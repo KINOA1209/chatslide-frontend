@@ -9,7 +9,7 @@ import {
 import availablePalettes from '@/components/slides/palette';
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
-import { Instruction } from '@/components/ui/Text';
+import { Explanation, Instruction } from '@/components/ui/Text';
 import Select from 'react-select';
 import { ColorPicker } from './ColorPicker';
 import { useSlides } from '@/hooks/use-slides';
@@ -118,6 +118,8 @@ const TemplateSelector: React.FC<{
       setFinalPaletteOptions(paletteOptions); // Update finalPaletteOptions when paletteOptions changes
     }, [paletteOptions]);
 
+    const [coverTitleFontFamily, setCoverTitleFontFamily] = useState<string | undefined>('');
+
     useEffect(() => {
       // use the consistent template and palette value to reload initial font family to stay consistent
       const initialCurrentTemplateTitleFontFamily = loadCustomizableElements(
@@ -142,6 +144,9 @@ const TemplateSelector: React.FC<{
       );
       setInitialLoadedContentFontFamily(
         initialCurrentTemplateTitleFontFamily?.contentFontCSS?.fontFamily,
+      );
+      setCoverTitleFontFamily(
+        initialCurrentTemplateTitleFontFamily?.headFontCSS?.fontFamily,
       );
     }, [template, palette]); // template + palette
 
@@ -308,136 +313,137 @@ const TemplateSelector: React.FC<{
     };
 
     return (
-		<div>
-			<div
-				className={`transition-opacity duration-300 ease-in-out gap-1 flex flex-col justify-start`}
-			>
-				<div className={`templateAndPaletteChoice flex flex-col  items-start`}>
-					<div className={`templateChoice flex flex-col `}>
-						<Instruction>Theme template</Instruction>
-						<DropDown
-							width='15rem'
-							onChange={handleTemplateChange}
-							value={template}
-							style='input'
-						>
-							{/* Map over the template options */}
-							{Object.entries(templateDisplayNames).map(([key, value]) => (
-								<option key={key} value={key}>
-									{`${value} ${
-										(availablePalettes[key as TemplateKeys]?.length ?? 0) > 1
-											? '(palette ✅)'
-											: ''
-									}`}
-								</option>
-							))}
-						</DropDown>
-					</div>
-					{/* Render color palette options only if there are more than one */}
-					{
-						<div className='paletteChoice w-full'>
-							{!hasSelectedCustomTemplateBgColor &&
-								paletteOptions.length > 1 && (
-									<div>
-										<Instruction>Theme color</Instruction>
-										<PaletteSelector />
-									</div>
-								)}
-
-							{showCustomColorPicker && (
-								<div>
-									<Instruction>Customize theme color</Instruction>
-									<ColorPicker
-										onCustomColorChange={handleCustomTemplateBgColorChange}
-										initialColor={
-											hasSelectedCustomTemplateBgColor
-												? customTemplateBgColor ||
-												  colorPreviews[palette as PaletteKeys]
-												: colorPreviews[palette as PaletteKeys]
-										} // Provide a default value if customTemplateBgColor is undefined
-										resetColorPicker={resetColorPicker}
-									/>
-								</div>
-							)}
-              <WrappableRow type='grid' cols={4}>
+      <div>
+        <div
+          className={`transition-opacity duration-300 ease-in-out gap-1 flex flex-col justify-start`}
+        >
+          <div className={`templateAndPaletteChoice flex flex-col items-start gap-y-2`}>
+            <div className={`templateChoice flex flex-col `}>
+              <Instruction>Theme template</Instruction>
+              <DropDown
+                width='15rem'
+                onChange={handleTemplateChange}
+                value={template}
+                style='input'
+              >
+                {/* Map over the template options */}
+                {Object.entries(templateDisplayNames).map(([key, value]) => (
+                  <option key={key} value={key}>
+                    {`${value} ${(availablePalettes[key as TemplateKeys]?.length ?? 0) > 1
+                      ? '(palette ✅)'
+                      : ''
+                      }`}
+                  </option>
+                ))}
+              </DropDown>
+            </div>
+            {/* Render color palette options only if there are more than one */}
+            <div className='paletteChoice w-full gap-y-2'>
+              {!hasSelectedCustomTemplateBgColor &&
+                paletteOptions.length > 1 && (
                   <div>
-                    <Instruction>Cover Heading</Instruction>
-                    <FontFamilyPicker
-                      onCustomFontFamilyChange={
-                        handleCustomTemplateTitleFontFamilyChange
-                      }
-                      selectedFontFamily={
-                        HasSelectedCustomizedTemplateTitleFontFamily
-                          ? customizedTemplateTitleFontFamily
-                          : initialLoadedTitleFontFamily
-                      }
-                      resetFontFamilyPicker={resetFontFamilyPicker}
-                      disableResetButton={true}
-                    />
+                    <Instruction>Theme color</Instruction>
+                    <PaletteSelector />
                   </div>
+                )}
 
-								{/* heading */}
-								<div>
-									<Instruction>Non-cover Heading</Instruction>
-									<FontFamilyPicker
-										onCustomFontFamilyChange={
-											handleCustomTemplateTitleFontFamilyChange
-										}
-										selectedFontFamily={
-											HasSelectedCustomizedTemplateTitleFontFamily
-												? customizedTemplateTitleFontFamily
-												: initialLoadedTitleFontFamily
-										}
-										resetFontFamilyPicker={resetFontFamilyPicker}
-										disableResetButton={true}
-									/>
-								</div>
-								{/* subheading */}
-								<div>
-									<Instruction>Non-cover Subheading</Instruction>
-									<FontFamilyPicker
-										onCustomFontFamilyChange={
-											handleCustomTemplateSubtitleFontFamilyChange
-										}
-										selectedFontFamily={
-											HasSelectedCustomizedTemplateSubtitleFontFamily
-												? customizedTemplateSubtitleFontFamily
-												: initialLoadedSubtitleFontFamily
-										}
-										resetFontFamilyPicker={resetFontFamilyPicker}
-										disableResetButton={true}
-									/>
-								</div>
-								{/* paragraph */}
-								<div>
-									<Instruction>Non-cover Paragraph</Instruction>
-									<FontFamilyPicker
-										onCustomFontFamilyChange={
-											handleCustomTemplateContentFontFamilyChange
-										}
-										selectedFontFamily={
-											HasSelectedCustomizedTemplateContentFontFamily
-												? customizedTemplateContentFontFamily
-												: initialLoadedContentFontFamily
-										}
-										resetFontFamilyPicker={resetFontFamilyPicker}
-										disableResetButton={false}
-									/>
-								</div>
-                </WrappableRow>
-						</div>
-					}
-				</div>
-			</div>
-			<div className='w-full mt-4 flex flex-col'>
-				<Instruction>Preview</Instruction>
-				<SlideDesignPreview
-					selectedTemplate={template}
-					selectedPalette={palette}
-				/>
-			</div>
-		</div >
-	);
-};
+              {showCustomColorPicker && (
+                <div>
+                  <Instruction>Customize theme color</Instruction>
+                  <ColorPicker
+                    onCustomColorChange={handleCustomTemplateBgColorChange}
+                    initialColor={
+                      hasSelectedCustomTemplateBgColor
+                        ? customTemplateBgColor ||
+                        colorPreviews[palette as PaletteKeys]
+                        : colorPreviews[palette as PaletteKeys]
+                    } // Provide a default value if customTemplateBgColor is undefined
+                    resetColorPicker={resetColorPicker}
+                  />
+                </div>
+              )}
+            </div>
+            <WrappableRow type='grid' cols={3}>
+              <div>
+              <div className='flex flex-row items-center gap-2'>
+                <Instruction>Cover Heading</Instruction>
+                <Explanation>
+                  Change this directly in the editor.
+                </Explanation>
+              </div>
+              <FontFamilyPicker
+                onCustomFontFamilyChange={
+                  handleCustomTemplateTitleFontFamilyChange
+                }
+                selectedFontFamily={
+                  coverTitleFontFamily
+                }
+                resetFontFamilyPicker={resetFontFamilyPicker}
+                disableResetButton={true}
+                disabled={true}
+              />
+              </div>
+
+              {/* heading */}
+              <div>
+                <Instruction>Non-cover Heading</Instruction>
+                <FontFamilyPicker
+                  onCustomFontFamilyChange={
+                    handleCustomTemplateTitleFontFamilyChange
+                  }
+                  selectedFontFamily={
+                    HasSelectedCustomizedTemplateTitleFontFamily
+                      ? customizedTemplateTitleFontFamily
+                      : initialLoadedTitleFontFamily
+                  }
+                  resetFontFamilyPicker={resetFontFamilyPicker}
+                  disableResetButton={true}
+                />
+              </div>
+              {/* subheading */}
+              <div>
+                <Instruction>Non-cover Subheading</Instruction>
+                <FontFamilyPicker
+                  onCustomFontFamilyChange={
+                    handleCustomTemplateSubtitleFontFamilyChange
+                  }
+                  selectedFontFamily={
+                    HasSelectedCustomizedTemplateSubtitleFontFamily
+                      ? customizedTemplateSubtitleFontFamily
+                      : initialLoadedSubtitleFontFamily
+                  }
+                  resetFontFamilyPicker={resetFontFamilyPicker}
+                  disableResetButton={true}
+                />
+              </div>
+              {/* paragraph */}
+              <div>
+                <Instruction>Non-cover Paragraph</Instruction>
+                <FontFamilyPicker
+                  onCustomFontFamilyChange={
+                    handleCustomTemplateContentFontFamilyChange
+                  }
+                  selectedFontFamily={
+                    HasSelectedCustomizedTemplateContentFontFamily
+                      ? customizedTemplateContentFontFamily
+                      : initialLoadedContentFontFamily
+                  }
+                  resetFontFamilyPicker={resetFontFamilyPicker}
+                  disableResetButton={false}
+                />
+              </div>
+            </WrappableRow>
+          </div>
+        </div>
+        <div className='w-full mt-4 flex flex-col'>
+          <Instruction>Preview</Instruction>
+          <SlideDesignPreview
+            selectedTemplate={template}
+            selectedPalette={palette}
+          />
+        </div>
+      </div >
+    );
+  };
 
 export default TemplateSelector;
