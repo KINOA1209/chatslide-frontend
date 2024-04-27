@@ -98,6 +98,7 @@ const FontFamilyPicker: React.FC<FontFamilyPickerProps> = ({
 					onChange={handleChange}
 					styles={customStyles}
           isDisabled={disabled}
+          menuPosition='fixed'
 				/>
 				{disableResetButton ? (
 					<></>
