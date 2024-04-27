@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import AZURE_VOICE_OPTIONS, { OAI_VOICE_OPTIONS, STYLE_DISPLAY_NAMES, TONE_DISPLAY_NAMES, AZURE_VOICE_STYLES, isOpenaiVoice } from './voiceData';
+import AZURE_VOICE_OPTIONS, { OAI_VOICE_OPTIONS, STYLE_DISPLAY_NAMES, TONE_DISPLAY_NAMES, AZURE_VOICE_STYLES, isOpenaiVoice, AZURE_MULTILINGUAL_VOICE_OPTIONS, isMultilingualVoice } from './voiceData';
 import LANGUAGES, { LANGUAGES_WITH_ACCENTS } from './languageData';
-import { ErrorMessage, Instruction, WarningMessage } from '../ui/Text';
+import { ErrorMessage, Explanation, Instruction, WarningMessage } from '../ui/Text';
 import { DropDown } from '../button/DrlambdaButton';
 import { useProject } from '@/hooks/use-project';
 import { WrappableRow } from '../layout/WrappableRow';
@@ -55,7 +55,7 @@ const VoiceSelector: React.FC<{
 		const formatVoiceName = (voiceName: string): string => {
 			if (isOpenaiVoice(voiceName)) {
 				// capitalize the first letter and return
-				return voiceName.charAt(0).toUpperCase() + voiceName.slice(1) + ' (new)';
+				return voiceName.charAt(0).toUpperCase() + voiceName.slice(1) + ' (🇺🇸🌐, new 🎉)';
 			}
 
 			const styleAvailableText = AZURE_VOICE_STYLES[voiceName] ? ' (styles ✅)' : '';
@@ -66,9 +66,6 @@ const VoiceSelector: React.FC<{
 				// Capitalize the first letter and return
 				formattedName = formattedName.charAt(0).toUpperCase() + formattedName.slice(1);
 				// replace Multilingual with `-Mulilingual`
-				if (formattedName.includes('Multilingual')) {
-					return formattedName.replace('Multilingual', '-Multilingual') + styleAvailableText;
-				}
 
 				formattedName = TONE_DISPLAY_NAMES[formattedName] ?? formattedName;
 				return formattedName + styleAvailableText;
@@ -110,6 +107,9 @@ const VoiceSelector: React.FC<{
 								{voiceOptions.map((voice) => (
 									<option key={voice} value={voice}>{formatVoiceName(voice)}</option>
 								))}
+								{AZURE_MULTILINGUAL_VOICE_OPTIONS[selectedGender].map((voice) => (
+									<option key={voice} value={voice}>{formatVoiceName(voice)}</option>
+								))}
 								{OAI_VOICE_OPTIONS[selectedGender].map((voice) => (
 									<option key={voice} value={voice}>{formatVoiceName(voice)}</option>
 								))}
@@ -126,6 +126,12 @@ const VoiceSelector: React.FC<{
 						</div>
 					</>}
 				</WrappableRow>
+				{
+					isMultilingualVoice(selectedVoice) &&
+					<Explanation>
+						This is a multilingual voice. The language it speaks depends on the text you provide.
+					</Explanation>
+				}
 				{
 					selectedLanguage !== originalLanguageCode && selectedLanguage !== 'None' &&
 					<WarningMessage>If your scripts and voice are in different languages, you may get suboptimal results.</WarningMessage>

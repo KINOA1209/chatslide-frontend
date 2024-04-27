@@ -1,23 +1,23 @@
-type AzureVoiceOption = {
-	[languageCode: string]: {
-		female: string[],
-		male: string[]
-	}
+type VoiceOptions = {
+	female: string[],
+	male: string[]
 };
 
-const AZURE_VOICE_OPTIONS: AzureVoiceOption = {
+type LangToVoiceOptions = {
+	[key: string]: VoiceOptions
+}
+
+const AZURE_VOICE_OPTIONS: LangToVoiceOptions = {
 	'en-US': {
 		'female': [
 			'en-US-AvaNeural', 'en-US-EmmaNeural', 'en-US-JennyNeural', 'en-US-AriaNeural', 'en-US-JaneNeural',
 			'en-US-SaraNeural', 'en-US-NancyNeural', 'en-US-AmberNeural', 'en-US-AnaNeural', 'en-US-AshleyNeural',
-			'en-US-AvaMultilingualNeural', 'en-US-CoraNeural', 'en-US-ElizabethNeural', 'en-US-EmmaMultilingualNeural',
-			'en-US-JennyMultilingualNeural', 'en-US-MichelleNeural', 'en-US-MonicaNeural'
+			'en-US-CoraNeural', 'en-US-ElizabethNeural', 'en-US-MichelleNeural', 'en-US-MonicaNeural'
 		],
 		'male': [
 			'en-US-AndrewNeural', 'en-US-BrianNeural', 'en-US-GuyNeural', 'en-US-DavisNeural', 'en-US-JasonNeural',
-			'en-US-TonyNeural', 'en-US-AndrewMultilingualNeural', 'en-US-BrandonNeural', 'en-US-BrianMultilingualNeural',
-			'en-US-ChristopherNeural', 'en-US-EricNeural', 'en-US-JacobNeural', 'en-US-RogerNeural',
-			'en-US-RyanMultilingualNeural', 'en-US-SteffanNeural'
+			'en-US-TonyNeural', 'en-US-BrandonNeural', 'en-US-ChristopherNeural', 'en-US-EricNeural', 'en-US-JacobNeural',
+			'en-US-RogerNeural', 'en-US-SteffanNeural'
 		]
 	},
 	'en-GB': {
@@ -75,7 +75,7 @@ const AZURE_VOICE_OPTIONS: AzureVoiceOption = {
 			'zh-CN-XiaoxiaoNeural', 'zh-CN-XiaoyiNeural', 'zh-CN-XiaochenNeural', 'zh-CN-XiaohanNeural',
 			'zh-CN-XiaomengNeural', 'zh-CN-XiaomoNeural', 'zh-CN-XiaoqiuNeural', 'zh-CN-XiaoruiNeural',
 			'zh-CN-XiaoshuangNeural', 'zh-CN-XiaoyanNeural', 'zh-CN-XiaoyouNeural', 'zh-CN-XiaozhenNeural',
-			'zh-CN-XiaoxuanNeural', 'zh-CN-shaanxi-XiaoniNeural', 
+			'zh-CN-XiaoxuanNeural', 'zh-CN-shaanxi-XiaoniNeural',
 			'zh-CN-liaoning-XiaobeiNeural',
 			'wuu-CN-XiaotongNeural', 'yue-CN-XiaoMinNeural'
 		],
@@ -117,11 +117,11 @@ const AZURE_VOICE_OPTIONS: AzureVoiceOption = {
 	'fr-FR': {
 		'female': [
 			'fr-FR-DeniseNeural', 'fr-FR-BrigitteNeural', 'fr-FR-CelesteNeural', 'fr-FR-CoralieNeural', 'fr-FR-EloiseNeural',
-			'fr-FR-JacquelineNeural', 'fr-FR-JosephineNeural', 'fr-FR-VivienneMultilingualNeural', 'fr-FR-YvetteNeural'
+			'fr-FR-JacquelineNeural', 'fr-FR-JosephineNeural', 'fr-FR-YvetteNeural'
 		],
 		'male': [
 			'fr-FR-HenriNeural', 'fr-FR-AlainNeural', 'fr-FR-ClaudeNeural', 'fr-FR-JeromeNeural', 'fr-FR-MauriceNeural',
-			'fr-FR-RemyMultilingualNeural', 'fr-FR-YvesNeural'
+			'fr-FR-YvesNeural'
 		]
 	},
 	"fr-Global": {
@@ -210,7 +210,22 @@ const AZURE_VOICE_OPTIONS: AzureVoiceOption = {
 	},
 };
 
-export const OAI_VOICE_OPTIONS = {
+export const AZURE_MULTILINGUAL_VOICE_OPTIONS: VoiceOptions = {
+	female: [
+		'fr-FR-VivienneMultilingualNeural',
+		'en-US-AvaMultilingualNeural',
+		'en-US-EmmaMultilingualNeural',
+		'en-US-JennyMultilingualNeural'
+	],
+	male: [
+		'fr-FR-RemyMultilingualNeural',
+		'en-US-AndrewMultilingualNeural',
+		'en-US-BrianMultilingualNeural',
+		'en-US-RyanMultilingualNeural'
+	]
+}
+
+export const OAI_VOICE_OPTIONS: VoiceOptions = {
 	female: ['nova'],
 	male: [
 		'alloy',
@@ -223,6 +238,10 @@ export const OAI_VOICE_OPTIONS = {
 
 export function isOpenaiVoice(voice: string): boolean {
 	return OAI_VOICE_OPTIONS.female.includes(voice) || OAI_VOICE_OPTIONS.male.includes(voice);
+}
+
+export function isMultilingualVoice(voice: string): boolean {
+	return voice.includes('Multilingual') || isOpenaiVoice(voice);
 }
 
 export const TONE_DISPLAY_NAMES: { [key: string]: string } = {
@@ -313,11 +332,20 @@ export const TONE_DISPLAY_NAMES: { [key: string]: string } = {
 	"HiuMaan": "曉曼 (🇭🇰)",
 	"HiuGaai": "曉佳 (🇭🇰)",
 	"WanLung": "雲龍 (🇭🇰)",
-	"YunSong": "云松 (广东)",
-	"XiaoMin": "小敏 (广东)",
-	"Yunzhe": "雲哲 (吴语)",
-	"Xiaotong": "晓彤 (吴语)",
+	"-YunSong": "云松 (广东)",  // yue-CN has 6 chars, so we need to add a dash
+	"-XiaoMin": "小敏 (广东)",
+	"-Yunzhe": "雲哲 (吴语)",
+	"-Xiaotong": "晓彤 (吴语)",
 	"Xiaobei": "晓蓓 (辽宁)",
+	
+	"VivienneMultilingual": "Vivienne (🇫🇷🌐)",
+	"RemyMultilingual": "Rémy (🇫🇷🌐)",
+	"AndrewMultilingual": "Andrew (🇺🇸🌐)",
+	"BrianMultilingual": "Brian (🇺🇸🌐)",
+	"RyanMultilingual": "Ryan (🇺🇸🌐)",
+	"AvaMultilingual": "Ava (🇺🇸🌐)",
+	"EmmaMultilingual": "Emma (🇺🇸🌐)",
+	"JennyMultilingual": "Jenny (🇺🇸🌐)",
 };
 
 // doc: https://github.com/MicrosoftDocs/azure-docs/blob/main/articles/ai-services/speech-service/includes/language-support/voice-styles-and-roles.md
