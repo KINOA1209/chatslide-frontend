@@ -812,7 +812,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			<div className='w-full flex flex-row items-start justify-center lg:justify-around gap-2 lg:h-[80vh]'>
 				{/* vertical bar */}
 				<Panel>
-					<div className='h-full hidden lg:flex md:w-[150px]'>
+					<div className='h-full hidden lg:flex md:w-[150px] mb-[8rem]'>
 						<DraggableSlidesPreview
 							ref={verticalCurrentSlideRef}
 							slideIndex={slideIndex}
