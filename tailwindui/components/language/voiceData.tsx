@@ -75,12 +75,15 @@ const VOICE_OPTIONS: VoiceOption = {
 			'zh-CN-XiaoxiaoNeural', 'zh-CN-XiaoyiNeural', 'zh-CN-XiaochenNeural', 'zh-CN-XiaohanNeural',
 			'zh-CN-XiaomengNeural', 'zh-CN-XiaomoNeural', 'zh-CN-XiaoqiuNeural', 'zh-CN-XiaoruiNeural',
 			'zh-CN-XiaoshuangNeural', 'zh-CN-XiaoyanNeural', 'zh-CN-XiaoyouNeural', 'zh-CN-XiaozhenNeural',
-			'zh-CN-XiaoxuanNeural', 'zh-CN-shaanxi-XiaoniNeural'
+			'zh-CN-XiaoxuanNeural', 'zh-CN-shaanxi-XiaoniNeural', 
+			'zh-CN-liaoning-XiaobeiNeural',
+			'wuu-CN-XiaotongNeural', 'yue-CN-XiaoMinNeural'
 		],
 		'male': [
 			'zh-CN-YunxiNeural', 'zh-CN-YunjianNeural', 'zh-CN-YunyangNeural', 'zh-CN-YunfengNeural',
 			'zh-CN-YunhaoNeural', 'zh-CN-YunxiaNeural', 'zh-CN-YunyeNeural', 'zh-CN-YunzeNeural', 'zh-CN-sichuan-YunxiNeural',
-			'zh-CN-shandong-YunxiangNeural', 'zh-CN-henan-YundengNeural'
+			'zh-CN-shandong-YunxiangNeural', 'zh-CN-henan-YundengNeural',
+			'wuu-CN-YunzheNeural.mp3', 'yue-CN-YunSongNeural'
 		]
 	},
 	'zh-TW': {
@@ -93,10 +96,10 @@ const VOICE_OPTIONS: VoiceOption = {
 	},
 	'zh-HK': {
 		'female': [
-			'zh-HK-HiuMaanNeural', 'zh-HK-HiuGaaiNeural'
+			'zh-HK-HiuMaanNeural', 'zh-HK-HiuGaaiNeural', 'yue-CN-XiaoMinNeural'
 		],
 		'male': [
-			'zh-HK-WanLungNeural'
+			'zh-HK-WanLungNeural', 'yue-CN-YunSongNeural'
 		]
 	},
 	'de-DE': {
@@ -294,7 +297,12 @@ export const TONE_DISPLAY_NAMES: { [key: string]: string } = {
 	"Sebastian": "Sebastian (🇻🇪)",
 	"HiuMaan": "曉曼 (🇭🇰)",
 	"HiuGaai": "曉佳 (🇭🇰)",
-	"WanLung": "雲龍 (🇭🇰)"
+	"WanLung": "雲龍 (🇭🇰)",
+	"YunSong": "云松 (广东)",
+	"XiaoMin": "小敏 (广东)",
+	"Yunzhe": "雲哲 (吴语)",
+	"Xiaotong": "晓彤 (吴语)",
+	"Xiaobei": "晓蓓 (辽宁)",
 };
 
 // doc: https://github.com/MicrosoftDocs/azure-docs/blob/main/articles/ai-services/speech-service/includes/language-support/voice-styles-and-roles.md
