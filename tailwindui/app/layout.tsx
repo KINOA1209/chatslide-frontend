@@ -1,86 +1,88 @@
 import './css/style.css';
 import React from 'react';
 import Script from 'next/script';
-import { getBrand, getOrigin, isChatslide } from '@/utils/getHost';
+import { getBrand, getOrigin, isChatslide, isLocal } from '@/utils/getHost';
 import Abotify from '@/components/integrations/Abotify';
 
 interface MetadataOptions {
-	title?: string;
-	description?: string;
-	keywords?: string;
-	name?: string;
+  title?: string;
+  description?: string;
+  keywords?: string;
+  name?: string;
 }
 
 export const generateMetadata = (options: MetadataOptions = {}): any => {
-	const {
-		title = `${getBrand()}: Create Professional Slides with AI`,
-		description = 'Your AI assistant to create professional slides and posts. Convert your documents, webpages, videos, and tweets into professional slides and documents.',
-		keywords = `${getBrand()}, AI-powered, documents_to_slides, tool, create, professional, slides, documents, sources, pdf, docx, notion, presentation, knowledge, goole_slides, powerpoint, keynote, canva, figma, design, content, marketing, social_media, twitter, linkedin, facebook, instagram, youtube, tiktok, pinterest, slideshare, medium`,
-		name = `${getBrand()}: AI Slides`,
-	} = options;
+  const {
+    title = `${getBrand()}: Create Professional Slides with AI`,
+    description = 'Your AI assistant to create professional slides and posts. Convert your documents, webpages, videos, and tweets into professional slides and documents.',
+    keywords = `${getBrand()}, AI-powered, documents_to_slides, tool, create, professional, slides, documents, sources, pdf, docx, notion, presentation, knowledge, goole_slides, powerpoint, keynote, canva, figma, design, content, marketing, social_media, twitter, linkedin, facebook, instagram, youtube, tiktok, pinterest, slideshare, medium`,
+    name = `${getBrand()}: AI Slides`,
+  } = options;
 
-	return {
-		title,
-		description,
-		keywords,
-		name,
-		metadataBase: {
-			title,
-			description,
-			keywords,
-			name,
-		},
-		openGraph: {
-			title,
-			description,
-			url: getOrigin(),
-			type: 'website',
-			images: [
-				{
-					url: `${getOrigin()}/images/ogimage_${getBrand()}.png`,
-					width: 800,
-					height: 440,
-					alt: getBrand(),
-				},
-			],
-		},
-		twitter: {
-			handle: '@drlambda_ai',
-			site: '@drlambda_ai',
-			card: 'summary_large_image',
-			creator: '@drlambda_ai',
-			title,
-			description,
-			image: `${getOrigin()}/images/ogimage_${getBrand()}.png`,
-		},
-	};
+  return {
+    title,
+    description,
+    keywords,
+    name,
+    metadataBase: {
+      title,
+      description,
+      keywords,
+      name,
+    },
+    openGraph: {
+      title,
+      description,
+      url: getOrigin(),
+      type: 'website',
+      images: [
+        {
+          url: `${getOrigin()}/images/ogimage_${getBrand()}.png`,
+          width: 800,
+          height: 440,
+          alt: getBrand(),
+        },
+      ],
+    },
+    twitter: {
+      handle: '@drlambda_ai',
+      site: '@drlambda_ai',
+      card: 'summary_large_image',
+      creator: '@drlambda_ai',
+      title,
+      description,
+      image: `${getOrigin()}/images/ogimage_${getBrand()}.png`,
+    },
+  };
 };
 
 export default function RootLayout({
-	children,
+  children,
 }: {
-	children: React.ReactNode;
+  children: React.ReactNode;
 }) {
-	return (
-		<>
-			<html lang='en'>
-				<head>
-					<link
-						rel='icon'
-						href={isChatslide() ? '/favicon_chatslide.ico' : '/favicon.ico'}
-					/>
+  return (
+    <>
+      <html lang='en'>
+        <head>
+          <link
+            rel='icon'
+            href={isChatslide() ? '/favicon_chatslide.ico' : '/favicon.ico'}
+          />
 
-					<Script id='intercom-settings'>
-						{`
+          {!isLocal() && (
+            <>
+              <Script id='intercom-settings'>
+                {`
 				window.intercomSettings = {
 						api_base: "https://api-iam.intercom.io",
 						app_id: "m25tvbz7",
 				};
 			`}
-					</Script>
+              </Script>
 
-					<Script id='rewardful'>
-						{`
+              <Script id='rewardful'>
+                {`
 (function(w,r){w._rwq=r;w[r]=w[r]||function(){(w[r].q=w[r].q||[]).push(arguments)}})(window,'rewardful');
 
 (function() {
@@ -90,10 +92,10 @@ el.setAttribute('data-rewardful', '649c29');
 document.body.appendChild(el);
 })();
 				`}
-					</Script>
+              </Script>
 
-					<Script id='datadog-rum'>
-						{`(function(h,o,u,n,d) {
+              <Script id='datadog-rum'>
+                {`(function(h,o,u,n,d) {
 		h=h[d]=h[d]||{q:[],onReady:function(c){h.q.push(c)}}
 		d=o.createElement(u);d.async=1;d.src=n
 		n=o.getElementsByTagName(u)[0];n.parentNode.insertBefore(d,n)
@@ -116,10 +118,10 @@ document.body.appendChild(el);
 		});
 	  })
 			`}
-					</Script>
+              </Script>
 
-					<Script id='mixpanel'>
-						{`
+              <Script id='mixpanel'>
+                {`
 (function (f, b) {
 if (!b.__SV) {
 	var e, g, i, h;
@@ -174,10 +176,10 @@ if (!b.__SV) {
 }
 })(document, window.mixpanel || []);
 				`}
-					</Script>
+              </Script>
 
-					<Script id='stey'>
-						{`(function () {
+              <Script id='stey'>
+                {`(function () {
 				'use strict';
 
 				var ErrorType;
@@ -300,18 +302,19 @@ if (!b.__SV) {
 					}
 				})()
 			`}
-					</Script>
-				</head>
-				<body
-					className={`font-inter antialiased bg-white text-gray-900 tracking-tight`}
-				>
-					<div className='Simpleflex flex-col min-h-screen overflow-hidden supports-[overflow:clip]:overflow-clip'>
-						{children}
-					</div>
+              </Script>
+            </>)}
+        </head>
+        <body
+          className={`font-inter antialiased bg-white text-gray-900 tracking-tight`}
+        >
+          <div className='Simpleflex flex-col min-h-screen overflow-hidden supports-[overflow:clip]:overflow-clip'>
+            {children}
+          </div>
 
-					<Abotify />
-				</body>
-			</html>
-		</>
-	);
+          {/* <Abotify /> */}
+        </body>
+      </html>
+    </>
+  );
 }
