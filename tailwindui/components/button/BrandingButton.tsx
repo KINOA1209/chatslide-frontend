@@ -40,17 +40,6 @@ export const BrandingButton: React.FC<{}> = () => {
 			});
 	}, []);
 
-	useEffect(() => {
-		document.addEventListener('upload_background', (e) => {
-			setShowModal(true);
-		});
-
-		return () =>
-			document.removeEventListener('upload_background', (e) => {
-				setShowModal(true);
-			});
-	}, []);
-
 	return (
 		<>
 			<Modal
