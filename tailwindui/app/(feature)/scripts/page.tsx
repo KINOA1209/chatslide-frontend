@@ -24,6 +24,7 @@ import { bgmDisplayNames } from '@/components/language/bgmData';
 import ButtonWithExplanation from '@/components/button/ButtonWithExplanation';
 import { FiPlay } from 'react-icons/fi';
 import Modal from '@/components/ui/Modal';
+import RangeSlider from '@/components/ui/RangeSlider';
 
 
 const ScriptSection = dynamic(
@@ -45,6 +46,7 @@ export default function WorkflowStep5() {
 	const [size, setSize] = useState('medium');
 	const [position, setPosition] = useState('bottom-right');
 	const [bgm, setBgm] = useState('');
+  const [bgmVolume, setBgmVolume] = useState(0.2);
 	const [showConfirmRegenModal, setShowConfirmRegenModal] = useState(false);
 
 	const params = useSearchParams();
@@ -119,7 +121,7 @@ export default function WorkflowStep5() {
 			try {
 				console.log('project_id:', project_id);
 				updateProject('video_url', '');
-				VideoService.generateVideo(project_id, foldername, voice, token, style, avatar, posture, size, position, bgm);
+				VideoService.generateVideo(project_id, foldername, voice, token, style, avatar, posture, size, position, bgm, bgmVolume);
 				updateCreditsFE(-20);
 				router.push(addIdToRedir('/video'));
 			} catch (error) {
@@ -212,6 +214,17 @@ export default function WorkflowStep5() {
 								}
 							/>}
 					</div>
+          <RangeSlider
+            onChange={(value: number) => {
+              if (value != 0)
+                setBgmVolume(value)
+            }
+            }
+            value={bgmVolume}
+            minValue={5}
+            choices={[0, 0.1, 0.2, 0.3, 0.4]}
+          />
+
 				</Card>
 
 				<Card>
