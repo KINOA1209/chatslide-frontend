@@ -48,6 +48,8 @@ export const colorPreviews: Record<PaletteKeys, string> = {
 	Saffron: '#F6C343',
 	Feta: '#EFFDE9',
 	'Catskill White': '#EEF5F7',
+	Serenade: '#FFF2E6',
+	Seashell: '#F1F1F1',
 	// Add more color previews for other palette keys if needed
 };
 

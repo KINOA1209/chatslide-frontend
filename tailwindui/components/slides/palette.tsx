@@ -40,6 +40,7 @@ const availablePalettes: availablePalettesObject = {
 		'Feta',
 		'Catskill White',
 	],
+	Creative_Brief_011: ['Serenade', 'Seashell'],
 };
 
 export const lightColorPalette: PaletteKeys[] = [
@@ -53,6 +54,8 @@ export const lightColorPalette: PaletteKeys[] = [
 	'Feta',
 	'Morning Glory',
 	'Jonquil',
+	'Serenade',
+	'Seashell',
 ];
 
 export const darkColorPalette: PaletteKeys[] = [

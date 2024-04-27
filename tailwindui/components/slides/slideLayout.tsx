@@ -284,7 +284,10 @@ export const Cover_img_0_layout = ({
 	// }, []);
 
 	return (
-		<div className={`SlideCanvas`} style={layoutElements.canvaCSS}>
+		<div
+			className={`SlideCanvas`}
+			style={{ ...layoutElements.canvaCSS, position: 'relative' }}
+		>
 			<div
 				className={`SlideUserNameAndHeadColumn`}
 				style={layoutElements.columnCSS}
@@ -310,7 +313,7 @@ export const Cover_img_0_layout = ({
 			</div>
 			<div
 				className={`SlideVisualElement`}
-				style={layoutElements.visualElementsCSS}
+				style={{ ...layoutElements.visualElementsCSS, position: 'absolute' }}
 			>
 				{themeElements.backgroundUrlCoverImg0 && (
 					<Image
@@ -382,7 +385,10 @@ export const Cover_img_1_layout = ({
 	const [imgHigherZIndex, setImgHigherZIndex] = useState(false);
 
 	return (
-		<div className={`SlideCanvas`} style={layoutElements.canvaCSS}>
+		<div
+			className={`SlideCanvas`}
+			style={{ ...layoutElements.canvaCSS, position: 'relative' }}
+		>
 			<div
 				className={`SlideUserNameAndHeadColumn`}
 				style={layoutElements.columnCSS}
@@ -427,7 +433,7 @@ export const Cover_img_1_layout = ({
 
 			<div
 				className={`SlideVisualElement`}
-				style={layoutElements.visualElementsCSS}
+				style={{ ...layoutElements.visualElementsCSS, position: 'absolute' }}
 			>
 				{themeElements.backgroundUrlCoverImg1 && (
 					<Image
@@ -506,9 +512,13 @@ export const Col_1_img_0_layout = ({
 	}, []);
 
 	return (
-		<div ref={containerRef} style={layoutElements.canvaCSS}>
+		<div
+			ref={containerRef}
+			className={`SlideCanva`}
+			style={{ ...layoutElements.canvaCSS, position: 'relative' }}
+		>
 			<div
-				className={`titleAndSubtopicBox`}
+				className={`SlideTitleAndSubtopicBox`}
 				style={{
 					...layoutElements.titleAndSubtopicBoxCSS,
 					zIndex: 50,
@@ -534,11 +544,15 @@ export const Col_1_img_0_layout = ({
 			</div>
 
 			<div
-				className='opacity-50 border border-neutral-900 border-opacity-40'
+				className='SlideTitlesAndCOntentDivider opacity-50 border border-neutral-900 border-opacity-40'
 				style={layoutElements.titlesAndContentDividerCSS}
 			></div>
-			<div style={{ ...layoutElements.columnCSS, zIndex: 40 }}>
+			<div
+				className='SlideColumn'
+				style={{ ...layoutElements.columnCSS, zIndex: 40 }}
+			>
 				<div
+					className='SlideContent'
 					style={{
 						...layoutElements.contentCSS, // Spread the existing styles first
 						maxHeight:
@@ -558,7 +572,10 @@ export const Col_1_img_0_layout = ({
 			>
 				{templateLogo}
 			</div>
-			<div style={layoutElements.visualElementsCSS}>
+			<div
+				className='SlideVisualElements'
+				style={{ ...layoutElements.visualElementsCSS, position: 'absolute' }}
+			>
 				{themeElements.backgroundUrlCol_1_img_0 && (
 					<Image
 						style={{ objectFit: 'cover', height: '100%' }}
@@ -637,7 +654,11 @@ export const Col_2_img_0_layout = ({
 	return (
 		<div
 			className={`SlideLayoutCanvas`}
-			style={{ display: 'grid', ...layoutElements.canvaCSS }}
+			style={{
+				display: 'grid',
+				...layoutElements.canvaCSS,
+				position: 'relative',
+			}}
 		>
 			<div
 				className={`SlideTopicAndSubtopicBox`}
@@ -822,7 +843,7 @@ export const Col_2_img_0_layout = ({
 			</div>
 			<div
 				className={`SlideVisualElements`}
-				style={layoutElements.visualElementsCSS}
+				style={{ ...layoutElements.visualElementsCSS, position: 'absolute' }}
 			>
 				{themeElements.backgroundUrlCol_2_img_0 && (
 					<Image
@@ -904,7 +925,13 @@ export const Col_3_img_0_layout = ({
 	// }, [shouldShowEditorBox]);
 
 	return (
-		<div style={{ display: 'grid', ...layoutElements.canvaCSS }}>
+		<div
+			style={{
+				display: 'grid',
+				...layoutElements.canvaCSS,
+				position: 'relative',
+			}}
+		>
 			<div
 				style={{
 					...layoutElements.titleAndSubtopicBoxCSS,
@@ -1185,7 +1212,9 @@ export const Col_3_img_0_layout = ({
 			>
 				{templateLogo}
 			</div>
-			<div style={layoutElements.visualElementsCSS}>
+			<div
+				style={{ ...layoutElements.visualElementsCSS, position: 'absolute' }}
+			>
 				{themeElements.backgroundUrlCol_3_img_0 && (
 					<Image
 						style={{ objectFit: 'cover', height: '100%' }}
@@ -1280,7 +1309,7 @@ export const Col_2_img_1_layout = ({
 		<div
 			// className='w-full h-full flex flex-row gap-[2rem] justify-start items-start'
 			ref={containerRef}
-			style={layoutElements.canvaCSS}
+			style={{ ...layoutElements.canvaCSS, position: 'relative' }}
 		>
 			{/* column 1 for text content */}
 			<div
@@ -1361,7 +1390,9 @@ export const Col_2_img_1_layout = ({
 			>
 				{templateLogo}
 			</div>
-			<div style={layoutElements.visualElementsCSS}>
+			<div
+				style={{ ...layoutElements.visualElementsCSS, position: 'absolute' }}
+			>
 				{themeElements.backgroundUrlCol_2_img_1 && (
 					<Image
 						style={{ objectFit: 'cover', height: '100%' }}
@@ -1460,7 +1491,7 @@ export const Col_1_img_1_layout = ({
 		<div
 			ref={containerRef}
 			className='w-full h-full'
-			style={layoutElements.canvaCSS}
+			style={{ ...layoutElements.canvaCSS, position: 'relative' }}
 		>
 			{/* area for topic, subtopic and contents */}
 			<div
@@ -1565,7 +1596,9 @@ export const Col_1_img_1_layout = ({
 			>
 				{templateLogo}
 			</div>
-			<div style={layoutElements.visualElementsCSS}>
+			<div
+				style={{ ...layoutElements.visualElementsCSS, position: 'absolute' }}
+			>
 				{themeElements.backgroundUrlCol_1_img_1 && (
 					<Image
 						style={{ objectFit: 'cover', height: '100%' }}
@@ -1701,7 +1734,7 @@ export const Col_2_img_2_layout = ({
 	//const filteredContent: JSX.Element[] = filterEmptyLines(content);
 
 	return (
-		<div style={layoutElements.canvaCSS}>
+		<div style={{ ...layoutElements.canvaCSS, position: 'relative' }}>
 			<div
 				// className='flex flex-col gap-[0.5rem]'
 				style={layoutElements.columnCSS}
@@ -1913,7 +1946,9 @@ export const Col_2_img_2_layout = ({
 			>
 				{templateLogo}
 			</div>
-			<div style={layoutElements.visualElementsCSS}>
+			<div
+				style={{ ...layoutElements.visualElementsCSS, position: 'absolute' }}
+			>
 				{themeElements.backgroundUrlCol_2_img_2 && (
 					<Image
 						style={{ objectFit: 'cover', height: '100%' }}
@@ -2014,7 +2049,7 @@ export const Col_3_img_3_layout = ({
 		updatedContentCol3.length === 0,
 	);
 	return (
-		<div style={layoutElements.canvaCSS}>
+		<div style={{ ...layoutElements.canvaCSS, position: 'relative' }}>
 			<div
 				// className='flex flex-col gap-[0.5rem]'
 				style={layoutElements.columnCSS}
@@ -2331,7 +2366,9 @@ export const Col_3_img_3_layout = ({
 			>
 				{templateLogo}
 			</div>
-			<div style={layoutElements.visualElementsCSS}>
+			<div
+				style={{ ...layoutElements.visualElementsCSS, position: 'absolute' }}
+			>
 				{themeElements.backgroundUrlCol_3_img_3 && (
 					<Image
 						style={{ objectFit: 'cover', height: '100%' }}

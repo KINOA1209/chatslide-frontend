@@ -23,6 +23,7 @@ import { UChicagoTemplateLayoutsConfig } from './templatesLayoutsConfigDetails/U
 import { Simplistic_008_TemplateLayoutsConfig } from './templatesLayoutsConfigDetails/Simplistic_008_TemplateLayoutsConfig';
 import { New_Education_009_TemplateLayoutsConfig } from './templatesLayoutsConfigDetails/New_Education_009_TemplateLayoutsConfig';
 import { Event_Report_010_TemplateLayoutsConfig } from './templatesLayoutsConfigDetails/Event_Report_010_TemplateLayoutsConfig';
+import { Creative_Brief_011_TemplateLayoutsConfig } from './templatesLayoutsConfigDetails/Creative_Brief_011_TemplateLayoutsConfig';
 export type LayoutElements = {
 	canvaCSS?: React.CSSProperties;
 	logoCSS?: React.CSSProperties;
@@ -65,6 +66,7 @@ const layoutConfigData: TemplateLayoutsConfig = {
 	Simplistic_008: Simplistic_008_TemplateLayoutsConfig,
 	New_Education_009: New_Education_009_TemplateLayoutsConfig,
 	Event_Report_010: Event_Report_010_TemplateLayoutsConfig,
+	Creative_Brief_011: Creative_Brief_011_TemplateLayoutsConfig,
 	Default: Default_TemplateLayoutsConfig,
 	Berkeley: BerkeleyTemplateLayoutsConfig,
 	Stanford: StanfordTemplateLayoutsConfig,
