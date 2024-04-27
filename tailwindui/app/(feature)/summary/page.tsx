@@ -471,7 +471,7 @@ export default function Topic() {
 
 					<div className='w-full gap-2 flex flex-col sm:grid sm:grid-cols-2'>
 						<div>
-							<Instruction>Number of Pages: {pageCountEst}</Instruction>
+							<Instruction>Estimated Number of Pages: {pageCountEst}</Instruction>
 							<Explanation>
 								A rough estimate of the number of slides you will need. <br />
 								{(pageCountEst > 20) && 'Decks with than 20 pages will cost more ⭐️credits.'}
@@ -489,7 +489,7 @@ export default function Topic() {
 								/>
 							</div>
 							<Explanation>
-								Rougghly {Math.round(pageCountEst / 3)} sections, {pageCountEst} pages of slides, and {Math.round(pageCountEst / 3)} minutes if you generate video.
+								Roughly {Math.round(pageCountEst / 3 + 0.5)} sections, {pageCountEst} pages of slides, and {Math.round(pageCountEst / 3)} minutes if you generate video.
 							</Explanation>
 						</div>
 					</div>
