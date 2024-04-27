@@ -50,8 +50,8 @@ const useHasSelectedCustomTemplateBgColor = createBearStore<boolean>()(
 	true,
 );
 
-const useInitalLoadedSubtitleFontFamily = createBearStore<string | undefined>()(
-	'initalLoadedSubtitleFontFamily',
+const useInitialLoadedSubtitleFontFamily = createBearStore<string | undefined>()(
+	'initialLoadedSubtitleFontFamily',
 	'Arial',
 	true,
 );
@@ -65,8 +65,8 @@ const useHasSelectedCustomizedTemplateSubtitleFontFamily =
 		true,
 	);
 
-const useInitalLoadedContentFontFamily = createBearStore<string | undefined>()(
-	'initalLoadedContentFontFamily',
+const useInitialLoadedContentFontFamily = createBearStore<string | undefined>()(
+	'initialLoadedContentFontFamily',
 	'Arial',
 	true,
 );
@@ -80,8 +80,8 @@ const useHasSelectedCustomizedTemplateContentFontFamily =
 		true,
 	);
 
-const useInitalLoadedTitleFontFamily = createBearStore<string | undefined>()(
-	'initalLoadedTitleFontFamily',
+const useInitialLoadedTitleFontFamily = createBearStore<string | undefined>()(
+	'initialLoadedTitleFontFamily',
 	'Arial',
 	true,
 );
@@ -148,8 +148,8 @@ export const useSlides = () => {
 	} = useHasSelectedCustomTemplateBgColor();
 	// for customized font family
 	// title font
-	const { initalLoadedTitleFontFamily, setInitalLoadedTitleFontFamily } =
-		useInitalLoadedTitleFontFamily();
+	const { initialLoadedTitleFontFamily, setInitialLoadedTitleFontFamily } =
+		useInitialLoadedTitleFontFamily();
 	const {
 		customizedTemplateTitleFontFamily,
 		setCustomizedTemplateTitleFontFamily,
@@ -160,8 +160,8 @@ export const useSlides = () => {
 	} = useHasSelectedCustomizedTemplateTitleFontFamily();
 
 	// subtitle font
-	const { initalLoadedSubtitleFontFamily, setInitalLoadedSubtitleFontFamily } =
-		useInitalLoadedSubtitleFontFamily();
+	const { initialLoadedSubtitleFontFamily, setInitialLoadedSubtitleFontFamily } =
+		useInitialLoadedSubtitleFontFamily();
 	const {
 		customizedTemplateSubtitleFontFamily,
 		setCustomizedTemplateSubtitleFontFamily,
@@ -171,8 +171,8 @@ export const useSlides = () => {
 		setHasSelectedCustomizedTemplateSubtitleFontFamily,
 	} = useHasSelectedCustomizedTemplateSubtitleFontFamily();
 	// content font
-	const { initalLoadedContentFontFamily, setInitalLoadedContentFontFamily } =
-		useInitalLoadedContentFontFamily();
+	const { initialLoadedContentFontFamily, setInitialLoadedContentFontFamily } =
+		useInitialLoadedContentFontFamily();
 	const {
 		customizedTemplateContentFontFamily,
 		setCustomizedTemplateContentFontFamily,
@@ -531,13 +531,13 @@ export const useSlides = () => {
 					: colorPreviews[newPalette as PaletteKeys],
 				titleFontFamily: HasSelectedCustomizedTemplateTitleFontFamily
 					? customizedTemplateTitleFontFamily
-					: initalLoadedTitleFontFamily,
+					: initialLoadedTitleFontFamily,
 				subtitleFontFamily: HasSelectedCustomizedTemplateSubtitleFontFamily
 					? customizedTemplateSubtitleFontFamily
-					: initalLoadedSubtitleFontFamily,
+					: initialLoadedSubtitleFontFamily,
 				contentFontFamily: HasSelectedCustomizedTemplateContentFontFamily
 					? customizedTemplateContentFontFamily
-					: initalLoadedContentFontFamily,
+					: initialLoadedContentFontFamily,
 
 				// images_position: [{}, {}, {}],// comment this line because it cause the image position to be wrong after changing template and palette
 			};
@@ -567,6 +567,10 @@ export const useSlides = () => {
 
 	const initSlides = (slides: Slide[]) => {
 		console.log('-- init slides: ', { slides });
+    if (slides.length === 0) {
+      return;
+    }
+
 		setSlides(slides);
 		setIsShowingLogo(slides?.some((slide) => slide.logo || slide.logo_url));
 		setSlideIndex(0);
@@ -574,6 +578,23 @@ export const useSlides = () => {
 		setSlidesHistoryIndex(0);
 		clearChatHistory();
 		setIsPresenting(false);
+
+    setCustomizedTemplateContentFontFamily(slides[0].contentFontFamily);
+    setCustomizedTemplateSubtitleFontFamily(slides[0].subtitleFontFamily);
+    setCustomizedTemplateTitleFontFamily(slides[0].titleFontFamily);
+
+    setHasSelectedCustomizedTemplateContentFontFamily(
+      !!slides[0].contentFontFamily,
+    );
+    setHasSelectedCustomizedTemplateSubtitleFontFamily(
+      !!slides[0].subtitleFontFamily,
+    );
+    setHasSelectedCustomizedTemplateTitleFontFamily(
+      !!slides[0].titleFontFamily,
+    );
+
+    setCustomTemplateBgColor(slides[0].background_color);
+    setHasSelectedCustomTemplateBgColor(!!slides[0].background_color);
 
 		slidesStatus = SlidesStatus.Inited;
 	};
@@ -688,20 +709,20 @@ export const useSlides = () => {
 		updateCustomizedContentFontFamilyForTemplate,
 		updateCustomizedSubtitleFontFamilyForTemplate,
 		toggleHasSelectedCustomTemplateBgColor,
-		initalLoadedTitleFontFamily,
-		setInitalLoadedTitleFontFamily,
+		initialLoadedTitleFontFamily,
+		setInitialLoadedTitleFontFamily,
 		customizedTemplateTitleFontFamily,
 		setCustomizedTemplateTitleFontFamily,
 		HasSelectedCustomizedTemplateTitleFontFamily,
 		setHasSelectedCustomizedTemplateTitleFontFamily,
-		initalLoadedSubtitleFontFamily,
-		setInitalLoadedSubtitleFontFamily,
+		initialLoadedSubtitleFontFamily,
+		setInitialLoadedSubtitleFontFamily,
 		customizedTemplateSubtitleFontFamily,
 		setCustomizedTemplateSubtitleFontFamily,
 		HasSelectedCustomizedTemplateSubtitleFontFamily,
 		setHasSelectedCustomizedTemplateSubtitleFontFamily,
-		initalLoadedContentFontFamily,
-		setInitalLoadedContentFontFamily,
+		initialLoadedContentFontFamily,
+		setInitialLoadedContentFontFamily,
 		customizedTemplateContentFontFamily,
 		setCustomizedTemplateContentFontFamily,
 		HasSelectedCustomizedTemplateContentFontFamily,

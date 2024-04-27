@@ -79,7 +79,7 @@ export const templateDispatch = (
 	const {
 		customTemplateBgColor,
 		updateCustomBgColorForTemplate,
-		setInitalLoadedTitleFontFamily,
+		setInitialLoadedTitleFontFamily,
 		hasSelectedCustomTemplateBgColor,
 		customizedTemplateTitleFontFamily,
 		HasSelectedCustomizedTemplateTitleFontFamily,
@@ -245,7 +245,7 @@ export const templateDispatch = (
 	// 		slide.palette,
 	// 		initialCurrentTemplateTitleFontFamily,
 	// 	);
-	// 	setInitalLoadedTitleFontFamily(
+	// 	setInitialLoadedTitleFontFamily(
 	// 		initialCurrentTemplateTitleFontFamily?.titleFontCSS?.fontFamily,
 	// 	);
 	// }, [templateKey]);
