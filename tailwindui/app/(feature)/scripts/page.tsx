@@ -7,7 +7,7 @@ import VideoService from '@/services/VideoService';
 import { useUser } from '@/hooks/use-user';
 import { Column } from '@/components/layout/Column';
 import { useSlides } from '@/hooks/use-slides';
-import { Instruction, BigTitle, Explanation } from '@/components/ui/Text';
+import { Instruction, BigTitle, Explanation, WarningMessage } from '@/components/ui/Text';
 import Card from '@/components/ui/Card';
 import { useProject } from '@/hooks/use-project';
 import VoiceSelector, { previewVoice } from '@/components/language/VoiceSelector';
@@ -26,6 +26,7 @@ import { FiPlay } from 'react-icons/fi';
 import Modal from '@/components/ui/Modal';
 import RangeSlider from '@/components/ui/RangeSlider';
 import { WrappableRow } from '@/components/layout/WrappableRow';
+import { isOpenaiVoice } from '@/components/language/voiceData';
 
 
 const ScriptSection = dynamic(
@@ -246,18 +247,26 @@ export default function WorkflowStep5() {
           <Explanation>
             Due to the limitation of our resources, we can only provide a limited number of video generations with avatars. <br />
             This feature will cost more credits. <br />
-            The credit cost for using an avatar may change in the future.
+            The credit cost for videos with avatar is 400 ⭐️. This may change in the future.
           </Explanation>
-          <AvatarSelector
-            avatar={avatar}
-            setAvatar={setAvatar}
-            posture={posture}
-            setPosture={setPosture}
-            size={size}
-            setSize={setSize}
-            position={position}
-            setPosition={setPosition}
-          />
+					{
+						isOpenaiVoice(voice) ? (
+							<WarningMessage>
+								The voice you selected does not support avatars yet.
+							</WarningMessage>
+						) : (
+								<AvatarSelector
+									avatar={avatar}
+									setAvatar={setAvatar}
+									posture={posture}
+									setPosture={setPosture}
+									size={size}
+									setSize={setSize}
+									position={position}
+									setPosition={setPosition}
+								/>
+						)
+					}
         </Card>
         {/* <Card>
 					<BigTitle>🦹‍♂️ Avatar</BigTitle>
@@ -275,17 +284,22 @@ export default function WorkflowStep5() {
 				</Card> */}
         <Card>
           <BigTitle>📝 Scripts</BigTitle>
-          <Instruction>
-            <div className='flex flex-col gap-y-1'>
-              <p>💡 Script to voice tips: </p>
-              <p>⏸️ Use <span className='text-green-600'>...</span> to denote pause </p>
-              <p>*️⃣ Use <span className='text-green-600'>*word*</span> to denote emphasis </p>
-              <p>🔤 Use <span className='text-green-600'>[word]</span> to spell out the word. </p>
-              <p>🌟 For example: {' '}
-                <span className='text-blue-600 hover:cursor-pointer' onClick={() => previewVoice('denotation')}>🔈 We also supports creating *slides* from... [doc] files. </span>
-              </p>
-            </div>
-          </Instruction>
+					{
+						!isOpenaiVoice(voice) && (
+							<Instruction>
+								<div className='flex flex-col gap-y-1'>
+									<p>💡 Script to voice tips: </p>
+									<p>⏸️ Use <span className='text-green-600'>...</span> to denote pause </p>
+									<p>*️⃣ Use <span className='text-green-600'>*word*</span> to denote emphasis </p>
+									<p>🔤 Use <span className='text-green-600'>[word]</span> to spell out the word. </p>
+									<p>🌟 For example: {' '}
+										<span className='text-blue-600 hover:cursor-pointer' onClick={() => previewVoice('denotation')}>🔈 We also supports creating *slides* from... [doc] files. </span>
+									</p>
+								</div>
+							</Instruction>
+						)
+					}
+
           <div className='flex flex-col gap-y-2'>
             {slides.map((_, index) => (
               <ScriptSection

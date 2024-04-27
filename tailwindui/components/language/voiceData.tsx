@@ -1,11 +1,11 @@
-type VoiceOption = {
+type AzureVoiceOption = {
 	[languageCode: string]: {
 		female: string[],
 		male: string[]
 	}
 };
 
-const VOICE_OPTIONS: VoiceOption = {
+const AZURE_VOICE_OPTIONS: AzureVoiceOption = {
 	'en-US': {
 		'female': [
 			'en-US-AvaNeural', 'en-US-EmmaNeural', 'en-US-JennyNeural', 'en-US-AriaNeural', 'en-US-JaneNeural',
@@ -210,6 +210,21 @@ const VOICE_OPTIONS: VoiceOption = {
 	},
 };
 
+export const OAI_VOICE_OPTIONS = {
+	female: ['nova'],
+	male: [
+		'alloy',
+		'echo',
+		'fable',
+		'onyx',
+		'shimmer'
+	]
+}
+
+export function isOpenaiVoice(voice: string): boolean {
+	return OAI_VOICE_OPTIONS.female.includes(voice) || OAI_VOICE_OPTIONS.male.includes(voice);
+}
+
 export const TONE_DISPLAY_NAMES: { [key: string]: string } = {
 	'Xiaoxiao': '晓晓',
 	'Xiaoyi': '晓怡',
@@ -306,7 +321,7 @@ export const TONE_DISPLAY_NAMES: { [key: string]: string } = {
 };
 
 // doc: https://github.com/MicrosoftDocs/azure-docs/blob/main/articles/ai-services/speech-service/includes/language-support/voice-styles-and-roles.md
-export const VOICE_STYLES: { [key: string]: string[] } = {
+export const AZURE_VOICE_STYLES: { [key: string]: string[] } = {
 	"de-DE-ConradNeural1": ["cheerful"],
 	"en-GB-SoniaNeural": ["cheerful", "sad"],
 	"en-US-AriaNeural": ["angry", "chat", "cheerful", "customerservice", "empathetic", "excited", "friendly", "hopeful", "narration-professional", "newscast-casual", "newscast-formal", "sad", "shouting", "terrified", "unfriendly", "whispering"],
@@ -385,4 +400,4 @@ export const STYLE_DISPLAY_NAMES: { [key: string]: string } = {
 }
 
 
-export default VOICE_OPTIONS;
+export default AZURE_VOICE_OPTIONS;

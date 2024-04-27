@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import VOICE_OPTIONS, { STYLE_DISPLAY_NAMES, TONE_DISPLAY_NAMES, VOICE_STYLES } from './voiceData';
+import AZURE_VOICE_OPTIONS, { OAI_VOICE_OPTIONS, STYLE_DISPLAY_NAMES, TONE_DISPLAY_NAMES, AZURE_VOICE_STYLES, isOpenaiVoice } from './voiceData';
 import LANGUAGES, { LANGUAGES_WITH_ACCENTS } from './languageData';
 import { ErrorMessage, Instruction, WarningMessage } from '../ui/Text';
 import { DropDown } from '../button/DrlambdaButton';
@@ -20,7 +20,7 @@ export const previewVoice = async (voice: string) => {
 };
 
 export const getVoiceStyles = (voice: string): string[] => {
-	const styles = VOICE_STYLES[voice] ?? [];
+	const styles = AZURE_VOICE_STYLES[voice] ?? [];
 	return ['', ...styles];
 }
 
@@ -47,13 +47,18 @@ const VoiceSelector: React.FC<{
 
 		// Update voice options based on selected language and gender
 		useEffect(() => {
-			const voices = VOICE_OPTIONS[selectedLanguage]?.[selectedGender] ?? ['Default'];
+			const voices = AZURE_VOICE_OPTIONS[selectedLanguage]?.[selectedGender] ?? ['Default'];
 			setVoiceOptions(voices);
 			setSelectedVoice(voices[0]);
 		}, [selectedLanguage, selectedGender]);
 
 		const formatVoiceName = (voiceName: string): string => {
-			const styleAvailableText = VOICE_STYLES[voiceName] ? ' (styles ✅)' : '';
+			if (isOpenaiVoice(voiceName)) {
+				// capitalize the first letter and return
+				return voiceName.charAt(0).toUpperCase() + voiceName.slice(1) + ' (new)';
+			}
+
+			const styleAvailableText = AZURE_VOICE_STYLES[voiceName] ? ' (styles ✅)' : '';
 
 			// Ensure the string is long enough to avoid negative substring indices
 			if (voiceName.length > 12) {
@@ -105,6 +110,9 @@ const VoiceSelector: React.FC<{
 								{voiceOptions.map((voice) => (
 									<option key={voice} value={voice}>{formatVoiceName(voice)}</option>
 								))}
+								{OAI_VOICE_OPTIONS[selectedGender].map((voice) => (
+									<option key={voice} value={voice}>{formatVoiceName(voice)}</option>
+								))}
 							</DropDown>
 						</div>
 
@@ -125,6 +133,10 @@ const VoiceSelector: React.FC<{
 				{
 					selectedLanguage === 'None' &&
 					<WarningMessage>Your video will not have any voiceover, each slide will play for 5 seconds silently.</WarningMessage>
+				}
+				{
+					isOpenaiVoice(selectedVoice) &&
+					<WarningMessage>The voice you selected does not support avatars yet.</WarningMessage>
 				}
 			</>
 		);
