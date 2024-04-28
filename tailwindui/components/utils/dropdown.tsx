@@ -103,11 +103,11 @@ const DropdownButton: React.FC<DropdownButtonProps> = () => {
 							Dashboard
 						</a>
 						<a
-							href='/my-resources'
+							href='/uploads'
 							className='block px-4 py-1 text-sm text-blue-600 hover:bg-gray-200'
 							role='menuitem'
 						>
-							My Resources
+							Uploads
 						</a>
 						<a
 							href='/discover'

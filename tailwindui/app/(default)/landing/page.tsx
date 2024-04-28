@@ -173,7 +173,7 @@ function Landing() {
 							>
 								Testimonials
 							</a>
-							<a href='#pricing' className='nav-link w-nav-link'>
+							<a href='/pricing' className='nav-link w-nav-link'>
 								Pricing
 							</a>
 							<div className='navbar-mobile-button-wrapper'>
@@ -2068,7 +2068,7 @@ function Landing() {
 				</div>
 			</section>
 			<Tutorial />
-			<Pricing />
+			{/* <Pricing /> */}
 			<section className='uui-section_pricing11-2 hide-tablet' />
 			<footer className='brix---footer-wrapper'>
 				<div className='brix---container-default w-container'>

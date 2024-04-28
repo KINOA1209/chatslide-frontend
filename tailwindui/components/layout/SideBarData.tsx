@@ -27,7 +27,7 @@ export const SideBarData: SideBarItem[] = [
 	{
 		title: 'Uploads',
 		icon: <GoFile />,
-		path: '/my-resources',
+		path: '/uploads',
 	},
 	{
 		title: 'Studio',
