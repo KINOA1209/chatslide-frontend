@@ -134,7 +134,7 @@ const MyCustomJoyride: React.FC<MyCustomJoyrideProps> = ({ steps }) => {
 
 	const handleConfirmingForward = (confirmed: boolean) => {
 		if (confirmed) {
-			router.push('/subscription');
+			router.push('/pricing');
 		} else {
 			setShowTourEndPromptWindow(false);
 		}

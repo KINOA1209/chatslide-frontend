@@ -67,7 +67,7 @@ const ScriptEditor: React.FC<TranscriptEditorProps> = ({
 					{script}
 				</TextareaAutosize> :
 				<div className='flex flex-col items-center justify-center h-full text-gray-500 text-sm'>
-					<BigBlueButton onClick={() => { window.location.href = '/subscription' }}>
+					<BigBlueButton onClick={() => { window.location.href = '/pricing' }}>
 						Upgrade to edit script
 					</BigBlueButton>
 				</div>

@@ -55,7 +55,7 @@ export const SideBarData: SideBarItem[] = [
 			},
 			{
 				title: 'Subscription',
-				path: '/subscription',
+				path: '/pricing',
 			},
 			{
 				title: 'Sign Out',
