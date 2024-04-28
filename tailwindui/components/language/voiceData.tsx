@@ -83,7 +83,7 @@ const AZURE_VOICE_OPTIONS: LangToVoiceOptions = {
 			'zh-CN-YunxiNeural', 'zh-CN-YunjianNeural', 'zh-CN-YunyangNeural', 'zh-CN-YunfengNeural',
 			'zh-CN-YunhaoNeural', 'zh-CN-YunxiaNeural', 'zh-CN-YunyeNeural', 'zh-CN-YunzeNeural', 'zh-CN-sichuan-YunxiNeural',
 			'zh-CN-shandong-YunxiangNeural', 'zh-CN-henan-YundengNeural',
-			'wuu-CN-YunzheNeural.mp3', 'yue-CN-YunSongNeural'
+			'wuu-CN-YunzheNeural', 'yue-CN-YunSongNeural'
 		]
 	},
 	'zh-TW': {
@@ -333,10 +333,10 @@ export const TONE_DISPLAY_NAMES: { [key: string]: string } = {
 	"HiuGaai": "曉佳 (🇭🇰)",
 	"WanLung": "雲龍 (🇭🇰)",
 	"-YunSong": "云松 (广东)",  // yue-CN has 6 chars, so we need to add a dash
-	"-XiaoMin": "小敏 (广东)",
-	"-Yunzhe": "雲哲 (吴语)",
+	"-XiaoMin": "晓敏 (广东)",
+  "-Yunzhe": "云哲 (吴语)",
 	"-Xiaotong": "晓彤 (吴语)",
-	"Xiaobei": "晓蓓 (辽宁)",
+	"Liaoning-Xiaobei": "晓蓓 (辽宁)",
 	
 	"VivienneMultilingual": "Vivienne (🇫🇷🌐)",
 	"RemyMultilingual": "Rémy (🇫🇷🌐)",
