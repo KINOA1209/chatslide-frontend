@@ -37,11 +37,13 @@ const VoiceSelector: React.FC<{
   setSelectedVoice: (language: string) => void;
   style: string;
   setStyle: (style: string) => void;
+  isHD: boolean;
 }> = ({
   selectedVoice,
   setSelectedVoice,
   style,
   setStyle,
+  isHD,
 }) => {
     const getCodeFromLanguage = (language: string | undefined): string => {
       const selectedLanguage = LANGUAGES.find((lang) => lang.englishName === language);
@@ -150,6 +152,12 @@ const VoiceSelector: React.FC<{
           isOpenaiVoice(selectedVoice) &&
           <Explanation>
             🎧 This is a Hi-Fi only voice. 
+          </Explanation>
+        }
+        {
+          (isOpenaiVoice(selectedVoice) || isHD) &&
+          <Explanation>
+            🎧 Hi-Fi voices have a much better voice quality. The ⭐️ credit cost may be higher in the future.
           </Explanation>
         }
         {

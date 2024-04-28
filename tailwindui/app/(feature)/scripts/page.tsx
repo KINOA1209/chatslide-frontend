@@ -55,6 +55,13 @@ export default function WorkflowStep5() {
 
   const params = useSearchParams();
 
+  useEffect(() => {
+    if (avatar)
+      setCreditCost(400);
+    else 
+      setCreditCost(20);
+  }, [avatar]);
+
   const CreditCost = () => {
     function getCreditCostPerPageAndReason() {
       if (avatar)
@@ -215,15 +222,15 @@ export default function WorkflowStep5() {
       {showConfirmRegenModal && <ConfirmVideoRegenModal />}
 
       <Column>
-        <CreditCost />
+        {/* <CreditCost /> */}
         <Card>
           <WrappableRow type='flex' justify='between'>
             <BigTitle>🎙️ Voice</BigTitle>
 
             {!isOpenaiVoice(voice) &&
               <Toggle
-                isLeft={voiceIsHD}
-                setIsLeft={(value: boolean) => setVoiceIsHD(value)}
+                isLeft={!voiceIsHD}
+                setIsLeft={(value: boolean) => setVoiceIsHD(!value)}
                 leftText='Standard'
                 rightText='Hi-Fi 🎧'
               />
@@ -238,6 +245,7 @@ export default function WorkflowStep5() {
             setSelectedVoice={setVoice}
             style={style}
             setStyle={setStyle}
+            isHD={voiceIsHD}
           />
         </Card>
 
