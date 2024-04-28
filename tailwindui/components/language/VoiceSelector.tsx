@@ -7,10 +7,18 @@ import { ErrorMessage, Explanation, Instruction, WarningMessage } from '../ui/Te
 import { DropDown } from '../button/DrlambdaButton';
 import { useProject } from '@/hooks/use-project';
 import { WrappableRow } from '../layout/WrappableRow';
+import { lang } from 'moment';
 
-export const previewVoice = async (voice: string) => {
+export const previewVoice = async (voice: string, language: string = 'en-US') => {
   try {
-    const audio_url = `/voice/${voice}.mp3`;
+    let audio_url = `/voice/${voice}.mp3`;
+    if(voice.includes('Multilingual') || isOpenaiVoice(voice)) {
+      if (['en', 'fr', 'de', 'es', 'zh', 'it', 'pt', 'ru'].includes(language.split('-')[0])) {
+        audio_url = `/voice/${voice}/${language}.mp3`;
+      } else {
+        audio_url = `/voice/${voice}/en.mp3`;
+      }
+    }
     const audioElement = new Audio(audio_url);
     audioElement.play(); // Play the voice
     console.log('playing audio:', audioElement);
@@ -101,7 +109,7 @@ const VoiceSelector: React.FC<{
             <div>
               <Instruction>Tone: </Instruction>
               <DropDown value={selectedVoice} onChange={(e) => {
-                previewVoice(e.target.value)
+                previewVoice(e.target.value, selectedLanguage);
                 setSelectedVoice(e.target.value)
               }}>
                 {voiceOptions.map((voice) => (
