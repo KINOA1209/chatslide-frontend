@@ -58,7 +58,7 @@ export default function WorkflowStep5() {
   useEffect(() => {
     if (avatar)
       setCreditCost(400);
-    else 
+    else
       setCreditCost(20);
   }, [avatar]);
 
@@ -291,22 +291,24 @@ export default function WorkflowStep5() {
                   />}
               </div>
             </div>
-            <div>
-              <Instruction>
-                Volume: {bgmVolume * 100}
-              </Instruction>
-              <RangeSlider
-                onChange={(value: number) => {
-                  if (value !== 0) {
-                    console.log(value)
-                    setBgmVolume(value)
-                  }
-                }}
-                value={bgmVolume}
-                minValue={0.1}
-                choices={[0, 0.1, 0.2, 0.3, 0.4]}
-              />
-            </div>
+            {bgm &&
+              <div>
+                <Instruction>
+                  Volume: {bgmVolume * 100}
+                </Instruction>
+                <RangeSlider
+                  onChange={(value: number) => {
+                    if (value !== 0) {
+                      console.log(value)
+                      setBgmVolume(value)
+                    }
+                  }}
+                  value={bgmVolume}
+                  minValue={0.1}
+                  choices={[0, 0.1, 0.2, 0.3, 0.4]}
+                />
+              </div>
+            }
           </WrappableRow>
 
         </Card>
