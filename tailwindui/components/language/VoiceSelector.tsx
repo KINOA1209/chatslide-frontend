@@ -7,14 +7,14 @@ import { ErrorMessage, Explanation, Instruction, WarningMessage } from '../ui/Te
 import { DropDown } from '../button/DrlambdaButton';
 import { useProject } from '@/hooks/use-project';
 import { WrappableRow } from '../layout/WrappableRow';
-import { lang } from 'moment';
 
 export const previewVoice = async (voice: string, language: string = 'en-US') => {
   try {
     let audio_url = `/voice/${voice}.mp3`;
+    console.log('previewing voice:', voice);
     if(voice.includes('Multilingual') || isOpenaiVoice(voice)) {
       if (['en', 'fr', 'de', 'es', 'zh', 'it', 'pt', 'ru'].includes(language.split('-')[0])) {
-        audio_url = `/voice/${voice}/${language}.mp3`;
+        audio_url = `/voice/${voice}/${language.split('-')[0]}.mp3`;
       } else {
         audio_url = `/voice/${voice}/en.mp3`;
       }
