@@ -15,6 +15,7 @@ import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import UserService from '@/services/UserService';
 import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
+import { useUser } from '@/hooks/use-user';
 
 type DrlambdaButtonProps = {
 	children: ReactNode;
@@ -200,11 +201,12 @@ export const BigBlueButton: React.FC<DrlambdaButtonProps> = ({
 };
 
 export const EarlyAccessButton: React.FC<{
-	username: string;
 	project_id?: string;
-	token: string;
 	feature: string;
-}> = ({ username, project_id = '', token, feature }) => {
+}> = ({ project_id = '', feature }) => {
+
+  const { username, token } = useUser();
+
 	return (
 		<>
 			<ToastContainer />

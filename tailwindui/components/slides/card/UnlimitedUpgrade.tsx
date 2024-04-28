@@ -1,3 +1,6 @@
+'use client';
+
+
 import { BigBlueButton } from "@/components/button/DrlambdaButton";
 import Card from "@/components/ui/Card";
 import { BigTitle, Instruction } from "@/components/ui/Text";

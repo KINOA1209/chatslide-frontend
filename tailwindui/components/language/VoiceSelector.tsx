@@ -109,7 +109,7 @@ const VoiceSelector: React.FC<{
             </div>
 
             <div>
-              <Instruction>Tone: </Instruction>
+              <Instruction>Tone (new choices): </Instruction>
               <DropDown value={selectedVoice} onChange={(e) => {
                 previewVoice(e.target.value, selectedLanguage);
                 setSelectedVoice(e.target.value)
