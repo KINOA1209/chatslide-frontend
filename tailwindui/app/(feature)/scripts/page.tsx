@@ -58,11 +58,9 @@ export default function WorkflowStep5() {
   const CreditCost = () => {
     function getCreditCostPerPageAndReason() {
       if (avatar)
-        return { cost: 30, reason: 'You are using an avatar' };
-      if (voiceIsHD)
-        return { cost: 5, reason: 'You are using a hi-fi voice' };
-      if (isOpenaiVoice(voice))
-        return { cost: 2, reason: 'You are using an OpenAI voice' };
+        return { cost: 30, reason: '🦹‍♂️ You are using an avatar' };
+      if (voiceIsHD || isOpenaiVoice(voice))
+        return { cost: 5, reason: '🎧 You are using a hi-fi voice' };
       return { cost: 1, reason: 'You are using a standard voice' };
     }
 
@@ -171,10 +169,10 @@ export default function WorkflowStep5() {
         console.log('project_id:', project_id);
         updateProject('video_url', '');
         VideoService.generateVideo(
-          project_id, foldername, 
-          voice, 
-          token, 
-          style, avatar, posture, size, position, 
+          project_id, foldername,
+          voice,
+          token,
+          style, avatar, posture, size, position,
           bgm, bgmVolume,
           creditCost);
         updateCreditsFE(-20);
@@ -222,12 +220,14 @@ export default function WorkflowStep5() {
           <WrappableRow type='flex' justify='between'>
             <BigTitle>🎙️ Voice</BigTitle>
 
-            <Toggle
-              isLeft={voiceIsHD}
-              setIsLeft={(value: boolean) => setVoiceIsHD(value)}
-              leftText='Standard'
-              rightText='Hi-Fi'
-            />
+            {!isOpenaiVoice(voice) &&
+              <Toggle
+                isLeft={voiceIsHD}
+                setIsLeft={(value: boolean) => setVoiceIsHD(value)}
+                leftText='Standard'
+                rightText='Hi-Fi 🎧'
+              />
+            }
           </WrappableRow>
 
           <Instruction>
