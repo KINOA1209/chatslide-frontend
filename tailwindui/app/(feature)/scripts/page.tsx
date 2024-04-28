@@ -321,7 +321,7 @@ export default function WorkflowStep5() {
           <Explanation>
             Due to the limitation of our resources, we can only provide a limited number of video generations with avatars. <br />
             This feature will cost more credits. <br />
-            The credit cost for videos with avatar is 30⭐️ per page. This may change in the future.
+            The credit cost for videos with avatar is 400⭐️ per video. This may change in the future.
           </Explanation>
           {
             isOpenaiVoice(voice) ? (
