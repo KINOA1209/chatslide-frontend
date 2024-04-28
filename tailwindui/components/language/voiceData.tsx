@@ -338,14 +338,14 @@ export const TONE_DISPLAY_NAMES: { [key: string]: string } = {
 	"-Xiaotong": "晓彤 (吴语)",
 	"Liaoning-Xiaobei": "晓蓓 (辽宁)",
 	
-	"VivienneMultilingual": "Vivienne (🇫🇷🌐)",
-	"RemyMultilingual": "Rémy (🇫🇷🌐)",
-	"AndrewMultilingual": "Andrew (🇺🇸🌐)",
-	"BrianMultilingual": "Brian (🇺🇸🌐)",
-	"RyanMultilingual": "Ryan (🇺🇸🌐)",
-	"AvaMultilingual": "Ava (🇺🇸🌐)",
-	"EmmaMultilingual": "Emma (🇺🇸🌐)",
-	"JennyMultilingual": "Jenny (🇺🇸🌐)",
+	"VivienneMultilingual": "Vivienne 🌐",
+	"RemyMultilingual": "Rémy 🌐",
+	"AndrewMultilingual": "Andrew 🌐",
+	"BrianMultilingual": "Brian 🌐",
+	"RyanMultilingual": "Ryan 🌐",
+	"AvaMultilingual": "Ava 🌐",
+	"EmmaMultilingual": "Emma 🌐",
+	"JennyMultilingual": "Jenny 🌐",
 };
 
 // doc: https://github.com/MicrosoftDocs/azure-docs/blob/main/articles/ai-services/speech-service/includes/language-support/voice-styles-and-roles.md

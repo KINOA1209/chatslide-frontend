@@ -27,13 +27,13 @@ import Modal from '@/components/ui/Modal';
 import RangeSlider from '@/components/ui/RangeSlider';
 import { WrappableRow } from '@/components/layout/WrappableRow';
 import { isOpenaiVoice } from '@/components/language/voiceData';
+import Toggle from '@/components/button/Toggle';
 
 
 const ScriptSection = dynamic(
   () => import('@/components/script/ScriptSection'),
   { ssr: false },
 );
-
 
 export default function WorkflowStep5() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -50,8 +50,55 @@ export default function WorkflowStep5() {
   const [bgm, setBgm] = useState('');
   const [bgmVolume, setBgmVolume] = useState(0.2);
   const [showConfirmRegenModal, setShowConfirmRegenModal] = useState(false);
+  const [voiceIsHD, setVoiceIsHD] = useState(false);
+  const [creditCost, setCreditCost] = useState(20);
 
   const params = useSearchParams();
+
+  const CreditCost = () => {
+    function getCreditCostPerPageAndReason() {
+      if (avatar)
+        return { cost: 30, reason: '🦹‍♂️ You are using an avatar' };
+      if (voiceIsHD || isOpenaiVoice(voice))
+        return { cost: 5, reason: '🎧 You are using a hi-fi voice' };
+      return { cost: 1, reason: 'You are using a standard voice' };
+    }
+
+    const { cost: pageCost, reason } = getCreditCostPerPageAndReason();
+    const totalCost = Math.max(slides.length * pageCost, 20);
+    setCreditCost(totalCost);
+    const waitMinPerSlide = avatar ? 1 : 0.3;
+
+    return (
+      <Card>
+        <BigTitle>⭐️ Cost</BigTitle>
+        <Instruction>Number of pages: {slides.length} </Instruction>
+        <Instruction>
+          Estimated wait time: {' '}
+          {Math.round(slides.length * waitMinPerSlide)} minutes
+        </Instruction>
+
+        <div>
+          <Instruction>
+            Total Credit Cost: {totalCost} ⭐️
+          </Instruction>
+          {slides.length * pageCost < 20 ? (
+            <Explanation>
+              The minimum deck cost is 20 ⭐️.
+            </Explanation>
+          ) : (
+            <>
+              <Instruction>
+                Credit cost per page: {pageCost} ⭐️
+              </Instruction>
+              <Explanation>{reason}</Explanation>
+            </>
+          )
+          }
+        </div>
+      </Card>
+    )
+  }
 
   if (!project) {
     if (params.get('id')) {
@@ -84,9 +131,7 @@ export default function WorkflowStep5() {
           <BigBlueButton
             onClick={handleSubmitVideo}
           >
-            {avatar ?
-              'Yes, Regenerate (400 ⭐️)' :
-              'Yes, Regenerate (20 ⭐️)'}
+            Yes, Regenerate Video
           </BigBlueButton>
         </div>
       </Modal>
@@ -123,7 +168,13 @@ export default function WorkflowStep5() {
       try {
         console.log('project_id:', project_id);
         updateProject('video_url', '');
-        VideoService.generateVideo(project_id, foldername, voice, token, style, avatar, posture, size, position, bgm, bgmVolume);
+        VideoService.generateVideo(
+          project_id, foldername,
+          voice,
+          token,
+          style, avatar, posture, size, position,
+          bgm, bgmVolume,
+          creditCost);
         updateCreditsFE(-20);
         router.push(addIdToRedir('/video'));
       } catch (error) {
@@ -156,7 +207,7 @@ export default function WorkflowStep5() {
         isPaidUser={isPaidUser}
         nextIsPaidFeature={true}
         // todo: change credits
-        nextText={avatar ? 'Create Video (400 ⭐️)' : 'Create Video (20 ⭐️)'}
+        nextText={'Create Video (' + creditCost + '⭐️)'}
       />
 
       <ToastContainer enableMultiContainer containerId={'script'} />
@@ -164,8 +215,21 @@ export default function WorkflowStep5() {
       {showConfirmRegenModal && <ConfirmVideoRegenModal />}
 
       <Column>
+        <CreditCost />
         <Card>
-          <BigTitle>🎙️ Voice</BigTitle>
+          <WrappableRow type='flex' justify='between'>
+            <BigTitle>🎙️ Voice</BigTitle>
+
+            {!isOpenaiVoice(voice) &&
+              <Toggle
+                isLeft={voiceIsHD}
+                setIsLeft={(value: boolean) => setVoiceIsHD(value)}
+                leftText='Standard'
+                rightText='Hi-Fi 🎧'
+              />
+            }
+          </WrappableRow>
+
           <Instruction>
             Select the voice you want to use for your video.
           </Instruction>
@@ -225,7 +289,7 @@ export default function WorkflowStep5() {
               </Instruction>
               <RangeSlider
                 onChange={(value: number) => {
-                  if (value !== 0){
+                  if (value !== 0) {
                     console.log(value)
                     setBgmVolume(value)
                   }
@@ -247,26 +311,26 @@ export default function WorkflowStep5() {
           <Explanation>
             Due to the limitation of our resources, we can only provide a limited number of video generations with avatars. <br />
             This feature will cost more credits. <br />
-            The credit cost for videos with avatar is 400 ⭐️. This may change in the future.
+            The credit cost for videos with avatar is 30⭐️ per page. This may change in the future.
           </Explanation>
-					{
-						isOpenaiVoice(voice) ? (
-							<WarningMessage>
-								The voice you selected does not support avatars yet.
-							</WarningMessage>
-						) : (
-								<AvatarSelector
-									avatar={avatar}
-									setAvatar={setAvatar}
-									posture={posture}
-									setPosture={setPosture}
-									size={size}
-									setSize={setSize}
-									position={position}
-									setPosition={setPosition}
-								/>
-						)
-					}
+          {
+            isOpenaiVoice(voice) ? (
+              <WarningMessage>
+                The voice you selected does not support avatars yet.
+              </WarningMessage>
+            ) : (
+              <AvatarSelector
+                avatar={avatar}
+                setAvatar={setAvatar}
+                posture={posture}
+                setPosture={setPosture}
+                size={size}
+                setSize={setSize}
+                position={position}
+                setPosition={setPosition}
+              />
+            )
+          }
         </Card>
         {/* <Card>
 					<BigTitle>🦹‍♂️ Avatar</BigTitle>
@@ -284,21 +348,21 @@ export default function WorkflowStep5() {
 				</Card> */}
         <Card>
           <BigTitle>📝 Scripts</BigTitle>
-					{
-						!isOpenaiVoice(voice) && (
-							<Instruction>
-								<div className='flex flex-col gap-y-1'>
-									<p>💡 Script to voice tips: </p>
-									<p>⏸️ Use <span className='text-green-600'>...</span> to denote pause </p>
-									<p>*️⃣ Use <span className='text-green-600'>*word*</span> to denote emphasis </p>
-									<p>🔤 Use <span className='text-green-600'>[word]</span> to spell out the word. </p>
-									<p>🌟 For example: {' '}
-										<span className='text-blue-600 hover:cursor-pointer' onClick={() => previewVoice('denotation')}>🔈 We also support creating *slides* from... [doc] files. </span>
-									</p>
-								</div>
-							</Instruction>
-						)
-					}
+          {
+            !isOpenaiVoice(voice) && (
+              <Instruction>
+                <div className='flex flex-col gap-y-1'>
+                  <p>💡 Script to voice tips: </p>
+                  <p>⏸️ Use <span className='text-green-600'>...</span> to denote pause </p>
+                  <p>*️⃣ Use <span className='text-green-600'>*word*</span> to denote emphasis </p>
+                  <p>🔤 Use <span className='text-green-600'>[word]</span> to spell out the word. </p>
+                  <p>🌟 For example: {' '}
+                    <span className='text-blue-600 hover:cursor-pointer' onClick={() => previewVoice('denotation')}>🔈 We also support creating *slides* from... [doc] files. </span>
+                  </p>
+                </div>
+              </Instruction>
+            )
+          }
 
           <div className='flex flex-col gap-y-2'>
             {slides.map((_, index) => (
