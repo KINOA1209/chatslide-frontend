@@ -158,9 +158,9 @@ const PricingComparison: React.FC<{
 				return 'then ' + getPrice(tier);
 			case 'yearly':
 				// strike through the original price
-				return (<span className='text-gray-600'><s>{currency + getOriginalPrice(tier)}</s></span>);
+				return (<span className='text-gray-600'><s>{currency + getOriginalPrice(tier).toFixed(2)}</s></span>);
 			case 'lifetime':
-				return (<span className='text-gray-600'><s>{currency + getOriginalPrice(tier) * 20}</s></span>);
+				return (<span className='text-gray-600'><s>{currency +( getOriginalPrice(tier) * 20).toFixed(2)}</s></span>);
 		}
 	}
 
@@ -411,7 +411,7 @@ const PricingComparison: React.FC<{
 						<div className="brix---pricing-v8-title-table">
 							<div className="brix---text-300-medium">📚 Upload documents</div>
 						</div>
-						<div className="brix---text-300-medium"><b>Multiple</b></div>
+            <div className="brix---text-300-medium">Up to <b>5</b></div>
 					</div>
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className="brix---pricing-v8-title-table">
@@ -506,7 +506,7 @@ const PricingComparison: React.FC<{
 						<div className="brix---pricing-v8-title-table">
 							<div className="brix---text-300-medium">📚 Upload documents</div>
 						</div>
-						<div className="brix---text-300-medium"><b>Multiple</b></div>
+            <div className="brix---text-300-medium">Up to <b>5</b></div>
 					</div>
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className="brix---pricing-v8-title-table">
@@ -629,7 +629,7 @@ const PricingComparison: React.FC<{
 						<div className="brix---pricing-v8-title-table">
 							<div className="brix---text-300-medium">📚 Upload documents</div>
 						</div>
-						<div className="brix---text-300-medium"><b>Multiple</b></div>
+            <div className="brix---text-300-medium">Up to <b>10</b></div>
 					</div>
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className="brix---pricing-v8-title-table">
