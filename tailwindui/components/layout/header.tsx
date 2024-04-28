@@ -14,6 +14,7 @@ import AuthService from '../../services/AuthService';
 import { useUser } from '@/hooks/use-user';
 import { getBrand } from '@/utils/getHost';
 import Modal from '../ui/Modal';
+import useHydrated from '@/hooks/use-hydrated';
 
 interface HeaderProps {
 	loginRequired: boolean;
@@ -65,6 +66,9 @@ const Header = ({
 			Hub.remove('auth', listener);
 		};
 	}, []);
+
+  if(!useHydrated())
+    return <></>;
 
 	if (!token && loginRequired) {
 		return (

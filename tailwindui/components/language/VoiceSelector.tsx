@@ -62,10 +62,10 @@ const VoiceSelector: React.FC<{
 
 			// Ensure the string is long enough to avoid negative substring indices
 			if (voiceName.length > 12) {
+        // remove `en-US-` and `Neural` from the voice name
 				let formattedName = voiceName.substring(6, voiceName.length - 6);
 				// Capitalize the first letter and return
 				formattedName = formattedName.charAt(0).toUpperCase() + formattedName.slice(1);
-				// replace Multilingual with `-Mulilingual`
 
 				formattedName = TONE_DISPLAY_NAMES[formattedName] ?? formattedName;
 				return formattedName + styleAvailableText;
