@@ -72,25 +72,29 @@ const SideBar = ({ }: SideBarProps) => {
     }
   }, [path]);
 
-	function getTierDisplayName(tier: string, isSidebarOpen: boolean): string {
-		const level = tier.split('_')[0];
-		if (!isSidebarOpen && level === 'ULTIMATE') {
-			return 'ULT';
-		}
-		if (isSidebarOpen)
-			return level + ' Tier';
-		return level;
-	}
+  function getTierDisplayName(tier: string, isSidebarOpen: boolean): string {
+    const level = tier.split('_')[0];
+    if (!isSidebarOpen && level === 'ULTIMATE') {
+      return 'ULT';
+    }
+    if (isSidebarOpen)
+      return level + ' Tier';
+    return level;
+  }
 
-	function getCreditsDisplay(credits: string, isSidebarOpen: boolean): string {
-		if(isSidebarOpen) {
-			return credits + ' ⭐️ Credits';
-		}
-		if (credits === 'Unlimited') {
-			return '∞ ⭐️';
-		}
-		return credits + ' ⭐️';
-	}
+  function getCreditsDisplay(credits: string, isSidebarOpen: boolean): string {
+    if (isSidebarOpen) {
+      return credits + ' ⭐️ Credits';
+    }
+    if (credits === 'Unlimited') {
+      return '∞ ⭐️';
+    }
+    return credits + ' ⭐️';
+  }
+
+  function isLogInRequired(): boolean {
+    return !(path.includes('/discover') || path.includes('/pricing') || path.includes('/whatsnew'));
+  }
 
   // avoid hydration error during development caused by persistence
   if (!useHydrated()) return <></>;
@@ -99,7 +103,7 @@ const SideBar = ({ }: SideBarProps) => {
     return <></>;
 
   if (userStatus == UserStatus.Failed || !uid) {
-    if (path.includes('/discover'))
+    if (isLogInRequired())
       return <></>; // do not show sidebar if user is a visitor
     else
       return (

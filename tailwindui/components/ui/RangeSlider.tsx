@@ -25,7 +25,7 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
 
 	const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		console.log('locked', locked);
+		// console.log('locked', locked);
 
 		if (locked) {
 			setShowPaymentModal(true);

@@ -9,7 +9,7 @@ const Title: React.FC<{ center?: boolean, children: React.ReactNode }> = ({ cent
 };
 
 const BigTitle: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-	return <div className='text-neutral-800 text-2xl font-bold py-1'>{children}</div>;
+	return <div className='text-neutral-800 text-2xl font-bold py-1 flex flex-row items-center gap-x-2'>{children}</div>;
 };
 
 

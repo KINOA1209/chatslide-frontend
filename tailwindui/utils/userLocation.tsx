@@ -57,10 +57,24 @@ export const userInEU = () => {
 		'DK', 'EE', 'ES', 'FI', 'FR', 'GR',
 		'HR', 'HU', 'IE', 'IT', 'LT', 'LU',
 		'LV', 'MT', 'NL', 'PL', 'PT', 'RO',
-		'SE', 'SI', 'SK',
+		'SE', 'SI', 'SK', 
+    'UK', // other European countries that may use Euro
+    'CH',
+    'NO',
 	];
 
+  const europeanCountries = [
+    'AT', 'BE', 'BG', 'CH', 'CY', 'CZ',
+    'DE', 'DK', 'EE', 'ES', 'FI', 'FR',
+    'GR', 'HR', 'HU', 'IE', 'IS', 'IT',
+    'LT', 'LU', 'LV', 'MT', 'NL', 'NO',
+    'PL', 'PT', 'RO', 'SE', 'SI', 'SK',
+    'GB', 'AD', 'XK', 'MC', 'ME', 'SM',
+    'VA', 'AL', 'BA', 'MD', 'MK', 'UA',
+    'BY', 'RS'
+  ];
+
 	return getUserCountryCode().then((countryCode) => {
-		return euCountries.includes(countryCode);
+    return europeanCountries.includes(countryCode);
 	});
 }

@@ -43,7 +43,7 @@ export default function Dashboard() {
 	const fetchProjects = async () => {
 		try {
 			ProjectService.getProjects(token).then((projects) => {
-				console.log('projects', projects);
+				// console.log('projects', projects);
 				setProjects(projects);
 				setRendered(true);
 			});

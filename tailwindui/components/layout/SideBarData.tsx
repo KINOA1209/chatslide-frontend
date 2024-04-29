@@ -3,6 +3,7 @@ import React from 'react';
 import { FaDiscord } from 'react-icons/fa';
 import { GoHome, GoFile, GoDiscussionOutdated, GoGear } from 'react-icons/go';
 import { IoExitOutline, IoMicOutline } from 'react-icons/io5';
+import { LuNewspaper } from 'react-icons/lu';
 import { RiDiscordLine } from 'react-icons/ri';
 
 export interface SubMenu {
@@ -27,7 +28,7 @@ export const SideBarData: SideBarItem[] = [
 	{
 		title: 'Uploads',
 		icon: <GoFile />,
-		path: '/my-resources',
+		path: '/uploads',
 	},
 	{
 		title: 'Studio',
@@ -39,6 +40,11 @@ export const SideBarData: SideBarItem[] = [
 		icon: <GoDiscussionOutdated />,
 		path: '/discover',
 	},
+  {
+    title: "What's New",
+    icon: <LuNewspaper />,
+    path: '/whatsnew',
+  },
 	{
 		title: 'Join Discord',
 		icon: <RiDiscordLine />,
@@ -55,7 +61,7 @@ export const SideBarData: SideBarItem[] = [
 			},
 			{
 				title: 'Subscription',
-				path: '/subscription',
+				path: '/pricing',
 			},
 			{
 				title: 'Sign Out',

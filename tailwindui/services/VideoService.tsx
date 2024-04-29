@@ -13,6 +13,8 @@ export default class VideoService {
 		avatarSize: string,
 		avatarPosition: string,
 		bgm: string,
+    bgmVolume: number,
+    creditCost: number
 	): Promise<void>{
 		fetch('/api/export/generate_video', {
 			method: 'POST',
@@ -31,6 +33,8 @@ export default class VideoService {
 				avatar_size: avatarSize,
 				avatar_position: avatarPosition,
 				background_music: bgm,
+        bgm_volume: bgmVolume,
+        credit_cost: creditCost
 			}),
 		});
 	}

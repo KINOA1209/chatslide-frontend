@@ -17,6 +17,7 @@ export const metadata = {
 
 export default async function Discover() {
 	const projects = await ProjectService.getProjects('', true, true);
+  // console.log('projects', projects);
 	// const projects = mockProjectsData; // for test purposes only
 
 	return (

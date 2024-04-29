@@ -13,6 +13,8 @@ import { Auth, Hub } from 'aws-amplify';
 import AuthService from '../../services/AuthService';
 import { useUser } from '@/hooks/use-user';
 import { getBrand } from '@/utils/getHost';
+import Modal from '../ui/Modal';
+import useHydrated from '@/hooks/use-hydrated';
 
 interface HeaderProps {
 	loginRequired: boolean;
@@ -43,7 +45,7 @@ const Header = ({
 	}, [top]);
 
 	useEffect(() => {
-		if(token) 
+		if (token)
 			setLoading(false);
 
 		const listener = (data: any) => {
@@ -65,11 +67,26 @@ const Header = ({
 		};
 	}, []);
 
+  if(!useHydrated())
+    return <></>;
+
+	if (!token && loginRequired) {
+		return (
+			<Modal
+				showModal={true}
+				canClose={false} // cannot close modal
+				setShowModal={() => { }} // cannot close modal
+				title='Sign in to continue'
+				description='Session expired, you need to sign in again to continue'
+				onConfirm={() => router.push('/signup')}
+			/>
+		);
+	}
+	
 	return (
 		<header
-			className={`relative sticky top-0 w-full z-30 bg-Dark transition duration-300 ease-in-out ${
-				!top ? 'bg-gray-800 backdrop-blur-sm shadow-lg' : ''
-			}`}
+			className={`relative sticky top-0 w-full z-30 bg-Dark transition duration-300 ease-in-out ${!top ? 'bg-gray-800 backdrop-blur-sm shadow-lg' : ''
+				}`}
 		>
 			<div className='max-w-4/5 mx-auto px-5'>
 				<div className='flex items-center justify-between h-12'>
@@ -77,8 +94,8 @@ const Header = ({
 					<div className='flex flex-row items-center gap-x-2'
 						onClick={() => router.push('/landing')}>
 						<div className='min-w-[1.5rem]'>
-							<Logo 
-								color={false} 
+							<Logo
+								color={false}
 								size={'32px'}
 							/>
 						</div>
@@ -126,7 +143,7 @@ const Header = ({
 						{/* Desktop sign in links */}
 						{!loading && token ? (
 							!isAuth && (
-									<DropdownButton />
+								<DropdownButton />
 							)
 						) : (
 							<ul className='flex grow justify-end flex-nowrap items-center'>

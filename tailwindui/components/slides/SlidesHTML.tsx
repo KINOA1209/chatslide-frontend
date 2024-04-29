@@ -809,10 +809,10 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				showReferralLink={true}
 			/>
 
-			<div className='w-full flex flex-row items-start justify-center lg:justify-around gap-2 lg:h-[80vh]'>
+			<div className='w-full flex flex-row items-start justify-center lg:justify-around gap-2'>
 				{/* vertical bar */}
 				<Panel>
-					<div className='h-full hidden lg:flex md:w-[150px] mb-[8rem]'>
+					<div className='max-h-[540px] hidden lg:flex md:w-[150px] mb-[8rem] overflow-y-scroll'>
 						<DraggableSlidesPreview
 							ref={verticalCurrentSlideRef}
 							slideIndex={slideIndex}

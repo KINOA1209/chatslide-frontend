@@ -71,7 +71,17 @@ const nextConfig = {
 				source: '/discord',
         destination: 'https://discord.gg/Cae8Vy2kUB',
 				permanent: false,
-			}
+			},
+      {
+        source: '/subscription',
+        destination: '/pricing',
+        permanent: true,
+      },
+      {
+        source: '/my-resources',
+        destination: '/upload',
+        permanent: true,
+      }
 		]
 	},
 
