@@ -293,7 +293,14 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
   useEffect(() => {
     if (window.innerWidth > 1200) {
       setIsChatWindowOpen(true);
-      toggleChatWindow();
+      setNonPresentScale(
+        calculateNonPresentScale(
+          window.innerWidth,
+          window.innerHeight,
+          showScript,
+          true
+        ),
+      );
     }
   }, []);
 
