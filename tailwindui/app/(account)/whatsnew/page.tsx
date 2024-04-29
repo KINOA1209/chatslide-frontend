@@ -29,7 +29,7 @@ export default function Studio() {
           <Instruction>
             <div>
               🌐 Multilingual Voices <br />
-              New multilignual voices available! Those voice can speak in any language depending on your scripts. <br />
+              New multiligual voices available! Those voices can speak in any language depending on your scripts. <br />
               <a href='/voice/nova/en.mp3' target='_blank' className='text-blue-600'>🇺🇸 Hello, my name is nova</a>. <br />
               <a href='/voice/nova/fr.mp3' target='_blank' className='text-blue-600'>🇫🇷 Bonjour, je m'appelle nova</a>.
             </div>
@@ -49,7 +49,7 @@ export default function Studio() {
           <Instruction>
             <div>
               💯 Slide Views Counts <br />
-              Now available in Discover page. <br />
+              Now available at Discover page. <br />
               <a href='/discover' className='text-blue-600'>Check it out</a>.
             </div>
           </Instruction>
@@ -60,7 +60,7 @@ export default function Studio() {
           <Instruction>
             <div>
               📝 Edit Fonts for the Whole Deck <br />
-              Customize your whole deck at once with font editing! You can find this either at design page, template card at slide page, or just talk with our ChatBot.
+              Customize your whole deck at once with font editing! You can find this either on the design page, template card on the slide page, or just talk with our ChatBot.
             </div>
           </Instruction>
           <Instruction>

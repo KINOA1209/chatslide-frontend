@@ -92,8 +92,8 @@ const SideBar = ({ }: SideBarProps) => {
     return credits + ' ⭐️';
   }
 
-  function isLogInRequired(): boolean {
-    return !(path.includes('/discover') || path.includes('/pricing') || path.includes('/whatsnew'));
+  function publiclyAvailable(): boolean {
+    return (path.includes('/discover') || path.includes('/pricing') || path.includes('/whatsnew'));
   }
 
   // avoid hydration error during development caused by persistence
@@ -103,7 +103,7 @@ const SideBar = ({ }: SideBarProps) => {
     return <></>;
 
   if (userStatus == UserStatus.Failed || !uid) {
-    if (isLogInRequired())
+    if (publiclyAvailable())
       return <></>; // do not show sidebar if user is a visitor
     else
       return (
