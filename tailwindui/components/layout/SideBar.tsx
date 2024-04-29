@@ -92,6 +92,10 @@ const SideBar = ({ }: SideBarProps) => {
     return credits + ' ⭐️';
   }
 
+  function isLogInRequired(): boolean {
+    return !(path.includes('/discover') || path.includes('/pricing') || path.includes('/whatsnew'));
+  }
+
   // avoid hydration error during development caused by persistence
   if (!useHydrated()) return <></>;
 
@@ -99,7 +103,7 @@ const SideBar = ({ }: SideBarProps) => {
     return <></>;
 
   if (userStatus == UserStatus.Failed || !uid) {
-    if ((path.includes('/discover')) || (path.includes('/pricing')))
+    if (isLogInRequired())
       return <></>; // do not show sidebar if user is a visitor
     else
       return (

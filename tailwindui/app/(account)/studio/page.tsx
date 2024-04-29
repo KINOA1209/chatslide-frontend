@@ -5,7 +5,6 @@ import { UnlimitedUpgrade } from "@/components/slides/card/UnlimitedUpgrade";
 import Card from "@/components/ui/Card";
 import { ProLabel } from "@/components/ui/GrayLabel";
 import { BigTitle, Explanation, Instruction } from "@/components/ui/Text";
-import useHydrated from "@/hooks/use-hydrated";
 
 export default function Studio() {
 
