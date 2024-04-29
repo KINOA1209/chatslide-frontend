@@ -13,11 +13,7 @@ import { ToolBar } from '@/components/ui/ToolBar';
 import ButtonWithExplanation from '@/components/button/ButtonWithExplanation';
 import { GoDownload } from 'react-icons/go';
 import { SpinIcon } from '../icons';
-import Modal from '@/components/ui/Modal';
-import { Explanation } from '@/components/ui/Text';
-import { SiQuicktime } from 'react-icons/si';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
-import { FaChrome } from 'react-icons/fa';
 import ShareButton from '@/components/button/ShareButton';
 import { getOrigin } from '@/utils/getHost';
 
@@ -31,11 +27,9 @@ const VideoVisualizer = ({
 }) => {
 	const videoSource = videoUrl;
 	const [isDownloading, setIsDownloading] = useState(false);
-	const [showQuickTimeModal, setShowQuickTimeModal] = useState(false);
 	const { project, isShared, updateIsShared, videoIsShared } = useProject();
 	const [host, setHost] = useState(getOrigin());
 	const [showShareModal, setShowShareModal] = useState(false);
-
 	
 	useEffect(() => {
 		if (
@@ -48,54 +42,8 @@ const VideoVisualizer = ({
 		}
 	}, []);
 
-
-	const QuickTimeModal = () => {
-		return (
-			<Modal
-				showModal={showQuickTimeModal}
-				setShowModal={setShowQuickTimeModal}
-				title='Device Compatibility Notice'
-				width='40rem'
-				canClose={true}
-			>
-				<div className='flex flex-col items-center gap-y-4'>
-					<div className='flex flex-row gap-x-2'>
-						<SiQuicktime
-							style={{
-								flex: '1',
-								width: '3rem',
-								height: '3rem',
-								color: '#344054',
-							}}
-						/>
-						<FaChrome
-							style={{
-								width: '3rem',
-								height: '3rem',
-								color: '#4285F4', // Google's blue color
-							}}
-						/>
-					</div>
-					<Explanation>
-						If you're using QuickTime on Mac or certain apps on Chromebook to play the video, you might experience an issue where the audio is missing 😕.
-						We recommend playing the video in the free <a href='https://www.videolan.org/vlc/'>VLC player</a>.
-						If you upload the video to social media, the audio will be fine 👍.
-					</Explanation>
-				</div>
-			</Modal>
-		);
-	}
-
-
 	async function downloadVideo() {
 		setIsDownloading(true);
-
-		// if user is using mac, tell users not use QuickTime Player to play the video
-		const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
-		const isChromebook = navigator.userAgent.toLowerCase().includes('cros');
-		if (isMac || isChromebook) {
-			setShowQuickTimeModal(true);
-		}
 
 		try {
 			// Fetch the video data from the server
@@ -131,7 +79,6 @@ const VideoVisualizer = ({
 		<>
 			{videoUrl !== '' ? (
 				<Column>
-					<QuickTimeModal />
 					<div className='flex flex-row justify-center'>
 						<ToolBar>
 							<ButtonWithExplanation

@@ -71,7 +71,7 @@ export const generateTemplate = (templateName: string) => {
 		const {
 			customTemplateBgColor,
 			hasSelectedCustomTemplateBgColor,
-			setInitalLoadedTitleFontFamily,
+			setInitialLoadedTitleFontFamily,
 			HasSelectedCustomizedTemplateTitleFontFamily,
 			setHasSelectedCustomizedTemplateTitleFontFamily,
 		} = useSlides();
@@ -86,7 +86,7 @@ export const generateTemplate = (templateName: string) => {
 		// 		'themeElements titleFontCSS fontFamily',
 		// 		themeElements?.titleFontCSS.fontFamily,
 		// 	);
-		// 	setInitalLoadedTitleFontFamily(themeElements?.titleFontCSS.fontFamily);
+		// 	setInitialLoadedTitleFontFamily(themeElements?.titleFontCSS.fontFamily);
 		// }, []);
 
 		return (

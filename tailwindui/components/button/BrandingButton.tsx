@@ -40,17 +40,6 @@ export const BrandingButton: React.FC<{}> = () => {
 			});
 	}, []);
 
-	useEffect(() => {
-		document.addEventListener('upload_background', (e) => {
-			setShowModal(true);
-		});
-
-		return () =>
-			document.removeEventListener('upload_background', (e) => {
-				setShowModal(true);
-			});
-	}, []);
-
 	return (
 		<>
 			<Modal
@@ -94,7 +83,7 @@ export const BrandingButton: React.FC<{}> = () => {
 					}}
 				/>
 				<Instruction>
-					Change branding color on
+					Change branding color and fonts on
 					<div
 						className='text-blue-600 cursor-pointer'
 						onClick={() => {

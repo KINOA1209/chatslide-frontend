@@ -72,6 +72,26 @@ const SideBar = ({ }: SideBarProps) => {
     }
   }, [path]);
 
+	function getTierDisplayName(tier: string, isSidebarOpen: boolean): string {
+		const level = tier.split('_')[0];
+		if (!isSidebarOpen && level === 'ULTIMATE') {
+			return 'ULT';
+		}
+		if (isSidebarOpen)
+			return level + ' Tier';
+		return level;
+	}
+
+	function getCreditsDisplay(credits: string, isSidebarOpen: boolean): string {
+		if(isSidebarOpen) {
+			return credits + ' ⭐️ Credits';
+		}
+		if (credits === 'Unlimited') {
+			return '∞ ⭐️';
+		}
+		return credits + ' ⭐️';
+	}
+
   // avoid hydration error during development caused by persistence
   if (!useHydrated()) return <></>;
 
@@ -176,7 +196,7 @@ const SideBar = ({ }: SideBarProps) => {
             }
             role='menuitem'
           >
-            {credits} ⭐️ {isSidebarOpen && 'Credits'}
+            {getCreditsDisplay(credits, isSidebarOpen)}
           </a>
 
           {
@@ -193,7 +213,7 @@ const SideBar = ({ }: SideBarProps) => {
 
           <div className={`w-fit mx-auto py-1`}>
             <BlueLabel>
-              {tier.split('_')[0]} {isSidebarOpen && 'Tier'}
+              {getTierDisplayName(tier, isSidebarOpen)}
             </BlueLabel>
           </div>
 
