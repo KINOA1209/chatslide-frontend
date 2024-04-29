@@ -1,0 +1,26 @@
+input[type='range']::-webkit-slider-thumb {
+  appearance: none;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: #5168F6;
+  cursor: pointer;
+  transition: background 0.15s ease-in-out;
+}
+
+input[type='range']::-moz-range-thumb {
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: #5168F6;
+  cursor: pointer;
+  transition: background 0.15s ease-in-out;
+}
+
+input[type='range']:focus::-webkit-slider-thumb {
+  background: #364099; 
+}
+
+input[type='range']:focus::-moz-range-thumb {
+  background: #364099; 
+}
