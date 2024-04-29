@@ -948,8 +948,9 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
         {
           !isViewing && isChatWindowOpen ? (
+
             <Panel>
-              <div className='max-h-[540px]'>
+              <div className='h-[540px]'>
                 <AIAssistantChatWindow
                   onToggle={toggleChatWindow}
                   slides={slides}
@@ -959,6 +960,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
                 />
               </div>
             </Panel>
+
           ) : (
             <div className='hidden sm:block w-0 h-0'></div>
           ) // empty div for justify-around
