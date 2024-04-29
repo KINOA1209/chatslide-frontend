@@ -151,13 +151,13 @@ const VoiceSelector: React.FC<{
         {
           isOpenaiVoice(selectedVoice) &&
           <Explanation>
-            🎧 This is a Hi-Fi only voice. 
+            🎧 This is a real-time AI voice, and it is Hi-Fi only. Everytime you play it, it may sound a little bit different.
           </Explanation>
         }
         {
           (isOpenaiVoice(selectedVoice) || isHD) &&
           <Explanation>
-            🎧 Hi-Fi voices have a much better voice quality. The ⭐️ credit cost may be higher in the future.
+            🎧 Hi-Fi voices have a much better voice quality. It will cost 100⭐️ per video. If you use avatar, the total cost is 400⭐️ per video. This may change in the future.
           </Explanation>
         }
         {

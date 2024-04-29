@@ -58,16 +58,19 @@ export default function WorkflowStep5() {
   useEffect(() => {
     if (avatar)
       setCreditCost(400);
+    else if (voiceIsHD || isOpenaiVoice(voice)) {
+      setCreditCost(100)
+    }
     else
       setCreditCost(20);
-  }, [avatar]);
+  }, [avatar, voiceIsHD]);
 
   const CreditCost = () => {
     function getCreditCostPerPageAndReason() {
       if (avatar)
         return { cost: 30, reason: '🦹‍♂️ You are using an avatar' };
       if (voiceIsHD || isOpenaiVoice(voice))
-        return { cost: 5, reason: '🎧 You are using a hi-fi voice' };
+        return { cost: 5, reason: '🎧 You are using a Hi-Fi voice' };
       return { cost: 1, reason: 'You are using a standard voice' };
     }
 
