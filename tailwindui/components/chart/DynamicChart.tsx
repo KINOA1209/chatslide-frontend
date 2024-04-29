@@ -145,6 +145,9 @@ const DynamicChart: React.FC<DynamicChartProps> = ({
 		};
 	} else {
 		options = {
+			animation: {
+				duration: false,
+			},
 			plugins: {
 				legend: {
 					display: false,
