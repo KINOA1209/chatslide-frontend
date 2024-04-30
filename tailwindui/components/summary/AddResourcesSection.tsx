@@ -32,6 +32,8 @@ interface AddResourcesProps {
 	isRequired?: boolean;
 	generationMode?: 'from_topic' | 'from_files';
 	setGenerationMode?: (mode: 'from_topic' | 'from_files') => void;
+	addCitations: string;
+	setaddCitations: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const AddResourcesSection: React.FC<AddResourcesProps> = ({
@@ -44,6 +46,8 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 	isRequired = false,
 	generationMode,
 	setGenerationMode,
+	addCitations,
+	setaddCitations,
 }) => {
 	const [resources, setResources] = useState<Resource[]>([]);
 	const { token } = useUser();
@@ -245,6 +249,21 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 					/>
 				</div>
 			)}
+
+			{/* add citation */}
+			<Instruction>
+				Do you want to add a citation page for the resources?
+			</Instruction>
+			<RadioButton
+				name='add_citations'
+				options={[
+					{ value: 'no', text: 'No', icon: <IoIosRemoveCircle /> },
+					{ value: 'yes', text: 'Yes', icon: <QuestionExplainIcon /> },
+				]}
+				selectedValue={addCitations}
+				setSelectedValue={setaddCitations}
+			/>
+
 		</Card>
 	);
 };

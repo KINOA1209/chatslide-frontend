@@ -104,6 +104,7 @@ export default function Topic() {
 	const [showFileModal, setShowFileModal] = useState(false);
 	const [topicError, setTopicError] = useState('');
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
+	const [addCitations, setaddCitations] = useState('no');
 
 	const [showGenerationStatusModal, setShowGenerationStatusModal] =
 		useState(false);
@@ -210,6 +211,7 @@ export default function Topic() {
 			scenario_type: scenarioType,
 			search_online: searchOnlineScope,
 			knowledge_summary: knowledge_summary,
+			add_citations: addCitations === 'yes',
 		} as Project);
 
 		// if needs to summarize resources
@@ -391,6 +393,8 @@ export default function Topic() {
 						isRequired
 						generationMode='from_files'
 						setGenerationMode={setGenerationMode}
+						addCitations={addCitations}
+						setaddCitations={setaddCitations}
 					/>
 				)}
 
@@ -521,6 +525,8 @@ export default function Topic() {
 						selectedResources={selectedResources}
 						setSelectedResources={setSelectedResources}
 						removeResourceAtIndex={removeResourceAtIndex}
+						addCitations={addCitations}
+						setaddCitations={setaddCitations}
 					/>
 				)}
 			</Column>

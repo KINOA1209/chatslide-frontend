@@ -15,7 +15,6 @@ import SlidesService from '@/services/SlidesService';
 import Slide from '@/models/Slide';
 import { getBrand } from '@/utils/getHost';
 import {
-	convertOutlineToPlainText,
 	convertPlainTextToOutlines,
 } from '@/components/outline/OutlineUtils';
 
@@ -127,6 +126,7 @@ const GenerateSlidesSubmit = ({
 			// endIndex: 2,  // generate first 2 sections only
 			logo: project.logo,
 			brand: getBrand(),
+			add_citations: project.add_citations,
 		};
 		bulkUpdateProject({
 			has_scripts: false, // in case it is re-generated
