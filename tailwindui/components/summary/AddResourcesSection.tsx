@@ -33,7 +33,7 @@ interface AddResourcesProps {
 	generationMode?: 'from_topic' | 'from_files';
 	setGenerationMode?: (mode: 'from_topic' | 'from_files') => void;
 	addCitations: string;
-	setaddCitations: React.Dispatch<React.SetStateAction<string>>;
+	setAddCitations: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const AddResourcesSection: React.FC<AddResourcesProps> = ({
@@ -47,7 +47,7 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 	generationMode,
 	setGenerationMode,
 	addCitations,
-	setaddCitations,
+	setAddCitations,
 }) => {
 	const [resources, setResources] = useState<Resource[]>([]);
 	const { token } = useUser();
@@ -261,7 +261,7 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 					{ value: 'yes', text: 'Yes'},
 				]}
 				selectedValue={addCitations}
-				setSelectedValue={setaddCitations}
+				setSelectedValue={setAddCitations}
 			/>
 
 		</Card>

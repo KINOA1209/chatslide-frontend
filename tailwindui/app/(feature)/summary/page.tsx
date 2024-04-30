@@ -104,7 +104,7 @@ export default function Topic() {
 	const [showFileModal, setShowFileModal] = useState(false);
 	const [topicError, setTopicError] = useState('');
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
-	const [addCitations, setaddCitations] = useState('no');
+	const [addCitations, setAddCitations] = useState('no');
 
 	const [showGenerationStatusModal, setShowGenerationStatusModal] =
 		useState(false);
@@ -394,7 +394,7 @@ export default function Topic() {
 						generationMode='from_files'
 						setGenerationMode={setGenerationMode}
 						addCitations={addCitations}
-						setaddCitations={setaddCitations}
+						setAddCitations={setAddCitations}
 					/>
 				)}
 
@@ -526,7 +526,7 @@ export default function Topic() {
 						setSelectedResources={setSelectedResources}
 						removeResourceAtIndex={removeResourceAtIndex}
 						addCitations={addCitations}
-						setaddCitations={setaddCitations}
+						setAddCitations={setAddCitations}
 					/>
 				)}
 			</Column>
