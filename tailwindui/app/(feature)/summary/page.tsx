@@ -64,6 +64,13 @@ const getAudienceFromScenario = (scenarioType: string) => {
 	);
 };
 
+const getStructureFromScenario = (scenarioType: string) => {
+	return (
+		slides_scenarios.options.find((scenario) => scenario.id === scenarioType)
+			?.structure || 'Introduction, background, details, examples, conclusion.'
+	);
+}
+
 export default function Topic() {
 	const {
 		isTourActive,
@@ -82,7 +89,7 @@ export default function Topic() {
 		initProject,
 	} = useProject();
 
-	const scenarioType = project?.scenario_type || 'business';
+	const scenarioType = project?.scenario_type || 'general';
 	const [generationMode, setGenerationMode] = useState<
 		'from_topic' | 'from_files'
 	>('from_topic');
@@ -111,7 +118,7 @@ export default function Topic() {
 
 	const [pageCountEst, setPageCountEst] = useState(15);
 
-	const [outlineStructure, setOutlineStructure] = useState('');
+	const [outlineStructure, setOutlineStructure] = useState(getStructureFromScenario(scenarioType));
 
 	const handleGenerationStatusModal = () => {
 		// console.log('user Research Modal toggled');
@@ -495,8 +502,8 @@ export default function Topic() {
 					<InputBox>
 						<input
 							type='text'
-							className='w-full'
-							placeholder='Introduction, Detailed Analysis, Comparison, Conclusion'
+							className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800 bg-gray-100'
+							placeholder='Introduction, background, details, examples, conclusion.'
 							value={outlineStructure}
 							onChange={(e) => setOutlineStructure(e.target.value)}
 							/>
