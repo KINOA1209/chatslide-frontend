@@ -1,4 +1,3 @@
-
 declare global {
 	interface Window {
 		Intercom: any;
@@ -7,4 +6,4 @@ declare global {
 	}
 }
 
-export { };
+export {};

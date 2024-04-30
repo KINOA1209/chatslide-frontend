@@ -1,4 +1,4 @@
-import TextSlider, { TextBox } from "../ui/TextSlider";
+import TextSlider, { TextBox } from '../ui/TextSlider';
 
 export const TOPIC_SUGGESTIONS = {
 	EN: [
@@ -147,48 +147,46 @@ export const TOPIC_SUGGESTIONS = {
 		'五個步驟啟動您的業務 🚀',
 		'科莫多巨蜥：世界上最大的蜥蜴 🦎',
 		'每日冥想的好處 🧘‍♂️✨',
-	]
-}
+	],
+};
 
 export const getTopicSuggestions = (language = 'English') => {
 	let suggestions = TOPIC_SUGGESTIONS.EN;
 	if (language.includes('Spanish')) {
 		suggestions = TOPIC_SUGGESTIONS.ES;
-	}
-	else if (language.includes('Chinese')) {
-		suggestions = language.includes('Traditional') ? TOPIC_SUGGESTIONS.zhTW : TOPIC_SUGGESTIONS.zhCN;
-	}
-	else if (language.includes('Japanese')) {
+	} else if (language.includes('Chinese')) {
+		suggestions = language.includes('Traditional')
+			? TOPIC_SUGGESTIONS.zhTW
+			: TOPIC_SUGGESTIONS.zhCN;
+	} else if (language.includes('Japanese')) {
 		suggestions = TOPIC_SUGGESTIONS.JP;
-	}
-	else if (language.includes('German')) {
+	} else if (language.includes('German')) {
 		suggestions = TOPIC_SUGGESTIONS.DE;
-	}
-	else if (language.includes('French')) {
+	} else if (language.includes('French')) {
 		suggestions = TOPIC_SUGGESTIONS.FR;
 	}
 
 	// return a shuffled array of topic suggestions
 	return suggestions.sort(() => 0.5 - Math.random());
-}
-
+};
 
 const TopicSuggestions: React.FC<{
 	language: string;
 	setTopic: (topic: string) => void;
-}> = ({
-	language,
-	setTopic
-}) => {
-		return (
-			<TextSlider>
-				{getTopicSuggestions(language).map((topic) => (
-					<div className='hover:cursor-pointer' key={topic} onClick={() => setTopic(topic)}>
-						<TextBox key={topic}>{topic}</TextBox>
-					</div>
-				))}
-			</TextSlider>
-		)
-	};
+}> = ({ language, setTopic }) => {
+	return (
+		<TextSlider>
+			{getTopicSuggestions(language).map((topic) => (
+				<div
+					className='hover:cursor-pointer'
+					key={topic}
+					onClick={() => setTopic(topic)}
+				>
+					<TextBox key={topic}>{topic}</TextBox>
+				</div>
+			))}
+		</TextSlider>
+	);
+};
 
 export default TopicSuggestions;

@@ -1,16 +1,26 @@
 import React, { ChangeEvent, FC, useState, useRef, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import DrlambdaButton, {
-	BigBlueButton,
-} from '../button/DrlambdaButton';
+import DrlambdaButton, { BigBlueButton } from '../button/DrlambdaButton';
 
-export const MEDIA_EXTENSIONS = ['png', 'jpg', 'jpeg', 'svg', 'webp', 'gif', 'avif'];
-export const DOCUMENT_EXTENSIONS = ['pdf', 'txt', 'docx', 'pptx', 'doc', 'docx'];
-export const ALL_EXTENSIONS = [
-	...MEDIA_EXTENSIONS,
-	...DOCUMENT_EXTENSIONS,
+export const MEDIA_EXTENSIONS = [
+	'png',
+	'jpg',
+	'jpeg',
+	'svg',
+	'webp',
+	'gif',
+	'avif',
 ];
+export const DOCUMENT_EXTENSIONS = [
+	'pdf',
+	'txt',
+	'docx',
+	'pptx',
+	'doc',
+	'docx',
+];
+export const ALL_EXTENSIONS = [...MEDIA_EXTENSIONS, ...DOCUMENT_EXTENSIONS];
 
 const determineSupportedFormats = (pageInvoked: string) => {
 	if (pageInvoked === 'theme') {

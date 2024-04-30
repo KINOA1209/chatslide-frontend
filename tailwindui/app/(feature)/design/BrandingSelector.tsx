@@ -1,12 +1,11 @@
-import { Instruction } from "@/components/ui/Text"
-import ImageSelector from "./ImageSelector"
-import RadioButton from "@/components/ui/RadioButton"
-import Resource from "@/models/Resource";
-import { PlusLabel } from "@/components/ui/GrayLabel";
-import { useUser } from "@/hooks/use-user";
-import { useState } from "react";
-import PaywallModal from "@/components/paywallModal";
-
+import { Instruction } from '@/components/ui/Text';
+import ImageSelector from './ImageSelector';
+import RadioButton from '@/components/ui/RadioButton';
+import Resource from '@/models/Resource';
+import { PlusLabel } from '@/components/ui/GrayLabel';
+import { useUser } from '@/hooks/use-user';
+import { useState } from 'react';
+import PaywallModal from '@/components/paywallModal';
 
 const brandingOptions = [
 	{
@@ -34,49 +33,51 @@ const BrandingSelector: React.FC<{
 	selectedBackground,
 	setSelectedBackground,
 }) => {
-		const { isPaidUser } = useUser();
-		const [showPaywall, setShowPaywall] = useState(false);
+	const { isPaidUser } = useUser();
+	const [showPaywall, setShowPaywall] = useState(false);
 
-		return (
+	return (
+		<div>
 			<div>
-				<div>
-					<PaywallModal
-						showModal={showPaywall}
-						setShowModal={setShowPaywall}
-						message='Unlock this feature to add your logo to your slides.'
-					/>
-					<Instruction>
-						Do you want to show logo on your slides? {!isPaidUser && <PlusLabel />}
-					</Instruction>
-					<RadioButton
-						options={brandingOptions}
-						selectedValue={showLogo ? 'yes' : 'no'}
-						setSelectedValue={(e) =>{
-							if (e === 'no' && !isPaidUser) {
-								setShowPaywall(true);
-								return;
-							}
-							setShowLogo(e === 'yes' ? true : false);
-						}}
-						name='branding'
-					/>
-				</div>
-
-				{/* customized logo */}
-				{showLogo &&
-					<ImageSelector
-						type='logo'
-						selectedImage={selectedLogo}
-						setSelectedImage={setSelectedLogo}
-					/>}
-				{/* background */}
-				<ImageSelector
-					type='background'
-					selectedImage={selectedBackground}
-					setSelectedImage={setSelectedBackground}
+				<PaywallModal
+					showModal={showPaywall}
+					setShowModal={setShowPaywall}
+					message='Unlock this feature to add your logo to your slides.'
+				/>
+				<Instruction>
+					Do you want to show logo on your slides?{' '}
+					{!isPaidUser && <PlusLabel />}
+				</Instruction>
+				<RadioButton
+					options={brandingOptions}
+					selectedValue={showLogo ? 'yes' : 'no'}
+					setSelectedValue={(e) => {
+						if (e === 'no' && !isPaidUser) {
+							setShowPaywall(true);
+							return;
+						}
+						setShowLogo(e === 'yes' ? true : false);
+					}}
+					name='branding'
 				/>
 			</div>
-		)
-	};
+
+			{/* customized logo */}
+			{showLogo && (
+				<ImageSelector
+					type='logo'
+					selectedImage={selectedLogo}
+					setSelectedImage={setSelectedLogo}
+				/>
+			)}
+			{/* background */}
+			<ImageSelector
+				type='background'
+				selectedImage={selectedBackground}
+				setSelectedImage={setSelectedBackground}
+			/>
+		</div>
+	);
+};
 
 export default BrandingSelector;

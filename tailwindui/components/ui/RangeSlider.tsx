@@ -17,7 +17,7 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
 	value,
 	choices,
 	locked,
-	minValue
+	minValue,
 }) => {
 	const [index, setIndex] = useState<number>(choices.indexOf(value));
 	const MAX_VALUE = choices.length - 1;
@@ -32,8 +32,7 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
 			return;
 		}
 		const newIndex = e.target.valueAsNumber;
-		if (newIndex < minValueIndex) 
-			return;
+		if (newIndex < minValueIndex) return;
 		setIndex(newIndex);
 		if (onChange) {
 			onChange(choices[newIndex]);

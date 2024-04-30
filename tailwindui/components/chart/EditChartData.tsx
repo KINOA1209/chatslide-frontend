@@ -180,16 +180,17 @@ const EditChartData: React.FC<EditChartDataProps> = ({
 								placeholder='Ex. Group A'
 								onChange={(e) => {
 									const newValue = e.target.value === '' ? '' : e.target.value;
-									handleDataChange(index, 'label', newValue)
+									handleDataChange(index, 'label', newValue);
 								}}
 							/>
 							<input
 								type='number'
 								value={dataPoint.value === 0 ? '' : dataPoint.value}
-								placeholder="Ex. 100"
+								placeholder='Ex. 100'
 								onChange={(e) => {
-									const newValue = e.target.value === '' ? 0 : Number(e.target.value);
-									handleDataChange(index, 'value', newValue)
+									const newValue =
+										e.target.value === '' ? 0 : Number(e.target.value);
+									handleDataChange(index, 'value', newValue);
 								}}
 							/>
 							{chartType !== 'line' && (

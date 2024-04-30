@@ -35,8 +35,8 @@ export default function Career() {
 								<h3 className='h3 text-xl mb-2'>UX Design Intern</h3>
 								<p className='text-base text-gray-600'>
 									Seeking a driven UX enthusiast passionate about innovative
-									design and education? We invite you to reshape the
-									educational landscape as a UX Design Intern.
+									design and education? We invite you to reshape the educational
+									landscape as a UX Design Intern.
 									<br />
 									<br />
 									<strong>Role Insight:</strong>

@@ -33,7 +33,6 @@ const SaveScriptsButton: React.FC<Props> = ({ slides }) => {
 			<div className='flex flex-row items-center gap-x-2'>
 				<FaDownload className='text-gray-800' />
 				Save Scripts
-
 			</div>
 		</BigGrayButton>
 	);

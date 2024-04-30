@@ -8,7 +8,7 @@ interface FontFamilyPickerProps {
 	onCustomFontFamilyChange: (fontFamily: string) => void;
 	resetFontFamilyPicker: () => void;
 	disableResetButton: Boolean;
-  disabled?: boolean;
+	disabled?: boolean;
 }
 
 const FontFamilyPicker: React.FC<FontFamilyPickerProps> = ({
@@ -16,7 +16,7 @@ const FontFamilyPicker: React.FC<FontFamilyPickerProps> = ({
 	onCustomFontFamilyChange,
 	resetFontFamilyPicker,
 	disableResetButton = false,
-  disabled = false,
+	disabled = false,
 }) => {
 	useEffect(() => {
 		console.log('selectedFontFamily', selectedFontFamily);
@@ -97,8 +97,8 @@ const FontFamilyPicker: React.FC<FontFamilyPickerProps> = ({
 					options={options}
 					onChange={handleChange}
 					styles={customStyles}
-          isDisabled={disabled}
-          menuPosition='fixed'
+					isDisabled={disabled}
+					menuPosition='fixed'
 				/>
 				{disableResetButton ? (
 					<></>

@@ -43,8 +43,7 @@ const ThemeChanger: React.FC<ThemeProps> = ({
 			<ButtonWithExplanation
 				explanation='Change Page Layout'
 				button={
-					<button
-						onClick={openTheme}>
+					<button onClick={openTheme}>
 						<LuPalette
 							style={{
 								strokeWidth: '2',

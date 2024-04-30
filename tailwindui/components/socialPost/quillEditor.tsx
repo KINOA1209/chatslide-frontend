@@ -90,7 +90,9 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 			});
 
 			//quillInstanceRef.current.clipboard.dangerouslyPasteHTML(content);
-			const delta = quillInstanceRef.current.clipboard.convert({ html: content });
+			const delta = quillInstanceRef.current.clipboard.convert({
+				html: content,
+			});
 			quillInstanceRef.current.setContents(delta);
 
 			quillInstanceRef.current.on('selection-change', () => {

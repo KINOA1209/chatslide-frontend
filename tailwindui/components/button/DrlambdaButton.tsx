@@ -204,8 +204,7 @@ export const EarlyAccessButton: React.FC<{
 	project_id?: string;
 	feature: string;
 }> = ({ project_id = '', feature }) => {
-
-  const { username, token } = useUser();
+	const { username, token } = useUser();
 
 	return (
 		<>

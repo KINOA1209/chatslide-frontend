@@ -164,10 +164,10 @@ export default function DesignPage() {
 		project?.logo === ''
 			? false
 			: project?.logo === 'Default'
-			? true
-			: isPaidUser
-			? false
-			: true,
+				? true
+				: isPaidUser
+					? false
+					: true,
 	);
 
 	async function viewSlidesSubmit() {

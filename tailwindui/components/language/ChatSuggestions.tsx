@@ -1,4 +1,4 @@
-import TextSlider, { TextBox } from "../ui/TextSlider";
+import TextSlider, { TextBox } from '../ui/TextSlider';
 
 const CHAT_SUGGESTIONS = {
 	cover: [
@@ -17,29 +17,30 @@ const CHAT_SUGGESTIONS = {
 	],
 };
 
-
 const ChatSuggestions: React.FC<{
 	language?: string;
 	isCover: boolean;
 	sendChat: (chat: string) => void;
-}> = ({
-	language,
-	isCover,
-	sendChat
-}) => {
-		const suggestions = isCover ? CHAT_SUGGESTIONS.cover : CHAT_SUGGESTIONS.noncover;
+}> = ({ language, isCover, sendChat }) => {
+	const suggestions = isCover
+		? CHAT_SUGGESTIONS.cover
+		: CHAT_SUGGESTIONS.noncover;
 
-		return (
-			<div className='w-full'>
-				<TextSlider slidesToShow={1} rows={2}>
-					{suggestions.map((chat) => (
-						<div className='hover:cursor-pointer' key={chat} onClick={() => sendChat(chat)}>
-							<TextBox key={chat}>{chat}</TextBox>
-						</div>
-					))}
-				</TextSlider>
-			</div>
-		)
-	};
+	return (
+		<div className='w-full'>
+			<TextSlider slidesToShow={1} rows={2}>
+				{suggestions.map((chat) => (
+					<div
+						className='hover:cursor-pointer'
+						key={chat}
+						onClick={() => sendChat(chat)}
+					>
+						<TextBox key={chat}>{chat}</TextBox>
+					</div>
+				))}
+			</TextSlider>
+		</div>
+	);
+};
 
 export default ChatSuggestions;

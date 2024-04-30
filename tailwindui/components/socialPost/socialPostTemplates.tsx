@@ -120,9 +120,9 @@ export const First_page_img_1 = ({
 			else newImagesPosition[index] = image_position;
 
 			update_callback(newImgs, newIsCharts, newImagesPosition);
-	};
+		};
 
-	const { socialPostsIndex, setSocialPostsIndex } = useSocialPosts()
+	const { socialPostsIndex, setSocialPostsIndex } = useSocialPosts();
 	const [imgHigherZIndex, setImgHigherZIndex] = useState(false);
 	return (
 		<div
@@ -225,7 +225,8 @@ export const Col_1_img_0 = ({
 				</div>
 				<div className='w-full h-[7%] mt-[2%]'>
 					<div className='flex flex-row justify-center items-center leading-normal tracking-wide text-[15px] text-[white]'>
-						{icon}{getBrand()}
+						{icon}
+						{getBrand()}
 					</div>
 				</div>
 			</div>
@@ -266,9 +267,9 @@ export const Col_2_img_1 = ({
 			else newImagesPosition[index] = image_position;
 
 			update_callback(newImgs, newIsCharts, newImagesPosition);
-	};
+		};
 
-	const { socialPostsIndex, setSocialPostsIndex } = useSocialPosts()
+	const { socialPostsIndex, setSocialPostsIndex } = useSocialPosts();
 	return (
 		<div
 			style={{
@@ -324,7 +325,8 @@ export const Col_2_img_1 = ({
 				</div>
 				<div className='w-full h-[7%] mt-[2%]'>
 					<div className='flex flex-row justify-center items-center leading-normal tracking-wide text-[15px] text-[white]'>
-						{icon}{getBrand()}
+						{icon}
+						{getBrand()}
 					</div>
 				</div>
 			</div>
@@ -360,10 +362,10 @@ export const First_page_img_1_template2 = ({
 			else newImagesPosition[index] = image_position;
 
 			update_callback(newImgs, newIsCharts, newImagesPosition);
-	};
+		};
 
 	const [username, setUsername] = useState(null);
-	const { socialPostsIndex, setSocialPostsIndex } = useSocialPosts()
+	const { socialPostsIndex, setSocialPostsIndex } = useSocialPosts();
 	useEffect(() => {
 		const fetchUser = async () => {
 			try {
@@ -502,7 +504,8 @@ export const img_0_template2 = ({
 					}}
 				>
 					<div className='flex flex-row justify-center items-center leading-normal tracking-wide text-[15px]'>
-						{icon}{getBrand()}
+						{icon}
+						{getBrand()}
 					</div>
 				</div>
 			</div>
@@ -539,8 +542,8 @@ export const First_page_img_1_template3 = ({
 			else newImagesPosition[index] = image_position;
 
 			update_callback(newImgs, newIsCharts, newImagesPosition);
-	};
-	const { socialPostsIndex, setSocialPostsIndex } = useSocialPosts()
+		};
+	const { socialPostsIndex, setSocialPostsIndex } = useSocialPosts();
 	return (
 		<div
 			style={{
@@ -622,8 +625,8 @@ export const img_1_template3 = ({
 			else newImagesPosition[index] = image_position;
 
 			update_callback(newImgs, newIsCharts, newImagesPosition);
-	};
-	const { socialPostsIndex, setSocialPostsIndex } = useSocialPosts()
+		};
+	const { socialPostsIndex, setSocialPostsIndex } = useSocialPosts();
 	return (
 		<div
 			style={{

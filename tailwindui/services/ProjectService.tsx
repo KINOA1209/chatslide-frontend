@@ -229,7 +229,8 @@ class ProjectService {
 			slide.title = slideData.title || 'New Slide';
 			slide.subtopic = slideData.subtopic || 'New Slide';
 			slide.userName = slideData.userName || '';
-			slide.template = slideData.template || ('Business_Light_006' as TemplateKeys);
+			slide.template =
+				slideData.template || ('Business_Light_006' as TemplateKeys);
 			slide.palette = slideData.palette || 'Original';
 			slide.content = slideData.content || [
 				'Some content here',
@@ -337,7 +338,7 @@ class ProjectService {
 						? slideData.illustration
 						: [
 								'https://stories.freepiklabs.com/storage/61572/life-in-a-city-cuate-9773.png',
-						  ];
+							];
 				slide.quote = slideData.quote || 'Your quote here';
 				slide.source = slideData.source || '';
 				slide.chart = slideData.chart;

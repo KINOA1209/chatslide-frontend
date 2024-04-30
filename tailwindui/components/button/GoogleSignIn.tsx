@@ -23,17 +23,15 @@ const GoogleSignIn: React.FC<GoogleSignInProps> = ({ signup = false }) => {
 		try {
 			await AuthService.googleSignIn();
 		} catch (error) {
-			toast.error('Failed to sign in with Google, can you try again later?',
-				{
-					position: 'top-center',
-					autoClose: 5000,
-					hideProgressBar: false,
-					closeOnClick: true,
-					pauseOnHover: true,
-					draggable: true,
-					progress: undefined,
-				}
-			);
+			toast.error('Failed to sign in with Google, can you try again later?', {
+				position: 'top-center',
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+			});
 			console.error(error);
 		}
 	};

@@ -5,7 +5,7 @@ import { useRouter, usePathname } from 'next/navigation';
 import { useEffect } from 'react';
 
 const Referral = () => {
-  const code = usePathname().split('/').pop();
+	const code = usePathname().split('/').pop();
 	const router = useRouter();
 	useEffect(() => {
 		if (code) {
@@ -13,9 +13,7 @@ const Referral = () => {
 		}
 	}, [code, router]);
 
-	return (
-		<Blank>Redirecting...</Blank>
-	);
+	return <Blank>Redirecting...</Blank>;
 };
 
 export default Referral;

@@ -3,7 +3,6 @@ import Slide from '@/models/Slide';
 import { templateDispatch as defaultTemplateDispatch } from './templateDispatch';
 import './slideContainer.css';
 
-
 type SlideContainerProps = {
 	slide: Slide;
 	index: number;
@@ -47,7 +46,6 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
 	pageNumber,
 	isEmbedded = false,
 }) => {
-
 	const noBorder = isPresenting || isEmbedded;
 
 	useEffect(() => {
@@ -58,10 +56,17 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
 	return (
 		<div
 			id='slideContainer'
-			className={`${isPresenting ? 'fixed top-0 left-0 w-full h-full z-50' : 'relative rounded p-1' +
-				(highlightBorder ? ' border-Blue' : subHighlightBorder ? ' border-green-600' : ' border-gray-200') +
-				(noBorder ? ' border-0' : ' border-2') 
-				}`}
+			className={`${
+				isPresenting
+					? 'fixed top-0 left-0 w-full h-full z-50'
+					: 'relative rounded p-1' +
+						(highlightBorder
+							? ' border-Blue'
+							: subHighlightBorder
+								? ' border-green-600'
+								: ' border-gray-200') +
+						(noBorder ? ' border-0' : ' border-2')
+			}`}
 			ref={containerRef}
 			style={{
 				boxSizing: 'border-box',
@@ -72,11 +77,13 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
 				height: isPresenting ? '100vh' : `${540 * scale + 12}px`,
 			}}
 		>
-			{pageNumber &&
-				<div className={`absolute bottom-1 left-1 border rounded-xs border-1 ${highlightBorder ? 'bg-Blue text-white border-Blue' : 'bg-white text-black border-gray-400'} px-1  text-sm rounded-sm z-10`}>
+			{pageNumber && (
+				<div
+					className={`absolute bottom-1 left-1 border rounded-xs border-1 ${highlightBorder ? 'bg-Blue text-white border-Blue' : 'bg-white text-black border-gray-400'} px-1  text-sm rounded-sm z-10`}
+				>
 					{pageNumber}
 				</div>
-			}
+			)}
 			{isPresenting && setIsPresenting && (
 				<button
 					className='fixed top-10 right-10 p-2 w-10 h-10 bg-gray-400 text-white rounded-full cursor-pointer hover:bg-gray-600'

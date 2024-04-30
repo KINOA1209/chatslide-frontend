@@ -33,7 +33,11 @@ const GenerationModePage = () => {
 	return (
 		<div className='bg-zinc-100 flex flex-col flex-grow justify-center items-center relative'>
 			<div className='absolute hidden sm:block top-5 left-5'>
-				<BackButton href='/scenario-choice' dark={true} text='Scenario Choice' />
+				<BackButton
+					href='/scenario-choice'
+					dark={true}
+					text='Scenario Choice'
+				/>
 			</div>
 			<div className='flex flex-col justify-center items-center gap-4 sm:gap-12 p-4 sm:p-8'>
 				{/* title */}

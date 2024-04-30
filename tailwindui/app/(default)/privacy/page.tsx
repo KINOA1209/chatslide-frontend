@@ -20,12 +20,12 @@ export default function Privacy() {
 					<div className='max-w-3xl mx-auto'>
 						<div className='pb-16'>
 							<p className='text-base text-gray-600'>
-								This Privacy Policy explains how ${getBrand()} collects, uses, and
-								protects the personal information of individuals who access or
-								use our website and services. By accessing or using the Service,
-								you agree to the terms and practices described in this Policy.
-								If you do not agree with this Policy, please do not use the
-								Service.
+								This Privacy Policy explains how ${getBrand()} collects, uses,
+								and protects the personal information of individuals who access
+								or use our website and services. By accessing or using the
+								Service, you agree to the terms and practices described in this
+								Policy. If you do not agree with this Policy, please do not use
+								the Service.
 							</p>
 						</div>
 					</div>

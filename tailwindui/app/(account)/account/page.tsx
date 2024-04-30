@@ -10,11 +10,7 @@ import 'aos/dist/aos.css';
 import ReferralLink from '@/components/ReferralLink';
 import { BigBlueButton } from '@/components/button/DrlambdaButton';
 import { InputBox } from '@/components/ui/InputBox';
-import {
-	FaInbox,
-	FaKey,
-	FaUser,
-} from 'react-icons/fa';
+import { FaInbox, FaKey, FaUser } from 'react-icons/fa';
 import { useUser } from '@/hooks/use-user';
 import useHydrated from '@/hooks/use-hydrated';
 import SessionStorage from '@/utils/SessionStorage';
@@ -76,7 +72,8 @@ const Profile = () => {
 		const ok = await UserService.updateUsernameAndEmail(
 			editUsername,
 			editEmail,
-			token);
+			token,
+		);
 		if (ok) {
 			toast.success('Successfully updated', {
 				position: 'top-center',
@@ -91,21 +88,18 @@ const Profile = () => {
 		}
 		setIsSubmitting(false);
 		setUsername(editUsername);
-	}
+	};
 
 	return (
 		<>
 			<div className='w-full'>
-				<BigTitle>
-					Hi, {userFirstName()}
-				</BigTitle>
+				<BigTitle>Hi, {userFirstName()}</BigTitle>
 			</div>
 			<div className='w-full'>
-				<Instruction>
-					📭 Email
-				</Instruction>
+				<Instruction>📭 Email</Instruction>
 				<Explanation>
-					Changing this will not affect your login email. This is only for us to reach you.
+					Changing this will not affect your login email. This is only for us to
+					reach you.
 				</Explanation>
 				<div className='w-full justify-center flex flex-row mt-2'>
 					<div className='w-full flex grow gap-4 max-w-[60rem] justify-center'>
@@ -121,30 +115,29 @@ const Profile = () => {
 						</InputBox>
 						<BigBlueButton
 							id='update-email'
-							onClick={handleSubmitUsernameAndEmail} isSubmitting={isSubmitting}>
+							onClick={handleSubmitUsernameAndEmail}
+							isSubmitting={isSubmitting}
+						>
 							Update
 						</BigBlueButton>
 					</div>
 				</div>
 			</div>
 			<div className='w-full'>
-				<Instruction>
-					🔐 Change Password
-				</Instruction>
+				<Instruction>🔐 Change Password</Instruction>
 				<div className='items-center justify-center flex flex-row'>
 					<BigBlueButton
 						id='change-password'
 						onClick={() => {
 							window.location.href = '/reset-password';
-						}}>
+						}}
+					>
 						Change Password
 					</BigBlueButton>
 				</div>
 			</div>
 			<div className='w-full'>
-				<Instruction>
-					🏷️ Username
-				</Instruction>
+				<Instruction>🏷️ Username</Instruction>
 
 				<div className='w-full justify-center flex flex-row'>
 					<div className='flex w-full max-w-[60rem] flex-row gap-4 justify-center mt-2'>
@@ -160,7 +153,9 @@ const Profile = () => {
 						</InputBox>
 						<BigBlueButton
 							id='update-username'
-							onClick={handleSubmitUsernameAndEmail} isSubmitting={isSubmitting}>
+							onClick={handleSubmitUsernameAndEmail}
+							isSubmitting={isSubmitting}
+						>
 							Update
 						</BigBlueButton>
 					</div>
@@ -170,13 +165,10 @@ const Profile = () => {
 	);
 };
 
-
 const Referral = () => {
 	return (
 		<div className='w-full'>
-			<Instruction>
-				👍 Referral
-			</Instruction>
+			<Instruction>👍 Referral</Instruction>
 			<div className='w-full justify-center flex grow flex-row'>
 				<div className='max-w-[60rem] w-full'>
 					<ReferralLink />
@@ -228,11 +220,10 @@ const OpenAIKey = () => {
 
 	return (
 		<div className='w-full'>
-			<Instruction>
-				🔑 Your OpenAI Key
-			</Instruction>
+			<Instruction>🔑 Your OpenAI Key</Instruction>
 			<Explanation>
-				Paste your own OpenAI key here so you can still generate when you run out of credits (paid users only):
+				Paste your own OpenAI key here so you can still generate when you run
+				out of credits (paid users only):
 			</Explanation>
 			<div className='w-full justify-center flex flex-row'>
 				<div className='flex grow max-w-[60rem] flex-row gap-4 justify-center mt-2'>
@@ -251,7 +242,8 @@ const OpenAIKey = () => {
 					<BigBlueButton
 						id='update-oai-key'
 						onClick={updateKey}
-						isSubmitting={isSubmitting}>
+						isSubmitting={isSubmitting}
+					>
 						Update
 					</BigBlueButton>
 				</div>
@@ -284,7 +276,7 @@ const ApplyPromo = () => {
 			true,
 		);
 		if (status == 200) {
-			toast.success("Your code is successfully applied!", {
+			toast.success('Your code is successfully applied!', {
 				position: 'top-center',
 				autoClose: 2000,
 				hideProgressBar: false,
@@ -331,7 +323,8 @@ const ApplyPromo = () => {
 					<BigBlueButton
 						id='apply-promo'
 						onClick={applyPromo}
-						isSubmitting={isSubmitting}>
+						isSubmitting={isSubmitting}
+					>
 						Apply
 					</BigBlueButton>
 				</div>
@@ -345,10 +338,10 @@ const CreditHistory = () => {
 
 	return (
 		<div className='w-full'>
-			<Instruction>
-				⭐️ Credit Balance
-			</Instruction>
-			<BigTitle><>{credits}</></BigTitle>
+			<Instruction>⭐️ Credit Balance</Instruction>
+			<BigTitle>
+				<>{credits}</>
+			</BigTitle>
 		</div>
 	);
 };
@@ -385,7 +378,7 @@ export default function Account() {
 				</Card>
 				{/* <div className='w-full max-w-none 2xl:max-w-[80%]'><PasswordModule /></div> */}
 				<Card>
-					{ /* id is for better locating the section */}
+					{/* id is for better locating the section */}
 					<div id='credit'>
 						<CreditHistory />
 					</div>
@@ -403,27 +396,37 @@ export default function Account() {
 				<UnlimitedUpgrade />
 
 				<Card>
-					<BigTitle>
-						💸 Earn Money with {getBrand()}
-					</BigTitle>
+					<BigTitle>💸 Earn Money with {getBrand()}</BigTitle>
 					<Instruction>
 						<div className='flex flex-col gap-y-1'>
-							<span>Share your love for {getBrand()} and make real money by inviting your friends and connections to join!</span>
-							<span>Your friends will get <strong>60%</strong> off on their first purchase and you will get <strong>30%</strong> commission on all their purchases. </span>
-							<span>Keep track of your conversions and earnings real-time and get paid monthly. </span>
+							<span>
+								Share your love for {getBrand()} and make real money by inviting
+								your friends and connections to join!
+							</span>
+							<span>
+								Your friends will get <strong>60%</strong> off on their first
+								purchase and you will get <strong>30%</strong> commission on all
+								their purchases.{' '}
+							</span>
+							<span>
+								Keep track of your conversions and earnings real-time and get
+								paid monthly.{' '}
+							</span>
 						</div>
 					</Instruction>
 					<Instruction>
-						<a href='/affiliate' className='text-blue-600'>Learn more about affiliate program. </a>
+						<a href='/affiliate' className='text-blue-600'>
+							Learn more about affiliate program.{' '}
+						</a>
 					</Instruction>
 					<BigBlueButton
 						onClick={() => {
-							router.push('https://drlambda-1.getrewardful.com/')
-						}}>
+							router.push('https://drlambda-1.getrewardful.com/');
+						}}
+					>
 						💸 Start Earning Now
 					</BigBlueButton>
 				</Card>
-
 			</Panel>
 		</Column>
 	);

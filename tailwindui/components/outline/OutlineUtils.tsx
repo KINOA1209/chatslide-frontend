@@ -9,7 +9,7 @@ export const convertOutlineToPlainText = (outlines: Outlines): string => {
 			return `${titleWithIndex}\n${contentWithIndent}`;
 		})
 		.join('\n\n');
-}
+};
 
 export const convertPlainTextToOutlines = async (
 	token: string,
@@ -28,8 +28,8 @@ export const convertPlainTextToOutlines = async (
 				text: text,
 				language: language,
 				model_name: model_name,
-			})
-		})
+			}),
+		});
 		if (!response.ok) {
 			throw new Error(`Error, status: ${response.status}`);
 		}
@@ -38,4 +38,4 @@ export const convertPlainTextToOutlines = async (
 		console.error('Error fetching outlines:', error);
 		throw error;
 	}
-}
+};

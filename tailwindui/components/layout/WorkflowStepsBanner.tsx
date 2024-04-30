@@ -50,7 +50,6 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 		};
 	}, []);
 
-
 	useEffect(() => {
 		sleep(10 * 1000).then(() => setShowPing(true));
 	}, []);
@@ -64,14 +63,16 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 	return (
 		<section className='sticky top-0 z-10 flex flex-col'>
 			<div className='relative w-full h-[80px] flex flex-row items-center bg-[#5168F6] gap-x-2 lg:gap-x-4 px-2 lg:px-4 xl:px-6'>
-				{
-					currentIndex === 0 ? 
-					<BackButton href='/scenario-choice' text='Scenario'/> :
+				{currentIndex === 0 ? (
+					<BackButton href='/scenario-choice' text='Scenario' />
+				) : (
 					<BackButton href='/dashboard' />
-				}
-				<div className={`flex-grow items-center justify-center flex py-2 
+				)}
+				<div
+					className={`flex-grow items-center justify-center flex py-2 
 								${workflow === 'socialPosts' && !nextStep ? 'absolute left-1/2 transform -translate-x-1/2' : ''}
-				`}>
+				`}
+				>
 					<ProjectProgress currentInd={currentIndex} />
 				</div>
 				{!lastStep ? (
@@ -93,7 +94,8 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 							onClick={(e) => {
 								if (isPaidUser || !nextIsPaidFeature)
 									handleClickingGeneration && handleClickingGeneration();
-							}}>
+							}}
+						>
 							<DrlambdaButton
 								isSubmitting={isSubmitting}
 								isPaidUser={isPaidUser}

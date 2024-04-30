@@ -7,7 +7,7 @@ import Modal from '../ui/Modal';
 import Slide from '@/models/Slide';
 type LayoutProps = {
 	currentSlideIndex: number;
-	slides: Slide[]//{ layout: string }[];
+	slides: Slide[]; //{ layout: string }[];
 	handleSlideEdit: Function;
 	availableLayouts: {
 		cover: { name: LayoutKeys; img: string }[];
@@ -40,11 +40,17 @@ const LayoutChanger: React.FC<LayoutProps> = ({
 		const filteredContent = slides[slideIndex].content.filter((element) => {
 			//need to filter out <p><br></p>, <li><p><br></p></li>, <li><span ...></span></li> or <li><span ...>  </span></li>
 			//multipe space also should be filtered
-			const isEmptyOrWhitespace = !element.trim() || /^<(\w+)(\s+[^>]*)?>\s*<\/\1>$/.test(element.trim());
-			const hasOnlyEmptyHTML = /<(p|li)(\s+[^>]*)?>\s*(<[^>]+>\s*)*<\/\1>/.test(element.trim());
+			const isEmptyOrWhitespace =
+				!element.trim() || /^<(\w+)(\s+[^>]*)?>\s*<\/\1>$/.test(element.trim());
+			const hasOnlyEmptyHTML = /<(p|li)(\s+[^>]*)?>\s*(<[^>]+>\s*)*<\/\1>/.test(
+				element.trim(),
+			);
 			return !isEmptyOrWhitespace && !hasOnlyEmptyHTML;
 		});
-		handleSlideEdit([layoutName, filteredContent], slideIndex, ['layout', 'content']);
+		handleSlideEdit([layoutName, filteredContent], slideIndex, [
+			'layout',
+			'content',
+		]);
 	};
 
 	useEffect(() => {
@@ -52,9 +58,10 @@ const LayoutChanger: React.FC<LayoutProps> = ({
 			setShowModal(true);
 		});
 
-		return () => document.removeEventListener('change_layout', (e) => {
-			setShowModal(true);
-		});
+		return () =>
+			document.removeEventListener('change_layout', (e) => {
+				setShowModal(true);
+			});
 	}, []);
 
 	return (
@@ -62,8 +69,7 @@ const LayoutChanger: React.FC<LayoutProps> = ({
 			<ButtonWithExplanation
 				explanation='Change Page Layout'
 				button={
-					<button
-						onClick={() => setShowModal(true)}>
+					<button onClick={() => setShowModal(true)}>
 						<FiLayout
 							style={{
 								strokeWidth: '2',
@@ -80,8 +86,11 @@ const LayoutChanger: React.FC<LayoutProps> = ({
 			<Modal
 				showModal={showModal}
 				setShowModal={setShowModal}
-				onConfirm={() => { setShowModal(false) }}
-				title='Change Page Layout'>
+				onConfirm={() => {
+					setShowModal(false);
+				}}
+				title='Change Page Layout'
+			>
 				<div className='max-w-[40rem] w-full h-full grid grid-cols-3 gap-4 p-2'>
 					{layoutsToDisplay.map((currLayout, index) => {
 						// Check if slides[currentSlideIndex] is defined
@@ -93,11 +102,7 @@ const LayoutChanger: React.FC<LayoutProps> = ({
 								<div
 									key={`layout-${index}-${currLayout}`} // Use the name as the key
 									onClick={(e) =>
-										updateLayout(
-											e,
-											currLayout.name,
-											currentSlideIndex,
-										)
+										updateLayout(e, currLayout.name, currentSlideIndex)
 									}
 									className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-[3px] outline-slate-300 hover:outline-[#5168F6]'
 								>
@@ -112,11 +117,7 @@ const LayoutChanger: React.FC<LayoutProps> = ({
 								<div
 									key={`layout-${index}-${currLayout}`} // Use the name as the key
 									onClick={(e) =>
-										updateLayout(
-											e,
-											currLayout.name,
-											currentSlideIndex,
-										)
+										updateLayout(e, currLayout.name, currentSlideIndex)
 									}
 									className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-[#5168F6] outline-[3px]'
 								>
@@ -132,7 +133,7 @@ const LayoutChanger: React.FC<LayoutProps> = ({
 						}
 					})}
 				</div>
-			</Modal >
+			</Modal>
 		</>
 	);
 };

@@ -65,10 +65,15 @@ const Modal: React.FC<ModalProps> = ({
 		};
 
 		const handleArrowKeys = (e: KeyboardEvent) => {
-			if (e.key === 'ArrowUp' || e.key === 'ArrowDown' || e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+			if (
+				e.key === 'ArrowUp' ||
+				e.key === 'ArrowDown' ||
+				e.key === 'ArrowLeft' ||
+				e.key === 'ArrowRight'
+			) {
 				e.stopPropagation();
 			}
-		}
+		};
 
 		window.addEventListener('keydown', handleEsc);
 		modalRef.current?.addEventListener('keydown', handleArrowKeys);
@@ -139,14 +144,16 @@ const Modal: React.FC<ModalProps> = ({
 							{canClose && (
 								<InversedBigBlueButton
 									id='modal-cancel'
-									onClick={handleCloseModal}>
+									onClick={handleCloseModal}
+								>
 									Cancel
 								</InversedBigBlueButton>
 							)}
 							<BigBlueButton
 								id='modal-confirm'
 								isSubmitting={isSubmitting}
-								onClick={onClick}>
+								onClick={onClick}
+							>
 								Confirm
 							</BigBlueButton>
 						</div>

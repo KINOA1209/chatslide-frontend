@@ -8,9 +8,21 @@ const useChatHistoryBear = createBearStore<ChatHistory[]>()(
 	true,
 );
 
-const useIsChatWindowOpenBear = createBearStore<boolean>()('isChatWindowOpen', false, true)
-const useRegenerateTextBear = createBearStore<string>()('regenerateText', '', true)
-const useIsRegenerateSelectedBear = createBearStore<boolean>()('isRegenerateSelected', false, true)
+const useIsChatWindowOpenBear = createBearStore<boolean>()(
+	'isChatWindowOpen',
+	false,
+	true,
+);
+const useRegenerateTextBear = createBearStore<string>()(
+	'regenerateText',
+	'',
+	true,
+);
+const useIsRegenerateSelectedBear = createBearStore<boolean>()(
+	'isRegenerateSelected',
+	false,
+	true,
+);
 
 export enum ChatHistoryStatus {
 	NotInited,
@@ -24,7 +36,8 @@ export const useChatHistory = () => {
 	const { chatHistory, setChatHistory } = useChatHistoryBear();
 	const { isChatWindowOpen, setIsChatWindowOpen } = useIsChatWindowOpenBear();
 	const { regenerateText, setRegenerateText } = useRegenerateTextBear();
-	const { isRegenerateSelected, setIsRegenerateSelected } = useIsRegenerateSelectedBear();
+	const { isRegenerateSelected, setIsRegenerateSelected } =
+		useIsRegenerateSelectedBear();
 
 	const init = async () => {
 		if (chatHistoryStatus !== ChatHistoryStatus.NotInited) return;
@@ -43,10 +56,10 @@ export const useChatHistory = () => {
 	const addEmojiToChatHistory = (index: number, emoji: string) => {
 		console.log('-- add emoji to chat history: ', { index, emoji });
 		const newChatHistory = [...chatHistory];
-		const newChat = { ...newChatHistory[index], emoji: emoji};
+		const newChat = { ...newChatHistory[index], emoji: emoji };
 		newChatHistory[index] = newChat;
 		setChatHistory(newChatHistory);
-	}
+	};
 
 	const clearChatHistory = () => {
 		console.log('-- clear chat history: ', { chatHistory });

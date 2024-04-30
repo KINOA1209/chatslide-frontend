@@ -27,16 +27,15 @@ const ScenarioChoicePage = () => {
 		clearProject();
 		if (workflowType == 'presentation') {
 			initProject({
-				'scenario_type': scenarioType,
-				'content_type': 'presentation'
+				scenario_type: scenarioType,
+				content_type: 'presentation',
 			} as Project);
 			router.push('/summary');
-		}
-		else {
+		} else {
 			initProject({
-				'post_type': scenarioType,
-				'content_type': 'social_posts'
-			} as Project)
+				post_type: scenarioType,
+				content_type: 'social_posts',
+			} as Project);
 			router.push('/summary-socialpost');
 		}
 	};
@@ -49,14 +48,15 @@ const ScenarioChoicePage = () => {
 			<div className='absolute block top-5 left-5'>
 				<BackButton href='/type-choice' dark={true} text='Type Choice' />
 			</div>
-      <div className='block md:hidden h-[3rem]' /> {/* Spacer */} 
+			<div className='block md:hidden h-[3rem]' /> {/* Spacer */}
 			<Column>
 				{/* title */}
-				<Title>
-					{scenarios.message}
-				</Title>
+				<Title>{scenarios.message}</Title>
 				{/* three types of scenarios */}
-				<div className='flex flex-wrap flex-row gap-4 md:gap-6 w-full mx-auto justify-around' id='choice_container'>
+				<div
+					className='flex flex-wrap flex-row gap-4 md:gap-6 w-full mx-auto justify-around'
+					id='choice_container'
+				>
 					{scenarios.options.map((scenario) => (
 						<div
 							key={scenario.id}
@@ -74,9 +74,7 @@ const ScenarioChoicePage = () => {
 									src={scenario.imageSrc}
 								/>
 							</div>
-							<Instruction center={true}>
-								{scenario.title}
-							</Instruction>
+							<Instruction center={true}>{scenario.title}</Instruction>
 						</div>
 					))}
 				</div>

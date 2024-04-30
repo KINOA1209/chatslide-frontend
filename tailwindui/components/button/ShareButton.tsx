@@ -15,7 +15,13 @@ import { getBrand, getOrigin } from '@/utils/getHost';
 import { useProject } from '@/hooks/use-project';
 type ShareButtonProps = {
 	share: boolean;
-	setShare: null | ((is_shared: boolean, video_is_shared: boolean, is_public?: boolean) => void);
+	setShare:
+		| null
+		| ((
+				is_shared: boolean,
+				video_is_shared: boolean,
+				is_public?: boolean,
+		  ) => void);
 	showShareModal: boolean; // Accept showCloneModal as prop
 	setShowShareModal: React.Dispatch<React.SetStateAction<boolean>>; // Accept setShowCloneModal as prop
 	isDropdownVisible?: boolean;
@@ -48,12 +54,13 @@ const ShareButton: React.FC<ShareButtonProps> = ({
 	const { isShared, videoIsShared } = useProject();
 
 	const toggleShare = async () => {
-		if (setShare){
+		if (setShare) {
 			// updates db as well
-			shareEntry === 'video' ? setShare(isShared, true, isPublic) :
-			setShare(true, videoIsShared, isPublic)
+			shareEntry === 'video'
+				? setShare(isShared, true, isPublic)
+				: setShare(true, videoIsShared, isPublic);
 		}
-		//setShare && setShare(true, isPublic); 
+		//setShare && setShare(true, isPublic);
 		setShowShareModal && setShowShareModal(true);
 		setIsDropdownVisible && setIsDropdownVisible(false);
 	};
@@ -66,8 +73,9 @@ const ShareButton: React.FC<ShareButtonProps> = ({
 	const limitedKeywords = keywords.slice(0, 3);
 	const truncatedDescription = truncateWithFullWords(description, 100);
 
-	const iframe = `<iframe src="${host}/embed/${project_id}?page=${currentSlideIndex + 1
-		}" width="960px" height="540px"></iframe>`;
+	const iframe = `<iframe src="${host}/embed/${project_id}?page=${
+		currentSlideIndex + 1
+	}" width="960px" height="540px"></iframe>`;
 
 	function truncateWithFullWords(str: string, maxLength: number) {
 		if (str.length <= maxLength) return str;
@@ -76,12 +84,16 @@ const ShareButton: React.FC<ShareButtonProps> = ({
 
 	const handlePost = async (platform: string, shareEntry: string) => {
 		try {
-			if (setShare){
+			if (setShare) {
 				// updates db as well
-				shareEntry === 'video' ? setShare(isShared, true, isPublic) :
-				setShare(true, videoIsShared, isPublic)
+				shareEntry === 'video'
+					? setShare(isShared, true, isPublic)
+					: setShare(true, videoIsShared, isPublic);
 			}
-			const shareLink = shareEntry === 'video' ? `${host}/shared_video/${project_id}` : `${host}/shared/${project_id}`;
+			const shareLink =
+				shareEntry === 'video'
+					? `${host}/shared_video/${project_id}`
+					: `${host}/shared/${project_id}`;
 			const hashTags = limitedKeywords
 				.map((keyword) => `#${keyword}`)
 				.join(' ');
@@ -117,11 +129,16 @@ const ShareButton: React.FC<ShareButtonProps> = ({
 				showModal={showShareModal}
 				setShowModal={setShowShareModal}
 				title='Share / Publish'
-			// description='Share your slides with others or on social media'
+				// description='Share your slides with others or on social media'
 			>
 				<div className='flex flex-col gap-2'>
 					<Instruction>
-						Share {shareEntry === 'socialPosts' ? 'Social Post' : shareEntry === 'slides' ? 'Slides' : 'Video'}
+						Share{' '}
+						{shareEntry === 'socialPosts'
+							? 'Social Post'
+							: shareEntry === 'slides'
+								? 'Slides'
+								: 'Video'}
 					</Instruction>
 					{setShare && (
 						<RadioButton
@@ -132,8 +149,9 @@ const ShareButton: React.FC<ShareButtonProps> = ({
 							]}
 							selectedValue={share ? 'yes' : 'no'}
 							setSelectedValue={(value) => {
-								shareEntry === 'video' ? setShare(isShared, value === 'yes', isPublic) :
-								setShare(value === 'yes', videoIsShared, isPublic);
+								shareEntry === 'video'
+									? setShare(isShared, value === 'yes', isPublic)
+									: setShare(value === 'yes', videoIsShared, isPublic);
 							}}
 						/>
 					)}
@@ -141,10 +159,13 @@ const ShareButton: React.FC<ShareButtonProps> = ({
 					{share && (
 						<div>
 							<Explanation>View only link:</Explanation>
-							{shareEntry === 'video' ? <ClickableLink link={`${host}/shared_video/${project_id || ''}`} /> :
+							{shareEntry === 'video' ? (
+								<ClickableLink
+									link={`${host}/shared_video/${project_id || ''}`}
+								/>
+							) : (
 								<ClickableLink link={`${host}/shared/${project_id || ''}`} />
-							}
-
+							)}
 						</div>
 					)}
 
@@ -173,7 +194,9 @@ const ShareButton: React.FC<ShareButtonProps> = ({
 						<Explanation>
 							Copy the code below and put it on your webpage, the content will
 							be updated as you update your slides. &nbsp;
-							<a className='text-blue-600' href='/embed_example'>Learn More.</a>
+							<a className='text-blue-600' href='/embed_example'>
+								Learn More.
+							</a>
 						</Explanation>
 						<ClickableLink link={iframe} />
 					</div>

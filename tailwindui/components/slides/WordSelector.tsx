@@ -1,6 +1,6 @@
-import { removeTags } from "@/hooks/use-slides";
-import { remove } from "lodash";
-import { useState } from "react";
+import { removeTags } from '@/hooks/use-slides';
+import { remove } from 'lodash';
+import { useState } from 'react';
 
 type WordSelectorProps = {
 	text: string;
@@ -11,19 +11,21 @@ function textIsChineseJapaneseOrKorean(text: string): boolean {
 	return text.match(/[\u3400-\u9FBF]/) !== null;
 }
 
-export const WordSelector: React.FC<WordSelectorProps> = ({ text, setQuery }) => {
+export const WordSelector: React.FC<WordSelectorProps> = ({
+	text,
+	setQuery,
+}) => {
 	if (!text) return null;
 	// text = removeTags(text) as string;
 	let words = text.split(' ');
-	// dedup 
+	// dedup
 	words = words.filter((word, index) => words.indexOf(word) === index);
 	// remove lowercase words with less than 3 characters
-	words = words.filter(word => word.length > 3);
+	words = words.filter((word) => word.length > 3);
 	// remove ',' and '.' from words
-	words = words.map(word => word.replace(/[,\.]/g, ''));
+	words = words.map((word) => word.replace(/[,\.]/g, ''));
 
-	if (textIsChineseJapaneseOrKorean(text))
-	  words = text.split('');
+	if (textIsChineseJapaneseOrKorean(text)) words = text.split('');
 
 	if (words.length == 0) return null;
 
@@ -51,8 +53,9 @@ export const WordSelector: React.FC<WordSelectorProps> = ({ text, setQuery }) =>
 				<div
 					key={`word-${index}-${word}`}
 					onClick={() => toggleWordSelection(word)}
-					className={`cursor-pointer border border-1 mx-1 rounded border-gray-200 ${selectedWords.includes(word) ? 'bg-blue-500 text-white' : ''
-						}`}
+					className={`cursor-pointer border border-1 mx-1 rounded border-gray-200 ${
+						selectedWords.includes(word) ? 'bg-blue-500 text-white' : ''
+					}`}
 				>
 					{word}
 				</div>

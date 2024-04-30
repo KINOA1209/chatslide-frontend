@@ -40,11 +40,11 @@ export const SideBarData: SideBarItem[] = [
 		icon: <GoDiscussionOutdated />,
 		path: '/discover',
 	},
-  {
-    title: "What's New",
-    icon: <LuNewspaper />,
-    path: '/whatsnew',
-  },
+	{
+		title: "What's New",
+		icon: <LuNewspaper />,
+		path: '/whatsnew',
+	},
 	{
 		title: 'Join Discord',
 		icon: <RiDiscordLine />,

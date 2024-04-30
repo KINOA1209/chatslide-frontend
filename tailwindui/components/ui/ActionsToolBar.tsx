@@ -25,7 +25,7 @@ const ActionsToolBar: React.FC<ActionsToolBarProps> = ({
 	startTour,
 	onlyShowTutorial,
 	isViewing = false,
-	children
+	children,
 }) => {
 	const [showTutorialPrompt, setShowTutorialPrompt] = useState(false);
 	const handleStartTour = () => {
@@ -88,88 +88,92 @@ const ActionsToolBar: React.FC<ActionsToolBarProps> = ({
 	) : (
 		<ToolBar>
 			{/* user tutorial control */}
-			{!isViewing && <>
-				<ButtonWithExplanation
-					button={
-						<button
-							onClick={handleStartTour}
-							style={{
-								display: 'flex',
-								justifyContent: 'center',
-								alignItems: 'center',
-							}}
-						>
-							<GoQuestion
+			{!isViewing && (
+				<>
+					<ButtonWithExplanation
+						button={
+							<button
+								onClick={handleStartTour}
 								style={{
-									strokeWidth: '1',
-									flex: '1',
-									width: '1.5rem',
-									height: '1.5rem',
-									fontWeight: 'bold',
-									color: '#344054',
+									display: 'flex',
+									justifyContent: 'center',
+									alignItems: 'center',
 								}}
-							/>
-						</button>
-					}
-					explanation={'User tutorial'}
-				/>
-				<div className='h-8 w-0.5 bg-gray-200'></div>
-			</>}
+							>
+								<GoQuestion
+									style={{
+										strokeWidth: '1',
+										flex: '1',
+										width: '1.5rem',
+										height: '1.5rem',
+										fontWeight: 'bold',
+										color: '#344054',
+									}}
+								/>
+							</button>
+						}
+						explanation={'User tutorial'}
+					/>
+					<div className='h-8 w-0.5 bg-gray-200'></div>
+				</>
+			)}
 
-			{!isViewing && <>
-				<ButtonWithExplanation
-					button={
-						<button
-							onClick={undo}
-							style={{
-								color: canUndo ? '#344054' : '#C6C6C6',
-								display: 'flex',
-								justifyContent: 'center',
-								alignItems: 'center',
-							}}
-							disabled={!canUndo}
-						>
-							<RiArrowGoBackFill
+			{!isViewing && (
+				<>
+					<ButtonWithExplanation
+						button={
+							<button
+								onClick={undo}
 								style={{
-									strokeWidth: '1',
-									flex: '1',
-									width: '1.5rem',
-									height: '1.5rem',
-									fontWeight: 'bold',
+									color: canUndo ? '#344054' : '#C6C6C6',
+									display: 'flex',
+									justifyContent: 'center',
+									alignItems: 'center',
 								}}
-							/>
-						</button>
-					}
-					explanation={'Undo'}
-				/>
+								disabled={!canUndo}
+							>
+								<RiArrowGoBackFill
+									style={{
+										strokeWidth: '1',
+										flex: '1',
+										width: '1.5rem',
+										height: '1.5rem',
+										fontWeight: 'bold',
+									}}
+								/>
+							</button>
+						}
+						explanation={'Undo'}
+					/>
 
-				<ButtonWithExplanation
-					button={
-						<button
-							onClick={redo}
-							style={{
-								color: canRedo ? '#344054' : '#C6C6C6',
-								display: 'flex',
-								justifyContent: 'center',
-								alignItems: 'center',
-							}}
-							disabled={!canRedo}
-						>
-							<RiArrowGoForwardFill
+					<ButtonWithExplanation
+						button={
+							<button
+								onClick={redo}
 								style={{
-									strokeWidth: '1',
-									flex: '1',
-									width: '1.5rem',
-									height: '1.5rem',
-									fontWeight: 'bold',
+									color: canRedo ? '#344054' : '#C6C6C6',
+									display: 'flex',
+									justifyContent: 'center',
+									alignItems: 'center',
 								}}
-							/>
-						</button>
-					}
-					explanation={'Redo'}
-				/>
-				<div className='h-8 w-0.5 bg-gray-200'></div>
-			</>}
+								disabled={!canRedo}
+							>
+								<RiArrowGoForwardFill
+									style={{
+										strokeWidth: '1',
+										flex: '1',
+										width: '1.5rem',
+										height: '1.5rem',
+										fontWeight: 'bold',
+									}}
+								/>
+							</button>
+						}
+						explanation={'Redo'}
+					/>
+					<div className='h-8 w-0.5 bg-gray-200'></div>
+				</>
+			)}
 
 			{children}
 

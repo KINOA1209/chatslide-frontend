@@ -41,8 +41,8 @@ type Project = {
 	scenario_type?: string;
 	has_scripts?: boolean;
 	search_online?: string;
-  
-  view_count?: number;
+
+	view_count?: number;
 
 	// Social Post-specific fields
 	post_type?: string;

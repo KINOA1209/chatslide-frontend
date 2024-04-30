@@ -1,6 +1,6 @@
 export enum SdkMode {
-	production = "production",
-	debug = "debug",
+	production = 'production',
+	debug = 'debug',
 }
 
 export interface UserViewUser {

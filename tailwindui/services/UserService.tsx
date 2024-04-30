@@ -133,15 +133,14 @@ class UserService {
 					username: username,
 					email: email,
 				}),
-			})
+			});
 			if (resp.ok) {
 				return true;
 			} else {
 				console.error(`Error updating username and email: ${resp.status}`);
 				return false;
 			}
-		}
-		catch (error) {
+		} catch (error) {
 			console.error('Error in updateUsernameAndEmail:', error);
 			return false;
 		}
@@ -149,7 +148,13 @@ class UserService {
 
 	static async getUserCreditsAndTier(
 		idToken: string,
-	): Promise<{ credits: string; tier: string; expirationDate: string, username: string | null, email: string | null }> {
+	): Promise<{
+		credits: string;
+		tier: string;
+		expirationDate: string;
+		username: string | null;
+		email: string | null;
+	}> {
 		if (!idToken) throw new Error('No idToken provided');
 
 		try {
@@ -160,7 +165,8 @@ class UserService {
 				},
 			});
 
-			if (!response.ok) {  // user not found in db
+			if (!response.ok) {
+				// user not found in db
 				const { email, idToken } =
 					await AuthService.getCurrentUserTokenAndEmail();
 				console.warn(
@@ -178,27 +184,39 @@ class UserService {
 				credits = 'Unlimited';
 			}
 			let tier: string = data['tier'] || 'FREE';
-      let expirationDate: string = data['expiration_date'] || '';
-      if (expirationDate) {
-        // local date with only month and day
-        expirationDate = new Date(expirationDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-      }
-      if (tier.includes('CANCELLED_')) {
-        if (expirationDate && new Date(expirationDate) > new Date()) {
-        tier = tier.replaceAll('CANCELLED_', '')
-        }
-      }
+			let expirationDate: string = data['expiration_date'] || '';
+			if (expirationDate) {
+				// local date with only month and day
+				expirationDate = new Date(expirationDate).toLocaleDateString('en-US', {
+					month: 'short',
+					day: 'numeric',
+				});
+			}
+			if (tier.includes('CANCELLED_')) {
+				if (expirationDate && new Date(expirationDate) > new Date()) {
+					tier = tier.replaceAll('CANCELLED_', '');
+				}
+			}
 
 			const username: string = data['username'] || null;
 			const email: string = data['email'] || null;
 
-			console.log(`User credits: ${credits}, expiration date: ${expirationDate}, tier: ${tier}`);
+			console.log(
+				`User credits: ${credits}, expiration date: ${expirationDate}, tier: ${tier}`,
+			);
 
 			return { credits, tier, expirationDate, username, email };
 		} catch (error) {
-			const { email, idToken } = await AuthService.getCurrentUserTokenAndEmail();
+			const { email, idToken } =
+				await AuthService.getCurrentUserTokenAndEmail();
 			console.error(`Failed to fetch user credits: ${email}`, error);
-			return { credits: '0', tier: 'FREE', expirationDate: '', username: null, email: null };
+			return {
+				credits: '0',
+				tier: 'FREE',
+				expirationDate: '',
+				username: null,
+				email: null,
+			};
 		}
 	}
 
@@ -247,7 +265,7 @@ class UserService {
 		}
 	}
 
-	// stripe checkout 
+	// stripe checkout
 	static async checkout(
 		plan: string,
 		email: string,
@@ -259,7 +277,7 @@ class UserService {
 			email: email,
 			currency: currency === '$' ? 'usd' : 'eur',
 			is_chatslide: isChatslide(),
-			client_reference_id: await getRewardfulReferralId()
+			client_reference_id: await getRewardfulReferralId(),
 		};
 
 		const response = await fetch('/api/create-checkout-session', {
@@ -272,7 +290,7 @@ class UserService {
 		});
 
 		if (response.ok) {
-			const url = await response.text()
+			const url = await response.text();
 			return url;
 		} else {
 			throw new Error('Failed to create checkout session');
@@ -328,7 +346,12 @@ class UserService {
 		}
 	}
 
-	static async submitFeedback(rating: number, text: string, project_id: string, token: string): Promise<boolean> {
+	static async submitFeedback(
+		rating: number,
+		text: string,
+		project_id: string,
+		token: string,
+	): Promise<boolean> {
 		const headers = new Headers();
 		if (token) {
 			headers.append('Authorization', `Bearer ${token}`);

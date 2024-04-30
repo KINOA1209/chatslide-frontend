@@ -1,31 +1,31 @@
 export const AVATAR_OPTIONS: { [key: string]: string[] } = {
-	'lisa': [
+	lisa: [
 		'casual-sitting',
 		'graceful-sitting',
 		'graceful-standing',
 		'technical-sitting',
-		'technical-standing'
+		'technical-standing',
 	],
-	'mark': [
+	mark: [
 		'casual-sitting',
 		'graceful-sitting',
 		'graceful-standing',
 		'technical-sitting',
-		'technical-standing'
+		'technical-standing',
 	],
 	'your own': [
 		'casual-sitting',
 		'graceful-sitting',
 		'graceful-standing',
 		'technical-sitting',
-		'technical-standing'
-	]
+		'technical-standing',
+	],
 };
 
 export const AVATAR_NAMES: { [key: string]: string } = {
-	'lisa': '👩 Lisa',
-	'mark': '👨 Mark (coming)',
-	'your own': '👤 Your Own (coming)'
+	lisa: '👩 Lisa',
+	mark: '👨 Mark (coming)',
+	'your own': '👤 Your Own (coming)',
 };
 
 export const POSTURE_NAMES: { [key: string]: string } = {
@@ -33,7 +33,7 @@ export const POSTURE_NAMES: { [key: string]: string } = {
 	'graceful-sitting': 'Graceful Sitting',
 	'graceful-standing': 'Graceful Standing',
 	'technical-sitting': 'Technical Sitting',
-	'technical-standing': 'Technical Standing'
+	'technical-standing': 'Technical Standing',
 };
 
 export const POSITION_NAMES: { [key: string]: string } = {
@@ -46,7 +46,7 @@ export const POSITION_NAMES: { [key: string]: string } = {
 };
 
 export const SIZE_NAMES: { [key: string]: string } = {
-	'small': 'Small',
-	'medium': 'Medium',
-	'large': 'Large'
+	small: 'Small',
+	medium: 'Medium',
+	large: 'Large',
 };

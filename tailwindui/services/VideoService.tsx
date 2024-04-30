@@ -13,9 +13,9 @@ export default class VideoService {
 		avatarSize: string,
 		avatarPosition: string,
 		bgm: string,
-    bgmVolume: number,
-    creditCost: number
-	): Promise<void>{
+		bgmVolume: number,
+		creditCost: number,
+	): Promise<void> {
 		fetch('/api/export/generate_video', {
 			method: 'POST',
 			headers: {
@@ -33,8 +33,8 @@ export default class VideoService {
 				avatar_size: avatarSize,
 				avatar_position: avatarPosition,
 				background_music: bgm,
-        bgm_volume: bgmVolume,
-        credit_cost: creditCost
+				bgm_volume: bgmVolume,
+				credit_cost: creditCost,
 			}),
 		});
 	}
@@ -44,13 +44,16 @@ export default class VideoService {
 		project_id: string,
 		userToken: string,
 	): Promise<VideoJobStatus> {
-		const response = await fetch(`/api/video_job_status?project_id=${project_id}`, {
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${userToken}`, // Replace this with your actual auth header
+		const response = await fetch(
+			`/api/video_job_status?project_id=${project_id}`,
+			{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${userToken}`, // Replace this with your actual auth header
+				},
 			},
-		});
+		);
 
 		if (!response.ok) {
 			throw new Error(
@@ -66,11 +69,12 @@ export default class VideoService {
 	}
 
 	static async getTTS(
-		text: string, 
-		voice: string, 
+		text: string,
+		voice: string,
 		style: string,
-		foldername: string, 
-		token: string): Promise<string> {
+		foldername: string,
+		token: string,
+	): Promise<string> {
 		const response = await fetch('/api/generate_audio_single_slide', {
 			method: 'POST',
 			headers: {
@@ -90,17 +94,23 @@ export default class VideoService {
 		}
 
 		const data = await response.json();
-		return `/api/audio?foldername=${foldername}&filename=${data.data.filename}`
+		return `/api/audio?foldername=${foldername}&filename=${data.data.filename}`;
 	}
 
-	static async hasRunningVideoJob(project_id: string, token: string): Promise<boolean> {
-		const response = await fetch(`/api/has_running_video_job?project_id=${project_id}`, {
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${token}`,
+	static async hasRunningVideoJob(
+		project_id: string,
+		token: string,
+	): Promise<boolean> {
+		const response = await fetch(
+			`/api/has_running_video_job?project_id=${project_id}`,
+			{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${token}`,
+				},
 			},
-		});
+		);
 
 		if (!response.ok) {
 			return false;

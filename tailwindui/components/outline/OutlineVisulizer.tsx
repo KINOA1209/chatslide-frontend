@@ -48,21 +48,25 @@ const OutlineVisualizer = ({
 	) => {
 		e.preventDefault();
 		let newOutlineData = [...outlineData];
-		newOutlineData[sectionIndex].content.splice(detailIndex, 0, 'Provide some details about this section');
+		newOutlineData[sectionIndex].content.splice(
+			detailIndex,
+			0,
+			'Provide some details about this section',
+		);
 		// select the input field
 		setHoveredDetailIndex(detailIndex);
 		setOutlineData(newOutlineData);
 
-		sleep(0.1)
+		sleep(0.1);
 
-		selectInputBox(sectionIndex, detailIndex);  // may not work if adding last detail in the section
+		selectInputBox(sectionIndex, detailIndex); // may not work if adding last detail in the section
 	};
 
 	function selectInputBox(sectionIndex: number, detailIndex: number) {
-		const inputBoxId = String(sectionIndex) + '-' + String(detailIndex)
+		const inputBoxId = String(sectionIndex) + '-' + String(detailIndex);
 		const inputBox = document.querySelector(`input[id="${inputBoxId}"]`);
-		console.log(inputBoxId)
-		console.log(inputBox)
+		console.log(inputBoxId);
+		console.log(inputBox);
 		if (inputBox) {
 			(inputBox as HTMLInputElement).focus();
 			// console.log('focused');
@@ -76,7 +80,10 @@ const OutlineVisualizer = ({
 			if (e.key === 'ArrowDown') {
 				e.stopPropagation();
 				e.preventDefault();
-				if (hoveredDetailIndex < outlineData[hoveredSectionIndex]?.content.length - 1) {
+				if (
+					hoveredDetailIndex <
+					outlineData[hoveredSectionIndex]?.content.length - 1
+				) {
 					selectInputBox(hoveredSectionIndex, hoveredDetailIndex + 1);
 					setHoveredDetailIndex(hoveredDetailIndex + 1);
 				}
@@ -184,10 +191,11 @@ const OutlineVisualizer = ({
 				outlineData.map((section: OutlineSection, sectionIndex: number) => (
 					<div key={sectionIndex}>
 						<div
-							className={`OutlineStep-2 flex my-3 items-center justify-center ${outlineData.length >= maxOutlineSectionCount
-								? 'opacity-50 cursor-not-allowed '
-								: ''
-								}`}
+							className={`OutlineStep-2 flex my-3 items-center justify-center ${
+								outlineData.length >= maxOutlineSectionCount
+									? 'opacity-50 cursor-not-allowed '
+									: ''
+							}`}
 						>
 							<button
 								disabled={outlineData.length >= maxOutlineSectionCount}
@@ -242,26 +250,27 @@ const OutlineVisualizer = ({
 										<div
 											key={sectionIndex + detailIndex}
 											className={`flex flex-row w-full relative overflow-visiable mt-2 bg-[white] border-2 rounded-md
-														${hoveredDetailIndex === detailIndex &&
-													sectionIndex === hoveredSectionIndex
-													? 'border-[#A4BCFD]'
-													: 'border-[#EAECF0]'
-												}
+														${
+															hoveredDetailIndex === detailIndex &&
+															sectionIndex === hoveredSectionIndex
+																? 'border-[#A4BCFD]'
+																: 'border-[#EAECF0]'
+														}
 													  `}
 											onMouseEnter={() => setHoveredDetailIndex(detailIndex)}
 											onMouseLeave={() => setHoveredDetailIndex(-1)}
 										>
-											<div className={`flex flex-row border-r-2 border-r-[#EAECF0] items-center justify-center w-[2rem] text-gray-800 overflow-ellipsis`}>
-													<span>{detailIndex + 1}</span>
+											<div
+												className={`flex flex-row border-r-2 border-r-[#EAECF0] items-center justify-center w-[2rem] text-gray-800 overflow-ellipsis`}
+											>
+												<span>{detailIndex + 1}</span>
 											</div>
 											<input
 												key={detailIndex}
 												id={String(sectionIndex) + '-' + String(detailIndex)}
 												className={`form-input w-[90%] border-none`}
 												value={content}
-												onClick={(e) =>
-													(e.target as HTMLInputElement).select()
-												}
+												onClick={(e) => (e.target as HTMLInputElement).select()}
 												onChange={(e) =>
 													handleDetailChange(
 														e,
@@ -283,49 +292,49 @@ const OutlineVisualizer = ({
 														<div className='absolute flex flex-row gap-4 bottom-[70%] right-0 mt-1 mr-1'>
 															{outlineData[sectionIndex].content.length >
 																minOutlineDetailCount && (
-																	<div
-																		onClick={(e) =>
-																			handleDeleteDetail(
-																				e,
-																				sectionIndex,
-																				detailIndex,
-																			)
-																		}
-																		id='outline-delete-detail-upper'
-																	>
-																		<DeleteIcon shadow={true} />
-																	</div>
-																)}
+																<div
+																	onClick={(e) =>
+																		handleDeleteDetail(
+																			e,
+																			sectionIndex,
+																			detailIndex,
+																		)
+																	}
+																	id='outline-delete-detail-upper'
+																>
+																	<DeleteIcon shadow={true} />
+																</div>
+															)}
 															{outlineData[sectionIndex].content.length <
 																maxOutlineDetailCount && (
-																	<div
-																		onClick={(e) =>
-																			handleAddDetail(
-																				e,
-																				sectionIndex,
-																				detailIndex,
-																			)
-																		}
-																	>
-																		<AddTopicIcon />
-																	</div>
-																)}
+																<div
+																	onClick={(e) =>
+																		handleAddDetail(
+																			e,
+																			sectionIndex,
+																			detailIndex,
+																		)
+																	}
+																>
+																	<AddTopicIcon />
+																</div>
+															)}
 														</div>
 														<div className='absolute flex flex-row gap-4 top-[70%] right-0 mb-1 mr-1 z-10'>
 															{outlineData[sectionIndex].content.length <
 																maxOutlineDetailCount && (
-																	<div
-																		onClick={(e) =>
-																			handleAddDetail(
-																				e,
-																				sectionIndex,
-																				detailIndex + 1,
-																			)
-																		}
-																	>
-																		<AddTopicIcon />
-																	</div>
-																)}
+																<div
+																	onClick={(e) =>
+																		handleAddDetail(
+																			e,
+																			sectionIndex,
+																			detailIndex + 1,
+																		)
+																	}
+																>
+																	<AddTopicIcon />
+																</div>
+															)}
 														</div>
 													</>
 												)}
@@ -339,10 +348,11 @@ const OutlineVisualizer = ({
 
 			<div key={outlineData.length}>
 				<div
-					className={`OutlineStep-2 flex my-3 items-center justify-center ${outlineData.length >= maxOutlineSectionCount
-						? 'opacity-50 cursor-not-allowed'
-						: ''
-						}`}
+					className={`OutlineStep-2 flex my-3 items-center justify-center ${
+						outlineData.length >= maxOutlineSectionCount
+							? 'opacity-50 cursor-not-allowed'
+							: ''
+					}`}
 				>
 					<button
 						disabled={outlineData.length >= maxOutlineSectionCount}

@@ -80,8 +80,8 @@ export default function SocialMediaTemplate() {
 		},
 	];
 
-	const { socialPosts, setSocialPosts } = useSocialPosts()
-	const { project, initProject, updateProject } = useProject()
+	const { socialPosts, setSocialPosts } = useSocialPosts();
+	const { project, initProject, updateProject } = useProject();
 	const res_scenario = project?.post_type || 'casual_topic';
 
 	function getCover(scenario: string | null): ThemeObject {

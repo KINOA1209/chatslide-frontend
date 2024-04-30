@@ -28,7 +28,8 @@ const LoginForm: React.FC = () => {
 			let message = error.message || 'An error occurred';
 			console.log('message', message);
 			if (message == 'User does not exist.') {
-				message += ' Please sign up first. Please also try Sign in with Google.';
+				message +=
+					' Please sign up first. Please also try Sign in with Google.';
 			}
 			toast.error(message, {
 				position: 'top-center',
@@ -93,8 +94,11 @@ const LoginForm: React.FC = () => {
 			</div>
 			<div className='flex flex-wrap -mx-3 mt-6'>
 				<div className='w-full px-3'>
-					<button className='btn text-white font-bold w-full bg-Blue disabled:bg-gray-200 disabled:text-gray-600' disabled={isSubmitting}>
-						{ isSubmitting ? 'Signing in...' : 'Sign in' }
+					<button
+						className='btn text-white font-bold w-full bg-Blue disabled:bg-gray-200 disabled:text-gray-600'
+						disabled={isSubmitting}
+					>
+						{isSubmitting ? 'Signing in...' : 'Sign in'}
 					</button>
 					<ToastContainer />
 				</div>

@@ -8,7 +8,7 @@ module.exports = {
 	theme: {
 		extend: {
 			screens: {
-				'iPhoneSE': '375px',
+				iPhoneSE: '375px',
 				dpr: {
 					raw: 'screen and (min-device-pixel-ratio: 2)',
 				},

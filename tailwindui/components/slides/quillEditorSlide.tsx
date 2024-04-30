@@ -117,12 +117,15 @@ Quill.register(Size, true);
 
 // file in quill/formats/list.js
 class UListContainer extends ListContainer {}
-UListContainer.blotName = 'list-container'
-UListContainer.tagName = 'UL'
+UListContainer.blotName = 'list-container';
+UListContainer.tagName = 'UL';
 
-Quill.register({
-	'formats/list-container': UListContainer
-}, true);
+Quill.register(
+	{
+		'formats/list-container': UListContainer,
+	},
+	true,
+);
 
 const toolbarOptions = [
 	['regenerate'],

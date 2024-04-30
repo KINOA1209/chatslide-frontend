@@ -21,7 +21,6 @@ import { getBrand, getLogoUrl, isChatslide } from '@/utils/getHost';
 import Chats from './Chats';
 import ChatBotService from '@/services/ChatBotService';
 
-
 export const AIAssistantIcon: React.FC<{
 	onClick: () => void;
 }> = ({ onClick }) => {
@@ -29,16 +28,17 @@ export const AIAssistantIcon: React.FC<{
 		<div
 			className='rounded-md p-2 bg-white border border-gray-200 border-2 flex items-center justify-center relative'
 			onClick={onClick}
-		// style={{ animation: 'pulse 0.5s infinite' }}
+			// style={{ animation: 'pulse 0.5s infinite' }}
 		>
-			{isChatslide() ?
+			{isChatslide() ? (
 				<Image
 					src={getLogoUrl()}
 					alt={'AIAssistantImage'}
 					className='w-[2rem] h-[2rem] z-10'
 					width={32}
 					height={32}
-				/> :
+				/>
+			) : (
 				<Image
 					src={DrlambdaCartoonImage}
 					alt={'AIAssistantImage'}
@@ -46,7 +46,7 @@ export const AIAssistantIcon: React.FC<{
 					width={28}
 					height={32}
 				/>
-			}
+			)}
 		</div>
 	);
 };
@@ -91,7 +91,10 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 	useEffect(() => {
 		chatWindowRef.current?.addEventListener('keydown', stopArrowKeyPropagation);
 		return () => {
-			chatWindowRef.current?.removeEventListener('keydown', stopArrowKeyPropagation);
+			chatWindowRef.current?.removeEventListener(
+				'keydown',
+				stopArrowKeyPropagation,
+			);
 		};
 	}, []);
 
@@ -155,13 +158,15 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 			console.log('responseData structure:', response);
 			// If the slide data is updated
 			if (response.slide) {
-				console.log(
-					'updateSlide content after api call:',
-					response.slide,
-				);
+				console.log('updateSlide content after api call:', response.slide);
 
 				if (response.action === 'add_page') {
-					const newSlide = { ...slides[currentSlideIndex], ...response.slide, layout: 'Col_1_img_0_layout', images: [] } as Slide;
+					const newSlide = {
+						...slides[currentSlideIndex],
+						...response.slide,
+						layout: 'Col_1_img_0_layout',
+						images: [],
+					} as Slide;
 
 					// insert the newSlide after the currentSlideIndex
 					setSlides((prevSlides) => {
@@ -170,47 +175,56 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 						return newSlides;
 					});
 					setSlideIndex(currentSlideIndex + 1);
-				} else {  
+				} else {
 					// change the current slide
 					let content = response.slide.content;
-					if (content.length >= 6 && JSON.stringify(content).length > 600) { 
+					if (content.length >= 6 && JSON.stringify(content).length > 600) {
 						// too much new content in one page, need to split into two pages
 						const mid = Math.floor(content.length / 2);
-						const slidePage1 = { ...slides[currentSlideIndex], ...response.slide, content: content.slice(0, mid) };
-						const slidePage2 = { ...slides[currentSlideIndex], ...response.slide, content: content.slice(mid) };
-						// replace the current slide with the 2 new slides 
+						const slidePage1 = {
+							...slides[currentSlideIndex],
+							...response.slide,
+							content: content.slice(0, mid),
+						};
+						const slidePage2 = {
+							...slides[currentSlideIndex],
+							...response.slide,
+							content: content.slice(mid),
+						};
+						// replace the current slide with the 2 new slides
 						setSlides((prevSlides) => {
 							const newSlides = [...prevSlides];
 							newSlides.splice(currentSlideIndex, 1, slidePage1, slidePage2);
 							return newSlides;
 						});
 						setSlideIndex(currentSlideIndex + 1);
-						addChatHistory(addSuccessMessage('📄 Because of too much content on one page, I have split the content into two pages.'));
+						addChatHistory(
+							addSuccessMessage(
+								'📄 Because of too much content on one page, I have split the content into two pages.',
+							),
+						);
 					} else {
 						// Update state with the new slides
 						updateSlidePage(currentSlideIndex, response.slide);
 						updateVersion(); // force rerender when version changes and index does not change
 					}
 				}
-			}
-
-			else if (response.action) {  // not add_page action with slide 
+			} else if (response.action) {
+				// not add_page action with slide
 				// send this as a document signal
 				console.log('action:', response.action);
-        let action = response.action;
-        if (action === 'upload_background') {
-          action = 'change_logo';  // for branding
-        }
-        if (action === 'change_font') {
-          action = 'change_template';
-        }
+				let action = response.action;
+				if (action === 'upload_background') {
+					action = 'change_logo'; // for branding
+				}
+				if (action === 'change_font') {
+					action = 'change_template';
+				}
 				document.dispatchEvent(new Event(response.action));
 			}
 
 			addChatHistory(addSuccessMessage(response.chat, response.images));
-		}
-
-		catch (error) {
+		} catch (error) {
 			console.error('Failed to get AI response');
 			const errorMessage = addErrorMessage(
 				'😞 Sorry, I do not understand your request, can you try something else?',

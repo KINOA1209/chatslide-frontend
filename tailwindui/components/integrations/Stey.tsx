@@ -128,5 +128,5 @@ export default function Stey() {
 					})()
 				`}
 		</Script>
-	)
+	);
 }

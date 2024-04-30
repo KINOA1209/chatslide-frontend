@@ -19,7 +19,6 @@ const ExportToPngButton: React.FC<ExportToPdfProps> = ({
 	socialPostSlide,
 	currentSlideIndex,
 }) => {
-
 	const { project } = useProject();
 	const topic = project?.topic;
 
@@ -37,29 +36,28 @@ const ExportToPngButton: React.FC<ExportToPdfProps> = ({
 	return (
 		<div className='flex flex-wrap flex-grow-0'>
 			<div className=''>
-
 				<ButtonWithExplanation
 					button={
-						<button
-							onClick={handleSaveImage}
-						>
-							{!downloading ? 
-							<GoDownload
-								style={{
-									strokeWidth: '1',
-									flex: '1',
-									width: '1.5rem',
-									height: '1.5rem',
-									fontWeight: 'bold',
-									color: '#344054',
-								}}
-							/> :
-								<SpinIcon />}
+						<button onClick={handleSaveImage}>
+							{!downloading ? (
+								<GoDownload
+									style={{
+										strokeWidth: '1',
+										flex: '1',
+										width: '1.5rem',
+										height: '1.5rem',
+										fontWeight: 'bold',
+										color: '#344054',
+									}}
+								/>
+							) : (
+								<SpinIcon />
+							)}
 						</button>
 					}
 					explanation={'Export to PNG (1 page)'}
 				/>
-		
+
 				{/* hidden div for export to pdf */}
 				<div className='absolute left-[-9999px] top-[-9999px] -z-1'>
 					<div ref={exportSlidesRef}>

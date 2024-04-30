@@ -67,7 +67,9 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 			await sleep(200);
 			counter++;
 			if (counter == 25) {
-				console.error('SlideVisualizer: saveStatus not UpToDate after 5 seconds');
+				console.error(
+					'SlideVisualizer: saveStatus not UpToDate after 5 seconds',
+				);
 				break;
 			}
 		}
@@ -88,12 +90,10 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 			const transcripts = await SlidesService.generateScripts(formData, token);
 			setTranscripts(transcripts); // and auto-save
 			router.push(addIdToRedir('/scripts'));
-		}
-
-		catch (error) {
+		} catch (error) {
 			toast.error(
 				'Server is busy now. Please try again later. Reference code: ' +
-				project.id,
+					project.id,
 			);
 			console.log(error);
 		}
@@ -108,8 +108,6 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 
 	return (
 		<div className='w-full flex max-h-[900px] flex-col justify-center items-start gap-4 overflow-y-scroll'>
-
-
 			{/* slides and scripts contents */}
 			<SlidesHTML exportSlidesRef={exportSlidesRef} showScript={showScript} />
 		</div>
