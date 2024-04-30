@@ -817,7 +817,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			<div className='w-full flex flex-row items-start justify-center lg:justify-around gap-2'>
 				{/* vertical bar */}
 				<Panel>
-					<div className='max-h-[540px] hidden lg:flex md:w-[150px] mb-[8rem]'>
+					<div className='max-h-[70vh] hidden lg:flex md:w-[150px] mb-[8rem]'>
 						<DraggableSlidesPreview
 							ref={verticalCurrentSlideRef}
 							slideIndex={slideIndex}
@@ -954,7 +954,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				{
 					!isViewing && isChatWindowOpen ? (
 						<Panel>
-							<div className='h-[540px]'>
+							<div className='h-[70vh]'>
 								<AIAssistantChatWindow
 									onToggle={toggleChatWindow}
 									slides={slides}
