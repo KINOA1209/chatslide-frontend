@@ -252,13 +252,13 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 
 			{/* add citation */}
 			<Instruction>
-				Do you want to add a citation page for the resources?
+				Do you want to add a citations page for the resources?
 			</Instruction>
 			<RadioButton
 				name='add_citations'
 				options={[
-					{ value: 'no', text: 'No', icon: <IoIosRemoveCircle /> },
-					{ value: 'yes', text: 'Yes', icon: <QuestionExplainIcon /> },
+					{ value: 'no', text: 'No' },
+					{ value: 'yes', text: 'Yes'},
 				]}
 				selectedValue={addCitations}
 				setSelectedValue={setaddCitations}
