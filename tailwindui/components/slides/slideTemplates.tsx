@@ -159,12 +159,12 @@ export const generateTemplate = (templateName: string) => {
 						backgroundImage:
 							themeElements?.isGradientBackground &&
 							!hasSelectedCustomTemplateBgColor
-								? themeElements.backgroundColor
+								? themeElements.backgroundColorCover
 								: undefined,
 						backgroundColor:
 							!themeElements?.isGradientBackground ||
 							hasSelectedCustomTemplateBgColor
-								? themeElements.backgroundColor
+								? themeElements.backgroundColorCover
 								: undefined,
 					}}
 				>

@@ -286,7 +286,13 @@ export const Cover_img_0_layout = ({
 	return (
 		<div
 			className={`SlideCanvas`}
-			style={{ ...layoutElements.canvaCSS, position: 'relative' }}
+			style={{
+				display: 'flex',
+				width: '100%',
+				height: '100%',
+				...layoutElements.canvaCSS,
+				position: 'relative',
+			}}
 		>
 			<div
 				className={`SlideUserNameAndHeadColumn`}
@@ -387,7 +393,13 @@ export const Cover_img_1_layout = ({
 	return (
 		<div
 			className={`SlideCanvas`}
-			style={{ ...layoutElements.canvaCSS, position: 'relative' }}
+			style={{
+				display: 'flex',
+				width: '100%',
+				height: '100%',
+				...layoutElements.canvaCSS,
+				position: 'relative',
+			}}
 		>
 			<div
 				className={`SlideUserNameAndHeadColumn`}
@@ -655,7 +667,10 @@ export const Col_2_img_0_layout = ({
 		<div
 			className={`SlideLayoutCanvas`}
 			style={{
-				display: 'grid',
+				display: 'flex',
+				flexDirection: 'column',
+				width: '100%',
+				height: '100%',
 				...layoutElements.canvaCSS,
 				position: 'relative',
 			}}
@@ -927,7 +942,10 @@ export const Col_3_img_0_layout = ({
 	return (
 		<div
 			style={{
-				display: 'grid',
+				display: 'flex',
+				flexDirection: 'column',
+				width: '100%',
+				height: '100%',
 				...layoutElements.canvaCSS,
 				position: 'relative',
 			}}
@@ -1734,7 +1752,15 @@ export const Col_2_img_2_layout = ({
 	//const filteredContent: JSX.Element[] = filterEmptyLines(content);
 
 	return (
-		<div style={{ ...layoutElements.canvaCSS, position: 'relative' }}>
+		<div
+			style={{
+				width: '100%',
+				height: '100%',
+				display: 'flex',
+				...layoutElements.canvaCSS,
+				position: 'relative',
+			}}
+		>
 			<div
 				// className='flex flex-col gap-[0.5rem]'
 				style={layoutElements.columnCSS}
@@ -2049,7 +2075,15 @@ export const Col_3_img_3_layout = ({
 		updatedContentCol3.length === 0,
 	);
 	return (
-		<div style={{ ...layoutElements.canvaCSS, position: 'relative' }}>
+		<div
+			style={{
+				width: '100%',
+				height: '100%',
+				display: 'flex',
+				...layoutElements.canvaCSS,
+				position: 'relative',
+			}}
+		>
 			<div
 				// className='flex flex-col gap-[0.5rem]'
 				style={layoutElements.columnCSS}
@@ -2472,18 +2506,6 @@ export const Full_img_only_layout = ({
 				}}
 			>
 				{templateLogo}
-			</div>
-			<div style={layoutElements.visualElementsCSS}>
-				{themeElements.backgroundUrlCol_3_img_3 && (
-					<Image
-						style={{ objectFit: 'cover', height: '100%' }}
-						width={960}
-						height={540}
-						src={themeElements.backgroundUrlCol_3_img_3}
-						alt='Background Image'
-						unoptimized={true}
-					/>
-				)}
 			</div>
 		</div>
 	);

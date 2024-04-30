@@ -15,7 +15,7 @@ export const Creative_Brief_011_TemplateLayoutsConfig: {
 		},
 		titleCSS: {
 			// backgroundColor: '#F1F1F1',
-			padding: '180px 80px 0px 80px',
+			padding: '80px 80px 0px 50px',
 			width: '100%',
 			height: '70%',
 			zIndex: 20,
@@ -30,7 +30,8 @@ export const Creative_Brief_011_TemplateLayoutsConfig: {
 		userNameCSS: {
 			position: 'absolute',
 			top: '400px',
-			left: '25%',
+			// left: '25%',
+			paddingLeft: '50px',
 			width: '50%',
 			// paddingLeft: '80px',
 			// transform: 'translate(-50%, -50%)', // Centering trick
@@ -67,7 +68,7 @@ export const Creative_Brief_011_TemplateLayoutsConfig: {
 			textAlign: 'left',
 		},
 		titleCSS: {
-			padding: '80px 0px 0px 80px',
+			padding: '80px 0px 0px 50px',
 			maxHeight: '80%',
 			width: '50%',
 			height: '70%',
@@ -80,7 +81,7 @@ export const Creative_Brief_011_TemplateLayoutsConfig: {
 			// paddingTop: '4rem', // Equivalent to pt-[1rem]
 			// paddingLeft: '2rem', // Equivalent to px-[2rem], for left padding
 			// paddingRight: '2rem', // Equivalent to px-[2rem], for right padding
-			width: '50%', // Equivalent to w-1/2
+			width: '65%', // Equivalent to w-1/2
 			display: 'flex', // Equivalent to flex
 			flexDirection: 'column', // Equivalent to flex-col
 			justifyContent: 'flex-start', // Equivalent to justify-start
@@ -88,7 +89,7 @@ export const Creative_Brief_011_TemplateLayoutsConfig: {
 			gap: '2rem',
 		},
 		imageContainerCSS: {
-			width: '50%', // Equivalent to w-1/2
+			width: '35%', // Equivalent to w-1/2
 			height: '100%', // Equivalent to h-full
 			//overflow: 'hidden',
 			display: 'flex',

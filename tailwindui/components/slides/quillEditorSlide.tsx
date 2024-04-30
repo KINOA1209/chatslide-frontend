@@ -43,6 +43,8 @@ export const fontWhiteList = [
 	'Arial',
 	'Assistant Medium',
 	'Assistant Regular',
+	'Big Shoulders Display Bold',
+	'Big Shoulders Display SemiBold',
 	'Big Shoulders Text',
 	'Brygada 1918 SemiBold',
 	'Caveat',
@@ -57,6 +59,7 @@ export const fontWhiteList = [
 	'DM Sans Bold',
 	'Georgia',
 	'Helvetica Neue',
+	'Inter Regular',
 	'Lemonada',
 	'Libre Baskerville Regular',
 	'Libre Baskerville Bold',
@@ -117,12 +120,15 @@ Quill.register(Size, true);
 
 // file in quill/formats/list.js
 class UListContainer extends ListContainer {}
-UListContainer.blotName = 'list-container'
-UListContainer.tagName = 'UL'
+UListContainer.blotName = 'list-container';
+UListContainer.tagName = 'UL';
 
-Quill.register({
-	'formats/list-container': UListContainer
-}, true);
+Quill.register(
+	{
+		'formats/list-container': UListContainer,
+	},
+	true,
+);
 
 const toolbarOptions = [
 	['regenerate'],

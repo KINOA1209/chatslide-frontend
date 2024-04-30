@@ -10,7 +10,8 @@
 	outline: 2px solid #545657;
 }
 
-.ql-editor ol, .ql-editor ul  {
+.ql-editor ol,
+.ql-editor ul {
 	padding-left: 0 !important;
 }
 
@@ -35,14 +36,15 @@
 
 // temp fix
 .ql-editor.non-editable-ql-editor ul li::before {
-    content: '• '; /* Unicode bullet symbol */
-    position: absolute;
-    margin-left: -0.55em;
+	content: '• '; /* Unicode bullet symbol */
+	position: absolute;
+	margin-left: -0.55em;
 	font-size: 22px;
 	margin-top: -0.15em;
 }
 
-.ql-editor ol li, .ql-editor ul li {
+.ql-editor ol li,
+.ql-editor ul li {
 	padding-bottom: 10px;
 }
 
@@ -102,6 +104,8 @@ $font-families: (
 	'Arial',
 	'Assistant Medium',
 	'Assistant Regular',
+	'Big Shoulders Display Bold',
+	'Big Shoulders Display SemiBold',
 	'Big Shoulders Text',
 	'Brygada 1918 SemiBold',
 	'Caveat',
@@ -116,6 +120,7 @@ $font-families: (
 	'DM Sans Bold',
 	'Georgia',
 	'Helvetica Neue',
+	'Inter Regular',
 	'Lemonada',
 	'Libre Baskerville Regular',
 	'Libre Baskerville Bold',
