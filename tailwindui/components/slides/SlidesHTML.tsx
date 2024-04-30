@@ -305,7 +305,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
         ),
       );
     }
-  }, []);
+  }, [showScript]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -342,19 +342,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
       document.removeEventListener('redo_change', redoChange);
     };
   }, [slideIndex, slidesHistoryIndex]);
-
-  useEffect(() => {
-    if (showScript) {
-      setNonPresentScale(
-        calculateNonPresentScale(
-          window.outerWidth,
-          window.outerHeight,
-          isChatWindowOpen,
-          showScript,
-        ),
-      );
-    }
-  }, [showScript]);
 
   const selectTemplateAndColorPalette = (
     newTemplate: string | TemplateKeys, // Accepts string or TemplateKeys
