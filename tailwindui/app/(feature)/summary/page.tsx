@@ -41,7 +41,7 @@ import slides_scenarios from './../scenario-choice/slides_scenarios.json';
 import RangeSlider from '@/components/ui/RangeSlider';
 import GenModeToggle from '@/components/summary/GenModeToggle';
 import { WrappableRow } from '@/components/layout/WrappableRow';
-import { formatName } from './util';
+import { InputBox } from '@/components/ui/InputBox';
 
 const MAX_TOPIC_LENGTH = 3000;
 const MIN_TOPIC_LENGTH = 3;
@@ -110,6 +110,8 @@ export default function Topic() {
 		useState(false);
 
 	const [pageCountEst, setPageCountEst] = useState(15);
+
+	const [outlineStructure, setOutlineStructure] = useState('');
 
 	const handleGenerationStatusModal = () => {
 		// console.log('user Research Modal toggled');
@@ -202,6 +204,7 @@ export default function Topic() {
 			knowledge_summary: knowledge_summary,
 			section_count: Math.round(pageCountEst / 3),
 			credit_cost: Math.max(20, pageCountEst),
+			outlines_structure: outlineStructure,
 		};
 
 		bulkUpdateProject({
@@ -487,6 +490,17 @@ export default function Topic() {
 						</div>
 						<LanguageSelector language={language} setLanguage={setLanguage} />
 					</WrappableRow>
+
+					<Instruction>Outlines Structure</Instruction>
+					<InputBox>
+						<input
+							type='text'
+							className='w-full'
+							placeholder='Introduction, Detailed Analysis, Comparison, Conclusion'
+							value={outlineStructure}
+							onChange={(e) => setOutlineStructure(e.target.value)}
+							/>
+					</InputBox>
 
 					<div className='w-full gap-2 flex flex-col sm:grid sm:grid-cols-2'>
 						<div>
