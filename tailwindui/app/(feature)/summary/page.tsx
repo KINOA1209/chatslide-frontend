@@ -26,6 +26,7 @@ import {
 	Explanation,
 	ExplanationPopup,
 	Instruction,
+	WarningMessage,
 } from '@/components/ui/Text';
 import { DropDown } from '@/components/button/DrlambdaButton';
 import ResourceService from '@/services/ResourceService';
@@ -42,6 +43,7 @@ import RangeSlider from '@/components/ui/RangeSlider';
 import GenModeToggle from '@/components/summary/GenModeToggle';
 import { WrappableRow } from '@/components/layout/WrappableRow';
 import { InputBox } from '@/components/ui/InputBox';
+import RadioButton from '@/components/ui/RadioButton';
 
 const MAX_TOPIC_LENGTH = 3000;
 const MIN_TOPIC_LENGTH = 3;
@@ -122,6 +124,7 @@ export default function Topic() {
 	const [outlineStructure, setOutlineStructure] = useState(
 		getStructureFromScenario(scenarioType),
 	);
+	const [structureMode, setStructureMode] = useState('custom');
 
 	const handleGenerationStatusModal = () => {
 		// console.log('user Research Modal toggled');
@@ -214,7 +217,8 @@ export default function Topic() {
 			knowledge_summary: knowledge_summary,
 			section_count: Math.round(pageCountEst / 3),
 			credit_cost: Math.max(20, pageCountEst),
-			outlines_structure: outlineStructure,
+			structure_mode: structureMode,
+			outline_structure: structureMode === 'custom' ? outlineStructure : '',
 		};
 
 		bulkUpdateProject({
@@ -322,6 +326,76 @@ export default function Topic() {
 	const removeResourceAtIndex = (indexToRemove: number) => {
 		setSelectedResources((currentResources) =>
 			currentResources.filter((_, index) => index !== indexToRemove),
+		);
+	};
+
+	const AdvancedOptions: React.FC = () => {
+		return (
+			<>
+				<Instruction>Structure of the Deck</Instruction>
+
+				<RadioButton
+					name='outline_structure_mode'
+					options={[
+						{ value: 'custom', text: 'Custom Structure' },
+						{
+							value: 'follow_resource',
+							text: 'Follow the structure of my resource',
+						},
+					]}
+					selectedValue={structureMode}
+					setSelectedValue={setStructureMode}
+				/>
+
+				{structureMode === 'custom' ? (
+					<InputBox>
+						<input
+							type='text'
+							className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800'
+							placeholder='Introduction, background, details, examples, conclusion.'
+							value={outlineStructure}
+							onChange={(e) => setOutlineStructure(e.target.value)}
+						/>
+					</InputBox>
+				) : selectedResources.length == 0 ? (
+					<WarningMessage>
+						Add a resource to enable this feature.
+					</WarningMessage>
+				) : (
+					<DropDown>
+						{selectedResources.map((resource, index) => (
+							<option key={index} value={resource.id}>
+								{resource.name}
+							</option>
+						))}
+					</DropDown>
+				)}
+
+				<div className='w-full gap-2 flex flex-col sm:grid sm:grid-cols-2'>
+					<div>
+						<Instruction>Estimated Number of Pages: {pageCountEst}</Instruction>
+						<Explanation>
+							A rough estimate of the number of slides you will need. <br />
+							Decks with more than 20 pages will cost more ⭐️ credits.
+						</Explanation>
+						<div className='w-[80%]'>
+							<RangeSlider
+								onChange={(value: number) => {
+									if (value != 0) setPageCountEst(value);
+								}}
+								value={pageCountEst}
+								minValue={5}
+								choices={[0, 5, 10, 15, 20, 25, 30, 35, 40]}
+							/>
+						</div>
+						<Explanation>
+							Roughly {Math.round(pageCountEst / 3 + 0.5)} sections,{' '}
+							{pageCountEst} pages of slides, and {Math.round(pageCountEst / 3)}{' '}
+							minutes if you generate video.
+						</Explanation>
+					</div>
+				</div>
+			</>
 		);
 	};
 
@@ -511,47 +585,7 @@ export default function Topic() {
 							</div>
 						</Instruction>
 					) : (
-						<>
-							<Instruction>Outlines Structure</Instruction>
-							<InputBox>
-								<input
-									type='text'
-									className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800 bg-gray-100'
-									placeholder='Introduction, background, details, examples, conclusion.'
-									value={outlineStructure}
-									onChange={(e) => setOutlineStructure(e.target.value)}
-								/>
-							</InputBox>
-
-							<div className='w-full gap-2 flex flex-col sm:grid sm:grid-cols-2'>
-								<div>
-									<Instruction>
-										Estimated Number of Pages: {pageCountEst}
-									</Instruction>
-									<Explanation>
-										A rough estimate of the number of slides you will need.{' '}
-										<br />
-										Decks with more than 20 pages will cost more ⭐️ credits.
-									</Explanation>
-									<div className='w-[80%]'>
-										<RangeSlider
-											onChange={(value: number) => {
-												if (value != 0) setPageCountEst(value);
-											}}
-											value={pageCountEst}
-											minValue={5}
-											choices={[0, 5, 10, 15, 20, 25, 30, 35, 40]}
-										/>
-									</div>
-									<Explanation>
-										Roughly {Math.round(pageCountEst / 3 + 0.5)} sections,{' '}
-										{pageCountEst} pages of slides, and{' '}
-										{Math.round(pageCountEst / 3)} minutes if you generate
-										video.
-									</Explanation>
-								</div>
-							</div>
-						</>
+						<AdvancedOptions />
 					)}
 				</Card>
 
