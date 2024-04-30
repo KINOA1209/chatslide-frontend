@@ -286,7 +286,7 @@ export default function DesignPage() {
 							Customize the design for your slide, you can also skip this step
 							and use the default
 						</Explanation>
-						{/* tempalte */}
+						{/* template */}
 						<TemplateSelector
 							template={template}
 							setTemplate={setTemplate}

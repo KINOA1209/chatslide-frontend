@@ -57,7 +57,7 @@ const audienceDict = {
 	Myself: '🧑‍💻 Myself',
 };
 
-const getAudienceFromSceario = (scenarioType: string) => {
+const getAudienceFromScenario = (scenarioType: string) => {
 	return (
 		slides_scenarios.options.find((scenario) => scenario.id === scenarioType)
 			?.audience || 'Business_Clients'
@@ -89,7 +89,7 @@ export default function Topic() {
 
 	const [topic, setTopic] = useState(project?.topic || '');
 	const [audience, setAudience] = useState(
-		project?.audience || getAudienceFromSceario(scenarioType),
+		project?.audience || getAudienceFromScenario(scenarioType),
 	);
 	const [language, setLanguage] = useState(project?.language || ''); // will be updated later depending on user's location
 	const [selectedResources, setSelectedResources] = useState<Resource[]>(

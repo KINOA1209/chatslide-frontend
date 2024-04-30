@@ -2088,7 +2088,7 @@ function Landing() {
 										</div>
 									</div>
 									<div className='uui-heading-xxsmall text-weight-medium'>
-										"I fully recomend this incredible tool for creators of
+										"I fully recommend this incredible tool for creators of
 										courses or education persons. You will be able to download
 										your presentation created in minutes and you can create a
 										video for your socialmedia."
