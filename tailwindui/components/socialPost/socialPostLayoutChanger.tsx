@@ -43,8 +43,7 @@ const LayoutChanger: React.FC<LayoutProps> = ({
 			<ButtonWithExplanation
 				explanation='Change Page Layout'
 				button={
-					<button
-						onClick={openModal}>
+					<button onClick={openModal}>
 						<FiLayout
 							style={{
 								strokeWidth: '2',
@@ -97,94 +96,94 @@ const LayoutChanger: React.FC<LayoutProps> = ({
 										<div className='w-full h-fit grid grid-cols-2 gap-4 p-2'>
 											{currentSlideIndex === 0
 												? templateSamples.cover.map((temp, index) => {
-													if (!slides[currentSlideIndex]) {
-														return <></>;
-													}
-													if (
-														temp.name !== slides[currentSlideIndex].template
-													) {
-														return (
-															<div
-																key={'layout1' + index}
-																onClick={(e) =>
-																	updateTemplate(
-																		e,
-																		temp.name,
-																		currentSlideIndex,
-																	)
-																}
-																className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-[3px] outline-slate-300 hover:outline-[#5168F6]'
-															>
-																<img
-																	src={temp.img}
-																	className='w-full h-full object-contain'
-																/>
-															</div>
-														);
-													} else {
-														return (
-															<div
-																key={'layout2' + index}
-																onClick={(e) =>
-																	updateTemplate(
-																		e,
-																		temp.name,
-																		currentSlideIndex,
-																	)
-																}
-																className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-[#5168F6] outline-[3px]'
-															>
-																<img
-																	src={temp.img}
-																	className='w-full h-full object-contain'
-																/>
-															</div>
-														);
-													}
-												})
+														if (!slides[currentSlideIndex]) {
+															return <></>;
+														}
+														if (
+															temp.name !== slides[currentSlideIndex].template
+														) {
+															return (
+																<div
+																	key={'layout1' + index}
+																	onClick={(e) =>
+																		updateTemplate(
+																			e,
+																			temp.name,
+																			currentSlideIndex,
+																		)
+																	}
+																	className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-[3px] outline-slate-300 hover:outline-[#5168F6]'
+																>
+																	<img
+																		src={temp.img}
+																		className='w-full h-full object-contain'
+																	/>
+																</div>
+															);
+														} else {
+															return (
+																<div
+																	key={'layout2' + index}
+																	onClick={(e) =>
+																		updateTemplate(
+																			e,
+																			temp.name,
+																			currentSlideIndex,
+																		)
+																	}
+																	className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-[#5168F6] outline-[3px]'
+																>
+																	<img
+																		src={temp.img}
+																		className='w-full h-full object-contain'
+																	/>
+																</div>
+															);
+														}
+													})
 												: templateSamples.main.map((temp, index) => {
-													if (
-														temp.name !== slides[currentSlideIndex].template
-													) {
-														return (
-															<div
-																key={'layout3' + index}
-																onClick={(e) =>
-																	updateTemplate(
-																		e,
-																		temp.name,
-																		currentSlideIndex,
-																	)
-																}
-																className='w-full aspect-[0.75/1] bg-white rounded-md overflow-hidden cursor-pointer outline outline-[3px] outline-slate-300 hover:outline-[#5168F6]'
-															>
-																<img
-																	src={temp.img}
-																	className='w-full h-full object-contain'
-																/>
-															</div>
-														);
-													} else {
-														return (
-															<div
-																key={'layout4' + index}
-																onClick={(e) =>
-																	updateTemplate(
-																		e,
-																		temp.name,
-																		currentSlideIndex,
-																	)
-																}
-																className='w-full aspect-[0.75/1] bg-white rounded-md overflow-hidden cursor-pointer outline outline-[#5168F6] outline-[3px]'
-															>
-																<img
-																	src={temp.img}
-																	className='w-full h-full object-contain'
-																/>
-															</div>
-														);
-													}
-												})}
+														if (
+															temp.name !== slides[currentSlideIndex].template
+														) {
+															return (
+																<div
+																	key={'layout3' + index}
+																	onClick={(e) =>
+																		updateTemplate(
+																			e,
+																			temp.name,
+																			currentSlideIndex,
+																		)
+																	}
+																	className='w-full aspect-[0.75/1] bg-white rounded-md overflow-hidden cursor-pointer outline outline-[3px] outline-slate-300 hover:outline-[#5168F6]'
+																>
+																	<img
+																		src={temp.img}
+																		className='w-full h-full object-contain'
+																	/>
+																</div>
+															);
+														} else {
+															return (
+																<div
+																	key={'layout4' + index}
+																	onClick={(e) =>
+																		updateTemplate(
+																			e,
+																			temp.name,
+																			currentSlideIndex,
+																		)
+																	}
+																	className='w-full aspect-[0.75/1] bg-white rounded-md overflow-hidden cursor-pointer outline outline-[#5168F6] outline-[3px]'
+																>
+																	<img
+																		src={temp.img}
+																		className='w-full h-full object-contain'
+																	/>
+																</div>
+															);
+														}
+													})}
 										</div>
 									</div>
 								</div>

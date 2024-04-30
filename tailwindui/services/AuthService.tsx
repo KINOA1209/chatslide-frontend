@@ -139,7 +139,7 @@ class AuthService {
 			console.warn(
 				`Error getting user token and id: ${error}, user probably did not log in.`,
 			);
-			return { email: '', idToken: '', uid: ''};
+			return { email: '', idToken: '', uid: '' };
 		}
 	}
 

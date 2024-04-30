@@ -166,7 +166,17 @@ export const calculateNonPresentScale = (
 	showScript = false,
 	workflow = 'slides',
 ) => {
-	// console.log("width", width, "height", height, "isChatWindowOpen", isChatWindowOpen, "showScript", showScript);
+	console.log(
+		'Calculating slides scale...',
+		'width',
+		width,
+		'height',
+		height,
+		'isChatWindowOpen',
+		isChatWindowOpen,
+		'showScript',
+		showScript,
+	);
 	if (width < 1024) {
 		// mobile, layout vertically
 		if (workflow === 'socialPosts') {
@@ -293,9 +303,17 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	useEffect(() => {
 		if (window.innerWidth > 1200) {
 			setIsChatWindowOpen(true);
-			toggleChatWindow();
+			console.log('Window size > 1200, Resizing the layout...');
+			setNonPresentScale(
+				calculateNonPresentScale(
+					window.innerWidth,
+					window.innerHeight,
+					showScript,
+					true,
+				),
+			);
 		}
-	}, []);
+	}, [showScript]);
 
 	useEffect(() => {
 		const handleResize = () => {
@@ -332,19 +350,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			document.removeEventListener('redo_change', redoChange);
 		};
 	}, [slideIndex, slidesHistoryIndex]);
-
-	useEffect(() => {
-		if (showScript) {
-			setNonPresentScale(
-				calculateNonPresentScale(
-					window.outerWidth,
-					window.outerHeight,
-					isChatWindowOpen,
-					showScript,
-				),
-			);
-		}
-	}, [showScript]);
 
 	const selectTemplateAndColorPalette = (
 		newTemplate: string | TemplateKeys, // Accepts string or TemplateKeys
@@ -812,7 +817,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			<div className='w-full flex flex-row items-start justify-center lg:justify-around gap-2'>
 				{/* vertical bar */}
 				<Panel>
-					<div className='max-h-[540px] hidden lg:flex md:w-[150px] mb-[8rem] overflow-y-scroll'>
+					<div className='max-h-[540px] hidden lg:flex md:w-[150px] mb-[8rem]'>
 						<DraggableSlidesPreview
 							ref={verticalCurrentSlideRef}
 							slideIndex={slideIndex}
@@ -949,13 +954,15 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				{
 					!isViewing && isChatWindowOpen ? (
 						<Panel>
-							<AIAssistantChatWindow
-								onToggle={toggleChatWindow}
-								slides={slides}
-								currentSlideIndex={slideIndex}
-								updateSlidePage={updateSlidePage}
-								updateImgUrlArray={updateImgUrlArray}
-							/>
+							<div className='h-[540px]'>
+								<AIAssistantChatWindow
+									onToggle={toggleChatWindow}
+									slides={slides}
+									currentSlideIndex={slideIndex}
+									updateSlidePage={updateSlidePage}
+									updateImgUrlArray={updateImgUrlArray}
+								/>
+							</div>
 						</Panel>
 					) : (
 						<div className='hidden sm:block w-0 h-0'></div>

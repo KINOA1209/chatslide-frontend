@@ -15,7 +15,7 @@ export default function DefaultLayout({
 	children: React.ReactNode;
 }) {
 	useEffect(() => {
-AOS.init({
+		AOS.init({
 			once: true,
 			disable: 'phone',
 			duration: 700,
@@ -28,9 +28,7 @@ AOS.init({
 
 	return (
 		<>
-			<main className='grow'>
-				{children}
-			</main>
+			<main className='grow'>{children}</main>
 
 			<Intercom />
 		</>

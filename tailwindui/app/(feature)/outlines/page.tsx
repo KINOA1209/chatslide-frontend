@@ -18,8 +18,14 @@ import GenerateSlidesSubmit from '@/components/outline/GenerateSlidesSubmit';
 import OutlinePageView from '@/components/outline/OutlinePageView';
 import { useUser } from '@/hooks/use-user';
 import Project from '@/models/Project';
-import { CardReviewIcon, PageReviewIcon } from '@/components/outline/OutlineIcons';
-import { convertOutlineToPlainText, convertPlainTextToOutlines } from '@/components/outline/OutlineUtils';
+import {
+	CardReviewIcon,
+	PageReviewIcon,
+} from '@/components/outline/OutlineIcons';
+import {
+	convertOutlineToPlainText,
+	convertPlainTextToOutlines,
+} from '@/components/outline/OutlineUtils';
 import { BigTitle, Instruction, Explanation } from '@/components/ui/Text';
 import { Column } from '@/components/layout/Column';
 import Toggle from '@/components/button/Toggle';
@@ -37,7 +43,7 @@ export default function WorkflowStep2() {
 	const [viewMode, setViewMode] = useState<OutlineViewMode>('card');
 	const [outlinesPlainText, setOutlinesPlainText] = useState<string>('');
 	const { token } = useUser();
-	const language = project?.language || 'English'
+	const language = project?.language || 'English';
 	const [loading, setLoading] = useState(false);
 	//keep track of whether the text in the page view has been modified or not
 	const [textModified, setTextModified] = useState(false);
@@ -52,16 +58,18 @@ export default function WorkflowStep2() {
 				language,
 				isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4',
 			);
-			updateOutlines(Object.values(JSON.parse(convertedOutlineJSON.data.outlines)));
+			updateOutlines(
+				Object.values(JSON.parse(convertedOutlineJSON.data.outlines)),
+			);
 			bulkUpdateProject({
-				outlines: convertedOutlineJSON.data.outlines
-			} as Project)
+				outlines: convertedOutlineJSON.data.outlines,
+			} as Project);
 		} catch (error) {
 			console.error('Failed to convert plain text to outlines:', error);
 		} finally {
-			setLoading(false)
+			setLoading(false);
 		}
-	}
+	};
 
 	if (!project) {
 		if (params.get('id')) {
@@ -90,8 +98,11 @@ export default function WorkflowStep2() {
 			const plainText = convertOutlineToPlainText(outlines);
 			setOutlinesPlainText(plainText);
 			setLoading(false);
-		}
-		else if (viewMode === 'card' && outlinesPlainText !== '' && textModified) {
+		} else if (
+			viewMode === 'card' &&
+			outlinesPlainText !== '' &&
+			textModified
+		) {
 			fetchData();
 			setTextModified(false);
 		}
@@ -146,21 +157,38 @@ export default function WorkflowStep2() {
 				nextText={!isSubmitting ? 'Select Design' : 'Select Design'}
 			/>
 			<div className='flex flex-col mb-[3rem]'>
-
 				<Column>
-						<WrappableRow type='flex' justify='around'>
-							<div className='flex flex-col gap-2'>
-								<BigTitle>🗒️ Outline</BigTitle>
-								{/* <Instruction>Modify this outline until you're satisfied.</Instruction> */}
-								<Explanation>Around {outlines.length * 3} slide pages total.</Explanation>
-							</div>
-							<Toggle
-								isLeft={viewMode === 'card'}
-								setIsLeft={(value: boolean) => setViewMode(value ? 'card' : 'page')}
-								leftElement={<><CardReviewIcon color={`${viewMode === 'card' ? '#5168F6' : '#707C8A'}`} />Card View</>}
-								rightElement={<><PageReviewIcon color={`${viewMode === 'page' ? '#5168F6' : '#707C8A'}`} />Page View</>}
-							/>
-						</WrappableRow>
+					<WrappableRow type='flex' justify='around'>
+						<div className='flex flex-col gap-2'>
+							<BigTitle>🗒️ Outline</BigTitle>
+							{/* <Instruction>Modify this outline until you're satisfied.</Instruction> */}
+							<Explanation>
+								Around {outlines.length * 3} slide pages total.
+							</Explanation>
+						</div>
+						<Toggle
+							isLeft={viewMode === 'card'}
+							setIsLeft={(value: boolean) =>
+								setViewMode(value ? 'card' : 'page')
+							}
+							leftElement={
+								<>
+									<CardReviewIcon
+										color={`${viewMode === 'card' ? '#5168F6' : '#707C8A'}`}
+									/>
+									Card View
+								</>
+							}
+							rightElement={
+								<>
+									<PageReviewIcon
+										color={`${viewMode === 'page' ? '#5168F6' : '#707C8A'}`}
+									/>
+									Page View
+								</>
+							}
+						/>
+					</WrappableRow>
 					{loading ? (
 						<Loading />
 					) : (
@@ -181,12 +209,11 @@ export default function WorkflowStep2() {
 										setTextModified={setTextModified}
 									/>
 								)}
-
 							</div>
 						</div>
 					)}
 				</Column>
 			</div>
-		</div >
+		</div>
 	);
 }

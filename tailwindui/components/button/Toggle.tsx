@@ -29,7 +29,7 @@ const Toggle: React.FC<ToggleProps> = ({
 										   ${isLeft ? 'text-[#5168F6]' : 'text-[#707C8A]'}
 										  `}
 					>
-						{ leftText || leftElement }
+						{leftText || leftElement}
 					</div>
 				</div>
 				<div
@@ -41,11 +41,11 @@ const Toggle: React.FC<ToggleProps> = ({
 								           ${!isLeft ? 'text-[#5168F6]' : 'text-[#707C8A]'}
 										  `}
 					>
-						{ rightText || rightElement }
+						{rightText || rightElement}
 					</div>
 				</div>
 			</div>
-			</div>
+		</div>
 	);
 };
 

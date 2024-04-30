@@ -15,11 +15,12 @@ import { useUser } from '@/hooks/use-user';
 import RadioButton, { RadioButtonOption } from '../ui/RadioButton';
 import { FaInternetExplorer, FaNewspaper, FaWikipediaW } from 'react-icons/fa';
 import { IoIosRemoveCircle, IoIosRemoveCircleOutline } from 'react-icons/io';
-import { Instruction, Explanation, BigTitle } from '../ui/Text';
+import { Instruction, Explanation, BigTitle, WarningMessage } from '../ui/Text';
 import Card from '../ui/Card';
 import { determineSupportedFormats } from '../file/FileUploadButton';
 import GenModeToggle from './GenModeToggle';
 import { WrappableRow } from '../layout/WrappableRow';
+import { select } from 'd3';
 
 interface AddResourcesProps {
 	searchOnlineScope?: string;
@@ -150,11 +151,12 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 				{isRequired ? (
 					<WrappableRow type='flex' justify='between'>
 						<BigTitle>📚 Import Sources</BigTitle>
-						{generationMode && setGenerationMode &&
+						{generationMode && setGenerationMode && (
 							<GenModeToggle
 								generationMode={generationMode}
 								setGenerationMode={setGenerationMode}
-							/>}
+							/>
+						)}
 					</WrappableRow>
 				) : (
 					<BigTitle>📚 Supporting Sources</BigTitle>
@@ -169,8 +171,12 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 			{/* search online */}
 			{setSearchOnlineScope && (
 				<div>
-					<Instruction>Which online sources do you want to include?</Instruction>
-					<Explanation>This may also add content less relevant to your topic.</Explanation>
+					<Instruction>
+						Which online sources do you want to include?
+					</Instruction>
+					<Explanation>
+						This may also add content less relevant to your topic.
+					</Explanation>
 					<RadioButton
 						name='search_online'
 						options={searchOnlineOptions}
@@ -183,9 +189,7 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 
 			{/* files */}
 			<div>
-				<Instruction>
-					What additional files do you want to include?
-				</Instruction>
+				<Instruction>What additional files do you want to include?</Instruction>
 				<div
 					className={`w-full h-[150px] flex flex-col items-center justify-center border rounded-md border-2 border-gray-200 cursor-pointer 
 						${isDragging ? 'bg-blue-100 border-blue-500' : ''}
@@ -230,6 +234,11 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 			{selectedResources.length > 0 && (
 				<div ref={selectedResourcesRef}>
 					<Instruction>Your selected sources:</Instruction>
+					{selectedResources.length > 4 && (
+						<WarningMessage>
+							The performance and accuracy may degrade with more than 4 sources.
+						</WarningMessage>
+					)}
 					<SelectedResourcesList
 						selectedResources={selectedResources}
 						removeResourceAtIndex={removeResourceAtIndex}

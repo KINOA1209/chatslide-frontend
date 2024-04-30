@@ -13,7 +13,7 @@ export default async function Page({ params }: Props) {
 
 	return (
 		<div>
-      <SharePage project_id={project_id} embed={true}/>{' '}
+			<SharePage project_id={project_id} embed={true} />{' '}
 			{/* The project is now passed as a prop */}
 		</div>
 	);

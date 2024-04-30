@@ -185,7 +185,7 @@ const OnboardingSurvey: React.FC<OnboardingSurveyProps> = ({ handleBack }) => {
 				</div>
 			</div>
 
-			{!showReferralSection && !showPurposeSection &&
+			{!showReferralSection && !showPurposeSection && (
 				<SurveySection
 					section={'industry'}
 					selectedItems={selectedIndustries}
@@ -193,7 +193,8 @@ const OnboardingSurvey: React.FC<OnboardingSurveyProps> = ({ handleBack }) => {
 					showNextSection={showReferralSection}
 					handleButtonClick={handleNextToReferral}
 					handleCustomInput={(value) => handleCustomInput(value, 'industry')}
-				/>}
+				/>
+			)}
 
 			{showReferralSection && (
 				<div

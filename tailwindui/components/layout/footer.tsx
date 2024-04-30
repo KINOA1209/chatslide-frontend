@@ -40,7 +40,11 @@ const socialMediaBlock = (
 		{/* twitter */}
 		<li className='ml-4'>
 			<a
-				href={isChatslide() ? 'https://twitter.com/chatslide_ai' : 'https://twitter.com/drlambda_ai'}
+				href={
+					isChatslide()
+						? 'https://twitter.com/chatslide_ai'
+						: 'https://twitter.com/drlambda_ai'
+				}
 				target='_blank'
 				className='flex justify-center items-center text-gray-600 hover:text-gray-900 bg-white hover:bg-white-100 rounded-full shadow transition duration-150 ease-in-out'
 				aria-label='Twitter'
@@ -217,9 +221,8 @@ export function WorkflowFooter() {
 	return (
 		<footer>
 			<div className='w-full border-t border-gray-200 bg-[#F4F4F4]'>
-					{/* Social as */}
-					{socialMediaBlock}
-
+				{/* Social as */}
+				{socialMediaBlock}
 			</div>
 		</footer>
 	);

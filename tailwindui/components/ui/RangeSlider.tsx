@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PaywallModal from '../paywallModal';
-import { Explanation } from './Text';
+import './rangeSlider.css';
 
 interface RangeSliderProps {
 	onChange?: (value: number) => void;
@@ -17,7 +17,7 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
 	value,
 	choices,
 	locked,
-	minValue
+	minValue,
 }) => {
 	const [index, setIndex] = useState<number>(choices.indexOf(value));
 	const MAX_VALUE = choices.length - 1;
@@ -32,8 +32,7 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
 			return;
 		}
 		const newIndex = e.target.valueAsNumber;
-		if (newIndex < minValueIndex) 
-			return;
+		if (newIndex < minValueIndex) return;
 		setIndex(newIndex);
 		if (onChange) {
 			onChange(choices[newIndex]);
@@ -64,35 +63,6 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
 						backgroundImage: `linear-gradient(90deg, #8B91FB, #E5E7EB ${(index / MAX_VALUE) * 100}%)`,
 					}}
 				/>
-
-				<style jsx>{`
-					input[type='range']::-webkit-slider-thumb {
-						appearance: none;
-						height: 16px;
-						width: 16px;
-						border-radius: 50%;
-						background: #5168F6;
-						cursor: pointer;
-						transition: background 0.15s ease-in-out;
-					}
-
-					input[type='range']::-moz-range-thumb {
-						height: 16px;
-						width: 16px;
-						border-radius: 50%;
-						background: #5168F6;
-						cursor: pointer;
-						transition: background 0.15s ease-in-out;
-					}
-
-					input[type='range']:focus::-webkit-slider-thumb {
-						background: #364099; // Darkened color for focus state
-					}
-
-					input[type='range']:focus::-moz-range-thumb {
-						background: #364099; // Darkened color for focus state
-					}
-				`}</style>
 			</div>
 			{/* <Explanation>{value}</Explanation> */}
 			<PaywallModal

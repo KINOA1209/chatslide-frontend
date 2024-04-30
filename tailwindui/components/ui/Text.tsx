@@ -1,23 +1,46 @@
 import { QuestionExplainIcon } from '@/app/(feature)/icons';
 import React from 'react';
 
-const Title: React.FC<{ center?: boolean, children: React.ReactNode }> = ({ center = true, children }) => {
+const Title: React.FC<{ center?: boolean; children: React.ReactNode }> = ({
+	center = true,
+	children,
+}) => {
 	if (center)
-		return <div className='text-neutral-800 text-xl font-bold py-1 text-center'>{children}</div>;
+		return (
+			<div className='text-neutral-800 text-xl font-bold py-1 text-center'>
+				{children}
+			</div>
+		);
 	else
-		return <div className='text-neutral-800 text-xl font-bold py-1'>{children}</div>;
+		return (
+			<div className='text-neutral-800 text-xl font-bold py-1'>{children}</div>
+		);
 };
 
 const BigTitle: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-	return <div className='text-neutral-800 text-2xl font-bold py-1 flex flex-row items-center gap-x-2'>{children}</div>;
+	return (
+		<div className='text-neutral-800 text-2xl font-bold py-1 flex flex-row items-center gap-x-2'>
+			{children}
+		</div>
+	);
 };
 
-
-const Instruction: React.FC<{ center?: boolean, children: React.ReactNode }> = ({ center = false, children }) => {
+const Instruction: React.FC<{
+	center?: boolean;
+	children: React.ReactNode;
+}> = ({ center = false, children }) => {
 	if (center)
-		return <div className='text-neutral-800 text-md py-1 text-center'>{children}</div>;
+		return (
+			<div className='text-neutral-800 text-md py-1 text-center'>
+				{children}
+			</div>
+		);
 	else
-		return <div className='text-neutral-800 text-md py-1 flex flex-row gap-x-2 items-center justify-start'>{children}</div>;
+		return (
+			<div className='text-neutral-800 text-md py-1 flex flex-row gap-x-2 items-center justify-start'>
+				{children}
+			</div>
+		);
 };
 
 const Explanation: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -61,4 +84,12 @@ const ExplanationPopup: React.FC<{ children: React.ReactNode }> = ({
 	);
 };
 
-export { Title, BigTitle, Instruction, Explanation, ErrorMessage, WarningMessage, ExplanationPopup };
+export {
+	Title,
+	BigTitle,
+	Instruction,
+	Explanation,
+	ErrorMessage,
+	WarningMessage,
+	ExplanationPopup,
+};

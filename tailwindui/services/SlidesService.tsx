@@ -84,7 +84,10 @@ class SlidesService {
 		}
 	}
 
-	static async generateScripts(formData: any, token: string): Promise<string[]> {
+	static async generateScripts(
+		formData: any,
+		token: string,
+	): Promise<string[]> {
 		const response = await fetch('/api/generate_script', {
 			method: 'POST',
 			headers: {

@@ -1,10 +1,10 @@
 'use client';
 
-import { useUser } from "@/hooks/use-user";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useUser } from '@/hooks/use-user';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
-export default function AutoRedir(){
+export default function AutoRedir() {
 	const { uid } = useUser();
 	const router = useRouter();
 
@@ -14,8 +14,8 @@ export default function AutoRedir(){
 		} else {
 			router.push('/landing');
 		}
-	}
-	), [uid];
+	}),
+		[uid];
 
 	return null;
 }

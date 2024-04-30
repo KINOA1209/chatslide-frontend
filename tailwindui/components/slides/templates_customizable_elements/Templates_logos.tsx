@@ -147,8 +147,8 @@ export const generateTemplateLogo = ({
 								? coverLogo.src // Assuming coverLogo is of type StaticImageData
 								: nonCoverLogo.src // Assuming nonCoverLogo is of type StaticImageData
 							: isLightBackground
-							? lightBGLogo!.src // Assuming lightBGLogo is of type StaticImageData
-							: darkBGLogo!.src // Assuming darkBGLogo is of type StaticImageData
+								? lightBGLogo!.src // Assuming lightBGLogo is of type StaticImageData
+								: darkBGLogo!.src // Assuming darkBGLogo is of type StaticImageData
 					}
 					alt='Template Logo'
 					className={`w-[${logoWidth}rem] h-auto`}

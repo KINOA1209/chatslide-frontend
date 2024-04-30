@@ -7,7 +7,7 @@ const AuthButtons: React.FC = () => {
 	const { uid } = useUser();
 
 	return (
-		<div className="flex items-center justify-center">
+		<div className='flex items-center justify-center'>
 			{uid ? (
 				<div className='navigation-button-wrap'>
 					<a
@@ -23,9 +23,11 @@ const AuthButtons: React.FC = () => {
 				</div>
 			) : (
 				<div className='navigation-button-wrap'>
-					<a href='/signin'
+					<a
+						href='/signin'
 						className='nav-link w-nav-link landing-sign-up whitespace-nowrap'
-						id='landing-sign-in'>
+						id='landing-sign-in'
+					>
 						Sign In
 					</a>
 					<a
@@ -42,6 +44,6 @@ const AuthButtons: React.FC = () => {
 			)}
 		</div>
 	);
-}
+};
 
 export default AuthButtons;

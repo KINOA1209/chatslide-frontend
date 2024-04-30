@@ -24,8 +24,8 @@ export const UserStudy: React.FC = () => {
 						Join our user study to earn 1000 ⭐️credits.
 					</h3>
 					<p className='text-sm text-gray-500 mt-2'>
-						We want to learn more about what you think of {getBrand()}, and how you
-						use {getBrand()}.
+						We want to learn more about what you think of {getBrand()}, and how
+						you use {getBrand()}.
 					</p>
 					<p className='text-sm text-gray-500 mt-2'>
 						Or you can fill out a form to earn 100 ⭐️credits.

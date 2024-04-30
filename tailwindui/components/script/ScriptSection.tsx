@@ -1,6 +1,5 @@
 'use client';
 
-
 import React, { useEffect, useRef, useState } from 'react';
 import { useUser } from '@/hooks/use-user';
 import SlideContainer from '@/components/slides/SlideContainer';
@@ -16,138 +15,133 @@ import { SpinIcon } from '@/app/(feature)/icons';
 import { calculateNonPresentScale } from '../slides/SlidesHTML';
 import { WrappableRow } from '../layout/WrappableRow';
 
-
 const ScriptSection: React.FC<{
 	slides: Array<Slide>;
 	index: number;
 	voice: string;
 	voiceStyle: string;
 	updateSlidePage: (index: number, slide: Slide) => void;
-}> = ({
-	slides,
-	index,
-	voice,
-	voiceStyle,
-	updateSlidePage,
-}) => {
-		const [scale, setScale] = useState(0.4);
-		const [isPlaying, setIsPlaying] = useState(false);
-		const [isLoading, setIsLoading] = useState(false);
-		// Add a state to store the audio element
-		const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
-		const { token } = useUser();
-		const { project } = useProject();
+}> = ({ slides, index, voice, voiceStyle, updateSlidePage }) => {
+	const [scale, setScale] = useState(0.4);
+	const [isPlaying, setIsPlaying] = useState(false);
+	const [isLoading, setIsLoading] = useState(false);
+	// Add a state to store the audio element
+	const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
+	const { token } = useUser();
+	const { project } = useProject();
 
-		// useEffect(() => {
-		// 	const handleResize = () => {
-		// 		setScale(calculateNonPresentScale(window.innerWidth, window.innerHeight) * 0.5);
-		// 	};
+	// useEffect(() => {
+	// 	const handleResize = () => {
+	// 		setScale(calculateNonPresentScale(window.innerWidth, window.innerHeight) * 0.5);
+	// 	};
 
-		// 	window.addEventListener('resize', handleResize);
+	// 	window.addEventListener('resize', handleResize);
 
-		// 	return () => window.removeEventListener('resize', handleResize);
-		// }, []);
+	// 	return () => window.removeEventListener('resize', handleResize);
+	// }, []);
 
-		const playScript = async () => {
-			const script = slides[index].transcript || '';
-			console.log('Playing script:', script);
-			setIsLoading(true);
+	const playScript = async () => {
+		const script = slides[index].transcript || '';
+		console.log('Playing script:', script);
+		setIsLoading(true);
 
-			// Assuming VideoService.playScript returns a Promise that resolves to an audio URL or blob
-			try {
-				const audio = await VideoService.getTTS(
-					script, 
-					voice, 
-					voiceStyle,
-					project?.foldername as string, 
-					token); // Fetch voice from backend
-				const audioElement = new Audio(audio); // Create an audio element with the fetched voice
-				setIsLoading(false);
-				setIsPlaying(true);
-				audioElement.play(); // Play the voice
-				setAudio(audioElement); // Store the audio element in state for access by pauseScript
-				console.log('playing audio:', audioElement);
-				audioElement.onended = () => {
-					setIsPlaying(false); // Automatically set to not playing when playback finishes
-				};
-			} catch (error) {
-				console.error("Error playing script audio:", error);
-				setIsPlaying(false); // Ensure we reset the state if there's an error
-			}
-		};
-
-		const pauseScript = () => {
-			// console.log('pausing audio:', audio);
-			if (audio) {
-				audio.pause(); // Pause the currently playing audio
-			}
-			setIsPlaying(false); // Update the state to reflect that playback has stopped
-		};
-
-		const PlayButton = () => {
-			return (
-				<div className='mt-4'>
-					{isLoading ?
-						<SpinIcon /> :
-						!isPlaying ?
-							<ButtonWithExplanation
-								explanation='Play the script'
-								button={
-									<button onClick={playScript}>
-										<FiPlay
-											style={{
-												strokeWidth: '2',
-												flex: '1',
-												width: '1.5rem',
-												height: '1.5rem',
-												fontWeight: 'bold',
-												color: '#344054',
-											}}
-										/>
-									</button>
-								}
-							/> :
-							<ButtonWithExplanation
-								explanation='Pause the script'
-								button={
-									<button onClick={pauseScript}>
-										<FiPause
-											style={{
-												strokeWidth: '2',
-												flex: '1',
-												width: '1.5rem',
-												height: '1.5rem',
-												fontWeight: 'bold',
-												color: '#344054',
-											}}
-										/>
-									</button>
-								}
-							/>}
-				</div>
-			)
-		};
-
-		return (
-			<WrappableRow type='flex' key={index}>
-				<SlideContainer
-					index={index}
-					slide={slides[index]}
-					scale={scale}
-					isViewing={true}
-					templateDispatch={uneditableTemplateDispatch}
-				/>
-				<ScriptEditor
-					slides={slides}
-					updateSlidePage={updateSlidePage}
-					currentSlideIndex={index}
-					scale={scale}
-				/>
-				{/* play and pause the script */}
-				<PlayButton />
-
-			</WrappableRow>
-		)
+		// Assuming VideoService.playScript returns a Promise that resolves to an audio URL or blob
+		try {
+			const audio = await VideoService.getTTS(
+				script,
+				voice,
+				voiceStyle,
+				project?.foldername as string,
+				token,
+			); // Fetch voice from backend
+			const audioElement = new Audio(audio); // Create an audio element with the fetched voice
+			setIsLoading(false);
+			setIsPlaying(true);
+			audioElement.play(); // Play the voice
+			setAudio(audioElement); // Store the audio element in state for access by pauseScript
+			console.log('playing audio:', audioElement);
+			audioElement.onended = () => {
+				setIsPlaying(false); // Automatically set to not playing when playback finishes
+			};
+		} catch (error) {
+			console.error('Error playing script audio:', error);
+			setIsPlaying(false); // Ensure we reset the state if there's an error
+		}
 	};
+
+	const pauseScript = () => {
+		// console.log('pausing audio:', audio);
+		if (audio) {
+			audio.pause(); // Pause the currently playing audio
+		}
+		setIsPlaying(false); // Update the state to reflect that playback has stopped
+	};
+
+	const PlayButton = () => {
+		return (
+			<div className='mt-4'>
+				{isLoading ? (
+					<SpinIcon />
+				) : !isPlaying ? (
+					<ButtonWithExplanation
+						explanation='Play the script'
+						button={
+							<button onClick={playScript}>
+								<FiPlay
+									style={{
+										strokeWidth: '2',
+										flex: '1',
+										width: '1.5rem',
+										height: '1.5rem',
+										fontWeight: 'bold',
+										color: '#344054',
+									}}
+								/>
+							</button>
+						}
+					/>
+				) : (
+					<ButtonWithExplanation
+						explanation='Pause the script'
+						button={
+							<button onClick={pauseScript}>
+								<FiPause
+									style={{
+										strokeWidth: '2',
+										flex: '1',
+										width: '1.5rem',
+										height: '1.5rem',
+										fontWeight: 'bold',
+										color: '#344054',
+									}}
+								/>
+							</button>
+						}
+					/>
+				)}
+			</div>
+		);
+	};
+
+	return (
+		<WrappableRow type='flex' key={index}>
+			<SlideContainer
+				index={index}
+				slide={slides[index]}
+				scale={scale}
+				isViewing={true}
+				templateDispatch={uneditableTemplateDispatch}
+			/>
+			<ScriptEditor
+				slides={slides}
+				updateSlidePage={updateSlidePage}
+				currentSlideIndex={index}
+				scale={scale}
+			/>
+			{/* play and pause the script */}
+			<PlayButton />
+		</WrappableRow>
+	);
+};
 
 export default ScriptSection;

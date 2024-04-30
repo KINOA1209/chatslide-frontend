@@ -32,7 +32,18 @@ export default function Affiliate() {
 									slides.
 								</li>
 								<li>
-									<strong>Transparency:</strong> See your rewards with transparency. Track the visitors, leads, and conversions in real time. <a href='https://help.rewardful.com/en/articles/4202371-visitors-leads-conversions' target='_blank' rel='noreferrer' className='text-blue-600'>Learn more.</a>.
+									<strong>Transparency:</strong> See your rewards with
+									transparency. Track the visitors, leads, and conversions in
+									real time.{' '}
+									<a
+										href='https://help.rewardful.com/en/articles/4202371-visitors-leads-conversions'
+										target='_blank'
+										rel='noreferrer'
+										className='text-blue-600'
+									>
+										Learn more.
+									</a>
+									.
 								</li>
 								<li>
 									<strong>Support & Resources:</strong> Get access to
@@ -47,16 +58,20 @@ export default function Affiliate() {
 								<h3 className='h3 text-xl mb-2'>🤩 Affiliate Benefits</h3>
 								<ul className='text-base text-gray-600 list-disc list-inside mt-4'>
 									<li>
-										<strong>High Conversion Rate:</strong> Get noticed instantly when your referral converts.
+										<strong>High Conversion Rate:</strong> Get noticed instantly
+										when your referral converts.
 									</li>
 									<li>
-										<strong>Monthly Payouts:</strong> Easily calculate how much money you are gaining.
+										<strong>Monthly Payouts:</strong> Easily calculate how much
+										money you are gaining.
 									</li>
 									<li>
-										<strong>Easy to Onboard:</strong> Get started by signing up, sharing your link, and see the money roll in.
+										<strong>Easy to Onboard:</strong> Get started by signing up,
+										sharing your link, and see the money roll in.
 									</li>
 									<li>
-										<strong>Share your deal:</strong> Your friend also gets <strong>60%</strong> off on their first purchase.
+										<strong>Share your deal:</strong> Your friend also gets{' '}
+										<strong>60%</strong> off on their first purchase.
 									</li>
 								</ul>
 							</div>

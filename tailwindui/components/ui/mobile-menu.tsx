@@ -21,8 +21,7 @@ const MobileMenu = ({ refList = [] }: HeaderProps) => {
 	const [landingPage, setLandingPage] = useState(false);
 
 	function userFirstName() {
-		if (username.includes('@'))
-			return username.split('@')[0];
+		if (username.includes('@')) return username.split('@')[0];
 		return username.split(' ')[0];
 	}
 
@@ -219,7 +218,7 @@ const MobileMenu = ({ refList = [] }: HeaderProps) => {
 								<li>
 									<div onClick={signOut}>
 										<Link
-											href="/landing"
+											href='/landing'
 											className='flex font-medium w-full text-red-500 hover:text-red-600 py-2 justify-center'
 											onClick={() => setMobileNavOpen(false)}
 										>

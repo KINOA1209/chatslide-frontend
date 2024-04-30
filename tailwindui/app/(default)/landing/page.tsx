@@ -51,23 +51,38 @@ function Landing() {
 				rel='preconnect'
 				crossOrigin='anonymous'
 			/>
-			<link href={isChatslide() ? '/favicon_chatslide.ico' : '/favicon.ico'} rel='shortcut icon' type='image/x-icon' />
-			<link href={isChatslide() ? '/favicon_chatslide.ico' : '/favicon.ico'} rel='apple-touch-icon' />
+			<link
+				href={isChatslide() ? '/favicon_chatslide.ico' : '/favicon.ico'}
+				rel='shortcut icon'
+				type='image/x-icon'
+			/>
+			<link
+				href={isChatslide() ? '/favicon_chatslide.ico' : '/favicon.ico'}
+				rel='apple-touch-icon'
+			/>
 			<style
 				dangerouslySetInnerHTML={{
 					__html:
 						'\n\t\t* {\n\t\t\t-webkit-font-smoothing: antialiased;\n\t\t\t-moz-osx-font-smoothing: grayscale;\n\t\t}\n\t',
 				}}
 			/>
-			<a href="https://www.producthunt.com/posts/chatslide-ai?utm_source=badge-top-post-badge&utm_medium=badge&utm_souce=badge-chatslide&#0045;ai" target="_blank"
+			<a
+				href='https://www.producthunt.com/posts/chatslide-ai?utm_source=badge-top-post-badge&utm_medium=badge&utm_souce=badge-chatslide&#0045;ai'
+				target='_blank'
 				style={{
 					position: 'fixed',
 					bottom: 5,
 					right: 5,
 					textDecoration: 'none',
 					zIndex: 50,
-				}}>
-				<img src="https://api.producthunt.com/widgets/embed-image/v1/top-post-badge.svg?post_id=451418&theme=light&period=daily" alt="ChatSlide&#0046;ai - AI&#0032;assistant&#0032;for&#0032;generating&#0032;slides&#0032;and&#0032;video | Product Hunt" width="250" height="54" />
+				}}
+			>
+				<img
+					src='https://api.producthunt.com/widgets/embed-image/v1/top-post-badge.svg?post_id=451418&theme=light&period=daily'
+					alt='ChatSlide&#0046;ai - AI&#0032;assistant&#0032;for&#0032;generating&#0032;slides&#0032;and&#0032;video | Product Hunt'
+					width='250'
+					height='54'
+				/>
 			</a>
 			<a
 				href='/discord'
@@ -146,7 +161,11 @@ function Landing() {
 							className='brand w-nav-brand w--current'
 						>
 							<img
-								src={isChatslide() ? 'images/template/chatslide_color.svg' : 'images/Frame-1707478931-1.png'}
+								src={
+									isChatslide()
+										? 'images/template/chatslide_color.svg'
+										: 'images/Frame-1707478931-1.png'
+								}
 								loading='lazy'
 								width={120}
 								alt=''
@@ -215,7 +234,11 @@ function Landing() {
 							🚀 Get an instant productivity boost for your knowledge sharing
 							workflow!
 						</p>
-						<a href='/signup' className='button-primary w-button landing-sign-up' id='landing-sign-up-1'>
+						<a
+							href='/signup'
+							className='button-primary w-button landing-sign-up'
+							id='landing-sign-up-1'
+						>
 							Try for free
 						</a>
 						<a href='#usecase' className='secondary-button w-button'>
@@ -255,7 +278,11 @@ function Landing() {
 								className='image-left'
 							/>
 						</div>
-						<a href='/signup' className='button w-button landing-sign-up' id='landing-sign-up-2'>
+						<a
+							href='/signup'
+							className='button w-button landing-sign-up'
+							id='landing-sign-up-2'
+						>
 							Try for free
 						</a>
 					</div>
@@ -280,7 +307,11 @@ function Landing() {
 								className='image-left'
 							/>
 						</div>
-						<a href='/signup' className='button w-button landing-sign-up' id='landing-sign-up-3'>
+						<a
+							href='/signup'
+							className='button w-button landing-sign-up'
+							id='landing-sign-up-3'
+						>
 							Try for free
 						</a>
 					</div>
@@ -336,7 +367,11 @@ function Landing() {
 								className='image-left'
 							/>
 						</div>
-						<a href='/signup' className='button w-button landing-sign-up' id='landing-sign-up-4'>
+						<a
+							href='/signup'
+							className='button w-button landing-sign-up'
+							id='landing-sign-up-4'
+						>
 							Try for free
 						</a>
 					</div>
@@ -359,7 +394,9 @@ function Landing() {
 					>
 						<div className='margin-bottom-24'>
 							<h3 className='heading'>
-								🦹‍♂️ Employ the <span className='text-span'> digital avatar </span> who speaks for you
+								🦹‍♂️ Employ the{' '}
+								<span className='text-span'> digital avatar </span> who speaks
+								for you
 								<br />
 							</h3>
 							<img
@@ -369,7 +406,11 @@ function Landing() {
 								className='image-left'
 							/>
 						</div>
-						<a href='/signup' className='button w-button landing-sign-up' id='landing-sign-up-5'>
+						<a
+							href='/signup'
+							className='button w-button landing-sign-up'
+							id='landing-sign-up-5'
+						>
 							Try for free
 						</a>
 					</div>
@@ -415,8 +456,9 @@ function Landing() {
 									</div>
 									<h3 className='combine-heading-style-h5'>Slides</h3>
 									<div className='combine-text-size-regular-3'>
-										Say good-bye to 7 windows open and copy pasting, {getBrand()} is
-										your one stop choice for slides creation workflow.
+										Say good-bye to 7 windows open and copy pasting,{' '}
+										{getBrand()} is your one stop choice for slides creation
+										workflow.
 									</div>
 									<div className='combine-button-icon' />
 								</a>
@@ -561,7 +603,8 @@ function Landing() {
 										</div>
 									</div>
 									<div className='uui-heading-xxsmall text-weight-medium'>
-										"The AI slide generator and video genertator is really awesome."
+										"The AI slide generator and video genertator is really
+										awesome."
 									</div>
 									<div className='uui-testimonial13_client'>
 										<div className='uui-testimonial13_client-image-wrapper'>
@@ -576,9 +619,7 @@ function Landing() {
 											<div className='uui-testimonial13_client-heading'>
 												<strong>Passivern</strong>
 											</div>
-											<div className='uui-text-size-small'>
-												Youtuber
-											</div>
+											<div className='uui-text-size-small'>Youtuber</div>
 										</div>
 									</div>
 								</div>
@@ -666,9 +707,9 @@ function Landing() {
 										</div>
 									</div>
 									<div className='uui-heading-xxsmall text-weight-medium'>
-										"There is an excellent AI service for this, '{getBrand()}' it
-										can quickly and easily turn any website, video or document
-										into a presentation."
+										"There is an excellent AI service for this, '{getBrand()}'
+										it can quickly and easily turn any website, video or
+										document into a presentation."
 									</div>
 									<div className='uui-testimonial13_client'>
 										<div className='uui-testimonial13_client-image-wrapper'>
@@ -773,8 +814,8 @@ function Landing() {
 										</div>
 									</div>
 									<div className='uui-heading-xxsmall text-weight-medium'>
-										🇧🇷 "{getBrand()} – rede neural que transforma páginas da web,
-										arquivos PDF e vídeos em uma apresentação com slides
+										🇧🇷 "{getBrand()} – rede neural que transforma páginas da
+										web, arquivos PDF e vídeos em uma apresentação com slides
 										interativos. E é grátis."
 									</div>
 									<div className='uui-testimonial13_client'>
@@ -1094,8 +1135,9 @@ function Landing() {
 										</div>
 									</div>
 									<div className='uui-heading-xxsmall text-weight-medium'>
-										🇩🇪 "{getBrand()} ist so gestaltet, dass jeder, unabhängig vom
-										Fachwissen, beeindruckende Präsentationen erstellen kann."
+										🇩🇪 "{getBrand()} ist so gestaltet, dass jeder, unabhängig
+										vom Fachwissen, beeindruckende Präsentationen erstellen
+										kann."
 									</div>
 									<div className='uui-testimonial13_client'>
 										<div className='uui-testimonial13_client-image-wrapper'>
@@ -1200,8 +1242,10 @@ function Landing() {
 										</div>
 									</div>
 									<div className='uui-heading-xxsmall text-weight-medium'>
-										"I tried different tools for making presentations with AI - also the famous one like Tome.
-										So i also tried {getBrand()} and was impressed - you get a great output with very little effort!"
+										"I tried different tools for making presentations with AI -
+										also the famous one like Tome. So i also tried {getBrand()}{' '}
+										and was impressed - you get a great output with very little
+										effort!"
 									</div>
 									<div className='uui-testimonial13_client'>
 										<div className='uui-testimonial13_client-image-wrapper'>
@@ -1216,8 +1260,7 @@ function Landing() {
 											<div className='uui-testimonial13_client-heading'>
 												Robert Leitinger
 											</div>
-											<div className='uui-text-size-small'>
-											</div>
+											<div className='uui-text-size-small'></div>
 										</div>
 									</div>
 								</div>
@@ -1304,8 +1347,13 @@ function Landing() {
 											</svg>
 										</div>
 									</div>
-									<div className='uui-heading-xxsmall text-weight-medium' style={{direction: 'rtl'}}>
-										🇸🇦 "عروض بثواني😎 لاتكتب اي عروض بعد اليوم، كل ما هو عليك فقط كتابة ماتريد للـAI وهو يكتب العرض كامل لك مع الصور والمعلومات من بحثك وملفاتك ويلخصها وكل شي، يعني كأنه كاتب "
+									<div
+										className='uui-heading-xxsmall text-weight-medium'
+										style={{ direction: 'rtl' }}
+									>
+										🇸🇦 "عروض بثواني😎 لاتكتب اي عروض بعد اليوم، كل ما هو عليك
+										فقط كتابة ماتريد للـAI وهو يكتب العرض كامل لك مع الصور
+										والمعلومات من بحثك وملفاتك ويلخصها وكل شي، يعني كأنه كاتب "
 									</div>
 									<div className='uui-testimonial13_client'>
 										<div className='uui-testimonial13_client-image-wrapper'>
@@ -1410,7 +1458,8 @@ function Landing() {
 										</div>
 									</div>
 									<div className='uui-heading-xxsmall text-weight-medium'>
-										"Great concept and cuts down on a lot of work creating presentations. "
+										"Great concept and cuts down on a lot of work creating
+										presentations. "
 									</div>
 									<div className='uui-testimonial13_client'>
 										<div className='uui-testimonial13_client-image-wrapper'>
@@ -1512,8 +1561,8 @@ function Landing() {
 										</div>
 									</div>
 									<div className='uui-heading-xxsmall text-weight-medium'>
-										🇷🇺 "Презентация из любых файлов: {getBrand()} соберет PDF, сайты
-										и видеоролики в готовые слайды"
+										🇷🇺 "Презентация из любых файлов: {getBrand()} соберет PDF,
+										сайты и видеоролики в готовые слайды"
 									</div>
 									<div className='uui-testimonial13_client'>
 										<div className='uui-testimonial13_client-image-wrapper'>
@@ -1933,7 +1982,8 @@ function Landing() {
 									</div>
 									<div className='uui-heading-xxsmall text-weight-medium'>
 										"I love how easy it is to use and the cool features it
-										offers. I give {getBrand()} 5 tacos, it's that good! 🌮🌮🌮🌮🌮"
+										offers. I give {getBrand()} 5 tacos, it's that good!
+										🌮🌮🌮🌮🌮"
 									</div>
 									<div className='uui-testimonial13_client'>
 										<div className='uui-testimonial13_client-image-wrapper'>
@@ -2038,7 +2088,7 @@ function Landing() {
 										</div>
 									</div>
 									<div className='uui-heading-xxsmall text-weight-medium'>
-										"I fully recomend this incredible tool for creators of
+										"I fully recommend this incredible tool for creators of
 										courses or education persons. You will be able to download
 										your presentation created in minutes and you can create a
 										video for your socialmedia."
@@ -2081,7 +2131,11 @@ function Landing() {
 										className='brix---footer-logo-wrapper w-inline-block'
 									>
 										<img
-											src={isChatslide() ? 'images/template/chatslide_color.svg' : 'images/Frame-1707478931-1.png'}
+											src={
+												isChatslide()
+													? 'images/template/chatslide_color.svg'
+													: 'images/Frame-1707478931-1.png'
+											}
 											alt=''
 											width={196}
 											className='brix---footer-logo'
@@ -2159,7 +2213,11 @@ function Landing() {
 							</p>
 							<div className='w-layout-grid brix---social-media-grid-right---t-center'>
 								<a
-									href={isChatslide() ? 'https://twitter.com/chatslide_ai' : 'https://twitter.com/drlambda_ai'}
+									href={
+										isChatslide()
+											? 'https://twitter.com/chatslide_ai'
+											: 'https://twitter.com/drlambda_ai'
+									}
 									className='brix---social-icon-square-30px w-inline-block'
 								>
 									<img

@@ -52,8 +52,8 @@ import RadioButton, { RadioButtonOption } from './ui/RadioButton';
 import { Explanation, Instruction } from './ui/Text';
 import { WordSelector } from './slides/WordSelector';
 import { useSocialPosts } from '@/hooks/use-socialpost';
-import { MdImageSearch } from "react-icons/md";
-import { IoMdCrop } from "react-icons/io";
+import { MdImageSearch } from 'react-icons/md';
+import { IoMdCrop } from 'react-icons/io';
 
 interface ImgModuleProp {
 	imgsrc: string;
@@ -253,17 +253,20 @@ export const ImgModule = ({
 			})
 			.then((parsedResponse) => {
 				if (parsedResponse.data.images.length === 0) {
-					toast.error('No images found, please try another keyword or search engine', {
-						position: 'top-center',
-						autoClose: 5000,
-						hideProgressBar: false,
-						closeOnClick: true,
-						pauseOnHover: true,
-						draggable: true,
-						progress: undefined,
-						theme: 'light',
-						containerId: 'slides',
-					});
+					toast.error(
+						'No images found, please try another keyword or search engine',
+						{
+							position: 'top-center',
+							autoClose: 5000,
+							hideProgressBar: false,
+							closeOnClick: true,
+							pauseOnHover: true,
+							draggable: true,
+							progress: undefined,
+							theme: 'light',
+							containerId: 'slides',
+						},
+					);
 				}
 				setSearchResult(parsedResponse.data.images);
 			})
@@ -298,17 +301,20 @@ export const ImgModule = ({
 			try {
 				const parsedResponse = await response.json();
 				if (parsedResponse.data.images.length === 0) {
-					toast.error('No images found, please try another keyword or search engine', {
-						position: 'top-center',
-						autoClose: 5000,
-						hideProgressBar: false,
-						closeOnClick: true,
-						pauseOnHover: true,
-						draggable: true,
-						progress: undefined,
-						theme: 'light',
-						containerId: 'slides',
-					});
+					toast.error(
+						'No images found, please try another keyword or search engine',
+						{
+							position: 'top-center',
+							autoClose: 5000,
+							hideProgressBar: false,
+							closeOnClick: true,
+							pauseOnHover: true,
+							draggable: true,
+							progress: undefined,
+							theme: 'light',
+							containerId: 'slides',
+						},
+					);
 				}
 				setSearchResult(parsedResponse.data.images);
 			} catch (error) {
@@ -949,10 +955,9 @@ export const ImgModule = ({
 		if (aspectRatio <= 1) {
 			newWidth = parentWidth;
 			newHeight = parentWidth / aspectRatio;
-			newX = 0
-			newY = (parentHeight - newHeight) / 2
-		}
-		else {
+			newX = 0;
+			newY = (parentHeight - newHeight) / 2;
+		} else {
 			// Compare the aspect ratios to decide how to scale
 			if (aspectRatio > parentAspectRatio) {
 				// Image is wider than the container proportionally
@@ -1137,17 +1142,16 @@ export const ImgModule = ({
 	};
 
 	const showIconsFunctionText = (layout: string) => {
-		if (layout === 'Col_2_img_2_layout' ||
-			layout === 'Col_3_img_3_layout'
-		) {
-			return false
+		if (layout === 'Col_2_img_2_layout' || layout === 'Col_3_img_3_layout') {
+			return false;
+		} else {
+			return true;
 		}
-		else {
-			return true
-		}
-	}
+	};
 
-	const layoutEntry = isSlide ? slides[slideIndex]?.layout : socialPosts[socialPostsIndex]?.template
+	const layoutEntry = isSlide
+		? slides[slideIndex]?.layout
+		: socialPosts[socialPostsIndex]?.template;
 
 	return (
 		<>
@@ -1276,24 +1280,25 @@ export const ImgModule = ({
 				onDrop={handleImageDrop}
 				onDragOver={(e) => e.preventDefault()}
 				onClick={openModal}
-				className={`w-full h-full transition ease-in-out duration-150 relative ${selectedImg === ''
-					? 'bg-[#E7E9EB]'
-					: canEdit
-						? 'hover:bg-[#CAD0D3]'
-						: ''
-					} flex flex-col items-center justify-center`} //${canEdit && !isImgEditMode ? 'cursor-pointer' : ''}
+				className={`w-full h-full transition ease-in-out duration-150 relative ${
+					selectedImg === ''
+						? 'bg-[#E7E9EB]'
+						: canEdit
+							? 'hover:bg-[#CAD0D3]'
+							: ''
+				} flex flex-col items-center justify-center`} //${canEdit && !isImgEditMode ? 'cursor-pointer' : ''}
 				style={{
 					overflow: isImgEditMode ? 'visible' : 'hidden',
 					borderRadius: customImageStyle?.borderRadius,
 				}}
 			>
 				{ischartArr &&
-					ischartArr[currentContentIndex] &&
-					selectedChartType &&
-					chartData.length > 0 ? ( // chart
+				ischartArr[currentContentIndex] &&
+				selectedChartType &&
+				chartData.length > 0 ? ( // chart
 					<div
 						className='w-full h-full flex items-center justify-center overflow-hidden '
-					// onClick={openModal}
+						// onClick={openModal}
 					>
 						<DynamicChart
 							chartType={selectedChartType}
@@ -1307,7 +1312,7 @@ export const ImgModule = ({
 					canEdit ? (
 						<div
 							className='flex flex-col items-center justify-center cursor-pointer'
-						// onClick={openModal}
+							// onClick={openModal}
 						>
 							<svg
 								className='w-20 h-20 opacity-50'
@@ -1404,12 +1409,13 @@ export const ImgModule = ({
 								width={960}
 								height={540}
 								// objectFit='contain'
-								className={`transition ease-in-out duration-150 ${canEdit
-									? isImgEditMode
-										? 'brightness-100'
-										: 'hover:brightness-50'
-									: ''
-									}`}
+								className={`transition ease-in-out duration-150 ${
+									canEdit
+										? isImgEditMode
+											? 'brightness-100'
+											: 'hover:brightness-50'
+										: ''
+								}`}
 								onError={(e) => {
 									console.log('failed to load image', imgsrc);
 									setImgLoadError(true);
@@ -1419,14 +1425,17 @@ export const ImgModule = ({
 						</Rnd>
 						{canEdit && showImgButton && (
 							<div
-								className={`absolute top-2 font-creato-medium ${isImgEditMode ? 'left-2'
-									: 'left-4'}`}
-								style={{ zIndex: 53 }}>
+								className={`absolute top-2 font-creato-medium ${
+									isImgEditMode ? 'left-2' : 'left-4'
+								}`}
+								style={{ zIndex: 53 }}
+							>
 								<ToolBar>
 									{!isImgEditMode && (
 										<button
 											onClick={openModal}
-											className='flex flex-row items-center justify-center gap-1'>
+											className='flex flex-row items-center justify-center gap-1'
+										>
 											<MdImageSearch
 												style={{
 													width: '1.2rem',
@@ -1435,11 +1444,14 @@ export const ImgModule = ({
 													fontWeight: 'bold',
 												}}
 											/>
-											{showIconsFunctionText(layoutEntry) ? "Change" : ""}
+											{showIconsFunctionText(layoutEntry) ? 'Change' : ''}
 										</button>
 									)}
 
-									<button onClick={toggleImgEditMode} className='flex flex-row items-center justify-center gap-1'>
+									<button
+										onClick={toggleImgEditMode}
+										className='flex flex-row items-center justify-center gap-1'
+									>
 										{!isImgEditMode ? (
 											<>
 												<IoMdCrop
@@ -1451,7 +1463,7 @@ export const ImgModule = ({
 														color: '#344054',
 													}}
 												/>
-												{showIconsFunctionText(layoutEntry) ? "Resize" : ""}
+												{showIconsFunctionText(layoutEntry) ? 'Resize' : ''}
 											</>
 										) : (
 											<>
@@ -1487,7 +1499,7 @@ export const ImgModule = ({
 														color: '#344054',
 													}}
 												/>
-												{showIconsFunctionText(layoutEntry) ? "Delete" : ""}
+												{showIconsFunctionText(layoutEntry) ? 'Delete' : ''}
 											</button>
 											{project?.additional_images && (
 												<button
@@ -1506,7 +1518,7 @@ export const ImgModule = ({
 															color: '#344054',
 														}}
 													/>
-													{showIconsFunctionText(layoutEntry) ? "Shuffle" : ""}
+													{showIconsFunctionText(layoutEntry) ? 'Shuffle' : ''}
 												</button>
 											)}
 										</>

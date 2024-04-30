@@ -50,11 +50,9 @@ const useHasSelectedCustomTemplateBgColor = createBearStore<boolean>()(
 	true,
 );
 
-const useInitialLoadedSubtitleFontFamily = createBearStore<string | undefined>()(
-	'initialLoadedSubtitleFontFamily',
-	'Arial',
-	true,
-);
+const useInitialLoadedSubtitleFontFamily = createBearStore<
+	string | undefined
+>()('initialLoadedSubtitleFontFamily', 'Arial', true);
 const useCustomizedTemplateSubtitleFontFamily = createBearStore<
 	string | undefined
 >()('customizedTemplateSubtitleFontFamily', '', true);
@@ -160,8 +158,10 @@ export const useSlides = () => {
 	} = useHasSelectedCustomizedTemplateTitleFontFamily();
 
 	// subtitle font
-	const { initialLoadedSubtitleFontFamily, setInitialLoadedSubtitleFontFamily } =
-		useInitialLoadedSubtitleFontFamily();
+	const {
+		initialLoadedSubtitleFontFamily,
+		setInitialLoadedSubtitleFontFamily,
+	} = useInitialLoadedSubtitleFontFamily();
 	const {
 		customizedTemplateSubtitleFontFamily,
 		setCustomizedTemplateSubtitleFontFamily,
@@ -567,9 +567,9 @@ export const useSlides = () => {
 
 	const initSlides = (slides: Slide[]) => {
 		console.log('-- init slides: ', { slides });
-    if (slides.length === 0) {
-      return;
-    }
+		if (slides.length === 0) {
+			return;
+		}
 
 		setSlides(slides);
 		setIsShowingLogo(slides?.some((slide) => slide.logo || slide.logo_url));
@@ -579,22 +579,22 @@ export const useSlides = () => {
 		clearChatHistory();
 		setIsPresenting(false);
 
-    setCustomizedTemplateContentFontFamily(slides[0].contentFontFamily);
-    setCustomizedTemplateSubtitleFontFamily(slides[0].subtitleFontFamily);
-    setCustomizedTemplateTitleFontFamily(slides[0].titleFontFamily);
+		setCustomizedTemplateContentFontFamily(slides[0].contentFontFamily);
+		setCustomizedTemplateSubtitleFontFamily(slides[0].subtitleFontFamily);
+		setCustomizedTemplateTitleFontFamily(slides[0].titleFontFamily);
 
-    setHasSelectedCustomizedTemplateContentFontFamily(
-      !!slides[0].contentFontFamily,
-    );
-    setHasSelectedCustomizedTemplateSubtitleFontFamily(
-      !!slides[0].subtitleFontFamily,
-    );
-    setHasSelectedCustomizedTemplateTitleFontFamily(
-      !!slides[0].titleFontFamily,
-    );
+		setHasSelectedCustomizedTemplateContentFontFamily(
+			!!slides[0].contentFontFamily,
+		);
+		setHasSelectedCustomizedTemplateSubtitleFontFamily(
+			!!slides[0].subtitleFontFamily,
+		);
+		setHasSelectedCustomizedTemplateTitleFontFamily(
+			!!slides[0].titleFontFamily,
+		);
 
-    setCustomTemplateBgColor(slides[0].background_color);
-    setHasSelectedCustomTemplateBgColor(!!slides[0].background_color);
+		setCustomTemplateBgColor(slides[0].background_color);
+		setHasSelectedCustomTemplateBgColor(!!slides[0].background_color);
 
 		slidesStatus = SlidesStatus.Inited;
 	};

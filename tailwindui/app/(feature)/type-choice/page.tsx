@@ -37,12 +37,8 @@ const ScenarioChoicePage = () => {
 	return (
 		<div className='flex flex-col flex-grow justify-center items-center relative'>
 			<div className='absolute hidden sm:block top-5 left-5'>
-				<BackButton
-					href='/dashboard'
-					dark={true}
-					text='Dashboard'
-				/>
-        <div className='block md:hidden h-[3rem]' /> {/* Spacer */} 
+				<BackButton href='/dashboard' dark={true} text='Dashboard' />
+				<div className='block md:hidden h-[3rem]' /> {/* Spacer */}
 			</div>
 			<Column>
 				{/* title */}
@@ -54,7 +50,10 @@ const ScenarioChoicePage = () => {
           {scenarios.description}
         </div> */}
 				{/* three types of scenarios */}
-				<div className='flex flex-wrap flex-row gap-4 md:gap-6 w-full mx-auto justify-center' id='choice_container'>
+				<div
+					className='flex flex-wrap flex-row gap-4 md:gap-6 w-full mx-auto justify-center'
+					id='choice_container'
+				>
 					{scenarios.options.map((scenario) => (
 						<div
 							key={scenario.id}

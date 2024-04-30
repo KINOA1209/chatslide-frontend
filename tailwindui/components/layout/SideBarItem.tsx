@@ -67,9 +67,9 @@ const SideBarItem: React.FC<SidebarItemProps> = ({
 					href={path}
 					target={target}
 					className={
-            'w-full block flex flex-row items-center py-2 text-white rounded-lg hover:bg-gray-400 cursor-pointer ' +
-            (isSidebarOpen ? 'px-2 gap-2' : 'justify-center')
-          }
+						'w-full block flex flex-row items-center py-2 text-white rounded-lg hover:bg-gray-400 cursor-pointer ' +
+						(isSidebarOpen ? 'px-2 gap-2' : 'justify-center')
+					}
 					role='menuitem'
 				>
 					{icon}

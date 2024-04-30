@@ -7,191 +7,209 @@ import { useUser } from './use-user';
 import debounce from 'lodash.debounce';
 import { useChatHistory } from './use-chat-history';
 
-const useSocialPostsBear = createBearStore<SocialPostSlide[]>()('socialPosts', [], true)
-const useSocialPostsIndex = createBearStore<number>()('socialPostsIndex', 0, true)
-const useSocialPostsVersion = createBearStore<number>()('socialPostVersion', 0, true);
+const useSocialPostsBear = createBearStore<SocialPostSlide[]>()(
+	'socialPosts',
+	[],
+	true,
+);
+const useSocialPostsIndex = createBearStore<number>()(
+	'socialPostsIndex',
+	0,
+	true,
+);
+const useSocialPostsVersion = createBearStore<number>()(
+	'socialPostVersion',
+	0,
+	true,
+);
 const useSocialPostsHistoryBear = createBearStore<SocialPostSlide[][]>()(
-    'socialPostsHistory',
-    [],
-    true
-)
-const useSocialPostsHistoryIndex = createBearStore<number>()('socialPostsHistoryIndex', 0, true)
+	'socialPostsHistory',
+	[],
+	true,
+);
+const useSocialPostsHistoryIndex = createBearStore<number>()(
+	'socialPostsHistoryIndex',
+	0,
+	true,
+);
 
 export enum SaveStatus {
-    UpToDate,
-    Saving,
+	UpToDate,
+	Saving,
 }
 
 const useSaveStatus = createBearStore<SaveStatus>()(
-    'saveStatus',
-    SaveStatus.UpToDate,
-    false,
+	'saveStatus',
+	SaveStatus.UpToDate,
+	false,
 );
 
 export enum SocialPostsStatus {
-    NotInited,
-    Initing,
-    Inited,
+	NotInited,
+	Initing,
+	Inited,
 }
 
 let socialPostsStatus: SocialPostsStatus = SocialPostsStatus.NotInited;
 
 export const useSocialPosts = () => {
-    const { socialPosts, setSocialPosts } = useSocialPostsBear();
-    const { socialPostsIndex, setSocialPostsIndex } = useSocialPostsIndex();
-    const { socialPostVersion, setSocialPostVersion } = useSocialPostsVersion();
-    const { saveStatus, setSaveStatus } = useSaveStatus();
-    const { project } = useProject();
-    const { token } = useUser();
-    const { socialPostsHistory, setSocialPostsHistory } = useSocialPostsHistoryBear();
-    const { socialPostsHistoryIndex, setSocialPostsHistoryIndex } = useSocialPostsHistoryIndex();
-    const { clearChatHistory } = useChatHistory();
+	const { socialPosts, setSocialPosts } = useSocialPostsBear();
+	const { socialPostsIndex, setSocialPostsIndex } = useSocialPostsIndex();
+	const { socialPostVersion, setSocialPostVersion } = useSocialPostsVersion();
+	const { saveStatus, setSaveStatus } = useSaveStatus();
+	const { project } = useProject();
+	const { token } = useUser();
+	const { socialPostsHistory, setSocialPostsHistory } =
+		useSocialPostsHistoryBear();
+	const { socialPostsHistoryIndex, setSocialPostsHistoryIndex } =
+		useSocialPostsHistoryIndex();
+	const { clearChatHistory } = useChatHistory();
 
-    const init = async () => {
-        if (socialPostsStatus !== SocialPostsStatus.NotInited) return;
-        socialPostsStatus = SocialPostsStatus.Initing;
+	const init = async () => {
+		if (socialPostsStatus !== SocialPostsStatus.NotInited) return;
+		socialPostsStatus = SocialPostsStatus.Initing;
 
-        setSocialPostVersion(0);
-        setSocialPostsHistory([socialPosts]);
-        setSocialPostsHistoryIndex(0);
-        console.log('-- init social posts: ', { socialPostsStatus, socialPosts });
-        socialPostsStatus = SocialPostsStatus.Inited;
-    }
+		setSocialPostVersion(0);
+		setSocialPostsHistory([socialPosts]);
+		setSocialPostsHistoryIndex(0);
+		console.log('-- init social posts: ', { socialPostsStatus, socialPosts });
+		socialPostsStatus = SocialPostsStatus.Inited;
+	};
 
-    useEffect(() => {
-        void init();
-    }, []);
+	useEffect(() => {
+		void init();
+	}, []);
 
-    const addEmptyPage = (index: number) => {
-        console.log('-- add empty page: ', { index });
-        let newSlide = new SocialPostSlide();
-        newSlide.template = socialPosts[index].template;
-        const newSlides = [...socialPosts];
-        newSlides.splice(index + 1, 0, newSlide);
-        setSocialPosts(newSlides);
-        setSocialPostsIndex(index + 1);
+	const addEmptyPage = (index: number) => {
+		console.log('-- add empty page: ', { index });
+		let newSlide = new SocialPostSlide();
+		newSlide.template = socialPosts[index].template;
+		const newSlides = [...socialPosts];
+		newSlides.splice(index + 1, 0, newSlide);
+		setSocialPosts(newSlides);
+		setSocialPostsIndex(index + 1);
 
-        updateVersion();
-        updateSocialPostHistory(newSlides);
-        debouncedSyncSocialPosts(newSlides);
-    };
+		updateVersion();
+		updateSocialPostHistory(newSlides);
+		debouncedSyncSocialPosts(newSlides);
+	};
 
-    const duplicatePage = (index: number) => {
-        console.log('-- duplicate page: ', { index });
-        const oldSlide = socialPosts[index];
-        const newSlide = { ...oldSlide };
-        const newSlides = [...socialPosts];
-        newSlides.splice(index + 1, 0, newSlide);
-        setSocialPosts(newSlides);
-        setSocialPostsIndex(index + 1);
+	const duplicatePage = (index: number) => {
+		console.log('-- duplicate page: ', { index });
+		const oldSlide = socialPosts[index];
+		const newSlide = { ...oldSlide };
+		const newSlides = [...socialPosts];
+		newSlides.splice(index + 1, 0, newSlide);
+		setSocialPosts(newSlides);
+		setSocialPostsIndex(index + 1);
 
-        updateVersion();
-        updateSocialPostHistory(newSlides);
-        debouncedSyncSocialPosts(newSlides);
-    };
+		updateVersion();
+		updateSocialPostHistory(newSlides);
+		debouncedSyncSocialPosts(newSlides);
+	};
 
-    const deleteSlidePage = (index: number) => {
-        console.log('-- delete slide page: ', { index });
-        const newSlides = [...socialPosts];
-        newSlides.splice(index, 1);
-        setSocialPosts(newSlides);
+	const deleteSlidePage = (index: number) => {
+		console.log('-- delete slide page: ', { index });
+		const newSlides = [...socialPosts];
+		newSlides.splice(index, 1);
+		setSocialPosts(newSlides);
 
-        if (socialPostsIndex >= newSlides.length) {
-            setSocialPostsIndex(newSlides.length - 1);
-        }
+		if (socialPostsIndex >= newSlides.length) {
+			setSocialPostsIndex(newSlides.length - 1);
+		}
 
-        updateVersion();
-        updateSocialPostHistory(newSlides);
-        debouncedSyncSocialPosts(newSlides);
-    };
+		updateVersion();
+		updateSocialPostHistory(newSlides);
+		debouncedSyncSocialPosts(newSlides);
+	};
 
-    const updateSocialPostsPage = (
-        index: number,
-        socialPost: SocialPostSlide,
-        rerender: boolean = true,
-        updateThumbnail: boolean = true,
-    ) => {
-        console.log('-- update social post page: ', { index, socialPost });
-        const newSocialPosts = [...socialPosts];
-        console.log('new social posts deck: ', newSocialPosts);
-        newSocialPosts[index] = socialPost;
-        setSocialPosts(newSocialPosts);
+	const updateSocialPostsPage = (
+		index: number,
+		socialPost: SocialPostSlide,
+		rerender: boolean = true,
+		updateThumbnail: boolean = true,
+	) => {
+		console.log('-- update social post page: ', { index, socialPost });
+		const newSocialPosts = [...socialPosts];
+		console.log('new social posts deck: ', newSocialPosts);
+		newSocialPosts[index] = socialPost;
+		setSocialPosts(newSocialPosts);
 
-        if (rerender) updateVersion();
-        updateSocialPostHistory(newSocialPosts);
-        debouncedSyncSocialPosts(newSocialPosts);
-    };
+		if (rerender) updateVersion();
+		updateSocialPostHistory(newSocialPosts);
+		debouncedSyncSocialPosts(newSocialPosts);
+	};
 
-    const gotoPage = (index: number) => {
-        console.log('-- goto page: ', { index });
-        if (index < 0 || index >= socialPosts.length) return;
-        setSocialPostsIndex(index);
-    };
+	const gotoPage = (index: number) => {
+		console.log('-- goto page: ', { index });
+		if (index < 0 || index >= socialPosts.length) return;
+		setSocialPostsIndex(index);
+	};
 
-    const initSocialPosts = (social_posts: SocialPostSlide[]) => {
-        console.log('-- init social posts: ', { socialPosts });
-        setSocialPosts(social_posts);
-        setSocialPostsIndex(0);
-        setSocialPostsHistory([social_posts]);
-        setSocialPostsHistoryIndex(0)
-        clearChatHistory();
-        socialPostsStatus = SocialPostsStatus.Inited;
-    };
+	const initSocialPosts = (social_posts: SocialPostSlide[]) => {
+		console.log('-- init social posts: ', { socialPosts });
+		setSocialPosts(social_posts);
+		setSocialPostsIndex(0);
+		setSocialPostsHistory([social_posts]);
+		setSocialPostsHistoryIndex(0);
+		clearChatHistory();
+		socialPostsStatus = SocialPostsStatus.Inited;
+	};
 
-    const updateVersion = () => {
-        // helps force update slide container
-        setSocialPostVersion((prevVersion) => prevVersion + 1);
-    };
+	const updateVersion = () => {
+		// helps force update slide container
+		setSocialPostVersion((prevVersion) => prevVersion + 1);
+	};
 
-    const syncSocialPosts = async (
-        socialposts: SocialPostSlide[],
-    ) => {
-        setSaveStatus(SaveStatus.Saving);
+	const syncSocialPosts = async (socialposts: SocialPostSlide[]) => {
+		setSaveStatus(SaveStatus.Saving);
 
-        const foldername = project?.foldername;
-        const project_id = project?.id;
+		const foldername = project?.foldername;
+		const project_id = project?.id;
 
-        if (!foldername || !project_id || !token) {
-            console.error(
-                'No foldername, project_id or token found. Cannot save slides.',
-            );
-            return;
-        }
+		if (!foldername || !project_id || !token) {
+			console.error(
+				'No foldername, project_id or token found. Cannot save slides.',
+			);
+			return;
+		}
 
-        const formData = {
-            foldername: foldername,
-            final_posts: socialposts,
-            project_id: project_id,
-        };
+		const formData = {
+			foldername: foldername,
+			final_posts: socialposts,
+			project_id: project_id,
+		};
 
-        console.log('Saving socialposts:', formData);
+		console.log('Saving socialposts:', formData);
 
-        // Send a POST request to the backend to save finalSlides
-        fetch('/api/save_social_posts', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(formData),
-        })
-            .then((response) => {
-                if (response.ok) {
-                    setSaveStatus(SaveStatus.UpToDate);
-                    console.log('Auto-save successful.');
-                } else {
-                    // Handle save error
-                    console.error('Auto-save failed.');
-                }
-            })
-            .catch((error) => {
-                // Handle network error
-                console.error('Auto-save failed:', error);
-            });
-    };
+		// Send a POST request to the backend to save finalSlides
+		fetch('/api/save_social_posts', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify(formData),
+		})
+			.then((response) => {
+				if (response.ok) {
+					setSaveStatus(SaveStatus.UpToDate);
+					console.log('Auto-save successful.');
+				} else {
+					// Handle save error
+					console.error('Auto-save failed.');
+				}
+			})
+			.catch((error) => {
+				// Handle network error
+				console.error('Auto-save failed:', error);
+			});
+	};
 
-    const updateSocialPostHistory = (social_posts: SocialPostSlide[]) => {
-		console.log('-- social posts changed, adding to history: ', { socialPosts });
+	const updateSocialPostHistory = (social_posts: SocialPostSlide[]) => {
+		console.log('-- social posts changed, adding to history: ', {
+			socialPosts,
+		});
 
 		setSocialPostsHistory((prevHistory) => {
 			// Truncate history up to the current index, then append the new slides
@@ -218,21 +236,22 @@ export const useSocialPosts = () => {
 		});
 	};
 
-    const undoChange = () => {
+	const undoChange = () => {
 		if (socialPostsHistoryIndex <= 0) return;
 
 		if (socialPostsHistory[socialPostsHistoryIndex - 1].length === 0) {
 			return;
 		}
 		setSocialPosts(socialPostsHistory[socialPostsHistoryIndex - 1]);
-		const maxSlideIndex = socialPostsHistory[socialPostsHistoryIndex - 1].length - 1;
+		const maxSlideIndex =
+			socialPostsHistory[socialPostsHistoryIndex - 1].length - 1;
 		if (socialPostsIndex > maxSlideIndex) {
 			setSocialPostsIndex(maxSlideIndex);
 		}
 		setSocialPostsHistoryIndex(socialPostsHistoryIndex - 1);
 		updateVersion();
 		console.log('Performing undo...');
-		debouncedSyncSocialPosts(socialPostsHistory[socialPostsHistoryIndex - 1],);
+		debouncedSyncSocialPosts(socialPostsHistory[socialPostsHistoryIndex - 1]);
 	};
 
 	const redoChange = () => {
@@ -242,14 +261,14 @@ export const useSocialPosts = () => {
 		updateVersion();
 		// Add your redo logic here
 		console.log('Performing redo...');
-		debouncedSyncSocialPosts(socialPostsHistory[socialPostsHistoryIndex + 1],);
+		debouncedSyncSocialPosts(socialPostsHistory[socialPostsHistoryIndex + 1]);
 	};
 
-    const debouncedSyncSocialPosts = debounce(syncSocialPosts, 1000);
-    return {
-        socialPosts,
-        setSocialPosts,
-        addEmptyPage,
+	const debouncedSyncSocialPosts = debounce(syncSocialPosts, 1000);
+	return {
+		socialPosts,
+		setSocialPosts,
+		addEmptyPage,
 		duplicatePage,
 		deleteSlidePage,
 		updateSocialPostsPage,
@@ -263,9 +282,9 @@ export const useSocialPosts = () => {
 		saveStatus,
 		SaveStatus,
 		syncSocialPosts,
-        undoChange,
-        redoChange,
-        socialPostsHistory,
-        socialPostsHistoryIndex,
-    }
-}
+		undoChange,
+		redoChange,
+		socialPostsHistory,
+		socialPostsHistoryIndex,
+	};
+};

@@ -30,9 +30,7 @@ const SurveySection: React.FC<SurveySectionProps> = ({
 
 	return (
 		<div className='flex flex-col text-center' ref={ref}>
-			<Title>
-				{sectionObject.question}
-			</Title>
+			<Title>{sectionObject.question}</Title>
 			<div className='mt-6 max-w-[100%] md:max-w-[80%] mx-auto'>
 				<div className='flex flex-wrap items-center justify-center gap-3'>
 					{sectionObject.itemsArr.map((item) => (

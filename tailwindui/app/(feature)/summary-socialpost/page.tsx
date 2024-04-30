@@ -78,9 +78,12 @@ export default function Topic_SocialPost() {
 	useEffect(() => {
 		if (selectedResources.length > 0) {
 			if (topic.length == 0) {
-				setTopic(formatName(selectedResources[0].name,
-					['url', 'webpage', 'youtube'].includes(selectedResources[0].type),
-					MAX_TOPIC_LENGTH),
+				setTopic(
+					formatName(
+						selectedResources[0].name,
+						['url', 'webpage', 'youtube'].includes(selectedResources[0].type),
+						MAX_TOPIC_LENGTH,
+					),
 				);
 			}
 		}
@@ -153,9 +156,9 @@ export default function Topic_SocialPost() {
 					audience,
 					language,
 					token,
-					undefined,  // search_online
-					undefined,  // scenario_type for slides
-					postStyle,  // post_style for social posts
+					undefined, // search_online
+					undefined, // scenario_type for slides
+					postStyle, // post_style for social posts
 				);
 				formData.knowledge_summary = response.data.knowledge_summary;
 				formData.project_id = response.data.project_id;
@@ -182,12 +185,11 @@ export default function Topic_SocialPost() {
 			initSocialPosts(
 				ProjectService.parseSocialPosts(response.data.res, postStyle),
 			);
-			bulkUpdateProject(
-				{
-					...response.data,
-					id: response.data.project_id,
-					social_posts: response.data.res,
-				} as Project);
+			bulkUpdateProject({
+				...response.data,
+				id: response.data.project_id,
+				social_posts: response.data.res,
+			} as Project);
 
 			router.push(addIdToRedir('/socialpost', response.data.project_id));
 		} catch (error) {
@@ -214,7 +216,7 @@ export default function Topic_SocialPost() {
 				console.error('Error when generating social posts:', response.status);
 				toast.error(
 					`Server is busy now. Please try again later. Reference code: ` +
-					project?.id,
+						project?.id,
 				);
 				setIsSubmitting(false);
 			}

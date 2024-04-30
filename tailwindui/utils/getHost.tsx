@@ -28,18 +28,18 @@ function getLogoUrl(color = true) {
 			? '/images/logo_color_chatslide.png'
 			: '/images/logo_color_drlambda.png';
 	}
-	
+
 	return isChatslide()
 		? '/images/logo_color_chatslide.png'
 		: '/images/logo_bw_drlambda.svg';
 }
 
 function isChatslide() {
-	return !getHost().includes('drlambda.ai');  // can be local
+	return !getHost().includes('drlambda.ai'); // can be local
 }
 
 function isLocal() {
-  return getHost().includes('localhost');
+	return getHost().includes('localhost');
 }
 
 export { getHost, getOrigin, getBrand, getLogoUrl, isChatslide, isLocal };

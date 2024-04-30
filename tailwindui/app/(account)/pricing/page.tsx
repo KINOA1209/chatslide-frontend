@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { ToastContainer, } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Link from 'next/link';
 import AOS from 'aos';
@@ -41,14 +41,16 @@ const Subscription = () => {
 				{/* <div className='w-fit text-[#363E4A] text-[17px] font-bold'>
 					Subscription
 				</div> */}
-				<Title>
-					Find tailored plans for you
-				</Title>
+				<Title>Find tailored plans for you</Title>
 
 				<PricingComparison small={true} />
 
 				<Title>
-					Looking to redeem your code? Click <Link className='text-blue-600' href='/account'>here</Link>!
+					Looking to redeem your code? Click{' '}
+					<Link className='text-blue-600' href='/account'>
+						here
+					</Link>
+					!
 				</Title>
 
 				{portalURL && (
@@ -104,12 +106,10 @@ export default function SubscriptionAndUserResearch() {
 			<Panel>
 				<Subscription />
 				<Card>
-					<Title>
-						Earn free credits⭐ by joining our user study
-					</Title>
-					<SmallBlueButton
-						onClick={handleUserResearchModal}
-					>{'Join today!'}</SmallBlueButton>
+					<Title>Earn free credits⭐ by joining our user study</Title>
+					<SmallBlueButton onClick={handleUserResearchModal}>
+						{'Join today!'}
+					</SmallBlueButton>
 				</Card>
 			</Panel>
 		</div>

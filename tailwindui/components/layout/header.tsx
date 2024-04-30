@@ -45,8 +45,7 @@ const Header = ({
 	}, [top]);
 
 	useEffect(() => {
-		if (token)
-			setLoading(false);
+		if (token) setLoading(false);
 
 		const listener = (data: any) => {
 			switch (data.payload.event) {
@@ -67,37 +66,36 @@ const Header = ({
 		};
 	}, []);
 
-  if(!useHydrated())
-    return <></>;
+	if (!useHydrated()) return <></>;
 
 	if (!token && loginRequired) {
 		return (
 			<Modal
 				showModal={true}
 				canClose={false} // cannot close modal
-				setShowModal={() => { }} // cannot close modal
+				setShowModal={() => {}} // cannot close modal
 				title='Sign in to continue'
 				description='Session expired, you need to sign in again to continue'
 				onConfirm={() => router.push('/signup')}
 			/>
 		);
 	}
-	
+
 	return (
 		<header
-			className={`relative sticky top-0 w-full z-30 bg-Dark transition duration-300 ease-in-out ${!top ? 'bg-gray-800 backdrop-blur-sm shadow-lg' : ''
-				}`}
+			className={`relative sticky top-0 w-full z-30 bg-Dark transition duration-300 ease-in-out ${
+				!top ? 'bg-gray-800 backdrop-blur-sm shadow-lg' : ''
+			}`}
 		>
 			<div className='max-w-4/5 mx-auto px-5'>
 				<div className='flex items-center justify-between h-12'>
 					{/* Site branding */}
-					<div className='flex flex-row items-center gap-x-2'
-						onClick={() => router.push('/landing')}>
+					<div
+						className='flex flex-row items-center gap-x-2'
+						onClick={() => router.push('/landing')}
+					>
 						<div className='min-w-[1.5rem]'>
-							<Logo
-								color={false}
-								size={'32px'}
-							/>
+							<Logo color={false} size={'32px'} />
 						</div>
 						<div className='grow flex flex-row justify-center item-center justify-start'>
 							<div className='w-fit h-[1rem] text-l text-gray-200 bg-clip-text bg-gradient-to-r relative bottom-[3px]'>
@@ -142,9 +140,7 @@ const Header = ({
 					<nav className='flex w-[200px]'>
 						{/* Desktop sign in links */}
 						{!loading && token ? (
-							!isAuth && (
-								<DropdownButton />
-							)
+							!isAuth && <DropdownButton />
 						) : (
 							<ul className='flex grow justify-end flex-nowrap items-center'>
 								<li>

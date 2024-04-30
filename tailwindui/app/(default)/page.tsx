@@ -1,6 +1,5 @@
-import Landing from "./landing/page";
-import AutoRedir from "./AutoRedir";
-
+import Landing from './landing/page';
+import AutoRedir from './AutoRedir';
 
 function App() {
 	return (

@@ -147,7 +147,6 @@ export const OnboardingFeedbackForm: React.FC<FeedbackFormProps> = ({
 			setRatingError('Please leave your feedback.');
 		} else {
 			try {
-
 				const headers = new Headers();
 				if (token) {
 					headers.append('Authorization', `Bearer ${token}`);

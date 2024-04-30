@@ -57,8 +57,8 @@ const UserResearchWindow: FC<UserResearchWindowProps> = ({ onClick }) => {
 					Earn free credits⭐ by joining our user study
 				</div>
 				<div className='text-gray-600 text-sm font-normal leading-normal tracking-[0.0175rem]'>
-					We want to learn more about what you think of {getBrand()}, and how you
-					use {getBrand()}.
+					We want to learn more about what you think of {getBrand()}, and how
+					you use {getBrand()}.
 				</div>
 				<div className='flex flex-col lg:flex-row gap-[1.5rem] self-center'>
 					{/* book a session */}

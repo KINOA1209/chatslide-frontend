@@ -15,13 +15,15 @@ export default function Rewardful() {
   })();
 					`}
 		</Script>
-	)
+	);
 }
-
 
 export async function trackRewardfulConversion(email: string) {
 	try {
-		if (typeof window !== 'undefined' && typeof window.rewardful === 'function') {
+		if (
+			typeof window !== 'undefined' &&
+			typeof window.rewardful === 'function'
+		) {
 			window.rewardful('convert', { email: email });
 		}
 	} catch (error) {
@@ -31,7 +33,10 @@ export async function trackRewardfulConversion(email: string) {
 
 export async function getRewardfulReferralId() {
 	try {
-		if (typeof window !== 'undefined' && typeof window.rewardful === 'function') {
+		if (
+			typeof window !== 'undefined' &&
+			typeof window.rewardful === 'function'
+		) {
 			console.log('Rewardful referral ID:', window.Rewardful.referral);
 			return window.Rewardful.referral;
 		} else {

@@ -22,7 +22,7 @@ export interface SlideElement {
 		| 'theme'
 		| 'chart'
 		| 'is_chart'
-		| 'images_position'
+		| 'images_position';
 	content: string | string[];
 }
 
@@ -44,7 +44,7 @@ export type SlideKeys =
 	| 'theme'
 	| 'chart'
 	| 'is_chart'
-	| 'images_position'
+	| 'images_position';
 
 export default class SocialPostSlide {
 	topic: string;
@@ -64,7 +64,7 @@ export default class SocialPostSlide {
 	theme: ThemeObject;
 	images_position: ImagesPosition[];
 	chart: Chart[];
-	is_chart: boolean[]; 
+	is_chart: boolean[];
 
 	constructor() {
 		const emptyGroup: Group = {
@@ -73,7 +73,7 @@ export default class SocialPostSlide {
 			keys: [],
 			legend: '',
 		};
-		
+
 		this.topic = 'Your topic';
 		this.subtopic = 'Your subtopic';
 		this.keywords = 'Your keywords';

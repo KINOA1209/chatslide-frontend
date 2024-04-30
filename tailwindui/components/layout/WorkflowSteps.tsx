@@ -13,7 +13,6 @@ import { useRouter } from 'next/navigation';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-
 interface StepProps {
 	id: number;
 	current: boolean;
@@ -41,10 +40,16 @@ const OneStep: React.FC<StepProps> = ({
 	const handleUnavailableClick = (e: MouseEvent<HTMLDivElement>) => {
 		e.preventDefault();
 		document.dispatchEvent(new Event('buttonBounce'));
-		toast.info('Please click the button on the right to generate.',
-			{ position: 'top-center', autoClose: 5000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, });
-
-	}
+		toast.info('Please click the button on the right to generate.', {
+			position: 'top-center',
+			autoClose: 5000,
+			hideProgressBar: false,
+			closeOnClick: true,
+			pauseOnHover: true,
+			draggable: true,
+			progress: undefined,
+		});
+	};
 
 	const handleHoverEnter = (e: MouseEvent<HTMLDivElement>) => {
 		e.preventDefault();
@@ -178,11 +183,15 @@ const ProgressBox: React.FC<ProgressBoxProps> = ({
 };
 
 const SOCIAL_POSTS_STEPS = ['Summary', 'Post'];
-const PRESENTATION_STEPS = ['Summary', 'Outlines', 'Design', 'Slides', 'Scripts', 'Video'];
-const SOCIAL_POSTS_REDIRECTS = [
-	'/summary-socialpost',
-	'/socialpost',
+const PRESENTATION_STEPS = [
+	'Summary',
+	'Outlines',
+	'Design',
+	'Slides',
+	'Scripts',
+	'Video',
 ];
+const SOCIAL_POSTS_REDIRECTS = ['/summary-socialpost', '/socialpost'];
 const PRESENTATION_REDIRECTS = [
 	'/summary',
 	'/outlines',
@@ -206,11 +215,11 @@ export const projectFinishedSteps = (project: Project | null) => {
 		if (project.parsed_slides && project.parsed_slides.length > 0) {
 			finishedStepsArray.push(2);
 		} else {
-			return finishedStepsArray;  // if no slides, return early with outlines	
+			return finishedStepsArray; // if no slides, return early with outlines
 		}
 		if (project?.template) {
-      finishedStepsArray.push(3);
-    }
+			finishedStepsArray.push(3);
+		}
 		if (project.has_scripts) finishedStepsArray.push(4);
 		if (project.video_url) finishedStepsArray.push(5);
 	}

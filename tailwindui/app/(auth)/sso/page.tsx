@@ -54,17 +54,20 @@ export default function SSORedirect() {
 	}, []);
 
 	useEffect(() => {
-		toast.info(`Welcome to ${getBrand()}, we are preparing your workspace for you! 💪`, {
-			position: 'top-center',
-			autoClose: 4000,
-			hideProgressBar: false,
-			closeOnClick: true,
-			pauseOnHover: true,
-			draggable: true,
-			progress: undefined,
-			theme: 'light',
-			containerId: 'welcome-toast',
-		});
+		toast.info(
+			`Welcome to ${getBrand()}, we are preparing your workspace for you! 💪`,
+			{
+				position: 'top-center',
+				autoClose: 4000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+				theme: 'light',
+				containerId: 'welcome-toast',
+			},
+		);
 	});
 
 	return (

@@ -4,7 +4,7 @@ import Modal from './Modal';
 import { BigBlueButton, InversedBigBlueButton } from '../button/DrlambdaButton';
 import { useProject } from '@/hooks/use-project';
 import { useUser } from '@/hooks/use-user';
-import Laura from '@/public/images/laura.jpeg'
+import Laura from '@/public/images/laura.jpeg';
 import Image from 'next/image';
 import { Instruction } from './Text';
 import UserService from '@/services/UserService';
@@ -75,7 +75,13 @@ const FeedbackButton: React.FC<FeedbackButtonProps> = ({
 				onClick={handleOpenModal}
 				className='bg-Blue text-white font-bold flex flex-row items-center py-1 px-2 gap-x-2 rounded-2xl focus:outline-none focus:shadow-outline-blue active:bg-blue-700'
 			>
-				<Image src={Laura} alt='Laura' width={30} height={30} style={{ borderRadius: '50%' }} />
+				<Image
+					src={Laura}
+					alt='Laura'
+					width={30}
+					height={30}
+					style={{ borderRadius: '50%' }}
+				/>
 				<span>Talk with us</span>
 			</button>
 
@@ -214,7 +220,13 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({
 				) : (
 					<div>
 						<div className='flex flex-row items-center justify-start gap-x-2'>
-							<Image src={Laura} alt='Laura' width={30} height={30} style={{ borderRadius: '50%' }} />
+							<Image
+								src={Laura}
+								alt='Laura'
+								width={30}
+								height={30}
+								style={{ borderRadius: '50%' }}
+							/>
 							<h3
 								className='text-lg leading-6 font-bold text-gray-900'
 								id='modal-headline'
@@ -257,22 +269,21 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({
 							></textarea>
 						</div>
 						<Instruction>
-							Want help? Book a meeting with me {' '}
-							<a href='https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ3Ly0YZMnlcouxHwvv7cUsVLziVxNPfqNBoDl8H9D9ob6sn9-WMDg7Uu0ZTPzUlKjXFjmMBeJGS' className='underline text-blue-600'>
+							Want help? Book a meeting with me{' '}
+							<a
+								href='https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ3Ly0YZMnlcouxHwvv7cUsVLziVxNPfqNBoDl8H9D9ob6sn9-WMDg7Uu0ZTPzUlKjXFjmMBeJGS'
+								className='underline text-blue-600'
+							>
 								here
 							</a>
 							.
 						</Instruction>
 						<div className='mt-4 flex justify-end gap-x-4'>
-							<InversedBigBlueButton
-								id='close-feedback'
-								onClick={onClose}>
+							<InversedBigBlueButton id='close-feedback' onClick={onClose}>
 								Close
 							</InversedBigBlueButton>
 
-							<BigBlueButton
-								id='submit-feedback'
-								onClick={() => { }}>
+							<BigBlueButton id='submit-feedback' onClick={() => {}}>
 								Submit
 							</BigBlueButton>
 						</div>

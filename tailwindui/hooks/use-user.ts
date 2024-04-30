@@ -3,8 +3,7 @@ import { Auth as AmplifyAuth } from '@aws-amplify/auth';
 import { createBearStore } from '@/utils/create-bear-store';
 import UserService from '@/services/UserService';
 import AuthService from '@/services/AuthService';
-import mixpanel from 'mixpanel-browser'
-
+import mixpanel from 'mixpanel-browser';
 
 const useTokenBear = createBearStore<string>()('token', '', true, false);
 const useUidBear = createBearStore<string>()('uid', '', true, false);
@@ -59,36 +58,42 @@ export const useUser = () => {
 			try {
 				const { uid, email, idToken } =
 					await AuthService.getCurrentUserTokenAndEmail();
-				if ( !idToken) {
+				if (!idToken) {
 					console.warn('User not logged in');
 					userStatus = UserStatus.Failed;
 					return;
 				}
 				let username = await AuthService.getCurrentUserDisplayName();
 
-				const { credits, tier, username: usernameInDB, email: emailInDB, expirationDate } =
-					await UserService.getUserCreditsAndTier(idToken);
+				const {
+					credits,
+					tier,
+					username: usernameInDB,
+					email: emailInDB,
+					expirationDate,
+				} = await UserService.getUserCreditsAndTier(idToken);
 
 				if (usernameInDB && emailInDB) {
-					if (usernameInDB !== username || !emailInDB.includes('@')) { // db info is not up to date, due to bad initing
-						UserService.updateUsernameAndEmail(username, email, idToken);  // async but dont await
+					if (usernameInDB !== username || !emailInDB.includes('@')) {
+						// db info is not up to date, due to bad initing
+						UserService.updateUsernameAndEmail(username, email, idToken); // async but dont await
 					}
 				}
 
-        const PAID_TIERS = [
-          'PLUS_ONETIME',
-          'PLUS_MONTHLY',
-          'PLUS_YEARLY',
-          'PLUS_LIFETIME',
-          'PRO_MONTHLY',
-          'PRO_YEARLY',
-          'PRO_LIFETIME',
-          'ULTIMATE_MONTHLY',
-          'ULTIMATE_YEARLY',
-          'ULTIMATE_LIFETIME'
-        ];
+				const PAID_TIERS = [
+					'PLUS_ONETIME',
+					'PLUS_MONTHLY',
+					'PLUS_YEARLY',
+					'PLUS_LIFETIME',
+					'PRO_MONTHLY',
+					'PRO_YEARLY',
+					'PRO_LIFETIME',
+					'ULTIMATE_MONTHLY',
+					'ULTIMATE_YEARLY',
+					'ULTIMATE_LIFETIME',
+				];
 
-        const isPaidUser = PAID_TIERS.includes(tier);
+				const isPaidUser = PAID_TIERS.includes(tier);
 
 				username = username?.split('@')[0] || 'User';
 
@@ -100,7 +105,7 @@ export const useUser = () => {
 					credits: credits,
 					tier: tier,
 					isPaidUser: isPaidUser,
-          expirationDate: expirationDate,
+					expirationDate: expirationDate,
 				});
 
 				mixpanel.init('22044147cd36f20bf805d416e1235329', {
@@ -120,14 +125,14 @@ export const useUser = () => {
 					},
 				});
 
-				console.log('-- Identified user in steyAIRecord')
+				console.log('-- Identified user in steyAIRecord');
 
 				setCredits(credits);
 				setTier(tier);
 				setUid(uid);
 				setToken(idToken);
 				setIsPaidUser(isPaidUser);
-        setExpirationDate(expirationDate);
+				setExpirationDate(expirationDate);
 				setUsername(username);
 				setEmail(email);
 				userStatus = UserStatus.Inited;
@@ -150,7 +155,7 @@ export const useUser = () => {
 	};
 
 	const updateCreditsAndTier = async () => {
-    console.log(' -- updating credits and tier')
+		console.log(' -- updating credits and tier');
 		const { credits, tier, expirationDate } =
 			await UserService.getUserCreditsAndTier(token);
 		const isPaidUser = [
@@ -166,11 +171,11 @@ export const useUser = () => {
 	};
 
 	const updateCreditsFE = async (delta: number) => {
-		console.log('updaing credits by ', delta)
+		console.log('updaing credits by ', delta);
 		if (credits === 'Unlimited') return;
 		const creditsNum = parseInt(credits);
-		setCredits((credits) => (creditsNum +delta).toString());
-	}
+		setCredits((credits) => (creditsNum + delta).toString());
+	};
 
 	useEffect(() => {
 		void initUser();

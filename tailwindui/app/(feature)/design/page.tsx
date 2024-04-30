@@ -164,10 +164,10 @@ export default function DesignPage() {
 		project?.logo === ''
 			? false
 			: project?.logo === 'Default'
-			? true
-			: isPaidUser
-			? false
-			: true,
+				? true
+				: isPaidUser
+					? false
+					: true,
 	);
 
 	async function viewSlidesSubmit() {
@@ -286,7 +286,7 @@ export default function DesignPage() {
 							Customize the design for your slide, you can also skip this step
 							and use the default
 						</Explanation>
-						{/* tempalte */}
+						{/* template */}
 						<TemplateSelector
 							template={template}
 							setTemplate={setTemplate}

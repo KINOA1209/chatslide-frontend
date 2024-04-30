@@ -1,5 +1,5 @@
 import { MouseEventHandler, ReactNode, useEffect, useRef } from 'react';
-import { stopArrowKeyPropagation  } from '@/utils/editing';
+import { stopArrowKeyPropagation } from '@/utils/editing';
 
 type InputBoxProps = {
 	children: ReactNode;
@@ -10,7 +10,6 @@ type InputBoxProps = {
 };
 
 export const InputBox: React.FC<InputBoxProps> = ({ children, onClick }) => {
-
 	const ref = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {

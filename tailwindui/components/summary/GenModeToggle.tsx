@@ -1,6 +1,6 @@
-import { MdOutlineSpeakerNotes } from "react-icons/md";
-import Toggle from "../button/Toggle";
-import { FiFilePlus } from "react-icons/fi";
+import { MdOutlineSpeakerNotes } from 'react-icons/md';
+import Toggle from '../button/Toggle';
+import { FiFilePlus } from 'react-icons/fi';
 
 const GenModeToggle = ({
 	generationMode,
@@ -12,7 +12,9 @@ const GenModeToggle = ({
 	return (
 		<Toggle
 			isLeft={generationMode === 'from_topic'}
-			setIsLeft={(isLeft: boolean) => setGenerationMode(isLeft ? 'from_topic' : 'from_files')}
+			setIsLeft={(isLeft: boolean) =>
+				setGenerationMode(isLeft ? 'from_topic' : 'from_files')
+			}
 			// leftText='From Topic'
 			// rightText='From Files'
 			leftElement={
@@ -27,7 +29,8 @@ const GenModeToggle = ({
 					<div>Files First</div>
 				</div>
 			}
-		/>);
-}
+		/>
+	);
+};
 
 export default GenModeToggle;

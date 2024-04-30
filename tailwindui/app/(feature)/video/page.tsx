@@ -17,7 +17,6 @@ import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import ShareButton from '@/components/button/ShareButton';
 import { getOrigin } from '@/utils/getHost';
 
-
 const VideoVisualizer = ({
 	videoUrl,
 	status,
@@ -30,7 +29,7 @@ const VideoVisualizer = ({
 	const { project, isShared, updateIsShared, videoIsShared } = useProject();
 	const [host, setHost] = useState(getOrigin());
 	const [showShareModal, setShowShareModal] = useState(false);
-	
+
 	useEffect(() => {
 		if (
 			window.location.hostname !== 'localhost' &&
@@ -48,7 +47,8 @@ const VideoVisualizer = ({
 		try {
 			// Fetch the video data from the server
 			const response = await fetch(videoSource);
-			if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+			if (!response.ok)
+				throw new Error(`HTTP error! status: ${response.status}`);
 
 			// Retrieve the video blob
 			const videoBlob = await response.blob();
@@ -83,11 +83,8 @@ const VideoVisualizer = ({
 						<ToolBar>
 							<ButtonWithExplanation
 								button={
-									<button
-										onClick={downloadVideo}
-										disabled={isDownloading}
-									>
-										{!isDownloading ?
+									<button onClick={downloadVideo} disabled={isDownloading}>
+										{!isDownloading ? (
 											<GoDownload
 												style={{
 													strokeWidth: '1',
@@ -97,9 +94,10 @@ const VideoVisualizer = ({
 													fontWeight: 'bold',
 													color: '#344054',
 												}}
-											/> :
+											/>
+										) : (
 											<SpinIcon />
-										}
+										)}
 									</button>
 								}
 								explanation={'Download'}
@@ -118,7 +116,7 @@ const VideoVisualizer = ({
 						</ToolBar>
 					</div>
 					<Video videoUrl={videoSource} />
-				</Column >
+				</Column>
 			) : status === 'failed' ? (
 				<Blank>
 					<div>
@@ -129,14 +127,16 @@ const VideoVisualizer = ({
 			) : (
 				<Loading>
 					<p>
-						Your video is being generated ⏳. It usually takes 5 minutes (20 minutes if with avatar) to
-						finish.{' '}
+						Your video is being generated ⏳. It usually takes 5 minutes (20
+						minutes if with avatar) to finish.{' '}
 					</p>
 					<p>
-						You can safely leave the page and check back later. Or stay on this page and wait.
+						You can safely leave the page and check back later. Or stay on this
+						page and wait.
 					</p>
 					<p>
-						Once the video is ready, we will also send you an notifying email 📧.
+						Once the video is ready, we will also send you an notifying email
+						📧.
 					</p>
 				</Loading>
 			)}

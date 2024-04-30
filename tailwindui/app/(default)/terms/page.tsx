@@ -21,10 +21,10 @@ export default function Terms() {
 						<div className='pb-16'>
 							<p className='text-base text-gray-600'>
 								Please read these terms and conditions carefully before using
-								our website and services provided by {getBrand()}. By accessing or
-								using our Service, you agree to be bound by these Terms. If you
-								do not agree with any part of these Terms, you may not access
-								the Service.
+								our website and services provided by {getBrand()}. By accessing
+								or using our Service, you agree to be bound by these Terms. If
+								you do not agree with any part of these Terms, you may not
+								access the Service.
 							</p>
 						</div>
 					</div>

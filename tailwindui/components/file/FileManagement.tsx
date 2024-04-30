@@ -205,8 +205,8 @@ const MyFiles: React.FC<filesInterface> = ({
 			pageInvoked === 'summary'
 				? ['doc', 'url', 'webpage', 'youtube']
 				: pageInvoked === 'theme'
-				? [fileType]
-				: [];
+					? [fileType]
+					: [];
 
 		ResourceService.fetchResources(resource_type, token).then((resources) => {
 			setResources(resources);

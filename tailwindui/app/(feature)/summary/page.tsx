@@ -43,7 +43,6 @@ import GenModeToggle from '@/components/summary/GenModeToggle';
 import { WrappableRow } from '@/components/layout/WrappableRow';
 import { formatName } from './util';
 
-
 const MAX_TOPIC_LENGTH = 3000;
 const MIN_TOPIC_LENGTH = 3;
 
@@ -58,10 +57,11 @@ const audienceDict = {
 	Myself: '🧑‍💻 Myself',
 };
 
-const getAudienceFromSceario = (scenarioType: string) => {
-	return slides_scenarios.options.find(
-		(scenario) => scenario.id === scenarioType,
-	)?.audience || 'Business_Clients';
+const getAudienceFromScenario = (scenarioType: string) => {
+	return (
+		slides_scenarios.options.find((scenario) => scenario.id === scenarioType)
+			?.audience || 'Business_Clients'
+	);
 };
 
 export default function Topic() {
@@ -83,11 +83,13 @@ export default function Topic() {
 	} = useProject();
 
 	const scenarioType = project?.scenario_type || 'business';
-	const [generationMode, setGenerationMode] = useState<'from_topic' | 'from_files'>('from_topic');
+	const [generationMode, setGenerationMode] = useState<
+		'from_topic' | 'from_files'
+	>('from_topic');
 
 	const [topic, setTopic] = useState(project?.topic || '');
 	const [audience, setAudience] = useState(
-		project?.audience || getAudienceFromSceario(scenarioType),
+		project?.audience || getAudienceFromScenario(scenarioType),
 	);
 	const [language, setLanguage] = useState(project?.language || ''); // will be updated later depending on user's location
 	const [selectedResources, setSelectedResources] = useState<Resource[]>(
@@ -132,7 +134,9 @@ export default function Topic() {
 	const updateTopic = (topic: string) => {
 		if (topic.length < MIN_TOPIC_LENGTH) {
 			setIsNextEnabled(false);
-			setTopicError(`Please enter at least ${MIN_TOPIC_LENGTH} characters, or use "Files First" option.`);
+			setTopicError(
+				`Please enter at least ${MIN_TOPIC_LENGTH} characters, or use "Files First" option.`,
+			);
 		}
 		if (topic.length >= MIN_TOPIC_LENGTH) {
 			setIsNextEnabled(true);
@@ -167,7 +171,9 @@ export default function Topic() {
 	const handleSubmit = async () => {
 		console.log('submitting');
 		if (generationMode === 'from_topic' && topic.length < MIN_TOPIC_LENGTH) {
-			setTopicError(`Please enter at least ${MIN_TOPIC_LENGTH} characters, or use "Files First" option.`);
+			setTopicError(
+				`Please enter at least ${MIN_TOPIC_LENGTH} characters, or use "Files First" option.`,
+			);
 			toast.error(
 				`Please enter at least ${MIN_TOPIC_LENGTH} characters for topic, or use "Files First" option.`,
 			);
@@ -193,7 +199,7 @@ export default function Topic() {
 			search_online: searchOnlineScope,
 			knowledge_summary: knowledge_summary,
 			section_count: Math.round(pageCountEst / 3),
-			credit_cost: Math.max(20, pageCountEst)
+			credit_cost: Math.max(20, pageCountEst),
 		};
 
 		bulkUpdateProject({
@@ -208,7 +214,7 @@ export default function Topic() {
 
 		// if needs to summarize resources
 		if (selectedResources?.length > 0 || searchOnlineScope) {
-			setSummarizing(true);  // should already be set to true
+			setSummarizing(true); // should already be set to true
 			try {
 				console.log('resources', selectedResources);
 				console.log('summarizing resources');
@@ -221,7 +227,7 @@ export default function Topic() {
 					token,
 					searchOnlineScope,
 					scenarioType,
-					undefined,  // post_style
+					undefined, // post_style
 				);
 				formData.knowledge_summary = response.data.knowledge_summary;
 				formData.project_id = response.data.project_id;
@@ -278,7 +284,7 @@ export default function Topic() {
 				console.error('Error when generating outlines:', response.status);
 				toast.error(
 					'Server is busy now. Please try again later. Reference code: ' +
-					project?.id,
+						project?.id,
 				);
 				setIsSubmitting(false);
 				setShowGenerationStatusModal(false);
@@ -325,17 +331,24 @@ export default function Topic() {
 				(summarizing ? (
 					<GenerationStatusProgressModal
 						onClick={handleGenerationStatusModal}
-						prompts={searchOnlineScope ? [
-							['🔍 Searching online...', 5],
-							['📚 Reading your resources...', 25]
-						] : [
-							['📚 Reading your resources...', 30]
-						]}
+						prompts={
+							searchOnlineScope
+								? [
+										['🔍 Searching online...', 5],
+										['📚 Reading your resources...', 25],
+									]
+								: [['📚 Reading your resources...', 30]]
+						}
 					></GenerationStatusProgressModal>
 				) : (
 					<GenerationStatusProgressModal
 						onClick={handleGenerationStatusModal}
-						prompts={[['📝 Writing outlines for your slides...', getEstWriteOutlineTime()]]}
+						prompts={[
+							[
+								'📝 Writing outlines for your slides...',
+								getEstWriteOutlineTime(),
+							],
+						]}
 					></GenerationStatusProgressModal>
 				))}
 
@@ -355,7 +368,9 @@ export default function Topic() {
 				isPaidUser={isPaidUser}
 				nextIsPaidFeature={false}
 				nextText={
-					!isSubmitting ? `Write Outline (${getCreditCost()}⭐️)` : 'Writing Outline...'
+					!isSubmitting
+						? `Write Outline (${getCreditCost()}⭐️)`
+						: 'Writing Outline...'
 				}
 				handleClickingGeneration={handleGenerationStatusModal}
 			/>
@@ -387,17 +402,19 @@ export default function Topic() {
 					<div className='title1'>
 						<WrappableRow type='flex' justify='between'>
 							<BigTitle>💡 Summary</BigTitle>
-							{generationMode === 'from_topic' &&
-								<GenModeToggle generationMode={generationMode} setGenerationMode={setGenerationMode} />
-							}
+							{generationMode === 'from_topic' && (
+								<GenModeToggle
+									generationMode={generationMode}
+									setGenerationMode={setGenerationMode}
+								/>
+							)}
 						</WrappableRow>
 						{/* <p id='after1'>
 								{' '}
 								{generationMode === 'from_topic' ? '(Required)' : '(Optional)'}
 							</p> */}
 						<Explanation>
-							To get started, give us some high-level intro about your
-							project.
+							To get started, give us some high-level intro about your project.
 						</Explanation>
 					</div>
 					{generationMode === 'from_topic' && (
@@ -427,9 +444,7 @@ export default function Topic() {
 								{/* if no char left, show red */}
 								<div
 									className={
-										MAX_TOPIC_LENGTH - topic.length === 0
-											? 'text-red-600'
-											: ''
+										MAX_TOPIC_LENGTH - topic.length === 0 ? 'text-red-600' : ''
 									}
 								>
 									{MAX_TOPIC_LENGTH - topic.length} characters left
@@ -468,28 +483,29 @@ export default function Topic() {
 						<LanguageSelector language={language} setLanguage={setLanguage} />
 					</WrappableRow>
 
-
 					<div className='w-full gap-2 flex flex-col sm:grid sm:grid-cols-2'>
 						<div>
-							<Instruction>Estimated Number of Pages: {pageCountEst}</Instruction>
+							<Instruction>
+								Estimated Number of Pages: {pageCountEst}
+							</Instruction>
 							<Explanation>
 								A rough estimate of the number of slides you will need. <br />
-								{(pageCountEst > 20) && 'Decks with than 20 pages will cost more ⭐️credits.'}
+								Decks with more than 20 pages will cost more ⭐️ credits.
 							</Explanation>
 							<div className='w-[80%]'>
 								<RangeSlider
 									onChange={(value: number) => {
-										if (value != 0)
-											setPageCountEst(value)
-									}
-									}
+										if (value != 0) setPageCountEst(value);
+									}}
 									value={pageCountEst}
 									minValue={5}
 									choices={[0, 5, 10, 15, 20, 25, 30, 35, 40]}
 								/>
 							</div>
 							<Explanation>
-								Roughly {Math.round(pageCountEst / 3 + 0.5)} sections, {pageCountEst} pages of slides, and {Math.round(pageCountEst / 3)} minutes if you generate video.
+								Roughly {Math.round(pageCountEst / 3 + 0.5)} sections,{' '}
+								{pageCountEst} pages of slides, and{' '}
+								{Math.round(pageCountEst / 3)} minutes if you generate video.
 							</Explanation>
 						</div>
 					</div>
