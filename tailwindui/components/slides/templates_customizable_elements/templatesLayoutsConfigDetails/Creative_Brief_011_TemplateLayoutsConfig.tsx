@@ -135,7 +135,7 @@ export const Creative_Brief_011_TemplateLayoutsConfig: {
 			width: '100%', // Equivalent to w-full
 			paddingLeft: '50px',
 			paddingRight: '50px',
-			paddingTop: '30px',
+			paddingTop: '0px',
 			paddingBottom: '0px',
 		},
 		columnCSS: {
@@ -171,7 +171,7 @@ export const Creative_Brief_011_TemplateLayoutsConfig: {
 	Col_2_img_0_layout: {
 		titleAndSubtopicBoxCSS: {
 			paddingTop: '50px',
-			paddingBottom: '30px',
+			paddingBottom: '50px',
 			paddingLeft: '50px',
 			paddingRight: '50px',
 			display: 'flex',
@@ -194,7 +194,7 @@ export const Creative_Brief_011_TemplateLayoutsConfig: {
 			gap: '50px',
 			paddingLeft: '50px',
 			paddingRight: '50px',
-			paddingTop: '30px',
+			paddingTop: '0px',
 			paddingBottom: '0px',
 		},
 		contentCSS: {
@@ -224,7 +224,7 @@ export const Creative_Brief_011_TemplateLayoutsConfig: {
 	Col_3_img_0_layout: {
 		titleAndSubtopicBoxCSS: {
 			paddingTop: '50px',
-			paddingBottom: '30px',
+			paddingBottom: '50px',
 			paddingLeft: '50px',
 			paddingRight: '50px',
 			display: 'flex',
@@ -247,7 +247,7 @@ export const Creative_Brief_011_TemplateLayoutsConfig: {
 			gap: '50px',
 			paddingLeft: '50px',
 			paddingRight: '50px',
-			paddingTop: '30px',
+			paddingTop: '0px',
 			paddingBottom: '0px',
 		},
 		contentCSS: {
@@ -276,7 +276,7 @@ export const Creative_Brief_011_TemplateLayoutsConfig: {
 	},
 	Col_2_img_1_layout: {
 		columnCSS: {
-			width: '50%', // equivalent to w-1/2
+			width: '60%', // equivalent to w-1/2
 			display: 'flex',
 			flexDirection: 'column',
 			alignItems: 'flex-start',
@@ -294,7 +294,7 @@ export const Creative_Brief_011_TemplateLayoutsConfig: {
 		titleAndSubtopicBoxCSS: {
 			// backgroundColor: '#F1F1F1',
 			paddingTop: '50px',
-			paddingBottom: '12px',
+			paddingBottom: '30px',
 			paddingLeft: '50px',
 			paddingRight: '0px',
 			display: 'flex',
@@ -315,7 +315,7 @@ export const Creative_Brief_011_TemplateLayoutsConfig: {
 			display: 'none',
 		},
 		imageContainerCSS: {
-			width: '50%', // equivalent to w-1/2
+			width: '40%', // equivalent to w-1/2
 			height: '100%', // equivalent to h-[90%]
 			display: 'flex',
 			alignItems: 'center', // equivalent to items-center
@@ -360,7 +360,7 @@ export const Creative_Brief_011_TemplateLayoutsConfig: {
 		titleAndSubtopicBoxCSS: {
 			// backgroundColor: '#F1F1F1',
 			paddingTop: '50px',
-			paddingBottom: '12px',
+			paddingBottom: '30px',
 			paddingLeft: '50px',
 			paddingRight: '50px',
 			display: 'flex',
@@ -393,7 +393,7 @@ export const Creative_Brief_011_TemplateLayoutsConfig: {
 			width: '100%', // Equivalent to w-full
 			paddingLeft: '50px',
 			paddingRight: '50px',
-			paddingTop: '30px',
+			paddingTop: '0px',
 			paddingBottom: '0px',
 			gridRow: 2,
 		},
@@ -437,7 +437,7 @@ export const Creative_Brief_011_TemplateLayoutsConfig: {
 		titleAndSubtopicBoxCSS: {
 			// backgroundColor: '#F1F1F1',
 			paddingTop: '50px',
-			paddingBottom: '12px',
+			paddingBottom: '30px',
 			paddingLeft: '50px',
 			paddingRight: '50px',
 			display: 'flex',
@@ -476,7 +476,7 @@ export const Creative_Brief_011_TemplateLayoutsConfig: {
 		},
 		contentContainerCSS: {
 			zIndex: 30,
-			padding: '30px 50px 0px 50px',
+			padding: '0px 50px 0px 50px',
 			width: '100%',
 			display: 'grid',
 			gridTemplateColumns: 'repeat(2, 1fr)', //
@@ -515,7 +515,7 @@ export const Creative_Brief_011_TemplateLayoutsConfig: {
 		titleAndSubtopicBoxCSS: {
 			// backgroundColor: '#F1F1F1',
 			paddingTop: '50px',
-			paddingBottom: '12px',
+			paddingBottom: '30px',
 			paddingLeft: '50px',
 			paddingRight: '50px',
 			display: 'flex',
@@ -555,7 +555,7 @@ export const Creative_Brief_011_TemplateLayoutsConfig: {
 		},
 		contentContainerCSS: {
 			zIndex: 30,
-			padding: '12px 50px 0px 50px',
+			padding: '0px 50px 0px 50px',
 			width: '100%',
 			display: 'grid',
 			gridTemplateColumns: 'repeat(3, 1fr)', //

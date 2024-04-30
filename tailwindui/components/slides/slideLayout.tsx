@@ -36,17 +36,32 @@ const QuillEditable = dynamic(
 );
 // Extend the interface with new fields
 
+// for cover:default image position is on the right side
+
+// for col1img1 image layout, default is on the bottom side
+// for col2img1 image layout, default is on the right side
+// for col2img2 image layout, default is on the bottom side
+// for col3img3 image layout, default is on the top side
+
 export type LayoutKeys =
 	| ''
 	| 'Cover_img_0_layout'
 	| 'Cover_img_1_layout'
+	// | 'Cover_img_1_top_layout' // new
+	// | 'Cover_img_1_left_layout' // new
+	// | 'Cover_img_1_bottom_layout' // new
 	| 'Col_1_img_0_layout'
 	| 'Col_2_img_0_layout'
 	| 'Col_3_img_0_layout'
 	| 'Col_2_img_1_layout'
+	// | 'Col_2_img_1_left_layout' // new
 	| 'Col_1_img_1_layout'
+	// | 'Col_1_img_1_top_layout' // new
+	// | 'Col_1_img_1_full_layout' // new
 	| 'Col_2_img_2_layout'
+	// | 'Col_2_img_2_top_layout' // new
 	| 'Col_3_img_3_layout'
+	// | 'Col_3_img_3_bottom_layout' // new
 	| 'Full_img_only_layout';
 // for add column of text button style
 const addButtonStyle = `
