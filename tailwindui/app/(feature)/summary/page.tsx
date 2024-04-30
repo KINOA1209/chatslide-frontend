@@ -69,7 +69,7 @@ const getStructureFromScenario = (scenarioType: string) => {
 		slides_scenarios.options.find((scenario) => scenario.id === scenarioType)
 			?.structure || 'Introduction, background, details, examples, conclusion.'
 	);
-}
+};
 
 export default function Topic() {
 	const {
@@ -118,7 +118,10 @@ export default function Topic() {
 
 	const [pageCountEst, setPageCountEst] = useState(15);
 
-	const [outlineStructure, setOutlineStructure] = useState(getStructureFromScenario(scenarioType));
+	const [advancedMode, setAdvancedMode] = useState(false);
+	const [outlineStructure, setOutlineStructure] = useState(
+		getStructureFromScenario(scenarioType),
+	);
 
 	const handleGenerationStatusModal = () => {
 		// console.log('user Research Modal toggled');
@@ -498,43 +501,58 @@ export default function Topic() {
 						<LanguageSelector language={language} setLanguage={setLanguage} />
 					</WrappableRow>
 
-					<Instruction>Outlines Structure</Instruction>
-					<InputBox>
-						<input
-							type='text'
-							className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800 bg-gray-100'
-							placeholder='Introduction, background, details, examples, conclusion.'
-							value={outlineStructure}
-							onChange={(e) => setOutlineStructure(e.target.value)}
-							/>
-					</InputBox>
-
-					<div className='w-full gap-2 flex flex-col sm:grid sm:grid-cols-2'>
-						<div>
-							<Instruction>
-								Estimated Number of Pages: {pageCountEst}
-							</Instruction>
-							<Explanation>
-								A rough estimate of the number of slides you will need. <br />
-								Decks with more than 20 pages will cost more ⭐️ credits.
-							</Explanation>
-							<div className='w-[80%]'>
-								<RangeSlider
-									onChange={(value: number) => {
-										if (value != 0) setPageCountEst(value);
-									}}
-									value={pageCountEst}
-									minValue={5}
-									choices={[0, 5, 10, 15, 20, 25, 30, 35, 40]}
-								/>
+					{!advancedMode ? (
+						<Instruction>
+							<div
+								onClick={() => setAdvancedMode(true)}
+								className='cursor-pointer text-blue-600'
+							>
+								Advanced Options
 							</div>
-							<Explanation>
-								Roughly {Math.round(pageCountEst / 3 + 0.5)} sections,{' '}
-								{pageCountEst} pages of slides, and{' '}
-								{Math.round(pageCountEst / 3)} minutes if you generate video.
-							</Explanation>
-						</div>
-					</div>
+						</Instruction>
+					) : (
+						<>
+							<Instruction>Outlines Structure</Instruction>
+							<InputBox>
+								<input
+									type='text'
+									className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800 bg-gray-100'
+									placeholder='Introduction, background, details, examples, conclusion.'
+									value={outlineStructure}
+									onChange={(e) => setOutlineStructure(e.target.value)}
+								/>
+							</InputBox>
+
+							<div className='w-full gap-2 flex flex-col sm:grid sm:grid-cols-2'>
+								<div>
+									<Instruction>
+										Estimated Number of Pages: {pageCountEst}
+									</Instruction>
+									<Explanation>
+										A rough estimate of the number of slides you will need.{' '}
+										<br />
+										Decks with more than 20 pages will cost more ⭐️ credits.
+									</Explanation>
+									<div className='w-[80%]'>
+										<RangeSlider
+											onChange={(value: number) => {
+												if (value != 0) setPageCountEst(value);
+											}}
+											value={pageCountEst}
+											minValue={5}
+											choices={[0, 5, 10, 15, 20, 25, 30, 35, 40]}
+										/>
+									</div>
+									<Explanation>
+										Roughly {Math.round(pageCountEst / 3 + 0.5)} sections,{' '}
+										{pageCountEst} pages of slides, and{' '}
+										{Math.round(pageCountEst / 3)} minutes if you generate
+										video.
+									</Explanation>
+								</div>
+							</div>
+						</>
+					)}
 				</Card>
 
 				{/* supporting docs  section */}
