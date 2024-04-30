@@ -166,7 +166,9 @@ export const calculateNonPresentScale = (
   showScript = false,
   workflow = 'slides',
 ) => {
-  // console.log("width", width, "height", height, "isChatWindowOpen", isChatWindowOpen, "showScript", showScript);
+  
+
+  console.log("Calculating slides scale...", "width", width, "height", height, "isChatWindowOpen", isChatWindowOpen, "showScript", showScript);
   if (width < 1024) {
     // mobile, layout vertically
     if (workflow === 'socialPosts') {
@@ -293,6 +295,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
   useEffect(() => {
     if (window.innerWidth > 1200) {
       setIsChatWindowOpen(true);
+      console.log('Window size > 1200, Resizing the layout...')
       setNonPresentScale(
         calculateNonPresentScale(
           window.innerWidth,
