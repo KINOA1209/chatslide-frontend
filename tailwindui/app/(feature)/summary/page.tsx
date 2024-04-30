@@ -160,7 +160,8 @@ export default function Topic() {
 	}
 
 	function getEstWriteOutlineTime() {
-		return Math.min(30, 10 + selectedResources.length * 5);
+		const base = isGpt35 ? 10 : 20;
+		return Math.min(30, base + selectedResources.length * 5);
 	}
 
 	useEffect(() => {
