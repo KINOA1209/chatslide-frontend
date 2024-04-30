@@ -1,11 +1,13 @@
 {
-  "options": [
+	"message": "Great! Where are you going to use it?",
+	"description": "We'll create contents tailored to your needs.",
+	"options": [
     {
       "id": "general",
       "title": "General",
       "imageSrc": "/images/scenario/general.webp",
       "audience": "Community_Members",
-      "structure": "Introduction, background details, examples, conclusion."
+      "structure": "Introduction, background, details, examples, conclusion."
     },
     {
       "id": "sales_pitch",
@@ -33,7 +35,7 @@
       "title": "Storytelling",
       "imageSrc": "/images/scenario/storytelling.jpg",
       "audience": "Video_Viewers",
-      "structure": "Introduction, narrative structure, character arcs, visual aids."
+      "structure": "Introduction, narrative structures, character arcs, visual aids."
     },
     {
       "id": "tutorial",
@@ -47,7 +49,7 @@
       "title": "Scientific Teaching",
       "imageSrc": "/images/scenario/scientific_teaching.jpg",
       "audience": "Students",
-      "structure": "Introduction, theory explanation, application, quiz."
+      "structure": "Introduction, theories explanations, applications, quiz."
     },
     {
       "id": "health_advising",
@@ -61,7 +63,7 @@
       "title": "Data Analysis",
       "imageSrc": "/images/scenario/data_analysis.jpg",
       "audience": "Researchers",
-      "structure": "Introduction, statistical methods, case study review, conclusions."
+      "structure": "Introduction, statistical methods, case study reviews."
     },
     {
       "id": "policy_training",
@@ -75,14 +77,14 @@
       "title": "News Report",
       "imageSrc": "/images/scenario/news_report.jpg",
       "audience": "Community_Members",
-      "structure": "Introduction, background information, main story, community impact."
+      "structure": "Introduction, background information, main story, developments, community impact."
     },
     {
       "id": "product_spec",
       "title": "Product Spec",
       "imageSrc": "/images/scenario/product_spec.jpg",
       "audience": "Business_Clients",
-      "structure": "Introduction, features, technical specifications, comparison with competitors."
+      "structure": "Introduction, features, technical specifications, comparison, use cases."
     }
   ]
 }
