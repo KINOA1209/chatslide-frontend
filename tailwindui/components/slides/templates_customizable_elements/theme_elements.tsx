@@ -23,6 +23,7 @@ import { JHUTemplateThemeConfig } from './templatesThemeConfigDetails/JHUTemplat
 import { Simplistic_008_TemplateThemeConfig } from './templatesThemeConfigDetails/Simplistic_008_TemplateThemeConfigDetails';
 import { New_Education_009_TemplateThemeConfig } from './templatesThemeConfigDetails/New_Education_009_TemplateThemeConfigDetails';
 import { Event_Report_010_TemplateThemeConfig } from './templatesThemeConfigDetails/Event_Report_010_TemplateThemeConfigDetails';
+import { Creative_Brief_011_TemplateThemeConfig } from './templatesThemeConfigDetails/Creative_Brief_011_TemplateThemeConfigDetails';
 
 export type ThemeElements = {
 	backgroundColorCover?: string;
@@ -90,6 +91,7 @@ const themeConfigData: ThemeConfig = {
 	Simplistic_008: Simplistic_008_TemplateThemeConfig,
 	New_Education_009: New_Education_009_TemplateThemeConfig,
 	Event_Report_010: Event_Report_010_TemplateThemeConfig,
+	Creative_Brief_011: Creative_Brief_011_TemplateThemeConfig,
 };
 
 export default themeConfigData;

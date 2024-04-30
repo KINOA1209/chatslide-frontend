@@ -185,9 +185,7 @@
 }
 @font-face {
 	font-family: 'Inter Regular';
-	src: url('/fonts/Inter Regular.ttf') format('truetype');
-	font-weight: bold;
-	font-style: normal;
+	src: url('/fonts/Inter-Regular.ttf') format('truetype');
 }
 
 @font-face {
@@ -240,6 +238,18 @@
 @font-face {
 	font-family: 'Poppins Bold';
 	src: url('/fonts/Poppins-Bold.ttf') format('truetype');
+	/* Add more src declarations for different font weights or styles if needed */
+}
+/* big shoulders Display */
+@font-face {
+	font-family: 'Big Shoulders Display Bold';
+	src: url('/fonts/BigShouldersDisplay-Bold.ttf') format('truetype');
+	/* Add more src declarations for different font weights or styles if needed */
+}
+/* big shoulders Display */
+@font-face {
+	font-family: 'Big Shoulders Display SemiBold';
+	src: url('/fonts/BigShouldersDisplay-SemiBold.ttf') format('truetype');
 	/* Add more src declarations for different font weights or styles if needed */
 }
 

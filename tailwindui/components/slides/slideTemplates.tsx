@@ -159,12 +159,12 @@ export const generateTemplate = (templateName: string) => {
 						backgroundImage:
 							themeElements?.isGradientBackground &&
 							!hasSelectedCustomTemplateBgColor
-								? themeElements.backgroundColor
+								? themeElements.backgroundColorCover
 								: undefined,
 						backgroundColor:
 							!themeElements?.isGradientBackground ||
 							hasSelectedCustomTemplateBgColor
-								? themeElements.backgroundColor
+								? themeElements.backgroundColorCover
 								: undefined,
 					}}
 				>
@@ -345,6 +345,8 @@ export type PaletteKeys =
 	| 'Feta'
 	| 'Catskill White'
 	| 'Customize'
+	| 'Serenade'
+	| 'Seashell'
 	| '';
 
 // add template keys here
@@ -371,12 +373,14 @@ export const availableTemplates = {
 	Simplistic_008: Simplistic_008_template,
 	New_Education_009: New_Education_009_template,
 	Event_Report_010: Event_Report_010_template,
+	Creative_Brief_011: Creative_Brief_011_template,
 };
 
 export const templateDisplayNames = {
 	Simplistic_008: '🌅 Simplistic',
 	New_Education_009: '📚 Education',
 	Event_Report_010: '📈 Report',
+	Creative_Brief_011: ' ✨ Creative Brief',
 	// Default: '📃 Blank',
 	Business_002: '📎 Business',
 	Business_Dark_005: '💼 Business Dark',

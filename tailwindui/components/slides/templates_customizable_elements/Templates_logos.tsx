@@ -411,6 +411,23 @@ export const Event_Report_010_TemplateLogo: React.FC<TemplateLogoType> = (
 		logoHeight: 1.5,
 	});
 
+export const Creative_Brief_011_TemplateLogo: React.FC<TemplateLogoType> = (
+	props: TemplateLogoType,
+) =>
+	generateTemplateLogo({
+		...props,
+		// coverLogo: drlambdaLogo,
+		// nonCoverLogo: drlambdaLogo,
+		lightBGLogo: isChatslide()
+			? chatslideLogoBlackText
+			: drlambdaLogoBadgeWhiteBG,
+		darkBGLogo: isChatslide()
+			? chatslideLogoWhiteText
+			: drlambdaLogoBadgeBlackBG,
+		logoWidth: 8, // Adjust the width as needed
+		logoHeight: 1.5,
+	});
+
 // Define the type for template logo information
 type TemplateLogoInfo = {
 	templateName: TemplateKeys;
@@ -431,6 +448,10 @@ const templatesInfo: TemplateLogoInfo[] = [
 	// 	templateName: 'Simplistic_008_dark' as TemplateKeys,
 	// 	templateLogo: Simplistic_008_TemplateLogoDark,
 	// },
+	{
+		templateName: 'Creative_Brief_011' as TemplateKeys,
+		templateLogo: Creative_Brief_011_TemplateLogo,
+	},
 
 	{
 		templateName: 'Event_Report_010' as TemplateKeys,

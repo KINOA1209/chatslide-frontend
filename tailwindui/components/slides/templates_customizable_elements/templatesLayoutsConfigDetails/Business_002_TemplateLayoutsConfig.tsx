@@ -6,11 +6,13 @@ export const Business_002_TemplateLayoutsConfig: {
 	[key in LayoutKeys]?: LayoutElements;
 } = {
 	Cover_img_0_layout: {
-		// canvaCSS: {
-		// 	backgroundColor: '#2E2E2E',
-		// 	margin: 0,
-		// 	padding: 0,
-		// },
+		canvaCSS: {
+			display: 'flex',
+			width: '100%',
+			height: '100%',
+			// position: 'relative',
+			// overflow: 'hidden',
+		},
 		titleCSS: {
 			backgroundColor: '#DEFF56',
 			paddingBottom: '20rem',
@@ -62,6 +64,13 @@ export const Business_002_TemplateLayoutsConfig: {
 		},
 	},
 	Cover_img_1_layout: {
+		canvaCSS: {
+			display: 'flex',
+			width: '100%',
+			height: '100%',
+			// position: 'relative',
+			// overflow: 'hidden',
+		},
 		titleCSS: {
 			paddingBottom: '10rem', // 20rem -> 10rem to solve print problem
 			paddingTop: '4rem',

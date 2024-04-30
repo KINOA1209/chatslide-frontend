@@ -174,6 +174,9 @@ export const Fun_Vibrant_007_TemplateLayoutsConfig: {
 		},
 	},
 	Col_2_img_0_layout: {
+		canvaCSS: {
+			display: 'inline-block',
+		},
 		visualElementsCSS: {
 			zIndex: 0,
 			width: '100%',
@@ -259,8 +262,7 @@ export const Fun_Vibrant_007_TemplateLayoutsConfig: {
 	},
 	Col_3_img_0_layout: {
 		canvaCSS: {
-			width: '100%',
-			// boxSizing: 'border-box',
+			display: 'inline-block',
 		},
 		visualElementsCSS: {
 			zIndex: 0,
