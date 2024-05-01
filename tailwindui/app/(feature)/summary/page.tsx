@@ -26,6 +26,7 @@ import {
 	Explanation,
 	ExplanationPopup,
 	Instruction,
+	WarningMessage,
 } from '@/components/ui/Text';
 import { DropDown } from '@/components/button/DrlambdaButton';
 import ResourceService from '@/services/ResourceService';
@@ -41,7 +42,8 @@ import slides_scenarios from './../scenario-choice/slides_scenarios.json';
 import RangeSlider from '@/components/ui/RangeSlider';
 import GenModeToggle from '@/components/summary/GenModeToggle';
 import { WrappableRow } from '@/components/layout/WrappableRow';
-import { formatName } from './util';
+import { InputBox } from '@/components/ui/InputBox';
+import RadioButton from '@/components/ui/RadioButton';
 
 const MAX_TOPIC_LENGTH = 3000;
 const MIN_TOPIC_LENGTH = 3;
@@ -64,6 +66,13 @@ const getAudienceFromScenario = (scenarioType: string) => {
 	);
 };
 
+const getStructureFromScenario = (scenarioType: string) => {
+	return (
+		slides_scenarios.options.find((scenario) => scenario.id === scenarioType)
+			?.structure || 'Introduction, background, details, examples, conclusion.'
+	);
+};
+
 export default function Topic() {
 	const {
 		isTourActive,
@@ -82,7 +91,7 @@ export default function Topic() {
 		initProject,
 	} = useProject();
 
-	const scenarioType = project?.scenario_type || 'business';
+	const scenarioType = project?.scenario_type || 'general';
 	const [generationMode, setGenerationMode] = useState<
 		'from_topic' | 'from_files'
 	>('from_topic');
@@ -104,11 +113,18 @@ export default function Topic() {
 	const [showFileModal, setShowFileModal] = useState(false);
 	const [topicError, setTopicError] = useState('');
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
+	const [addCitations, setAddCitations] = useState('no');
 
 	const [showGenerationStatusModal, setShowGenerationStatusModal] =
 		useState(false);
 
 	const [pageCountEst, setPageCountEst] = useState(15);
+
+	const [advancedMode, setAdvancedMode] = useState(false);
+	const [outlineStructure, setOutlineStructure] = useState(
+		getStructureFromScenario(scenarioType),
+	);
+	const [structureMode, setStructureMode] = useState('custom');
 
 	const handleGenerationStatusModal = () => {
 		// console.log('user Research Modal toggled');
@@ -159,7 +175,8 @@ export default function Topic() {
 	}
 
 	function getEstWriteOutlineTime() {
-		return Math.min(30, 10 + selectedResources.length * 5);
+		const base = isGpt35 ? 10 : 20;
+		return Math.min(30, base + selectedResources.length * 5);
 	}
 
 	useEffect(() => {
@@ -200,6 +217,8 @@ export default function Topic() {
 			knowledge_summary: knowledge_summary,
 			section_count: Math.round(pageCountEst / 3),
 			credit_cost: Math.max(20, pageCountEst),
+			structure_mode: structureMode,
+			outline_structure: structureMode === 'custom' ? outlineStructure : '',
 		};
 
 		bulkUpdateProject({
@@ -210,6 +229,7 @@ export default function Topic() {
 			scenario_type: scenarioType,
 			search_online: searchOnlineScope,
 			knowledge_summary: knowledge_summary,
+			add_citations: addCitations === 'yes',
 		} as Project);
 
 		// if needs to summarize resources
@@ -309,6 +329,76 @@ export default function Topic() {
 		);
 	};
 
+	const AdvancedOptions: React.FC = () => {
+		return (
+			<>
+				<Instruction>Structure of the Deck</Instruction>
+
+				<RadioButton
+					name='outline_structure_mode'
+					options={[
+						{ value: 'custom', text: 'Custom Structure' },
+						{
+							value: 'follow_resource',
+							text: 'Follow the structure of my resource',
+						},
+					]}
+					selectedValue={structureMode}
+					setSelectedValue={setStructureMode}
+				/>
+
+				{structureMode === 'custom' ? (
+					<InputBox>
+						<input
+							type='text'
+							className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800'
+							placeholder='Introduction, background, details, examples, conclusion.'
+							value={outlineStructure}
+							onChange={(e) => setOutlineStructure(e.target.value)}
+						/>
+					</InputBox>
+				) : selectedResources.length == 0 ? (
+					<WarningMessage>
+						Add a resource to enable this feature.
+					</WarningMessage>
+				) : (
+					<DropDown>
+						{selectedResources.map((resource, index) => (
+							<option key={index} value={resource.id}>
+								{resource.name}
+							</option>
+						))}
+					</DropDown>
+				)}
+
+				<div className='w-full gap-2 flex flex-col sm:grid sm:grid-cols-2'>
+					<div>
+						<Instruction>Estimated Number of Pages: {pageCountEst}</Instruction>
+						<Explanation>
+							A rough estimate of the number of slides you will need. <br />
+							Decks with more than 20 pages will cost more ⭐️ credits.
+						</Explanation>
+						<div className='w-[80%]'>
+							<RangeSlider
+								onChange={(value: number) => {
+									if (value != 0) setPageCountEst(value);
+								}}
+								value={pageCountEst}
+								minValue={5}
+								choices={[0, 5, 10, 15, 20, 25, 30, 35, 40]}
+							/>
+						</div>
+						<Explanation>
+							Roughly {Math.round(pageCountEst / 3 + 0.5)} sections,{' '}
+							{pageCountEst} pages of slides, and {Math.round(pageCountEst / 3)}{' '}
+							minutes if you generate video.
+						</Explanation>
+					</div>
+				</div>
+			</>
+		);
+	};
+
 	// avoid hydration error during development caused by persistence
 	if (!useHydrated()) return <></>;
 
@@ -391,6 +481,8 @@ export default function Topic() {
 						isRequired
 						generationMode='from_files'
 						setGenerationMode={setGenerationMode}
+						addCitations={addCitations}
+						setAddCitations={setAddCitations}
 					/>
 				)}
 
@@ -483,32 +575,18 @@ export default function Topic() {
 						<LanguageSelector language={language} setLanguage={setLanguage} />
 					</WrappableRow>
 
-					<div className='w-full gap-2 flex flex-col sm:grid sm:grid-cols-2'>
-						<div>
-							<Instruction>
-								Estimated Number of Pages: {pageCountEst}
-							</Instruction>
-							<Explanation>
-								A rough estimate of the number of slides you will need. <br />
-								Decks with more than 20 pages will cost more ⭐️ credits.
-							</Explanation>
-							<div className='w-[80%]'>
-								<RangeSlider
-									onChange={(value: number) => {
-										if (value != 0) setPageCountEst(value);
-									}}
-									value={pageCountEst}
-									minValue={5}
-									choices={[0, 5, 10, 15, 20, 25, 30, 35, 40]}
-								/>
+					{!advancedMode ? (
+						<Instruction>
+							<div
+								onClick={() => setAdvancedMode(true)}
+								className='cursor-pointer text-blue-600'
+							>
+								Advanced Options
 							</div>
-							<Explanation>
-								Roughly {Math.round(pageCountEst / 3 + 0.5)} sections,{' '}
-								{pageCountEst} pages of slides, and{' '}
-								{Math.round(pageCountEst / 3)} minutes if you generate video.
-							</Explanation>
-						</div>
-					</div>
+						</Instruction>
+					) : (
+						<AdvancedOptions />
+					)}
 				</Card>
 
 				{/* supporting docs  section */}
@@ -521,6 +599,8 @@ export default function Topic() {
 						selectedResources={selectedResources}
 						setSelectedResources={setSelectedResources}
 						removeResourceAtIndex={removeResourceAtIndex}
+						addCitations={addCitations}
+						setAddCitations={setAddCitations}
 					/>
 				)}
 			</Column>

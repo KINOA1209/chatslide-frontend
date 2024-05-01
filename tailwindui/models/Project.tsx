@@ -41,6 +41,7 @@ type Project = {
 	scenario_type?: string;
 	has_scripts?: boolean;
 	search_online?: string;
+	add_citations?: boolean;
 
 	view_count?: number;
 
