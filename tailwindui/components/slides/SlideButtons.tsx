@@ -253,8 +253,11 @@ export const ChangeTemplateOptions: React.FC<{}> = ({}) => {
 		hasSelectedCustomTemplateBgColor,
 		updateCustomBgColorForTemplate,
 		customTemplateBgColor,
+		updateCustomizedTitleFontFamilyForTemplate,
+		updateCustomizedSubtitleFontFamilyForTemplate,
+		updateCustomizedContentFontFamilyForTemplate,
 	} = useSlides();
-	const { changeTemplateAndPalette } = useSlides();
+	const { changeTemplateAndPaletteAndBgColorAndFont } = useSlides();
 	const [selectedTemplate, setSelectedTemplate] = useState<TemplateKeys>(
 		slides[0]?.template || 'Default',
 	);
@@ -268,10 +271,15 @@ export const ChangeTemplateOptions: React.FC<{}> = ({}) => {
 	const [selectedPaletteOption, setSelectedPaletteOption] =
 		useState<PaletteKeys>(slides[0]?.palette || 'Original');
 
+	const [selectedTemplateBgColor, setSelectedTemplateBgColor] = useState(slides[0]?.background_color || '#FFFFFF')
+	const [selectedTemplateTitleFontFamily, setSelectedTemplateTitleFontFamily] = useState(slides[0]?.titleFontFamily || 'Arial')
+	const [selectedTemplateSubtitleFontFamily, setSelectedTemplateSubtitleFontFamily] = useState(slides[0]?.subtitleFontFamily || 'Arial')
+	const [selectedTemplateContentFontFamily, setSelectedTemplateContentFontFamily] = useState(slides[0]?.contentFontFamily || 'Arial')
+
 	const handleConfirm = () => {
-		console.log('selectedTemplate:', selectedTemplate, selectedPaletteOption);
+		// console.log('selectedTemplate all configs:', selectedTemplate, selectedPaletteOption, selectedTemplateBgColor, selectedTemplateTitleFontFamily, selectedTemplateSubtitleFontFamily, selectedTemplateContentFontFamily);
 		// if (!hasSelectedCustomTemplateBgColor) {
-		changeTemplateAndPalette(selectedTemplate, selectedPaletteOption);
+		changeTemplateAndPaletteAndBgColorAndFont(selectedTemplate, selectedPaletteOption, selectedTemplateBgColor, selectedTemplateTitleFontFamily, selectedTemplateSubtitleFontFamily, selectedTemplateContentFontFamily);
 		// }
 		// when confirm, set the selected palette color code to background color
 		// updateCustomBgColorForTemplate(
@@ -322,6 +330,10 @@ export const ChangeTemplateOptions: React.FC<{}> = ({}) => {
 						setTemplate={setSelectedTemplate}
 						setPalette={setSelectedPaletteOption}
 						showCustomColorPicker={true}
+						setCustomizedTemplateBgColorCallback={setSelectedTemplateBgColor}
+						setCustomizedTemplateContentFontFamilyCallback={setSelectedTemplateContentFontFamily}
+						setCustomizedTemplateSubtitleFontFamilyCallback={setSelectedTemplateSubtitleFontFamily}
+						setCustomizedTemplateTitleFontFamilyCallback={setSelectedTemplateTitleFontFamily}
 					/>
 				</div>
 			</Modal>
