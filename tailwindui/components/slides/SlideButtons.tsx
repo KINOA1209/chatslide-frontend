@@ -204,48 +204,6 @@ export const DeleteSlideButton: React.FC<{
 	);
 };
 
-// use to change the template. selection box
-// export const ChangeTemplateOptions: React.FC<{
-//   templateOptions: string[]
-//   onChangeTemplate: (newTemplate: string) => void
-// }> = ({ templateOptions, onChangeTemplate }) => {
-//   const [selectedTemplate, setSelectedTemplate] = useState('')
-//   const handleTemplateChange = (
-//     event: React.ChangeEvent<HTMLSelectElement>
-//   ) => {
-//     setSelectedTemplate(event.target.value)
-//   }
-//   const applyTemplateChange = () => {
-//     if (selectedTemplate) {
-//       onChangeTemplate(selectedTemplate)
-//     }
-//   }
-//   useEffect(() => console.log('templateOptions are:', templateOptions), [])
-//   return (
-//     <div className='relative'>
-//       <select
-//         className='border border-gray-300 rounded-md px-3 py-1 mr-2'
-//         onChange={handleTemplateChange}
-//         value={selectedTemplate}
-//       >
-//         <option value='' disabled>
-//           Select Template
-//         </option>
-//         {templateOptions.map((template) => (
-//           <option key={template} value={template}>
-//             {template}
-//           </option>
-//         ))}
-//       </select>
-//       <button
-//         className='bg-blue-500 text-white px-3 py-1 rounded-md cursor-pointer'
-//         onClick={applyTemplateChange}
-//       >
-//         Apply
-//       </button>
-//     </div>
-//   )
-// }
 export const ChangeTemplateOptions: React.FC<{}> = ({}) => {
 	// const { project } = useProject();
 	const {
@@ -271,15 +229,31 @@ export const ChangeTemplateOptions: React.FC<{}> = ({}) => {
 	const [selectedPaletteOption, setSelectedPaletteOption] =
 		useState<PaletteKeys>(slides[0]?.palette || 'Original');
 
-	const [selectedTemplateBgColor, setSelectedTemplateBgColor] = useState(slides[0]?.background_color || '#FFFFFF')
-	const [selectedTemplateTitleFontFamily, setSelectedTemplateTitleFontFamily] = useState(slides[0]?.titleFontFamily || 'Arial')
-	const [selectedTemplateSubtitleFontFamily, setSelectedTemplateSubtitleFontFamily] = useState(slides[0]?.subtitleFontFamily || 'Arial')
-	const [selectedTemplateContentFontFamily, setSelectedTemplateContentFontFamily] = useState(slides[0]?.contentFontFamily || 'Arial')
+	const [selectedTemplateBgColor, setSelectedTemplateBgColor] = useState(
+		slides[0]?.background_color || '#FFFFFF',
+	);
+	const [selectedTemplateTitleFontFamily, setSelectedTemplateTitleFontFamily] =
+		useState(slides[0]?.titleFontFamily || 'Arial');
+	const [
+		selectedTemplateSubtitleFontFamily,
+		setSelectedTemplateSubtitleFontFamily,
+	] = useState(slides[0]?.subtitleFontFamily || 'Arial');
+	const [
+		selectedTemplateContentFontFamily,
+		setSelectedTemplateContentFontFamily,
+	] = useState(slides[0]?.contentFontFamily || 'Arial');
 
 	const handleConfirm = () => {
 		// console.log('selectedTemplate all configs:', selectedTemplate, selectedPaletteOption, selectedTemplateBgColor, selectedTemplateTitleFontFamily, selectedTemplateSubtitleFontFamily, selectedTemplateContentFontFamily);
 		// if (!hasSelectedCustomTemplateBgColor) {
-		changeTemplateAndPaletteAndBgColorAndFont(selectedTemplate, selectedPaletteOption, selectedTemplateBgColor, selectedTemplateTitleFontFamily, selectedTemplateSubtitleFontFamily, selectedTemplateContentFontFamily);
+		changeTemplateAndPaletteAndBgColorAndFont(
+			selectedTemplate,
+			selectedPaletteOption,
+			selectedTemplateBgColor,
+			selectedTemplateTitleFontFamily,
+			selectedTemplateSubtitleFontFamily,
+			selectedTemplateContentFontFamily,
+		);
 		// }
 		// when confirm, set the selected palette color code to background color
 		// updateCustomBgColorForTemplate(
@@ -331,9 +305,15 @@ export const ChangeTemplateOptions: React.FC<{}> = ({}) => {
 						setPalette={setSelectedPaletteOption}
 						showCustomColorPicker={true}
 						setCustomizedTemplateBgColorCallback={setSelectedTemplateBgColor}
-						setCustomizedTemplateContentFontFamilyCallback={setSelectedTemplateContentFontFamily}
-						setCustomizedTemplateSubtitleFontFamilyCallback={setSelectedTemplateSubtitleFontFamily}
-						setCustomizedTemplateTitleFontFamilyCallback={setSelectedTemplateTitleFontFamily}
+						setCustomizedTemplateContentFontFamilyCallback={
+							setSelectedTemplateContentFontFamily
+						}
+						setCustomizedTemplateSubtitleFontFamilyCallback={
+							setSelectedTemplateSubtitleFontFamily
+						}
+						setCustomizedTemplateTitleFontFamilyCallback={
+							setSelectedTemplateTitleFontFamily
+						}
 					/>
 				</div>
 			</Modal>

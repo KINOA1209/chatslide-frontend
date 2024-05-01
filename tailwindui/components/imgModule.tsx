@@ -535,6 +535,34 @@ export const ImgModule = ({
 		console.log('out', selectedQueryMode);
 	};
 
+	interface YouTubeEmbedProps {
+		videoId: string;
+		width?: string;
+		height?: string;
+	}
+	const YouTubeEmbed: React.FC<YouTubeEmbedProps> = ({
+		videoId,
+		width = '100%',
+		height = '100%',
+	}) => {
+		// YouTube embed URL
+		const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+
+		return (
+			<div style={{ width: width, height: height }}>
+				<iframe
+					width={width}
+					height={height}
+					src={embedUrl}
+					frameBorder={0}
+					allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+					allowFullScreen
+					title='YouTube Video Player'
+				></iframe>
+			</div>
+		);
+	};
+
 	const resourceSelectionDiv = (
 		<div className='w-full h-full'>
 			<div className='w-full h-full flex flex-col'>
@@ -1162,6 +1190,14 @@ export const ImgModule = ({
 					setShowModal={setShowModal}
 					title='Image / Chart'
 				>
+					{/* <div>
+						<h1>YouTube Video</h1>
+						<YouTubeEmbed
+							videoId='B91wc5dCEBA'
+							// width={'300px'}
+							// height={'300px'}
+						/>
+					</div> */}
 					<div className='flex grow h-[400px] w-full sm:w-[600px] flex-col overflow-auto'>
 						<div className='w-full flex flex-col' ref={typeRef}>
 							<div className='w-full grid grid-cols-4'>
@@ -1333,6 +1369,7 @@ export const ImgModule = ({
 					)
 				) : (
 					// image
+
 					<div
 						className={`
 							${isImgEditMode ? 'rndContainerWithOutBorder' : ''}

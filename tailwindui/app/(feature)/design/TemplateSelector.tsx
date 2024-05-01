@@ -60,10 +60,10 @@ const TemplateSelector: React.FC<{
 	palette: PaletteKeys;
 	setPalette: (palette: PaletteKeys) => void;
 	showCustomColorPicker?: boolean;
-	setCustomizedTemplateBgColorCallback: (color: string) => void
-	setCustomizedTemplateTitleFontFamilyCallback: (font: string) => void
-	setCustomizedTemplateSubtitleFontFamilyCallback: (font: string) => void
-	setCustomizedTemplateContentFontFamilyCallback: (font: string) => void
+	setCustomizedTemplateBgColorCallback: (color: string) => void;
+	setCustomizedTemplateTitleFontFamilyCallback: (font: string) => void;
+	setCustomizedTemplateSubtitleFontFamilyCallback: (font: string) => void;
+	setCustomizedTemplateContentFontFamilyCallback: (font: string) => void;
 }> = ({
 	template,
 	setTemplate,
@@ -74,17 +74,18 @@ const TemplateSelector: React.FC<{
 	setCustomizedTemplateBgColorCallback,
 	setCustomizedTemplateContentFontFamilyCallback,
 	setCustomizedTemplateSubtitleFontFamilyCallback,
-	setCustomizedTemplateTitleFontFamilyCallback
+	setCustomizedTemplateTitleFontFamilyCallback,
 }) => {
 	// should not use slides because there could be no slides object yet
 	const {
-		slides,
-		updateCustomBgColorForTemplate,
-		updateCustomizedTitleFontFamilyForTemplate,
-		updateCustomizedSubtitleFontFamilyForTemplate,
-		updateCustomizedContentFontFamilyForTemplate,
-		initialLoadedTemplateBgColor, setInitialLoadedTemplateBgColor,
-		toggleHasSelectedCustomTemplateBgColor,
+		// slides,
+		// updateCustomBgColorForTemplate,
+		// updateCustomizedTitleFontFamilyForTemplate,
+		// updateCustomizedSubtitleFontFamilyForTemplate,
+		// updateCustomizedContentFontFamilyForTemplate,
+		initialLoadedTemplateBgColor,
+		setInitialLoadedTemplateBgColor,
+		// toggleHasSelectedCustomTemplateBgColor,
 		hasSelectedCustomTemplateBgColor,
 		setHasSelectedCustomTemplateBgColor,
 		customTemplateBgColor,
@@ -119,7 +120,7 @@ const TemplateSelector: React.FC<{
 		setCustomizedTemplateBgColorCallback(color);
 		// updateCustomBgColorForTemplate(color);
 		// toggleHasSelectedCustomTemplateBgColor(true);
-		setHasSelectedCustomTemplateBgColor(true); 
+		setHasSelectedCustomTemplateBgColor(true);
 		// console.log('SelectedCustomTemplateBgColor:', customTemplateBgColor);
 	};
 	const [finalPaletteOptions, setFinalPaletteOptions] =
@@ -143,17 +144,19 @@ const TemplateSelector: React.FC<{
 			template as TemplateKeys,
 			palette as PaletteKeys,
 		);
-		console.log(
-			'initialCurrentTemplate configs',
-			template,
-			palette,
-			// currentSelectedPalette,
-			initialCurrentTemplateThemeConfig,
-			initialLoadedTemplateBgColor
+		// console.log(
+		// 	'initialCurrentTemplate configs',
+		// 	template,
+		// 	palette,
+		// 	// currentSelectedPalette,
+		// 	initialCurrentTemplateThemeConfig,
+		// 	initialLoadedTemplateBgColor
+		// );
+		// console.log("has set customized bg color", hasSelectedCustomTemplateBgColor)
+		// console.log("has set customized font", HasSelectedCustomizedTemplateTitleFontFamily)
+		setInitialLoadedTemplateBgColor(
+			initialCurrentTemplateThemeConfig?.backgroundColor,
 		);
-		console.log("has set customized bg color", hasSelectedCustomTemplateBgColor)
-		console.log("has set customized font", HasSelectedCustomizedTemplateTitleFontFamily)
-		setInitialLoadedTemplateBgColor(initialCurrentTemplateThemeConfig?.backgroundColor)
 
 		setInitialLoadedTitleFontFamily(
 			initialCurrentTemplateThemeConfig?.titleFontCSS?.fontFamily,
@@ -169,7 +172,6 @@ const TemplateSelector: React.FC<{
 		);
 	}, [template, palette]); // template + palette
 
-
 	// useEffect(() => {
 	// 	setHasSelectedCustomTemplateBgColor(false);  // choose preset palette -> not selected customized bg color
 	// }, [palette])
@@ -181,7 +183,7 @@ const TemplateSelector: React.FC<{
 		// 	HasSelectedCustomizedTemplateTitleFontFamily,
 		// );
 		setCustomizedTemplateTitleFontFamily(fontFamily);
-		setCustomizedTemplateTitleFontFamilyCallback(fontFamily)
+		setCustomizedTemplateTitleFontFamilyCallback(fontFamily);
 		// updateCustomizedTitleFontFamilyForTemplate(fontFamily);
 		setHasSelectedCustomizedTemplateTitleFontFamily(true);
 	};
@@ -192,7 +194,7 @@ const TemplateSelector: React.FC<{
 		// 	HasSelectedCustomizedTemplateTitleFontFamily,
 		// );
 		setCustomizedTemplateSubtitleFontFamily(fontFamily);
-		setCustomizedTemplateSubtitleFontFamilyCallback(fontFamily)
+		setCustomizedTemplateSubtitleFontFamilyCallback(fontFamily);
 		// updateCustomizedSubtitleFontFamilyForTemplate(fontFamily);
 		setHasSelectedCustomizedTemplateSubtitleFontFamily(true);
 	};
@@ -203,7 +205,7 @@ const TemplateSelector: React.FC<{
 		// 	HasSelectedCustomizedTemplateTitleFontFamily,
 		// );
 		setCustomizedTemplateContentFontFamily(fontFamily);
-		setCustomizedTemplateContentFontFamilyCallback(fontFamily)
+		setCustomizedTemplateContentFontFamilyCallback(fontFamily);
 		// updateCustomizedContentFontFamilyForTemplate(fontFamily);
 		setHasSelectedCustomizedTemplateContentFontFamily(true);
 	};
@@ -214,11 +216,15 @@ const TemplateSelector: React.FC<{
 		if (paletteOptions.length === 1) {
 			// setCurrentSelectedPalette(paletteOptions[0]); // Update finalPaletteOptions when paletteOptions changes
 			setPalette(paletteOptions[0]); // If only one option, set it as default
-			setCustomizedTemplateBgColorCallback(colorPreviews[paletteOptions[0] as PaletteKeys])
+			setCustomizedTemplateBgColorCallback(
+				colorPreviews[paletteOptions[0] as PaletteKeys],
+			);
 		} else if (!paletteOptions.includes(palette)) {
 			// setCurrentSelectedPalette(paletteOptions[0]); // Update finalPaletteOptions when paletteOptions changes
 			setPalette(paletteOptions[0]); // If current palette is not in options, set first option as default
-			setCustomizedTemplateBgColorCallback(colorPreviews[paletteOptions[0] as PaletteKeys])
+			setCustomizedTemplateBgColorCallback(
+				colorPreviews[paletteOptions[0] as PaletteKeys],
+			);
 		}
 	}, [template, paletteOptions]);
 
@@ -231,38 +237,45 @@ const TemplateSelector: React.FC<{
 	// 	setFinalPaletteOptions([...paletteOptions, 'Customize']);
 	// }, []);
 
-	useEffect(() => {
-		console.log('current selected custom color:', customTemplateBgColor);
-	});
+	// useEffect(() => {
+	// 	console.log('current selected custom color:', customTemplateBgColor);
+	// });
 	// const handlePaletteChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 	// 	const selectedValue = e.target.value;
 	// 	setPalette(selectedValue);
 	// };
 	const handlePaletteChange = (selectedOption: OptionType | null) => {
-		console.log("selected option:", selectedOption)
+		console.log('selected option:', selectedOption);
 		if (selectedOption !== null) {
 			// setCurrentSelectedPalette(selectedOption.value);
 			setPalette(selectedOption.value);
 			// setHasSelectedCustomTemplateBgColor(false);  // choose preset palette -> not selected customized bg color
-			setCustomizedTemplateBgColorCallback(colorPreviews[selectedOption.value as PaletteKeys])
+			setCustomizedTemplateBgColorCallback(
+				colorPreviews[selectedOption.value as PaletteKeys],
+			);
 		} else {
 			// Handle the case where no option is selected, for example, clear the palette
 			// setCurrentSelectedPalette(paletteOptions[0]);
 			setPalette(paletteOptions[0]);
 			// setHasSelectedCustomTemplateBgColor(false);  // choose preset palette -> not selected customized bg color
-			setCustomizedTemplateBgColorCallback(colorPreviews[paletteOptions[0] as PaletteKeys])
-
+			setCustomizedTemplateBgColorCallback(
+				colorPreviews[paletteOptions[0] as PaletteKeys],
+			);
 		}
 	};
 
 	const resetColorPicker = () => {
 		// updateCustomBgColorForTemplate(colorPreviews[palette as PaletteKeys]);
 		// setCustomTemplateBgColor(colorPreviews[palette as PaletteKeys])
-		setCustomTemplateBgColor(initialLoadedTemplateBgColor || colorPreviews[palette as PaletteKeys])
-		setCustomizedTemplateBgColorCallback(initialLoadedTemplateBgColor || colorPreviews[palette as PaletteKeys])
+		setCustomTemplateBgColor(
+			initialLoadedTemplateBgColor || colorPreviews[palette as PaletteKeys],
+		);
+		setCustomizedTemplateBgColorCallback(
+			initialLoadedTemplateBgColor || colorPreviews[palette as PaletteKeys],
+		);
 		// Reset hasSelectedCustomTemplateBgColor to false
 		// toggleHasSelectedCustomTemplateBgColor(false);
-		setHasSelectedCustomTemplateBgColor(false); 
+		setHasSelectedCustomTemplateBgColor(false);
 	};
 
 	const resetFontFamilyPicker = () => {
@@ -276,13 +289,16 @@ const TemplateSelector: React.FC<{
 		// updateCustomizedContentFontFamilyForTemplate(
 		// 	initialLoadedContentFontFamily || '',
 		// );
-		setCustomizedTemplateTitleFontFamily(initialLoadedTitleFontFamily || '')
-		setCustomizedTemplateSubtitleFontFamily(initialLoadedSubtitleFontFamily || '')
-		setCustomizedTemplateContentFontFamily(initialLoadedContentFontFamily || '')
+		setCustomizedTemplateTitleFontFamily(initialLoadedTitleFontFamily || '');
+		setCustomizedTemplateSubtitleFontFamily(
+			initialLoadedSubtitleFontFamily || '',
+		);
+		setCustomizedTemplateContentFontFamily(
+			initialLoadedContentFontFamily || '',
+		);
 		setHasSelectedCustomizedTemplateTitleFontFamily(false);
 		setHasSelectedCustomizedTemplateSubtitleFontFamily(false);
 		setHasSelectedCustomizedTemplateContentFontFamily(false);
-
 	};
 
 	const PaletteSelector = () => {
