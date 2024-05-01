@@ -49,6 +49,12 @@ import { addIdToRedir } from '@/utils/redirWithId';
 import SlidesService from '@/services/SlidesService';
 import Slide from '@/models/Slide';
 import ProjectService from '@/services/ProjectService';
+const colorPreviews: any = dynamic(
+	() => import('@/app/(feature)/design/TemplateSelector'),
+	{
+		ssr: false,
+	},
+);
 
 const TemplateSelector = dynamic(() => import('./TemplateSelector'), {
 	ssr: false,
@@ -81,7 +87,22 @@ export default function DesignPage() {
 		// console.log('user Research Modal toggled');
 		setShowGenerationStatusModal(!showGenerationStatusModal);
 	};
-
+	const {
+		slides,
+		initSlides,
+		initialLoadedContentFontFamily,
+		initialLoadedSubtitleFontFamily,
+		initialLoadedTitleFontFamily,
+		initialLoadedTemplateBgColor,
+		customTemplateBgColor,
+		customizedTemplateContentFontFamily,
+		customizedTemplateTitleFontFamily,
+		customizedTemplateSubtitleFontFamily,
+		hasSelectedCustomTemplateBgColor,
+		HasSelectedCustomizedTemplateContentFontFamily,
+		HasSelectedCustomizedTemplateSubtitleFontFamily,
+		HasSelectedCustomizedTemplateTitleFontFamily,
+	} = useSlides();
 	const { isTourActive, startTour, setIsTourActive } = useTourStore();
 	const { token, isPaidUser } = useUser();
 	const [isSubmitting, setIsSubmitting] = useState(false);
@@ -90,12 +111,41 @@ export default function DesignPage() {
 	const [template, setTemplate] = useState<TemplateKeys>(
 		project?.template || getTemplateFromAudicence(project?.audience || ''),
 	);
-
 	const [colorPalette, setColorPalette] = useState<PaletteKeys>(
 		project?.palette ||
 			availablePalettes[template as keyof typeof availablePalettes]?.[0] ||
 			'Original',
 	);
+
+	// once slides object is created we should use slides object's info to set template, palette, background color and font etc
+	const [selectedTemplateBgColor, setSelectedTemplateBgColor] = useState(
+		hasSelectedCustomTemplateBgColor
+			? customTemplateBgColor
+			: colorPreviews[colorPalette as PaletteKeys],
+	);
+	const [selectedTemplateTitleFontFamily, setSelectedTemplateTitleFontFamily] =
+		useState(
+			HasSelectedCustomizedTemplateTitleFontFamily
+				? customizedTemplateTitleFontFamily
+				: initialLoadedTitleFontFamily || 'Arial',
+		);
+	const [
+		selectedTemplateSubtitleFontFamily,
+		setSelectedTemplateSubtitleFontFamily,
+	] = useState(
+		HasSelectedCustomizedTemplateSubtitleFontFamily
+			? customizedTemplateSubtitleFontFamily
+			: initialLoadedSubtitleFontFamily || 'Arial',
+	);
+	const [
+		selectedTemplateContentFontFamily,
+		setSelectedTemplateContentFontFamily,
+	] = useState(
+		HasSelectedCustomizedTemplateContentFontFamily
+			? customizedTemplateContentFontFamily
+			: initialLoadedContentFontFamily || 'Arial',
+	);
+
 	const [selectedLogo, setSelectedLogo] = useState<Resource[]>(
 		project?.selected_logo || [],
 	);
@@ -103,7 +153,6 @@ export default function DesignPage() {
 		project?.selected_background || [],
 	);
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
-	const { slides, initSlides } = useSlides();
 
 	const params = useSearchParams();
 	const router = useRouter();
@@ -115,15 +164,27 @@ export default function DesignPage() {
 		return <Blank>Project not found</Blank>;
 	}
 
-	// Initialize the palette state with the first available palette for the current template
 	useEffect(() => {
-		if (template && availablePalettes) {
-			const paletteForTemplate = availablePalettes[template];
-			if (paletteForTemplate && paletteForTemplate.length > 0) {
-				setColorPalette(paletteForTemplate[0]);
-			}
+		if (project?.parsed_slides && project?.parsed_slides?.length !== 0) {
+			// console.log("setting the palette to be", project?.parsed_slides[0].palette)
+			// setTemplate(project?.parsed_slides[0].template)
+			setTemplate(slides[0].template);
+			// setColorPalette(project?.parsed_slides[0].palette)
+			setColorPalette(slides[0].palette);
 		}
-	}, [template]);
+
+		// console.log("current project parsed slides", project.parsed_slides)
+	}, []);
+
+	// Initialize the palette state with the first available palette for the current template
+	// useEffect(() => {
+	// 	if (template && availablePalettes) {
+	// 		const paletteForTemplate = availablePalettes[template];
+	// 		if (paletteForTemplate && paletteForTemplate.length > 0) {
+	// 			setColorPalette(paletteForTemplate[0]);
+	// 		}
+	// 	}
+	// }, [template]);
 
 	const [imageAmount, setImageAmount] = useState('more_images');
 	const imageAmountOptions: RadioButtonOption[] = [
@@ -191,6 +252,12 @@ export default function DesignPage() {
 						...slide,
 						template: template,
 						palette: colorPalette,
+						background_color: hasSelectedCustomTemplateBgColor
+							? selectedTemplateBgColor
+							: undefined, // only when selected custom template bg color is true we set background color
+						titleFontFamily: selectedTemplateTitleFontFamily,
+						subtitleFontFamily: selectedTemplateSubtitleFontFamily,
+						contentFontFamily: selectedTemplateContentFontFamily,
 						logo: showLogo ? 'Default' : '',
 						logo_url: selectedLogo?.[0]?.thumbnail_url || '',
 						background_url: selectedBackground?.[0]?.thumbnail_url || '',
@@ -298,6 +365,16 @@ export default function DesignPage() {
 							}
 							palette={colorPalette}
 							showCustomColorPicker={true}
+							setCustomizedTemplateBgColorCallback={setSelectedTemplateBgColor}
+							setCustomizedTemplateContentFontFamilyCallback={
+								setSelectedTemplateContentFontFamily
+							}
+							setCustomizedTemplateSubtitleFontFamilyCallback={
+								setSelectedTemplateSubtitleFontFamily
+							}
+							setCustomizedTemplateTitleFontFamilyCallback={
+								setSelectedTemplateTitleFontFamily
+							}
 						/>
 
 						{/* images */}

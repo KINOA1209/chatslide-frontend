@@ -226,7 +226,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		deleteSlidePage,
 		changeTemplate,
 		changePalette,
-		changeTemplateAndPalette,
+		// changeTemplateAndPalette,
 		undoChange,
 		redoChange,
 		slidesHistoryIndex,
@@ -351,25 +351,25 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		};
 	}, [slideIndex, slidesHistoryIndex]);
 
-	const selectTemplateAndColorPalette = (
-		newTemplate: string | TemplateKeys, // Accepts string or TemplateKeys
-		newColorPalette: string | PaletteKeys,
-	) => {
-		changeTemplateAndPalette(
-			newTemplate as TemplateKeys,
-			newColorPalette as PaletteKeys,
-		);
-	};
+	// const selectTemplateAndColorPalette = (
+	// 	newTemplate: string | TemplateKeys, // Accepts string or TemplateKeys
+	// 	newColorPalette: string | PaletteKeys,
+	// ) => {
+	// 	changeTemplateAndPalette(
+	// 		newTemplate as TemplateKeys,
+	// 		newColorPalette as PaletteKeys,
+	// 	);
+	// };
 	// Function to change the template of slides starting from the second one
-	const selectTemplate = (newTemplate: string) => {
-		console.log('Changing template to:', newTemplate);
-		changeTemplate(newTemplate as TemplateKeys);
-	};
+	// const selectTemplate = (newTemplate: string) => {
+	// 	console.log('Changing template to:', newTemplate);
+	// 	changeTemplate(newTemplate as TemplateKeys);
+	// };
 
-	const selectPalette = (newPalette: string) => {
-		console.log('Changing template color theme to:', newPalette);
-		changePalette(newPalette as PaletteKeys);
-	};
+	// const selectPalette = (newPalette: string) => {
+	// 	console.log('Changing template color theme to:', newPalette);
+	// 	changePalette(newPalette as PaletteKeys);
+	// };
 
 	const openPresent = () => {
 		setIsPresenting(true);
