@@ -180,16 +180,16 @@ export const calculateNonPresentScale = (
 	if (width < 1024) {
 		// mobile, layout vertically
 		if (workflow === 'socialPosts') {
-			return Math.min(1, Math.min(width / 450, (height - 200) / 650) * 0.7);
+			return Math.min(1.5, Math.min(width / 450, (height - 200) / 650) * 0.7);
 		} else {
-			return Math.min(1, Math.min(width / 960, (height - 200) / 540) * 0.8);
+			return Math.min(1.5, Math.min(width / 960, (height - 200) / 540) * 0.8);
 		}
 	} else {
 		const chatWindowWidth = width > 1280 && isChatWindowOpen ? 250 : 0;
 		const scriptEditorHeight = 0;
 		if (workflow === 'socialPosts') {
 			return Math.min(
-				1,
+				1.5,
 				Math.min(
 					(width - 400 - chatWindowWidth) / 450,
 					(height - 250 - scriptEditorHeight) / 650,
@@ -197,7 +197,7 @@ export const calculateNonPresentScale = (
 			);
 		} else {
 			return Math.min(
-				1,
+				1.5,
 				Math.min(
 					(width - 400 - chatWindowWidth) / 960,
 					(height - 250 - scriptEditorHeight) / 540,
