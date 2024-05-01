@@ -454,11 +454,6 @@ const MyFiles: React.FC<filesInterface> = ({
 		}
 	};
 
-	const handleDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
-		e.preventDefault();
-		setIsDragging(true);
-	};
-
 	const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
 		e.preventDefault();
 		if (!isDragging) setIsDragging(true);
@@ -469,12 +464,17 @@ const MyFiles: React.FC<filesInterface> = ({
 		setIsDragging(false);
 	};
 
+  const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setIsDragging(true);
+    e.dataTransfer.clearData();
+  }
+
 	const handleDrop = async (e: React.DragEvent<HTMLDivElement>) => {
 		e.preventDefault();
 		setIsDragging(false);
 		if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
 			await onFileSelected(e.dataTransfer.files[0]);
-			e.dataTransfer.clearData();
 		}
 	};
 
@@ -573,7 +573,7 @@ const MyFiles: React.FC<filesInterface> = ({
 						className={`w-full mx-auto mt-4 px-4 pt-4 flex grow overflow-y-auto border border-gray-200 ${
 							isDragging ? 'bg-blue-100 border-blue-500' : ''
 						}`}
-						onDragEnter={handleDragEnter}
+            onDragStart={handleDragStart}
 						onDragOver={handleDragOver}
 						onDragLeave={handleDragLeave}
 						onDrop={handleDrop}
