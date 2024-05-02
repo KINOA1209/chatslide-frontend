@@ -62,6 +62,7 @@ export default function WorkflowStep5() {
 	const [showConfirmRegenModal, setShowConfirmRegenModal] = useState(false);
 	const [voiceIsHD, setVoiceIsHD] = useState(false);
 	const [creditCost, setCreditCost] = useState(20);
+	const [transitionType, setTransitionType] = useState('');
 
 	const params = useSearchParams();
 
@@ -189,6 +190,7 @@ export default function WorkflowStep5() {
 					bgm,
 					bgmVolume,
 					creditCost,
+					transitionType,
 				);
 				updateCreditsFE(-20);
 				router.push(addIdToRedir('/video'));
@@ -257,7 +259,7 @@ export default function WorkflowStep5() {
 				</Card>
 
 				<Card>
-					<BigTitle>🎵 Background Music</BigTitle>
+					<BigTitle>🎥 Video Effects</BigTitle>
 					<WrappableRow type='grid' cols={2}>
 						<div>
 							<Instruction>Background Music:</Instruction>
@@ -312,6 +314,18 @@ export default function WorkflowStep5() {
 							</div>
 						)}
 					</WrappableRow>
+
+					<div>
+						<Instruction>Transition Between Slides:</Instruction>
+						<DropDown
+							onChange={(e) => setTransitionType(e.target.value)}
+							value={transitionType}
+						>
+							<option value=''>⏹️ None</option>
+							<option value='crossfade'>🌫️ Fade</option>
+							<option value='slide'>➡️ Slide</option>
+						</DropDown>
+					</div>
 				</Card>
 
 				<Card>

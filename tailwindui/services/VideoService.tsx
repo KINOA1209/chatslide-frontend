@@ -15,6 +15,7 @@ export default class VideoService {
 		bgm: string,
 		bgmVolume: number,
 		creditCost: number,
+    transitionType: string,
 	): Promise<void> {
 		fetch('/api/export/generate_video', {
 			method: 'POST',
@@ -35,6 +36,7 @@ export default class VideoService {
 				background_music: bgm,
 				bgm_volume: bgmVolume,
 				credit_cost: creditCost,
+        transition_type: transitionType,
 			}),
 		});
 	}
