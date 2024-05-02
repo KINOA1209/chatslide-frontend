@@ -317,14 +317,23 @@ export default function WorkflowStep5() {
 
 					<div>
 						<Instruction>Transition Between Slides:</Instruction>
-						<DropDown
-							onChange={(e) => setTransitionType(e.target.value)}
-							value={transitionType}
-						>
-							<option value=''>⏹️ None</option>
-							<option value='crossfade'>🌫️ Fade</option>
-							<option value='slide'>➡️ Slide</option>
-						</DropDown>
+						<WrappableRow type='grid' cols={2}>
+							<DropDown
+								onChange={(e) => setTransitionType(e.target.value)}
+								value={transitionType}
+							>
+								<option value=''>⏹️ None</option>
+								<option value='crossfade'>🌫️ Fade</option>
+								<option value='slide'>➡️ Slide In</option>
+							</DropDown>
+							{transitionType && (
+								<img
+									src={`/images/script/${transitionType}.gif`}
+									alt='Transition'
+									className='h-24'
+								/>
+							)}
+						</WrappableRow>
 					</div>
 				</Card>
 
