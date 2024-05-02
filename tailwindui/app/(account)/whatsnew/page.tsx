@@ -20,6 +20,43 @@ export default function Studio() {
 				</Card>
 
 				<Card>
+					<BigTitle>May 1</BigTitle>
+					<div>
+						<Instruction>
+							<div>
+								🔢 Customize deck structure: you can specify the structure you
+								want to have for a deck.
+							</div>
+						</Instruction>
+						<Explanation>
+							For example, in a slide deck about the richest people in the
+							world, you can have{' '}
+							<i>Introduction, Elon Musk, Jeff Bezos, Bill Gates</i> as the
+							structure.
+						</Explanation>
+					</div>
+					<Instruction>
+						<div>
+							🌅 New slide template: <b>Creative Brief</b> template is available
+							now.
+						</div>
+					</Instruction>
+					<Instruction>
+						<div>
+							✍️ Citations page: if you upload resources, you will have the
+							option to add the citations as the last page.
+						</div>
+					</Instruction>
+					<Instruction>
+						<div>
+							🐞 Numerous bug fixes: we fixed several bugs related to generating
+							social posts, choosing customized template color, etc. If you find
+							one, feel free to post in our Discord channel.
+						</div>
+					</Instruction>
+				</Card>
+
+				<Card>
 					<BigTitle>April 28</BigTitle>
 					<Instruction>
 						<div>
