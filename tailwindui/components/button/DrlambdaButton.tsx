@@ -185,18 +185,31 @@ export const BigBlueButton: React.FC<DrlambdaButtonProps> = ({
 	isPaidFeature = false,
 	id,
 }) => {
+	const [showPaywallModal, setShowPaywallModal] = useState(false);
+
 	return (
-		<button
-			id={id}
-			className={`btn h-[36px] sm:h-[36px] w-[12rem] mx-auto sm:gap-x-2 text-white sm:font-semibold bg-Blue ${
-				isSubmitting && 'animate-pulse cursor-progress'
-			} disabled:bg-gray-600 disabled:cursor-not-allowed
+		<>
+			<PaywallModal
+				showModal={showPaywallModal}
+				setShowModal={setShowPaywallModal}
+				message='Upgrade to unlock more features. 🚀'
+			/>
+			<button
+				id={id}
+				className={`btn h-[36px] sm:h-[36px] w-[12rem] mx-auto sm:gap-x-2 text-white sm:font-semibold bg-Blue ${
+					isSubmitting && 'animate-pulse cursor-progress'
+				} disabled:bg-gray-600 disabled:cursor-not-allowed
 			whitespace-nowrap rounded-xl`}
-			onClick={onClick}
-			disabled={isSubmitting || disabled}
-		>
-			{children}
-		</button>
+				onClick={
+          isPaidFeature && !isPaidUser
+            ? () => setShowPaywallModal(true)
+            : onClick
+        }
+				disabled={isSubmitting || disabled}
+			>
+				{children}
+			</button>
+		</>
 	);
 };
 
