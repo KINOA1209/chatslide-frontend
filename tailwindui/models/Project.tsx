@@ -24,6 +24,7 @@ type Project = {
 
 	logo?: string; // overwriten by selected_logo, '' means no logo
 	selected_logo?: Resource[];
+	is_logo_left?: boolean; // true if logo on left side otherwise right side
 	selected_background?: Resource[];
 	template?: TemplateKeys;
 	palette?: PaletteKeys;

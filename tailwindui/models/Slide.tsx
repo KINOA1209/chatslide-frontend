@@ -22,7 +22,8 @@ export interface SlideElement {
 		| 'additional_images'
 		| 'chart'
 		| 'is_chart'
-		| 'palette';
+		| 'palette'
+		| 'is_logo_left';
 	content: string | string[];
 }
 
@@ -44,7 +45,8 @@ export type SlideKeys =
 	| 'chart'
 	| 'is_chart'
 	| 'images_position'
-	| 'palette';
+	| 'palette'
+	| 'is_logo_left';
 
 export type Media = 'image' | 'chart' | 'youtube';
 
@@ -75,6 +77,7 @@ export default class Slide {
 	transcript?: string;
 	additional_images?: string[];
 	palette: PaletteKeys;
+	is_logo_left: boolean;
 
 	constructor() {
 		const emptyGroup: Group = {
@@ -108,5 +111,6 @@ export default class Slide {
 		this.logo = 'Default';
 		this.additional_images = [];
 		this.palette = 'Original';
+		this.is_logo_left = true;
 	}
 }

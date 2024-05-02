@@ -454,6 +454,7 @@ export const templateDispatch = (
 						custom_logo={custom_logo}
 						template_name={slide.template}
 						isLightBackground={isLightBackground}
+						isLogoLeftSide={slide.is_logo_left}
 					/>
 				) : (
 					<></>
