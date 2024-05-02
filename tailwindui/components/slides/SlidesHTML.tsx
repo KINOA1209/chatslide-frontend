@@ -166,17 +166,17 @@ export const calculateNonPresentScale = (
 	showScript = false,
 	workflow = 'slides',
 ) => {
-	console.log(
-		'Calculating slides scale...',
-		'width',
-		width,
-		'height',
-		height,
-		'isChatWindowOpen',
-		isChatWindowOpen,
-		'showScript',
-		showScript,
-	);
+	// console.log(
+	// 	'Calculating slides scale...',
+	// 	'width',
+	// 	width,
+	// 	'height',
+	// 	height,
+	// 	'isChatWindowOpen',
+	// 	isChatWindowOpen,
+	// 	'showScript',
+	// 	showScript,
+	// );
 	if (width < 1024) {
 		// mobile, layout vertically
 		if (workflow === 'socialPosts') {
@@ -457,7 +457,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		slideIndex: number,
 		tag: SlideKeys | SlideKeys[],
 		contentIndex?: number,
-		rerender: boolean = true,
+		rerender: boolean = false,
 	) {
 		console.log('handleSlideEdit', content, slideIndex, tag, contentIndex);
 		setIsEditMode(false);
