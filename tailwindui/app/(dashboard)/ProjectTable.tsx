@@ -586,6 +586,7 @@ const ProjectTable: React.FC<Props> = ({
 					{' '}
 					{currentProjects.map((project, index) => (
 						<div
+							key={'project_list' + index}
 							className={`grid bg-white ${grids}`}
 							style={{
 								alignItems: 'center',

@@ -129,7 +129,7 @@ const Modal: React.FC<ModalProps> = ({
 					)}
 
 					{title && (
-						<div className='w-full felx flex-col items-center justify-center'>
+						<div className='w-full felx flex-col items-center justify-center font-creato-medium'>
 							<Title>{title}</Title>
 						</div>
 					)}

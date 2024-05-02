@@ -21,6 +21,8 @@ type Project = {
 	is_shared?: boolean;
 	is_public?: boolean;
 	additional_images?: string[];
+	project_group_id?: string;
+	project_group_name?: string;
 
 	logo?: string; // overwriten by selected_logo, '' means no logo
 	selected_logo?: Resource[];

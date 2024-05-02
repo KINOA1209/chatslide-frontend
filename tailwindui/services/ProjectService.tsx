@@ -4,6 +4,12 @@ import SocialPostSlide from '@/models/SocialPost';
 import Project from '@/models/Project';
 import Slide from '@/models/Slide';
 import Chart, { Group } from '@/models/Chart';
+import Folder from '@/models/Folder';
+
+export interface ProjectAndFolder {
+	projects: Project[];
+	empty_groups: string[];
+}
 
 class ProjectService {
 	static async getSharedProjectDetails(
@@ -137,7 +143,8 @@ class ProjectService {
 		token: string,
 		is_public: boolean = false,
 		server_side = false,
-	): Promise<Project[]> {
+		need_folder = false,
+	): Promise<Project[] | ProjectAndFolder> {
 		const headers = new Headers();
 		if (is_public) {
 			token = process.env.SELF_TOKEN || '';
@@ -166,7 +173,16 @@ class ProjectService {
 						item.content_type = 'presentation';
 					}
 				});
-				return data.projects;
+
+				if (need_folder) {
+					return {
+						'projects': data.projects,
+						'empty_groups': data.empty_groups || []
+					}
+				}
+				else {
+					return data.projects;
+				}
 			} else {
 				// Handle error cases
 				console.error(`getProjects failed: ${response.status}`);
@@ -337,8 +353,8 @@ class ProjectService {
 					slideData.illustration !== null
 						? slideData.illustration
 						: [
-								'https://stories.freepiklabs.com/storage/61572/life-in-a-city-cuate-9773.png',
-							];
+							'https://stories.freepiklabs.com/storage/61572/life-in-a-city-cuate-9773.png',
+						];
 				slide.quote = slideData.quote || 'Your quote here';
 				slide.source = slideData.source || '';
 				slide.chart = slideData.chart;

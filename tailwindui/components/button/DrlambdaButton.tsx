@@ -29,6 +29,7 @@ type DrlambdaButtonProps = {
 	isFlashing?: boolean;
 	id?: string;
 	customizeStyle?: React.CSSProperties;
+	wfull?: boolean;
 };
 
 const DrlambdaButton: React.FC<DrlambdaButtonProps> = ({
@@ -184,14 +185,15 @@ export const BigBlueButton: React.FC<DrlambdaButtonProps> = ({
 	isPaidUser,
 	isPaidFeature = false,
 	id,
+	wfull = false,
 }) => {
 	return (
 		<button
 			id={id}
-			className={`btn h-[36px] sm:h-[36px] w-[12rem] mx-auto sm:gap-x-2 text-white sm:font-semibold bg-Blue ${
+			className={`btn h-[36px] sm:h-[36px] ${wfull ? 'w-full' : 'w-[12rem]'} mx-auto sm:gap-x-2 text-white sm:font-semibold bg-Blue ${
 				isSubmitting && 'animate-pulse cursor-progress'
 			} disabled:bg-gray-600 disabled:cursor-not-allowed
-			whitespace-nowrap rounded-xl`}
+			whitespace-nowrap rounded-xl font-creato-medium`}
 			onClick={onClick}
 			disabled={isSubmitting || disabled}
 		>
