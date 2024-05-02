@@ -80,6 +80,7 @@ interface ImgModuleProp {
 	search_illustration?: boolean;
 	defaultObjectFit?: 'contain' | 'cover';
 	embed_code?: string[];
+	embed_code_single?: string;
 }
 
 enum ImgQueryMode {
@@ -152,6 +153,7 @@ export const ImgModule = ({
 	isSocialPostTemp1Cover = false,
 	defaultObjectFit = 'contain',
 	embed_code,
+	embed_code_single,
 }: ImgModuleProp) => {
 	const sourceImage = useImageStore((state) => state.sourceImage);
 	const { project } = useProject();
@@ -206,6 +208,12 @@ export const ImgModule = ({
 			setSelectedImg(imgsrc);
 		}
 	}, [imgsrc]);
+
+	useEffect(() => {
+		if (embed_code_single && embed_code_single !== '') {
+			setCurrentStoredEmbedCode(embed_code_single);
+		}
+	}, [embed_code_single]);
 
 	const handleImageDrop = (e: React.DragEvent<HTMLDivElement>) => {
 		e.preventDefault();
@@ -904,6 +912,9 @@ export const ImgModule = ({
 
 	const isConfirmDisabled = inputValue.trim() === '';
 
+	useEffect(() => {
+		console.log('currentStoredEmbedCode is', currentStoredEmbedCode);
+	}, [currentStoredEmbedCode]);
 	const EmbedCodeDiv = (
 		<div>
 			<ToastContainer />
