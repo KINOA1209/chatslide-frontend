@@ -380,7 +380,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 			};
 
 			if (need_placeholder) {
-				quillOptions.placeholder = 'Text here...';
+				quillOptions.placeholder = '';
 			}
 
 			const quill = new Quill(editorRef.current, quillOptions);
