@@ -308,8 +308,8 @@ export default function WorkflowStep5() {
 										}
 									}}
 									value={bgmVolume}
-									minValue={0.1}
-									choices={[0, 0.1, 0.2, 0.3, 0.4]}
+									minValue={0.05}
+									choices={[0, 0.05, 0.1, 0.2, 0.3, 0.4]}
 								/>
 							</div>
 						)}
