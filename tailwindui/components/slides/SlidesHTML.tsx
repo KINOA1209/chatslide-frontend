@@ -59,6 +59,7 @@ import { DraggableSlidesPreview } from './DraggableSlidesPreview';
 import { addIdToRedir } from '@/utils/redirWithId';
 import { useRouter } from 'next/navigation';
 import { Blank } from '../ui/Loading';
+import IFrameEmbed from '../utils/IFrameEmbed';
 
 type SlidesHTMLProps = {
 	isViewing?: boolean; // viewing another's shared project
@@ -968,6 +969,14 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 						<div className='hidden sm:block w-0 h-0'></div>
 					) // empty div for justify-around
 				}
+
+				{/* <div>
+					<h1>Iframe</h1>
+					<div>
+						<h1>Embedding Example</h1>
+						<IFrameEmbed />
+					</div>
+				</div> */}
 			</div>
 		</div>
 	);
