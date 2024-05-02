@@ -621,11 +621,13 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			console.log('updateImgUrlArray called');
 			// console.log('urls', urls);
 			// console.log('prevUrls', prevUrls);
-			handleSlideEdit([urls, ischart, images_position], slideIndex, [
-				'images',
-				'is_chart',
-				'images_position',
-			]);
+			handleSlideEdit(
+				[urls, ischart, images_position],
+				slideIndex,
+				['images', 'is_chart', 'images_position'],
+        undefined,  // contentIndex
+				true,
+			);
 		};
 		return updateImgUrl;
 	};
