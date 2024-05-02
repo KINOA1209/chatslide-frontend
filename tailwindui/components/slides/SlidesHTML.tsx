@@ -454,7 +454,14 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		content:
 			| string
 			| string[]
-			| Array<string | string[] | Chart[] | boolean[] | ImagesPosition[]>,
+			| Array<
+					| string
+					| string[]
+					| JSX.Element[]
+					| Chart[]
+					| boolean[]
+					| ImagesPosition[]
+			  >,
 		slideIndex: number,
 		tag: SlideKeys | SlideKeys[],
 		contentIndex?: number,
@@ -467,7 +474,13 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		const className = tag;
 
 		const applyUpdate = (
-			content: string | string[] | Chart[] | boolean[] | ImagesPosition[],
+			content:
+				| string
+				| string[]
+				| JSX.Element[]
+				| Chart[]
+				| boolean[]
+				| ImagesPosition[],
 			className: string,
 		) => {
 			if (className === 'head') {
@@ -489,6 +502,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			} else if (className === 'images') {
 				currentSlide.images = [...(content as string[])]; // deep copy
 				// newSlide.images_position = slides[0]?.images_position;
+			} else if (className === 'embed_code') {
+				currentSlide.embed_code = [...(content as string[])]; // deep copy
 			} else if (className === 'images_position') {
 				currentSlide.images_position = content as ImagesPosition[]; // deep copy
 				// newSlide.images_position = slides[0]?.images_position;
@@ -519,6 +534,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				let updateContent:
 					| string
 					| string[]
+					| JSX.Element[]
 					| Chart[]
 					| boolean[]
 					| ImagesPosition[];
@@ -597,6 +613,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			urls: string[],
 			ischart: boolean[],
 			images_position: ImagesPosition[],
+			embed_code: string[],
 		) => {
 			// change all null to ''
 			urls = urls.map((url) => (url === null ? '' : url));
@@ -622,11 +639,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			console.log('updateImgUrlArray called');
 			// console.log('urls', urls);
 			// console.log('prevUrls', prevUrls);
-			handleSlideEdit([urls, ischart, images_position], slideIndex, [
-				'images',
-				'is_chart',
-				'images_position',
-			]);
+			handleSlideEdit(
+				[urls, ischart, images_position, embed_code],
+				slideIndex,
+				['images', 'is_chart', 'images_position', 'embed_code'],
+			);
 		};
 		return updateImgUrl;
 	};

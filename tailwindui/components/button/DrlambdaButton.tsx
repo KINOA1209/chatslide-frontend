@@ -184,6 +184,7 @@ export const BigBlueButton: React.FC<DrlambdaButtonProps> = ({
 	isPaidUser,
 	isPaidFeature = false,
 	id,
+	customizeStyle,
 }) => {
 	return (
 		<button
@@ -194,6 +195,7 @@ export const BigBlueButton: React.FC<DrlambdaButtonProps> = ({
 			whitespace-nowrap rounded-xl`}
 			onClick={onClick}
 			disabled={isSubmitting || disabled}
+			style={customizeStyle}
 		>
 			{children}
 		</button>

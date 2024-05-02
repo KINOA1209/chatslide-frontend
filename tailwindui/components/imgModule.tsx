@@ -1,7 +1,7 @@
 import React, { CSSProperties, useEffect, useRef, useState } from 'react';
 import AuthService from '@/services/AuthService';
 import { createPortal } from 'react-dom';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import ResourceService from '@/services/ResourceService';
 import Resource from '@/models/Resource';
 import Image from 'next/image';
@@ -55,6 +55,7 @@ import { useSocialPosts } from '@/hooks/use-socialpost';
 import { MdImageSearch } from 'react-icons/md';
 import { IoMdCrop } from 'react-icons/io';
 import IFrameEmbed from './utils/IFrameEmbed';
+import useJSScript from '@/hooks/use-JSScript';
 
 interface ImgModuleProp {
 	imgsrc: string;
@@ -78,6 +79,7 @@ interface ImgModuleProp {
 	isSocialPostTemp1Cover?: boolean;
 	search_illustration?: boolean;
 	defaultObjectFit?: 'contain' | 'cover';
+	embed_code?: string[];
 }
 
 enum ImgQueryMode {
@@ -85,6 +87,7 @@ enum ImgQueryMode {
 	SEARCH,
 	GENERATION,
 	CHART_SELECTION,
+	EMBED_CODE,
 }
 
 const imageLicenseOptions: RadioButtonOption[] = [
@@ -148,6 +151,7 @@ export const ImgModule = ({
 	isSlide = true,
 	isSocialPostTemp1Cover = false,
 	defaultObjectFit = 'contain',
+	embed_code,
 }: ImgModuleProp) => {
 	const sourceImage = useImageStore((state) => state.sourceImage);
 	const { project } = useProject();
@@ -837,6 +841,116 @@ export const ImgModule = ({
 			closeModal();
 		}
 	};
+
+	// handle all embed code related
+	const [currentStoredEmbedCode, setCurrentStoredEmbedCode] =
+		useState<string>('');
+	const [inputValue, setInputValue] = useState('');
+	const handleDoneEmbeddingCode = () => {
+		if (selectedQueryMode === ImgQueryMode.EMBED_CODE && embed_code) {
+			let updated_embed_code = [...embed_code];
+			updated_embed_code[currentContentIndex] = currentStoredEmbedCode;
+			console.log('currentStoredEmbedCode', currentStoredEmbedCode);
+			handleSlideEdit(updated_embed_code, currentSlideIndex, 'embed_code');
+			closeModal();
+		} else {
+			closeModal();
+		}
+	};
+	const handleUpdateStoredEmbedCode = (embedCode: string) => {
+		// useJSScript(embedCode);
+		setCurrentStoredEmbedCode(embedCode);
+	};
+
+	// useEffect(() => {
+	// 	console.log(
+	// 		'embed_code[currentContentIndex]',
+	// 		embed_code[currentContentIndex],
+	// 	);
+	// }, [currentStoredEmbedCode]);
+
+	const handleConfirmClick = () => {
+		if (
+			inputValue.startsWith('<iframe') ||
+			inputValue.startsWith('<blockquote')
+		) {
+			// setEmbedCode(inputValue);
+			setCurrentStoredEmbedCode(inputValue); // Update currentStoredEmbedCode in parent
+		} else {
+			// setErrorMessage(
+			// 	'Please paste embed code that starts with <iframe> or <blockquote>.',
+			// );
+			toast.error(
+				'Please paste embed code that starts with <iframe> or <blockquote>.',
+				{
+					position: 'top-center',
+					autoClose: 2000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					theme: 'light',
+				},
+			);
+		}
+	};
+
+	const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+		const newInputValue = event.target.value;
+		setInputValue(newInputValue);
+		// setErrorMessage('');
+	};
+
+	const isConfirmDisabled = inputValue.trim() === '';
+
+	const EmbedCodeDiv = (
+		<div>
+			<ToastContainer />
+			{/* <h1>Iframe</h1> */}
+			<textarea
+				rows={5}
+				// cols={50}
+				value={inputValue}
+				onChange={handleInputChange}
+				placeholder='Paste embed code here'
+				style={{ marginBottom: '10px', width: '100%', maxWidth: '100%' }}
+			></textarea>
+			<div className='w-full mx-auto flex justify-center items-center'>
+				<BigBlueButton
+					// isSubmitting={uploading || searching}
+					onClick={handleConfirmClick}
+					disabled={isConfirmDisabled}
+					customizeStyle={{
+						cursor: isConfirmDisabled ? 'not-allowed' : 'pointer',
+					}}
+				>
+					Confirm pasting
+				</BigBlueButton>
+			</div>
+			<div className='w-full mx-auto flex flex-col justify-center items-center'>
+				{/* <h1>Embedding Example</h1> */}
+				<IFrameEmbed
+					currentStoredEmbedCode={currentStoredEmbedCode}
+					// setCurrentStoredEmbedCode={handleUpdateStoredEmbedCode}
+					// handleConfirmClick={handleConfirmClick}
+				/>
+				{selectedQueryMode === ImgQueryMode.EMBED_CODE &&
+					currentStoredEmbedCode && (
+						<BigBlueButton
+							isSubmitting={uploading || searching}
+							onClick={(e) => {
+								e.preventDefault();
+								handleDoneEmbeddingCode();
+							}}
+						>
+							Add Embed Code
+						</BigBlueButton>
+					)}
+			</div>
+		</div>
+	);
+
 	const chartSelectionDiv = (
 		<div>
 			{chartModalContent === 'selection' && (
@@ -1161,18 +1275,11 @@ export const ImgModule = ({
 				<Modal
 					showModal={showModal}
 					setShowModal={setShowModal}
-					title='Image / Chart'
+					title='Image / Chart / Embed Code'
 				>
-					<div>
-						<h1>Iframe</h1>
-						<div>
-							<h1>Embedding Example</h1>
-							<IFrameEmbed />
-						</div>
-					</div>
 					<div className='flex grow h-[400px] w-full sm:w-[600px] flex-col overflow-auto'>
 						<div className='w-full flex flex-col' ref={typeRef}>
-							<div className='w-full grid grid-cols-4'>
+							<div className='w-full grid grid-cols-5'>
 								<button
 									className='cursor-pointer whitespace-nowrap py-2 flex flex-row justify-center items-center'
 									onClick={(e) => {
@@ -1237,13 +1344,32 @@ export const ImgModule = ({
 								>
 									Chart
 								</button>
+								<button
+									className='cursor-pointer whitespace-nowrap py-2 flex flex-row justify-center items-center'
+									onClick={(e) => {
+										setSelectedQueryMode(ImgQueryMode.EMBED_CODE);
+										setSearchResult([]);
+										// setKeyword('');
+									}}
+									onMouseOver={(e) => {
+										handleMouseOver(e, ImgQueryMode.EMBED_CODE);
+									}}
+									onMouseOut={(e) => {
+										handleMouseOut(e, ImgQueryMode.EMBED_CODE);
+									}}
+								>
+									Embed
+								</button>
 							</div>
+							{/* sliding animation */}
 							<div className='w-full bg-slate-200 mb-2'>
 								<div
 									className={`w-1/4 h-[2px] bg-black
-										${hoverQueryMode == ImgQueryMode.RESOURCE && 'ml-[25%]'} 
-										${hoverQueryMode == ImgQueryMode.GENERATION && 'ml-[50%]'} 
-										${hoverQueryMode == ImgQueryMode.CHART_SELECTION && 'ml-[75%]'} 
+										${hoverQueryMode == ImgQueryMode.SEARCH && 'ml-0'} 
+										${hoverQueryMode == ImgQueryMode.RESOURCE && 'ml-[20%]'} 
+										${hoverQueryMode == ImgQueryMode.GENERATION && 'ml-[40%]'} 
+										${hoverQueryMode == ImgQueryMode.CHART_SELECTION && 'ml-[60%]'} 
+										${hoverQueryMode == ImgQueryMode.EMBED_CODE && 'ml-[80%]'} 
                                 		transition-all ease-in-out`}
 								></div>
 							</div>
@@ -1257,6 +1383,7 @@ export const ImgModule = ({
 							{selectedQueryMode == ImgQueryMode.GENERATION && imgGenerationDiv}
 							{selectedQueryMode == ImgQueryMode.CHART_SELECTION &&
 								chartSelectionDiv}
+							{selectedQueryMode == ImgQueryMode.EMBED_CODE && EmbedCodeDiv}
 						</div>
 					</div>
 
@@ -1284,240 +1411,229 @@ export const ImgModule = ({
 			)}
 
 			{/* image itself */}
-			<div
-				onDrop={handleImageDrop}
-				onDragOver={(e) => e.preventDefault()}
-				onClick={openModal}
-				className={`w-full h-full transition ease-in-out duration-150 relative ${
-					selectedImg === ''
-						? 'bg-[#E7E9EB]'
-						: canEdit
-							? 'hover:bg-[#CAD0D3]'
-							: ''
-				} flex flex-col items-center justify-center`} //${canEdit && !isImgEditMode ? 'cursor-pointer' : ''}
-				style={{
-					overflow: isImgEditMode ? 'visible' : 'hidden',
-					borderRadius: customImageStyle?.borderRadius,
-				}}
-			>
-				{ischartArr &&
-				ischartArr[currentContentIndex] &&
-				selectedChartType &&
-				chartData.length > 0 ? ( // chart
-					<div
-						className='w-full h-full flex items-center justify-center overflow-hidden '
-						// onClick={openModal}
-					>
-						<DynamicChart
-							chartType={selectedChartType}
-							chartData={chartData}
-							isPrview={!canEdit}
-						/>
-					</div>
-				) : selectedImg === '' || imgLoadError ? ( // updload icon
-					// if loading is fail and in editable page we show the error image
-					// otherwise(like presentation) show a empty div
-					canEdit ? (
+			{currentStoredEmbedCode ? ( // embed code
+				<div dangerouslySetInnerHTML={{ __html: currentStoredEmbedCode }}></div>
+			) : (
+				<div
+					onDrop={handleImageDrop}
+					onDragOver={(e) => e.preventDefault()}
+					onClick={openModal}
+					className={`w-full h-full transition ease-in-out duration-150 relative ${
+						selectedImg === ''
+							? 'bg-[#E7E9EB]'
+							: canEdit
+								? 'hover:bg-[#CAD0D3]'
+								: ''
+					} flex flex-col items-center justify-center`} //${canEdit && !isImgEditMode ? 'cursor-pointer' : ''}
+					style={{
+						overflow: isImgEditMode ? 'visible' : 'hidden',
+						borderRadius: customImageStyle?.borderRadius,
+					}}
+				>
+					{ischartArr &&
+					ischartArr[currentContentIndex] &&
+					selectedChartType &&
+					chartData.length > 0 ? ( // chart
 						<div
-							className='flex flex-col items-center justify-center cursor-pointer'
+							className='w-full h-full flex items-center justify-center overflow-hidden '
 							// onClick={openModal}
 						>
-							<svg
-								className='w-20 h-20 opacity-50'
-								viewBox='0 0 24 24'
-								xmlns='http://www.w3.org/2000/svg'
-							>
-								<rect x='0' fill='none' width='24' height='24' />
-								<g>
-									<path d='M23 4v2h-3v3h-2V6h-3V4h3V1h2v3h3zm-8.5 7c.828 0 1.5-.672 1.5-1.5S15.328 8 14.5 8 13 8.672 13 9.5s.672 1.5 1.5 1.5zm3.5 3.234l-.513-.57c-.794-.885-2.18-.885-2.976 0l-.655.73L9 9l-3 3.333V6h7V4H6c-1.105 0-2 .895-2 2v12c0 1.105.895 2 2 2h12c1.105 0 2-.895 2-2v-7h-2v3.234z' />
-								</g>
-							</svg>
-							<div className='text-black opacity-50'>
-								{canEdit && 'Click to add image'}
-							</div>
+							<DynamicChart
+								chartType={selectedChartType}
+								chartData={chartData}
+								isPrview={!canEdit}
+							/>
 						</div>
-					) : (
-						<div></div>
-					)
-				) : (
-					// image
-
-					<div
-						className={`
-							${isImgEditMode ? 'rndContainerWithOutBorder' : ''}
-							${!isSlide ? 'absolute top-0 left-0 w-full h-full' : ''}
-						`}
-						style={{
-							...layoutElements?.rndContainerCSS,
-						}}
-						ref={imageRefs[currentContentIndex]}
-						onMouseEnter={() => setShowImgButton(true)}
-						onMouseLeave={() => setShowImgButton(false)}
-						onClick={openModal}
-					>
-						{!isSlide && isSocialPostTemp1Cover && (
+					) : selectedImg === '' || imgLoadError ? ( // updload icon
+						// if loading is fail and in editable page we show the error image
+						// otherwise(like presentation) show a empty div
+						canEdit ? (
 							<div
-								className='absolute inset-0'
-								style={{
-									backgroundImage: `linear-gradient(180deg, ${socialPosts[socialPostsIndex].theme.cover_start}, ${socialPosts[socialPostsIndex].theme.cover_end} 40%)`,
-									zIndex: 2,
-								}}
-							/>
-						)}
-						<Rnd
-							className={`${isImgEditMode ? 'rndContainerWithBorder' : ''}`}
-							style={{ ...layoutElements?.rndCSS }}
-							size={{
-								width:
-									imagesDimensions[currentContentIndex]?.width ?? 'max-content',
-								//imageRefs[currentContentIndex]?.current?.clientWidth ??
-								//imageSize.width ? imageSize.width : ,
-								height: imagesDimensions[currentContentIndex]?.height ?? 'auto',
-								// imageRefs[currentContentIndex]?.current?.clientHeight ??
-								//imageSize.height ? imageSize.height : 'auto',
-							}}
-							position={{
-								x: imagesDimensions[currentContentIndex]?.x ?? 0,
-								y: imagesDimensions[currentContentIndex]?.y ?? 0,
-							}}
-							enableResizing={canEdit && isImgEditMode}
-							lockAspectRatio={false}
-							disableDragging={
-								!canEdit || !showImgButton || !isImgEditMode || showModal
-							}
-							onDragStart={handleDragStart(currentContentIndex)}
-							onDragStop={handleDragStop(currentContentIndex)}
-							onResizeStart={handleResizeStart}
-							onResizeStop={handleResizeStop(currentContentIndex)}
-							resizeHandleStyles={{
-								topLeft: { ...circle_indicator, left: '-7px' },
-								topRight: { ...circle_indicator, right: '-7px' },
-								bottomLeft: { ...circle_indicator, left: '-7px' },
-								bottomRight: { ...circle_indicator, right: '-7px' },
-								top: { ...rectangular_indicator, ...rectangular_horizontal },
-								bottom: { ...rectangular_indicator, ...rectangular_horizontal },
-								left: { ...rectangular_indicator, ...rectangular_vertical },
-								right: { ...rectangular_indicator, ...rectangular_vertical },
-							}}
-						>
-							<Image
-								unoptimized={imgsrc?.includes('freepik') ? false : true}
-								style={{
-									//dont use contain, it will make resize feature always resize based on aspect ratio
-									objectFit: 'fill',
-									height: '100%',
-									//width: 'auto',
-									width: '100%',
-									// borderRadius: customImageStyle?.borderRadius,
-									//transform: `scale(${zoomLevel / 100})`,
-									//transformOrigin: 'center center',
-								}}
-								src={imgsrc}
-								alt='Image'
-								// layout='contain'
-								width={960}
-								height={540}
-								// objectFit='contain'
-								className={`transition ease-in-out duration-150 ${
-									canEdit
-										? isImgEditMode
-											? 'brightness-100'
-											: 'hover:brightness-50'
-										: ''
-								}`}
-								onError={(e) => {
-									console.log('failed to load image', imgsrc);
-									setImgLoadError(true);
-									updateSingleCallback('shuffle', false, {});
-								}}
-							/>
-						</Rnd>
-						{canEdit && showImgButton && (
-							<div
-								className={`absolute top-2 font-creato-medium ${
-									isImgEditMode ? 'left-2' : 'left-4'
-								}`}
-								style={{ zIndex: 53 }}
+								className='flex flex-col items-center justify-center cursor-pointer'
+								// onClick={openModal}
 							>
-								<ToolBar>
-									{!isImgEditMode && (
-										<button
-											onClick={openModal}
-											className='flex flex-row items-center justify-center gap-1'
-										>
-											<MdImageSearch
-												style={{
-													width: '1.2rem',
-													height: '1.2rem',
-													color: '#344054',
-													fontWeight: 'bold',
-												}}
-											/>
-											{showIconsFunctionText(layoutEntry) ? 'Change' : ''}
-										</button>
-									)}
+								<svg
+									className='w-20 h-20 opacity-50'
+									viewBox='0 0 24 24'
+									xmlns='http://www.w3.org/2000/svg'
+								>
+									<rect x='0' fill='none' width='24' height='24' />
+									<g>
+										<path d='M23 4v2h-3v3h-2V6h-3V4h3V1h2v3h3zm-8.5 7c.828 0 1.5-.672 1.5-1.5S15.328 8 14.5 8 13 8.672 13 9.5s.672 1.5 1.5 1.5zm3.5 3.234l-.513-.57c-.794-.885-2.18-.885-2.976 0l-.655.73L9 9l-3 3.333V6h7V4H6c-1.105 0-2 .895-2 2v12c0 1.105.895 2 2 2h12c1.105 0 2-.895 2-2v-7h-2v3.234z' />
+									</g>
+								</svg>
+								<div className='text-black opacity-50'>
+									{canEdit && 'Click to add image'}
+								</div>
+							</div>
+						) : (
+							<div></div>
+						)
+					) : (
+						// image
 
-									<button
-										onClick={toggleImgEditMode}
-										className='flex flex-row items-center justify-center gap-1'
-									>
-										{!isImgEditMode ? (
-											<>
-												<IoMdCrop
+						<div
+							className={`
+						${isImgEditMode ? 'rndContainerWithOutBorder' : ''}
+						${!isSlide ? 'absolute top-0 left-0 w-full h-full' : ''}
+					`}
+							style={{
+								...layoutElements?.rndContainerCSS,
+							}}
+							ref={imageRefs[currentContentIndex]}
+							onMouseEnter={() => setShowImgButton(true)}
+							onMouseLeave={() => setShowImgButton(false)}
+							onClick={openModal}
+						>
+							{!isSlide && isSocialPostTemp1Cover && (
+								<div
+									className='absolute inset-0'
+									style={{
+										backgroundImage: `linear-gradient(180deg, ${socialPosts[socialPostsIndex].theme.cover_start}, ${socialPosts[socialPostsIndex].theme.cover_end} 40%)`,
+										zIndex: 2,
+									}}
+								/>
+							)}
+							<Rnd
+								className={`${isImgEditMode ? 'rndContainerWithBorder' : ''}`}
+								style={{ ...layoutElements?.rndCSS }}
+								size={{
+									width:
+										imagesDimensions[currentContentIndex]?.width ??
+										'max-content',
+									//imageRefs[currentContentIndex]?.current?.clientWidth ??
+									//imageSize.width ? imageSize.width : ,
+									height:
+										imagesDimensions[currentContentIndex]?.height ?? 'auto',
+									// imageRefs[currentContentIndex]?.current?.clientHeight ??
+									//imageSize.height ? imageSize.height : 'auto',
+								}}
+								position={{
+									x: imagesDimensions[currentContentIndex]?.x ?? 0,
+									y: imagesDimensions[currentContentIndex]?.y ?? 0,
+								}}
+								enableResizing={canEdit && isImgEditMode}
+								lockAspectRatio={false}
+								disableDragging={
+									!canEdit || !showImgButton || !isImgEditMode || showModal
+								}
+								onDragStart={handleDragStart(currentContentIndex)}
+								onDragStop={handleDragStop(currentContentIndex)}
+								onResizeStart={handleResizeStart}
+								onResizeStop={handleResizeStop(currentContentIndex)}
+								resizeHandleStyles={{
+									topLeft: { ...circle_indicator, left: '-7px' },
+									topRight: { ...circle_indicator, right: '-7px' },
+									bottomLeft: { ...circle_indicator, left: '-7px' },
+									bottomRight: { ...circle_indicator, right: '-7px' },
+									top: { ...rectangular_indicator, ...rectangular_horizontal },
+									bottom: {
+										...rectangular_indicator,
+										...rectangular_horizontal,
+									},
+									left: { ...rectangular_indicator, ...rectangular_vertical },
+									right: { ...rectangular_indicator, ...rectangular_vertical },
+								}}
+							>
+								<Image
+									unoptimized={imgsrc?.includes('freepik') ? false : true}
+									style={{
+										//dont use contain, it will make resize feature always resize based on aspect ratio
+										objectFit: 'fill',
+										height: '100%',
+										//width: 'auto',
+										width: '100%',
+										// borderRadius: customImageStyle?.borderRadius,
+										//transform: `scale(${zoomLevel / 100})`,
+										//transformOrigin: 'center center',
+									}}
+									src={imgsrc}
+									alt='Image'
+									// layout='contain'
+									width={960}
+									height={540}
+									// objectFit='contain'
+									className={`transition ease-in-out duration-150 ${
+										canEdit
+											? isImgEditMode
+												? 'brightness-100'
+												: 'hover:brightness-50'
+											: ''
+									}`}
+									onError={(e) => {
+										console.log('failed to load image', imgsrc);
+										setImgLoadError(true);
+										updateSingleCallback('shuffle', false, {});
+									}}
+								/>
+							</Rnd>
+							{canEdit && showImgButton && (
+								<div
+									className={`absolute top-2 font-creato-medium ${
+										isImgEditMode ? 'left-2' : 'left-4'
+									}`}
+									style={{ zIndex: 53 }}
+								>
+									<ToolBar>
+										{!isImgEditMode && (
+											<button
+												onClick={openModal}
+												className='flex flex-row items-center justify-center gap-1'
+											>
+												<MdImageSearch
 													style={{
-														strokeWidth: '0.8',
 														width: '1.2rem',
 														height: '1.2rem',
-														fontWeight: 'bold',
 														color: '#344054',
+														fontWeight: 'bold',
 													}}
 												/>
-												{showIconsFunctionText(layoutEntry) ? 'Resize' : ''}
-											</>
-										) : (
-											<>
-												<FaCheck
-													style={{
-														strokeWidth: '0.8',
-														width: '1rem',
-														height: '1rem',
-														fontWeight: 'bold',
-														color: '#344054',
-													}}
-												/>
-												Apply
-											</>
-										)}
-									</button>
-
-									{!isImgEditMode && (
-										<>
-											<button
-												className='flex flex-row items-center justify-center gap-1'
-												onClick={() => {
-													updateSingleCallback('');
-												}}
-											>
-												<LuTrash2
-													style={{
-														strokeWidth: '2',
-														flex: '1',
-														width: '1rem',
-														height: '1rem',
-														fontWeight: 'bold',
-														color: '#344054',
-													}}
-												/>
-												{showIconsFunctionText(layoutEntry) ? 'Delete' : ''}
+												{showIconsFunctionText(layoutEntry) ? 'Change' : ''}
 											</button>
-											{project?.additional_images && (
+										)}
+
+										<button
+											onClick={toggleImgEditMode}
+											className='flex flex-row items-center justify-center gap-1'
+										>
+											{!isImgEditMode ? (
+												<>
+													<IoMdCrop
+														style={{
+															strokeWidth: '0.8',
+															width: '1.2rem',
+															height: '1.2rem',
+															fontWeight: 'bold',
+															color: '#344054',
+														}}
+													/>
+													{showIconsFunctionText(layoutEntry) ? 'Resize' : ''}
+												</>
+											) : (
+												<>
+													<FaCheck
+														style={{
+															strokeWidth: '0.8',
+															width: '1rem',
+															height: '1rem',
+															fontWeight: 'bold',
+															color: '#344054',
+														}}
+													/>
+													Apply
+												</>
+											)}
+										</button>
+
+										{!isImgEditMode && (
+											<>
 												<button
 													className='flex flex-row items-center justify-center gap-1'
 													onClick={() => {
-														updateSingleCallback('shuffle', false, {});
+														updateSingleCallback('');
 													}}
 												>
-													<HiOutlineRefresh
+													<LuTrash2
 														style={{
 															strokeWidth: '2',
 															flex: '1',
@@ -1527,25 +1643,47 @@ export const ImgModule = ({
 															color: '#344054',
 														}}
 													/>
-													{showIconsFunctionText(layoutEntry) ? 'Shuffle' : ''}
+													{showIconsFunctionText(layoutEntry) ? 'Delete' : ''}
 												</button>
-											)}
-										</>
-									)}
-								</ToolBar>
-							</div>
-						)}
-						{/* {isImgEditMode && canEdit && (
-								<ResizeSlider
-									zoomLevel={zoomLevel}
-									setZoomLevel={setZoomLevel}
-									applyZoom={applyZoom}
-									onZoomChange={onZoomChange}
-								/>
-						)} */}
-					</div>
-				)}
-			</div>
+												{project?.additional_images && (
+													<button
+														className='flex flex-row items-center justify-center gap-1'
+														onClick={() => {
+															updateSingleCallback('shuffle', false, {});
+														}}
+													>
+														<HiOutlineRefresh
+															style={{
+																strokeWidth: '2',
+																flex: '1',
+																width: '1rem',
+																height: '1rem',
+																fontWeight: 'bold',
+																color: '#344054',
+															}}
+														/>
+														{showIconsFunctionText(layoutEntry)
+															? 'Shuffle'
+															: ''}
+													</button>
+												)}
+											</>
+										)}
+									</ToolBar>
+								</div>
+							)}
+							{/* {isImgEditMode && canEdit && (
+							<ResizeSlider
+								zoomLevel={zoomLevel}
+								setZoomLevel={setZoomLevel}
+								applyZoom={applyZoom}
+								onZoomChange={onZoomChange}
+							/>
+					)} */}
+						</div>
+					)}
+				</div>
+			)}
 		</>
 	);
 };

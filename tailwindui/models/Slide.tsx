@@ -22,7 +22,8 @@ export interface SlideElement {
 		| 'additional_images'
 		| 'chart'
 		| 'is_chart'
-		| 'palette';
+		| 'palette'
+		| 'embed_code';
 	content: string | string[];
 }
 
@@ -44,7 +45,8 @@ export type SlideKeys =
 	| 'chart'
 	| 'is_chart'
 	| 'images_position'
-	| 'palette';
+	| 'palette'
+	| 'embed_code';
 
 export type Media = 'image' | 'chart' | 'youtube';
 
@@ -61,6 +63,7 @@ export default class Slide {
 	images_position: ImagesPosition[];
 	chart: Chart[]; // data of charts
 	layout: LayoutKeys;
+	embed_code?: string[];
 	// show_logo?: boolean;
 	logo: string; // enum for school template, if user has custom logo, then use logo_url
 	logo_url?: string; // overwrites logo if present
@@ -108,5 +111,6 @@ export default class Slide {
 		this.logo = 'Default';
 		this.additional_images = [];
 		this.palette = 'Original';
+		this.embed_code = ['', '', ''];
 	}
 }

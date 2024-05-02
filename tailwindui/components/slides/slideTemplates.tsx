@@ -66,6 +66,7 @@ export const generateTemplate = (templateName: string) => {
 		palette,
 		themeElements,
 		layoutElements,
+		embed_code,
 	}: // initialTemplateTitleFontFamily,
 	MainSlideProps) => {
 		const {
@@ -146,6 +147,7 @@ export const generateTemplate = (templateName: string) => {
 						currentSlideIndex={currentSlideIndex}
 						isShowingLogo={isShowingLogo}
 						images_position={images_position}
+						embed_code={embed_code}
 					></ChosenLayoutNonCover>
 				</div>
 				{/* for cover page */}
@@ -203,6 +205,7 @@ export const generateTemplate = (templateName: string) => {
 						currentSlideIndex={currentSlideIndex}
 						isShowingLogo={isShowingLogo}
 						images_position={images_position}
+						embed_code={embed_code}
 					></ChosenLayoutCover>
 				</div>
 			</>
@@ -264,6 +267,7 @@ export interface MainSlideProps {
 		imgs: string[],
 		ischart: boolean[],
 		images_position: ImagesPosition[],
+		embed_code: string[],
 	) => void;
 	canEdit: boolean;
 	isCoverPage: boolean;
@@ -283,6 +287,7 @@ export interface MainSlideProps {
 	template?: TemplateKeys;
 	themeElements: ThemeElements;
 	layoutElements: LayoutElements;
+	embed_code: string[];
 	// initialTemplateTitleFontFamily?: string;
 }
 

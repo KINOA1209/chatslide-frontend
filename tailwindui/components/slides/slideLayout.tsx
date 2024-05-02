@@ -383,10 +383,16 @@ export const Cover_img_1_layout = ({
 	currentSlideIndex,
 	isShowingLogo,
 	images_position,
+	embed_code,
 }: MainSlideProps) => {
 	const updateImgAtIndex =
 		(index: number) =>
-		(imgSrc: string, ischart: boolean, image_position: ImagesPosition) => {
+		(
+			imgSrc: string,
+			ischart: boolean,
+			image_position: ImagesPosition,
+			embed_code_single: string,
+		) => {
 			const newImgs = [...imgs];
 			if (index >= newImgs.length) newImgs.push(imgSrc);
 			else newImgs[index] = imgSrc;
@@ -400,7 +406,11 @@ export const Cover_img_1_layout = ({
 				newImagesPosition.push(image_position);
 			else newImagesPosition[index] = image_position;
 
-			update_callback(newImgs, newIsCharts, newImagesPosition);
+			const newEmbedCode = [...embed_code];
+			if (index >= newEmbedCode.length) newEmbedCode.push(embed_code_single);
+			else newEmbedCode[index] = embed_code_single;
+
+			update_callback(newImgs, newIsCharts, newImagesPosition, newEmbedCode);
 		};
 
 	const [imgHigherZIndex, setImgHigherZIndex] = useState(false);
@@ -455,6 +465,7 @@ export const Cover_img_1_layout = ({
 					customImageStyle={layoutElements.imageCSS}
 					// additional_images={imgs.slice(3)}
 					setImgHigherZIndex={setImgHigherZIndex}
+					embed_code={embed_code}
 				/>
 			</div>
 
@@ -1283,10 +1294,16 @@ export const Col_2_img_1_layout = ({
 	currentSlideIndex,
 	isShowingLogo,
 	images_position,
+	embed_code,
 }: MainSlideProps) => {
 	const updateImgAtIndex =
 		(index: number) =>
-		(imgSrc: string, ischart: boolean, image_position: ImagesPosition) => {
+		(
+			imgSrc: string,
+			ischart: boolean,
+			image_position: ImagesPosition,
+			embed_code_single: string,
+		) => {
 			const newImgs = [...imgs];
 			if (index >= newImgs.length) newImgs.push(imgSrc);
 			else newImgs[index] = imgSrc;
@@ -1300,7 +1317,11 @@ export const Col_2_img_1_layout = ({
 				newImagesPosition.push(image_position);
 			else newImagesPosition[index] = image_position;
 
-			update_callback(newImgs, newIsCharts, newImagesPosition);
+			const newEmbedCode = [...embed_code];
+			if (index >= newEmbedCode.length) newEmbedCode.push(embed_code_single);
+			else newEmbedCode[index] = embed_code_single;
+
+			update_callback(newImgs, newIsCharts, newImagesPosition, newEmbedCode);
 		};
 
 	const [maxContentHeight, setMaxContentHeight] = useState<number | null>(null);
@@ -1410,6 +1431,7 @@ export const Col_2_img_1_layout = ({
 					layoutElements={layoutElements}
 					customImageStyle={layoutElements.imageCSS}
 					setImgHigherZIndex={setImgHigherZIndex}
+					embed_code={embed_code}
 				/>
 			</div>
 			{/* logo section */}
@@ -1462,10 +1484,16 @@ export const Col_1_img_1_layout = ({
 	currentSlideIndex,
 	isShowingLogo,
 	images_position,
+	embed_code,
 }: MainSlideProps) => {
 	const updateImgAtIndex =
 		(index: number) =>
-		(imgSrc: string, ischart: boolean, image_position: ImagesPosition) => {
+		(
+			imgSrc: string,
+			ischart: boolean,
+			image_position: ImagesPosition,
+			embed_code_single: string,
+		) => {
 			const newImgs = [...imgs];
 			if (index >= newImgs.length) newImgs.push(imgSrc);
 			else newImgs[index] = imgSrc;
@@ -1479,7 +1507,11 @@ export const Col_1_img_1_layout = ({
 				newImagesPosition.push(image_position);
 			else newImagesPosition[index] = image_position;
 
-			update_callback(newImgs, newIsCharts, newImagesPosition);
+			const newEmbedCode = [...embed_code];
+			if (index >= newEmbedCode.length) newEmbedCode.push(embed_code_single);
+			else newEmbedCode[index] = embed_code_single;
+
+			update_callback(newImgs, newIsCharts, newImagesPosition, newEmbedCode);
 		};
 
 	const [maxContentHeight, setMaxContentHeight] = useState<number | null>(null);
@@ -1575,6 +1607,7 @@ export const Col_1_img_1_layout = ({
 						layoutElements={layoutElements}
 						customImageStyle={layoutElements.imageCSS}
 						setImgHigherZIndex={setImgHigherZIndex}
+						embed_code={embed_code}
 					/>
 				</div>
 				{/* row3 for contents */}
@@ -1668,10 +1701,16 @@ export const Col_2_img_2_layout = ({
 	currentSlideIndex,
 	isShowingLogo,
 	images_position,
+	embed_code,
 }: MainSlideProps) => {
 	const updateImgAtIndex =
 		(index: number) =>
-		(imgSrc: string, ischart: boolean, image_position: ImagesPosition) => {
+		(
+			imgSrc: string,
+			ischart: boolean,
+			image_position: ImagesPosition,
+			embed_code_single: string,
+		) => {
 			const newImgs = [...imgs];
 			if (index >= newImgs.length) newImgs.push(imgSrc);
 			else newImgs[index] = imgSrc;
@@ -1685,7 +1724,11 @@ export const Col_2_img_2_layout = ({
 				newImagesPosition.push(image_position);
 			else newImagesPosition[index] = image_position;
 
-			update_callback(newImgs, newIsCharts, newImagesPosition);
+			const newEmbedCode = [...embed_code];
+			if (index >= newEmbedCode.length) newEmbedCode.push(embed_code_single);
+			else newEmbedCode[index] = embed_code_single;
+
+			update_callback(newImgs, newIsCharts, newImagesPosition, newEmbedCode);
 		};
 
 	const [maxContentHeight, setMaxContentHeight] = useState<number | null>(null);
@@ -1836,6 +1879,7 @@ export const Col_2_img_2_layout = ({
 							customImageStyle={layoutElements.imageCSS}
 							setImgHigherZIndex={setImgHigherZIndex}
 							columnIndex={0}
+							embed_code={embed_code}
 						/>
 					</div>
 					<div
@@ -1865,6 +1909,7 @@ export const Col_2_img_2_layout = ({
 							customImageStyle={layoutElements.imageCSS}
 							setImgHigherZIndex={setImgHigherZIndex}
 							columnIndex={1}
+							embed_code={embed_code}
 						/>
 					</div>
 				</div>
@@ -2025,10 +2070,16 @@ export const Col_3_img_3_layout = ({
 	currentSlideIndex,
 	isShowingLogo,
 	images_position,
+	embed_code,
 }: MainSlideProps) => {
 	const updateImgAtIndex =
 		(index: number) =>
-		(imgSrc: string, ischart: boolean, image_position: ImagesPosition) => {
+		(
+			imgSrc: string,
+			ischart: boolean,
+			image_position: ImagesPosition,
+			embed_code_single: string,
+		) => {
 			const newImgs = [...imgs];
 			if (index >= newImgs.length) newImgs.push(imgSrc);
 			else newImgs[index] = imgSrc;
@@ -2042,7 +2093,11 @@ export const Col_3_img_3_layout = ({
 				newImagesPosition.push(image_position);
 			else newImagesPosition[index] = image_position;
 
-			update_callback(newImgs, newIsCharts, newImagesPosition);
+			const newEmbedCode = [...embed_code];
+			if (index >= newEmbedCode.length) newEmbedCode.push(embed_code_single);
+			else newEmbedCode[index] = embed_code_single;
+
+			update_callback(newImgs, newIsCharts, newImagesPosition, newEmbedCode);
 		};
 
 	const [imgHigherZIndex, setImgHigherZIndex] = useState(false);
@@ -2146,6 +2201,7 @@ export const Col_3_img_3_layout = ({
 							customImageStyle={layoutElements.imageCSS}
 							setImgHigherZIndex={setImgHigherZIndex}
 							columnIndex={0}
+							embed_code={embed_code}
 						/>
 					</div>
 					<div
@@ -2166,6 +2222,7 @@ export const Col_3_img_3_layout = ({
 							customImageStyle={layoutElements.imageCSS}
 							setImgHigherZIndex={setImgHigherZIndex}
 							columnIndex={1}
+							embed_code={embed_code}
 						/>
 					</div>
 					<div
@@ -2186,6 +2243,7 @@ export const Col_3_img_3_layout = ({
 							customImageStyle={layoutElements.imageCSS}
 							setImgHigherZIndex={setImgHigherZIndex}
 							columnIndex={2}
+							embed_code={embed_code}
 						/>
 					</div>
 				</div>
@@ -2454,10 +2512,16 @@ export const Full_img_only_layout = ({
 	currentSlideIndex,
 	isShowingLogo,
 	images_position,
+	embed_code,
 }: MainSlideProps) => {
 	const updateImgAtIndex =
 		(index: number) =>
-		(imgSrc: string, ischart: boolean, image_position: ImagesPosition) => {
+		(
+			imgSrc: string,
+			ischart: boolean,
+			image_position: ImagesPosition,
+			embed_code_single: string,
+		) => {
 			const newImgs = [...imgs];
 			if (index >= newImgs.length) newImgs.push(imgSrc);
 			else newImgs[index] = imgSrc;
@@ -2471,7 +2535,11 @@ export const Full_img_only_layout = ({
 				newImagesPosition.push(image_position);
 			else newImagesPosition[index] = image_position;
 
-			update_callback(newImgs, newIsCharts, newImagesPosition);
+			const newEmbedCode = [...embed_code];
+			if (index >= newEmbedCode.length) newEmbedCode.push(embed_code_single);
+			else newEmbedCode[index] = embed_code_single;
+
+			update_callback(newImgs, newIsCharts, newImagesPosition, newEmbedCode);
 		};
 
 	const [imgHigherZIndex, setImgHigherZIndex] = useState(false);
@@ -2509,6 +2577,7 @@ export const Full_img_only_layout = ({
 						customImageStyle={layoutElements.imageCSS}
 						setImgHigherZIndex={setImgHigherZIndex}
 						columnIndex={0}
+						embed_code={embed_code}
 					/>
 				</div>
 			</div>
