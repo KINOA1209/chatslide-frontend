@@ -83,6 +83,9 @@ const AdvancedOptions: React.FC<{
 	setStructureMode: (value: string) => void;
   addCitations: string;
   setAddCitations: (value: string) => void;
+	resourceToFollowStructureFrom: Resource | undefined
+	;
+	setResourceToFollowStructureFrom: (value: Resource) => void;
 }> = ({
 	outlineStructure,
 	setOutlineStructure,
@@ -93,6 +96,8 @@ const AdvancedOptions: React.FC<{
 	setStructureMode,
   addCitations,
   setAddCitations,
+	resourceToFollowStructureFrom,
+	setResourceToFollowStructureFrom,
 }) => {
 	return (
 		<>
@@ -147,7 +152,19 @@ const AdvancedOptions: React.FC<{
 							If you want the outline to follow the source you uploaded, select
 							one source here.
 						</Explanation>
-						<DropDown width='20rem'>
+						<DropDown
+						value={resourceToFollowStructureFrom?.id}
+						onChange={(e) => {
+							const selectedResource = selectedResources.find(
+								(resource) => resource.id === e.target.value,
+							);
+							if (selectedResource) {
+								setResourceToFollowStructureFrom(selectedResource);
+								setOutlineStructure(selectedResource.name);
+							}
+						}}
+						width='20rem' 
+						>
 							{selectedResources.map((resource, index) => (
 								<option key={index} value={resource.id}>
 									{resource.name.replace('.txt', '').replaceAll('_', ' ')}
@@ -256,6 +273,7 @@ export default function Topic() {
 		getStructureFromScenario(scenarioType),
 	);
 	const [structureMode, setStructureMode] = useState('custom');
+	const [resourceToFollowStructureFrom, setResourceToFollowStructureFrom] = useState<Resource>();
 
 	const handleGenerationStatusModal = () => {
 		// console.log('user Research Modal toggled');
@@ -350,6 +368,7 @@ export default function Topic() {
 			credit_cost: Math.max(20, pageCountEst),
 			structure_mode: structureMode,
 			outline_structure: structureMode === 'custom' ? outlineStructure : '',
+			resource_to_follow_structure_from: resourceToFollowStructureFrom?.id,
 		};
 
 		bulkUpdateProject({
@@ -379,7 +398,8 @@ export default function Topic() {
 					searchOnlineScope,
 					scenarioType,
 					undefined, // post_style
-					structureMode
+					structureMode,
+					resourceToFollowStructureFrom?.id,
 				);
 				formData.knowledge_summary = response.data.knowledge_summary;
 				formData.project_id = response.data.project_id;
@@ -655,6 +675,8 @@ export default function Topic() {
 							setStructureMode={setStructureMode}
               addCitations={addCitations}
               setAddCitations={setAddCitations}
+							resourceToFollowStructureFrom={resourceToFollowStructureFrom}
+							setResourceToFollowStructureFrom={setResourceToFollowStructureFrom}
 						/>
 					)}
 				</Card>
