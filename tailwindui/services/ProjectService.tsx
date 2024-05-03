@@ -489,6 +489,42 @@ class ProjectService {
 			);
 		}
 	}
+
+	static async deleteFolder(
+		token: string,
+		folder_name: string,
+	): Promise<boolean> {
+		const response = await fetch('/api/delete_project_group', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify({
+				group_name: folder_name
+			}),
+		});
+		return response.ok;
+	}
+
+	static async renameFolder(
+		token: string,
+		prev_folder_name: string,
+		new_folder_name: string,
+	): Promise<boolean> {
+		const response = await fetch('/api/change_project_group_name', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify({
+				group_name: prev_folder_name,
+				new_group_name: new_folder_name,
+			}),
+		});
+		return response.ok;
+	}
 }
 
 export default ProjectService;

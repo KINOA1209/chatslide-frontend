@@ -21,6 +21,7 @@ import { Title } from '@/components/ui/Text'
 import CreateFolderModal from '@/components/dashboard/createFolderModal';
 import { groupProjectsByFolder } from '@/components/dashboard/folder_helper';
 import Folder from '@/models/Folder';
+import FolderButton from '@/components/dashboard/FolderButton';
 
 export default function Dashboard() {
 	const [projects, setProjects] = useState<Project[]>([]);
@@ -35,9 +36,14 @@ export default function Dashboard() {
 	const [showDeleteModal, setShowDeleteModal] = useState(false);
 	const [showSurvey, setShowSurvey] = useState(false);
 	const [hasFolder, setHasFolder] = useState(true);
-	const [showCreateFolderModal, setShowCreateFolderModal] = useState(false)
+	const [showCreateFolderModal, setShowCreateFolderModal] = useState(false);
 	const [activeFolder, setActiveFolder] = useState('drlambda-default');
 	const [currentProjects, setCurrentProjects] = useState<Project[]>([]);
+	const [showDeleteFolderModal, setShowDeleteFolderModal] = useState(false);
+	const [deleteFolderName, setDeleteFolderName] = useState('');
+	const [showRenameFolderModal, setShowRenameFolderModal] = useState(false);
+	const [renameInput, setRenameInput] = useState('')
+	const [prevFolderName, setPrevFolderName] = useState('')
 
 	useEffect(() => {
 		if (userStatus != UserStatus.Inited) return;
@@ -74,7 +80,6 @@ export default function Dashboard() {
 			console.error(error);
 		}
 	};
-	console.log(folders)
 	const init = async () => {
 		if (!token) return; // sidebar will show a modal to ask user to login
 
@@ -201,12 +206,86 @@ export default function Dashboard() {
 		console.log(currentProjects)
 	}
 
+	const handleDeleteFolder = (folderName: string) => {
+		setDeleteFolderName(folderName);
+		setShowDeleteFolderModal(true);
+	};
+
+	const confirmDeleteFolder = async () => {
+		if (deleteFolderName === '') {
+			throw 'Error';
+		}
+		try {
+			const response = await ProjectService.deleteFolder(token, deleteFolderName);
+
+			setFolders(folders.filter((folder) => folder.folderName !== deleteFolderName));
+		} catch (error: any) {
+			toast.error(error.message, {
+				position: 'top-center',
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+				theme: 'light',
+			});
+		}
+		setShowDeleteFolderModal(false);
+		setDeleteFolderName('');
+	};
+
+	const handleRenameFolder = (folderName: string) => {
+		setPrevFolderName(folderName)
+		setShowRenameFolderModal(true)
+	}
+
+	const confirmRenameFolder = async () => {
+		if (renameInput === '') {
+			toast.error('Folder name cannot be empty.', {
+				position: 'top-center',
+				autoClose: 5000,
+			});
+			return;
+		}
+		try {
+			const response = await ProjectService.renameFolder(token, prevFolderName, renameInput);
+
+			setFolders((prevFolders) =>
+				prevFolders.map(folder =>
+					folder.folderName === prevFolderName
+						? { ...folder, folderName: renameInput }
+						: folder
+				)
+			);
+			setFolders(prevFolders => {
+				// Map through folders to find and update the renamed folder
+				const updatedFolders = prevFolders.map(folder =>
+					folder.folderName === prevFolderName
+						? { ...folder, folderName: renameInput }
+						: folder
+				);
+				return updatedFolders.sort((a, b) => a.folderName.localeCompare(b.folderName));
+			});
+		} catch (error: any) {
+			toast.error(error.message, {
+				position: 'top-center',
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+				theme: 'light',
+			});
+		}
+		setShowRenameFolderModal(false);
+		setRenameInput('');
+		setPrevFolderName('');
+	};
+
 	return (
 		<section className='grow flex flex-col'>
-			<CreateFolderModal
-				showCreateFolderModal={showCreateFolderModal}
-				setShowCreateFolderModal={setShowCreateFolderModal}
-			/>
 			<ToastContainer />
 			{/* top background container of my projects title text and button */}
 			<div className='grow flex flex-col'>
@@ -274,11 +353,15 @@ export default function Dashboard() {
 								if (folder.folderName !== 'drlambda-default') {
 									return (
 										<div
-											key={index}
-											className='cursor-pointer hover:bg-gray-200 p-2 rounded-md border-2 border-solid border-gray-200 bg-white'
+											key={'folderButton' + index}
+											className='cursor-pointer hover:bg-gray-200 p-2 rounded-md border border-solid border-gray-200 bg-white'
 											onDoubleClick={() => handleFolderDoubleClick(folder.folderName)}
 										>
-											{folder.folderName}
+											<FolderButton
+												folder={folder}
+												handleDeleteFolder={handleDeleteFolder}
+												handleRenameFolder={handleRenameFolder}
+											/>
 										</div>
 									);
 								}
@@ -319,6 +402,32 @@ export default function Dashboard() {
 					title='Delete Project'
 					description='Are you sure you want to delete this project?'
 					onConfirm={confirmDelete}
+				/>
+
+
+				{/* Create Folder modal */}
+				<CreateFolderModal
+					showCreateFolderModal={showCreateFolderModal}
+					setShowCreateFolderModal={setShowCreateFolderModal}
+					setFolders={setFolders}
+				/>
+
+				<Modal
+					showModal={showDeleteFolderModal}
+					setShowModal={setShowDeleteFolderModal}
+					title='Delete Folder'
+					description='Are you sure you want to delete this folder?'
+					onConfirm={confirmDeleteFolder}
+				/>
+
+				<Modal
+					showModal={showRenameFolderModal}
+					setShowModal={setShowRenameFolderModal}
+					title='Rename Folder'
+					inputValue={renameInput}
+					setInputValue={setRenameInput}
+					hasInputArea={true}
+					onConfirm={confirmRenameFolder}
 				/>
 			</div>
 			{showSurvey && (

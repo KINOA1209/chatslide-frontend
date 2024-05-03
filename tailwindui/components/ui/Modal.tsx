@@ -16,6 +16,9 @@ interface ModalProps {
 	clickOutsideToClose?: boolean;
 	canClose?: boolean;
 	width?: string;
+	hasInputArea?: boolean;
+	inputValue?: string;
+	setInputValue?: (value: string) => void
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -29,6 +32,9 @@ const Modal: React.FC<ModalProps> = ({
 	clickOutsideToClose = true,
 	canClose = true,
 	width,
+	hasInputArea = false,
+	inputValue,
+	setInputValue,
 }) => {
 	const modalRef = React.useRef<HTMLDivElement>(null);
 	const modalContentRef = React.useRef<HTMLDivElement>(null);
@@ -51,6 +57,12 @@ const Modal: React.FC<ModalProps> = ({
 		console.log('onConfirm resolved');
 		setIsSubmitting(false);
 		setShowModal(false);
+	};
+
+	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		if (setInputValue) {
+            setInputValue(event.target.value);
+        }
 	};
 
 	// press esc to close modal
@@ -136,6 +148,15 @@ const Modal: React.FC<ModalProps> = ({
 
 					{description && <Explanation>{description}</Explanation>}
 
+					{hasInputArea && (
+						<input
+							type="text"
+							placeholder="New folder name"
+							value={inputValue}
+							onChange={handleInputChange}
+							className="w-full p-2.5 mb-2.5 min-w-[300px] font-creato-medium rounded-md"
+						/>
+					)}
 					{/* Modal body */}
 					{children}
 

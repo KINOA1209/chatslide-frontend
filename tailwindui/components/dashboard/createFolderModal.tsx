@@ -2,13 +2,16 @@ import React, { useState, useEffect, Fragment, useRef } from 'react';
 import Modal from "../ui/Modal";
 import { BigBlueButton } from '../button/DrlambdaButton';
 import { useUser } from '@/hooks/use-user';
+import Folder from '@/models/Folder';
 
 const CreateFolderModal: React.FC<{
     showCreateFolderModal: boolean;
     setShowCreateFolderModal: (showCreateFolderModal: boolean) => void;
+    setFolders: React.Dispatch<React.SetStateAction<Folder[]>>;
 }> = ({
     showCreateFolderModal,
     setShowCreateFolderModal,
+    setFolders
 }) => {
         const [folderName, setFolderName] = useState('');
         const [isSubmitting, setIsSubmitting] = React.useState(false);
@@ -37,7 +40,13 @@ const CreateFolderModal: React.FC<{
 
                 if (response.ok) {
                     console.log('Folder created successfully:', data);
-                    // Perform any actions on successful creation, like closing the modal
+                    setFolders(prevFolders => {
+                        const newFolders = [
+                            ...prevFolders,
+                            { folderName: folderName, projects: [] }
+                        ];
+                        return newFolders.sort((a, b) => a.folderName.localeCompare(b.folderName));
+                    });
                     setShowCreateFolderModal(false);
                 } else {
                     // Handle server-side errors (e.g., group already exists)
