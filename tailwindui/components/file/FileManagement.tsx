@@ -16,6 +16,7 @@ import { FaCheckCircle } from 'react-icons/fa';
 import { useUser } from '@/hooks/use-user';
 import { Blank, Loading } from '../ui/Loading';
 import { getBrand, getLogoUrl } from '@/utils/getHost';
+import MyResourcePageHeader from '@/app/(feature)/uploads/MyResourcePageHeader';
 
 interface UserFileList {
 	selectable: boolean;
@@ -27,15 +28,57 @@ interface UserFileList {
 
 // Define a new component for the table header
 const FileTableHeader = () => (
-	<div className='grid bg-[#ECF1FE] border border-gray-200 grid-cols-2 md:grid-cols-3'>
-		{/* <div className='hidden md:flex w-full ml-4 text-indigo-300 text-[13px] font-bold uppercase leading-normal tracking-wide'>
-          Type
-        </div> */}
-		<div className='col-span-2 flex w-full ml-4 text-indigo-300 text-[13px] font-bold uppercase leading-normal tracking-wide'>
-			Title
+	// <div className='grid bg-[#ECF1FE] border border-gray-200 grid-cols-2 md:grid-cols-3'>
+	// 	{/* <div className='hidden md:flex w-full ml-4 text-indigo-300 text-[13px] font-bold uppercase leading-normal tracking-wide'>
+	//       Type
+	//     </div> */}
+	// 	<div className='col-span-2 flex w-full ml-4 text-indigo-300 text-[13px] font-bold uppercase leading-normal tracking-wide'>
+	// 		Title
+	// 	</div>
+	// 	<div className='hidden md:flex w-full ml-4 text-indigo-300 text-[13px] font-bold uppercase leading-normal tracking-wide'>
+	// 		Date
+	// 	</div>
+	// </div>
+	<div
+		className={`grid grid-cols-2 md:grid-cols-3`}
+		style={{
+			borderTop: '1px solid #EAECF0',
+			borderLeft: '1px solid #EAECF0',
+			borderRight: '1px solid #EAECF0',
+			background: 'var(--Colors-Background-bg-secondary, #F9FAFB)',
+			borderRadius: 'var(--radius-md) var(--radius-md) 0px 0px',
+		}}
+	>
+		{/* <div className='hidden lg:flex col-span-1 w-full ml-4 text-indigo-300 text-[13px] font-bold uppercase leading-normal tracking-wide'> */}
+		<div
+			className='flex col-span-2 w-full capitalize '
+			style={{
+				padding: `var(--spacing-xl, 8px) var(--spacing-3xl, 8px)`,
+				whiteSpace: 'nowrap',
+				color: 'var(--colors-text-text-tertiary-600, #475467)',
+
+				fontSize: '12px',
+				fontStyle: 'normal',
+				lineHeight: '18px',
+				fontWeight: 500,
+			}}
+		>
+			<span>File name</span>
 		</div>
-		<div className='hidden md:flex w-full ml-4 text-indigo-300 text-[13px] font-bold uppercase leading-normal tracking-wide'>
-			Date
+		<div
+			className='hidden md:flex col-span-1 w-full capitalize '
+			style={{
+				padding: `var(--spacing-xl, 8px) var(--spacing-3xl, 8px)`,
+				whiteSpace: 'nowrap',
+				color: 'var(--colors-text-text-tertiary-600, #475467)',
+
+				fontSize: '12px',
+				fontStyle: 'normal',
+				lineHeight: '18px',
+				fontWeight: 500,
+			}}
+		>
+			<span>Date uploaded</span>
 		</div>
 	</div>
 );
@@ -168,6 +211,7 @@ const MyFiles: React.FC<filesInterface> = ({
 	const { isPaidUser, token } = useUser();
 	const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 	const [isDragging, setIsDragging] = useState(false);
+	const [showUploadOptionsMenu, setShowUploadOptionsMenu] = useState(false);
 
 	useEffect(() => {
 		if (contentRef.current) {
@@ -481,102 +525,120 @@ const MyFiles: React.FC<filesInterface> = ({
 	return (
 		<section className='bg-white grow flex flex-col h-full w-full'>
 			<ToastContainer enableMultiContainer containerId={'fileManagement'} />
-			<div
-				className={`max-w-7xl w-full mx-auto px-4 flex flex-wrap justify-around`}
-			>
-				{/* upload local file button */}
-				<div className='max-w-sm w-fit text-center pt-4 mx-4'>
-					<div className='w-full mx-auto'>
-						<FileUploadButton
-							onFileSelected={onFileSelected}
-							isSubmitting={isSubmitting}
-							pageInvoked={pageInvoked}
-						/>
-					</div>
-				</div>
+			{pageInvoked === 'resources' ? (
+				<MyResourcePageHeader
+					showUploadOptionsMenu={showUploadOptionsMenu}
+					setShowUploadOptionsMenu={setShowUploadOptionsMenu}
+					// localFileUploadButton={}
+					// uploadFromCloudButton={}
+				/>
+			) : (
+				<></>
+			)}
 
-				{/* carbon connect cloud storage */}
-				{pageInvoked !== 'theme' && (
+			{/* the two blue button for upload */}
+			{pageInvoked === 'resources' ? (
+				<></>
+			) : (
+				<div
+					className={`max-w-7xl w-full mx-auto px-4 flex flex-wrap justify-around`}
+				>
+					{/* upload local file button */}
 					<div className='max-w-sm w-fit text-center pt-4 mx-4'>
 						<div className='w-full mx-auto'>
-							{isPaidUser ? (
-								<CarbonConnect
-									orgName={getBrand()}
-									brandIcon={getLogoUrl()}
-									tokenFetcher={carbonTokenFetcher}
-									tags={{
-										tag1: 'tag1_value',
-										tag2: 'tag2_value',
-										tag3: 'tag3_value',
-									}}
-									maxFileSize={10000000}
-									enabledIntegrations={[
-										// {
-										//     id: IntegrationName.GOOGLE_DRIVE,
-										//     chunkSize: 1500,
-										//     overlapSize: 20,
-										//     skipEmbeddingGeneration: true,
-										// },
-										{
-											id: IntegrationName.ONEDRIVE,
-											chunkSize: 1500,
-											overlapSize: 20,
-											skipEmbeddingGeneration: true,
-										},
-										{
-											id: IntegrationName.DROPBOX,
-											chunkSize: 1500,
-											overlapSize: 20,
-											skipEmbeddingGeneration: true,
-										},
-										// {
-										// 	id: IntegrationName.NOTION,
-										// 	chunkSize: 1500,
-										// 	overlapSize: 20,
-										// 	skipEmbeddingGeneration: true,
-										// },
-										{
-											id: IntegrationName.GOOGLE_DRIVE,
-											chunkSize: 1500,
-											overlapSize: 20,
-											skipEmbeddingGeneration: true,
-										},
-									]}
-									onSuccess={(data) => handleSuccess(data)}
-									onError={(error) => console.log('Data on Error: ', error)}
-									primaryBackgroundColor='#5168f6'
-									primaryTextColor='#fafafa'
-									secondaryBackgroundColor='#f2f2f2'
-									secondaryTextColor='#000000'
-									allowMultipleFiles={true}
-									open={false}
-									chunkSize={1500}
-									overlapSize={20}
-									// entryPoint="LOCAL_FILES"
-								>
+							<FileUploadButton
+								onFileSelected={onFileSelected}
+								isSubmitting={isSubmitting}
+								pageInvoked={pageInvoked}
+							/>
+						</div>
+					</div>
+
+					{/* carbon connect cloud storage */}
+					{pageInvoked !== 'theme' && (
+						<div className='max-w-sm w-fit text-center pt-4 mx-4'>
+							<div className='w-full mx-auto'>
+								{isPaidUser ? (
+									<CarbonConnect
+										orgName={getBrand()}
+										brandIcon={getLogoUrl()}
+										tokenFetcher={carbonTokenFetcher}
+										tags={{
+											tag1: 'tag1_value',
+											tag2: 'tag2_value',
+											tag3: 'tag3_value',
+										}}
+										maxFileSize={10000000}
+										enabledIntegrations={[
+											// {
+											//     id: IntegrationName.GOOGLE_DRIVE,
+											//     chunkSize: 1500,
+											//     overlapSize: 20,
+											//     skipEmbeddingGeneration: true,
+											// },
+											{
+												id: IntegrationName.ONEDRIVE,
+												chunkSize: 1500,
+												overlapSize: 20,
+												skipEmbeddingGeneration: true,
+											},
+											{
+												id: IntegrationName.DROPBOX,
+												chunkSize: 1500,
+												overlapSize: 20,
+												skipEmbeddingGeneration: true,
+											},
+											// {
+											// 	id: IntegrationName.NOTION,
+											// 	chunkSize: 1500,
+											// 	overlapSize: 20,
+											// 	skipEmbeddingGeneration: true,
+											// },
+											{
+												id: IntegrationName.GOOGLE_DRIVE,
+												chunkSize: 1500,
+												overlapSize: 20,
+												skipEmbeddingGeneration: true,
+											},
+										]}
+										onSuccess={(data) => handleSuccess(data)}
+										onError={(error) => console.log('Data on Error: ', error)}
+										primaryBackgroundColor='#5168f6'
+										primaryTextColor='#fafafa'
+										secondaryBackgroundColor='#f2f2f2'
+										secondaryTextColor='#000000'
+										allowMultipleFiles={true}
+										open={false}
+										chunkSize={1500}
+										overlapSize={20}
+										// entryPoint="LOCAL_FILES"
+									>
+										<BigBlueButton
+											onClick={() => {}}
+											isSubmitting={false}
+											showArrow={false}
+										>
+											Upload from Cloud ☁️
+										</BigBlueButton>
+									</CarbonConnect>
+								) : (
 									<BigBlueButton
 										onClick={() => {}}
 										isSubmitting={false}
 										showArrow={false}
+										isPaidFeature={true}
+										isPaidUser={isPaidUser}
 									>
 										Upload from Cloud ☁️
 									</BigBlueButton>
-								</CarbonConnect>
-							) : (
-								<BigBlueButton
-									onClick={() => {}}
-									isSubmitting={false}
-									showArrow={false}
-                  isPaidFeature={true}
-                  isPaidUser={isPaidUser}
-								>
-									Upload from Cloud ☁️
-								</BigBlueButton>
-							)}
+								)}
+							</div>
 						</div>
-					</div>
-				)}
-			</div>
+					)}
+				</div>
+			)}
+
+			{/* rendered resources items area */}
 			{rendered ? (
 				resources.length === 0 ? (
 					<Blank text='You have no uploaded file' />
