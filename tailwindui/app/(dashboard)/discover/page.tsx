@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { JoinUsBanner } from '@/components/layout/JoinUsBanner';
 import DesignSystemButton from '@/components/ui/design_systems/ButtonsOrdinary';
 import { getBrand } from '@/utils/getHost';
+import Project from '@/models/Project';
 
 export const metadata = {
 	title: `Discover | ${getBrand()}`,
@@ -16,7 +17,7 @@ export const metadata = {
 };
 
 export default async function Discover() {
-	const projects = await ProjectService.getProjects('', true, true);
+	const projects = await ProjectService.getProjects('', true, true, false) as Project[];
 	// console.log('projects', projects);
 	// const projects = mockProjectsData; // for test purposes only
 
