@@ -7,6 +7,7 @@ import React, {
 	ReactNode,
 	useState,
 	MouseEvent,
+	useEffect,
 } from 'react';
 import PaywallModal from '../paywallModal';
 import { useRouter } from 'next/navigation';
@@ -187,18 +188,31 @@ export const BigBlueButton: React.FC<DrlambdaButtonProps> = ({
 	id,
 	wfull = false,
 }) => {
+	const [showPaywallModal, setShowPaywallModal] = useState(false);
+
 	return (
-		<button
-			id={id}
-			className={`btn h-[36px] sm:h-[36px] ${wfull ? 'w-full' : 'w-[12rem]'} mx-auto sm:gap-x-2 text-white sm:font-semibold bg-Blue ${
-				isSubmitting && 'animate-pulse cursor-progress'
-			} disabled:bg-gray-600 disabled:cursor-not-allowed
-			whitespace-nowrap rounded-xl font-creato-medium`}
-			onClick={onClick}
-			disabled={isSubmitting || disabled}
-		>
-			{children}
-		</button>
+		<>
+			<PaywallModal
+				showModal={showPaywallModal}
+				setShowModal={setShowPaywallModal}
+				message='Upgrade to unlock more features. 🚀'
+			/>
+			<button
+				id={id}
+				className={`btn h-[36px] sm:h-[36px] w-[12rem] mx-auto sm:gap-x-2 text-white sm:font-semibold bg-Blue ${
+					isSubmitting && 'animate-pulse cursor-progress'
+				} disabled:bg-gray-600 disabled:cursor-not-allowed
+			whitespace-nowrap rounded-xl`}
+				onClick={
+					isPaidFeature && !isPaidUser
+						? () => setShowPaywallModal(true)
+						: onClick
+				}
+				disabled={isSubmitting || disabled}
+			>
+				{children}
+			</button>
+		</>
 	);
 };
 
@@ -266,6 +280,7 @@ export const BigGrayButton: React.FC<DrlambdaButtonProps> = ({
 type DrlambdaDropDownProps = {
 	children: ReactNode;
 	onChange?: React.ChangeEventHandler<HTMLSelectElement>;
+	onLoad?: () => void;
 	displayText?: string;
 	width?: string;
 	style?: 'button' | 'input';
@@ -276,6 +291,7 @@ type DrlambdaDropDownProps = {
 export const DropDown: React.FC<DrlambdaDropDownProps> = ({
 	children,
 	onChange,
+	onLoad,
 	displayText,
 	width = '12rem',
 	style = 'input',
@@ -286,6 +302,13 @@ export const DropDown: React.FC<DrlambdaDropDownProps> = ({
 		style === 'button'
 			? 'bg-gray-300 border-none rounded-xl'
 			: 'border border-2 border-gray-200 rounded-lg';
+
+	// Run onLoad logic when the component is mounted
+	useEffect(() => {
+		if (onLoad) {
+			onLoad();
+		}
+	}, [onLoad]);
 	return (
 		<select
 			className={`h-[36px] flex ${styleClassName} text-sm py-0 overflow-visible disabled:text-gray-600 disabled:animate-pulse`}

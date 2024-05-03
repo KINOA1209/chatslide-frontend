@@ -454,11 +454,6 @@ const MyFiles: React.FC<filesInterface> = ({
 		}
 	};
 
-	const handleDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
-		e.preventDefault();
-		setIsDragging(true);
-	};
-
 	const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
 		e.preventDefault();
 		if (!isDragging) setIsDragging(true);
@@ -469,12 +464,17 @@ const MyFiles: React.FC<filesInterface> = ({
 		setIsDragging(false);
 	};
 
+	const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
+		e.preventDefault();
+		setIsDragging(true);
+		e.dataTransfer.clearData();
+	};
+
 	const handleDrop = async (e: React.DragEvent<HTMLDivElement>) => {
 		e.preventDefault();
 		setIsDragging(false);
 		if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
 			await onFileSelected(e.dataTransfer.files[0]);
-			e.dataTransfer.clearData();
 		}
 	};
 
@@ -499,68 +499,80 @@ const MyFiles: React.FC<filesInterface> = ({
 				{pageInvoked !== 'theme' && (
 					<div className='max-w-sm w-fit text-center pt-4 mx-4'>
 						<div className='w-full mx-auto'>
-							<CarbonConnect
-								orgName={getBrand()}
-								brandIcon={getLogoUrl()}
-								tokenFetcher={carbonTokenFetcher}
-								tags={{
-									tag1: 'tag1_value',
-									tag2: 'tag2_value',
-									tag3: 'tag3_value',
-								}}
-								maxFileSize={10000000}
-								enabledIntegrations={[
-									// {
-									//     id: IntegrationName.GOOGLE_DRIVE,
-									//     chunkSize: 1500,
-									//     overlapSize: 20,
-									//     skipEmbeddingGeneration: true,
-									// },
-									{
-										id: IntegrationName.ONEDRIVE,
-										chunkSize: 1500,
-										overlapSize: 20,
-										skipEmbeddingGeneration: true,
-									},
-									{
-										id: IntegrationName.DROPBOX,
-										chunkSize: 1500,
-										overlapSize: 20,
-										skipEmbeddingGeneration: true,
-									},
-									// {
-									// 	id: IntegrationName.NOTION,
-									// 	chunkSize: 1500,
-									// 	overlapSize: 20,
-									// 	skipEmbeddingGeneration: true,
-									// },
-									{
-										id: IntegrationName.GOOGLE_DRIVE,
-										chunkSize: 1500,
-										overlapSize: 20,
-										skipEmbeddingGeneration: true,
-									},
-								]}
-								onSuccess={(data) => handleSuccess(data)}
-								onError={(error) => console.log('Data on Error: ', error)}
-								primaryBackgroundColor='#5168f6'
-								primaryTextColor='#fafafa'
-								secondaryBackgroundColor='#f2f2f2'
-								secondaryTextColor='#000000'
-								allowMultipleFiles={true}
-								open={false}
-								chunkSize={1500}
-								overlapSize={20}
-								// entryPoint="LOCAL_FILES"
-							>
+							{isPaidUser ? (
+								<CarbonConnect
+									orgName={getBrand()}
+									brandIcon={getLogoUrl()}
+									tokenFetcher={carbonTokenFetcher}
+									tags={{
+										tag1: 'tag1_value',
+										tag2: 'tag2_value',
+										tag3: 'tag3_value',
+									}}
+									maxFileSize={10000000}
+									enabledIntegrations={[
+										// {
+										//     id: IntegrationName.GOOGLE_DRIVE,
+										//     chunkSize: 1500,
+										//     overlapSize: 20,
+										//     skipEmbeddingGeneration: true,
+										// },
+										{
+											id: IntegrationName.ONEDRIVE,
+											chunkSize: 1500,
+											overlapSize: 20,
+											skipEmbeddingGeneration: true,
+										},
+										{
+											id: IntegrationName.DROPBOX,
+											chunkSize: 1500,
+											overlapSize: 20,
+											skipEmbeddingGeneration: true,
+										},
+										// {
+										// 	id: IntegrationName.NOTION,
+										// 	chunkSize: 1500,
+										// 	overlapSize: 20,
+										// 	skipEmbeddingGeneration: true,
+										// },
+										{
+											id: IntegrationName.GOOGLE_DRIVE,
+											chunkSize: 1500,
+											overlapSize: 20,
+											skipEmbeddingGeneration: true,
+										},
+									]}
+									onSuccess={(data) => handleSuccess(data)}
+									onError={(error) => console.log('Data on Error: ', error)}
+									primaryBackgroundColor='#5168f6'
+									primaryTextColor='#fafafa'
+									secondaryBackgroundColor='#f2f2f2'
+									secondaryTextColor='#000000'
+									allowMultipleFiles={true}
+									open={false}
+									chunkSize={1500}
+									overlapSize={20}
+									// entryPoint="LOCAL_FILES"
+								>
+									<BigBlueButton
+										onClick={() => {}}
+										isSubmitting={false}
+										showArrow={false}
+									>
+										Upload from Cloud ☁️
+									</BigBlueButton>
+								</CarbonConnect>
+							) : (
 								<BigBlueButton
 									onClick={() => {}}
 									isSubmitting={false}
 									showArrow={false}
+                  isPaidFeature={true}
+                  isPaidUser={isPaidUser}
 								>
 									Upload from Cloud ☁️
 								</BigBlueButton>
-							</CarbonConnect>
+							)}
 						</div>
 					</div>
 				)}
@@ -573,7 +585,7 @@ const MyFiles: React.FC<filesInterface> = ({
 						className={`w-full mx-auto mt-4 px-4 pt-4 flex grow overflow-y-auto border border-gray-200 ${
 							isDragging ? 'bg-blue-100 border-blue-500' : ''
 						}`}
-						onDragEnter={handleDragEnter}
+						onDragStart={handleDragStart}
 						onDragOver={handleDragOver}
 						onDragLeave={handleDragLeave}
 						onDrop={handleDrop}

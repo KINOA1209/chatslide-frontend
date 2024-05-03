@@ -38,6 +38,10 @@ const useIsShowingLogo = createBearStore<boolean>()(
 	false,
 );
 
+
+const useInitialLoadedTemplateBgColor = createBearStore<
+	string | undefined
+>()('initialLoadedTemplateBgColor', '#FFFFFF', true);
 const useCustomTemplateBgColor = createBearStore<string | undefined>()(
 	'customTemplateBgColor',
 	'',
@@ -144,6 +148,8 @@ export const useSlides = () => {
 		hasSelectedCustomTemplateBgColor,
 		setHasSelectedCustomTemplateBgColor,
 	} = useHasSelectedCustomTemplateBgColor();
+	const { initialLoadedTemplateBgColor, setInitialLoadedTemplateBgColor } =
+	useInitialLoadedTemplateBgColor()
 	// for customized font family
 	// title font
 	const { initialLoadedTitleFontFamily, setInitialLoadedTitleFontFamily } =
@@ -515,11 +521,15 @@ export const useSlides = () => {
 		debouncedSyncSlides(newSlides, true);
 	};
 
-	const changeTemplateAndPalette = (
+	const changeTemplateAndPaletteAndBgColorAndFont = (
 		newTemplate: TemplateKeys,
 		newPalette: PaletteKeys,
+		newBgColor: string,
+		newTitleFontFamily: string,
+		newSubtitleFontFamily: string,
+		newContentFontFamily: string,
 	) => {
-		console.log('-- changeTemplateAndPalette:', newTemplate, newPalette);
+		console.log('-- changeTemplateAndPaletteAndBgColorAndFont:', newTemplate, newPalette, newBgColor, newTitleFontFamily, newSubtitleFontFamily, newContentFontFamily);
 
 		let newSlides = slides.map((slide, index) => {
 			return {
@@ -528,7 +538,10 @@ export const useSlides = () => {
 				palette: newPalette,
 				background_color: hasSelectedCustomTemplateBgColor
 					? customTemplateBgColor
-					: colorPreviews[newPalette as PaletteKeys],
+					:colorPreviews[newPalette as PaletteKeys],
+				// background_color: customTemplateBgColor,
+					
+				
 				titleFontFamily: HasSelectedCustomizedTemplateTitleFontFamily
 					? customizedTemplateTitleFontFamily
 					: initialLoadedTitleFontFamily,
@@ -594,7 +607,7 @@ export const useSlides = () => {
 		);
 
 		setCustomTemplateBgColor(slides[0].background_color);
-		setHasSelectedCustomTemplateBgColor(!!slides[0].background_color);
+		
 
 		slidesStatus = SlidesStatus.Inited;
 	};
@@ -674,7 +687,7 @@ export const useSlides = () => {
 		// updateBranding,
 		changeTemplate,
 		changePalette,
-		changeTemplateAndPalette,
+		changeTemplateAndPaletteAndBgColorAndFont,
 		initSlides,
 		slidesHistory,
 		slidesHistoryIndex,
@@ -704,6 +717,9 @@ export const useSlides = () => {
 		debouncedSyncSlides,
 		customTemplateBgColor,
 		hasSelectedCustomTemplateBgColor,
+		setHasSelectedCustomTemplateBgColor,
+		initialLoadedTemplateBgColor, setInitialLoadedTemplateBgColor,
+		setCustomTemplateBgColor,
 		updateCustomBgColorForTemplate,
 		updateCustomizedTitleFontFamilyForTemplate,
 		updateCustomizedContentFontFamilyForTemplate,

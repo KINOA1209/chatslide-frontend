@@ -66,7 +66,7 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
 								? ' border-green-600'
 								: ' border-gray-200') +
 						(noBorder ? ' border-0' : ' border-2')
-			}`}
+			}` + ' notranslate'}
 			ref={containerRef}
 			style={{
 				boxSizing: 'border-box',

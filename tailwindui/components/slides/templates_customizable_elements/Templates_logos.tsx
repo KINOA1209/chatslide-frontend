@@ -24,6 +24,11 @@ import ColumbiaLogo from '@/public/images/template/Columbia/ColumbiaLogo.png';
 import { useEffect } from 'react';
 import { isChatslide } from '@/utils/getHost';
 
+function openBrandingModal() {
+  console.log('openBrandingModal');
+	document.dispatchEvent(new CustomEvent('change_logo'));
+}
+
 const DrLambdaLogo: React.FC<TemplateLogoType> = ({
 	isCoverPage,
 	custom_logo,
@@ -34,8 +39,12 @@ const DrLambdaLogo: React.FC<TemplateLogoType> = ({
 	if (isCoverPage) {
 		if (custom_logo === 'Default') {
 			return (
-				<div className='absolute inset-0 top-[90%] w-full justify-start items-center gap-7 inline-flex pl-[12px] pb-[12px] z-50'>
+				<div
+					onClick={openBrandingModal}
+					className='absolute inset-0 top-[90%] w-full justify-start items-center gap-7 inline-flex pl-[12px] pb-[12px] z-50'
+				>
 					<Image
+          onClick={openBrandingModal}
 						src={isChatslide() ? chatslideLogoBlackText : drlambdaLogoSingle}
 						alt='Logo'
 						className='w-[8rem] h-auto'
@@ -45,8 +54,12 @@ const DrLambdaLogo: React.FC<TemplateLogoType> = ({
 			);
 		} else {
 			return (
-				<div className='absolute inset-0 top-[90%] w-full justify-start items-center gap-7 inline-flex pl-[12px] pb-[12px] z-50'>
+				<div
+					onClick={openBrandingModal}
+					className='absolute inset-0 top-[90%] w-full justify-start items-center gap-7 inline-flex pl-[12px] pb-[12px] z-50'
+				>
 					<Image
+						onClick={openBrandingModal}
 						unoptimized={true}
 						src={custom_logo}
 						alt='CustomLogo'
@@ -60,8 +73,12 @@ const DrLambdaLogo: React.FC<TemplateLogoType> = ({
 	} else {
 		if (custom_logo === 'Default') {
 			return (
-				<div className='absolute inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[12px] pb-[12px] z-50'>
+				<div
+					onClick={openBrandingModal}
+					className='absolute inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[12px] pb-[12px] z-50'
+				>
 					<Image
+						onClick={openBrandingModal}
 						unoptimized={true}
 						src={isChatslide() ? chatslideLogoBlackText : drlambdaLogo}
 						alt='Logo'
@@ -75,8 +92,12 @@ const DrLambdaLogo: React.FC<TemplateLogoType> = ({
 			);
 		} else {
 			return (
-				<div className='absolute inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[12px] pb-[12px] z-50'>
+				<div
+					onClick={openBrandingModal}
+					className='absolute inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[12px] pb-[12px] z-50'
+				>
 					<Image
+						onClick={openBrandingModal}
 						unoptimized={true}
 						src={custom_logo}
 						alt='custom logo'
@@ -132,11 +153,13 @@ export const generateTemplateLogo = ({
 	return (
 		<div
 			className={`absolute inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[12px] pb-[12px] z-40`}
+			onClick={openBrandingModal}
 		>
 			{custom_logo === template_name || custom_logo === 'Default' ? (
 				// use original template logo
 
 				<Image
+					onClick={openBrandingModal}
 					unoptimized={true}
 					// src={isCoverPage ? coverLogo : nonCoverLogo}
 					width={logoWidth}
@@ -161,6 +184,7 @@ export const generateTemplateLogo = ({
 				// 			></div>
 				// use user uploaded logo
 				<Image
+					onClick={openBrandingModal}
 					unoptimized={true}
 					width={45} // Adjust the multiplier as needed
 					height={40} // Adjust the multiplier as needed

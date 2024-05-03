@@ -74,12 +74,14 @@ export default async function Page({ params }: Props) {
 	);
 
 	return (
-		<div className='flex flex-col w-screen'>
+		<div className='flex flex-col w-screen h-screen'>
 			<div className='flex'>
 				<Header loginRequired={false} isLanding={false} />
 			</div>
 			<JoinUsBanner />
-			<main className='w-full flex h-full flex-col overflow-y-scroll'>
+			<main className='w-full flex grow flex-col overflow-y-hidden'>
+				<SharePage project_id={project_id} />
+
 				{project.description && (
 					<div className='hidden sm:flex m-4'>
 						<Card>
@@ -91,8 +93,6 @@ export default async function Page({ params }: Props) {
 						</Card>
 					</div>
 				)}
-
-				<SharePage project_id={project_id} />
 			</main>
 			{/* <WorkflowFooter /> */}
 		</div>
