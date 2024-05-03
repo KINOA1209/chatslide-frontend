@@ -369,7 +369,7 @@ export default function Dashboard() {
 								// text='Create New'
 								onClick={handleStartNewProject}
 							>
-								Create New
+								Start New Project
 							</DesignSystemButton>
 						</div>
 					</div>
