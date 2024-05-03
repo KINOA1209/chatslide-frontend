@@ -29,7 +29,7 @@ import { useSlides } from '@/hooks/use-slides';
 import ResizeSlider from './drag_resize/resize_slider';
 import '@/components/slides/drag_resize/dragAndResizeCSS.css';
 import dynamic from 'next/dynamic';
-import Slide, { SlideKeys } from '@/models/Slide';
+import Slide, { Media, SlideKeys } from '@/models/Slide';
 const QuillEditable = dynamic(
 	() => import('@/components/slides/quillEditorSlide'),
 	{ ssr: false },
@@ -384,6 +384,7 @@ export const Cover_img_1_layout = ({
 	isShowingLogo,
 	images_position,
 	embed_code,
+	media_types,
 }: MainSlideProps) => {
 	const updateImgAtIndex =
 		(index: number) =>
@@ -392,6 +393,7 @@ export const Cover_img_1_layout = ({
 			ischart: boolean,
 			image_position: ImagesPosition,
 			embed_code_single: string,
+			media_type: Media,
 		) => {
 			const newImgs = [...imgs];
 			if (index >= newImgs.length) newImgs.push(imgSrc);
@@ -410,7 +412,17 @@ export const Cover_img_1_layout = ({
 			if (index >= newEmbedCode.length) newEmbedCode.push(embed_code_single);
 			else newEmbedCode[index] = embed_code_single;
 
-			update_callback(newImgs, newIsCharts, newImagesPosition, newEmbedCode);
+			const newMediaTypes = [...media_types];
+			if (index >= newMediaTypes.length) newMediaTypes.push(media_type);
+			else newMediaTypes[index] = media_type;
+
+			update_callback(
+				newImgs,
+				newIsCharts,
+				newImagesPosition,
+				newEmbedCode,
+				newMediaTypes,
+			);
 		};
 
 	const [imgHigherZIndex, setImgHigherZIndex] = useState(false);
@@ -466,6 +478,9 @@ export const Cover_img_1_layout = ({
 					// additional_images={imgs.slice(3)}
 					setImgHigherZIndex={setImgHigherZIndex}
 					embed_code={embed_code}
+					embed_code_single={embed_code?.[0]}
+					media_types={media_types}
+					media_type={media_types?.[0]}
 				/>
 			</div>
 
@@ -1295,6 +1310,7 @@ export const Col_2_img_1_layout = ({
 	isShowingLogo,
 	images_position,
 	embed_code,
+	media_types,
 }: MainSlideProps) => {
 	const updateImgAtIndex =
 		(index: number) =>
@@ -1303,6 +1319,7 @@ export const Col_2_img_1_layout = ({
 			ischart: boolean,
 			image_position: ImagesPosition,
 			embed_code_single: string,
+			media_type: Media,
 		) => {
 			const newImgs = [...imgs];
 			if (index >= newImgs.length) newImgs.push(imgSrc);
@@ -1321,7 +1338,17 @@ export const Col_2_img_1_layout = ({
 			if (index >= newEmbedCode.length) newEmbedCode.push(embed_code_single);
 			else newEmbedCode[index] = embed_code_single;
 
-			update_callback(newImgs, newIsCharts, newImagesPosition, newEmbedCode);
+			const newMediaTypes = [...media_types];
+			if (index >= newMediaTypes.length) newMediaTypes.push(media_type);
+			else newMediaTypes[index] = media_type;
+
+			update_callback(
+				newImgs,
+				newIsCharts,
+				newImagesPosition,
+				newEmbedCode,
+				newMediaTypes,
+			);
 		};
 
 	const [maxContentHeight, setMaxContentHeight] = useState<number | null>(null);
@@ -1432,6 +1459,9 @@ export const Col_2_img_1_layout = ({
 					customImageStyle={layoutElements.imageCSS}
 					setImgHigherZIndex={setImgHigherZIndex}
 					embed_code={embed_code}
+					embed_code_single={embed_code?.[0]}
+					media_types={media_types}
+					media_type={media_types?.[0]}
 				/>
 			</div>
 			{/* logo section */}
@@ -1485,6 +1515,7 @@ export const Col_1_img_1_layout = ({
 	isShowingLogo,
 	images_position,
 	embed_code,
+	media_types,
 }: MainSlideProps) => {
 	const updateImgAtIndex =
 		(index: number) =>
@@ -1493,6 +1524,7 @@ export const Col_1_img_1_layout = ({
 			ischart: boolean,
 			image_position: ImagesPosition,
 			embed_code_single: string,
+			media_type: Media,
 		) => {
 			const newImgs = [...imgs];
 			if (index >= newImgs.length) newImgs.push(imgSrc);
@@ -1511,7 +1543,17 @@ export const Col_1_img_1_layout = ({
 			if (index >= newEmbedCode.length) newEmbedCode.push(embed_code_single);
 			else newEmbedCode[index] = embed_code_single;
 
-			update_callback(newImgs, newIsCharts, newImagesPosition, newEmbedCode);
+			const newMediaTypes = [...media_types];
+			if (index >= newMediaTypes.length) newMediaTypes.push(media_type);
+			else newMediaTypes[index] = media_type;
+
+			update_callback(
+				newImgs,
+				newIsCharts,
+				newImagesPosition,
+				newEmbedCode,
+				newMediaTypes,
+			);
 		};
 
 	const [maxContentHeight, setMaxContentHeight] = useState<number | null>(null);
@@ -1608,6 +1650,9 @@ export const Col_1_img_1_layout = ({
 						customImageStyle={layoutElements.imageCSS}
 						setImgHigherZIndex={setImgHigherZIndex}
 						embed_code={embed_code}
+						embed_code_single={embed_code?.[0]}
+						media_types={media_types}
+						media_type={media_types?.[0]}
 					/>
 				</div>
 				{/* row3 for contents */}
@@ -1702,6 +1747,7 @@ export const Col_2_img_2_layout = ({
 	isShowingLogo,
 	images_position,
 	embed_code,
+	media_types,
 }: MainSlideProps) => {
 	const updateImgAtIndex =
 		(index: number) =>
@@ -1710,6 +1756,7 @@ export const Col_2_img_2_layout = ({
 			ischart: boolean,
 			image_position: ImagesPosition,
 			embed_code_single: string,
+			media_type: Media,
 		) => {
 			const newImgs = [...imgs];
 			if (index >= newImgs.length) newImgs.push(imgSrc);
@@ -1728,7 +1775,17 @@ export const Col_2_img_2_layout = ({
 			if (index >= newEmbedCode.length) newEmbedCode.push(embed_code_single);
 			else newEmbedCode[index] = embed_code_single;
 
-			update_callback(newImgs, newIsCharts, newImagesPosition, newEmbedCode);
+			const newMediaTypes = [...media_types];
+			if (index >= newMediaTypes.length) newMediaTypes.push(media_type);
+			else newMediaTypes[index] = media_type;
+
+			update_callback(
+				newImgs,
+				newIsCharts,
+				newImagesPosition,
+				newEmbedCode,
+				newMediaTypes,
+			);
 		};
 
 	const [maxContentHeight, setMaxContentHeight] = useState<number | null>(null);
@@ -1880,6 +1937,9 @@ export const Col_2_img_2_layout = ({
 							setImgHigherZIndex={setImgHigherZIndex}
 							columnIndex={0}
 							embed_code={embed_code}
+							embed_code_single={embed_code?.[0]}
+							media_types={media_types}
+							media_type={media_types?.[0]}
 						/>
 					</div>
 					<div
@@ -1910,6 +1970,9 @@ export const Col_2_img_2_layout = ({
 							setImgHigherZIndex={setImgHigherZIndex}
 							columnIndex={1}
 							embed_code={embed_code}
+							embed_code_single={embed_code?.[1]}
+							media_types={media_types}
+							media_type={media_types?.[1]}
 						/>
 					</div>
 				</div>
@@ -2071,6 +2134,7 @@ export const Col_3_img_3_layout = ({
 	isShowingLogo,
 	images_position,
 	embed_code,
+	media_types,
 }: MainSlideProps) => {
 	const updateImgAtIndex =
 		(index: number) =>
@@ -2079,6 +2143,7 @@ export const Col_3_img_3_layout = ({
 			ischart: boolean,
 			image_position: ImagesPosition,
 			embed_code_single: string,
+			media_type: Media,
 		) => {
 			const newImgs = [...imgs];
 			if (index >= newImgs.length) newImgs.push(imgSrc);
@@ -2097,7 +2162,17 @@ export const Col_3_img_3_layout = ({
 			if (index >= newEmbedCode.length) newEmbedCode.push(embed_code_single);
 			else newEmbedCode[index] = embed_code_single;
 
-			update_callback(newImgs, newIsCharts, newImagesPosition, newEmbedCode);
+			const newMediaTypes = [...media_types];
+			if (index >= newMediaTypes.length) newMediaTypes.push(media_type);
+			else newMediaTypes[index] = media_type;
+
+			update_callback(
+				newImgs,
+				newIsCharts,
+				newImagesPosition,
+				newEmbedCode,
+				newMediaTypes,
+			);
 		};
 
 	const [imgHigherZIndex, setImgHigherZIndex] = useState(false);
@@ -2202,6 +2277,9 @@ export const Col_3_img_3_layout = ({
 							setImgHigherZIndex={setImgHigherZIndex}
 							columnIndex={0}
 							embed_code={embed_code}
+							embed_code_single={embed_code?.[0]}
+							media_types={media_types}
+							media_type={media_types?.[0]}
 						/>
 					</div>
 					<div
@@ -2223,6 +2301,9 @@ export const Col_3_img_3_layout = ({
 							setImgHigherZIndex={setImgHigherZIndex}
 							columnIndex={1}
 							embed_code={embed_code}
+							embed_code_single={embed_code?.[1]}
+							media_types={media_types}
+							media_type={media_types?.[1]}
 						/>
 					</div>
 					<div
@@ -2244,6 +2325,9 @@ export const Col_3_img_3_layout = ({
 							setImgHigherZIndex={setImgHigherZIndex}
 							columnIndex={2}
 							embed_code={embed_code}
+							embed_code_single={embed_code?.[2]}
+							media_types={media_types}
+							media_type={media_types?.[2]}
 						/>
 					</div>
 				</div>
@@ -2513,6 +2597,7 @@ export const Full_img_only_layout = ({
 	isShowingLogo,
 	images_position,
 	embed_code,
+	media_types,
 }: MainSlideProps) => {
 	const updateImgAtIndex =
 		(index: number) =>
@@ -2521,6 +2606,7 @@ export const Full_img_only_layout = ({
 			ischart: boolean,
 			image_position: ImagesPosition,
 			embed_code_single: string,
+			media_type: Media,
 		) => {
 			const newImgs = [...imgs];
 			if (index >= newImgs.length) newImgs.push(imgSrc);
@@ -2539,7 +2625,17 @@ export const Full_img_only_layout = ({
 			if (index >= newEmbedCode.length) newEmbedCode.push(embed_code_single);
 			else newEmbedCode[index] = embed_code_single;
 
-			update_callback(newImgs, newIsCharts, newImagesPosition, newEmbedCode);
+			const newMediaTypes = [...media_types];
+			if (index >= newMediaTypes.length) newMediaTypes.push(media_type);
+			else newMediaTypes[index] = media_type;
+
+			update_callback(
+				newImgs,
+				newIsCharts,
+				newImagesPosition,
+				newEmbedCode,
+				newMediaTypes,
+			);
 		};
 
 	const [imgHigherZIndex, setImgHigherZIndex] = useState(false);
@@ -2578,6 +2674,9 @@ export const Full_img_only_layout = ({
 						setImgHigherZIndex={setImgHigherZIndex}
 						columnIndex={0}
 						embed_code={embed_code}
+						embed_code_single={embed_code?.[0]}
+						media_types={media_types}
+						media_type={media_types?.[0]}
 					/>
 				</div>
 			</div>

@@ -39,7 +39,7 @@ import layoutConfigData, {
 	TemplateLayoutsConfig,
 } from './templates_customizable_elements/layout_elements';
 import ScriptEditor from '../script/ScriptEditor';
-import Slide, { SlideKeys } from '@/models/Slide';
+import Slide, { Media, SlideKeys } from '@/models/Slide';
 import { AIAssistantIcon, AIAssistantChatWindow } from '../chatbot/AIAssistant';
 import ActionsToolBar from '../ui/ActionsToolBar';
 import { SlidesStatus, useSlides } from '@/hooks/use-slides';
@@ -454,6 +454,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		content:
 			| string
 			| string[]
+			| Media[]
 			| Array<
 					| string
 					| string[]
@@ -461,6 +462,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					| Chart[]
 					| boolean[]
 					| ImagesPosition[]
+					| Media[]
 			  >,
 		slideIndex: number,
 		tag: SlideKeys | SlideKeys[],
@@ -480,7 +482,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				| JSX.Element[]
 				| Chart[]
 				| boolean[]
-				| ImagesPosition[],
+				| ImagesPosition[]
+				| Media[],
 			className: string,
 		) => {
 			if (className === 'head') {
@@ -504,6 +507,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				// newSlide.images_position = slides[0]?.images_position;
 			} else if (className === 'embed_code') {
 				currentSlide.embed_code = [...(content as string[])]; // deep copy
+			} else if (className === 'media_types') {
+				currentSlide.media_types = [...(content as Media[])]; // deep copy
 			} else if (className === 'images_position') {
 				currentSlide.images_position = content as ImagesPosition[]; // deep copy
 				// newSlide.images_position = slides[0]?.images_position;
@@ -614,6 +619,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			ischart: boolean[],
 			images_position: ImagesPosition[],
 			embed_code: string[],
+			media_types: Media[],
 		) => {
 			// change all null to ''
 			urls = urls.map((url) => (url === null ? '' : url));
@@ -640,9 +646,9 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			// console.log('urls', urls);
 			// console.log('prevUrls', prevUrls);
 			handleSlideEdit(
-				[urls, ischart, images_position, embed_code],
+				[urls, ischart, images_position, embed_code, media_types],
 				slideIndex,
-				['images', 'is_chart', 'images_position', 'embed_code'],
+				['images', 'is_chart', 'images_position', 'embed_code', 'media_types'],
 			);
 		};
 		return updateImgUrl;

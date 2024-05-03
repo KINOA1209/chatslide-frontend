@@ -46,9 +46,10 @@ export type SlideKeys =
 	| 'is_chart'
 	| 'images_position'
 	| 'palette'
-	| 'embed_code';
+	| 'embed_code'
+	| 'media_types';
 
-export type Media = 'image' | 'chart' | 'youtube';
+export type Media = 'image' | 'chart' | 'embed';
 
 export default class Slide {
 	head: string;

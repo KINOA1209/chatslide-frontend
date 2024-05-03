@@ -8,10 +8,12 @@ const useJSScript = (html: string) => {
 
 		scriptTags.forEach((scriptTag) => {
 			const src = scriptTag.getAttribute('src');
-			if (src) {
+			const isAsync = scriptTag.hasAttribute('async');
+			if (src || isAsync) {
+				// Check if src or async attribute is present
 				const script = document.createElement('script');
-				script.src = src;
-				script.async = true;
+				if (src) script.src = src;
+				if (isAsync) script.async = true;
 				document.body.appendChild(script);
 			}
 		});
@@ -19,7 +21,9 @@ const useJSScript = (html: string) => {
 		return () => {
 			scriptTags.forEach((scriptTag) => {
 				const src = scriptTag.getAttribute('src');
-				if (src) {
+				const isAsync = scriptTag.hasAttribute('async');
+				if (src || isAsync) {
+					// Check if src or async attribute is present
 					const script = document.querySelector(`script[src="${src}"]`);
 					if (script) {
 						document.body.removeChild(script);

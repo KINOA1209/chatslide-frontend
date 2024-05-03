@@ -54,8 +54,10 @@ import { WordSelector } from './slides/WordSelector';
 import { useSocialPosts } from '@/hooks/use-socialpost';
 import { MdImageSearch } from 'react-icons/md';
 import { IoMdCrop } from 'react-icons/io';
-import IFrameEmbed from './utils/IFrameEmbed';
+import IFrameEmbed, { executeScripts } from './utils/IFrameEmbed';
 import useJSScript from '@/hooks/use-JSScript';
+import { LayoutKeys } from './slides/slideLayout';
+import { Media } from '@/models/Slide';
 
 interface ImgModuleProp {
 	imgsrc: string;
@@ -81,6 +83,8 @@ interface ImgModuleProp {
 	defaultObjectFit?: 'contain' | 'cover';
 	embed_code?: string[];
 	embed_code_single?: string;
+	media_types: Media[];
+	media_type: Media;
 }
 
 enum ImgQueryMode {
@@ -154,7 +158,14 @@ export const ImgModule = ({
 	defaultObjectFit = 'contain',
 	embed_code,
 	embed_code_single,
+	media_types,
+	media_type,
 }: ImgModuleProp) => {
+	// Regular expression to find width and height attributes
+	const regex = /width="(\d+)" height="(\d+)"/;
+
+	// Replace width and height attributes with '100%'
+
 	const sourceImage = useImageStore((state) => state.sourceImage);
 	const { project } = useProject();
 	const { slideIndex, slides } = useSlides();
@@ -207,13 +218,19 @@ export const ImgModule = ({
 		if (imgsrc !== '') {
 			setSelectedImg(imgsrc);
 		}
+		console.log('imgsrc', imgsrc);
 	}, [imgsrc]);
 
-	useEffect(() => {
-		if (embed_code_single && embed_code_single !== '') {
-			setCurrentStoredEmbedCode(embed_code_single);
-		}
-	}, [embed_code_single]);
+	// useEffect(() => {
+	// 	if (modified_embed_code && modified_embed_code !== '') {
+	// 		setCurrentStoredEmbedCode(modified_embed_code);
+	// 	}
+	// 	console.log('modified_embed_code', modified_embed_code);
+	// }, [modified_embed_code]);
+
+	// useEffect(() => {
+	// 	console.log('embed_code is :', embed_code);
+	// }, [embed_code]);
 
 	const handleImageDrop = (e: React.DragEvent<HTMLDivElement>) => {
 		e.preventDefault();
@@ -836,46 +853,81 @@ export const ImgModule = ({
 			let updated_chartArr = [...chartArr];
 			updated_chartArr[currentContentIndex] = updated_chartdata;
 
+			let updated_media_typesArr = [...media_types];
+			updated_media_typesArr[currentContentIndex] = 'chart';
 			//autosave ischart
 			let updated_ischartArr = [...ischartArr];
 			updated_ischartArr[currentContentIndex] = true;
 			handleSlideEdit(
-				[updated_chartArr, updated_ischartArr],
+				[updated_chartArr, updated_ischartArr, updated_media_typesArr],
 				currentSlideIndex,
-				['chart', 'is_chart'],
+				['chart', 'is_chart', 'media_types'],
 			);
+			// setMediaType((prevState) => ({ ...prevState, chart: true }));
 			closeModal();
 		} else {
 			closeModal();
 		}
 	};
 
+	const iFrameDimension = (layout: LayoutKeys) => {
+		if (layout === 'Cover_img_1_layout' || layout === 'Col_2_img_1_layout') {
+			return 'width="450px" height="500px"';
+		} else if (layout === 'Full_img_only_layout') {
+			return 'width="940px" height="520px"';
+		} else if (layout === 'Col_2_img_2_layout') {
+			return 'width="400px" height="150px"';
+		} else if (layout === 'Col_1_img_1_layout') {
+			return 'width="940px" height="150px"';
+		} else {
+			return 'width="300px" height="100px"';
+		}
+	};
+
+	const modified_embed_code_single =
+		embed_code_single &&
+		embed_code_single.replace(
+			regex,
+			iFrameDimension(slides[slideIndex].layout),
+		);
+
+	// const [mediaType, setMediaType] = useState({
+	// 	image: false,
+	// 	embed: true,
+	// 	chart: false,
+	// });
 	// handle all embed code related
-	const [currentStoredEmbedCode, setCurrentStoredEmbedCode] =
-		useState<string>('');
-	const [inputValue, setInputValue] = useState('');
+	const [currentStoredEmbedCode, setCurrentStoredEmbedCode] = useState<string>(
+		modified_embed_code_single || '',
+	);
+	const [inputValue, setInputValue] = useState(currentStoredEmbedCode);
 	const handleDoneEmbeddingCode = () => {
 		if (selectedQueryMode === ImgQueryMode.EMBED_CODE && embed_code) {
 			let updated_embed_code = [...embed_code];
-			updated_embed_code[currentContentIndex] = currentStoredEmbedCode;
-			console.log('currentStoredEmbedCode', currentStoredEmbedCode);
-			handleSlideEdit(updated_embed_code, currentSlideIndex, 'embed_code');
+			updated_embed_code[currentContentIndex] = currentStoredEmbedCode || '';
+
+			let updated_media_typesArr = [...media_types];
+			updated_media_typesArr[currentContentIndex] = 'embed';
+			// console.log('currentStoredEmbedCode', currentStoredEmbedCode);
+			handleSlideEdit(
+				[updated_embed_code, updated_media_typesArr],
+				currentSlideIndex,
+				['embed_code', 'media_types'],
+			);
+			// setMediaType((prevState) => ({ ...prevState, embed: true }));
 			closeModal();
 		} else {
 			closeModal();
 		}
 	};
-	const handleUpdateStoredEmbedCode = (embedCode: string) => {
-		// useJSScript(embedCode);
-		setCurrentStoredEmbedCode(embedCode);
-	};
+	// const handleUpdateStoredEmbedCode = (embedCode: string) => {
+	// 	// useJSScript(embedCode);
+	// 	setCurrentStoredEmbedCode(embedCode);
+	// };
 
-	// useEffect(() => {
-	// 	console.log(
-	// 		'embed_code[currentContentIndex]',
-	// 		embed_code[currentContentIndex],
-	// 	);
-	// }, [currentStoredEmbedCode]);
+	useEffect(() => {
+		console.log('currentStoredEmbedCode content', currentStoredEmbedCode);
+	}, [currentStoredEmbedCode]);
 
 	const handleConfirmClick = () => {
 		if (
@@ -883,7 +935,11 @@ export const ImgModule = ({
 			inputValue.startsWith('<blockquote')
 		) {
 			// setEmbedCode(inputValue);
-			setCurrentStoredEmbedCode(inputValue); // Update currentStoredEmbedCode in parent
+
+			const modified_embed_code_input =
+				inputValue &&
+				inputValue.replace(regex, iFrameDimension(slides[slideIndex].layout));
+			setCurrentStoredEmbedCode(modified_embed_code_input); // Update currentStoredEmbedCode in parent
 		} else {
 			// setErrorMessage(
 			// 	'Please paste embed code that starts with <iframe> or <blockquote>.',
@@ -913,8 +969,9 @@ export const ImgModule = ({
 	const isConfirmDisabled = inputValue.trim() === '';
 
 	useEffect(() => {
-		console.log('currentStoredEmbedCode is', currentStoredEmbedCode);
+		executeScripts(currentStoredEmbedCode);
 	}, [currentStoredEmbedCode]);
+
 	const EmbedCodeDiv = (
 		<div>
 			<ToastContainer />
@@ -1422,9 +1479,7 @@ export const ImgModule = ({
 			)}
 
 			{/* image itself */}
-			{currentStoredEmbedCode ? ( // embed code
-				<div dangerouslySetInnerHTML={{ __html: currentStoredEmbedCode }}></div>
-			) : (
+			{
 				<div
 					onDrop={handleImageDrop}
 					onDragOver={(e) => e.preventDefault()}
@@ -1443,6 +1498,8 @@ export const ImgModule = ({
 				>
 					{ischartArr &&
 					ischartArr[currentContentIndex] &&
+					media_types &&
+					media_types[currentContentIndex] === 'chart' &&
 					selectedChartType &&
 					chartData.length > 0 ? ( // chart
 						<div
@@ -1454,6 +1511,59 @@ export const ImgModule = ({
 								chartData={chartData}
 								isPrview={!canEdit}
 							/>
+						</div>
+					) : embed_code &&
+					  embed_code[currentContentIndex] &&
+					  media_types &&
+					  media_types[currentContentIndex] === 'embed' ? ( // embed code
+						<div
+							// onMouseEnter={() => setShowImgButton(true)}
+							// onMouseLeave={() => setShowImgButton(false)}
+							onClick={() => setShowModal(true)}
+						>
+							{/* {canEdit && showImgButton && (
+								<div
+									className={`absolute top-4 font-creato-medium left-0`}
+									style={{ zIndex: 53 }}
+								>
+									<ToolBar>
+										<button
+											onClick={() => setShowModal(true)}
+											className='flex flex-row items-center justify-center gap-1'
+										>
+											{
+												<>
+													<FaCheck
+														style={{
+															strokeWidth: '0.8',
+															width: '1rem',
+															height: '1rem',
+															fontWeight: 'bold',
+															color: '#344054',
+														}}
+													/>
+													Change
+												</>
+											}
+										</button>
+									</ToolBar>
+								</div>
+							)} */}
+							<div
+								// style={{
+								// 	width: '-webkit-fill-available',
+								// 	height: '-webkit-fill-available',
+								// }}
+								// className='pointer-events-none'
+								// onMouseOver={(e) => e.preventDefault()}
+								// onMouseLeave={(e) => e.preventDefault()}
+								// onMouseEnter={() => setShowImgButton(true)}
+								// onMouseLeave={() => setShowImgButton(false)}
+								// onClick={(e) => e.preventDefault()}
+								dangerouslySetInnerHTML={{
+									__html: embed_code[currentContentIndex],
+								}}
+							></div>
 						</div>
 					) : selectedImg === '' || imgLoadError ? ( // updload icon
 						// if loading is fail and in editable page we show the error image
@@ -1694,7 +1804,7 @@ export const ImgModule = ({
 						</div>
 					)}
 				</div>
-			)}
+			}
 		</>
 	);
 };

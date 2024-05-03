@@ -12,6 +12,30 @@ interface IFrameEmbedProps {
 	// handleConfirmClick: (inputValue: string) => void;
 }
 
+export const executeScripts = (html: string) => {
+	const parser = new DOMParser();
+	const doc = parser.parseFromString(html, 'text/html');
+	const scriptTags = doc.querySelectorAll('script');
+
+	scriptTags.forEach((scriptTag) => {
+		const src = scriptTag.getAttribute('src');
+		if (src) {
+			// If script has a src attribute, create and append it
+			const script = document.createElement('script');
+			script.src = src;
+			script.async = true;
+			document.body.appendChild(script);
+		} else {
+			// If script doesn't have a src attribute, execute its content
+			try {
+				eval(scriptTag.innerHTML); // Execute script content
+			} catch (error) {
+				console.error('Error executing script:', error);
+			}
+		}
+	});
+};
+
 const IFrameEmbed: React.FC<IFrameEmbedProps> = ({
 	currentStoredEmbedCode,
 	// inputValue,
@@ -23,7 +47,7 @@ const IFrameEmbed: React.FC<IFrameEmbedProps> = ({
 	// const [inputValue, setInputValue] = useState('');
 	// const [errorMessage, setErrorMessage] = useState('');
 
-	useJSScript(currentStoredEmbedCode);
+	// useJSScript(currentStoredEmbedCode);
 
 	// const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
 	// 	const newInputValue = event.target.value;
@@ -60,8 +84,12 @@ const IFrameEmbed: React.FC<IFrameEmbedProps> = ({
 
 	// const isConfirmDisabled = inputValue.trim() === '';
 
-	useEffect(() => {
-		console.log('embedCode:', currentStoredEmbedCode);
+	// useEffect(() => {
+	// 	console.log('embedCode:', currentStoredEmbedCode);
+	// }, [currentStoredEmbedCode]);
+
+	React.useEffect(() => {
+		executeScripts(currentStoredEmbedCode);
 	}, [currentStoredEmbedCode]);
 
 	return (
