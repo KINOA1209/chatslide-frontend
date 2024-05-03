@@ -165,24 +165,19 @@ const SharePage: React.FC<SharePageProps> = ({ project_id, embed = false }) => {
 	return (
 		<>
 			<ToastContainer />
-			<div className='flex flex-col h-full items-center justify-center overflow-y-scroll'>
-				{(!project?.content_type ||
-					project?.content_type === 'presentation') && (
-					<div className='w-full flex grow'>
-						<SlidesHTML isViewing={true} />
-					</div>
-				)}
+			{(!project?.content_type || project?.content_type === 'presentation') && (
+				<SlidesHTML isViewing={true} />
+			)}
 
-				{project?.content_type === 'social_posts' && (
-					<div>
-						<SocialPostHTML
-							isViewing={true}
-							borderColorOptions={borderColorOptions}
-							res_scenario={postType}
-						/>
-					</div>
-				)}
-			</div>
+			{project?.content_type === 'social_posts' && (
+				<div>
+					<SocialPostHTML
+						isViewing={true}
+						borderColorOptions={borderColorOptions}
+						res_scenario={postType}
+					/>
+				</div>
+			)}
 		</>
 	);
 };
