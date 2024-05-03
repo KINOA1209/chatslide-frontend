@@ -94,7 +94,7 @@ const DesignSystemButton: React.FC<DesignSystemButtonProps> = ({
 			disabled: '#98A2B3',
 		},
 		secondary: {
-			enabled: '#FFFFFF',
+			enabled: '#444CE7',
 			disabled: '#98A2B3',
 		},
 		tertiary: {

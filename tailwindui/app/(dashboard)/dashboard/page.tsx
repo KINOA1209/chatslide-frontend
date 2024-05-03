@@ -353,7 +353,7 @@ export default function Dashboard() {
 								<DesignSystemButton
 									isPaidFeature={false}
 									size='lg'
-									hierarchy='primary'
+									hierarchy='secondary'
 									buttonStatus='enabled'
 									onClick={handleCreateFolderClick}
 								>
