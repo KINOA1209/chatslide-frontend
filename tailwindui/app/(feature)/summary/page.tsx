@@ -81,6 +81,8 @@ const AdvancedOptions: React.FC<{
 	setPageCountEst: (value: number) => void;
 	structureMode: string;
 	setStructureMode: (value: string) => void;
+  addCitations: string;
+  setAddCitations: (value: string) => void;
 }> = ({
 	outlineStructure,
 	setOutlineStructure,
@@ -89,6 +91,8 @@ const AdvancedOptions: React.FC<{
 	setPageCountEst,
 	structureMode,
 	setStructureMode,
+  addCitations,
+  setAddCitations,
 }) => {
 	return (
 		<>
@@ -136,14 +140,13 @@ const AdvancedOptions: React.FC<{
 						outline you provided in the next step.
 					</WarningMessage>
 				) : selectedResources.length == 0 ? ( // my_resource
-					<WarningMessage>
-						Add a source to enable this feature.
-					</WarningMessage>
+					<WarningMessage>Add a source to enable this feature.</WarningMessage>
 				) : (
 					<>
 						<Explanation>
-              If you want the outline to follow the source you uploaded, select one source here.
-            </Explanation>
+							If you want the outline to follow the source you uploaded, select
+							one source here.
+						</Explanation>
 						<DropDown width='20rem'>
 							{selectedResources.map((resource, index) => (
 								<option key={index} value={resource.id}>
@@ -181,6 +184,22 @@ const AdvancedOptions: React.FC<{
 					</div>
 				</div>
 			)}
+
+			{/* add citation */}
+			<div>
+				<Instruction>
+					Do you want to add a citations page for the sources?
+				</Instruction>
+				<RadioButton
+					name='add_citations'
+					options={[
+						{ value: 'no', text: 'No' },
+						{ value: 'yes', text: 'Yes' },
+					]}
+					selectedValue={addCitations}
+					setSelectedValue={setAddCitations}
+				/>
+			</div>
 		</>
 	);
 };
@@ -523,8 +542,6 @@ export default function Topic() {
 						isRequired
 						generationMode='from_files'
 						setGenerationMode={setGenerationMode}
-						addCitations={addCitations}
-						setAddCitations={setAddCitations}
 					/>
 				)}
 
@@ -635,6 +652,8 @@ export default function Topic() {
 							setPageCountEst={setPageCountEst}
 							structureMode={structureMode}
 							setStructureMode={setStructureMode}
+              addCitations={addCitations}
+              setAddCitations={setAddCitations}
 						/>
 					)}
 				</Card>
@@ -649,8 +668,6 @@ export default function Topic() {
 						selectedResources={selectedResources}
 						setSelectedResources={setSelectedResources}
 						removeResourceAtIndex={removeResourceAtIndex}
-						addCitations={addCitations}
-						setAddCitations={setAddCitations}
 					/>
 				)}
 			</Column>
