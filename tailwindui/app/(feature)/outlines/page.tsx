@@ -40,7 +40,7 @@ export default function WorkflowStep2() {
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const router = useRouter();
 	const { project, outlines, updateOutlines, bulkUpdateProject } = useProject();
-	const [viewMode, setViewMode] = useState<OutlineViewMode>('card');
+	const [viewMode, setViewMode] = useState<OutlineViewMode>(outlines.length ? 'card' : 'page');
 	const [outlinesPlainText, setOutlinesPlainText] = useState<string>('');
 	const { token } = useUser();
 	const language = project?.language || 'English';
