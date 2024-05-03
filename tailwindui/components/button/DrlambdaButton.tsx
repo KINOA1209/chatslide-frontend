@@ -30,6 +30,7 @@ type DrlambdaButtonProps = {
 	isFlashing?: boolean;
 	id?: string;
 	customizeStyle?: React.CSSProperties;
+	wfull?: boolean;
 };
 
 const DrlambdaButton: React.FC<DrlambdaButtonProps> = ({
@@ -185,6 +186,7 @@ export const BigBlueButton: React.FC<DrlambdaButtonProps> = ({
 	isPaidUser,
 	isPaidFeature = false,
 	id,
+	wfull = false,
 }) => {
 	const [showPaywallModal, setShowPaywallModal] = useState(false);
 
