@@ -83,8 +83,8 @@ interface ImgModuleProp {
 	defaultObjectFit?: 'contain' | 'cover';
 	embed_code?: string[];
 	embed_code_single?: string;
-	media_types: Media[];
-	media_type: Media;
+	media_types?: Media[];
+	media_type?: Media;
 }
 
 enum ImgQueryMode {
@@ -237,6 +237,21 @@ export const ImgModule = ({
 		if (sourceImage) {
 			const droppedImageUrl = sourceImage;
 			// Update the image source with the dropped image URL
+
+			let updated_media_typesArr = [
+				...(media_types || ['image', 'image', 'image']),
+			];
+			updated_media_typesArr[currentContentIndex] = 'image';
+
+			let updated_ischartArr = [...ischartArr];
+			updated_ischartArr[currentContentIndex] = false;
+
+			handleSlideEdit(
+				[updated_media_typesArr, updated_ischartArr],
+				currentSlideIndex,
+				['media_types', 'is_chart'],
+			);
+
 			updateSingleCallback(droppedImageUrl, false, {});
 		}
 	};
@@ -432,6 +447,19 @@ export const ImgModule = ({
 		e.preventDefault();
 		// update image here to template & source html
 		// reset images position after changing image
+		let updated_media_typesArr = [
+			...(media_types || ['image', 'image', 'image']),
+		];
+		updated_media_typesArr[currentContentIndex] = 'image';
+
+		let updated_ischartArr = [...ischartArr];
+		updated_ischartArr[currentContentIndex] = false;
+		handleSlideEdit(
+			[updated_media_typesArr, updated_ischartArr],
+			currentSlideIndex,
+			['media_types', 'is_chart'],
+		);
+
 		updateSingleCallback(
 			decodeImageUrl((e.target as HTMLImageElement).getAttribute('src')),
 			false,
@@ -853,7 +881,9 @@ export const ImgModule = ({
 			let updated_chartArr = [...chartArr];
 			updated_chartArr[currentContentIndex] = updated_chartdata;
 
-			let updated_media_typesArr = [...media_types];
+			let updated_media_typesArr = [
+				...(media_types || ['image', 'image', 'image']),
+			];
 			updated_media_typesArr[currentContentIndex] = 'chart';
 			//autosave ischart
 			let updated_ischartArr = [...ischartArr];
@@ -906,13 +936,17 @@ export const ImgModule = ({
 			let updated_embed_code = [...embed_code];
 			updated_embed_code[currentContentIndex] = currentStoredEmbedCode || '';
 
-			let updated_media_typesArr = [...media_types];
+			let updated_media_typesArr = [
+				...(media_types || ['image', 'image', 'image']),
+			];
+			let updated_ischartArr = [...ischartArr];
+			updated_ischartArr[currentContentIndex] = false;
 			updated_media_typesArr[currentContentIndex] = 'embed';
 			// console.log('currentStoredEmbedCode', currentStoredEmbedCode);
 			handleSlideEdit(
-				[updated_embed_code, updated_media_typesArr],
+				[updated_embed_code, updated_media_typesArr, updated_ischartArr],
 				currentSlideIndex,
-				['embed_code', 'media_types'],
+				['embed_code', 'media_types', 'is_chart'],
 			);
 			// setMediaType((prevState) => ({ ...prevState, embed: true }));
 			closeModal();
