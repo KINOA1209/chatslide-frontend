@@ -126,7 +126,7 @@ const IFrameEmbed: React.FC<IFrameEmbedProps> = ({
 			{/* {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>} */}
 			{currentStoredEmbedCode && (
 				<div>
-					<h1>Preview</h1>
+					{/* <h1>Preview</h1> */}
 					<div dangerouslySetInnerHTML={{ __html: currentStoredEmbedCode }} />
 				</div>
 			)}

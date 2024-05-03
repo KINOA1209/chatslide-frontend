@@ -932,7 +932,8 @@ export const ImgModule = ({
 	const handleConfirmClick = () => {
 		if (
 			inputValue.startsWith('<iframe') ||
-			inputValue.startsWith('<blockquote')
+			(inputValue.startsWith('<blockquote') &&
+				inputValue.includes('youtube.com'))
 		) {
 			// setEmbedCode(inputValue);
 
@@ -945,7 +946,7 @@ export const ImgModule = ({
 			// 	'Please paste embed code that starts with <iframe> or <blockquote>.',
 			// );
 			toast.error(
-				'Please paste embed code that starts with <iframe> or <blockquote>.',
+				'Please paste youtube embed code that starts with <iframe> or <blockquote>.',
 				{
 					position: 'top-center',
 					autoClose: 2000,
@@ -991,6 +992,7 @@ export const ImgModule = ({
 					disabled={isConfirmDisabled}
 					customizeStyle={{
 						cursor: isConfirmDisabled ? 'not-allowed' : 'pointer',
+						marginBottom: '6px',
 					}}
 				>
 					Confirm pasting
@@ -1011,6 +1013,7 @@ export const ImgModule = ({
 								e.preventDefault();
 								handleDoneEmbeddingCode();
 							}}
+							customizeStyle={{ marginTop: '6px' }}
 						>
 							Add Embed Code
 						</BigBlueButton>
