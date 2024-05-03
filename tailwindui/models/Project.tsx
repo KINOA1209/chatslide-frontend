@@ -1,6 +1,6 @@
 import { PaletteKeys, TemplateKeys } from '@/components/slides/slideTemplates';
 import Resource from './Resource';
-import Slide from './Slide';
+import Slide, { LogoPosition } from './Slide';
 import SocialPostSlide from './SocialPost';
 
 type Project = {
@@ -26,6 +26,8 @@ type Project = {
 
 	logo?: string; // overwriten by selected_logo, '' means no logo
 	selected_logo?: Resource[];
+	// is_logo_left?: boolean; // true if logo on left side otherwise right side
+	logo_position?: LogoPosition;
 	selected_background?: Resource[];
 	template?: TemplateKeys;
 	palette?: PaletteKeys;

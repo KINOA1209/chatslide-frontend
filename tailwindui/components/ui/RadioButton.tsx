@@ -21,7 +21,7 @@ const RadioButton: React.FC<RadioButtonProps> = ({
 	options,
 	selectedValue,
 	setSelectedValue,
-	cols = 3,
+	cols = 4,
 }) => {
 	return (
 		<div className={`grid grid-cols-2 md:grid-cols-${cols} gap-x-3`}>

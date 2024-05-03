@@ -47,7 +47,7 @@ import { Blank } from '@/components/ui/Loading';
 import Project from '@/models/Project';
 import { addIdToRedir } from '@/utils/redirWithId';
 import SlidesService from '@/services/SlidesService';
-import Slide from '@/models/Slide';
+import Slide, { LogoPosition } from '@/models/Slide';
 import ProjectService from '@/services/ProjectService';
 const colorPreviews: any = dynamic(
 	() => import('@/app/(feature)/design/TemplateSelector'),
@@ -231,6 +231,9 @@ export default function DesignPage() {
 					: true,
 	);
 
+	const [selectedLogoPosition, setSelectedLogoPosition] =
+		useState<LogoPosition>(project?.logo_position || 'BottomLeft');
+
 	async function viewSlidesSubmit() {
 		if (!project) {
 			console.error('Project not found');
@@ -263,6 +266,7 @@ export default function DesignPage() {
 						background_url: selectedBackground?.[0]?.thumbnail_url || '',
 						media_type: ['image', 'image', 'image'],
 						transcript: '',
+						logo_position: selectedLogoPosition,
 					};
 				});
 
@@ -274,6 +278,7 @@ export default function DesignPage() {
 					palette: colorPalette,
 					additional_images: additional_images,
 					parsed_slides: newSlides as Slide[],
+					logo_position: selectedLogoPosition,
 				} as Project);
 
 				initSlides(newSlides);
@@ -422,6 +427,8 @@ export default function DesignPage() {
 							setSelectedLogo={setSelectedLogo}
 							selectedBackground={selectedBackground}
 							setSelectedBackground={setSelectedBackground}
+							logoPosition={selectedLogoPosition}
+							setLogoPosition={setSelectedLogoPosition}
 						/>
 					</Card>
 				</Panel>
