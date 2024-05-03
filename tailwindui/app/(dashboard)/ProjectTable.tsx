@@ -161,7 +161,7 @@ const ProjectItem: React.FC<{
 								width={72}
 								height={40}
 								style={{ width: '72px', height: '40px' }}
-								//priority={isPriority}
+							//priority={isPriority}
 							// onError={(e) => {
 							// 	e.currentTarget.src = DEFAULT_THUMBNAIL;
 							// }}
@@ -522,7 +522,7 @@ interface Props {
 	setCurrentFolders?: React.Dispatch<React.SetStateAction<Folder[]>>;
 	onDelete?: (projectId: string) => void;
 	isDiscover?: boolean;
-	activeFolder?:string;
+	activeFolder?: string;
 }
 
 const ProjectTable: React.FC<Props> = ({

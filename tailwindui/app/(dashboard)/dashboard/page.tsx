@@ -55,7 +55,6 @@ export default function Dashboard() {
 
 	useEffect(() => {
 		const currentFolder = folders.find(folder => folder.folderName === activeFolder);
-		console.log(currentFolder)
 		if (currentFolder) {
 			setCurrentProjects(currentFolder.projects);
 		}

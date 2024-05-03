@@ -81,7 +81,7 @@ const FolderButton: React.FC<{
                                             '1px solid var(--Colors-Border-border-secondary, #EAECF0)',
                                     }}
                                 >
-                                    <MdDriveFileRenameOutline style={{ width: '16px', height: '16px' }}/>
+                                    <MdDriveFileRenameOutline style={{ width: '16px', height: '16px' }} />
                                     Rename
                                 </button>
                                 <button
