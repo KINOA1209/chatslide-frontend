@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState, useEffect, Fragment, useRef } from 'react';
 import Modal from "../ui/Modal";
 import { BigBlueButton } from '../button/DrlambdaButton';

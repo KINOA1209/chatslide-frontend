@@ -525,6 +525,25 @@ class ProjectService {
 		});
 		return response.ok;
 	}
+
+	static async moveToFolder(
+		token: string,
+		project_id: string,
+		folder_name: string,
+	): Promise<boolean> {
+		const response = await fetch('/api/move_project', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify({
+				project_id: project_id,
+				group_name: folder_name,
+			}),
+		});
+		return response.ok;
+	}
 }
 
 export default ProjectService;

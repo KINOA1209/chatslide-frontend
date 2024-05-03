@@ -35,7 +35,7 @@ export default function Dashboard() {
 
 	const [showDeleteModal, setShowDeleteModal] = useState(false);
 	const [showSurvey, setShowSurvey] = useState(false);
-	const [hasFolder, setHasFolder] = useState(true);
+	const [hasFolder, setHasFolder] = useState(false);
 	const [showCreateFolderModal, setShowCreateFolderModal] = useState(false);
 	const [activeFolder, setActiveFolder] = useState('drlambda-default');
 	const [currentProjects, setCurrentProjects] = useState<Project[]>([]);
@@ -52,6 +52,34 @@ export default function Dashboard() {
 		}
 		init();
 	}, [userStatus]);
+
+	useEffect(() => {
+		const currentFolder = folders.find(folder => folder.folderName === activeFolder);
+		console.log(currentFolder)
+		if (currentFolder) {
+			setCurrentProjects(currentFolder.projects);
+		}
+	}, [activeFolder, folders]);
+
+	// useEffect(() => {
+	// 	// Example: log when projects change
+	// 	console.log('Projects updated:', projects);
+	// }, [projects]);
+
+	// useEffect(() => {
+	// 	// Handle logic when folders change
+	// 	console.log('Folders updated:', folders);
+	// }, [folders]);
+
+	useEffect(() => {
+		//folder drlambda-default is not shown
+		if (folders.length > 1) {
+			setHasFolder(true)
+		}
+		else {
+			setHasFolder(false)
+		}
+	}, [folders])
 
 	const fetchProjects = async () => {
 		try {
@@ -70,7 +98,7 @@ export default function Dashboard() {
 			} else {
 				console.log('Projects and Folders:', response);
 				setProjects(response.projects);
-				console.log(projects)
+				//console.log(projects)
 				setFolders(groupProjectsByFolder(response.projects, response.empty_groups));
 				console.log(groupProjectsByFolder(response.projects, response.empty_groups))
 				setCurrentProjects(response.projects)
@@ -201,9 +229,9 @@ export default function Dashboard() {
 	const handleFolderDoubleClick = (folderName: string) => {
 		console.log('Entering folder:', folderName);
 		setActiveFolder(folderName);
-		const filteredProjects = projects.filter(project => project.project_group_name === folderName);
-		setCurrentProjects(filteredProjects)
-		console.log(currentProjects)
+		// const filteredProjects = projects.filter(project => project.project_group_name === folderName);
+		// setCurrentProjects(filteredProjects)
+		//console.log(currentProjects)
 	}
 
 	const handleDeleteFolder = (folderName: string) => {
@@ -284,6 +312,13 @@ export default function Dashboard() {
 		setPrevFolderName('');
 	};
 
+	const handleBackToDefaultFolder = () => {
+		console.log('Back to default page');
+		setActiveFolder('drlambda-default');
+		// const filteredProjects = projects.filter(project => project.project_group_name === null);
+		// setCurrentProjects(filteredProjects)
+	}
+
 	return (
 		<section className='grow flex flex-col'>
 			<ToastContainer />
@@ -297,12 +332,13 @@ export default function Dashboard() {
 							My Projects
 						</div> */}
 						<div
-							className='text-[24px] font-bold leading-[32px] tracking-wide'
+							className='text-[24px] font-bold leading-[32px] tracking-wide cursor-pointer'
 							style={{
 								color: 'var(--colors-text-text-secondary-700, #344054)',
 							}}
+							onClick={handleBackToDefaultFolder}
 						>
-							My Projects
+							{activeFolder === 'drlambda-default' ? 'My Projects' : `My Projects > ${activeFolder}`}
 						</div>
 
 						{/* create new project button */}
@@ -314,15 +350,17 @@ export default function Dashboard() {
 							>
 								Start
 							</DrlambdaButton> */}
-							<DesignSystemButton
-								isPaidFeature={false}
-								size='lg'
-								hierarchy='primary'
-								buttonStatus='enabled'
-								onClick={handleCreateFolderClick}
-							>
-								Create Folder
-							</DesignSystemButton>
+							{activeFolder === 'drlambda-default' &&
+								<DesignSystemButton
+									isPaidFeature={false}
+									size='lg'
+									hierarchy='primary'
+									buttonStatus='enabled'
+									onClick={handleCreateFolderClick}
+								>
+									Create Folder
+								</DesignSystemButton>
+							}
 							<DesignSystemButton
 								isPaidFeature={false}
 								size='lg'
@@ -345,7 +383,7 @@ export default function Dashboard() {
 				{/* select sorting key: last update time, created time or title */}
 				{hasFolder && (
 					<div
-						className='w-full px-8 pt-8 flex flex-col grow overflow-auto'
+						className='w-full px-8 pt-8 flex flex-col grow mb-5'
 					>
 						<span className='font-creato-medium text-[#707C8A]'>Folders</span>
 						<div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
@@ -382,8 +420,11 @@ export default function Dashboard() {
 							<ProjectTable
 								currentProjects={currentProjects}
 								setCurrentProjects={setProjects}
+								currentFolders={folders}
+								setCurrentFolders={setFolders}
 								onDelete={handleDelete}
 								isDiscover={false}
+								activeFolder={activeFolder}
 							/>
 						) : (
 							<Blank text={`${activeFolder === "drlambda-default" ? "You haven't created any project yet." :
@@ -404,8 +445,8 @@ export default function Dashboard() {
 					onConfirm={confirmDelete}
 				/>
 
-
 				{/* Create Folder modal */}
+
 				<CreateFolderModal
 					showCreateFolderModal={showCreateFolderModal}
 					setShowCreateFolderModal={setShowCreateFolderModal}
