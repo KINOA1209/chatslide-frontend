@@ -169,6 +169,19 @@ const AdvancedOptions: React.FC<{
 								}
 							}}
 							width='20rem'
+							onLoad={() => {
+								// Your initialization logic here
+								// For example, setting default value or fetching initial data
+								const initialResource = selectedResources[0]; // Get the first resource as initial value
+								if (initialResource) {
+									setResourceToFollowStructureFrom(initialResource);
+									setOutlineStructure(initialResource.name);
+									console.log(
+										'resourceToFollowStructureFrom',
+										resourceToFollowStructureFrom?.id,
+									);
+								}
+							}}
 						>
 							{selectedResources.map((resource, index) => (
 								<option key={index} value={resource.id}>
