@@ -31,101 +31,111 @@ const FolderButton: React.FC<{
         };
 
         return (
-            <>
-                <div className='flex flex-row gap-3 items-center justify-between px-3 text-[#344054]'>
-                    <div className='flex flex-row gap-3 items-center font-semibold'>
-                        <CiFolderOn size={21} color='#344054' strokeWidth={1} />
-                        {folder.folderName}
-                    </div>
-                    <div className='h-full flex items-center gap-4 relative font-normal'>
-                        <div
-                            style={{
-                                display: 'flex',
-                                cursor: 'pointer',
-                                padding: '5px',
-                                borderRadius: 'var(--radius-sm, 6px)',
-                                transition: 'background-color 0.3s',
-                            }}
-                            onMouseEnter={handleMouseEnter}
-                            onMouseLeave={handleMouseLeave}
-                            onClick={() => {
-                                toggleDropdown();
-                            }}
-                        >
-                            <HiOutlineDotsVertical
-                                style={{ color: '#667085', width: '1rem', height: '1rem' }}
-                            ></HiOutlineDotsVertical>
-                        </div>
-                        {isDropdownVisible && (
-                            <div
-                                className='absolute top-full right-0 bg-white shadow-md rounded-md border border-2 border-gray-200 mt-1 lg:w-[180px]'
-                                style={{
-                                    zIndex: 999,
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                }}
-                            >
-                                <button
-                                    className='block px-[10px] py-[9px] text-sm text-[#182230] rounded-md  hover:bg-zinc-100 w-full text-left'
-                                    onClick={() => {
-                                        setIsDropdownVisible(false);
-                                        handleRenameFolder(folder.folderName);
-                                    }}
-                                    style={{
-                                        display: 'flex',
-                                        flexDirection: 'row',
-                                        alignItems: 'center',
-                                        justifyContent: 'flex-start',
-                                        gap: 'var(--spacing-lg, 12px)',
-                                        borderBottom:
-                                            '1px solid var(--Colors-Border-border-secondary, #EAECF0)',
-                                    }}
-                                >
-                                    <MdDriveFileRenameOutline style={{ width: '16px', height: '16px' }} />
-                                    Rename
-                                </button>
-                                <button
-                                    className='block px-[10px] py-[9px] text-sm text-[#182230] rounded-md hover:bg-zinc-100 w-full text-left'
-                                    onClick={() => {
-                                        setIsDropdownVisible(false);
-                                        handleDeleteFolder(folder.folderName);
-                                    }}
-                                    style={{
-                                        display: 'flex',
-                                        flexDirection: 'row',
-                                        alignItems: 'center',
-                                        justifyContent: 'flex-start',
-                                        gap: 'var(--spacing-lg, 12px)',
-                                        color:
-                                            'var(--colors-text-text-error-primary-600, #D92D20)',
-                                    }}
-                                >
-                                    <ButtonWithExplanation
-                                        button={
-                                            <button onClick={() => handleDeleteFolder(folder.folderName)}>
-                                                <MdOutlineDelete
-                                                    style={{
-                                                        // strokeWidth: '2',
-                                                        // flex: '1',
-                                                        width: '16px',
-                                                        height: '16px',
-                                                        // fontWeight: 'bold',
-                                                        color:
-                                                            'var(--colors-text-text-error-primary-600, #D92D20)',
-                                                    }}
-                                                />
-                                            </button>
-                                        }
-                                        explanation={'Delete'}
-                                    />
-                                    Delete
-                                </button>
-                            </div>
-                        )}
-                    </div>
-                </div>
-            </>
-        )
+					<>
+						<div className='flex flex-row gap-3 items-center justify-between px-3 text-[#344054]'>
+							<div className='flex flex-row gap-3 items-center overflow-hidden'>
+								<div className='w-[21px]'>
+									<CiFolderOn size={21} color='#344054' strokeWidth={1} />
+								</div>
+								<span className='overflow-hidden truncate'>
+									{folder.folderName}
+								</span>
+							</div>
+							<div className='h-full flex items-center gap-4 relative font-normal'>
+								<div
+									style={{
+										display: 'flex',
+										cursor: 'pointer',
+										padding: '5px',
+										borderRadius: 'var(--radius-sm, 6px)',
+										transition: 'background-color 0.3s',
+									}}
+									onMouseEnter={handleMouseEnter}
+									onMouseLeave={handleMouseLeave}
+									onClick={() => {
+										toggleDropdown();
+									}}
+								>
+									<HiOutlineDotsVertical
+										style={{ color: '#667085', width: '1rem', height: '1rem' }}
+									></HiOutlineDotsVertical>
+								</div>
+								{isDropdownVisible && (
+									<div
+										className='absolute top-full right-0 bg-white shadow-md rounded-md border border-2 border-gray-200 mt-1 lg:w-[180px]'
+										style={{
+											zIndex: 999,
+											display: 'flex',
+											flexDirection: 'column',
+										}}
+									>
+										<button
+											className='block px-[10px] py-[9px] text-sm text-[#182230] rounded-md  hover:bg-zinc-100 w-full text-left'
+											onClick={() => {
+												setIsDropdownVisible(false);
+												handleRenameFolder(folder.folderName);
+											}}
+											style={{
+												display: 'flex',
+												flexDirection: 'row',
+												alignItems: 'center',
+												justifyContent: 'flex-start',
+												gap: 'var(--spacing-lg, 12px)',
+												borderBottom:
+													'1px solid var(--Colors-Border-border-secondary, #EAECF0)',
+											}}
+										>
+											<MdDriveFileRenameOutline
+												style={{ width: '16px', height: '16px' }}
+											/>
+											Rename
+										</button>
+										<button
+											className='block px-[10px] py-[9px] text-sm text-[#182230] rounded-md hover:bg-zinc-100 w-full text-left'
+											onClick={() => {
+												setIsDropdownVisible(false);
+												handleDeleteFolder(folder.folderName);
+											}}
+											style={{
+												display: 'flex',
+												flexDirection: 'row',
+												alignItems: 'center',
+												justifyContent: 'flex-start',
+												gap: 'var(--spacing-lg, 12px)',
+												color:
+													'var(--colors-text-text-error-primary-600, #D92D20)',
+											}}
+										>
+											<ButtonWithExplanation
+												button={
+													<button
+														onClick={() =>
+															handleDeleteFolder(folder.folderName)
+														}
+													>
+														<MdOutlineDelete
+															style={{
+																// strokeWidth: '2',
+																// flex: '1',
+																width: '16px',
+																height: '16px',
+																// fontWeight: 'bold',
+																color:
+																	'var(--colors-text-text-error-primary-600, #D92D20)',
+															}}
+														/>
+													</button>
+												}
+												explanation={'Delete'}
+											/>
+											Delete
+										</button>
+									</div>
+								)}
+							</div>
+						</div>
+					</>
+				);
     }
 
 export default FolderButton

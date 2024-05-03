@@ -1462,7 +1462,7 @@ export const ImgModule = ({
 						</Rnd>
 						{canEdit && showImgButton && (
 							<div
-								className={`absolute top-2 font-creato-medium ${
+								className={`absolute top-2 ${
 									isImgEditMode ? 'left-2' : 'left-4'
 								}`}
 								style={{ zIndex: 53 }}

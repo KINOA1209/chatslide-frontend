@@ -3,6 +3,7 @@ import { FaTimes } from 'react-icons/fa';
 import { BigBlueButton, InversedBigBlueButton } from '../button/DrlambdaButton';
 import { Transition } from '@headlessui/react';
 import { Title, Explanation } from '@/components/ui/Text';
+import { InputBox } from './InputBox';
 
 interface ModalProps {
 	children?: React.ReactNode;
@@ -18,7 +19,8 @@ interface ModalProps {
 	width?: string;
 	hasInputArea?: boolean;
 	inputValue?: string;
-	setInputValue?: (value: string) => void
+	setInputValue?: (value: string) => void;
+	maxInputLength?: number;
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -35,6 +37,7 @@ const Modal: React.FC<ModalProps> = ({
 	hasInputArea = false,
 	inputValue,
 	setInputValue,
+	maxInputLength,
 }) => {
 	const modalRef = React.useRef<HTMLDivElement>(null);
 	const modalContentRef = React.useRef<HTMLDivElement>(null);
@@ -61,8 +64,8 @@ const Modal: React.FC<ModalProps> = ({
 
 	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		if (setInputValue) {
-            setInputValue(event.target.value);
-        }
+			setInputValue(event.target.value);
+		}
 	};
 
 	// press esc to close modal
@@ -141,21 +144,24 @@ const Modal: React.FC<ModalProps> = ({
 					)}
 
 					{title && (
-						<div className='w-full felx flex-col items-center justify-center font-creato-medium'>
+						<div className='w-full felx flex-col items-center justify-center '>
 							<Title>{title}</Title>
 						</div>
 					)}
 
 					{description && <Explanation>{description}</Explanation>}
 
-					{hasInputArea && (
-						<input
-							type="text"
-							placeholder="New folder name"
-							value={inputValue}
-							onChange={handleInputChange}
-							className="w-full p-2.5 mb-2.5 min-w-[300px] font-creato-medium rounded-md"
-						/>
+					{hasInputArea && setInputValue && (
+						<InputBox>
+							<input
+								id='key'
+								type='text'
+								className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800 bg-gray-100'
+								onChange={(e) => setInputValue(e.target.value)}
+								value={inputValue}
+                maxLength={maxInputLength}
+							/>
+						</InputBox>
 					)}
 					{/* Modal body */}
 					{children}

@@ -17,7 +17,7 @@ import { Loading, Blank } from '@/components/ui/Loading';
 import SessionStorage from '@/utils/SessionStorage';
 import { useProject } from '@/hooks/use-project';
 import DesignSystemButton from '@/components/ui/design_systems/ButtonsOrdinary';
-import { Title } from '@/components/ui/Text'
+import { Instruction, Title } from '@/components/ui/Text'
 import CreateFolderModal from '@/components/dashboard/createFolderModal';
 import { groupProjectsByFolder } from '@/components/dashboard/folder_helper';
 import Folder from '@/models/Folder';
@@ -384,7 +384,7 @@ export default function Dashboard() {
 					<div
 						className='w-full px-8 pt-8 flex flex-col grow mb-5'
 					>
-						<span className='font-creato-medium text-[#707C8A]'>Folders</span>
+            <Instruction>Folders</Instruction>
 						<div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
 							{folders.map((folder, index) => {
 								if (folder.folderName !== 'drlambda-default') {
@@ -413,7 +413,7 @@ export default function Dashboard() {
 					className='pb-[1rem] w-full px-8 pt-8 flex flex-col grow overflow-auto'
 					ref={contentRef}
 				>
-					<span className='font-creato-medium text-[#707C8A]'>Projects</span>
+          <Instruction>Projects</Instruction>
 					{rendered ? (
 						currentProjects && currentProjects.length > 0 ? (
 							<ProjectTable
@@ -456,7 +456,7 @@ export default function Dashboard() {
 					showModal={showDeleteFolderModal}
 					setShowModal={setShowDeleteFolderModal}
 					title='Delete Folder'
-					description='Are you sure you want to delete this folder?'
+					description='Are you sure you want to delete this folder? The projects in the folder will be moved to the default folder.'
 					onConfirm={confirmDeleteFolder}
 				/>
 
@@ -468,6 +468,7 @@ export default function Dashboard() {
 					setInputValue={setRenameInput}
 					hasInputArea={true}
 					onConfirm={confirmRenameFolder}
+          maxInputLength={100}
 				/>
 			</div>
 			{showSurvey && (

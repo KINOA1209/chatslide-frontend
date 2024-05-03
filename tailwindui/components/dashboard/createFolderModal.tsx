@@ -5,6 +5,7 @@ import Modal from "../ui/Modal";
 import { BigBlueButton } from '../button/DrlambdaButton';
 import { useUser } from '@/hooks/use-user';
 import Folder from '@/models/Folder';
+import { InputBox } from '../ui/InputBox';
 
 const CreateFolderModal: React.FC<{
     showCreateFolderModal: boolean;
@@ -64,30 +65,27 @@ const CreateFolderModal: React.FC<{
             setShowCreateFolderModal(false);
         };
         return (
-            <>
-                <Modal
-                    showModal={showCreateFolderModal}
-                    setShowModal={setShowCreateFolderModal}
-                    title='Create new folder'
-                >
-                    <input
-                        type="text"
-                        placeholder="New folder name"
-                        value={folderName}
-                        onChange={handleInputChange}
-                        className="w-full p-2.5 mb-2.5 min-w-[300px] font-creato-medium rounded-md"
-                    />
-                    <BigBlueButton
-                        id='create-folder-confirm'
-                        isSubmitting={isSubmitting}
-                        onClick={handleFormSubmit}
-                        wfull={true}
-                    >
-                        Create
-                    </BigBlueButton>
-                </Modal>
-            </>
-        )
+					<>
+						<Modal
+							showModal={showCreateFolderModal}
+							setShowModal={setShowCreateFolderModal}
+							title='Create new folder'
+							onConfirm={handleFormSubmit}
+						>
+							<InputBox>
+								<input
+									id='key'
+									type='text'
+									placeholder='New folder name'
+									className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800 bg-gray-100'
+                  maxLength={100}
+									value={folderName}
+									onChange={handleInputChange}
+								/>
+							</InputBox>
+						</Modal>
+					</>
+				);
     }
 
 export default CreateFolderModal

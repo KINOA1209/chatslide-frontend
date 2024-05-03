@@ -55,7 +55,7 @@ export const MoveToFolderSelector: React.FC<{
                 </div>
                 <ul>
                     <li key={'myProjectDefaultFolder'}
-                        className={`flex flex-row items-center p-2 rounded cursor-pointer font-creato-medium gap-3 hover:bg-gray-200
+                        className={`flex flex-row items-center p-2 rounded cursor-pointer gap-3 hover:bg-gray-200
                         ${selectedFolder === 'drlambda-default' ? 'bg-blue-500 text-white' : 'bg-white'}
                     `}
                         onClick={() => setSelectedFolder('drlambda-default')}>
@@ -66,7 +66,7 @@ export const MoveToFolderSelector: React.FC<{
                         .filter(folder => folder.folderName !== 'drlambda-default')
                         .map(folder => (
                             <li key={folder.folderName}
-                                className={`flex flex-row items-center p-2 rounded cursor-pointer font-creato-medium gap-3 pl-5 hover:bg-gray-200
+                                className={`flex flex-row items-center p-2 rounded cursor-pointer  gap-3 pl-5 hover:bg-gray-200
                                     ${selectedFolder === folder.folderName ? 'bg-blue-500 text-white' : 'bg-white'}
                                 `}
                                 onClick={() => setSelectedFolder(folder.folderName)}>
