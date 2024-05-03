@@ -24,6 +24,7 @@ import ColumbiaLogo from '@/public/images/template/Columbia/ColumbiaLogo.png';
 import { useEffect } from 'react';
 import { isChatslide } from '@/utils/getHost';
 import { useSlides } from '@/hooks/use-slides';
+import { LogoPosition } from '@/models/Slide';
 
 const DrLambdaLogo: React.FC<TemplateLogoType> = ({
 	isCoverPage,
@@ -109,7 +110,8 @@ export type TemplateLogoType = {
 	nonCoverLogo?: StaticImageData;
 	lightBGLogo?: StaticImageData;
 	darkBGLogo?: StaticImageData;
-	isLogoLeftSide?: boolean;
+	// isLogoLeftSide?: boolean;
+	logoPosition?: LogoPosition;
 };
 // generate school template logo logic
 
@@ -124,8 +126,9 @@ export const generateTemplateLogo = ({
 	nonCoverLogo,
 	lightBGLogo,
 	darkBGLogo,
-	isLogoLeftSide,
+	// isLogoLeftSide,
 	// isLogoLeftSide = true,
+	logoPosition,
 }: TemplateLogoType) => {
 	// console.log('custom_logo:', custom_logo);
 	// console.log('logo:', coverLogo);
@@ -136,10 +139,23 @@ export const generateTemplateLogo = ({
 
 	// const { slides, isTemplateLogoLeftSide, setIsTemplateLogoLeftSide } =
 	// 	useSlides();
+	const logoPosConfig = (logoPosition: LogoPosition) => {
+		if (logoPosition === 'BottomLeft') {
+			return 'top-[90%]';
+		} else if (logoPosition === 'BottomRight') {
+			return 'top-[90%] left-[83%]';
+		} else if (logoPosition === 'TopLeft') {
+			return 'top-[2%] ';
+		} else if (logoPosition === 'TopRight') {
+			return 'top-[2%] left-[83%]';
+		} else {
+			return 'top-[90%] ';
+		}
+	};
 
 	return (
 		<div
-			className={`absolute inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[12px] pb-[12px] z-40 pr-[12px] ${isLogoLeftSide ? '' : 'left-[83%]'}`}
+			className={`absolute inset-0 w-full h-14 justify-start items-center gap-7 inline-flex pl-[12px] pb-[12px] z-40 pr-[12px] ${logoPosConfig(logoPosition || 'BottomLeft')}`}
 		>
 			{custom_logo === template_name || custom_logo === 'Default' ? (
 				// use original template logo

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { createBearStore } from '@/utils/create-bear-store';
-import Slide from '@/models/Slide';
+import Slide, { LogoPosition } from '@/models/Slide';
 import { PaletteKeys, TemplateKeys } from '@/components/slides/slideTemplates';
 import { useUser } from './use-user';
 import { useChatHistory } from './use-chat-history';
@@ -37,11 +37,11 @@ const useIsShowingLogo = createBearStore<boolean>()(
 	true,
 	false,
 );
-const useIsTemplateLogoLeftSide = createBearStore<boolean>()(
-	'isTemplateLogoLeftSide',
-	true,
-	true,
-);
+// const useIsTemplateLogoLeftSide = createBearStore<boolean>()(
+// 	'isTemplateLogoLeftSide',
+// 	true,
+// 	true,
+// );
 
 const useInitialLoadedTemplateBgColor = createBearStore<string | undefined>()(
 	'initialLoadedTemplateBgColor',
@@ -145,8 +145,8 @@ export const useSlides = () => {
 	const { project } = useProject();
 	const { isPresenting, setIsPresenting } = usePresenting();
 	const { isShowingLogo, setIsShowingLogo } = useIsShowingLogo();
-	const { isTemplateLogoLeftSide, setIsTemplateLogoLeftSide } =
-		useIsTemplateLogoLeftSide();
+	// const { isTemplateLogoLeftSide, setIsTemplateLogoLeftSide } =
+	// 	useIsTemplateLogoLeftSide();
 	const { updateProject, bulkUpdateProject } = useProject();
 	const { saveStatus, setSaveStatus } = useSaveStatus();
 	const { clearChatHistory } = useChatHistory();
@@ -328,12 +328,13 @@ export const useSlides = () => {
 		debouncedSyncSlides(newSlides, true);
 	};
 
-	const updateTemplateLogoPositionToLeft = (isLeft: boolean) => {
+	const updateTemplateLogoPosition = (position: LogoPosition) => {
 		const newSlides = slides.map((slide, index) => {
-			return { ...slide, is_logo_left: isLeft ? true : false };
+			return { ...slide, logo_position: position };
 		});
-		setIsTemplateLogoLeftSide(isLeft);
-		updateProject('is_logo_left', isLeft);
+		// setIsTemplateLogoLeftSide(isLeft);
+		// updateProject('is_logo_left', isLeft);
+		updateProject('logo_position', position);
 		setSlides(newSlides);
 		updateSlideHistory(newSlides);
 		debouncedSyncSlides(newSlides, true);
@@ -612,7 +613,7 @@ export const useSlides = () => {
 
 		setSlides(slides);
 		setIsShowingLogo(slides?.some((slide) => slide.logo || slide.logo_url));
-		setIsTemplateLogoLeftSide(slides[0].is_logo_left);
+		// setIsTemplateLogoLeftSide(slides[0].is_logo_left);
 		setSlideIndex(0);
 		setSlidesHistory([slides]);
 		setSlidesHistoryIndex(0);
@@ -770,8 +771,9 @@ export const useSlides = () => {
 		setCustomizedTemplateContentFontFamily,
 		HasSelectedCustomizedTemplateContentFontFamily,
 		setHasSelectedCustomizedTemplateContentFontFamily,
-		isTemplateLogoLeftSide,
-		setIsTemplateLogoLeftSide,
-		updateTemplateLogoPositionToLeft,
+		// isTemplateLogoLeftSide,
+		// setIsTemplateLogoLeftSide,
+		// updateTemplateLogoPositionToLeft,
+		updateTemplateLogoPosition,
 	};
 };

@@ -46,9 +46,15 @@ export type SlideKeys =
 	| 'is_chart'
 	| 'images_position'
 	| 'palette'
-	| 'is_logo_left';
+	// | 'is_logo_left';
+	| 'logo_position';
 
 export type Media = 'image' | 'chart' | 'youtube';
+export type LogoPosition =
+	| 'BottomLeft'
+	| 'BottomRight'
+	| 'TopLeft'
+	| 'TopRight';
 
 export default class Slide {
 	head: string;
@@ -77,7 +83,8 @@ export default class Slide {
 	transcript?: string;
 	additional_images?: string[];
 	palette: PaletteKeys;
-	is_logo_left: boolean;
+	// is_logo_left: boolean;
+	logo_position: LogoPosition;
 
 	constructor() {
 		const emptyGroup: Group = {
@@ -111,6 +118,7 @@ export default class Slide {
 		this.logo = 'Default';
 		this.additional_images = [];
 		this.palette = 'Original';
-		this.is_logo_left = true;
+		// this.is_logo_left = true;
+		this.logo_position = 'BottomLeft';
 	}
 }

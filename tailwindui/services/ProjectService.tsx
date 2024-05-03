@@ -251,7 +251,8 @@ class ProjectService {
 			slide.transcript = slideData.transcript || '';
 			slide.logo = slideData.logo;
 			slide.logo_url = slideData.logo_url || '';
-			slide.is_logo_left = slideData.is_logo_left || true;
+			// slide.is_logo_left = slideData.is_logo_left || true;
+			slide.logo_position = slideData.logo_position || 'BottomLeft';
 			slide.background_url = slideData.background_url || '';
 			slide.background_color = slideData.background_color || ''; // for customized background color
 			slide.titleFontFamily = slideData.titleFontFamily || '';

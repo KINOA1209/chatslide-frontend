@@ -67,6 +67,7 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 				project?.selected_background?.[0]?.thumbnail_url || '';
 			newSlide.logo_url = project?.selected_logo?.[0]?.thumbnail_url || '';
 			newSlide.logo = project?.logo || '';
+			newSlide.logo_position = project?.logo_position || 'BottomLeft';
 
 			if (
 				layoutKey === 'Col_2_img_0_layout' ||
