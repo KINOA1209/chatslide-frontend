@@ -102,7 +102,7 @@ const AdvancedOptions: React.FC<{
 						{ value: 'my_outline', text: 'Detailed Outline' },
 						// {
 						// 	value: 'follow_resource',
-						// 	text: 'Structure of a resource',
+						// 	text: 'Structure of a source',
 						// },
 					]}
 					selectedValue={structureMode}
@@ -137,12 +137,12 @@ const AdvancedOptions: React.FC<{
 					</WarningMessage>
 				) : selectedResources.length == 0 ? ( // my_resource
 					<WarningMessage>
-						Add a resource to enable this feature.
+						Add a source to enable this feature.
 					</WarningMessage>
 				) : (
 					<>
 						<Explanation>
-              If you want the outline to follow the resource you uploaded, select one resource here.
+              If you want the outline to follow the source you uploaded, select one source here.
             </Explanation>
 						<DropDown width='20rem'>
 							{selectedResources.map((resource, index) => (
