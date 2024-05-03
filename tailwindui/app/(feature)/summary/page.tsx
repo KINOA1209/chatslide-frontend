@@ -81,11 +81,11 @@ const AdvancedOptions: React.FC<{
 	setPageCountEst: (value: number) => void;
 	structureMode: string;
 	setStructureMode: (value: string) => void;
-  addCitations: string;
-  setAddCitations: (value: string) => void;
-	resourceToFollowStructureFrom: Resource | undefined
-	;
+	addCitations: string;
+	setAddCitations: (value: string) => void;
+	resourceToFollowStructureFrom: Resource | undefined;
 	setResourceToFollowStructureFrom: (value: Resource) => void;
+	generationMode: string;
 }> = ({
 	outlineStructure,
 	setOutlineStructure,
@@ -94,10 +94,11 @@ const AdvancedOptions: React.FC<{
 	setPageCountEst,
 	structureMode,
 	setStructureMode,
-  addCitations,
-  setAddCitations,
+	addCitations,
+	setAddCitations,
 	resourceToFollowStructureFrom,
 	setResourceToFollowStructureFrom,
+	generationMode,
 }) => {
 	return (
 		<>
@@ -106,14 +107,18 @@ const AdvancedOptions: React.FC<{
 
 				<RadioButton
 					name='outline_structure_mode'
-					options={[
-						{ value: 'custom', text: 'General Structure' },
-						{ value: 'my_outline', text: 'Detailed Outline' },
-						{
-							value: 'follow_resource',
-							text: 'Structure of a source',
-						},
-					]}
+					options={
+						generationMode === 'from_topic'
+							? [
+									{ value: 'custom', text: 'General Structure' },
+									{ value: 'my_outline', text: 'Detailed Outline' },
+								]
+							: [
+									{ value: 'custom', text: 'General Structure' },
+									{ value: 'my_outline', text: 'Detailed Outline' },
+									{ value: 'follow_resource', text: 'Structure of a source' },
+								]
+					}
 					selectedValue={structureMode}
 					setSelectedValue={setStructureMode}
 				/>
@@ -153,17 +158,17 @@ const AdvancedOptions: React.FC<{
 							one source here.
 						</Explanation>
 						<DropDown
-						value={resourceToFollowStructureFrom?.id}
-						onChange={(e) => {
-							const selectedResource = selectedResources.find(
-								(resource) => resource.id === e.target.value,
-							);
-							if (selectedResource) {
-								setResourceToFollowStructureFrom(selectedResource);
-								setOutlineStructure(selectedResource.name);
-							}
-						}}
-						width='20rem' 
+							value={resourceToFollowStructureFrom?.id}
+							onChange={(e) => {
+								const selectedResource = selectedResources.find(
+									(resource) => resource.id === e.target.value,
+								);
+								if (selectedResource) {
+									setResourceToFollowStructureFrom(selectedResource);
+									setOutlineStructure(selectedResource.name);
+								}
+							}}
+							width='20rem'
 						>
 							{selectedResources.map((resource, index) => (
 								<option key={index} value={resource.id}>
@@ -273,7 +278,8 @@ export default function Topic() {
 		getStructureFromScenario(scenarioType),
 	);
 	const [structureMode, setStructureMode] = useState('custom');
-	const [resourceToFollowStructureFrom, setResourceToFollowStructureFrom] = useState<Resource>();
+	const [resourceToFollowStructureFrom, setResourceToFollowStructureFrom] =
+		useState<Resource>();
 
 	const handleGenerationStatusModal = () => {
 		// console.log('user Research Modal toggled');
@@ -673,10 +679,13 @@ export default function Topic() {
 							setPageCountEst={setPageCountEst}
 							structureMode={structureMode}
 							setStructureMode={setStructureMode}
-              addCitations={addCitations}
-              setAddCitations={setAddCitations}
+							addCitations={addCitations}
+							setAddCitations={setAddCitations}
 							resourceToFollowStructureFrom={resourceToFollowStructureFrom}
-							setResourceToFollowStructureFrom={setResourceToFollowStructureFrom}
+							setResourceToFollowStructureFrom={
+								setResourceToFollowStructureFrom
+							}
+							generationMode={generationMode}
 						/>
 					)}
 				</Card>
