@@ -17,7 +17,7 @@ import { Loading, Blank } from '@/components/ui/Loading';
 import SessionStorage from '@/utils/SessionStorage';
 import { useProject } from '@/hooks/use-project';
 import DesignSystemButton from '@/components/ui/design_systems/ButtonsOrdinary';
-import { Instruction, Title } from '@/components/ui/Text'
+import { BigTitle, Instruction, Title } from '@/components/ui/Text'
 import CreateFolderModal from '@/components/dashboard/createFolderModal';
 import { groupProjectsByFolder } from '@/components/dashboard/folder_helper';
 import Folder from '@/models/Folder';
@@ -28,7 +28,6 @@ export default function Dashboard() {
 	const [folders, setFolders] = useState<Folder[]>([])
 	const [deleteInd, setDeleteInd] = useState('');
 	const router = useRouter();
-	const contentRef = useRef<HTMLDivElement>(null);
 	const [rendered, setRendered] = useState<boolean>(false);
 	const { token, userStatus, updateCreditsAndTier } = useUser();
 	const { initProject } = useProject();
@@ -47,9 +46,6 @@ export default function Dashboard() {
 
 	useEffect(() => {
 		if (userStatus != UserStatus.Inited) return;
-		if (contentRef.current) {
-			contentRef.current.style.height = contentRef.current.offsetHeight + 'px';
-		}
 		init();
 	}, [userStatus]);
 
@@ -337,7 +333,9 @@ export default function Dashboard() {
 							}}
 							onClick={handleBackToDefaultFolder}
 						>
-							{activeFolder === 'drlambda-default' ? 'My Projects' : `My Projects > ${activeFolder}`}
+							{activeFolder === 'drlambda-default'
+								? 'My Projects'
+								: `My Projects > ${activeFolder}`}
 						</div>
 
 						{/* create new project button */}
@@ -349,7 +347,7 @@ export default function Dashboard() {
 							>
 								Start
 							</DrlambdaButton> */}
-							{activeFolder === 'drlambda-default' &&
+							{activeFolder === 'drlambda-default' && (
 								<DesignSystemButton
 									isPaidFeature={false}
 									size='lg'
@@ -359,7 +357,7 @@ export default function Dashboard() {
 								>
 									Create Folder
 								</DesignSystemButton>
-							}
+							)}
 							<DesignSystemButton
 								isPaidFeature={false}
 								size='lg'
@@ -381,10 +379,8 @@ export default function Dashboard() {
 					flex-shrink: 0; */}
 				{/* select sorting key: last update time, created time or title */}
 				{hasFolder && (
-					<div
-						className='w-full px-8 pt-8 flex flex-col grow mb-5'
-					>
-            <Instruction>Folders</Instruction>
+					<div className='w-full px-8 pt-8 flex flex-col grow mb-5'>
+						<Title center={false}>📂 Folders</Title>
 						<div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
 							{folders.map((folder, index) => {
 								if (folder.folderName !== 'drlambda-default') {
@@ -392,7 +388,9 @@ export default function Dashboard() {
 										<div
 											key={'folderButton' + index}
 											className='cursor-pointer hover:bg-gray-200 p-2 rounded-md border border-solid border-gray-200 bg-white'
-											onDoubleClick={() => handleFolderDoubleClick(folder.folderName)}
+											onDoubleClick={() =>
+												handleFolderDoubleClick(folder.folderName)
+											}
 										>
 											<FolderButton
 												folder={folder}
@@ -411,9 +409,8 @@ export default function Dashboard() {
 				{/* projects details area */}
 				<div
 					className='pb-[1rem] w-full px-8 pt-8 flex flex-col grow overflow-auto'
-					ref={contentRef}
 				>
-          <Instruction>Projects</Instruction>
+					<Title center={false}>📑 Projects</Title>
 					{rendered ? (
 						currentProjects && currentProjects.length > 0 ? (
 							<ProjectTable
@@ -426,9 +423,13 @@ export default function Dashboard() {
 								activeFolder={activeFolder}
 							/>
 						) : (
-							<Blank text={`${activeFolder === "drlambda-default" ? "You haven't created any project yet." :
-								`No projects found in ${activeFolder}.`
-								}`} />
+							<Blank
+								text={`${
+									activeFolder === 'drlambda-default'
+										? "You haven't created any project yet."
+										: `No projects found in ${activeFolder}.`
+								}`}
+							/>
 						)
 					) : (
 						<Loading />
@@ -468,7 +469,7 @@ export default function Dashboard() {
 					setInputValue={setRenameInput}
 					hasInputArea={true}
 					onConfirm={confirmRenameFolder}
-          maxInputLength={100}
+					maxInputLength={100}
 				/>
 			</div>
 			{showSurvey && (
