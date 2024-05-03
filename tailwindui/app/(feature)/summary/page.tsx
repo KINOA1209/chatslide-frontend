@@ -104,10 +104,10 @@ const AdvancedOptions: React.FC<{
 					options={[
 						{ value: 'custom', text: 'General Structure' },
 						{ value: 'my_outline', text: 'Detailed Outline' },
-						// {
-						// 	value: 'follow_resource',
-						// 	text: 'Structure of a source',
-						// },
+						{
+							value: 'follow_resource',
+							text: 'Structure of a source',
+						},
 					]}
 					selectedValue={structureMode}
 					setSelectedValue={setStructureMode}
