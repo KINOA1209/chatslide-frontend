@@ -80,6 +80,7 @@ const AdvancedOptions: React.FC<{
 	pageCountEst: number;
 	setPageCountEst: (value: number) => void;
 	structureMode: string;
+	setStructureMode: (value: string) => void;
 }> = ({
 	outlineStructure,
 	setOutlineStructure,
@@ -87,76 +88,99 @@ const AdvancedOptions: React.FC<{
 	pageCountEst,
 	setPageCountEst,
 	structureMode,
+	setStructureMode,
 }) => {
 	return (
 		<>
 			<div>
-				<Instruction>Structure of the Deck</Instruction>
+				<Instruction>Outline Structure</Instruction>
 
-				{/* <RadioButton
+				<RadioButton
 					name='outline_structure_mode'
 					options={[
-						{ value: 'custom', text: 'Custom Structure' },
-						{
-							value: 'follow_resource',
-							text: 'Structure of a resource',
-						},
+						{ value: 'custom', text: 'General Structure' },
+						{ value: 'my_outline', text: 'Detailed Outline' },
+						// {
+						// 	value: 'follow_resource',
+						// 	text: 'Structure of a resource',
+						// },
 					]}
 					selectedValue={structureMode}
 					setSelectedValue={setStructureMode}
-				/> */}
+				/>
 
 				{structureMode === 'custom' ? (
-					<InputBox>
-						<input
-							id='outline_structure'
-							key='outline_structure'
-							type='text'
-							className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800'
-							placeholder='Introduction, background, details, examples, conclusion.'
-							value={outlineStructure}
-							onChange={(e) => setOutlineStructure(e.target.value)}
-						/>
-					</InputBox>
-				) : selectedResources.length == 0 ? (
+					<>
+						<Explanation>
+							If you have a rough idea about the outline you want, you can put
+							it here. We will write the outline based on this structure and the
+							number of pages you want.
+						</Explanation>
+						<InputBox>
+							<input
+								id='outline_structure'
+								key='outline_structure'
+								type='text'
+								className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800'
+								placeholder='Introduction, background, details, examples, conclusion.'
+								value={outlineStructure}
+								onChange={(e) => setOutlineStructure(e.target.value)}
+							/>
+						</InputBox>
+					</>
+				) : structureMode === 'my_outline' ? (
+					<WarningMessage>
+						If you already have a detailed outline ready, we will not generate
+						outlines for you. But you can write your own outline in the next
+						step. The number of slide pages will depend on the length of the
+						outline you provided in the next step.
+					</WarningMessage>
+				) : selectedResources.length == 0 ? ( // my_resource
 					<WarningMessage>
 						Add a resource to enable this feature.
 					</WarningMessage>
 				) : (
-					<DropDown>
-						{selectedResources.map((resource, index) => (
-							<option key={index} value={resource.id}>
-								{resource.name}
-							</option>
-						))}
-					</DropDown>
+					<>
+						<Explanation>
+              If you want the outline to follow the resource you uploaded, select one resource here.
+            </Explanation>
+						<DropDown width='20rem'>
+							{selectedResources.map((resource, index) => (
+								<option key={index} value={resource.id}>
+									{resource.name.replace('.txt', '').replaceAll('_', ' ')}
+								</option>
+							))}
+						</DropDown>
+					</>
 				)}
 			</div>
 
-			<div className='w-full gap-2 flex flex-col sm:grid sm:grid-cols-2'>
-				<div>
-					<Instruction>Estimated Number of Pages: {pageCountEst}</Instruction>
-					<Explanation>
-						A rough estimate of the number of slides you will need. <br />
-						Decks with more than 20 pages will cost more ⭐️ credits.
-					</Explanation>
-					<div className='w-[80%]'>
-						<RangeSlider
-							onChange={(value: number) => {
-								if (value != 0) setPageCountEst(value);
-							}}
-							value={pageCountEst}
-							minValue={5}
-							choices={[0, 5, 10, 15, 20, 25, 30, 35, 40]}
-						/>
+			{structureMode !== 'my_outline' && (
+				<div className='w-full gap-2 flex flex-col sm:grid sm:grid-cols-2'>
+					<div>
+						<Instruction>Estimated Number of Pages: {pageCountEst}</Instruction>
+						<Explanation>
+							A rough estimate of the number of slides you will need. <br />
+							Decks with more than 20 pages will cost more ⭐️ credits.
+						</Explanation>
+						<div className='w-[80%]'>
+							<RangeSlider
+								onChange={(value: number) => {
+									if (value != 0) setPageCountEst(value);
+								}}
+								value={pageCountEst}
+								minValue={5}
+								choices={[0, 5, 10, 15, 20, 25, 30, 35, 40]}
+							/>
+						</div>
+						<Explanation>
+							Roughly {Math.round(pageCountEst / 3 + 0.5)} sections,{' '}
+							{pageCountEst} pages of slides, and {Math.round(pageCountEst / 3)}{' '}
+							minutes if you generate video.
+						</Explanation>
 					</div>
-					<Explanation>
-						Roughly {Math.round(pageCountEst / 3 + 0.5)} sections,{' '}
-						{pageCountEst} pages of slides, and {Math.round(pageCountEst / 3)}{' '}
-						minutes if you generate video.
-					</Explanation>
 				</div>
-			</div>
+			)}
 		</>
 	);
 };
@@ -610,6 +634,7 @@ export default function Topic() {
 							pageCountEst={pageCountEst}
 							setPageCountEst={setPageCountEst}
 							structureMode={structureMode}
+							setStructureMode={setStructureMode}
 						/>
 					)}
 				</Card>
