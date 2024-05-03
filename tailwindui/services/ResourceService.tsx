@@ -86,6 +86,7 @@ class ResourceService {
 		search_online?: string,
 		scenario_type?: string,
 		post_style?: string,
+		structureMode?: string,
 	): Promise<any> {
 		const header = new Headers();
 		if (token) {
@@ -105,6 +106,7 @@ class ResourceService {
 					language: language,
 					search_online: search_online,
 					scenario_type: scenario_type,
+					structure_mode: structureMode,
 				}),
 			});
 
