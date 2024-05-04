@@ -6,6 +6,7 @@ import { MdOutlineDelete } from "react-icons/md";
 import ButtonWithExplanation from '@/components/button/ButtonWithExplanation';
 import Folder from "@/models/Folder";
 import { MdDriveFileRenameOutline } from "react-icons/md";
+import { GoHome } from 'react-icons/go';
 
 const FolderButton: React.FC<{
     folder: Folder;
@@ -35,10 +36,16 @@ const FolderButton: React.FC<{
 						<div className='flex flex-row gap-3 items-center justify-between px-3 text-[#344054]'>
 							<div className='flex flex-row gap-3 items-center overflow-hidden'>
 								<div className='w-[21px]'>
-									<CiFolderOn size={21} color='#344054' strokeWidth={1} />
+									{folder.folderName === 'drlambda-default' ? (
+										<GoHome style={{ width: '18px', height: '18px' }} />
+									) : (
+										<CiFolderOn size={21} color='#344054' strokeWidth={1} />
+									)}
 								</div>
 								<span className='overflow-hidden truncate'>
-									{folder.folderName === 'drlambda-default' ? 'My Projects' : folder.folderName}
+									{folder.folderName === 'drlambda-default'
+										? 'My Projects'
+										: folder.folderName}
 								</span>
 							</div>
 							<div className='h-full flex items-center gap-4 relative font-normal'>

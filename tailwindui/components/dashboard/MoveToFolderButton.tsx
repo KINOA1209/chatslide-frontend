@@ -33,7 +33,7 @@ export const MoveToFolderButton: React.FC<{
     activeFolder,
 }) => {
         const { token } = useUser();
-        const [selectedFolder, setSelectedFolder] = useState<string>('');
+        const [selectedFolder, setSelectedFolder] = useState<string>(project?.foldername || 'drlambda-default');
 
         const confirmMoveToFolder = async () => {
             if (!selectedFolder) {
@@ -92,7 +92,7 @@ export const MoveToFolderButton: React.FC<{
                 <Modal
                     showModal={showMoveToFolderModal}
                     setShowModal={setShowMoveToFolderModal}
-                    title='Move to folder'
+                    title='Move project to folder'
                     onConfirm={confirmMoveToFolder}
                 >
                     <MoveToFolderSelector
