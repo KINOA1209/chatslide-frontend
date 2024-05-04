@@ -33,7 +33,9 @@ export const MoveToFolderButton: React.FC<{
     activeFolder,
 }) => {
         const { token } = useUser();
-        const [selectedFolder, setSelectedFolder] = useState<string>(project?.foldername || 'drlambda-default');
+        const [selectedFolder, setSelectedFolder] = useState<string>(
+					project?.project_group_name || 'drlambda-default',
+				);
 
         const confirmMoveToFolder = async () => {
             if (!selectedFolder) {

@@ -39,10 +39,7 @@ export const Menu: React.FC<{
 
 	return (
 		<div
-			className='col-span-1 p-2 flex'
-			style={{
-				padding: `var(--spacing-xl, 8px) var(--spacing-3xl, 8px)`,
-			}}
+			className='col-span-1 flex'
 		>
 			<div className='h-full flex justify-end items-center w-full gap-4 relative'>
 				<div
