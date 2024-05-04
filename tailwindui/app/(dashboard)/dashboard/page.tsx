@@ -22,6 +22,7 @@ import CreateFolderModal from '@/components/dashboard/createFolderModal';
 import { groupProjectsByFolder } from '@/components/dashboard/folder_helper';
 import Folder from '@/models/Folder';
 import FolderButton from '@/components/dashboard/FolderButton';
+import { FolderItem } from '@/components/dashboard/FolderItem';
 
 export default function Dashboard() {
 	const [projects, setProjects] = useState<Project[]>([]);
@@ -113,6 +114,42 @@ export default function Dashboard() {
 			console.error(error);
 		}
 	};
+
+	const moveProjectToFolder = (folder: Folder) => {
+		const project = projects.find((proj) => proj.id === draggingProjectId);
+		if (project) {
+			const updatedProjects = projects.map((proj) => {
+				if (proj.id === draggingProjectId) {
+					return {
+						...proj,
+						project_group_name: folder.folderName,
+					};
+				}
+				return proj;
+			});
+			setProjects(updatedProjects);
+			const updatedFolders = folders.map((f) => {
+				if (f.folderName === folder.folderName) {
+					return {
+						...f,
+						projects: [...f.projects, project],
+					};
+				}
+				if (f.folderName === activeFolder) {
+					return {
+						...f,
+						projects: f.projects.filter(
+							(proj) => proj.id !== draggingProjectId,
+						),
+					};
+				}
+				return f;
+			});
+			setFolders(updatedFolders);
+			ProjectService.moveToFolder(token, draggingProjectId, folder.folderName);
+		}
+	};
+
 	const init = async () => {
 		if (!token) return; // sidebar will show a modal to ask user to login
 
@@ -240,7 +277,7 @@ export default function Dashboard() {
 
 	const handleRenameFolder = (folderName: string) => {
 		setPrevFolderName(folderName);
-    setRenameInput(folderName);
+		setRenameInput(folderName);
 		setShowRenameFolderModal(true);
 	};
 
@@ -319,6 +356,14 @@ export default function Dashboard() {
 								color: 'var(--colors-text-text-secondary-700, #344054)',
 							}}
 							onClick={handleBackToDefaultFolder}
+							onDragOver={(e) => e.preventDefault()}
+							onDrop={(e) => {
+								e.preventDefault();
+								moveProjectToFolder({
+									folderName: 'drlambda-default',
+									projects: [],
+								});
+							}}
 						>
 							{activeFolder === 'drlambda-default'
 								? 'My Projects'
@@ -362,66 +407,35 @@ export default function Dashboard() {
 					<div className='w-full px-8 pt-8 flex flex-col mb-5'>
 						<Title center={false}>📂 Folders</Title>
 						<div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
-							{folders.map((folder, index) => {
-								if (folder.folderName !== 'drlambda-default') {
-									return (
-										<div
-											key={'folderButton' + index}
-											className='cursor-pointer hover:bg-gray-200 p-2 rounded-md border border-solid border-gray-200 bg-white'
-											onDoubleClick={() =>
-												handleFolderDoubleClick(folder.folderName)
-											}
-											onDragOver={(e) => e.preventDefault()}
-											onDrop={(e) => {
-												e.preventDefault();
-												console.log('Dropped on folder:', folder.folderName);
-												// Move the project to the folder
-												const project = projects.find(
-													(proj) => proj.id === draggingProjectId,
-												);
-												if (project) {
-													const updatedProjects = projects.map((proj) => {
-														if (proj.id === draggingProjectId) {
-															return {
-																...proj,
-																project_group_name: folder.folderName,
-															};
-														}
-														return proj;
-													});
-													setProjects(updatedProjects);
-													const updatedFolders = folders.map((f) => {
-														if (f.folderName === folder.folderName) {
-															return {
-																...f,
-																projects: [...f.projects, project],
-															};
-														}
-														if (f.folderName === activeFolder) {
-															return {
-																...f,
-																projects: f.projects.filter(
-																	(proj) => proj.id !== draggingProjectId,
-																),
-															};
-														}
-														return f;
-													});
-													setFolders(updatedFolders);
-                          ProjectService.moveToFolder(token, draggingProjectId, folder.folderName)
-												}
-											}}
-										>
-											<FolderButton
+							{activeFolder !== 'drlambda-default' ? (
+								<FolderItem
+                  folder={{
+                    folderName: 'drlambda-default',
+                    projects: [],
+                  }}
+                  handleFolderDoubleClick={handleFolderDoubleClick}
+                  handleDeleteFolder={handleDeleteFolder}
+                  handleRenameFolder={handleRenameFolder}
+                  moveProjectToFolder={moveProjectToFolder}
+                  index={0}
+                />
+							) : (
+								folders
+									.filter((folder) => folder.folderName !== 'drlambda-default')
+									.map((folder, index) => {
+										return (
+											<FolderItem
+												key={index}
 												folder={folder}
+												handleFolderDoubleClick={handleFolderDoubleClick}
 												handleDeleteFolder={handleDeleteFolder}
 												handleRenameFolder={handleRenameFolder}
+												moveProjectToFolder={moveProjectToFolder}
+												index={index}
 											/>
-										</div>
-									);
-								}
-								return null;
-							})}
+										);
+									})
+							)}
 						</div>
 					</div>
 				)}

@@ -38,7 +38,7 @@ const FolderButton: React.FC<{
 									<CiFolderOn size={21} color='#344054' strokeWidth={1} />
 								</div>
 								<span className='overflow-hidden truncate'>
-									{folder.folderName}
+									{folder.folderName === 'drlambda-default' ? 'My Projects' : folder.folderName}
 								</span>
 							</div>
 							<div className='h-full flex items-center gap-4 relative font-normal'>
