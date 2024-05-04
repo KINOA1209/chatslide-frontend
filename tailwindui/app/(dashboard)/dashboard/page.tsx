@@ -17,7 +17,7 @@ import { Loading, Blank } from '@/components/ui/Loading';
 import SessionStorage from '@/utils/SessionStorage';
 import { useProject } from '@/hooks/use-project';
 import DesignSystemButton from '@/components/ui/design_systems/ButtonsOrdinary';
-import { BigTitle, Instruction, Title } from '@/components/ui/Text'
+import { BigTitle, Instruction, Title } from '@/components/ui/Text';
 import CreateFolderModal from '@/components/dashboard/createFolderModal';
 import { groupProjectsByFolder } from '@/components/dashboard/folder_helper';
 import Folder from '@/models/Folder';
@@ -25,12 +25,11 @@ import FolderButton from '@/components/dashboard/FolderButton';
 
 export default function Dashboard() {
 	const [projects, setProjects] = useState<Project[]>([]);
-	const [folders, setFolders] = useState<Folder[]>([])
+	const [folders, setFolders] = useState<Folder[]>([]);
 	const [deleteInd, setDeleteInd] = useState('');
 	const router = useRouter();
 	const [rendered, setRendered] = useState<boolean>(false);
 	const { token, userStatus, updateCreditsAndTier } = useUser();
-	const { initProject } = useProject();
 
 	const [showDeleteModal, setShowDeleteModal] = useState(false);
 	const [showSurvey, setShowSurvey] = useState(false);
@@ -41,8 +40,9 @@ export default function Dashboard() {
 	const [showDeleteFolderModal, setShowDeleteFolderModal] = useState(false);
 	const [deleteFolderName, setDeleteFolderName] = useState('');
 	const [showRenameFolderModal, setShowRenameFolderModal] = useState(false);
-	const [renameInput, setRenameInput] = useState('')
-	const [prevFolderName, setPrevFolderName] = useState('')
+	const [renameInput, setRenameInput] = useState('');
+	const [prevFolderName, setPrevFolderName] = useState('');
+	const [draggingProjectId, setDraggingProjectId] = useState<string>('');
 
 	useEffect(() => {
 		if (userStatus != UserStatus.Inited) return;
@@ -50,7 +50,9 @@ export default function Dashboard() {
 	}, [userStatus]);
 
 	useEffect(() => {
-		const currentFolder = folders.find(folder => folder.folderName === activeFolder);
+		const currentFolder = folders.find(
+			(folder) => folder.folderName === activeFolder,
+		);
 		if (currentFolder) {
 			setCurrentProjects(currentFolder.projects);
 		}
@@ -69,12 +71,11 @@ export default function Dashboard() {
 	useEffect(() => {
 		//folder drlambda-default is not shown
 		if (folders.length > 1) {
-			setHasFolder(true)
+			setHasFolder(true);
+		} else {
+			setHasFolder(false);
 		}
-		else {
-			setHasFolder(false)
-		}
-	}, [folders])
+	}, [folders]);
 
 	const fetchProjects = async () => {
 		try {
@@ -84,7 +85,12 @@ export default function Dashboard() {
 			// 	setProjects(projects);
 			// 	setRendered(true);
 			// });
-			const response = await ProjectService.getProjects(token, false, false, true);
+			const response = await ProjectService.getProjects(
+				token,
+				false,
+				false,
+				true,
+			);
 
 			// response is data.projects
 			if (Array.isArray(response)) {
@@ -94,9 +100,13 @@ export default function Dashboard() {
 				console.log('Projects and Folders:', response);
 				setProjects(response.projects);
 				//console.log(projects)
-				setFolders(groupProjectsByFolder(response.projects, response.empty_groups));
-				console.log(groupProjectsByFolder(response.projects, response.empty_groups))
-				setCurrentProjects(response.projects)
+				setFolders(
+					groupProjectsByFolder(response.projects, response.empty_groups),
+				);
+				console.log(
+					groupProjectsByFolder(response.projects, response.empty_groups),
+				);
+				setCurrentProjects(response.projects);
 			}
 			setRendered(true);
 		} catch (error: any) {
@@ -182,44 +192,9 @@ export default function Dashboard() {
 		router.push('/type-choice');
 	};
 
-	const AIIcon = (
-		<div
-			className='Badge'
-			style={{
-				width: 24,
-				height: 22,
-				paddingLeft: 6,
-				paddingRight: 6,
-				paddingTop: 2,
-				paddingBottom: 2,
-				background: '#EFF4FF',
-				borderRadius: 6,
-				border: '1px #C7D7FE solid',
-				justifyContent: 'flex-start',
-				alignItems: 'center',
-				display: 'inline-flex',
-			}}
-		>
-			<div
-				className='Text'
-				style={{
-					textAlign: 'center',
-					color: '#3538CD',
-					fontSize: 12,
-					fontFamily: 'Creato Display',
-					fontWeight: '500',
-					lineHeight: 18,
-					wordWrap: 'break-word',
-				}}
-			>
-				AI
-			</div>
-		</div>
-	);
-
 	const handleCreateFolderClick = () => {
-		setShowCreateFolderModal(true)
-	}
+		setShowCreateFolderModal(true);
+	};
 
 	const handleFolderDoubleClick = (folderName: string) => {
 		console.log('Entering folder:', folderName);
@@ -227,7 +202,7 @@ export default function Dashboard() {
 		// const filteredProjects = projects.filter(project => project.project_group_name === folderName);
 		// setCurrentProjects(filteredProjects)
 		//console.log(currentProjects)
-	}
+	};
 
 	const handleDeleteFolder = (folderName: string) => {
 		setDeleteFolderName(folderName);
@@ -239,9 +214,14 @@ export default function Dashboard() {
 			throw 'Error';
 		}
 		try {
-			const response = await ProjectService.deleteFolder(token, deleteFolderName);
+			const response = await ProjectService.deleteFolder(
+				token,
+				deleteFolderName,
+			);
 
-			setFolders(folders.filter((folder) => folder.folderName !== deleteFolderName));
+			setFolders(
+				folders.filter((folder) => folder.folderName !== deleteFolderName),
+			);
 		} catch (error: any) {
 			toast.error(error.message, {
 				position: 'top-center',
@@ -259,9 +239,9 @@ export default function Dashboard() {
 	};
 
 	const handleRenameFolder = (folderName: string) => {
-		setPrevFolderName(folderName)
-		setShowRenameFolderModal(true)
-	}
+		setPrevFolderName(folderName);
+		setShowRenameFolderModal(true);
+	};
 
 	const confirmRenameFolder = async () => {
 		if (renameInput === '') {
@@ -272,23 +252,29 @@ export default function Dashboard() {
 			return;
 		}
 		try {
-			const response = await ProjectService.renameFolder(token, prevFolderName, renameInput);
+			const response = await ProjectService.renameFolder(
+				token,
+				prevFolderName,
+				renameInput,
+			);
 
 			setFolders((prevFolders) =>
-				prevFolders.map(folder =>
+				prevFolders.map((folder) =>
 					folder.folderName === prevFolderName
 						? { ...folder, folderName: renameInput }
-						: folder
-				)
+						: folder,
+				),
 			);
-			setFolders(prevFolders => {
+			setFolders((prevFolders) => {
 				// Map through folders to find and update the renamed folder
-				const updatedFolders = prevFolders.map(folder =>
+				const updatedFolders = prevFolders.map((folder) =>
 					folder.folderName === prevFolderName
 						? { ...folder, folderName: renameInput }
-						: folder
+						: folder,
 				);
-				return updatedFolders.sort((a, b) => a.folderName.localeCompare(b.folderName));
+				return updatedFolders.sort((a, b) =>
+					a.folderName.localeCompare(b.folderName),
+				);
 			});
 		} catch (error: any) {
 			toast.error(error.message, {
@@ -312,7 +298,7 @@ export default function Dashboard() {
 		setActiveFolder('drlambda-default');
 		// const filteredProjects = projects.filter(project => project.project_group_name === null);
 		// setCurrentProjects(filteredProjects)
-	}
+	};
 
 	return (
 		<section className='grow flex flex-col'>
@@ -340,13 +326,6 @@ export default function Dashboard() {
 
 						{/* create new project button */}
 						<div className='flex flex-row gap-2'>
-							{/* <DrlambdaButton
-								isPaidFeature={false}
-								onClick={handleStartNewProject}
-								id='start_new_project'
-							>
-								Start
-							</DrlambdaButton> */}
 							{activeFolder === 'drlambda-default' && (
 								<DesignSystemButton
 									isPaidFeature={false}
@@ -379,7 +358,7 @@ export default function Dashboard() {
 					flex-shrink: 0; */}
 				{/* select sorting key: last update time, created time or title */}
 				{hasFolder && (
-					<div className='w-full px-8 pt-8 flex flex-col grow mb-5'>
+					<div className='w-full px-8 pt-8 flex flex-col mb-5'>
 						<Title center={false}>📂 Folders</Title>
 						<div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
 							{folders.map((folder, index) => {
@@ -391,6 +370,46 @@ export default function Dashboard() {
 											onDoubleClick={() =>
 												handleFolderDoubleClick(folder.folderName)
 											}
+											onDragOver={(e) => e.preventDefault()}
+											onDrop={(e) => {
+												e.preventDefault();
+												console.log('Dropped on folder:', folder.folderName);
+												// Move the project to the folder
+												const project = projects.find(
+													(proj) => proj.id === draggingProjectId,
+												);
+												if (project) {
+													const updatedProjects = projects.map((proj) => {
+														if (proj.id === draggingProjectId) {
+															return {
+																...proj,
+																project_group_name: folder.folderName,
+															};
+														}
+														return proj;
+													});
+													setProjects(updatedProjects);
+													const updatedFolders = folders.map((f) => {
+														if (f.folderName === folder.folderName) {
+															return {
+																...f,
+																projects: [...f.projects, project],
+															};
+														}
+														if (f.folderName === activeFolder) {
+															return {
+																...f,
+																projects: f.projects.filter(
+																	(proj) => proj.id !== draggingProjectId,
+																),
+															};
+														}
+														return f;
+													});
+													setFolders(updatedFolders);
+                          ProjectService.moveToFolder(token, draggingProjectId, folder.folderName)
+												}
+											}}
 										>
 											<FolderButton
 												folder={folder}
@@ -407,9 +426,7 @@ export default function Dashboard() {
 				)}
 
 				{/* projects details area */}
-				<div
-					className='pb-[1rem] w-full px-8 pt-8 flex flex-col grow overflow-auto'
-				>
+				<div className='pb-[1rem] w-full px-8 pt-8 flex flex-col grow overflow-auto'>
 					<Title center={false}>📑 Projects</Title>
 					{rendered ? (
 						currentProjects && currentProjects.length > 0 ? (
@@ -421,6 +438,7 @@ export default function Dashboard() {
 								onDelete={handleDelete}
 								isDiscover={false}
 								activeFolder={activeFolder}
+								onDrag={setDraggingProjectId}
 							/>
 						) : (
 							<Blank
