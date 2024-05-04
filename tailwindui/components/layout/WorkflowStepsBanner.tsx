@@ -120,12 +120,6 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 				)}
 			</div>
 
-			{/* <div className='relative w-full h-[0px] flex items-center w-full bg-transparent'>
-				<div className='absolute left-5 top-5'>
-					<BackButton href='/dashboard' />
-				</div>
-			</div> */}
-
 			<div className='py-2 w-full flex-auto text-center self-center bg-yellow-100 font-small leading-snug tracking-tight sm:hidden'>
 				Use our desktop version to see all the functionalities, including AI Chatbot. 
 			</div>

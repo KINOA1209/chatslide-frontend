@@ -105,7 +105,7 @@ const PricingComparison: React.FC<{
 		// apply discounts
 		switch (interval) {
 			case 'onetime':
-				amount = amount * 0.5;
+				amount = amount * 0.6;
 				break;
 			case 'monthly':
 				amount = amount * (firstTime ? 0.6 : 1);
@@ -156,7 +156,7 @@ const PricingComparison: React.FC<{
 	const getSecondLine = (tier: Tier): string | JSX.Element => {
 		switch (interval) {
 			case 'onetime':
-				return '3 day access';
+				return '7 day access';
 			case 'monthly':
 				return 'then ' + getPrice(tier);
 			case 'yearly':
@@ -244,7 +244,7 @@ const PricingComparison: React.FC<{
 		<div className='flex flex-col items-center overflow-y-scroll overflow-x-scroll'>
 			<MultiwayToggle
 				options={[
-					{ key: 'onetime', text: '3 Day' },
+					{ key: 'onetime', text: '7-Day' },
 					{ key: 'monthly', text: 'Monthly' },
 					{
 						key: 'yearly',
