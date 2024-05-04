@@ -12,8 +12,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import '@/app/css/workflow-edit-topic-css/topic_style.css';
 
 // Your project's global imports
-import ContentWithImageImg from '@/public/images/summary/content_with_image.png';
-import ContentOnlyImg from '@/public/images/summary/content_only.png';
+// import ContentWithImageImg from '@/public/images/summary/content_with_image.png';
+// import ContentOnlyImg from '@/public/images/summary/content_only.png';
+import MoreImagesImg from '@/public/images/design/more_images.png';
+import FewerImagesImg from '@/public/images/design/fewer_images.png';
+
 import Resource from '@/models/Resource';
 import useHydrated from '@/hooks/use-hydrated';
 import { useProject } from '@/hooks/use-project';
@@ -189,12 +192,12 @@ export default function DesignPage() {
 	const [imageAmount, setImageAmount] = useState('more_images');
 	const imageAmountOptions: RadioButtonOption[] = [
 		{
-			img: ContentWithImageImg,
+			img: MoreImagesImg,
 			value: 'more_images',
 			text: 'More images (70% decks contain images)',
 		},
 		{
-			img: ContentOnlyImg,
+			img: FewerImagesImg,
 			value: 'fewer_images',
 			text: 'Fewer images (30% decks contain images)',
 		},

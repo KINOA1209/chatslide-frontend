@@ -33,8 +33,8 @@ const RadioButton: React.FC<RadioButtonProps> = ({
 				>
 					<label>
 						{img && (
-							<div>
-								<Image src={img} alt={text} />
+							<div className='h-[100px]'>
+								<Image src={img} alt={text} height={100} />
 							</div>
 						)}
 						<div className='flex flex-row items-center gap-x-2'>
