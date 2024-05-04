@@ -32,7 +32,7 @@ export const DraggableSlidesPreview = forwardRef<
 			{slides.map((slide, index) => (
 				<div
 					key={`previewContainer` + index.toString() + slides.length.toString()} // force update when slide length changes
-					className={`w-[6rem] h-[4.5rem] lg:w-[8rem] lg:h-[6rem] rounded-md flex-shrink-0 px-2 grabCursor`}
+					className={`w-[6rem] h-[4.5rem] lg:w-[8rem] lg:h-[6rem] xl:w-[10rem] xl:h-[7rem] rounded-md flex-shrink-0 px-2 grabCursor`}
 					onClick={() => gotoPage(index)}
 					ref={index === slideIndex ? ref : null}
 					draggable={index !== 0}

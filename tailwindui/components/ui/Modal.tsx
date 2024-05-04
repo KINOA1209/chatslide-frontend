@@ -3,6 +3,7 @@ import { FaTimes } from 'react-icons/fa';
 import { BigBlueButton, InversedBigBlueButton } from '../button/DrlambdaButton';
 import { Transition } from '@headlessui/react';
 import { Title, Explanation } from '@/components/ui/Text';
+import { InputBox } from './InputBox';
 
 interface ModalProps {
 	children?: React.ReactNode;
@@ -16,6 +17,10 @@ interface ModalProps {
 	clickOutsideToClose?: boolean;
 	canClose?: boolean;
 	width?: string;
+	hasInputArea?: boolean;
+	inputValue?: string;
+	setInputValue?: (value: string) => void;
+	maxInputLength?: number;
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -29,6 +34,10 @@ const Modal: React.FC<ModalProps> = ({
 	clickOutsideToClose = true,
 	canClose = true,
 	width,
+	hasInputArea = false,
+	inputValue,
+	setInputValue,
+	maxInputLength,
 }) => {
 	const modalRef = React.useRef<HTMLDivElement>(null);
 	const modalContentRef = React.useRef<HTMLDivElement>(null);
@@ -51,6 +60,12 @@ const Modal: React.FC<ModalProps> = ({
 		console.log('onConfirm resolved');
 		setIsSubmitting(false);
 		setShowModal(false);
+	};
+
+	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		if (setInputValue) {
+			setInputValue(event.target.value);
+		}
 	};
 
 	// press esc to close modal
@@ -129,13 +144,25 @@ const Modal: React.FC<ModalProps> = ({
 					)}
 
 					{title && (
-						<div className='w-full felx flex-col items-center justify-center'>
+						<div className='w-full felx flex-col items-center justify-center '>
 							<Title>{title}</Title>
 						</div>
 					)}
 
 					{description && <Explanation>{description}</Explanation>}
 
+					{hasInputArea && setInputValue && (
+						<InputBox>
+							<input
+								id='key'
+								type='text'
+								className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800 bg-gray-100'
+								onChange={(e) => setInputValue(e.target.value)}
+								value={inputValue}
+                maxLength={maxInputLength}
+							/>
+						</InputBox>
+					)}
 					{/* Modal body */}
 					{children}
 

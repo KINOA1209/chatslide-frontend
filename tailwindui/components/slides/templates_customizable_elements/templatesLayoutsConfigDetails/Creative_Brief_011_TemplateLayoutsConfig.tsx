@@ -89,7 +89,7 @@ export const Creative_Brief_011_TemplateLayoutsConfig: {
 			gap: '2rem',
 		},
 		imageContainerCSS: {
-			width: '35%', // Equivalent to w-1/2
+			width: '45%', // Equivalent to w-1/2
 			height: '100%', // Equivalent to h-full
 			//overflow: 'hidden',
 			display: 'flex',

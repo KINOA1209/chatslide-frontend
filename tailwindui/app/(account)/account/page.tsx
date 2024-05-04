@@ -421,7 +421,7 @@ export default function Account() {
 					</Instruction>
 					<BigBlueButton
 						onClick={() => {
-							router.push('https://drlambda-1.getrewardful.com/');
+							router.push('https://chatslide.getrewardful.com/');
 						}}
 					>
 						💸 Start Earning Now

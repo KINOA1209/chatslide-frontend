@@ -181,16 +181,16 @@ export const calculateNonPresentScale = (
 	if (width < 1024) {
 		// mobile, layout vertically
 		if (workflow === 'socialPosts') {
-			return Math.min(1.5, Math.min(width / 450, (height - 200) / 650) * 0.7);
+			return Math.min(1.2, Math.min(width / 450, (height - 200) / 650) * 0.7);
 		} else {
-			return Math.min(1.5, Math.min(width / 960, (height - 200) / 540) * 0.8);
+			return Math.min(1.2, Math.min(width / 960, (height - 200) / 540) * 0.8);
 		}
 	} else {
 		const chatWindowWidth = width > 1280 && isChatWindowOpen ? 250 : 0;
 		const scriptEditorHeight = 0;
 		if (workflow === 'socialPosts') {
 			return Math.min(
-				1.5,
+				1.2,
 				Math.min(
 					(width - 400 - chatWindowWidth) / 450,
 					(height - 250 - scriptEditorHeight) / 650,
@@ -198,7 +198,7 @@ export const calculateNonPresentScale = (
 			);
 		} else {
 			return Math.min(
-				1.5,
+				1.2,
 				Math.min(
 					(width - 400 - chatWindowWidth) / 960,
 					(height - 250 - scriptEditorHeight) / 540,
@@ -309,8 +309,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				calculateNonPresentScale(
 					window.innerWidth,
 					window.innerHeight,
-					showScript,
 					true,
+					showScript,
 				),
 			);
 		}
@@ -467,7 +467,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		slideIndex: number,
 		tag: SlideKeys | SlideKeys[],
 		contentIndex?: number,
-		rerender: boolean = true,
+		rerender: boolean = false,
 	) {
 		console.log('handleSlideEdit', content, slideIndex, tag, contentIndex);
 		setIsEditMode(false);
@@ -752,85 +752,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 	return (
 		<div className='w-full h-full flex flex-col items-start justify-around py-2 relative gap-y-2'>
-			<div className='w-full flex flex-row items-center justify-center'>
-				<ActionsToolBar
-					undo={undoChange}
-					redo={redoChange}
-					canRedo={canRedo}
-					canUndo={canUndo}
-					startTour={startTour}
-					onlyShowTutorial={false}
-					isViewing={isViewing}
-				>
-					{!isViewing && (
-						<>
-							<AddSlideButton
-								addPage={handleAddPage}
-								currentSlideIndex={slideIndex}
-							/>
-							<DuplicateSlidePageButton
-								duplicatePage={handleDuplicatePage}
-								currentSlideIndex={slideIndex}
-							/>
-							<DeleteSlideButton
-								deletePage={handleDeletePage}
-								currentSlideIndex={slideIndex}
-							/>
-
-							<div className='h-8 w-0.5 bg-gray-200'></div>
-
-							<ChangeTemplateOptions />
-							<LayoutChanger
-								currentSlideIndex={slideIndex}
-								// templateSamples={templateSamples}
-								slides={slides}
-								handleSlideEdit={handleSlideEdit}
-								availableLayouts={availableLayouts}
-							/>
-							<BrandingButton />
-
-							<div className='h-8 w-0.5 bg-gray-200'></div>
-						</>
-					)}
-
-					<ButtonWithExplanation
-						button={<PresentButton openPresent={openPresent} />}
-						explanation='Present'
-					/>
-
-					{!isViewing && (
-						<ExportToPdfButton
-							exportSlidesRef={exportSlidesRef}
-							hasScript={showScript}
-							setShowExportToPdfModal={setShowExportToPdfModal}
-							showExportToPdfModal={showExportToPdfModal}
-						/>
-					)}
-
-					{project && (
-						<ShareButton
-							setShare={isViewing ? null : updateIsShared}
-							share={isShared}
-							project={project}
-							host={host}
-							currentSlideIndex={slideIndex}
-							showShareModal={showShareModal}
-							setShowShareModal={setShowShareModal}
-						/>
-					)}
-				</ActionsToolBar>
-				{!isViewing && !isPresenting && (
-					<div className='hidden ml-2 sm:block cursor-pointer'>
-						<ButtonWithExplanation
-							button={
-								<AIAssistantIcon onClick={toggleChatWindow}></AIAssistantIcon>
-							}
-							explanation='AI Assistant'
-						/>
-					</div>
-				)}
-			</div>
-
 			<PaywallModal
 				showModal={showPaymentModal}
 				setShowModal={setShowPaymentModal}
@@ -838,21 +759,100 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				showReferralLink={true}
 			/>
 
-			<div className='w-full flex flex-row items-start justify-center lg:justify-around gap-2'>
+			<div className='w-full h-full flex flex-row items-start justify-center lg:justify-around gap-2'>
 				{/* vertical bar */}
-				<Panel>
-					<div className='max-h-[70vh] hidden lg:flex md:w-[150px] mb-[8rem]'>
-						<DraggableSlidesPreview
-							ref={verticalCurrentSlideRef}
-							slideIndex={slideIndex}
-							slides={slides}
-							gotoPage={gotoPage}
-							nonPresentScale={nonPresentScale}
-						/>
-					</div>
-				</Panel>
+				<div className='sticky left-0 top-0 h-full hidden lg:flex md:w-[150px] mb-[8rem] lg:w-[180px]'>
+					<DraggableSlidesPreview
+						ref={verticalCurrentSlideRef}
+						slideIndex={slideIndex}
+						slides={slides}
+						gotoPage={gotoPage}
+						nonPresentScale={nonPresentScale}
+					/>
+				</div>
 
 				<Panel>
+					<div className='w-full flex flex-row items-center justify-center'>
+						<ActionsToolBar
+							undo={undoChange}
+							redo={redoChange}
+							canRedo={canRedo}
+							canUndo={canUndo}
+							startTour={startTour}
+							onlyShowTutorial={false}
+							isViewing={isViewing}
+						>
+							{!isViewing && (
+								<>
+									<AddSlideButton
+										addPage={handleAddPage}
+										currentSlideIndex={slideIndex}
+									/>
+									<DuplicateSlidePageButton
+										duplicatePage={handleDuplicatePage}
+										currentSlideIndex={slideIndex}
+									/>
+									<DeleteSlideButton
+										deletePage={handleDeletePage}
+										currentSlideIndex={slideIndex}
+									/>
+
+									<div className='h-8 w-0.5 bg-gray-200'></div>
+
+									<ChangeTemplateOptions />
+									<LayoutChanger
+										currentSlideIndex={slideIndex}
+										// templateSamples={templateSamples}
+										slides={slides}
+										handleSlideEdit={handleSlideEdit}
+										availableLayouts={availableLayouts}
+									/>
+									<BrandingButton />
+
+									<div className='h-8 w-0.5 bg-gray-200'></div>
+								</>
+							)}
+
+							<ButtonWithExplanation
+								button={<PresentButton openPresent={openPresent} />}
+								explanation='Present'
+							/>
+
+							{!isViewing && (
+								<ExportToPdfButton
+									exportSlidesRef={exportSlidesRef}
+									hasScript={showScript}
+									setShowExportToPdfModal={setShowExportToPdfModal}
+									showExportToPdfModal={showExportToPdfModal}
+								/>
+							)}
+
+							{project && (
+								<ShareButton
+									setShare={isViewing ? null : updateIsShared}
+									share={isShared}
+									project={project}
+									host={host}
+									currentSlideIndex={slideIndex}
+									showShareModal={showShareModal}
+									setShowShareModal={setShowShareModal}
+								/>
+							)}
+						</ActionsToolBar>
+						{!isViewing && !isPresenting && (
+							<div className='hidden ml-2 sm:block cursor-pointer'>
+								<ButtonWithExplanation
+									button={
+										<AIAssistantIcon
+											onClick={toggleChatWindow}
+										></AIAssistantIcon>
+									}
+									explanation='AI Assistant'
+								/>
+							</div>
+						)}
+					</div>
+
 					<div className='flex flex-row items-center justify-start'>
 						<div className='hidden lg:block'>
 							<SlideLeftNavigator
@@ -909,7 +909,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 						)}
 					</div>
 
-					{/* transcripotList */}
+					{/* transcript List */}
 					{showScript && (
 						<ScriptEditor
 							slides={slides}
@@ -975,19 +975,18 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					</div>
 				</Panel>
 
+				{/* chatbot */}
 				{
 					!isViewing && isChatWindowOpen ? (
-						<Panel>
-							<div className='h-[70vh]'>
-								<AIAssistantChatWindow
-									onToggle={toggleChatWindow}
-									slides={slides}
-									currentSlideIndex={slideIndex}
-									updateSlidePage={updateSlidePage}
-									updateImgUrlArray={updateImgUrlArray}
-								/>
-							</div>
-						</Panel>
+						<div className='sticky right-0 top-0 h-full z-20'>
+							<AIAssistantChatWindow
+								onToggle={toggleChatWindow}
+								slides={slides}
+								currentSlideIndex={slideIndex}
+								updateSlidePage={updateSlidePage}
+								updateImgUrlArray={updateImgUrlArray}
+							/>
+						</div>
 					) : (
 						<div className='hidden sm:block w-0 h-0'></div>
 					) // empty div for justify-around

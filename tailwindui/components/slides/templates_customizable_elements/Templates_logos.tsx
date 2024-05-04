@@ -23,6 +23,13 @@ import JHULogo from '@/public/images/template/JHU/Johns_Hopkins_University-Logo.
 import ColumbiaLogo from '@/public/images/template/Columbia/ColumbiaLogo.png';
 import { useEffect } from 'react';
 import { isChatslide } from '@/utils/getHost';
+import { useSlides } from '@/hooks/use-slides';
+import { LogoPosition } from '@/models/Slide';
+
+function openBrandingModal() {
+	console.log('openBrandingModal');
+	document.dispatchEvent(new CustomEvent('change_logo'));
+}
 
 const DrLambdaLogo: React.FC<TemplateLogoType> = ({
 	isCoverPage,
@@ -34,8 +41,12 @@ const DrLambdaLogo: React.FC<TemplateLogoType> = ({
 	if (isCoverPage) {
 		if (custom_logo === 'Default') {
 			return (
-				<div className='absolute inset-0 top-[90%] w-full justify-start items-center gap-7 inline-flex pl-[12px] pb-[12px] z-50'>
+				<div
+					onClick={openBrandingModal}
+					className='absolute inset-0 top-[90%] w-full justify-start items-center gap-7 inline-flex pl-[12px] pb-[12px] z-50'
+				>
 					<Image
+						onClick={openBrandingModal}
 						src={isChatslide() ? chatslideLogoBlackText : drlambdaLogoSingle}
 						alt='Logo'
 						className='w-[8rem] h-auto'
@@ -45,8 +56,12 @@ const DrLambdaLogo: React.FC<TemplateLogoType> = ({
 			);
 		} else {
 			return (
-				<div className='absolute inset-0 top-[90%] w-full justify-start items-center gap-7 inline-flex pl-[12px] pb-[12px] z-50'>
+				<div
+					onClick={openBrandingModal}
+					className='absolute inset-0 top-[90%] w-full justify-start items-center gap-7 inline-flex pl-[12px] pb-[12px] z-50'
+				>
 					<Image
+						onClick={openBrandingModal}
 						unoptimized={true}
 						src={custom_logo}
 						alt='CustomLogo'
@@ -60,8 +75,12 @@ const DrLambdaLogo: React.FC<TemplateLogoType> = ({
 	} else {
 		if (custom_logo === 'Default') {
 			return (
-				<div className='absolute inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[12px] pb-[12px] z-50'>
+				<div
+					onClick={openBrandingModal}
+					className='absolute inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[12px] pb-[12px] z-50'
+				>
 					<Image
+						onClick={openBrandingModal}
 						unoptimized={true}
 						src={isChatslide() ? chatslideLogoBlackText : drlambdaLogo}
 						alt='Logo'
@@ -75,8 +94,12 @@ const DrLambdaLogo: React.FC<TemplateLogoType> = ({
 			);
 		} else {
 			return (
-				<div className='absolute inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[12px] pb-[12px] z-50'>
+				<div
+					onClick={openBrandingModal}
+					className='absolute inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[12px] pb-[12px] z-50'
+				>
 					<Image
+						onClick={openBrandingModal}
 						unoptimized={true}
 						src={custom_logo}
 						alt='custom logo'
@@ -108,8 +131,11 @@ export type TemplateLogoType = {
 	nonCoverLogo?: StaticImageData;
 	lightBGLogo?: StaticImageData;
 	darkBGLogo?: StaticImageData;
+	// isLogoLeftSide?: boolean;
+	logoPosition?: LogoPosition;
 };
 // generate school template logo logic
+
 export const generateTemplateLogo = ({
 	isCoverPage,
 	custom_logo,
@@ -121,6 +147,9 @@ export const generateTemplateLogo = ({
 	nonCoverLogo,
 	lightBGLogo,
 	darkBGLogo,
+	// isLogoLeftSide,
+	// isLogoLeftSide = true,
+	logoPosition,
 }: TemplateLogoType) => {
 	// console.log('custom_logo:', custom_logo);
 	// console.log('logo:', coverLogo);
@@ -129,14 +158,31 @@ export const generateTemplateLogo = ({
 		return <></>;
 	}
 
+	// const { slides, isTemplateLogoLeftSide, setIsTemplateLogoLeftSide } =
+	// 	useSlides();
+	const logoPosConfig = (logoPosition: LogoPosition) => {
+		if (logoPosition === 'BottomLeft') {
+			return 'top-[90%]';
+		} else if (logoPosition === 'BottomRight') {
+			return 'top-[90%] left-[83%]';
+		} else if (logoPosition === 'TopLeft') {
+			return 'top-[2%] ';
+		} else if (logoPosition === 'TopRight') {
+			return 'top-[2%] left-[83%]';
+		} else {
+			return 'top-[90%] ';
+		}
+	};
+
 	return (
 		<div
-			className={`absolute inset-0 top-[90%] w-full h-14 justify-start items-center gap-7 inline-flex pl-[12px] pb-[12px] z-40`}
+			className={`absolute inset-0 w-full h-14 justify-start items-center gap-7 inline-flex pl-[12px] pb-[12px] z-40 pr-[12px] ${logoPosConfig(logoPosition || 'BottomLeft')}`}
 		>
 			{custom_logo === template_name || custom_logo === 'Default' ? (
 				// use original template logo
 
 				<Image
+					onClick={openBrandingModal}
 					unoptimized={true}
 					// src={isCoverPage ? coverLogo : nonCoverLogo}
 					width={logoWidth}
@@ -161,6 +207,7 @@ export const generateTemplateLogo = ({
 				// 			></div>
 				// use user uploaded logo
 				<Image
+					onClick={openBrandingModal}
 					unoptimized={true}
 					width={45} // Adjust the multiplier as needed
 					height={40} // Adjust the multiplier as needed
@@ -181,6 +228,7 @@ export const BerkeleyTemplateLogo: React.FC<TemplateLogoType> = (
 		coverLogo: BerkeleyLogoWhite,
 		nonCoverLogo: BerkeleyLogo,
 		logoWidth: 6, // Adjust the width as needed
+		// isLogoLeftSide: isTemplateLogoLeftSide,
 	});
 
 export const StanfordTemplateLogo: React.FC<TemplateLogoType> = (
@@ -191,6 +239,7 @@ export const StanfordTemplateLogo: React.FC<TemplateLogoType> = (
 		coverLogo: StanfordLogo,
 		nonCoverLogo: StanfordLogo,
 		logoWidth: 3, // Adjust the width as needed
+		// isLogoLeftSide: isTemplateLogoLeftSide,
 	});
 
 export const HarvardTemplateLogo: React.FC<TemplateLogoType> = (
@@ -201,6 +250,7 @@ export const HarvardTemplateLogo: React.FC<TemplateLogoType> = (
 		coverLogo: HarvardLogo,
 		nonCoverLogo: HarvardLogo,
 		logoWidth: 8, // Adjust the width as needed
+		// isLogoLeftSide: isTemplateLogoLeftSide,
 	});
 
 export const MITTemplateLogo: React.FC<TemplateLogoType> = (
@@ -211,6 +261,7 @@ export const MITTemplateLogo: React.FC<TemplateLogoType> = (
 		coverLogo: MITLogo,
 		nonCoverLogo: MITLogo,
 		logoWidth: 3, // Adjust the width as needed
+		// isLogoLeftSide: isTemplateLogoLeftSide,
 	});
 
 export const PrincetonTemplateLogo: React.FC<TemplateLogoType> = (
@@ -221,6 +272,7 @@ export const PrincetonTemplateLogo: React.FC<TemplateLogoType> = (
 		coverLogo: PrincetonLogo,
 		nonCoverLogo: PrincetonLogo,
 		logoWidth: 6, // Adjust the width as needed
+		// isLogoLeftSide: isTemplateLogoLeftSide,
 	});
 
 export const CaltechTemplateLogo: React.FC<TemplateLogoType> = (
@@ -231,6 +283,7 @@ export const CaltechTemplateLogo: React.FC<TemplateLogoType> = (
 		coverLogo: CaltechLogo,
 		nonCoverLogo: CaltechLogo,
 		logoWidth: 6, // Adjust the width as needed
+		// isLogoLeftSide: isTemplateLogoLeftSide,
 	});
 
 export const UPennTemplateLogo: React.FC<TemplateLogoType> = (
@@ -241,6 +294,7 @@ export const UPennTemplateLogo: React.FC<TemplateLogoType> = (
 		coverLogo: UPennLogo,
 		nonCoverLogo: UPennLogo,
 		logoWidth: 6, // Adjust the width as needed
+		// isLogoLeftSide: isTemplateLogoLeftSide,
 	});
 export const UChicagoTemplateLogo: React.FC<TemplateLogoType> = (
 	props: TemplateLogoType,
@@ -250,6 +304,7 @@ export const UChicagoTemplateLogo: React.FC<TemplateLogoType> = (
 		coverLogo: UChicagoLogo,
 		nonCoverLogo: UChicagoLogo,
 		logoWidth: 4, // Adjust the width as needed
+		// isLogoLeftSide: isTemplateLogoLeftSide,
 	});
 export const YaleTemplateLogo: React.FC<TemplateLogoType> = (
 	props: TemplateLogoType,
@@ -259,6 +314,7 @@ export const YaleTemplateLogo: React.FC<TemplateLogoType> = (
 		coverLogo: YaleLogo,
 		nonCoverLogo: YaleLogo,
 		logoWidth: 3, // Adjust the width as needed
+		// isLogoLeftSide: isTemplateLogoLeftSide,
 	});
 
 export const JHUTemplateLogo: React.FC<TemplateLogoType> = (
@@ -269,6 +325,7 @@ export const JHUTemplateLogo: React.FC<TemplateLogoType> = (
 		coverLogo: JHULogo,
 		nonCoverLogo: JHULogo,
 		logoWidth: 8, // Adjust the width as needed
+		// isLogoLeftSide: isTemplateLogoLeftSide,
 	});
 export const ColumbiaTemplateLogo: React.FC<TemplateLogoType> = (
 	props: TemplateLogoType,
@@ -278,6 +335,7 @@ export const ColumbiaTemplateLogo: React.FC<TemplateLogoType> = (
 		coverLogo: ColumbiaLogo,
 		nonCoverLogo: ColumbiaLogo,
 		logoWidth: 10, // Adjust the width as needed
+		// isLogoLeftSide: isTemplateLogoLeftSide,
 	});
 
 export const Fun_Education_004_TemplateLogo: React.FC<TemplateLogoType> = (
@@ -288,6 +346,7 @@ export const Fun_Education_004_TemplateLogo: React.FC<TemplateLogoType> = (
 		coverLogo: isChatslide() ? chatslideLogoBlackText : drlambdaLogo,
 		nonCoverLogo: isChatslide() ? chatslideLogoBlackText : drlambdaLogo,
 		logoWidth: 8, // Adjust the width as needed
+		// isLogoLeftSide: isTemplateLogoLeftSide,
 	});
 
 export const Business_Dark_005_TemplateLogo: React.FC<TemplateLogoType> = (
@@ -298,6 +357,7 @@ export const Business_Dark_005_TemplateLogo: React.FC<TemplateLogoType> = (
 		coverLogo: isChatslide() ? chatslideLogoWhiteText : drlambdaLogo,
 		nonCoverLogo: isChatslide() ? chatslideLogoWhiteText : drlambdaLogo,
 		logoWidth: 8, // Adjust the width as needed
+		// isLogoLeftSide: isTemplateLogoLeftSide,
 	});
 
 export const Business_002_TemplateLogo: React.FC<TemplateLogoType> = (
@@ -308,6 +368,7 @@ export const Business_002_TemplateLogo: React.FC<TemplateLogoType> = (
 		coverLogo: isChatslide() ? chatslideLogoWhiteText : drlambdaLogo,
 		nonCoverLogo: isChatslide() ? chatslideLogoWhiteText : drlambdaLogo,
 		logoWidth: 8, // Adjust the width as needed
+		// isLogoLeftSide: isTemplateLogoLeftSide,
 	});
 
 export const Clean_Lifestyle_003_TemplateLogo: React.FC<TemplateLogoType> = (
@@ -318,6 +379,7 @@ export const Clean_Lifestyle_003_TemplateLogo: React.FC<TemplateLogoType> = (
 		coverLogo: isChatslide() ? chatslideLogoBlackText : drlambdaLogo,
 		nonCoverLogo: isChatslide() ? chatslideLogoBlackText : drlambdaLogo,
 		logoWidth: 8, // Adjust the width as needed
+		// isLogoLeftSide: isTemplateLogoLeftSide,
 	});
 
 export const Fun_Education_001_TemplateLogo: React.FC<TemplateLogoType> = (
@@ -328,6 +390,7 @@ export const Fun_Education_001_TemplateLogo: React.FC<TemplateLogoType> = (
 		coverLogo: isChatslide() ? chatslideLogoBlackText : drlambdaLogo,
 		nonCoverLogo: isChatslide() ? chatslideLogoBlackText : drlambdaLogo,
 		logoWidth: 8, // Adjust the width as needed
+		// isLogoLeftSide: isTemplateLogoLeftSide,
 	});
 
 export const Fun_Vibrant_007_TemplateLogo: React.FC<TemplateLogoType> = (
@@ -338,6 +401,7 @@ export const Fun_Vibrant_007_TemplateLogo: React.FC<TemplateLogoType> = (
 		coverLogo: isChatslide() ? chatslideLogoBlackText : drlambdaLogo,
 		nonCoverLogo: isChatslide() ? chatslideLogoBlackText : drlambdaLogo,
 		logoWidth: 8, // Adjust the width as needed
+		// isLogoLeftSide: isTemplateLogoLeftSide,
 	});
 
 export const Business_Light_006_TemplateLogo: React.FC<TemplateLogoType> = (
@@ -348,6 +412,7 @@ export const Business_Light_006_TemplateLogo: React.FC<TemplateLogoType> = (
 		coverLogo: isChatslide() ? chatslideLogoBlackText : drlambdaLogo,
 		nonCoverLogo: isChatslide() ? chatslideLogoBlackText : drlambdaLogo,
 		logoWidth: 8, // Adjust the width as needed
+		// isLogoLeftSide: isTemplateLogoLeftSide,
 	});
 
 // export const Simplistic_008_TemplateLogoDark: React.FC<TemplateLogoType> = (
@@ -375,6 +440,7 @@ export const Simplistic_008_TemplateLogo: React.FC<TemplateLogoType> = (
 			: drlambdaLogoBadgeBlackBG,
 		logoWidth: 8, // Adjust the width as needed
 		logoHeight: 1.5,
+		// isLogoLeftSide: isTemplateLogoLeftSide,
 	});
 
 export const New_Education_009_TemplateLogo: React.FC<TemplateLogoType> = (
@@ -392,6 +458,7 @@ export const New_Education_009_TemplateLogo: React.FC<TemplateLogoType> = (
 			: drlambdaLogoBadgeBlackBG,
 		logoWidth: 8, // Adjust the width as needed
 		logoHeight: 1.5,
+		// isLogoLeftSide: isTemplateLogoLeftSide,
 	});
 
 export const Event_Report_010_TemplateLogo: React.FC<TemplateLogoType> = (
@@ -409,6 +476,7 @@ export const Event_Report_010_TemplateLogo: React.FC<TemplateLogoType> = (
 			: drlambdaLogoBadgeBlackBG,
 		logoWidth: 8, // Adjust the width as needed
 		logoHeight: 1.5,
+		// isLogoLeftSide: isTemplateLogoLeftSide,
 	});
 
 export const Creative_Brief_011_TemplateLogo: React.FC<TemplateLogoType> = (
@@ -426,6 +494,7 @@ export const Creative_Brief_011_TemplateLogo: React.FC<TemplateLogoType> = (
 			: drlambdaLogoBadgeBlackBG,
 		logoWidth: 8, // Adjust the width as needed
 		logoHeight: 1.5,
+		// isLogoLeftSide: isTemplateLogoLeftSide,
 	});
 
 // Define the type for template logo information

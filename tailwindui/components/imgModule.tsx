@@ -1016,7 +1016,7 @@ export const ImgModule = ({
 				// cols={50}
 				value={inputValue}
 				onChange={handleInputChange}
-				placeholder='Paste embed code here'
+				placeholder='Paste youtube embed code here. Start with <iframe> tag'
 				style={{ marginBottom: '10px', width: '100%', maxWidth: '100%' }}
 			></textarea>
 			<div className='w-full mx-auto flex justify-center items-center'>
@@ -1746,7 +1746,9 @@ export const ImgModule = ({
 														fontWeight: 'bold',
 													}}
 												/>
-												{showIconsFunctionText(layoutEntry) ? 'Change' : ''}
+												<span>
+													{showIconsFunctionText(layoutEntry) ? 'Change' : ''}
+												</span>
 											</button>
 										)}
 
@@ -1765,7 +1767,9 @@ export const ImgModule = ({
 															color: '#344054',
 														}}
 													/>
-													{showIconsFunctionText(layoutEntry) ? 'Resize' : ''}
+													<span>
+														{showIconsFunctionText(layoutEntry) ? 'Resize' : ''}
+													</span>
 												</>
 											) : (
 												<>
@@ -1801,7 +1805,9 @@ export const ImgModule = ({
 															color: '#344054',
 														}}
 													/>
-													{showIconsFunctionText(layoutEntry) ? 'Delete' : ''}
+													<span>
+														{showIconsFunctionText(layoutEntry) ? 'Delete' : ''}
+													</span>
 												</button>
 												{project?.additional_images && (
 													<button
@@ -1820,9 +1826,11 @@ export const ImgModule = ({
 																color: '#344054',
 															}}
 														/>
-														{showIconsFunctionText(layoutEntry)
-															? 'Shuffle'
-															: ''}
+														<span>
+															{showIconsFunctionText(layoutEntry)
+																? 'Shuffle'
+																: ''}
+														</span>
 													</button>
 												)}
 											</>

@@ -85,7 +85,7 @@ export default function Affiliate() {
 							</p>
 							<div className='w-full flex flex-col items-center my-4'>
 								<DrlambdaLink
-									link='https://drlambda-1.getrewardful.com/signup'
+									link='https://chatslide.getrewardful.com/signup'
 									text='Start Earning Now'
 								/>
 							</div>
