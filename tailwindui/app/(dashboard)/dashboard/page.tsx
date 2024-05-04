@@ -240,6 +240,7 @@ export default function Dashboard() {
 
 	const handleRenameFolder = (folderName: string) => {
 		setPrevFolderName(folderName);
+    setRenameInput(folderName);
 		setShowRenameFolderModal(true);
 	};
 
