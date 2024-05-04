@@ -102,17 +102,12 @@ const BrandingSelector: React.FC<{
 						message='Unlock this feature to adjust your logo position'
 					/>
 					<Instruction>
-						Which position do you wanna put the logo?{' '}
-						{!isPaidUser && <PlusLabel />}
+						Where do you want to put the logo?{' '}
 					</Instruction>
 					<RadioButton
 						options={LogoPositionOptions}
 						selectedValue={logoPosition}
 						setSelectedValue={(e) => {
-							if (e !== 'BottomLeft' && !isPaidUser) {
-								setShowPaywall(true);
-								return;
-							}
 							// setIsTemplateLogoLeftSide(e === 'yes' ? true : false);
 							setLogoPosition(e as LogoPosition);
 							updateTemplateLogoPosition(e as LogoPosition);
