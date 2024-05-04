@@ -116,7 +116,7 @@ const AdvancedOptions: React.FC<{
 							: [
 									{ value: 'custom', text: 'General Structure' },
 									{ value: 'my_outline', text: 'Detailed Outline' },
-									{ value: 'follow_resource', text: 'Structure of a source' },
+									{ value: 'follow_resource', text: 'Structure of a Source' },
 								]
 					}
 					selectedValue={structureMode}
@@ -672,16 +672,15 @@ export default function Topic() {
 						<LanguageSelector language={language} setLanguage={setLanguage} />
 					</WrappableRow>
 
-					{!advancedMode ? (
-						<Instruction>
-							<div
-								onClick={() => setAdvancedMode(true)}
-								className='cursor-pointer text-blue-600'
-							>
-								Advanced Options
-							</div>
-						</Instruction>
-					) : (
+					<Instruction>
+						<div
+							onClick={() => setAdvancedMode(!advancedMode)}
+							className='cursor-pointer text-blue-600'
+						>
+							{!advancedMode ? <span>Hide </span> : <span></span>} Advanced Options
+						</div>
+					</Instruction>
+					{!advancedMode && (
 						<AdvancedOptions
 							outlineStructure={outlineStructure}
 							setOutlineStructure={setOutlineStructure}
