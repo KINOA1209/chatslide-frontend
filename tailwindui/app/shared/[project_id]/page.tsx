@@ -79,7 +79,7 @@ export default async function Page({ params }: Props) {
 				<Header loginRequired={false} isLanding={false} />
 			</div>
 			<JoinUsBanner />
-			<main className='w-full flex grow flex-col overflow-y-hidden'>
+			<main className='w-full flex grow flex-col overflow-y-scroll'>
 				<SharePage project_id={project_id} />
 
 				{project.description && (
