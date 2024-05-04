@@ -22,7 +22,7 @@ export const InputBox: React.FC<InputBoxProps> = ({ children, onClick }) => {
 
 	return (
 		<div
-			className='h-[36px] sm:h-[36px] w-full flex flex-row flex-nowrap items-center justify-center border border-2 border-gray-200 bg-gray-100 px-3 py-2.5 gap-x-2 cursor-text rounded-lg overflow-visible'
+			className='h-[36px] sm:h-[36px] w-full flex flex-row flex-nowrap items-center justify-center border border-2 border-gray-200 px-3 py-2.5 gap-x-2 cursor-text rounded-lg overflow-visible'
 			onClick={onClick}
 			ref={ref}
 		>
@@ -57,14 +57,14 @@ export const NewInputBox: React.FC<{
 
 	return (
 		<div
-			className='h-[36px] sm:h-[36px] w-full flex flex-row flex-nowrap items-center justify-center border border-2 border-gray-200 bg-gray-100 px-3 py-2.5 gap-x-2 cursor-text rounded-lg overflow-visible'
+			className='h-[36px] sm:h-[36px] w-full flex flex-row flex-nowrap items-center justify-center border border-2 border-gray-200 px-3 py-2.5 gap-x-2 cursor-text rounded-lg overflow-visible'
 			ref={ref}
 		>
       {icon}
 			<input
 				id='key'
 				type='text'
-				className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800 bg-gray-100'
+				className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800'
 				onChange={(e) => onChange(e.target.value)}
 				onClick={(e) => {
 					autoSelect && (e.target as HTMLInputElement)?.select();

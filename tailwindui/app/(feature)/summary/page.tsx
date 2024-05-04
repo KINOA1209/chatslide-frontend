@@ -42,7 +42,7 @@ import slides_scenarios from './../scenario-choice/slides_scenarios.json';
 import RangeSlider from '@/components/ui/RangeSlider';
 import GenModeToggle from '@/components/summary/GenModeToggle';
 import { WrappableRow } from '@/components/layout/WrappableRow';
-import { InputBox } from '@/components/ui/InputBox';
+import { InputBox, NewInputBox } from '@/components/ui/InputBox';
 import RadioButton from '@/components/ui/RadioButton';
 
 const MAX_TOPIC_LENGTH = 3000;
@@ -121,6 +121,7 @@ const AdvancedOptions: React.FC<{
 					}
 					selectedValue={structureMode}
 					setSelectedValue={setStructureMode}
+          cols={generationMode  === 'from_topic' ? 2 : 3}
 				/>
 
 				{structureMode === 'custom' ? (
@@ -130,17 +131,13 @@ const AdvancedOptions: React.FC<{
 							it here. We will write the outline based on this structure and the
 							number of pages you want.
 						</Explanation>
-						<InputBox>
-							<input
-								id='outline_structure'
-								key='outline_structure'
-								type='text'
-								className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800'
-								placeholder='Introduction, background, details, examples, conclusion.'
-								value={outlineStructure}
-								onChange={(e) => setOutlineStructure(e.target.value)}
-							/>
-						</InputBox>
+            <NewInputBox
+              value={outlineStructure}
+              onChange={setOutlineStructure}
+              placeholder='Introduction, background, details, examples, conclusion.'
+              maxLength={1000}
+            />
+
 					</>
 				) : structureMode === 'my_outline' ? (
 					<WarningMessage>
