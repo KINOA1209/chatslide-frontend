@@ -32,7 +32,7 @@ import '@/components/slides/drag_resize/dragAndResizeCSS.css';
 import { removeTags, useSlides } from '@/hooks/use-slides';
 import { LayoutElements } from './slides/templates_customizable_elements/layout_elements';
 import Modal from './ui/Modal';
-import { InputBox } from './ui/InputBox';
+import { InputBox, NewInputBox } from './ui/InputBox';
 import { SpinIcon } from '@/app/(feature)/icons';
 import { FaCheck, FaSearch, FaTrash } from 'react-icons/fa';
 import DrlambdaButton, { BigBlueButton } from './button/DrlambdaButton';
@@ -995,12 +995,6 @@ export const ImgModule = ({
 		}
 	};
 
-	const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-		const newInputValue = event.target.value;
-		setInputValue(newInputValue);
-		// setErrorMessage('');
-	};
-
 	const isConfirmDisabled = inputValue.trim() === '';
 
 	useEffect(() => {
@@ -1008,17 +1002,20 @@ export const ImgModule = ({
 	}, [currentStoredEmbedCode]);
 
 	const EmbedCodeDiv = (
-		<div>
+		<div className='flex flex-col gap-y-2'>
 			<ToastContainer />
-			{/* <h1>Iframe</h1> */}
-			<textarea
-				rows={5}
-				// cols={50}
+
+			<Explanation>
+				This is beta feature. Only Youtube embed code is supported for now.
+			</Explanation>
+
+			<NewInputBox
+				placeholder='Paste YouTube embed code here. Start with <iframe> tag.'
 				value={inputValue}
-				onChange={handleInputChange}
-				placeholder='Paste youtube embed code here. Start with <iframe> tag'
-				style={{ marginBottom: '10px', width: '100%', maxWidth: '100%' }}
-			></textarea>
+				onChange={setInputValue}
+				rows={5}
+			/>
+
 			<div className='w-full mx-auto flex justify-center items-center'>
 				<BigBlueButton
 					// isSubmitting={uploading || searching}
@@ -1029,9 +1026,10 @@ export const ImgModule = ({
 						marginBottom: '6px',
 					}}
 				>
-					Confirm pasting
+					Preview
 				</BigBlueButton>
 			</div>
+
 			<div className='w-full mx-auto flex flex-col justify-center items-center'>
 				{/* <h1>Embedding Example</h1> */}
 				<IFrameEmbed
@@ -1049,7 +1047,7 @@ export const ImgModule = ({
 							}}
 							customizeStyle={{ marginTop: '6px' }}
 						>
-							Add Embed Code
+							Confirm
 						</BigBlueButton>
 					)}
 			</div>
@@ -1380,7 +1378,7 @@ export const ImgModule = ({
 				<Modal
 					showModal={showModal}
 					setShowModal={setShowModal}
-					title='Image / Chart / Embed Code'
+					title='Media'
 				>
 					<div className='flex grow h-[400px] w-full sm:w-[600px] flex-col overflow-auto'>
 						<div className='w-full flex flex-col' ref={typeRef}>
