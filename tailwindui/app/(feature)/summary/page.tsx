@@ -164,17 +164,7 @@ const AdvancedOptions: React.FC<{
 									setResourceToFollowStructureFrom(selectedResource);
 								}
 							}}
-							width='20rem'
-							onLoad={() => {
-								const initialResource = selectedResources[0]; // Get the first resource as initial value
-								if (initialResource) {
-									setResourceToFollowStructureFrom(initialResource);
-									console.log(
-										'resourceToFollowStructureFrom',
-										resourceToFollowStructureFrom?.id,
-									);
-								}
-							}}
+							width='30rem'
 						>
 							{selectedResources.map((resource, index) => (
 								<option key={index} value={resource.id}>
