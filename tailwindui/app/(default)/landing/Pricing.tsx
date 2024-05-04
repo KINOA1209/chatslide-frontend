@@ -28,7 +28,7 @@ const PricingComparison: React.FC<{
 		if (!token) {
 			return 'Sign up to Start';
 		}
-		if (interval === 'onetime' && tier != 'PLUS') {
+		if (interval === 'onetime' && tier === 'ULTIMATE') {
 			return '⏹️ Unavailable';
 		}
 		if (userTier.includes('CANCELLED') || userTier === 'FREE') {
