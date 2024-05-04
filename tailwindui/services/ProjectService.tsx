@@ -260,6 +260,8 @@ class ProjectService {
 			);
 			slide.chart = slideData.chart;
 			slide.is_chart = slideData.is_chart || [false, false, false];
+			slide.media_types = slideData.media_types || ['image', 'image', 'image'];
+			slide.embed_code = slideData.embed_code || ['', '', ''];
 			slide.images_position = slideData.images_position;
 			// console.log(
 			//     'slideData.content.length',

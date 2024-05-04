@@ -1,7 +1,7 @@
 import React, { CSSProperties, useEffect, useRef, useState } from 'react';
 import AuthService from '@/services/AuthService';
 import { createPortal } from 'react-dom';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import ResourceService from '@/services/ResourceService';
 import Resource from '@/models/Resource';
 import Image from 'next/image';
@@ -54,6 +54,10 @@ import { WordSelector } from './slides/WordSelector';
 import { useSocialPosts } from '@/hooks/use-socialpost';
 import { MdImageSearch } from 'react-icons/md';
 import { IoMdCrop } from 'react-icons/io';
+import IFrameEmbed, { executeScripts } from './utils/IFrameEmbed';
+import useJSScript from '@/hooks/use-JSScript';
+import { LayoutKeys } from './slides/slideLayout';
+import { Media } from '@/models/Slide';
 
 interface ImgModuleProp {
 	imgsrc: string;
@@ -77,6 +81,10 @@ interface ImgModuleProp {
 	isSocialPostTemp1Cover?: boolean;
 	search_illustration?: boolean;
 	defaultObjectFit?: 'contain' | 'cover';
+	embed_code?: string[];
+	embed_code_single?: string;
+	media_types?: Media[];
+	media_type?: Media;
 }
 
 enum ImgQueryMode {
@@ -84,6 +92,7 @@ enum ImgQueryMode {
 	SEARCH,
 	GENERATION,
 	CHART_SELECTION,
+	EMBED_CODE,
 }
 
 const imageLicenseOptions: RadioButtonOption[] = [
@@ -147,7 +156,16 @@ export const ImgModule = ({
 	isSlide = true,
 	isSocialPostTemp1Cover = false,
 	defaultObjectFit = 'contain',
+	embed_code,
+	embed_code_single,
+	media_types,
+	media_type,
 }: ImgModuleProp) => {
+	// Regular expression to find width and height attributes
+	const regex = /width="(\d+)" height="(\d+)"/;
+
+	// Replace width and height attributes with '100%'
+
 	const sourceImage = useImageStore((state) => state.sourceImage);
 	const { project } = useProject();
 	const { slideIndex, slides } = useSlides();
@@ -200,13 +218,40 @@ export const ImgModule = ({
 		if (imgsrc !== '') {
 			setSelectedImg(imgsrc);
 		}
+		console.log('imgsrc', imgsrc);
 	}, [imgsrc]);
+
+	// useEffect(() => {
+	// 	if (modified_embed_code && modified_embed_code !== '') {
+	// 		setCurrentStoredEmbedCode(modified_embed_code);
+	// 	}
+	// 	console.log('modified_embed_code', modified_embed_code);
+	// }, [modified_embed_code]);
+
+	// useEffect(() => {
+	// 	console.log('embed_code is :', embed_code);
+	// }, [embed_code]);
 
 	const handleImageDrop = (e: React.DragEvent<HTMLDivElement>) => {
 		e.preventDefault();
 		if (sourceImage) {
 			const droppedImageUrl = sourceImage;
 			// Update the image source with the dropped image URL
+
+			let updated_media_typesArr = [
+				...(media_types || ['image', 'image', 'image']),
+			];
+			updated_media_typesArr[currentContentIndex] = 'image';
+
+			let updated_ischartArr = [...ischartArr];
+			updated_ischartArr[currentContentIndex] = false;
+
+			handleSlideEdit(
+				[updated_media_typesArr, updated_ischartArr],
+				currentSlideIndex,
+				['media_types', 'is_chart'],
+			);
+
 			updateSingleCallback(droppedImageUrl, false, {});
 		}
 	};
@@ -402,6 +447,19 @@ export const ImgModule = ({
 		e.preventDefault();
 		// update image here to template & source html
 		// reset images position after changing image
+		let updated_media_typesArr = [
+			...(media_types || ['image', 'image', 'image']),
+		];
+		updated_media_typesArr[currentContentIndex] = 'image';
+
+		let updated_ischartArr = [...ischartArr];
+		updated_ischartArr[currentContentIndex] = false;
+		handleSlideEdit(
+			[updated_media_typesArr, updated_ischartArr],
+			currentSlideIndex,
+			['media_types', 'is_chart'],
+		);
+
 		updateSingleCallback(
 			decodeImageUrl((e.target as HTMLImageElement).getAttribute('src')),
 			false,
@@ -533,34 +591,6 @@ export const ImgModule = ({
 	) => {
 		setHoverQueryMode(selectedQueryMode);
 		console.log('out', selectedQueryMode);
-	};
-
-	interface YouTubeEmbedProps {
-		videoId: string;
-		width?: string;
-		height?: string;
-	}
-	const YouTubeEmbed: React.FC<YouTubeEmbedProps> = ({
-		videoId,
-		width = '100%',
-		height = '100%',
-	}) => {
-		// YouTube embed URL
-		const embedUrl = `https://www.youtube.com/embed/${videoId}`;
-
-		return (
-			<div style={{ width: width, height: height }}>
-				<iframe
-					width={width}
-					height={height}
-					src={embedUrl}
-					frameBorder={0}
-					allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
-					allowFullScreen
-					title='YouTube Video Player'
-				></iframe>
-			</div>
-		);
 	};
 
 	const resourceSelectionDiv = (
@@ -851,19 +881,181 @@ export const ImgModule = ({
 			let updated_chartArr = [...chartArr];
 			updated_chartArr[currentContentIndex] = updated_chartdata;
 
+			let updated_media_typesArr = [
+				...(media_types || ['image', 'image', 'image']),
+			];
+			updated_media_typesArr[currentContentIndex] = 'chart';
 			//autosave ischart
 			let updated_ischartArr = [...ischartArr];
 			updated_ischartArr[currentContentIndex] = true;
 			handleSlideEdit(
-				[updated_chartArr, updated_ischartArr],
+				[updated_chartArr, updated_ischartArr, updated_media_typesArr],
 				currentSlideIndex,
-				['chart', 'is_chart'],
+				['chart', 'is_chart', 'media_types'],
 			);
+			// setMediaType((prevState) => ({ ...prevState, chart: true }));
 			closeModal();
 		} else {
 			closeModal();
 		}
 	};
+
+	const iFrameDimension = (layout: LayoutKeys) => {
+		if (layout === 'Cover_img_1_layout' || layout === 'Col_2_img_1_layout') {
+			return 'width="450px" height="500px"';
+		} else if (layout === 'Full_img_only_layout') {
+			return 'width="940px" height="520px"';
+		} else if (layout === 'Col_2_img_2_layout') {
+			return 'width="400px" height="150px"';
+		} else if (layout === 'Col_1_img_1_layout') {
+			return 'width="940px" height="150px"';
+		} else {
+			return 'width="300px" height="100px"';
+		}
+	};
+
+	const modified_embed_code_single =
+		embed_code_single &&
+		embed_code_single.replace(
+			regex,
+			iFrameDimension(slides[slideIndex].layout),
+		);
+
+	// const [mediaType, setMediaType] = useState({
+	// 	image: false,
+	// 	embed: true,
+	// 	chart: false,
+	// });
+	// handle all embed code related
+	const [currentStoredEmbedCode, setCurrentStoredEmbedCode] = useState<string>(
+		modified_embed_code_single || '',
+	);
+	const [inputValue, setInputValue] = useState(currentStoredEmbedCode);
+	const handleDoneEmbeddingCode = () => {
+		if (selectedQueryMode === ImgQueryMode.EMBED_CODE && embed_code) {
+			let updated_embed_code = [...embed_code];
+			updated_embed_code[currentContentIndex] = currentStoredEmbedCode || '';
+
+			let updated_media_typesArr = [
+				...(media_types || ['image', 'image', 'image']),
+			];
+			let updated_ischartArr = [...ischartArr];
+			updated_ischartArr[currentContentIndex] = false;
+			updated_media_typesArr[currentContentIndex] = 'embed';
+			// console.log('currentStoredEmbedCode', currentStoredEmbedCode);
+			handleSlideEdit(
+				[updated_embed_code, updated_media_typesArr, updated_ischartArr],
+				currentSlideIndex,
+				['embed_code', 'media_types', 'is_chart'],
+			);
+			// setMediaType((prevState) => ({ ...prevState, embed: true }));
+			closeModal();
+		} else {
+			closeModal();
+		}
+	};
+	// const handleUpdateStoredEmbedCode = (embedCode: string) => {
+	// 	// useJSScript(embedCode);
+	// 	setCurrentStoredEmbedCode(embedCode);
+	// };
+
+	useEffect(() => {
+		console.log('currentStoredEmbedCode content', currentStoredEmbedCode);
+	}, [currentStoredEmbedCode]);
+
+	const handleConfirmClick = () => {
+		if (
+			inputValue.startsWith('<iframe') ||
+			(inputValue.startsWith('<blockquote') &&
+				inputValue.includes('youtube.com'))
+		) {
+			// setEmbedCode(inputValue);
+
+			const modified_embed_code_input =
+				inputValue &&
+				inputValue.replace(regex, iFrameDimension(slides[slideIndex].layout));
+			setCurrentStoredEmbedCode(modified_embed_code_input); // Update currentStoredEmbedCode in parent
+		} else {
+			// setErrorMessage(
+			// 	'Please paste embed code that starts with <iframe> or <blockquote>.',
+			// );
+			toast.error(
+				'Please paste youtube embed code that starts with <iframe> or <blockquote>.',
+				{
+					position: 'top-center',
+					autoClose: 2000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					theme: 'light',
+				},
+			);
+		}
+	};
+
+	const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+		const newInputValue = event.target.value;
+		setInputValue(newInputValue);
+		// setErrorMessage('');
+	};
+
+	const isConfirmDisabled = inputValue.trim() === '';
+
+	useEffect(() => {
+		executeScripts(currentStoredEmbedCode);
+	}, [currentStoredEmbedCode]);
+
+	const EmbedCodeDiv = (
+		<div>
+			<ToastContainer />
+			{/* <h1>Iframe</h1> */}
+			<textarea
+				rows={5}
+				// cols={50}
+				value={inputValue}
+				onChange={handleInputChange}
+				placeholder='Paste youtube embed code here. Start with <iframe> tag'
+				style={{ marginBottom: '10px', width: '100%', maxWidth: '100%' }}
+			></textarea>
+			<div className='w-full mx-auto flex justify-center items-center'>
+				<BigBlueButton
+					// isSubmitting={uploading || searching}
+					onClick={handleConfirmClick}
+					disabled={isConfirmDisabled}
+					customizeStyle={{
+						cursor: isConfirmDisabled ? 'not-allowed' : 'pointer',
+						marginBottom: '6px',
+					}}
+				>
+					Confirm pasting
+				</BigBlueButton>
+			</div>
+			<div className='w-full mx-auto flex flex-col justify-center items-center'>
+				{/* <h1>Embedding Example</h1> */}
+				<IFrameEmbed
+					currentStoredEmbedCode={currentStoredEmbedCode}
+					// setCurrentStoredEmbedCode={handleUpdateStoredEmbedCode}
+					// handleConfirmClick={handleConfirmClick}
+				/>
+				{selectedQueryMode === ImgQueryMode.EMBED_CODE &&
+					currentStoredEmbedCode && (
+						<BigBlueButton
+							isSubmitting={uploading || searching}
+							onClick={(e) => {
+								e.preventDefault();
+								handleDoneEmbeddingCode();
+							}}
+							customizeStyle={{ marginTop: '6px' }}
+						>
+							Add Embed Code
+						</BigBlueButton>
+					)}
+			</div>
+		</div>
+	);
+
 	const chartSelectionDiv = (
 		<div>
 			{chartModalContent === 'selection' && (
@@ -1188,19 +1380,11 @@ export const ImgModule = ({
 				<Modal
 					showModal={showModal}
 					setShowModal={setShowModal}
-					title='Image / Chart'
+					title='Image / Chart / Embed Code'
 				>
-					{/* <div>
-						<h1>YouTube Video</h1>
-						<YouTubeEmbed
-							videoId='B91wc5dCEBA'
-							// width={'300px'}
-							// height={'300px'}
-						/>
-					</div> */}
 					<div className='flex grow h-[400px] w-full sm:w-[600px] flex-col overflow-auto'>
 						<div className='w-full flex flex-col' ref={typeRef}>
-							<div className='w-full grid grid-cols-4'>
+							<div className='w-full grid grid-cols-5'>
 								<button
 									className='cursor-pointer whitespace-nowrap py-2 flex flex-row justify-center items-center'
 									onClick={(e) => {
@@ -1265,13 +1449,32 @@ export const ImgModule = ({
 								>
 									Chart
 								</button>
+								<button
+									className='cursor-pointer whitespace-nowrap py-2 flex flex-row justify-center items-center'
+									onClick={(e) => {
+										setSelectedQueryMode(ImgQueryMode.EMBED_CODE);
+										setSearchResult([]);
+										// setKeyword('');
+									}}
+									onMouseOver={(e) => {
+										handleMouseOver(e, ImgQueryMode.EMBED_CODE);
+									}}
+									onMouseOut={(e) => {
+										handleMouseOut(e, ImgQueryMode.EMBED_CODE);
+									}}
+								>
+									Embed
+								</button>
 							</div>
+							{/* sliding animation */}
 							<div className='w-full bg-slate-200 mb-2'>
 								<div
 									className={`w-1/4 h-[2px] bg-black
-										${hoverQueryMode == ImgQueryMode.RESOURCE && 'ml-[25%]'} 
-										${hoverQueryMode == ImgQueryMode.GENERATION && 'ml-[50%]'} 
-										${hoverQueryMode == ImgQueryMode.CHART_SELECTION && 'ml-[75%]'} 
+										${hoverQueryMode == ImgQueryMode.SEARCH && 'ml-0'} 
+										${hoverQueryMode == ImgQueryMode.RESOURCE && 'ml-[20%]'} 
+										${hoverQueryMode == ImgQueryMode.GENERATION && 'ml-[40%]'} 
+										${hoverQueryMode == ImgQueryMode.CHART_SELECTION && 'ml-[60%]'} 
+										${hoverQueryMode == ImgQueryMode.EMBED_CODE && 'ml-[80%]'} 
                                 		transition-all ease-in-out`}
 								></div>
 							</div>
@@ -1285,6 +1488,7 @@ export const ImgModule = ({
 							{selectedQueryMode == ImgQueryMode.GENERATION && imgGenerationDiv}
 							{selectedQueryMode == ImgQueryMode.CHART_SELECTION &&
 								chartSelectionDiv}
+							{selectedQueryMode == ImgQueryMode.EMBED_CODE && EmbedCodeDiv}
 						</div>
 					</div>
 
@@ -1312,246 +1516,286 @@ export const ImgModule = ({
 			)}
 
 			{/* image itself */}
-			<div
-				onDrop={handleImageDrop}
-				onDragOver={(e) => e.preventDefault()}
-				onClick={openModal}
-				className={`w-full h-full transition ease-in-out duration-150 relative ${
-					selectedImg === ''
-						? 'bg-[#E7E9EB]'
-						: canEdit
-							? 'hover:bg-[#CAD0D3]'
-							: ''
-				} flex flex-col items-center justify-center`} //${canEdit && !isImgEditMode ? 'cursor-pointer' : ''}
-				style={{
-					overflow: isImgEditMode ? 'visible' : 'hidden',
-					borderRadius: customImageStyle?.borderRadius,
-				}}
-			>
-				{ischartArr &&
-				ischartArr[currentContentIndex] &&
-				selectedChartType &&
-				chartData.length > 0 ? ( // chart
-					<div
-						className='w-full h-full flex items-center justify-center overflow-hidden '
-						// onClick={openModal}
-					>
-						<DynamicChart
-							chartType={selectedChartType}
-							chartData={chartData}
-							isPrview={!canEdit}
-						/>
-					</div>
-				) : selectedImg === '' || imgLoadError ? ( // updload icon
-					// if loading is fail and in editable page we show the error image
-					// otherwise(like presentation) show a empty div
-					canEdit ? (
+			{
+				<div
+					onDrop={handleImageDrop}
+					onDragOver={(e) => e.preventDefault()}
+					onClick={openModal}
+					className={`w-full h-full transition ease-in-out duration-150 relative ${
+						selectedImg === ''
+							? 'bg-[#E7E9EB]'
+							: canEdit
+								? 'hover:bg-[#CAD0D3]'
+								: ''
+					} flex flex-col items-center justify-center`} //${canEdit && !isImgEditMode ? 'cursor-pointer' : ''}
+					style={{
+						overflow: isImgEditMode ? 'visible' : 'hidden',
+						borderRadius: customImageStyle?.borderRadius,
+					}}
+				>
+					{ischartArr &&
+					ischartArr[currentContentIndex] &&
+					media_types &&
+					media_types[currentContentIndex] === 'chart' &&
+					selectedChartType &&
+					chartData.length > 0 ? ( // chart
 						<div
-							className='flex flex-col items-center justify-center cursor-pointer'
+							className='w-full h-full flex items-center justify-center overflow-hidden '
 							// onClick={openModal}
 						>
-							<svg
-								className='w-20 h-20 opacity-50'
-								viewBox='0 0 24 24'
-								xmlns='http://www.w3.org/2000/svg'
-							>
-								<rect x='0' fill='none' width='24' height='24' />
-								<g>
-									<path d='M23 4v2h-3v3h-2V6h-3V4h3V1h2v3h3zm-8.5 7c.828 0 1.5-.672 1.5-1.5S15.328 8 14.5 8 13 8.672 13 9.5s.672 1.5 1.5 1.5zm3.5 3.234l-.513-.57c-.794-.885-2.18-.885-2.976 0l-.655.73L9 9l-3 3.333V6h7V4H6c-1.105 0-2 .895-2 2v12c0 1.105.895 2 2 2h12c1.105 0 2-.895 2-2v-7h-2v3.234z' />
-								</g>
-							</svg>
-							<div className='text-black opacity-50'>
-								{canEdit && 'Click to add image'}
-							</div>
+							<DynamicChart
+								chartType={selectedChartType}
+								chartData={chartData}
+								isPrview={!canEdit}
+							/>
 						</div>
-					) : (
-						<div></div>
-					)
-				) : (
-					// image
-
-					<div
-						className={`
-							${isImgEditMode ? 'rndContainerWithOutBorder' : ''}
-							${!isSlide ? 'absolute top-0 left-0 w-full h-full' : ''}
-						`}
-						style={{
-							...layoutElements?.rndContainerCSS,
-						}}
-						ref={imageRefs[currentContentIndex]}
-						onMouseEnter={() => setShowImgButton(true)}
-						onMouseLeave={() => setShowImgButton(false)}
-						onClick={openModal}
-					>
-						{!isSlide && isSocialPostTemp1Cover && (
-							<div
-								className='absolute inset-0'
-								style={{
-									backgroundImage: `linear-gradient(180deg, ${socialPosts[socialPostsIndex].theme.cover_start}, ${socialPosts[socialPostsIndex].theme.cover_end} 40%)`,
-									zIndex: 2,
-								}}
-							/>
-						)}
-						<Rnd
-							className={`${isImgEditMode ? 'rndContainerWithBorder' : ''}`}
-							style={{ ...layoutElements?.rndCSS }}
-							size={{
-								width:
-									imagesDimensions[currentContentIndex]?.width ?? 'max-content',
-								//imageRefs[currentContentIndex]?.current?.clientWidth ??
-								//imageSize.width ? imageSize.width : ,
-								height: imagesDimensions[currentContentIndex]?.height ?? 'auto',
-								// imageRefs[currentContentIndex]?.current?.clientHeight ??
-								//imageSize.height ? imageSize.height : 'auto',
-							}}
-							position={{
-								x: imagesDimensions[currentContentIndex]?.x ?? 0,
-								y: imagesDimensions[currentContentIndex]?.y ?? 0,
-							}}
-							enableResizing={canEdit && isImgEditMode}
-							lockAspectRatio={false}
-							disableDragging={
-								!canEdit || !showImgButton || !isImgEditMode || showModal
-							}
-							onDragStart={handleDragStart(currentContentIndex)}
-							onDragStop={handleDragStop(currentContentIndex)}
-							onResizeStart={handleResizeStart}
-							onResizeStop={handleResizeStop(currentContentIndex)}
-							resizeHandleStyles={{
-								topLeft: { ...circle_indicator, left: '-7px' },
-								topRight: { ...circle_indicator, right: '-7px' },
-								bottomLeft: { ...circle_indicator, left: '-7px' },
-								bottomRight: { ...circle_indicator, right: '-7px' },
-								top: { ...rectangular_indicator, ...rectangular_horizontal },
-								bottom: { ...rectangular_indicator, ...rectangular_horizontal },
-								left: { ...rectangular_indicator, ...rectangular_vertical },
-								right: { ...rectangular_indicator, ...rectangular_vertical },
-							}}
+					) : embed_code &&
+					  embed_code[currentContentIndex] &&
+					  media_types &&
+					  media_types[currentContentIndex] === 'embed' ? ( // embed code
+						<div
+							// onMouseEnter={() => setShowImgButton(true)}
+							// onMouseLeave={() => setShowImgButton(false)}
+							onClick={() => setShowModal(true)}
 						>
-							<Image
-								unoptimized={imgsrc?.includes('freepik') ? false : true}
-								style={{
-									//dont use contain, it will make resize feature always resize based on aspect ratio
-									objectFit: 'fill',
-									height: '100%',
-									//width: 'auto',
-									width: '100%',
-									// borderRadius: customImageStyle?.borderRadius,
-									//transform: `scale(${zoomLevel / 100})`,
-									//transformOrigin: 'center center',
-								}}
-								src={imgsrc}
-								alt='Image'
-								// layout='contain'
-								width={960}
-								height={540}
-								// objectFit='contain'
-								className={`transition ease-in-out duration-150 ${
-									canEdit
-										? isImgEditMode
-											? 'brightness-100'
-											: 'hover:brightness-50'
-										: ''
-								}`}
-								onError={(e) => {
-									console.log('failed to load image', imgsrc);
-									setImgLoadError(true);
-									updateSingleCallback('shuffle', false, {});
-								}}
-							/>
-						</Rnd>
-						{canEdit && showImgButton && (
-							<div
-								className={`absolute top-2 ${
-									isImgEditMode ? 'left-2' : 'left-4'
-								}`}
-								style={{ zIndex: 53 }}
-							>
-								<ToolBar>
-									{!isImgEditMode && (
+							{/* {canEdit && showImgButton && (
+								<div
+									className={`absolute top-4 font-creato-medium left-0`}
+									style={{ zIndex: 53 }}
+								>
+									<ToolBar>
 										<button
-											onClick={openModal}
+											onClick={() => setShowModal(true)}
 											className='flex flex-row items-center justify-center gap-1'
 										>
-											<MdImageSearch
-												style={{
-													width: '1.2rem',
-													height: '1.2rem',
-													color: '#344054',
-													fontWeight: 'bold',
-												}}
-											/>
-											<span>
-												{showIconsFunctionText(layoutEntry) ? 'Change' : ''}
-											</span>
+											{
+												<>
+													<FaCheck
+														style={{
+															strokeWidth: '0.8',
+															width: '1rem',
+															height: '1rem',
+															fontWeight: 'bold',
+															color: '#344054',
+														}}
+													/>
+													Change
+												</>
+											}
 										</button>
-									)}
+									</ToolBar>
+								</div>
+							)} */}
+							<div
+								// style={{
+								// 	width: '-webkit-fill-available',
+								// 	height: '-webkit-fill-available',
+								// }}
+								// className='pointer-events-none'
+								// onMouseOver={(e) => e.preventDefault()}
+								// onMouseLeave={(e) => e.preventDefault()}
+								// onMouseEnter={() => setShowImgButton(true)}
+								// onMouseLeave={() => setShowImgButton(false)}
+								// onClick={(e) => e.preventDefault()}
+								dangerouslySetInnerHTML={{
+									__html: embed_code[currentContentIndex],
+								}}
+							></div>
+						</div>
+					) : selectedImg === '' || imgLoadError ? ( // updload icon
+						// if loading is fail and in editable page we show the error image
+						// otherwise(like presentation) show a empty div
+						canEdit ? (
+							<div
+								className='flex flex-col items-center justify-center cursor-pointer'
+								// onClick={openModal}
+							>
+								<svg
+									className='w-20 h-20 opacity-50'
+									viewBox='0 0 24 24'
+									xmlns='http://www.w3.org/2000/svg'
+								>
+									<rect x='0' fill='none' width='24' height='24' />
+									<g>
+										<path d='M23 4v2h-3v3h-2V6h-3V4h3V1h2v3h3zm-8.5 7c.828 0 1.5-.672 1.5-1.5S15.328 8 14.5 8 13 8.672 13 9.5s.672 1.5 1.5 1.5zm3.5 3.234l-.513-.57c-.794-.885-2.18-.885-2.976 0l-.655.73L9 9l-3 3.333V6h7V4H6c-1.105 0-2 .895-2 2v12c0 1.105.895 2 2 2h12c1.105 0 2-.895 2-2v-7h-2v3.234z' />
+									</g>
+								</svg>
+								<div className='text-black opacity-50'>
+									{canEdit && 'Click to add image'}
+								</div>
+							</div>
+						) : (
+							<div></div>
+						)
+					) : (
+						// image
 
-									<button
-										onClick={toggleImgEditMode}
-										className='flex flex-row items-center justify-center gap-1'
-									>
-										{!isImgEditMode ? (
-											<>
-												<IoMdCrop
+						<div
+							className={`
+						${isImgEditMode ? 'rndContainerWithOutBorder' : ''}
+						${!isSlide ? 'absolute top-0 left-0 w-full h-full' : ''}
+					`}
+							style={{
+								...layoutElements?.rndContainerCSS,
+							}}
+							ref={imageRefs[currentContentIndex]}
+							onMouseEnter={() => setShowImgButton(true)}
+							onMouseLeave={() => setShowImgButton(false)}
+							onClick={openModal}
+						>
+							{!isSlide && isSocialPostTemp1Cover && (
+								<div
+									className='absolute inset-0'
+									style={{
+										backgroundImage: `linear-gradient(180deg, ${socialPosts[socialPostsIndex].theme.cover_start}, ${socialPosts[socialPostsIndex].theme.cover_end} 40%)`,
+										zIndex: 2,
+									}}
+								/>
+							)}
+							<Rnd
+								className={`${isImgEditMode ? 'rndContainerWithBorder' : ''}`}
+								style={{ ...layoutElements?.rndCSS }}
+								size={{
+									width:
+										imagesDimensions[currentContentIndex]?.width ??
+										'max-content',
+									//imageRefs[currentContentIndex]?.current?.clientWidth ??
+									//imageSize.width ? imageSize.width : ,
+									height:
+										imagesDimensions[currentContentIndex]?.height ?? 'auto',
+									// imageRefs[currentContentIndex]?.current?.clientHeight ??
+									//imageSize.height ? imageSize.height : 'auto',
+								}}
+								position={{
+									x: imagesDimensions[currentContentIndex]?.x ?? 0,
+									y: imagesDimensions[currentContentIndex]?.y ?? 0,
+								}}
+								enableResizing={canEdit && isImgEditMode}
+								lockAspectRatio={false}
+								disableDragging={
+									!canEdit || !showImgButton || !isImgEditMode || showModal
+								}
+								onDragStart={handleDragStart(currentContentIndex)}
+								onDragStop={handleDragStop(currentContentIndex)}
+								onResizeStart={handleResizeStart}
+								onResizeStop={handleResizeStop(currentContentIndex)}
+								resizeHandleStyles={{
+									topLeft: { ...circle_indicator, left: '-7px' },
+									topRight: { ...circle_indicator, right: '-7px' },
+									bottomLeft: { ...circle_indicator, left: '-7px' },
+									bottomRight: { ...circle_indicator, right: '-7px' },
+									top: { ...rectangular_indicator, ...rectangular_horizontal },
+									bottom: {
+										...rectangular_indicator,
+										...rectangular_horizontal,
+									},
+									left: { ...rectangular_indicator, ...rectangular_vertical },
+									right: { ...rectangular_indicator, ...rectangular_vertical },
+								}}
+							>
+								<Image
+									unoptimized={imgsrc?.includes('freepik') ? false : true}
+									style={{
+										//dont use contain, it will make resize feature always resize based on aspect ratio
+										objectFit: 'fill',
+										height: '100%',
+										//width: 'auto',
+										width: '100%',
+										// borderRadius: customImageStyle?.borderRadius,
+										//transform: `scale(${zoomLevel / 100})`,
+										//transformOrigin: 'center center',
+									}}
+									src={imgsrc}
+									alt='Image'
+									// layout='contain'
+									width={960}
+									height={540}
+									// objectFit='contain'
+									className={`transition ease-in-out duration-150 ${
+										canEdit
+											? isImgEditMode
+												? 'brightness-100'
+												: 'hover:brightness-50'
+											: ''
+									}`}
+									onError={(e) => {
+										console.log('failed to load image', imgsrc);
+										setImgLoadError(true);
+										updateSingleCallback('shuffle', false, {});
+									}}
+								/>
+							</Rnd>
+							{canEdit && showImgButton && (
+								<div
+									className={`absolute top-2 font-creato-medium ${
+										isImgEditMode ? 'left-2' : 'left-4'
+									}`}
+									style={{ zIndex: 53 }}
+								>
+									<ToolBar>
+										{!isImgEditMode && (
+											<button
+												onClick={openModal}
+												className='flex flex-row items-center justify-center gap-1'
+											>
+												<MdImageSearch
 													style={{
-														strokeWidth: '0.8',
 														width: '1.2rem',
 														height: '1.2rem',
-														fontWeight: 'bold',
 														color: '#344054',
+														fontWeight: 'bold',
 													}}
 												/>
 												<span>
-													{showIconsFunctionText(layoutEntry) ? 'Resize' : ''}
-												</span>
-											</>
-										) : (
-											<>
-												<FaCheck
-													style={{
-														strokeWidth: '0.8',
-														width: '1rem',
-														height: '1rem',
-														fontWeight: 'bold',
-														color: '#344054',
-													}}
-												/>
-												Apply
-											</>
-										)}
-									</button>
-
-									{!isImgEditMode && (
-										<>
-											<button
-												className='flex flex-row items-center justify-center gap-1'
-												onClick={() => {
-													updateSingleCallback('');
-												}}
-											>
-												<LuTrash2
-													style={{
-														strokeWidth: '2',
-														flex: '1',
-														width: '1rem',
-														height: '1rem',
-														fontWeight: 'bold',
-														color: '#344054',
-													}}
-												/>
-												<span>
-													{showIconsFunctionText(layoutEntry) ? 'Delete' : ''}
+													{showIconsFunctionText(layoutEntry) ? 'Change' : ''}
 												</span>
 											</button>
-											{project?.additional_images && (
+										)}
+
+										<button
+											onClick={toggleImgEditMode}
+											className='flex flex-row items-center justify-center gap-1'
+										>
+											{!isImgEditMode ? (
+												<>
+													<IoMdCrop
+														style={{
+															strokeWidth: '0.8',
+															width: '1.2rem',
+															height: '1.2rem',
+															fontWeight: 'bold',
+															color: '#344054',
+														}}
+													/>
+													<span>
+														{showIconsFunctionText(layoutEntry) ? 'Resize' : ''}
+													</span>
+												</>
+											) : (
+												<>
+													<FaCheck
+														style={{
+															strokeWidth: '0.8',
+															width: '1rem',
+															height: '1rem',
+															fontWeight: 'bold',
+															color: '#344054',
+														}}
+													/>
+													Apply
+												</>
+											)}
+										</button>
+
+										{!isImgEditMode && (
+											<>
 												<button
 													className='flex flex-row items-center justify-center gap-1'
 													onClick={() => {
-														updateSingleCallback('shuffle', false, {});
+														updateSingleCallback('');
 													}}
 												>
-													<HiOutlineRefresh
+													<LuTrash2
 														style={{
 															strokeWidth: '2',
 															flex: '1',
@@ -1562,28 +1806,50 @@ export const ImgModule = ({
 														}}
 													/>
 													<span>
-														{showIconsFunctionText(layoutEntry)
-															? 'Shuffle'
-															: ''}
+														{showIconsFunctionText(layoutEntry) ? 'Delete' : ''}
 													</span>
 												</button>
-											)}
-										</>
-									)}
-								</ToolBar>
-							</div>
-						)}
-						{/* {isImgEditMode && canEdit && (
-								<ResizeSlider
-									zoomLevel={zoomLevel}
-									setZoomLevel={setZoomLevel}
-									applyZoom={applyZoom}
-									onZoomChange={onZoomChange}
-								/>
-						)} */}
-					</div>
-				)}
-			</div>
+												{project?.additional_images && (
+													<button
+														className='flex flex-row items-center justify-center gap-1'
+														onClick={() => {
+															updateSingleCallback('shuffle', false, {});
+														}}
+													>
+														<HiOutlineRefresh
+															style={{
+																strokeWidth: '2',
+																flex: '1',
+																width: '1rem',
+																height: '1rem',
+																fontWeight: 'bold',
+																color: '#344054',
+															}}
+														/>
+														<span>
+															{showIconsFunctionText(layoutEntry)
+																? 'Shuffle'
+																: ''}
+														</span>
+													</button>
+												)}
+											</>
+										)}
+									</ToolBar>
+								</div>
+							)}
+							{/* {isImgEditMode && canEdit && (
+							<ResizeSlider
+								zoomLevel={zoomLevel}
+								setZoomLevel={setZoomLevel}
+								applyZoom={applyZoom}
+								onZoomChange={onZoomChange}
+							/>
+					)} */}
+						</div>
+					)}
+				</div>
+			}
 		</>
 	);
 };

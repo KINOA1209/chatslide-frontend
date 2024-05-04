@@ -186,6 +186,7 @@ export const BigBlueButton: React.FC<DrlambdaButtonProps> = ({
 	isPaidUser,
 	isPaidFeature = false,
 	id,
+	customizeStyle,
 	wfull = false,
 }) => {
 	const [showPaywallModal, setShowPaywallModal] = useState(false);
@@ -209,6 +210,7 @@ export const BigBlueButton: React.FC<DrlambdaButtonProps> = ({
 						: onClick
 				}
 				disabled={isSubmitting || disabled}
+				style={customizeStyle}
 			>
 				{children}
 			</button>
