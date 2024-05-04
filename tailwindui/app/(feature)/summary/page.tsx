@@ -162,7 +162,6 @@ const AdvancedOptions: React.FC<{
 								);
 								if (selectedResource) {
 									setResourceToFollowStructureFrom(selectedResource);
-									setOutlineStructure(selectedResource.name);
 								}
 							}}
 							width='20rem'
@@ -170,7 +169,6 @@ const AdvancedOptions: React.FC<{
 								const initialResource = selectedResources[0]; // Get the first resource as initial value
 								if (initialResource) {
 									setResourceToFollowStructureFrom(initialResource);
-									setOutlineStructure(initialResource.name);
 									console.log(
 										'resourceToFollowStructureFrom',
 										resourceToFollowStructureFrom?.id,
