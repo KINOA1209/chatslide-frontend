@@ -32,7 +32,7 @@ import {
 	loadLayoutConfigElements,
 } from './SlidesHTML';
 import Image from 'next/image';
-import { SlideKeys } from '@/models/Slide';
+import { Media, SlideKeys } from '@/models/Slide';
 import Chart from '@/models/Chart';
 import ImagesPosition from '@/models/ImagesPosition';
 
@@ -66,6 +66,8 @@ export const generateTemplate = (templateName: string) => {
 		palette,
 		themeElements,
 		layoutElements,
+		embed_code,
+		media_types,
 	}: // initialTemplateTitleFontFamily,
 	MainSlideProps) => {
 		const {
@@ -146,6 +148,8 @@ export const generateTemplate = (templateName: string) => {
 						currentSlideIndex={currentSlideIndex}
 						isShowingLogo={isShowingLogo}
 						images_position={images_position}
+						embed_code={embed_code}
+						media_types={media_types}
 					></ChosenLayoutNonCover>
 				</div>
 				{/* for cover page */}
@@ -203,6 +207,8 @@ export const generateTemplate = (templateName: string) => {
 						currentSlideIndex={currentSlideIndex}
 						isShowingLogo={isShowingLogo}
 						images_position={images_position}
+						embed_code={embed_code}
+						media_types={media_types}
 					></ChosenLayoutCover>
 				</div>
 			</>
@@ -264,6 +270,8 @@ export interface MainSlideProps {
 		imgs: string[],
 		ischart: boolean[],
 		images_position: ImagesPosition[],
+		embed_code: string[],
+		media_types: Media[],
 	) => void;
 	canEdit: boolean;
 	isCoverPage: boolean;
@@ -283,6 +291,8 @@ export interface MainSlideProps {
 	template?: TemplateKeys;
 	themeElements: ThemeElements;
 	layoutElements: LayoutElements;
+	embed_code: string[];
+	media_types: Media[];
 	// initialTemplateTitleFontFamily?: string;
 }
 

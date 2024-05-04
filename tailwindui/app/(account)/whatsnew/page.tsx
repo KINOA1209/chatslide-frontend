@@ -15,10 +15,48 @@ export default function Studio() {
 			<Panel>
 				<Card>
 					<BigTitle>Coming Next...</BigTitle>
-					<Instruction>🛝 Slide deck transitions in videos</Instruction>
-					<Instruction>📁 Folders in Uploads and Dashboard</Instruction>
+					<Instruction>🎤 Voice cloning</Instruction>
+					<Instruction>📂 Folders for resources</Instruction>
+					<Instruction>📈 Price increase for ULTIMATE LIFETIME tier on May 11th</Instruction>
 				</Card>
 
+				<Card>
+					<BigTitle>May 3</BigTitle>
+					<Instruction>
+						<div>
+							✍️ Two More Outline Structure Modes: The two new modes are
+							Detailed Outline and Structure of a Source (available only under
+							from file mode). You can either provide your own detailed outline,
+							or ask AI to follow the structure of a source.
+						</div>
+					</Instruction>
+					<Instruction>
+						<div>📁 Folders: Use folders to better manage your projects.</div>
+					</Instruction>
+					<Instruction>
+						<div>
+							🏷️ Logo Positions: Instead of the lower left, you can put the logo
+							at any corner of your slide.
+						</div>
+					</Instruction>
+					<Instruction>
+						<div>
+							🎥 Embed YouTube (beta): You can embed a YouTube video in the
+							slides, just click on one image and you will see the embed choice.
+						</div>
+					</Instruction>
+					<Instruction>
+						<div>
+							💨 Video Transition Effects: Slide-In and Dissolve are available
+							for transition effects.
+						</div>
+					</Instruction>
+					<Instruction>
+						<div>
+							💻 Infrastructure Upgrades: Increase server capacity and it is less busy than before!
+						</div>
+					</Instruction>
+				</Card>
 				<Card>
 					<BigTitle>May 1</BigTitle>
 					<div>

@@ -126,8 +126,8 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 				</div>
 			</div> */}
 
-			<div className='py-2 w-full flex-auto text-center self-center bg-yellow-100 font-small leading-snug tracking-tight whitespace-nowrap sm:hidden'>
-				Use our desktop version to see all the functionalities!
+			<div className='py-2 w-full flex-auto text-center self-center bg-yellow-100 font-small leading-snug tracking-tight sm:hidden'>
+				Use our desktop version to see all the functionalities, including AI Chatbot. 
 			</div>
 		</section>
 	);

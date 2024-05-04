@@ -22,7 +22,9 @@ export interface SlideElement {
 		| 'additional_images'
 		| 'chart'
 		| 'is_chart'
-		| 'palette';
+		| 'palette'
+		| 'embed_code'
+		| 'is_logo_left';
 	content: string | string[];
 }
 
@@ -44,9 +46,17 @@ export type SlideKeys =
 	| 'chart'
 	| 'is_chart'
 	| 'images_position'
-	| 'palette';
+	| 'palette'
+	| 'embed_code'
+	| 'media_types'
+	| 'logo_position';
 
-export type Media = 'image' | 'chart' | 'youtube';
+export type Media = 'image' | 'chart' | 'embed';
+export type LogoPosition =
+	| 'BottomLeft'
+	| 'BottomRight'
+	| 'TopLeft'
+	| 'TopRight';
 
 export default class Slide {
 	head: string;
@@ -61,6 +71,7 @@ export default class Slide {
 	images_position: ImagesPosition[];
 	chart: Chart[]; // data of charts
 	layout: LayoutKeys;
+	embed_code?: string[];
 	// show_logo?: boolean;
 	logo: string; // enum for school template, if user has custom logo, then use logo_url
 	logo_url?: string; // overwrites logo if present
@@ -75,6 +86,8 @@ export default class Slide {
 	transcript?: string;
 	additional_images?: string[];
 	palette: PaletteKeys;
+	// is_logo_left: boolean;
+	logo_position: LogoPosition;
 
 	constructor() {
 		const emptyGroup: Group = {
@@ -108,5 +121,8 @@ export default class Slide {
 		this.logo = 'Default';
 		this.additional_images = [];
 		this.palette = 'Original';
+		this.embed_code = ['', '', ''];
+		// this.is_logo_left = true;
+		this.logo_position = 'BottomLeft';
 	}
 }

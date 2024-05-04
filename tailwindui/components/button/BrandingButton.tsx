@@ -13,6 +13,7 @@ import { useSlides } from '@/hooks/use-slides';
 import PaywallModal from '../paywallModal';
 import { Instruction } from '../ui/Text';
 import { PlusLabel } from '../ui/GrayLabel';
+import { LogoPosition } from '@/models/Slide';
 
 export const BrandingButton: React.FC<{}> = () => {
 	const { project, updateProject } = useProject();
@@ -80,6 +81,10 @@ export const BrandingButton: React.FC<{}> = () => {
 						} else {
 							updateBackgroundUrl('');
 						}
+					}}
+					logoPosition={project?.logo_position || 'BottomLeft'}
+					setLogoPosition={(selectedLogoPosition: LogoPosition) => {
+						updateProject('logo_position', selectedLogoPosition);
 					}}
 				/>
 				<Instruction>

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { createBearStore } from '@/utils/create-bear-store';
-import Slide from '@/models/Slide';
+import Slide, { LogoPosition } from '@/models/Slide';
 import { PaletteKeys, TemplateKeys } from '@/components/slides/slideTemplates';
 import { useUser } from './use-user';
 import { useChatHistory } from './use-chat-history';
@@ -37,11 +37,17 @@ const useIsShowingLogo = createBearStore<boolean>()(
 	true,
 	false,
 );
+// const useIsTemplateLogoLeftSide = createBearStore<boolean>()(
+// 	'isTemplateLogoLeftSide',
+// 	true,
+// 	true,
+// );
 
-
-const useInitialLoadedTemplateBgColor = createBearStore<
-	string | undefined
->()('initialLoadedTemplateBgColor', '#FFFFFF', true);
+const useInitialLoadedTemplateBgColor = createBearStore<string | undefined>()(
+	'initialLoadedTemplateBgColor',
+	'#FFFFFF',
+	true,
+);
 const useCustomTemplateBgColor = createBearStore<string | undefined>()(
 	'customTemplateBgColor',
 	'',
@@ -139,6 +145,8 @@ export const useSlides = () => {
 	const { project } = useProject();
 	const { isPresenting, setIsPresenting } = usePresenting();
 	const { isShowingLogo, setIsShowingLogo } = useIsShowingLogo();
+	// const { isTemplateLogoLeftSide, setIsTemplateLogoLeftSide } =
+	// 	useIsTemplateLogoLeftSide();
 	const { updateProject, bulkUpdateProject } = useProject();
 	const { saveStatus, setSaveStatus } = useSaveStatus();
 	const { clearChatHistory } = useChatHistory();
@@ -149,7 +157,7 @@ export const useSlides = () => {
 		setHasSelectedCustomTemplateBgColor,
 	} = useHasSelectedCustomTemplateBgColor();
 	const { initialLoadedTemplateBgColor, setInitialLoadedTemplateBgColor } =
-	useInitialLoadedTemplateBgColor()
+		useInitialLoadedTemplateBgColor();
 	// for customized font family
 	// title font
 	const { initialLoadedTitleFontFamily, setInitialLoadedTitleFontFamily } =
@@ -315,6 +323,18 @@ export const useSlides = () => {
 		});
 		setIsShowingLogo(false);
 		updateProject('logo', '');
+		setSlides(newSlides);
+		updateSlideHistory(newSlides);
+		debouncedSyncSlides(newSlides, true);
+	};
+
+	const updateTemplateLogoPosition = (position: LogoPosition) => {
+		const newSlides = slides.map((slide, index) => {
+			return { ...slide, logo_position: position };
+		});
+		// setIsTemplateLogoLeftSide(isLeft);
+		// updateProject('is_logo_left', isLeft);
+		updateProject('logo_position', position);
 		setSlides(newSlides);
 		updateSlideHistory(newSlides);
 		debouncedSyncSlides(newSlides, true);
@@ -529,7 +549,15 @@ export const useSlides = () => {
 		newSubtitleFontFamily: string,
 		newContentFontFamily: string,
 	) => {
-		console.log('-- changeTemplateAndPaletteAndBgColorAndFont:', newTemplate, newPalette, newBgColor, newTitleFontFamily, newSubtitleFontFamily, newContentFontFamily);
+		console.log(
+			'-- changeTemplateAndPaletteAndBgColorAndFont:',
+			newTemplate,
+			newPalette,
+			newBgColor,
+			newTitleFontFamily,
+			newSubtitleFontFamily,
+			newContentFontFamily,
+		);
 
 		let newSlides = slides.map((slide, index) => {
 			return {
@@ -538,10 +566,9 @@ export const useSlides = () => {
 				palette: newPalette,
 				background_color: hasSelectedCustomTemplateBgColor
 					? customTemplateBgColor
-					:colorPreviews[newPalette as PaletteKeys],
+					: colorPreviews[newPalette as PaletteKeys],
 				// background_color: customTemplateBgColor,
-					
-				
+
 				titleFontFamily: HasSelectedCustomizedTemplateTitleFontFamily
 					? customizedTemplateTitleFontFamily
 					: initialLoadedTitleFontFamily,
@@ -586,6 +613,7 @@ export const useSlides = () => {
 
 		setSlides(slides);
 		setIsShowingLogo(slides?.some((slide) => slide.logo || slide.logo_url));
+		// setIsTemplateLogoLeftSide(slides[0].is_logo_left);
 		setSlideIndex(0);
 		setSlidesHistory([slides]);
 		setSlidesHistoryIndex(0);
@@ -607,7 +635,6 @@ export const useSlides = () => {
 		);
 
 		setCustomTemplateBgColor(slides[0].background_color);
-		
 
 		slidesStatus = SlidesStatus.Inited;
 	};
@@ -718,7 +745,8 @@ export const useSlides = () => {
 		customTemplateBgColor,
 		hasSelectedCustomTemplateBgColor,
 		setHasSelectedCustomTemplateBgColor,
-		initialLoadedTemplateBgColor, setInitialLoadedTemplateBgColor,
+		initialLoadedTemplateBgColor,
+		setInitialLoadedTemplateBgColor,
 		setCustomTemplateBgColor,
 		updateCustomBgColorForTemplate,
 		updateCustomizedTitleFontFamilyForTemplate,
@@ -743,5 +771,9 @@ export const useSlides = () => {
 		setCustomizedTemplateContentFontFamily,
 		HasSelectedCustomizedTemplateContentFontFamily,
 		setHasSelectedCustomizedTemplateContentFontFamily,
+		// isTemplateLogoLeftSide,
+		// setIsTemplateLogoLeftSide,
+		// updateTemplateLogoPositionToLeft,
+		updateTemplateLogoPosition,
 	};
 };

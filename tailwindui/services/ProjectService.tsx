@@ -4,6 +4,12 @@ import SocialPostSlide from '@/models/SocialPost';
 import Project from '@/models/Project';
 import Slide from '@/models/Slide';
 import Chart, { Group } from '@/models/Chart';
+import Folder from '@/models/Folder';
+
+export interface ProjectAndFolder {
+	projects: Project[];
+	empty_groups: string[];
+}
 
 class ProjectService {
 	static async getSharedProjectDetails(
@@ -137,7 +143,8 @@ class ProjectService {
 		token: string,
 		is_public: boolean = false,
 		server_side = false,
-	): Promise<Project[]> {
+		need_folder = false,
+	): Promise<Project[] | ProjectAndFolder> {
 		const headers = new Headers();
 		if (is_public) {
 			token = process.env.SELF_TOKEN || '';
@@ -166,7 +173,16 @@ class ProjectService {
 						item.content_type = 'presentation';
 					}
 				});
-				return data.projects;
+
+				if (need_folder) {
+					return {
+						'projects': data.projects,
+						'empty_groups': data.empty_groups || []
+					}
+				}
+				else {
+					return data.projects;
+				}
 			} else {
 				// Handle error cases
 				console.error(`getProjects failed: ${response.status}`);
@@ -244,6 +260,8 @@ class ProjectService {
 			);
 			slide.chart = slideData.chart;
 			slide.is_chart = slideData.is_chart || [false, false, false];
+			slide.media_types = slideData.media_types || ['image', 'image', 'image'];
+			slide.embed_code = slideData.embed_code || ['', '', ''];
 			slide.images_position = slideData.images_position;
 			// console.log(
 			//     'slideData.content.length',
@@ -251,6 +269,8 @@ class ProjectService {
 			slide.transcript = slideData.transcript || '';
 			slide.logo = slideData.logo;
 			slide.logo_url = slideData.logo_url || '';
+			// slide.is_logo_left = slideData.is_logo_left || true;
+			slide.logo_position = slideData.logo_position || 'BottomLeft';
 			slide.background_url = slideData.background_url || '';
 			slide.background_color = slideData.background_color || ''; // for customized background color
 			slide.titleFontFamily = slideData.titleFontFamily || '';
@@ -337,8 +357,8 @@ class ProjectService {
 					slideData.illustration !== null
 						? slideData.illustration
 						: [
-								'https://stories.freepiklabs.com/storage/61572/life-in-a-city-cuate-9773.png',
-							];
+							'https://stories.freepiklabs.com/storage/61572/life-in-a-city-cuate-9773.png',
+						];
 				slide.quote = slideData.quote || 'Your quote here';
 				slide.source = slideData.source || '';
 				slide.chart = slideData.chart;
@@ -472,6 +492,61 @@ class ProjectService {
 				`Failed to clone project ${project_id}, ${response.status}`,
 			);
 		}
+	}
+
+	static async deleteFolder(
+		token: string,
+		folder_name: string,
+	): Promise<boolean> {
+		const response = await fetch('/api/delete_project_group', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify({
+				group_name: folder_name
+			}),
+		});
+		return response.ok;
+	}
+
+	static async renameFolder(
+		token: string,
+		prev_folder_name: string,
+		new_folder_name: string,
+	): Promise<boolean> {
+		const response = await fetch('/api/change_project_group_name', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify({
+				group_name: prev_folder_name,
+				new_group_name: new_folder_name,
+			}),
+		});
+		return response.ok;
+	}
+
+	static async moveToFolder(
+		token: string,
+		project_id: string,
+		folder_name: string,
+	): Promise<boolean> {
+		const response = await fetch('/api/move_project', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify({
+				project_id: project_id,
+				group_name: folder_name,
+			}),
+		});
+		return response.ok;
 	}
 }
 

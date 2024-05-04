@@ -1,4 +1,4 @@
-import Slide from '@/models/Slide';
+import Slide, { Media } from '@/models/Slide';
 import { SlideKeys } from '@/models/Slide';
 import {
 	availableTemplates,
@@ -62,6 +62,8 @@ export const templateDispatch = (
 		urls: string[],
 		ischart: boolean[],
 		images_position: ImagesPosition[],
+		embed_code: string[],
+		media_types: Media[],
 	) => void = () => () => {}, // Replace with your default function if you have one
 	toggleEditMathMode: () => void = () => {}, // Replace with your default function if you have one
 	// palette: PaletteKeys = 'Original',
@@ -454,6 +456,8 @@ export const templateDispatch = (
 						custom_logo={custom_logo}
 						template_name={slide.template}
 						isLightBackground={isLightBackground}
+						// isLogoLeftSide={slide.is_logo_left}
+						logoPosition={slide.logo_position}
 					/>
 				) : (
 					<></>
@@ -471,7 +475,9 @@ export const templateDispatch = (
 			template={slide.template}
 			themeElements={themeElements}
 			layoutElements={layoutElements}
+			embed_code={slide.embed_code || ['', '', '']}
 			// initialTemplateTitleFontFamily={initialTemplateTitleFontFamily}
+			media_types={slide.media_types}
 		/>
 	);
 	// }
