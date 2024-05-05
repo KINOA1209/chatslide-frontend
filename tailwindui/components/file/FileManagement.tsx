@@ -8,7 +8,7 @@ import moment from 'moment';
 // import mixpanel from 'mixpanel-browser'
 import { CarbonConnect, IntegrationName } from 'carbon-connect';
 import { DeleteIcon, SpinIcon } from '@/app/(feature)/icons';
-import { ResourceItem } from '../ui/ResourceItem';
+import { ResourceItem, getFileExtension } from '../ui/ResourceItem';
 import Resource from '@/models/Resource';
 import ResourceService from '@/services/ResourceService';
 import DrlambdaButton, { BigBlueButton } from '../button/DrlambdaButton';
@@ -40,7 +40,7 @@ const FileTableHeader = () => (
 	// 	</div>
 	// </div>
 	<div
-		className={`grid grid-cols-2 md:grid-cols-3`}
+		className={`grid grid-cols-3 md:grid-cols-4`}
 		style={{
 			borderTop: '1px solid #EAECF0',
 			borderLeft: '1px solid #EAECF0',
@@ -51,12 +51,12 @@ const FileTableHeader = () => (
 	>
 		{/* <div className='hidden lg:flex col-span-1 w-full ml-4 text-indigo-300 text-[13px] font-bold uppercase leading-normal tracking-wide'> */}
 		<div
-			className='flex col-span-2 w-full capitalize '
+			className='flex col-span-3 w-full capitalize '
 			style={{
 				padding: `var(--spacing-xl, 8px) var(--spacing-3xl, 8px)`,
 				whiteSpace: 'nowrap',
 				color: 'var(--colors-text-text-tertiary-600, #475467)',
-
+				fontFamily: 'Inter Regular',
 				fontSize: '12px',
 				fontStyle: 'normal',
 				lineHeight: '18px',
@@ -71,7 +71,7 @@ const FileTableHeader = () => (
 				padding: `var(--spacing-xl, 8px) var(--spacing-3xl, 8px)`,
 				whiteSpace: 'nowrap',
 				color: 'var(--colors-text-text-tertiary-600, #475467)',
-
+				fontFamily: 'Inter Regular',
 				fontSize: '12px',
 				fontStyle: 'normal',
 				lineHeight: '18px',
@@ -85,7 +85,7 @@ const FileTableHeader = () => (
 
 const FileManagement: React.FC<UserFileList> = ({
 	selectable = false,
-	userfiles,
+	userfiles, // contains all resources
 	deleteCallback,
 	clickCallback,
 	selectedResources,
@@ -133,8 +133,14 @@ const FileManagement: React.FC<UserFileList> = ({
 		return (
 			<div
 				key={resource.id}
-				className='grid grid-cols-3 border border-gray-300 bg-white'
-				style={{ gridTemplateColumns: '2fr 1fr' }}
+				className='grid grid-cols-4 '
+				// style={{ gridTemplateColumns: '2fr 1fr' }}
+				style={{
+					alignItems: 'center',
+					border: '1px solid #EAECF0',
+					borderRadius: ' 0px 0px var(--radius-md) var(--radius-md)',
+					// gridTemplateColumns: '2fr 1fr',
+				}}
 				onClick={(e) => {
 					if (selectable) {
 						clickCallback(resource.id);
@@ -143,18 +149,36 @@ const FileManagement: React.FC<UserFileList> = ({
 					}
 				}}
 			>
-				<ResourceItem {...resource} />
+				{/* the resource title and thumbnail */}
+				<div className={`col-span-3 w-full`}>
+					<ResourceItem {...resource} />
+				</div>
 
-				{/* timestamp and delete icon */}
-				<div className='h-full flex justify-end items-center w-full py-4 px-2 text-gray-600 text-[13px] font-normal leading-normal tracking-[0.12rem]'>
+				{/* timestamp*/}
+				<div className='col-span-1 h-full flex justify-end items-center w-full py-4 px-2 text-gray-600 text-[13px] font-normal leading-normal tracking-[0.12rem]'>
 					{' '}
 					{resource.timestamp && (
 						<div className='hidden md:block'>
-							{moment(resource.timestamp).format('L')}
+							{/* {moment(resource.timestamp).format('L')} */}
+							<span
+								style={{
+									whiteSpace: 'nowrap',
+									color: 'var(--colors-text-text-quaternary-500, #667085)',
+									fontFamily: 'Creato Display Medium',
+									fontSize: '14px',
+									fontStyle: 'normal',
+									fontWeight: 400,
+									lineHeight: '20px',
+								}}
+							>
+								{moment(resource.timestamp).format('MMM D, YYYY')}
+							</span>
+							{/* {resource.timestamp} */}
 						</div>
 					)}
+					{/* delete icon */}
 					{!selectable && (
-						<div className='w-8 flex flex-row-reverse cursor-pointer'>
+						<div className='w-full flex flex-row-reverse cursor-pointer'>
 							<div onClick={(e) => handleDeleteFile(e, resource.id)}>
 								{deletingIds.includes(resource.id) ? (
 									<SpinIcon />
@@ -197,6 +221,36 @@ interface filesInterface {
 	fileType?: string;
 }
 
+// Define file extensions for different types
+export const fileExtensions = {
+	documents: [
+		'pdf',
+		'doc',
+		'docx',
+		'pptx',
+		'ppt',
+		'xls',
+		'xlsx',
+		'csv',
+		'rtf',
+		'txt',
+	],
+	images: ['background', 'logo', 'png', 'jpg', 'jpeg', 'gif', 'bmp', 'svg'],
+	links: ['webpage', 'html', 'htm'],
+	videos: [
+		'youtube',
+		'mp4',
+		'avi',
+		'mkv',
+		'mov',
+		'webm',
+		'flv',
+		'wmv',
+		'3gp',
+		'mpeg',
+	],
+};
+
 const MyFiles: React.FC<filesInterface> = ({
 	selectable = false,
 	selectedResources,
@@ -205,6 +259,9 @@ const MyFiles: React.FC<filesInterface> = ({
 	fileType = 'logo',
 }) => {
 	const [resources, setResources] = useState<Resource[]>([]);
+	const [filteredResources, setFilteredResources] = useState<Resource[]>([]);
+	const [currentResourceType, setCurrentResourceType] = useState<string>('all');
+
 	const promptRef = useRef<HTMLDivElement>(null);
 	const contentRef = useRef<HTMLDivElement>(null);
 	const [rendered, setRendered] = useState<boolean>(false);
@@ -235,11 +292,49 @@ const MyFiles: React.FC<filesInterface> = ({
 		}
 	}, []);
 
+	// useEffect(() => {
+	// 	console.log('stored resources:', resources);
+	// }, [resources]);
+
 	useEffect(() => {
 		if (rendered && resources.length === 0 && promptRef.current) {
 			promptRef.current.innerHTML = 'You have no uploaded file';
 		}
 	}, [resources, rendered]);
+
+	const filterResources = (type: string) => {
+		setCurrentResourceType(type);
+
+		let filtered: Resource[] = [];
+		if (type === 'all') {
+			filtered = resources;
+		} else if (type === 'files') {
+			filtered = resources.filter((resource) =>
+				fileExtensions.documents.includes(
+					getFileExtension(resource.name) || resource.type,
+				),
+			);
+		} else if (type === 'images') {
+			filtered = resources.filter((resource) =>
+				fileExtensions.images.includes(
+					getFileExtension(resource.name) || resource.type,
+				),
+			);
+		} else if (type === 'links') {
+			filtered = resources.filter((resource) =>
+				fileExtensions.links.includes(
+					getFileExtension(resource.name) || resource.type,
+				),
+			);
+		} else if (type === 'videos') {
+			filtered = resources.filter((resource) =>
+				fileExtensions.videos.includes(
+					getFileExtension(resource.name) || resource.type,
+				),
+			);
+		}
+		setFilteredResources(filtered);
+	};
 
 	const fetchFiles = async (token: string) => {
 		console.log('pageInvoked', pageInvoked);
@@ -254,6 +349,7 @@ const MyFiles: React.FC<filesInterface> = ({
 
 		ResourceService.fetchResources(resource_type, token).then((resources) => {
 			setResources(resources);
+			setFilteredResources(resources);
 			setRendered(true);
 		});
 	};
@@ -317,6 +413,9 @@ const MyFiles: React.FC<filesInterface> = ({
 		setResources((prevResources) =>
 			prevResources.filter((resource) => resource.id !== id),
 		); // prevents race condition
+		setFilteredResources((prevResources) =>
+			prevResources.filter((resource) => resource.id !== id),
+		);
 	};
 
 	const handleClick = (id: string) => {
@@ -638,13 +737,32 @@ const MyFiles: React.FC<filesInterface> = ({
 				</div>
 			)}
 
+			{/* Filter buttons */}
+			<div className='flex flex-row gap-4'>
+				<div className='all' onClick={() => filterResources('all')}>
+					<span>All</span>
+				</div>
+				<div className='files' onClick={() => filterResources('files')}>
+					<span>Files</span>
+				</div>
+				<div className='images' onClick={() => filterResources('images')}>
+					<span>Images</span>
+				</div>
+				<div className='links' onClick={() => filterResources('links')}>
+					<span>Links</span>
+				</div>
+				<div className='videos' onClick={() => filterResources('videos')}>
+					<span>Videos</span>
+				</div>
+			</div>
+
 			{/* rendered resources items area */}
 			{rendered ? (
-				resources.length === 0 ? (
+				filteredResources.length === 0 ? (
 					<Blank text='You have no uploaded file' />
 				) : (
 					<div
-						className={`w-full mx-auto mt-4 px-4 pt-4 flex grow overflow-y-auto border border-gray-200 ${
+						className={`w-full mx-auto mt-4 px-4 pt-4 flex grow overflow-y-auto  ${
 							isDragging ? 'bg-blue-100 border-blue-500' : ''
 						}`}
 						onDragStart={handleDragStart}
@@ -655,7 +773,7 @@ const MyFiles: React.FC<filesInterface> = ({
 					>
 						<FileManagement
 							selectable={selectable}
-							userfiles={resources}
+							userfiles={filteredResources}
 							deleteCallback={handleFileDeleted}
 							clickCallback={handleClick}
 							selectedResources={selectedResources || []}

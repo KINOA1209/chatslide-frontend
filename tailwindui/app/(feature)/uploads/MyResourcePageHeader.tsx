@@ -28,7 +28,7 @@ const MyResourcePageHeader: React.FC<MyResourcePageHeaderProps> = ({
 		// 		</div>
 		// 	</div>
 		// </section>
-		<div className='flex flex-row items-end w-full z-10 pt-[2rem] px-[2rem]'>
+		<div className='flex flex-row items-end w-full z-10 pt-[2rem] px-[1rem]'>
 			{/* flex container controlling max width */}
 			<div className='w-full flex flex-wrap items-center justify-between'>
 				{/* my project title text */}
