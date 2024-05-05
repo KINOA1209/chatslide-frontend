@@ -207,7 +207,7 @@ export const ResourceItem: React.FC<Resource> = ({
 				overflow: 'hidden',
 			}}
 		>
-			<div className='mx-auto my-auto w-[40px] h-[40px]'>
+			<div className='mx-auto my-auto flex items-center w-[40px] h-[40px]'>
 				{/* Ensure consistent dimensions for the file icon */}
 				<ResourceIcon
 					resource={{
