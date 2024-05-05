@@ -147,9 +147,7 @@ class UserService {
 		}
 	}
 
-	static async getUserCreditsAndTier(
-		idToken: string,
-	): Promise<User> {
+	static async getUserCreditsAndTier(idToken: string): Promise<User> {
 		if (!idToken) throw new Error('No idToken provided');
 
 		try {
@@ -196,9 +194,9 @@ class UserService {
 			const username: string = data['username'] || null;
 			const email: string = data['email'] || null;
 
-      const openai_api_key: string = data['openai_api_key'] || null;
-      const rewardful_code: string = data['rewardful_code'] || null;
-      const referral_code: string = data['referral_code'] || null;
+			const openai_api_key: string = data['openai_api_key'] || null;
+			const rewardful_code: string = data['rewardful_code'] || null;
+			const referral_code: string = data['referral_code'] || null;
 
 			console.log(
 				`User credits: ${credits}, expiration date: ${expirationDate}, tier: ${tier}`,
@@ -212,7 +210,7 @@ class UserService {
 				subscription_tier: tier,
 				expiration_date: expirationDate,
 				rewardful_code: rewardful_code,
-        referral_code: referral_code,
+				referral_code: referral_code,
 				openai_api_key: openai_api_key,
 			};
 		} catch (error) {
@@ -386,6 +384,31 @@ class UserService {
 			const data = await response.json();
 			console.error('Fail to submit ', data.message);
 			return false;
+		}
+	}
+
+	static async updateRewardfulCode(
+		code: string,
+		idToken: string,
+	): Promise<boolean> {
+		try {
+			const response = await fetch(`/api/user/rewardful_code`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${idToken}`,
+				},
+				body: JSON.stringify({ rewardful_code: code }),
+			});
+
+			if (response.ok) {
+				return true;
+			} else {
+				throw new Error(`Error ${response.status}: ${await response.text()}`);
+			}
+		} catch (error) {
+			console.error('Error in updateRewardfulCode:', error);
+			throw error; // Rethrow the error so that it can be handled by the caller
 		}
 	}
 }

@@ -13,6 +13,7 @@ import RadioButton from '../ui/RadioButton';
 import { MdOutlineShare } from 'react-icons/md';
 import { getBrand, getOrigin } from '@/utils/getHost';
 import { useProject } from '@/hooks/use-project';
+import { useUser } from '@/hooks/use-user';
 type ShareButtonProps = {
 	share: boolean;
 	setShare:
@@ -52,6 +53,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({
 	const project_id = project?.id || '';
 	const [isPublic, setIsPublic] = useState(project.is_public);
 	const { isShared, videoIsShared } = useProject();
+	const { user } = useUser();
 
 	const toggleShare = async () => {
 		if (setShare) {
@@ -156,12 +158,33 @@ const ShareButton: React.FC<ShareButtonProps> = ({
 						/>
 					)}
 
+					{!user?.rewardful_code && (
+						<>
+							<Instruction>
+								<a href='/affiliate' className='text-blue-600'>
+									Get cash rewards for your high quality contents
+								</a>
+							</Instruction>
+							{/* <Explanation>
+								Share your content with someone new to our platform. <br />
+								If your audience converted to a user, you will get 30% of all of
+								their payments as a reward. <br />
+								<a href='/affiliate' className='text-blue-600'>
+									Learn More
+								</a>
+							</Explanation> */}
+						</>
+					)}
+
 					{share && (
 						<div>
 							<Explanation>View only link:</Explanation>
 							{shareEntry === 'video' ? (
 								<ClickableLink
-									link={`${host}/shared_video/${project_id || ''}`}
+									link={
+										`${host}/shared_video/${project_id || ''}` +
+										(user?.rewardful_code ? '?via=' + user.rewardful_code : '')
+									}
 								/>
 							) : (
 								<ClickableLink link={`${host}/shared/${project_id || ''}`} />

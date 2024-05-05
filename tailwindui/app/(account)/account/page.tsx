@@ -8,14 +8,16 @@ import UserService from '@/services/UserService';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import ReferralLink from '@/components/ReferralLink';
-import { BigBlueButton } from '@/components/button/DrlambdaButton';
+import DrlambdaButton, {
+	BigBlueButton,
+} from '@/components/button/DrlambdaButton';
 import { NewInputBox } from '@/components/ui/InputBox';
-import { FaInbox, FaKey, FaUser } from 'react-icons/fa';
+import { FaInbox, FaKey, FaMoneyBill, FaRegStar, FaUser } from 'react-icons/fa';
 import { useUser } from '@/hooks/use-user';
 import useHydrated from '@/hooks/use-hydrated';
 import SessionStorage from '@/utils/SessionStorage';
 import Card from '@/components/ui/Card';
-import { BigTitle, Explanation, Instruction } from '@/components/ui/Text';
+import { BigTitle, Explanation, Instruction, Title } from '@/components/ui/Text';
 import { Panel } from '@/components/layout/Panel';
 import { Column } from '@/components/layout/Column';
 import { getBrand } from '@/utils/getHost';
@@ -103,16 +105,15 @@ const Profile = () => {
 				</Explanation>
 				<div className='w-full justify-center flex flex-row mt-2'>
 					<div className='w-full flex grow gap-4 max-w-[60rem] justify-center'>
-
-            <NewInputBox
-              id='email'
-              value={editEmail}
-              onChange={setEditEmail}
-              autoSelect
-              placeholder='Email'
-              maxLength={50}
-              icon={<FaInbox className='text-gray-600' />}
-            />
+						<NewInputBox
+							id='email'
+							value={editEmail}
+							onChange={setEditEmail}
+							autoSelect
+							placeholder='Email'
+							maxLength={50}
+							icon={<FaInbox className='text-gray-600' />}
+						/>
 
 						<BigBlueButton
 							id='update-email'
@@ -142,16 +143,15 @@ const Profile = () => {
 
 				<div className='w-full justify-center flex flex-row'>
 					<div className='flex w-full max-w-[60rem] flex-row gap-4 justify-center mt-2'>
-
-            <NewInputBox
-              id='username'
-              value={editUsername}
-              onChange={setEditUsername}
-              autoSelect
-              placeholder='Username'
-              maxLength={50}
-              icon={<FaUser className='text-gray-600' />}
-            />
+						<NewInputBox
+							id='username'
+							value={editUsername}
+							onChange={setEditUsername}
+							autoSelect
+							placeholder='Username'
+							maxLength={50}
+							icon={<FaUser className='text-gray-600' />}
+						/>
 
 						<BigBlueButton
 							id='update-username'
@@ -183,11 +183,11 @@ const Referral = () => {
 const OpenAIKey = () => {
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const { token, user } = useUser();
-  const [key, setKey] = useState(user?.openai_api_key || 'sk-...');
+	const [key, setKey] = useState(user?.openai_api_key || 'sk-...');
 
-  useEffect(() => {
-    setKey(user?.openai_api_key || 'sk-...');
-  }, [user]);
+	useEffect(() => {
+		setKey(user?.openai_api_key || 'sk-...');
+	}, [user]);
 
 	const updateKey = async () => {
 		setIsSubmitting(true);
@@ -216,15 +216,15 @@ const OpenAIKey = () => {
 			</Explanation>
 			<div className='w-full justify-center flex flex-row'>
 				<div className='flex grow max-w-[60rem] flex-row gap-4 justify-center mt-2'>
-          <NewInputBox
-            id='openai_api_key'
-            value={key}
-            onChange={setKey}
-            autoSelect
-            placeholder='sk-...'
-            maxLength={100}
-            icon={<FaKey className='text-gray-600' />}
-          />
+					<NewInputBox
+						id='openai_api_key'
+						value={key}
+						onChange={setKey}
+						autoSelect
+						placeholder='sk-...'
+						maxLength={100}
+						icon={<FaKey className='text-gray-600' />}
+					/>
 
 					<BigBlueButton
 						id='update-oai-key'
@@ -296,15 +296,15 @@ const ApplyPromo = () => {
 			</div>
 			<div className='w-full justify-center flex flex-row'>
 				<div className='flex grow max-w-[60rem] flex-row gap-4 justify-center mt-2'>
-          <NewInputBox
-            id='promo_code'
-            value={promo}
-            onChange={setPromo}
-            autoSelect
-            placeholder='Enter promo code'
-            maxLength={50}
-            icon={<FaKey className='text-gray-600' />}
-          />
+					<NewInputBox
+						id='promo_code'
+						value={promo}
+						onChange={setPromo}
+						autoSelect
+						placeholder='Enter promo code'
+						maxLength={50}
+						icon={<FaRegStar className='text-gray-600' />}
+					/>
 
 					<BigBlueButton
 						id='apply-promo'
@@ -316,6 +316,95 @@ const ApplyPromo = () => {
 				</div>
 			</div>
 		</div>
+	);
+};
+
+const Affiliate = () => {
+	const { user, token } = useUser();
+	const [rewardfulCode, setRewardfulCode] = useState(
+		user?.rewardful_code || '',
+	);
+	const router = useRouter();
+
+	useEffect(() => {
+		setRewardfulCode(user?.rewardful_code || '');
+	}, [user]);
+
+	return (
+		<Card>
+			<BigTitle>💸 Earn Money with {getBrand()}</BigTitle>
+			<Instruction>
+				<div className='flex flex-col gap-y-1'>
+					<span>
+						Share your love for {getBrand()} and make real money by inviting
+						your friends and connections to join!
+					</span>
+					<span>
+						You will get <strong>30%</strong> commission on all their purchases,
+						including the recurring ones.{' '}
+					</span>
+					<span>
+						Keep track of your conversions and earnings real-time and get paid
+						monthly.{' '}
+					</span>
+				</div>
+			</Instruction>
+			<Instruction>
+				<a href='/affiliate' className='text-blue-600'>
+					Learn more about affiliate program.{' '}
+				</a>
+			</Instruction>
+			<BigBlueButton
+				onClick={() => {
+					router.push('https://chatslide.getrewardful.com/');
+				}}
+			>
+				💸 Start Earning Now
+			</BigBlueButton>
+
+			<Title center={false}>Already joined? </Title>
+			<Instruction>
+				Put your Rewardful code here, the code will be added to all of your
+				shared projects. And you will get paid on every converted paying user
+				through your shared contents.
+			</Instruction>
+			<div className='w-full justify-center flex flex-row'>
+				<div className='flex grow max-w-[60rem] flex-row gap-4 justify-center mt-2'>
+					<NewInputBox
+						id='rewardful_code'
+						value={rewardfulCode}
+						onChange={setRewardfulCode}
+						autoSelect
+						placeholder='Rewardful Code'
+						maxLength={50}
+						icon={<FaMoneyBill className='text-gray-600' />}
+					/>
+					<BigBlueButton
+						onClick={() => {
+							UserService.updateRewardfulCode(rewardfulCode, token);
+						}}
+					>
+						Update
+					</BigBlueButton>
+				</div>
+			</div>
+
+			{rewardfulCode && (
+				<Explanation>
+					<span>Your share link will look like: </span>
+					<u>https://chatslide.ai/shared/your-project?via={rewardfulCode}</u>
+					<br />
+					<span>
+						You will get paid on every converted paying user joining through
+						this link.
+					</span>
+					<br />
+					<a href='/affiliate' className='text-blue-600'>
+						Learn more.{' '}
+					</a>
+				</Explanation>
+			)}
+		</Card>
 	);
 };
 
@@ -341,7 +430,7 @@ export default function Account() {
 	const bar = <div className='w-full h-0 border-b-2 border-[#CAD0D3]'></div>;
 
 	const router = useRouter();
-	const { isPaidUser } = useUser();
+	const { user } = useUser();
 
 	useEffect(() => {
 		AOS.init({
@@ -381,38 +470,7 @@ export default function Account() {
 
 				<UnlimitedUpgrade />
 
-				<Card>
-					<BigTitle>💸 Earn Money with {getBrand()}</BigTitle>
-					<Instruction>
-						<div className='flex flex-col gap-y-1'>
-							<span>
-								Share your love for {getBrand()} and make real money by inviting
-								your friends and connections to join!
-							</span>
-							<span>
-								Your friends will get <strong>60%</strong> off on their first
-								purchase and you will get <strong>30%</strong> commission on all
-								their purchases.{' '}
-							</span>
-							<span>
-								Keep track of your conversions and earnings real-time and get
-								paid monthly.{' '}
-							</span>
-						</div>
-					</Instruction>
-					<Instruction>
-						<a href='/affiliate' className='text-blue-600'>
-							Learn more about affiliate program.{' '}
-						</a>
-					</Instruction>
-					<BigBlueButton
-						onClick={() => {
-							router.push('https://chatslide.getrewardful.com/');
-						}}
-					>
-						💸 Start Earning Now
-					</BigBlueButton>
-				</Card>
+        <Affiliate />
 			</Panel>
 		</Column>
 	);
