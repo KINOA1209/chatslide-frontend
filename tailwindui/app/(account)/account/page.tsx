@@ -325,10 +325,22 @@ const Affiliate = () => {
 		user?.rewardful_code || '',
 	);
 	const router = useRouter();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
 	useEffect(() => {
 		setRewardfulCode(user?.rewardful_code || '');
 	}, [user]);
+
+  async function handleUpdateRewardfulCode() {
+    setIsSubmitting(true);
+    try {
+      await UserService.updateRewardfulCode(rewardfulCode, token);
+      toast.success('Rewardful code updated successfully');
+    } catch (error) {
+      toast.error('Failed to update rewardful code');
+    }
+    setIsSubmitting(false);
+  }
 
 	return (
 		<Card>
@@ -379,11 +391,7 @@ const Affiliate = () => {
 						maxLength={50}
 						icon={<FaMoneyBill className='text-gray-600' />}
 					/>
-					<BigBlueButton
-						onClick={() => {
-							UserService.updateRewardfulCode(rewardfulCode, token);
-						}}
-					>
+					<BigBlueButton onClick={handleUpdateRewardfulCode} isSubmitting={isSubmitting}>
 						Update
 					</BigBlueButton>
 				</div>

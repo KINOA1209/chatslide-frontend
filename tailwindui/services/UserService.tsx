@@ -398,7 +398,7 @@ class UserService {
 					'Content-Type': 'application/json',
 					Authorization: `Bearer ${idToken}`,
 				},
-				body: JSON.stringify({ rewardful_code: code }),
+				body: JSON.stringify({ code: code }),
 			});
 
 			if (response.ok) {
