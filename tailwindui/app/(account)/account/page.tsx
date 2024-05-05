@@ -9,7 +9,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import ReferralLink from '@/components/ReferralLink';
 import { BigBlueButton } from '@/components/button/DrlambdaButton';
-import { InputBox } from '@/components/ui/InputBox';
+import { NewInputBox } from '@/components/ui/InputBox';
 import { FaInbox, FaKey, FaUser } from 'react-icons/fa';
 import { useUser } from '@/hooks/use-user';
 import useHydrated from '@/hooks/use-hydrated';
@@ -103,16 +103,17 @@ const Profile = () => {
 				</Explanation>
 				<div className='w-full justify-center flex flex-row mt-2'>
 					<div className='w-full flex grow gap-4 max-w-[60rem] justify-center'>
-						<InputBox>
-							<FaInbox className='text-gray-600' />
-							<input
-								id='email'
-								type='text'
-								className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800 bg-gray-100'
-								value={editEmail}
-								onChange={(e) => setEditEmail(e.target.value)}
-							/>
-						</InputBox>
+
+            <NewInputBox
+              id='email'
+              value={editEmail}
+              onChange={setEditEmail}
+              autoSelect
+              placeholder='Email'
+              maxLength={50}
+              icon={<FaInbox className='text-gray-600' />}
+            />
+
 						<BigBlueButton
 							id='update-email'
 							onClick={handleSubmitUsernameAndEmail}
@@ -141,16 +142,17 @@ const Profile = () => {
 
 				<div className='w-full justify-center flex flex-row'>
 					<div className='flex w-full max-w-[60rem] flex-row gap-4 justify-center mt-2'>
-						<InputBox>
-							<FaUser className='text-gray-600' />
-							<input
-								id='username'
-								type='text'
-								className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800 bg-gray-100'
-								onChange={(e) => handleUsernameChange(e)}
-								value={editUsername}
-							/>
-						</InputBox>
+
+            <NewInputBox
+              id='username'
+              value={editUsername}
+              onChange={setEditUsername}
+              autoSelect
+              placeholder='Username'
+              maxLength={50}
+              icon={<FaUser className='text-gray-600' />}
+            />
+
 						<BigBlueButton
 							id='update-username'
 							onClick={handleSubmitUsernameAndEmail}
@@ -214,17 +216,15 @@ const OpenAIKey = () => {
 			</Explanation>
 			<div className='w-full justify-center flex flex-row'>
 				<div className='flex grow max-w-[60rem] flex-row gap-4 justify-center mt-2'>
-					<InputBox>
-						<FaKey className='text-gray-600' />
-						<input
-							id='key'
-							type='text'
-							className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800 bg-gray-100'
-							onChange={(e) => setKey(e.target.value)}
-							onClick={(e) => (e.target as HTMLInputElement)?.select()}
-							value={key}
-						/>
-					</InputBox>
+          <NewInputBox
+            id='openai_api_key'
+            value={key}
+            onChange={setKey}
+            autoSelect
+            placeholder='sk-...'
+            maxLength={100}
+            icon={<FaKey className='text-gray-600' />}
+          />
 
 					<BigBlueButton
 						id='update-oai-key'
@@ -296,16 +296,15 @@ const ApplyPromo = () => {
 			</div>
 			<div className='w-full justify-center flex flex-row'>
 				<div className='flex grow max-w-[60rem] flex-row gap-4 justify-center mt-2'>
-					<InputBox>
-						<input
-							id='promo'
-							type='text'
-							className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800 bg-gray-100'
-							onChange={(e) => setPromo(e.target.value)}
-							onClick={(e) => (e.target as HTMLInputElement)?.select()}
-							value={promo}
-						/>
-					</InputBox>
+          <NewInputBox
+            id='promo_code'
+            value={promo}
+            onChange={setPromo}
+            autoSelect
+            placeholder='Enter promo code'
+            maxLength={50}
+            icon={<FaKey className='text-gray-600' />}
+          />
 
 					<BigBlueButton
 						id='apply-promo'

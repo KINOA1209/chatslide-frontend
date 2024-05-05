@@ -1013,6 +1013,7 @@ export const ImgModule = ({
 				placeholder='Paste YouTube embed code here. Start with <iframe> tag.'
 				value={inputValue}
 				onChange={setInputValue}
+        maxLength={undefined}
 				rows={5}
 			/>
 

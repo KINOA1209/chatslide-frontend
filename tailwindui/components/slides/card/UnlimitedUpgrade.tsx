@@ -44,7 +44,7 @@ export const UnlimitedUpgrade: React.FC<{}> = ({}) => {
 						2024. <br />
 						Get a lifetime upgrade to our Ultimate at a discounted price. 14 day
 						money back guarantee.{' '}
-						<a href='https://blog.drlambda.ai/upgrade-to-ultimate-a-one-time-payment-for-lifetime-access/'>
+						<a href='https://blog.drlambda.ai/upgrade-to-ultimate-a-one-time-payment-for-lifetime-access/' className='text-blue-600'>
 							Learn more
 						</a>
 						.
