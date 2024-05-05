@@ -10,8 +10,7 @@ import { getOrigin } from '@/utils/getHost';
 
 const ReferralLink: React.FC = () => {
 	const [host, setHost] = useState(getOrigin());
-	const [referralLink, setReferralLink] = useState('');
-	const { token, email } = useUser();
+	const { token, user } = useUser();
 
 	useEffect(() => {
 		if (
@@ -24,36 +23,9 @@ const ReferralLink: React.FC = () => {
 		}
 	}, []);
 
-	useEffect(() => {
-		const fetchReferral = async (token: string) => {
-			if (!token) return;
-
-			fetch(`/api/user/create_referral_code`, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					Authorization: `Bearer ${token}`,
-				},
-			})
-				.then((response) => {
-					if (response.ok) {
-						return response.json();
-					} else {
-						throw (response.status, response);
-					}
-				})
-				.then((data) => {
-					const code = data['referral_code'];
-					setReferralLink('/referral/' + code);
-				})
-				.catch((error) => console.error);
-		};
-		fetchReferral(token);
-	}, []);
-
 	return (
 		<div className='w-full'>
-			<ClickableLink link={host + referralLink} />
+			<ClickableLink link={host + '/referral/' + user?.referral_code} />
 			<Explanation>
 				You and your friend will both get 50 ⭐️credits.
 			</Explanation>

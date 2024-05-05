@@ -4,6 +4,7 @@ import { createBearStore } from '@/utils/create-bear-store';
 import UserService from '@/services/UserService';
 import AuthService from '@/services/AuthService';
 import mixpanel from 'mixpanel-browser';
+import { User } from '@/models/User';
 
 const useTokenBear = createBearStore<string>()('token', '', true, false);
 const useUidBear = createBearStore<string>()('uid', '', true, false);
@@ -23,6 +24,7 @@ const useExpirationDateBear = createBearStore<string>()(
 	true,
 	false,
 );
+const useUserBear = createBearStore<User | null>()('user', null, true, false);
 
 export enum UserStatus {
 	NotInited,
@@ -32,6 +34,20 @@ export enum UserStatus {
 }
 
 let userStatus: UserStatus = UserStatus.NotInited;
+
+const PAID_TIERS = [
+	'PLUS_ONETIME',
+	'PRO_ONETIME',
+	'PLUS_MONTHLY',
+	'PLUS_YEARLY',
+	'PLUS_LIFETIME',
+	'PRO_MONTHLY',
+	'PRO_YEARLY',
+	'PRO_LIFETIME',
+	'ULTIMATE_MONTHLY',
+	'ULTIMATE_YEARLY',
+	'ULTIMATE_LIFETIME',
+];
 
 export const useUser = () => {
 	// const { user, setUser } = useUserBear();
@@ -44,6 +60,8 @@ export const useUser = () => {
 	const { username, setUsername } = useUsernameBear();
 	const { email, setEmail } = useEmailBear();
 	const { expirationDate, setExpirationDate } = useExpirationDateBear();
+
+	const { user, setUser } = useUserBear(); // for other attributes of User
 
 	const initUser = async () => {
 		// console.log('-- initing user: ', {userStatus, user})
@@ -65,48 +83,28 @@ export const useUser = () => {
 				}
 				let username = await AuthService.getCurrentUserDisplayName();
 
-				const {
-					credits,
-					tier,
-					username: usernameInDB,
-					email: emailInDB,
-					expirationDate,
-				} = await UserService.getUserCreditsAndTier(idToken);
+				const user = await UserService.getUserCreditsAndTier(idToken);
+        console.log(' -- initUser: ', user);
+				setUser(user);
 
-				if (usernameInDB && emailInDB) {
-					if (usernameInDB !== username || !emailInDB.includes('@')) {
+				const {
+					name: usernameInDB,
+					email: emailInDb,
+					credits,
+					subscription_tier,
+					expiration_date,
+				} = user;
+
+				if (usernameInDB && emailInDb) {
+					if (usernameInDB !== username || !emailInDb.includes('@')) {
 						// db info is not up to date, due to bad initing
 						UserService.updateUsernameAndEmail(username, email, idToken); // async but dont await
 					}
 				}
 
-				const PAID_TIERS = [
-					'PLUS_ONETIME',
-					'PLUS_MONTHLY',
-					'PLUS_YEARLY',
-					'PLUS_LIFETIME',
-					'PRO_MONTHLY',
-					'PRO_YEARLY',
-					'PRO_LIFETIME',
-					'ULTIMATE_MONTHLY',
-					'ULTIMATE_YEARLY',
-					'ULTIMATE_LIFETIME',
-				];
-
 				const isPaidUser = PAID_TIERS.includes(tier);
 
 				username = username?.split('@')[0] || 'User';
-
-				console.log('-- initUser: ', {
-					username: username,
-					userId: uid,
-					// idToken: idToken,
-					email: email,
-					credits: credits,
-					tier: tier,
-					isPaidUser: isPaidUser,
-					expirationDate: expirationDate,
-				});
 
 				mixpanel.init('22044147cd36f20bf805d416e1235329', {
 					debug: false,
@@ -128,11 +126,11 @@ export const useUser = () => {
 				console.log('-- Identified user in steyAIRecord');
 
 				setCredits(credits);
-				setTier(tier);
+				setTier(subscription_tier);
 				setUid(uid);
 				setToken(idToken);
 				setIsPaidUser(isPaidUser);
-				setExpirationDate(expirationDate);
+				if (expiration_date) setExpirationDate(expiration_date);
 				setUsername(username);
 				setEmail(email);
 				userStatus = UserStatus.Inited;
@@ -156,22 +154,17 @@ export const useUser = () => {
 
 	const updateCreditsAndTier = async () => {
 		console.log(' -- updating credits and tier');
-		const { credits, tier, expirationDate } =
+		const { credits, subscription_tier, expiration_date } =
 			await UserService.getUserCreditsAndTier(token);
-		const isPaidUser = [
-			'PRO_MONTHLY',
-			'PLUS_MONTHLY',
-			'PRO_YEARLY',
-			'PLUS_YEARLY',
-		].includes(tier);
+		const isPaidUser = PAID_TIERS.includes(subscription_tier);
 		setCredits(credits);
-		setTier(tier);
+		setTier(subscription_tier);
 		setIsPaidUser(isPaidUser);
-		setExpirationDate(expirationDate);
+		if (expiration_date) setExpirationDate(expiration_date);
 	};
 
 	const updateCreditsFE = async (delta: number) => {
-		console.log('updaing credits by ', delta);
+		console.log('updating credits by ', delta);
 		if (credits === 'Unlimited') return;
 		const creditsNum = parseInt(credits);
 		setCredits((credits) => (creditsNum + delta).toString());
@@ -195,6 +188,7 @@ export const useUser = () => {
 	// console.log('-- useUser: ', {user, session, isPaidUser})
 
 	return {
+		user,
 		username,
 		token,
 		uid,

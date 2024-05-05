@@ -23,7 +23,7 @@ import { UnlimitedUpgrade } from '@/components/slides/card/UnlimitedUpgrade';
 import { trackRewardfulConversion } from '@/components/integrations/Rewardful';
 
 const Profile = () => {
-	const { username, email, token, setUsername } = useUser();
+	const { username, email, token, setUsername, user } = useUser();
 	const [editUsername, setEditUsername] = useState(username);
 	const [editEmail, setEditEmail] = useState(email);
 	const [isSubmitting, setIsSubmitting] = useState(false);
@@ -179,19 +179,13 @@ const Referral = () => {
 };
 
 const OpenAIKey = () => {
-	const [key, setKey] = useState('sk-......');
 	const [isSubmitting, setIsSubmitting] = useState(false);
-	const { token } = useUser();
+	const { token, user } = useUser();
+  const [key, setKey] = useState(user?.openai_api_key || 'sk-...');
 
-	const fetchKey = async () => {
-		UserService.getOpenaiApiKey(token)
-			.then((data) => {
-				if (data) setKey(data);
-			})
-			.catch((error) => {
-				console.error(error);
-			});
-	};
+  useEffect(() => {
+    setKey(user?.openai_api_key || 'sk-...');
+  }, [user]);
 
 	const updateKey = async () => {
 		setIsSubmitting(true);
@@ -210,13 +204,6 @@ const OpenAIKey = () => {
 		setIsSubmitting(false);
 		console.log(isSubmitting);
 	};
-
-	useEffect(() => {
-		if (token) {
-			// update only when useUser() is ready
-			fetchKey();
-		}
-	}, [token]);
 
 	return (
 		<div className='w-full'>

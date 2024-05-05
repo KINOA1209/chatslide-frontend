@@ -1,6 +1,7 @@
 import { getRewardfulReferralId } from '@/components/integrations/Rewardful';
 import AuthService from './AuthService';
 import { isChatslide } from '@/utils/getHost';
+import { User } from '@/models/User';
 
 class UserService {
 	static async initializeUser(token: string): Promise<boolean> {
@@ -148,13 +149,7 @@ class UserService {
 
 	static async getUserCreditsAndTier(
 		idToken: string,
-	): Promise<{
-		credits: string;
-		tier: string;
-		expirationDate: string;
-		username: string | null;
-		email: string | null;
-	}> {
+	): Promise<User> {
 		if (!idToken) throw new Error('No idToken provided');
 
 		try {
@@ -201,21 +196,35 @@ class UserService {
 			const username: string = data['username'] || null;
 			const email: string = data['email'] || null;
 
+      const openai_api_key: string = data['openai_api_key'] || null;
+      const rewardful_code: string = data['rewardful_code'] || null;
+      const referral_code: string = data['referral_code'] || null;
+
 			console.log(
 				`User credits: ${credits}, expiration date: ${expirationDate}, tier: ${tier}`,
 			);
 
-			return { credits, tier, expirationDate, username, email };
+			return {
+				id: '',
+				name: username,
+				email: email,
+				credits: credits,
+				subscription_tier: tier,
+				expiration_date: expirationDate,
+				rewardful_code: rewardful_code,
+        referral_code: referral_code,
+				openai_api_key: openai_api_key,
+			};
 		} catch (error) {
 			const { email, idToken } =
 				await AuthService.getCurrentUserTokenAndEmail();
 			console.error(`Failed to fetch user credits: ${email}`, error);
 			return {
+				id: '',
+				name: '',
+				email: '',
 				credits: '0',
-				tier: 'FREE',
-				expirationDate: '',
-				username: null,
-				email: null,
+				subscription_tier: 'FREE',
 			};
 		}
 	}
