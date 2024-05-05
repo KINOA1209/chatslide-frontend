@@ -12,7 +12,7 @@ import DrlambdaButton, {
 	BigBlueButton,
 } from '@/components/button/DrlambdaButton';
 import { NewInputBox } from '@/components/ui/InputBox';
-import { FaInbox, FaKey, FaMoneyBill, FaRegStar, FaUser } from 'react-icons/fa';
+import { FaInbox, FaKey, FaMoneyBill, FaRegStar, FaStar, FaUser } from 'react-icons/fa';
 import { useUser } from '@/hooks/use-user';
 import useHydrated from '@/hooks/use-hydrated';
 import SessionStorage from '@/utils/SessionStorage';
@@ -301,9 +301,9 @@ const ApplyPromo = () => {
 						value={promo}
 						onChange={setPromo}
 						autoSelect
-						placeholder='Enter promo code'
+						placeholder='Promo code'
 						maxLength={50}
-						icon={<FaRegStar className='text-gray-600' />}
+						icon={<FaStar className='text-gray-600' />}
 					/>
 
 					<BigBlueButton
