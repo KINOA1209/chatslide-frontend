@@ -218,7 +218,7 @@ export const ImgModule = ({
 		if (imgsrc !== '') {
 			setSelectedImg(imgsrc);
 		}
-		console.log('imgsrc', imgsrc);
+		// console.log('imgsrc', imgsrc);
 	}, [imgsrc]);
 
 	// useEffect(() => {
@@ -954,14 +954,6 @@ export const ImgModule = ({
 			closeModal();
 		}
 	};
-	// const handleUpdateStoredEmbedCode = (embedCode: string) => {
-	// 	// useJSScript(embedCode);
-	// 	setCurrentStoredEmbedCode(embedCode);
-	// };
-
-	useEffect(() => {
-		console.log('currentStoredEmbedCode content', currentStoredEmbedCode);
-	}, [currentStoredEmbedCode]);
 
 	const handleConfirmClick = () => {
 		if (

@@ -102,7 +102,7 @@ export const useUser = () => {
 					}
 				}
 
-				const isPaidUser = PAID_TIERS.includes(tier);
+				const isPaidUser = PAID_TIERS.includes(subscription_tier);
 
 				username = username?.split('@')[0] || 'User';
 
