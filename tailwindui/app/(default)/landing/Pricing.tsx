@@ -193,6 +193,8 @@ const PricingComparison: React.FC<{
 			toast.success('Your plan already includes this feature');
 		} else if (userTier.includes('CANCELLED') || userTier === 'FREE') {
 			return handleSubscription(tier, token);
+		} else if (interval === 'onetime') {  // top-up
+			return handleSubscription(tier, token);
 		} else if (userTier.includes('PLUS')) {
 			if (tier === 'PLUS') {
 				return handleManageSubscription(token);
