@@ -35,10 +35,11 @@ export const BrandingButton: React.FC<{}> = () => {
 			setShowModal(true);
 		});
 
-		return () =>
+		return () => {
 			document.removeEventListener('change_logo', (e) => {
 				setShowModal(true);
 			});
+    }
 	}, []);
 
 	return (

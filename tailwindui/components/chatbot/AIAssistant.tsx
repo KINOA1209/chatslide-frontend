@@ -219,7 +219,6 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 			} else if (response.action) {
 				// not add_page action with slide
 				// send this as a document signal
-				console.log('action:', response.action);
 				let action = response.action;
 				if (action === 'upload_background') {
 					action = 'change_logo'; // for branding
@@ -227,7 +226,8 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 				if (action === 'change_font') {
 					action = 'change_template';
 				}
-				document.dispatchEvent(new Event(response.action));
+        
+				document.dispatchEvent(new Event(action));
 			}
 
 			addChatHistory(addSuccessMessage(response.chat, response.images));
