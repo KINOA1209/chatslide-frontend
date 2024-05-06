@@ -43,6 +43,10 @@ const ScriptEditor: React.FC<TranscriptEditorProps> = ({
 
 	const debouncedUpdateTranscriptList = debounce(updateTranscriptList, 500);
 
+  useEffect(() => {
+    setScript(slides[currentSlideIndex]?.transcript || '');
+  }, [currentSlideIndex]);
+
 	useEffect(() => {
 		if (editorRef.current) {
 			editorRef.current?.addEventListener('keydown', stopArrowKeyPropagation); // TODO: seems not working
