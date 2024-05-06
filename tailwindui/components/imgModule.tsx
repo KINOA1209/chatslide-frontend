@@ -1783,8 +1783,9 @@ export const ImgModule = ({
 											<>
 												<button
 													className='flex flex-row items-center justify-center gap-1'
-													onClick={() => {
+													onClick={(e) => {
 														updateSingleCallback('');
+                            e.stopPropagation();
 													}}
 												>
 													<LuTrash2
@@ -1804,8 +1805,9 @@ export const ImgModule = ({
 												{project?.additional_images && (
 													<button
 														className='flex flex-row items-center justify-center gap-1'
-														onClick={() => {
+														onClick={(e) => {
 															updateSingleCallback('shuffle', false, {});
+                              e.stopPropagation();
 														}}
 													>
 														<HiOutlineRefresh
