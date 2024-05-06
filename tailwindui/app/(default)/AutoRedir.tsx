@@ -8,14 +8,18 @@ export default function AutoRedir() {
 	const { uid } = useUser();
 	const router = useRouter();
 
-	useEffect(() => {
-		if (uid) {
-			router.push('/dashboard');
-		} else {
-			router.push('/landing');
-		}
-	}),
-		[uid];
+git s  useEffect(() => {
+		const currentSearchParams = new URLSearchParams(window.location.search);
+		const searchParamsString = currentSearchParams.toString();
 
-	return null;
+		if (uid) {
+			router.push(
+				'/dashboard' + (searchParamsString ? `?${searchParamsString}` : ''),
+			);
+		} else {
+			router.push(
+				'/landing' + (searchParamsString ? `?${searchParamsString}` : ''),
+			);
+		}
+	}, [uid]);
 }
