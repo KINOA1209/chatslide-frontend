@@ -17,7 +17,9 @@ export default function Studio() {
 					<BigTitle>Coming Next...</BigTitle>
 					<Instruction>🎤 Voice cloning</Instruction>
 					<Instruction>📂 Folders for resources</Instruction>
-					<Instruction>🎰 Directly add scripts, voiceover, and avatar to PPTX</Instruction>
+					<Instruction>
+						🎰 Directly add scripts, voiceover, and avatar to PPTX
+					</Instruction>
 					<Instruction>
 						📈 Price increase for ULTIMATE LIFETIME to $354 on May 11th
 					</Instruction>
@@ -35,27 +37,36 @@ export default function Studio() {
 				<Card>
 					<BigTitle>May 6</BigTitle>
 					<Instruction>
-						<span>
-							💸 Rewards for Your Content: Now, you can share your content along
-							with your affiliate program (Rewardful) code. Earn money when your
-							audience converts to paying users. You'll receive 30% of all their
-							payments. Detailed instructions are on the way...
-						</span>
-						<a href='/account' className='text-blue-600'>
-							Learn more.
-						</a>
+						<div>
+							<span>
+								<b>💸 Make Money from Your Content</b>: Now, you can share your
+								content along with your affiliate program (Rewardful) code. Earn
+								money when your audience converts to paying users. You'll
+								receive 30% of all their payments. Detailed instructions are on
+								the way...<br/>
+							</span>
+							<a href='/account' className='text-blue-600'>
+								Learn more.
+							</a>
+						</div>
 					</Instruction>
 					<Instruction>
-						🤖 Script Chatbot: Enhance your scripts with our chatbot! Translate,
-						change tone, add details—simply give your command.
+						<div>
+							<b>🤖 Script Chatbot</b>: Enhance your scripts with our chatbot!
+							Translate, change tone, add details—simply give your command.
+						</div>
 					</Instruction>
 					<Instruction>
-						🐞 More Bugs Fixed: We've squashed some more bugs for smoother
-						performance.
+						<div>
+							<b>🐞 More Bugs Fixed</b>: We've squashed some more bugs for
+							smoother performance.
+						</div>
 					</Instruction>
 					<Instruction>
-						🚀 Pricing Update: Our ONETIME prices have been updated. The PRO
-						ONETIME plan is now available.
+						<div>
+							<b>🚀 Pricing Update</b>: Our ONETIME prices have been updated.
+							The PRO ONETIME plan is now available.
+						</div>
 					</Instruction>
 				</Card>
 
