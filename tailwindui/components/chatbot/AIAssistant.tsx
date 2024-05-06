@@ -20,6 +20,7 @@ import TextareaAutosize from 'react-textarea-autosize';
 import { getBrand, getLogoUrl, isChatslide } from '@/utils/getHost';
 import Chats from './Chats';
 import ChatBotService from '@/services/ChatBotService';
+import { GrayLabel } from '../ui/GrayLabel';
 
 export const AIAssistantIcon: React.FC<{
 	onClick: () => void;
@@ -153,6 +154,8 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 				slides[currentSlideIndex],
 				project?.id || '',
 				slideIndex,
+        undefined,  // selectedText
+        type
 			);
 
 			setLoading(false);
@@ -208,6 +211,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 						);
 					} else {
 						// Update state with the new slides
+            // console.log('updating script at index', currentSlideIndex)
 						updateSlidePage(currentSlideIndex, response.slide);
 						updateVersion(); // force rerender when version changes and index does not change
 					}
@@ -268,6 +272,8 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 				</div>
 
 				<div className='flex flex-row gap-2'>
+					{type === 'script' && <GrayLabel>Beta</GrayLabel>}
+
 					{/* Clear Chat button */}
 					<button onClick={() => clearChatHistory()}>
 						<DeleteIcon />

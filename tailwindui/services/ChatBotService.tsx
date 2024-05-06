@@ -31,7 +31,12 @@ class ChatBotService {
 		projectId: string,
 		pageIndex: number,
 		selectedText?: string,
+    mode?: 'script' | 'slide'
 	): Promise<ChatResponse> {
+    // console.log('mode', mode)
+
+    if (!mode) mode = 'slide'
+
 		try {
 			const resp = await fetch('/api/ai_gen_slide', {
 				method: 'POST',
@@ -49,6 +54,7 @@ class ChatBotService {
 						.slice(-5),
 					page_index: pageIndex,
 					selected_text: selectedText,
+          mode: mode
 				}),
 			});
 			return { ...(await resp.json()).data, role: 'assistant' };

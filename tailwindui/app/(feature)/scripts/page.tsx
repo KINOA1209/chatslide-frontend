@@ -444,12 +444,12 @@ export default function WorkflowStep5() {
 					</div>
 				</Card>
 
-				<div className='h-full flex flex-col items-end'>
-					<div className='h-[600px] sticky bottom-5'>
+				<div className='h-full flex flex-col justify-end'>
+					<div className='h-[600px] sticky bottom-0'>
 						<AIAssistantChatWindow
-							onToggle={() => {}}
+							onToggle={undefined}
 							slides={slides}
-							currentSlideIndex={0}
+							currentSlideIndex={slideIndex}
 							updateSlidePage={updateSlidePage}
 							updateImgUrlArray={() => {}}
 							type='script'

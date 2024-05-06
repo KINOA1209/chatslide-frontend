@@ -46,19 +46,9 @@ const ScriptEditor: React.FC<TranscriptEditorProps> = ({
 	const debouncedUpdateTranscriptList = debounce(updateTranscriptList, 500);
 
 	useEffect(() => {
+    // console.log('updating script at index', currentSlideIndex, 'version', version)
 		setScript(slides[currentSlideIndex]?.transcript || '');
 	}, [currentSlideIndex, version]);
-
-	// listen to update_script event and update the script
-	useEffect(() => {
-		const updateScript = () => {
-			setScript(slides[currentSlideIndex]?.transcript || '');
-		};
-		document.addEventListener('update_script', updateScript);
-		return () => {
-			document.removeEventListener('update_script', updateScript);
-		};
-	}, []);
 
 	useEffect(() => {
 		if (editorRef.current) {

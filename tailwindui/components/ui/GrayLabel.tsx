@@ -11,7 +11,7 @@ export const GrayLabel: React.FC<InputBoxProps> = ({
 }) => {
 	return (
 		<div
-			className={`text-center text-neutral-800 text-xs font-bold leading-snug tracking-wide ${bgColor} rounded px-1 py-0.5 ml-2 cursor-auto`}
+			className={`text-center text-neutral-800 text-xs font-bold leading-snug tracking-wide ${bgColor} rounded px-1 py-0.5 ml-2 cursor-auto flex items-center justify-center`}
 		>
 			{children}
 		</div>
