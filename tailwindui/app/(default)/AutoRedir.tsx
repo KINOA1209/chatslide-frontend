@@ -8,7 +8,7 @@ export default function AutoRedir() {
 	const { uid } = useUser();
 	const router = useRouter();
 
-git s  useEffect(() => {
+  useEffect(() => {
 		const currentSearchParams = new URLSearchParams(window.location.search);
 		const searchParamsString = currentSearchParams.toString();
 
