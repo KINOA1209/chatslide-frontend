@@ -57,7 +57,7 @@ interface AIAssistantChatWindowProps {
 	currentSlideIndex: number;
 	updateSlidePage: Function;
 	updateImgUrlArray: Function;
-  type?: 'script' | 'slide';
+	type?: 'script' | 'slide';
 }
 
 export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
@@ -66,7 +66,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 	currentSlideIndex,
 	updateSlidePage,
 	updateImgUrlArray,
-  type = 'slide',
+	type = 'slide',
 }) => {
 	// const [isChatWindowOpen, setIsChatWindowOpen] = useState(true);
 	// const toggleChatWindow = () => {
@@ -180,6 +180,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 				} else {
 					// change the current slide
 					let content = response.slide.content;
+
 					if (content.length >= 6 && JSON.stringify(content).length > 600) {
 						// too much new content in one page, need to split into two pages
 						const mid = Math.floor(content.length / 2);
@@ -240,7 +241,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 			console.log('chatHistory:', chatHistory);
 	}, [chatHistoryStatus]);
 
-  const pos =
+	const pos =
 		type === 'slide'
 			? 'sm:fixed xl:relative sm:bottom-0 sm:right-0 sm:z-50 sm:w-[20rem] sm:h-[30rem] xl:h-full'
 			: 'sm:relative sm:w-[20rem] sm:h-full';
@@ -291,9 +292,18 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 					{/* welcoming text */}
 					<div className='px-3.5 py-2.5 rounded-tl-xl rounded-tr-xl rounded-br-xl border border-gray-200 justify-center items-center gap-2.5 inline-flex'>
 						<div className='max-w-[15rem] text-neutral-800 text-base font-normal tracking-tight'>
-							Welcome to {getBrand()}! I'm your AI assistant, ready to help with
-							slide design 🎨, content ideas ✍️, data organization 📊,
-							proofreading, and updating. Just type your request here!
+							{type === 'slide' ? (
+								<span>
+									Welcome to {getBrand()}! I'm your AI assistant, ready to help
+									with slide design 🎨, content ideas ✍️, data organization 📊,
+									proofreading, and updating. Just type your request here!
+								</span>
+							) : (
+								<span>
+									Welcome to {getBrand()}! I'm your AI assistant, ready to help
+									with script writing 📝, content ideas ✍️, translation 🌐, etc.
+								</span>
+							)}
 						</div>
 					</div>
 					{/* chat history render */}
@@ -330,7 +340,13 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 			<div className='w-full border-t border-gray-200 border-t-2'>
 				{!userInput && !loading && (
 					<ChatSuggestions
-						isCover={currentSlideIndex === 0}
+						type={
+							type === 'slide'
+								? currentSlideIndex === 0
+									? 'cover'
+									: 'noncover'
+								: 'script'
+						}
 						sendChat={handleSend}
 					/>
 				)}

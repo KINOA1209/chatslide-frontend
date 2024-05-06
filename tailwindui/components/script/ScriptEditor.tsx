@@ -6,6 +6,7 @@ import { stopArrowKeyPropagation } from '@/utils/editing';
 import { useUser } from '@/hooks/use-user';
 import { BigBlueButton } from '../button/DrlambdaButton';
 import TextareaAutosize from 'react-textarea-autosize';
+import { useSlides } from '@/hooks/use-slides';
 
 interface TranscriptEditorProps {
 	slides: Slide[];
@@ -34,6 +35,7 @@ const ScriptEditor: React.FC<TranscriptEditorProps> = ({
 	);
 	const { isPaidUser } = useUser();
 	const editorRef = React.useRef<HTMLDivElement>(null);
+  const { version } = useSlides();
 
 	const updateTranscriptList = (newValue: string) => {
 		const newSlide = { ...slides[currentSlideIndex] };
@@ -43,9 +45,20 @@ const ScriptEditor: React.FC<TranscriptEditorProps> = ({
 
 	const debouncedUpdateTranscriptList = debounce(updateTranscriptList, 500);
 
-  useEffect(() => {
-    setScript(slides[currentSlideIndex]?.transcript || '');
-  }, [currentSlideIndex]);
+	useEffect(() => {
+		setScript(slides[currentSlideIndex]?.transcript || '');
+	}, [currentSlideIndex, version]);
+
+	// listen to update_script event and update the script
+	useEffect(() => {
+		const updateScript = () => {
+			setScript(slides[currentSlideIndex]?.transcript || '');
+		};
+		document.addEventListener('update_script', updateScript);
+		return () => {
+			document.removeEventListener('update_script', updateScript);
+		};
+	}, []);
 
 	useEffect(() => {
 		if (editorRef.current) {

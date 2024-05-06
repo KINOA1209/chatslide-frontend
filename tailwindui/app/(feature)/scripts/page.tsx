@@ -385,7 +385,7 @@ export default function WorkflowStep5() {
 				</Card> */}
 			</Column>
 
-			<div className='flex h-[70vh] flex-row justify-between gap-x-4 lg:px-4 pb-4'>
+			<div className='flex flex-row justify-between gap-x-4 lg:px-4 pb-4'>
 				<Card>
 					<BigTitle>📝 Scripts</BigTitle>
 					{!isOpenaiVoice(voice) && (
@@ -417,7 +417,7 @@ export default function WorkflowStep5() {
 						</Instruction>
 					)}
 
-					<div className='flex flex-col gap-y-2 items-center'>
+					<div className='flex flex-col gap-y-2 items-center '>
 						<ScriptSection
 							slides={slides}
 							index={slideIndex}
@@ -426,31 +426,36 @@ export default function WorkflowStep5() {
 							updateSlidePage={updateSlidePage}
 						/>
 						<div className='flex flex-row items-center'>
-								<SlideLeftNavigator
-									currentSlideIndex={slideIndex}
-									slides={slides}
-									goToSlide={gotoPage}
-								/>
+							<SlideLeftNavigator
+								currentSlideIndex={slideIndex}
+								slides={slides}
+								goToSlide={gotoPage}
+							/>
 							<SlidePagesIndicator
 								currentSlideIndex={slideIndex}
 								slides={slides}
 							/>
-								<SlideRightNavigator
-									currentSlideIndex={slideIndex}
-									slides={slides}
-									goToSlide={gotoPage}
-								/>
+							<SlideRightNavigator
+								currentSlideIndex={slideIndex}
+								slides={slides}
+								goToSlide={gotoPage}
+							/>
 						</div>
 					</div>
 				</Card>
-				<AIAssistantChatWindow
-					onToggle={() => {}}
-					slides={slides}
-					currentSlideIndex={0}
-					updateSlidePage={updateSlidePage}
-					updateImgUrlArray={() => {}}
-          type='script'
-				/>
+
+				<div className='h-full flex flex-col items-end'>
+					<div className='h-[600px] sticky bottom-5'>
+						<AIAssistantChatWindow
+							onToggle={() => {}}
+							slides={slides}
+							currentSlideIndex={0}
+							updateSlidePage={updateSlidePage}
+							updateImgUrlArray={() => {}}
+							type='script'
+						/>
+					</div>
+				</div>
 			</div>
 		</div>
 	);
