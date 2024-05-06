@@ -41,7 +41,7 @@ export const SideBarData: SideBarItem[] = [
 		path: '/discover',
 	},
 	{
-		title: "What's New",
+		title: "Updates 5.06",
 		icon: <LuNewspaper />,
 		path: '/whatsnew',
 	},

@@ -17,7 +17,46 @@ export default function Studio() {
 					<BigTitle>Coming Next...</BigTitle>
 					<Instruction>🎤 Voice cloning</Instruction>
 					<Instruction>📂 Folders for resources</Instruction>
-					<Instruction>📈 Price increase for ULTIMATE LIFETIME tier on May 11th</Instruction>
+					<Instruction>🎰 Directly add scripts, voiceover, and avatar to PPTX</Instruction>
+					<Instruction>
+						📈 Price increase for ULTIMATE LIFETIME to $354 on May 11th
+					</Instruction>
+					<Instruction>
+						👨🏻‍💻 We are hiring Engineering Interns
+						<a
+							href='https://twitter.com/chatslide_ai/status/1787564603997921582'
+							className='text-blue-600'
+						>
+							Help us retweet.{' '}
+						</a>
+					</Instruction>
+				</Card>
+
+				<Card>
+					<BigTitle>May 6</BigTitle>
+					<Instruction>
+						<span>
+							💸 Rewards for Your Content: Now, you can share your content along
+							with your affiliate program (Rewardful) code. Earn money when your
+							audience converts to paying users. You'll receive 30% of all their
+							payments. Detailed instructions are on the way...
+						</span>
+						<a href='/account' className='text-blue-600'>
+							Learn more.
+						</a>
+					</Instruction>
+					<Instruction>
+						🤖 Script Chatbot: Enhance your scripts with our chatbot! Translate,
+						change tone, add details—simply give your command.
+					</Instruction>
+					<Instruction>
+						🐞 More Bugs Fixed: We've squashed some more bugs for smoother
+						performance.
+					</Instruction>
+					<Instruction>
+						🚀 Pricing Update: Our ONETIME prices have been updated. The PRO
+						ONETIME plan is now available.
+					</Instruction>
 				</Card>
 
 				<Card>
@@ -53,7 +92,8 @@ export default function Studio() {
 					</Instruction>
 					<Instruction>
 						<div>
-							💻 Infrastructure Upgrades: Increase server capacity and it is less busy than before!
+							💻 Infrastructure Upgrades: Increase server capacity and it is
+							less busy than before!
 						</div>
 					</Instruction>
 				</Card>
