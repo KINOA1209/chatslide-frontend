@@ -18,7 +18,6 @@ const LinkInput = ({
 	const { token, isPaidUser } = useUser();
 	const [isAddingLink, setIsAddingLink] = useState(false);
 	const [linkUrl, setLinkUrl] = useState('' as string);
-	const [urlIsYoutube, setUrlIsYoutube] = useState(false);
 
 	const isValidUrl = (urlString: string): boolean => {
 		try {
@@ -50,7 +49,7 @@ const LinkInput = ({
 		}
 		setLinkError('');
 		setIsAddingLink(true);
-		if (urlIsYoutube) {
+		if (checkLinkIsYoutube(link)) {
 			addYoutubeLink(link);
 		} else {
 			addWebpageLink(link);
@@ -93,7 +92,7 @@ const LinkInput = ({
 		setIsAddingLink(false);
 	}
 
-	const handleLinkChange = (link: string) => {
+	const checkLinkIsYoutube = (link: string): boolean => {
 		// url format: https://gist.github.com/rodrigoborgesdeoliveira/987683cfbfcc8d800192da1e73adc486
 		// search params will be ignored
 		// sample: https://www.youtube.com/watch?v=Ir3eJ1t13fk
@@ -103,7 +102,7 @@ const LinkInput = ({
 		if (link === '') {
 			setLinkUrl('');
 			setLinkError('');
-			return;
+			return false;
 		}
 		setLinkUrl(link);
 		setLinkError('');
@@ -115,8 +114,8 @@ const LinkInput = ({
 			const essentialLink = link.match(regex1);
 			if (essentialLink && essentialLink.length > 0) {
 				setLinkUrl('https://www.' + essentialLink[0]);
-				setUrlIsYoutube(true);
 				addLink(link);
+        return true;
 			}
 		} else if (regex2.test(link)) {
 			const essentialLink = link.match(regex2);
@@ -124,8 +123,8 @@ const LinkInput = ({
 				const vID = essentialLink[0].match(/[A-Za-z0-9_-]{11}/);
 				if (vID && vID.length > 0) {
 					setLinkUrl('https://www.youtube.com/watch?v=' + vID[0]);
-					setUrlIsYoutube(true);
 					addLink(link);
+          return true
 				}
 			}
 		} else if (regex3.test(link)) {
@@ -134,15 +133,16 @@ const LinkInput = ({
 				const vID = essentialLink[0].match(/[A-Za-z0-9_-]{11}/);
 				if (vID && vID.length > 0) {
 					setLinkUrl('https://www.youtube.com/watch?v=' + vID[0]);
-					setUrlIsYoutube(true);
 					addLink(link);
+          return true;
 				}
 			}
 		} else {
 			// url is not youtube, assuming it is a web link
-			setUrlIsYoutube(false);
 			addLink(link);
+      return false;
 		}
+    return false;
 	};
 
 	return (
@@ -158,7 +158,6 @@ const LinkInput = ({
 						type='text'
 						className='text-sm md:text-l form-input w-full border-none bg-gray-100'
 						value={linkUrl}
-						onChange={(e) => handleLinkChange(e.target.value)}
 						onClick={(e) => (e.target as HTMLInputElement).select()}
 						placeholder='Paste webpage, Youtube, or 𝕏 link'
 					/>
