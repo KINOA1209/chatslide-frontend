@@ -1007,6 +1007,7 @@ export const ImgModule = ({
 				onChange={setInputValue}
         maxLength={undefined}
 				rows={5}
+				textarea
 			/>
 
 			<div className='w-full mx-auto flex justify-center items-center'>
