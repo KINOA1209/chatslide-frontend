@@ -16,13 +16,15 @@ import LayoutChanger from './LayoutChanger';
 import { Default_TemplateThemeConfig } from './templates_customizable_elements/templatesThemeConfigDetails/Default_TemplateThemeConfigDetails';
 import {
 	PresentButton,
-	SlideLeftNavigator,
-	SlideRightNavigator,
-	SlidePagesIndicator,
 	AddSlideButton,
 	DeleteSlideButton,
 	ChangeTemplateOptions,
 } from './SlideButtons';
+import {
+	SlideRightNavigator,
+	SlideLeftNavigator,
+	SlidePagesIndicator,
+} from '@/components/slides/SlidePageIndicator';
 
 import SlideContainer from './SlideContainer';
 import ButtonWithExplanation from '../button/ButtonWithExplanation';

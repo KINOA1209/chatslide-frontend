@@ -40,7 +40,11 @@ import { WrappableRow } from '@/components/layout/WrappableRow';
 import { isOpenaiVoice } from '@/components/language/voiceData';
 import Toggle from '@/components/button/Toggle';
 import { AIAssistantChatWindow } from '@/components/chatbot/AIAssistant';
-import { SlideLeftNavigator, SlidePagesIndicator, SlideRightNavigator } from '@/components/slides/SlideButtons';
+import {
+	SlideRightNavigator,
+  SlideLeftNavigator,
+  SlidePagesIndicator
+} from '@/components/slides/SlidePageIndicator';
 
 const ScriptSection = dynamic(
 	() => import('@/components/script/ScriptSection'),
@@ -425,22 +429,23 @@ export default function WorkflowStep5() {
 							voiceStyle={style}
 							updateSlidePage={updateSlidePage}
 						/>
-						<div className='flex flex-row items-center'>
-							<SlideLeftNavigator
-								currentSlideIndex={slideIndex}
-								slides={slides}
-								goToSlide={gotoPage}
-							/>
-							<SlidePagesIndicator
-								currentSlideIndex={slideIndex}
-								slides={slides}
-							/>
-							<SlideRightNavigator
-								currentSlideIndex={slideIndex}
-								slides={slides}
-								goToSlide={gotoPage}
-							/>
-						</div>
+
+							<div className='flex flex-row items-center'>
+								<SlideLeftNavigator
+									currentSlideIndex={slideIndex}
+									slides={slides}
+									goToSlide={gotoPage}
+								/>
+								<SlidePagesIndicator
+									currentSlideIndex={slideIndex}
+									slides={slides}
+								/>
+								<SlideRightNavigator
+									currentSlideIndex={slideIndex}
+									slides={slides}
+									goToSlide={gotoPage}
+								/>
+							</div>
 					</div>
 				</Card>
 
