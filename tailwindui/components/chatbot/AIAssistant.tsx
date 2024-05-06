@@ -52,11 +52,12 @@ export const AIAssistantIcon: React.FC<{
 };
 
 interface AIAssistantChatWindowProps {
-	onToggle: () => void;
+	onToggle?: () => void;
 	slides: Slide[];
 	currentSlideIndex: number;
 	updateSlidePage: Function;
 	updateImgUrlArray: Function;
+  type?: 'script' | 'slide';
 }
 
 export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
@@ -65,6 +66,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 	currentSlideIndex,
 	updateSlidePage,
 	updateImgUrlArray,
+  type = 'slide',
 }) => {
 	// const [isChatWindowOpen, setIsChatWindowOpen] = useState(true);
 	// const toggleChatWindow = () => {
@@ -238,9 +240,14 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 			console.log('chatHistory:', chatHistory);
 	}, [chatHistoryStatus]);
 
+  const pos =
+		type === 'slide'
+			? 'sm:fixed xl:relative sm:bottom-0 sm:right-0 sm:z-50 sm:w-[20rem] sm:h-[30rem] xl:h-full'
+			: 'sm:relative sm:w-[20rem] sm:h-full';
+
 	return (
 		<section
-			className={`hidden sm:flex sm:flex-col sm:fixed xl:relative sm:bottom-0 sm:right-0 sm:w-[20rem] sm:z-50 sm:h-[30rem] xl:h-full bg-white rounded-lg sm:items-center border border-2 border-gray-200`}
+			className={`hidden sm:flex ${pos} sm:flex-col bg-white rounded-lg sm:items-center border border-2 border-gray-200`}
 			ref={chatWindowRef}
 		>
 			{/* title and exit button */}
@@ -266,9 +273,11 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 					</button>
 
 					{/* exit button */}
-					<button onClick={onToggle}>
-						<FaTimes color='#5168F6' />
-					</button>
+					{onToggle && (
+						<button onClick={onToggle}>
+							<FaTimes color='#5168F6' />
+						</button>
+					)}
 				</div>
 			</div>
 

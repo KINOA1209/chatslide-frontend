@@ -124,7 +124,7 @@ const ScriptSection: React.FC<{
 	};
 
 	return (
-		<WrappableRow type='flex' key={index}>
+		<div className='flex flex-col lg:flex-row'>
 			<SlideContainer
 				index={index}
 				slide={slides[index]}
@@ -140,7 +140,7 @@ const ScriptSection: React.FC<{
 			/>
 			{/* play and pause the script */}
 			<PlayButton />
-		</WrappableRow>
+		</div>
 	);
 };
 

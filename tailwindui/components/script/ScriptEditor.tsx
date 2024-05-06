@@ -61,7 +61,7 @@ const ScriptEditor: React.FC<TranscriptEditorProps> = ({
 	return (
 		<div
 			ref={editorRef}
-			style={{ maxWidth: `${maxWidth}px` }}
+			style={{ width: `${maxWidth}px` }}
 			className={`w-full min-h-[4rem] border border-2 border-gray-200 rounded-lg flex flex-col overflow-y-auto my-1`} // shift left to align with slide
 		>
 			{isPaidUser || currentSlideIndex < 5 ? (

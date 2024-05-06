@@ -9,7 +9,7 @@ export const WrappableRow: React.FC<{
 	if (type === 'grid') {
 		return (
 			<div
-				className={`w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-${cols} gap-2 items-start`}
+				className={`w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-${cols} gap-2 items-start`}
 			>
 				{children}
 			</div>
