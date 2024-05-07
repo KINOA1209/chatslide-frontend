@@ -307,7 +307,7 @@ export default function DesignPage() {
 			if (project?.presentation_slides) {
 				const parsedSlides = ProjectService.parseSlides(
 					project.presentation_slides,
-				);
+				).slides;
 				// updateProject('parsed_slides', parsedSlides);
 				initSlides(parsedSlides);
 				setShowGenerationStatusModal(true);

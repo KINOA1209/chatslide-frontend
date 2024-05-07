@@ -8,4 +8,5 @@ export type User = {
   expiration_date?: string;
   rewardful_code?: string;
   openai_api_key?: string;
+  ltd_upgrade_price?: number;
 }

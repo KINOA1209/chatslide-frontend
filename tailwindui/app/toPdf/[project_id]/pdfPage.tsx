@@ -34,7 +34,7 @@ const PdfPage: React.FC<PdfPageProps> = ({ project_id, page = 1 }) => {
 				if (project.presentation_slides) {
 					const slides = ProjectService.parseSlides(
 						project.presentation_slides,
-					);
+					).slides;
 					initSlides(slides);
 					setLoading(false);
 					setIsPresenting(true);

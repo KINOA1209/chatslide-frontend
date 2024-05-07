@@ -212,6 +212,7 @@ class UserService {
 				rewardful_code: rewardful_code,
 				referral_code: referral_code,
 				openai_api_key: openai_api_key,
+        ltd_upgrade_price: data['ltd_upgrade_price'],
 			};
 		} catch (error) {
 			const { email, idToken } =
