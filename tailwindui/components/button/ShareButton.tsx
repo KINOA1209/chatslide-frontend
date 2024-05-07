@@ -187,7 +187,12 @@ const ShareButton: React.FC<ShareButtonProps> = ({
 									}
 								/>
 							) : (
-								<ClickableLink link={`${host}/shared/${project_id || ''}`} />
+								<ClickableLink
+									link={
+										`${host}/shared/${project_id || ''}` +
+										(user?.rewardful_code ? '?via=' + user.rewardful_code : '')
+									}
+								/>
 							)}
 						</div>
 					)}
