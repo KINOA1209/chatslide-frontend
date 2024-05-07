@@ -164,6 +164,7 @@ const LinkInput = ({
 					/>
 				</div>
 				<SmallBlueButton
+					// customizeStyle={{ fontSize: '12px', padding: '6px 4px' }}
 					onClick={(e) => {
 						addLink(linkUrl);
 					}}

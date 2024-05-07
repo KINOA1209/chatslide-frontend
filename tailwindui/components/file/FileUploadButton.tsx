@@ -32,7 +32,7 @@ const determineSupportedFormats = (pageInvoked: string) => {
 	return ALL_EXTENSIONS;
 };
 
-const sizeLimit = 10 * 1024 * 1024; // 10mb
+export const sizeLimit = 10 * 1024 * 1024; // 10mb
 
 interface FileUploadButtonProps {
 	onFileSelected: (file: File | null) => void;

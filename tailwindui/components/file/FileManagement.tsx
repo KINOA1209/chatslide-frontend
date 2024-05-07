@@ -628,6 +628,12 @@ const MyFiles: React.FC<filesInterface> = ({
 				<MyResourcePageHeader
 					showUploadOptionsMenu={showUploadOptionsMenu}
 					setShowUploadOptionsMenu={setShowUploadOptionsMenu}
+					setSelectedResources={setResources}
+					selectedResources={resources}
+					onFileSelected={onFileSelected}
+					isSubmitting={isSubmitting}
+					pageInvoked={pageInvoked}
+
 					// localFileUploadButton={}
 					// uploadFromCloudButton={}
 				/>

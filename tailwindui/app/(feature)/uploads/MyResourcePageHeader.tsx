@@ -5,15 +5,26 @@ import { FiUpload } from 'react-icons/fi';
 import { FaChevronDown } from 'react-icons/fa';
 import { FaChevronUp } from 'react-icons/fa';
 import UploadOptionsDropdownMenu from '@/components/ui/UploadOptionsDropdownMenu';
+import Resource from '@/models/Resource';
 
 interface MyResourcePageHeaderProps {
 	showUploadOptionsMenu: boolean;
 	setShowUploadOptionsMenu: (value: boolean) => void;
+	selectedResources: Resource[];
+	setSelectedResources: React.Dispatch<React.SetStateAction<Resource[]>>;
+	onFileSelected: (file: File | null) => Promise<void>;
+	isSubmitting: boolean;
+	pageInvoked: string;
 }
 
 const MyResourcePageHeader: React.FC<MyResourcePageHeaderProps> = ({
 	showUploadOptionsMenu,
 	setShowUploadOptionsMenu,
+	selectedResources,
+	setSelectedResources,
+	onFileSelected,
+	isSubmitting = false,
+	pageInvoked = 'resources',
 }) => {
 	return (
 		// <section>
@@ -70,7 +81,7 @@ const MyResourcePageHeader: React.FC<MyResourcePageHeaderProps> = ({
 						// text='Create New'
 						// onClick={handleStartNewProject}
 					>
-						<span>Upload</span>
+						<span>{!isSubmitting ? 'Upload' : 'Uploading...'}</span>
 					</DesignSystemButton>
 					<DesignSystemButton
 						isPaidFeature={false}
@@ -94,6 +105,11 @@ const MyResourcePageHeader: React.FC<MyResourcePageHeaderProps> = ({
 					{showUploadOptionsMenu && (
 						<UploadOptionsDropdownMenu
 							setIsDropdownVisible={setShowUploadOptionsMenu}
+							setSelectedResources={setSelectedResources}
+							selectedResources={selectedResources}
+							onFileSelected={onFileSelected}
+							isSubmitting={isSubmitting}
+							pageInvoked={pageInvoked}
 						></UploadOptionsDropdownMenu>
 					)}
 				</div>
