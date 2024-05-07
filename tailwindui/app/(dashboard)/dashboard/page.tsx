@@ -207,6 +207,7 @@ export default function Dashboard() {
 			const response = await ProjectService.deleteProject(token, deleteInd);
 
 			setProjects(projects.filter((proj) => proj.id !== deleteInd));
+			setCurrentProjects(projects.filter((proj) => proj.id !== deleteInd));
 		} catch (error: any) {
 			toast.error(error.message, {
 				position: 'top-center',
