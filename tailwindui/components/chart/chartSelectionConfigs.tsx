@@ -9,7 +9,7 @@ const chartSelectionConfigs: Record<string, ChartConfig> = {
 			<DynamicChart
 				chartType='pie'
 				chartData={getChartData('pie')}
-				isPrview={true}
+				isPreview={true}
 			/>
 		),
 		chartType: 'pie',
@@ -21,7 +21,7 @@ const chartSelectionConfigs: Record<string, ChartConfig> = {
 			<DynamicChart
 				chartType='line'
 				chartData={getChartData('line')}
-				isPrview={true}
+				isPreview={true}
 			/>
 		),
 		chartType: 'line',
@@ -33,7 +33,7 @@ const chartSelectionConfigs: Record<string, ChartConfig> = {
 			<DynamicChart
 				chartType='bar'
 				chartData={getChartData('bar')}
-				isPrview={true}
+				isPreview={true}
 			/>
 		),
 		chartType: 'bar',
