@@ -60,7 +60,7 @@ const OneStep: React.FC<StepProps> = ({
 	};
 
 	const renderLine = !isLastStep && (
-		<div className='hidden md:flex md:w-12 xl:w-20 overflow-x-hidden'>
+		<div className='hidden md:flex md:w-12 lg:w-16 xl:w-20 overflow-x-hidden'>
 			{!isLastStep ? <ConnectedLine /> : null}
 		</div>
 	);
@@ -75,7 +75,7 @@ const OneStep: React.FC<StepProps> = ({
 					{renderLine}
 				</div>
 				<span
-					className={`absolute top-8 text-neutral-800 text-white text-sm font-bold leading-normal tracking-tight ${isLastStep ? '' : 'ml-[-8px]'}`}
+					className={`absolute top-8 text-neutral-800 text-white text-xs lg:text-sm font-bold leading-normal tracking-tight ${isLastStep ? '' : 'ml-[-8px]'}`}
 				>
 					{desc}
 				</span>
@@ -96,7 +96,7 @@ const OneStep: React.FC<StepProps> = ({
 					{renderLine}
 				</div>
 				<span
-					className={`absolute top-8 text-white text-sm font-normal leading-normal tracking-tight ${isLastStep ? '' : 'ml-[-18px]'}`}
+					className={`absolute top-8 text-white text-xs lg:text-sm font-normal leading-normal tracking-tight ${isLastStep ? '' : 'ml-[-18px]'}`}
 				>
 					{desc}
 				</span>
@@ -115,7 +115,7 @@ const OneStep: React.FC<StepProps> = ({
 					{renderLine}
 				</div>
 				<span
-					className={`absolute top-8 text-white text-sm font-normal leading-normal tracking-tight ${isLastStep ? '' : 'ml-[-8px]'}`}
+					className={`absolute top-8 text-white text-xs lg:text-sm font-normal leading-normal tracking-tight ${isLastStep ? '' : 'ml-[-8px]'}`}
 				>
 					{desc}
 				</span>
