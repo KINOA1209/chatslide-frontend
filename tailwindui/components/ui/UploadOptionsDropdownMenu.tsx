@@ -15,6 +15,7 @@ import {
 } from '../file/FileUploadButton';
 import { toast } from 'react-toastify';
 import { CarbonConnect } from 'carbon-connect';
+import { CloudConnectComponent } from '../file/FileManagement';
 interface UploadOptionsDropdownMenuProps {
 	setIsDropdownVisible: (value: boolean) => void;
 	selectedResources: Resource[];
@@ -22,6 +23,12 @@ interface UploadOptionsDropdownMenuProps {
 	onFileSelected: (file: File | null) => void;
 	isSubmitting: boolean;
 	pageInvoked: string;
+	isPaidUser: boolean;
+	getBrand: () => string;
+	getLogoUrl: () => string;
+	carbonTokenFetcher: () => Promise<any>;
+	handleSuccess: (data: any) => Promise<void>; // Adjust the type according to the actual data type
+	isUploadDropdownItem: boolean;
 }
 
 const UploadOptionsDropdownMenu: React.FC<UploadOptionsDropdownMenuProps> = ({
@@ -31,6 +38,12 @@ const UploadOptionsDropdownMenu: React.FC<UploadOptionsDropdownMenuProps> = ({
 	onFileSelected,
 	isSubmitting,
 	pageInvoked,
+	isPaidUser,
+	getBrand,
+	getLogoUrl,
+	carbonTokenFetcher,
+	handleSuccess,
+	isUploadDropdownItem,
 }) => {
 	const [showFileSupportExplain, setShowFileSupportExplain] = useState(false);
 	const [showAddLinkInput, setShowAddLinkInput] = useState(false);
@@ -180,107 +193,35 @@ const UploadOptionsDropdownMenu: React.FC<UploadOptionsDropdownMenuProps> = ({
 					{
 						<>
 							{/* carbon connect cloud storage */}
-							{/* {pageInvoked !== 'theme' && (
-								<div className='max-w-sm w-fit text-center pt-4 mx-4'>
-									<div className='w-full mx-auto'>
-										{isPaidUser ? (
-											<CarbonConnect
-												orgName={getBrand()}
-												brandIcon={getLogoUrl()}
-												tokenFetcher={carbonTokenFetcher}
-												tags={{
-													tag1: 'tag1_value',
-													tag2: 'tag2_value',
-													tag3: 'tag3_value',
-												}}
-												maxFileSize={10000000}
-												enabledIntegrations={[
-													// {
-													//     id: IntegrationName.GOOGLE_DRIVE,
-													//     chunkSize: 1500,
-													//     overlapSize: 20,
-													//     skipEmbeddingGeneration: true,
-													// },
-													{
-														id: IntegrationName.ONEDRIVE,
-														chunkSize: 1500,
-														overlapSize: 20,
-														skipEmbeddingGeneration: true,
-													},
-													{
-														id: IntegrationName.DROPBOX,
-														chunkSize: 1500,
-														overlapSize: 20,
-														skipEmbeddingGeneration: true,
-													},
-													// {
-													// 	id: IntegrationName.NOTION,
-													// 	chunkSize: 1500,
-													// 	overlapSize: 20,
-													// 	skipEmbeddingGeneration: true,
-													// },
-													{
-														id: IntegrationName.GOOGLE_DRIVE,
-														chunkSize: 1500,
-														overlapSize: 20,
-														skipEmbeddingGeneration: true,
-													},
-												]}
-												onSuccess={(data) => handleSuccess(data)}
-												onError={(error) =>
-													console.log('Data on Error: ', error)
-												}
-												primaryBackgroundColor='#5168f6'
-												primaryTextColor='#fafafa'
-												secondaryBackgroundColor='#f2f2f2'
-												secondaryTextColor='#000000'
-												allowMultipleFiles={true}
-												open={false}
-												chunkSize={1500}
-												overlapSize={20}
-												// entryPoint="LOCAL_FILES"
-											>
-												<BigBlueButton
-													onClick={() => {}}
-													isSubmitting={false}
-													showArrow={false}
-												>
-													Upload from Cloud ☁️
-												</BigBlueButton>
-											</CarbonConnect>
-										) : (
-											<BigBlueButton
-												onClick={() => {}}
-												isSubmitting={false}
-												showArrow={false}
-												isPaidFeature={true}
-												isPaidUser={isPaidUser}
-											>
-												Upload from Cloud ☁️
-											</BigBlueButton>
-										)}
-									</div>
-								</div>
-							)} */}
+
 							{pageInvoked !== 'theme' && (
-								<button
-									className='block px-[10px] py-[9px] text-sm text-[#182230] rounded-md  hover:bg-zinc-100 w-full text-left'
-									onClick={() => {
-										setIsDropdownVisible(false);
-									}}
-									style={{
-										display: 'flex',
-										flexDirection: 'row',
-										alignItems: 'center',
-										justifyContent: 'flex-start',
-										gap: 'var(--spacing-lg, 12px)',
-										borderBottom:
-											'1px solid var(--Colors-Border-border-secondary, #EAECF0)',
-									}}
-								>
-									<MdOutlineCloudUpload></MdOutlineCloudUpload>
-									<span>From Cloud</span>
-								</button>
+								// <button
+								// 	className='block px-[10px] py-[9px] text-sm text-[#182230] rounded-md  hover:bg-zinc-100 w-full text-left'
+								// 	onClick={() => {
+								// 		setIsDropdownVisible(false);
+								// 	}}
+								// 	style={{
+								// 		display: 'flex',
+								// 		flexDirection: 'row',
+								// 		alignItems: 'center',
+								// 		justifyContent: 'flex-start',
+								// 		gap: 'var(--spacing-lg, 12px)',
+								// 		borderBottom:
+								// 			'1px solid var(--Colors-Border-border-secondary, #EAECF0)',
+								// 	}}
+								// >
+								// 	<MdOutlineCloudUpload></MdOutlineCloudUpload>
+								// 	<span>From Cloud</span>
+								// </button>
+
+								<CloudConnectComponent
+									isPaidUser={isPaidUser}
+									getBrand={getBrand}
+									getLogoUrl={getLogoUrl}
+									carbonTokenFetcher={carbonTokenFetcher}
+									handleSuccess={handleSuccess}
+									isUploadDropdownItem={isUploadDropdownItem}
+								></CloudConnectComponent>
 							)}
 						</>
 					}

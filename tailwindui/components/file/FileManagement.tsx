@@ -17,6 +17,7 @@ import { useUser } from '@/hooks/use-user';
 import { Blank, Loading } from '../ui/Loading';
 import { getBrand, getLogoUrl } from '@/utils/getHost';
 import MyResourcePageHeader from '@/app/(feature)/uploads/MyResourcePageHeader';
+import { MdOutlineCloudUpload } from 'react-icons/md';
 
 interface UserFileList {
 	selectable: boolean;
@@ -26,7 +27,108 @@ interface UserFileList {
 	selectedResources: Array<Resource>;
 }
 
-// Define a new component for the table header
+export interface CloudConnectProps {
+	isPaidUser: boolean;
+	getBrand: () => string;
+	getLogoUrl: () => string;
+	carbonTokenFetcher: () => Promise<any>;
+	handleSuccess: (data: any) => Promise<void>; // Adjust the type according to the actual data type
+	isUploadDropdownItem: boolean;
+}
+
+export const CloudConnectComponent: React.FC<CloudConnectProps> = ({
+	isPaidUser,
+	getBrand,
+	getLogoUrl,
+	carbonTokenFetcher,
+	handleSuccess,
+	isUploadDropdownItem = false,
+}) => {
+	const brand = getBrand(); // Assuming getBrand is a function that returns the brand name
+	const logoUrl = getLogoUrl(); // Assuming getLogoUrl is a function that returns the logo URL
+
+	return (
+		<div className='w-full mx-auto'>
+			{isPaidUser ? (
+				<CarbonConnect
+					orgName={brand}
+					brandIcon={logoUrl}
+					tokenFetcher={carbonTokenFetcher}
+					tags={{
+						tag1: 'tag1_value',
+						tag2: 'tag2_value',
+						tag3: 'tag3_value',
+					}}
+					maxFileSize={10000000}
+					enabledIntegrations={[
+						{
+							id: IntegrationName.ONEDRIVE,
+							chunkSize: 1500,
+							overlapSize: 20,
+							skipEmbeddingGeneration: true,
+						},
+						{
+							id: IntegrationName.DROPBOX,
+							chunkSize: 1500,
+							overlapSize: 20,
+							skipEmbeddingGeneration: true,
+						},
+						{
+							id: IntegrationName.GOOGLE_DRIVE,
+							chunkSize: 1500,
+							overlapSize: 20,
+							skipEmbeddingGeneration: true,
+						},
+					]}
+					onSuccess={(data) => handleSuccess(data)}
+					onError={(error) => console.log('Data on Error: ', error)}
+					primaryBackgroundColor='#5168f6'
+					primaryTextColor='#fafafa'
+					secondaryBackgroundColor='#f2f2f2'
+					secondaryTextColor='#000000'
+					allowMultipleFiles={true}
+					open={false}
+					chunkSize={1500}
+					overlapSize={20}
+				>
+					<BigBlueButton
+						onClick={() => {}}
+						isSubmitting={false}
+						showArrow={false}
+						isUploadDropdownItem={isUploadDropdownItem}
+					>
+						{!isUploadDropdownItem ? (
+							<span>Upload from Cloud ☁️</span>
+						) : (
+							<>
+								<MdOutlineCloudUpload />
+								<span>From Cloud</span>
+							</>
+						)}
+					</BigBlueButton>
+				</CarbonConnect>
+			) : (
+				<BigBlueButton
+					onClick={() => {}}
+					isSubmitting={false}
+					showArrow={false}
+					isPaidFeature={true}
+					isPaidUser={isPaidUser}
+					isUploadDropdownItem={isUploadDropdownItem}
+				>
+					{isUploadDropdownItem ? (
+						<span>Upload from Cloud ☁️</span>
+					) : (
+						<>
+							<MdOutlineCloudUpload />
+							<span>From Cloud</span>
+						</>
+					)}
+				</BigBlueButton>
+			)}
+		</div>
+	);
+}; // Define a new component for the table header
 const FileTableHeader = () => (
 	// <div className='grid bg-[#ECF1FE] border border-gray-200 grid-cols-2 md:grid-cols-3'>
 	// 	{/* <div className='hidden md:flex w-full ml-4 text-indigo-300 text-[13px] font-bold uppercase leading-normal tracking-wide'>
@@ -641,7 +743,12 @@ const MyFiles: React.FC<filesInterface> = ({
 					onFileSelected={onFileSelected}
 					isSubmitting={isSubmitting}
 					pageInvoked={pageInvoked}
-
+					isPaidUser={isPaidUser}
+					getBrand={getBrand}
+					getLogoUrl={getLogoUrl}
+					carbonTokenFetcher={carbonTokenFetcher}
+					handleSuccess={handleSuccess}
+					isUploadDropdownItem={true}
 					// localFileUploadButton={}
 					// uploadFromCloudButton={}
 				/>
@@ -670,7 +777,7 @@ const MyFiles: React.FC<filesInterface> = ({
 					{/* carbon connect cloud storage */}
 					{pageInvoked !== 'theme' && (
 						<div className='max-w-sm w-fit text-center pt-4 mx-4'>
-							<div className='w-full mx-auto'>
+							{/* <div className='w-full mx-auto'>
 								{isPaidUser ? (
 									<CarbonConnect
 										orgName={getBrand()}
@@ -745,7 +852,16 @@ const MyFiles: React.FC<filesInterface> = ({
 										Upload from Cloud ☁️
 									</BigBlueButton>
 								)}
-							</div>
+							</div> */}
+
+							<CloudConnectComponent
+								isPaidUser={isPaidUser}
+								getBrand={getBrand}
+								getLogoUrl={getLogoUrl}
+								carbonTokenFetcher={carbonTokenFetcher}
+								handleSuccess={handleSuccess}
+								isUploadDropdownItem={false}
+							></CloudConnectComponent>
 						</div>
 					)}
 				</div>

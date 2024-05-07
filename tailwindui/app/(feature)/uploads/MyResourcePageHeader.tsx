@@ -15,6 +15,13 @@ interface MyResourcePageHeaderProps {
 	onFileSelected: (file: File | null) => Promise<void>;
 	isSubmitting: boolean;
 	pageInvoked: string;
+	// for cloud connect
+	isPaidUser: boolean;
+	getBrand: () => string;
+	getLogoUrl: () => string;
+	carbonTokenFetcher: () => Promise<any>;
+	handleSuccess: (data: any) => Promise<void>; // Adjust the type according to the actual data type
+	isUploadDropdownItem: boolean;
 }
 
 const MyResourcePageHeader: React.FC<MyResourcePageHeaderProps> = ({
@@ -25,6 +32,12 @@ const MyResourcePageHeader: React.FC<MyResourcePageHeaderProps> = ({
 	onFileSelected,
 	isSubmitting = false,
 	pageInvoked = 'resources',
+	isPaidUser,
+	getBrand,
+	getLogoUrl,
+	carbonTokenFetcher,
+	handleSuccess,
+	isUploadDropdownItem,
 }) => {
 	return (
 		// <section>
@@ -110,6 +123,12 @@ const MyResourcePageHeader: React.FC<MyResourcePageHeaderProps> = ({
 							onFileSelected={onFileSelected}
 							isSubmitting={isSubmitting}
 							pageInvoked={pageInvoked}
+							isPaidUser={isPaidUser}
+							getBrand={getBrand}
+							getLogoUrl={getLogoUrl}
+							carbonTokenFetcher={carbonTokenFetcher}
+							handleSuccess={handleSuccess}
+							isUploadDropdownItem={isUploadDropdownItem}
 						></UploadOptionsDropdownMenu>
 					)}
 				</div>
