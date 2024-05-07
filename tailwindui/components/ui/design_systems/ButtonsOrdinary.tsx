@@ -11,7 +11,7 @@ import { GrayLabel, PlusLabel } from '../../ui/GrayLabel';
 import { SpinIcon } from '@/app/(feature)/icons';
 
 interface DesignSystemButtonProps {
-	children: ReactNode;
+	children?: ReactNode;
 	size: 'sm' | 'md' | 'lg' | 'xl' | '2xl';
 	hierarchy: 'primary' | 'secondary' | 'tertiary';
 	buttonStatus: 'enabled' | 'disabled';
@@ -23,6 +23,9 @@ interface DesignSystemButtonProps {
 	isPaidUser?: boolean;
 	isPaidFeature?: boolean;
 	id?: string;
+	customButtonStyles?: React.CSSProperties;
+	customTextStyles?: React.CSSProperties;
+	customIconStyles?: React.CSSProperties;
 }
 
 const DesignSystemButton: React.FC<DesignSystemButtonProps> = ({
@@ -38,6 +41,9 @@ const DesignSystemButton: React.FC<DesignSystemButtonProps> = ({
 	isPaidUser,
 	isPaidFeature = false,
 	id = '',
+	customButtonStyles,
+	customIconStyles,
+	customTextStyles,
 }) => {
 	// Define the CSS variables for spacing and colors
 	const [showPaywallModal, setShowPaywallModal] = useState(false);
@@ -165,6 +171,10 @@ const DesignSystemButton: React.FC<DesignSystemButtonProps> = ({
 	const iconStyles: React.CSSProperties = {
 		width: '24px', // Adjust as needed
 		height: '24px', // Adjust as needed
+		color: `var(--Component-colors-Components-Buttons-${hierarchy}-button-${hierarchy}-fg, ${fontColors[hierarchy][buttonStatus]})`,
+		display: 'flex',
+		justifyContent: 'center',
+		alignItems: 'center',
 	};
 
 	return (
@@ -187,12 +197,12 @@ const DesignSystemButton: React.FC<DesignSystemButtonProps> = ({
 				id={'primary-' + id}
 				disabled={isSubmitting}
 				onClick={checkPaidUser}
-				style={buttonStyles}
+				style={{ ...buttonStyles, ...customButtonStyles }}
 			>
 				{iconLeft && (
-					<span style={{ ...iconStyles, marginRight: '6px' }}>{iconLeft}</span>
+					<span style={{ ...iconStyles, ...customIconStyles }}>{iconLeft}</span>
 				)}
-				<span style={textStyles[size]}>
+				<span style={{ ...textStyles[size], ...customTextStyles }}>
 					{/* {text} */}
 					{children}
 					{isPaidFeature && !isPaidUser && <PlusLabel />}
@@ -202,7 +212,7 @@ const DesignSystemButton: React.FC<DesignSystemButtonProps> = ({
 					<SpinIcon />
 				) : (
 					iconRight && (
-						<span style={{ ...iconStyles, marginLeft: '6px' }}>
+						<span style={{ ...iconStyles, ...customIconStyles }}>
 							{iconRight}
 						</span>
 					)

@@ -67,7 +67,7 @@ const LinkInput = ({
 				return;
 			}
 
-			setSelectedResources((prevList) => [...prevList, videoDetails]);
+			setSelectedResources((prevList) => [videoDetails, ...prevList]);
 		} catch (error: any) {
 			console.error('Error fetching YouTube video details: ', error);
 			setLinkError('Error fetching YouTube video details');
@@ -85,7 +85,7 @@ const LinkInput = ({
 				return;
 			}
 
-			setSelectedResources((prevList) => [...prevList, pageDetails]);
+			setSelectedResources((prevList) => [pageDetails, ...prevList]);
 		} catch (error: any) {
 			console.error('Error reading webpage details: ', error);
 			setLinkError('This webpage does not allow being read.');
@@ -174,6 +174,7 @@ const LinkInput = ({
 					/>
 				</div>
 				<SmallBlueButton
+					// customizeStyle={{ fontSize: '12px', padding: '6px 4px' }}
 					onClick={(e) => {
 						addLink(linkUrl);
 					}}

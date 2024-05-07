@@ -31,6 +31,7 @@ type DrlambdaButtonProps = {
 	id?: string;
 	customizeStyle?: React.CSSProperties;
 	wfull?: boolean;
+	isUploadDropdownItem?: boolean;
 };
 
 const DrlambdaButton: React.FC<DrlambdaButtonProps> = ({
@@ -188,6 +189,7 @@ export const BigBlueButton: React.FC<DrlambdaButtonProps> = ({
 	id,
 	customizeStyle,
 	wfull = false,
+	isUploadDropdownItem,
 }) => {
 	const [showPaywallModal, setShowPaywallModal] = useState(false);
 
@@ -198,22 +200,44 @@ export const BigBlueButton: React.FC<DrlambdaButtonProps> = ({
 				setShowModal={setShowPaywallModal}
 				message='Upgrade to unlock more features. 🚀'
 			/>
-			<button
-				id={id}
-				className={`btn h-[36px] w-[8rem] sm:w-[12rem] mx-auto sm:gap-x-2 text-white sm:font-semibold bg-Blue ${
-					isSubmitting && 'animate-pulse cursor-progress'
-				} disabled:bg-gray-600 disabled:cursor-not-allowed
+			{isUploadDropdownItem ? (
+				<button
+					className='block px-[10px] py-[9px] text-sm text-[#182230] rounded-md  hover:bg-zinc-100 w-full text-left'
+					onClick={
+						isPaidFeature && !isPaidUser
+							? () => setShowPaywallModal(true)
+							: onClick
+					}
+					style={{
+						display: 'flex',
+						flexDirection: 'row',
+						alignItems: 'center',
+						justifyContent: 'flex-start',
+						gap: 'var(--spacing-lg, 12px)',
+						borderBottom:
+							'1px solid var(--Colors-Border-border-secondary, #EAECF0)',
+					}}
+				>
+					{children}
+				</button>
+			) : (
+				<button
+					id={id}
+					className={`btn h-[36px] w-[8rem] sm:w-[12rem] mx-auto sm:gap-x-2 text-white sm:font-semibold bg-Blue ${
+						isSubmitting && 'animate-pulse cursor-progress'
+					} disabled:bg-gray-600 disabled:cursor-not-allowed
 			whitespace-nowrap rounded-xl`}
-				onClick={
-					isPaidFeature && !isPaidUser
-						? () => setShowPaywallModal(true)
-						: onClick
-				}
-				disabled={isSubmitting || disabled}
-				style={customizeStyle}
-			>
-				{children}
-			</button>
+					onClick={
+						isPaidFeature && !isPaidUser
+							? () => setShowPaywallModal(true)
+							: onClick
+					}
+					disabled={isSubmitting || disabled}
+					style={customizeStyle}
+				>
+					{children}
+				</button>
+			)}
 		</>
 	);
 };
@@ -366,7 +390,7 @@ export const SmallBlueButton: React.FC<DrlambdaButtonProps> = ({
 	return (
 		<button
 			onClick={onClick}
-			className={`border border-2 ${getButtonStyle()} rounded-lg text-Lavender px-3 py-1 whitespace-nowrap`}
+			className={`border border-2 ${getButtonStyle()} rounded-lg text-Lavender px-2 md:px-3 py-1 text-xs md:text-sm whitespace-nowrap`}
 			disabled={isSubmitting || disabled}
 			style={customizeStyle}
 		>

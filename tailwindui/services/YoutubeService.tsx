@@ -1,4 +1,5 @@
 import Resource from '@/models/Resource';
+import moment from 'moment';
 import { parse } from 'url';
 
 export default class YoutubeService {
@@ -32,12 +33,16 @@ export default class YoutubeService {
 				throw new Error(`HTTP error! status: ${response.status}`);
 			}
 			const data = await response.json();
-			console.log('data', data.data);
+			console.log('youtube video detail data', data.data);
+
+			// Add the timestamp field formatted with Moment.js
+			const timestamp = moment().format('MMM D, YYYY');
 			return {
 				id: data.data.id,
 				name: data.data.name,
 				thumbnail_url: data.data.thumbnail_url,
 				type: 'youtube',
+				timestamp: timestamp,
 			};
 		} catch (error) {
 			throw error;

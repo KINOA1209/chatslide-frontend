@@ -21,7 +21,8 @@ export const ResourceIcon: React.FC<{
 	resource: Resource;
 	contain?: boolean;
 }> = ({ resource, contain = false }) => {
-	// console.log('resource.file_extension is', resource.file_extension);
+	console.log('resource.file_extension is', resource.file_extension);
+	console.log('resource.type', resource.type);
 	if (!resource.thumbnail_url) {
 		return (
 			<div className='p-[10px]'>
@@ -183,18 +184,93 @@ const FileIcon: React.FC<{ fileType: string }> = ({ fileType }) => {
 	}
 };
 
+export function getFileExtension(name: string) {
+	// Remove text like `.txt` from the end of the file name
+	const new_name = name.replace('.txt', '');
+	const lastDotIndex = new_name.lastIndexOf('.');
+	if (lastDotIndex !== -1) {
+		const extension = new_name.slice(lastDotIndex + 1).toLowerCase();
+		// List of valid file extensions
+		const validExtensions = [
+			'pdf',
+			'doc',
+			'docx',
+			'png',
+			'jpg',
+			'jpeg',
+			'gif',
+			'bmp',
+			'svg',
+			'mp4',
+			'avi',
+			'mkv',
+			'mov',
+			'webm',
+			'flv',
+			'wmv',
+			'3gp',
+			'mpeg',
+			'mp3',
+			'wav',
+			'ogg',
+			'aac',
+			'flac',
+			'wma',
+			'html',
+			'htm',
+			'css',
+			'js',
+			'json',
+			'xml',
+			'csv',
+			'tsv',
+			'txt',
+			'rtf',
+			'csv',
+			'xml',
+			'json',
+			'yaml',
+			'yml',
+			'log',
+			'zip',
+			'rar',
+			'7z',
+			'tar',
+			'gz',
+			'bz2',
+			'xz',
+			'exe',
+			'msi',
+			'dmg',
+			'pkg',
+			'deb',
+			'rpm',
+			'apk',
+			// Add more valid extensions as needed
+		];
+		if (validExtensions.includes(extension)) {
+			return extension;
+		}
+	}
+	return '';
+}
+
 export const ResourceItem: React.FC<Resource> = ({
 	id,
 	name,
 	type,
 	thumbnail_url,
+	// file_extension,
 }) => {
+	// console.log('ResourceItem file extension: ', file_extension);
+	// console.log('ResourceItem file type: ', type);
 	// remove text like `.txt` from the end of the file name
 	name = name.replace('.txt', '');
 	// Get file extension
-	const lastDotIndex = name.lastIndexOf('.');
-	const fileExtension =
-		lastDotIndex !== -1 ? name.slice(lastDotIndex + 1).toLowerCase() : '';
+	// const lastDotIndex = name.lastIndexOf('.');
+	// const fileExtension =
+	// 	lastDotIndex !== -1 ? name.slice(lastDotIndex + 1).toLowerCase() : '';
+	const fileExtension = getFileExtension(name);
 
 	// console.log('resource file extension: ', name, fileExtension);
 	return (
@@ -205,6 +281,8 @@ export const ResourceItem: React.FC<Resource> = ({
 				// width: '168px',
 				// textOverflow: 'ellipsis',
 				overflow: 'hidden',
+				// backgroundColor: 'red',
+				gap: 'var(--spacing-lg, 12px)',
 			}}
 		>
 			<div className='mx-auto my-auto flex items-center w-[40px] h-[40px]'>
@@ -234,6 +312,16 @@ export const ResourceItem: React.FC<Resource> = ({
 					color: 'var(--colors-text-text-tertiary-600, #475467)',
 				}}
 			>
+				<span
+					style={{
+						color: 'var(--colors-text-text-secondary-700, #344054)',
+						fontFamily: 'Creato Display Medium',
+						fontSize: '14px',
+						fontStyle: 'normal',
+						fontWeight: 500,
+						lineHeight: '20px',
+					}}
+				></span>
 				{name}
 			</div>
 		</div>
