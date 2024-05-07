@@ -316,7 +316,7 @@ export default function Topic() {
 	}
 
 	function getEstWriteOutlineTime() {
-		const base = isGpt35 ? 10 : 20;
+		const base = isGpt35 ? 15 : 25;
 		return Math.min(30, base + selectedResources.length * 5);
 	}
 
