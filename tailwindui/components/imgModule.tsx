@@ -1298,8 +1298,6 @@ export const ImgModule = ({
 		? slides[slideIndex]?.layout
 		: socialPosts[socialPostsIndex]?.template;
 
-  console.log("selected img url", selectedImg);
-
 	return (
 		<>
 			{/* select image modal */}
