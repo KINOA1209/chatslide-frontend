@@ -1005,7 +1005,7 @@ export const ImgModule = ({
 				placeholder='Paste YouTube embed code here. Start with <iframe> tag.'
 				value={inputValue}
 				onChange={setInputValue}
-        maxLength={undefined}
+				maxLength={undefined}
 				rows={5}
 				textarea
 			/>
@@ -1147,11 +1147,6 @@ export const ImgModule = ({
 		}
 	};
 
-	const applyZoom = () => {
-		handleSave();
-		setIsImgEditMode(false);
-	};
-
 	const customScale = (
 		width: number,
 		height: number,
@@ -1186,33 +1181,6 @@ export const ImgModule = ({
 			}
 		}
 		return { width: newWidth, height: newHeight, x: newX, y: newY };
-	};
-
-	const onZoomChange = (newZoomLevel: number) => {
-		const scale = newZoomLevel / 100;
-		const dimension = imagesDimensions[currentContentIndex];
-		const currentWidth = dimension.width ?? 0;
-		const currentHeight = dimension.height ?? 0;
-		const newWidth = currentWidth * scale;
-		const newHeight = currentHeight * scale;
-		//const currentX = dimension.x ?? 0;
-		//const currentY = dimension.y ?? 0;
-
-		//const deltaX = (newWidth - imageSize.width) / 2;
-		//const deltaY = (newHeight - imageSize.height) / 2;
-		//const newX = currentX - deltaX;
-		//const newY = currentY - deltaY;
-
-		const updatedDimensions = [...imagesDimensions];
-		updatedDimensions[currentContentIndex] = {
-			...dimension,
-			width: newWidth,
-			height: newHeight,
-			//x: newX,
-			//y: newY,
-		};
-
-		setImagesDimensions(updatedDimensions);
 	};
 
 	//reposition to default if images changed
@@ -1257,29 +1225,6 @@ export const ImgModule = ({
 		const initializedData = initializeImageData(images_position, imageRefs);
 		setImagesDimensions(initializedData);
 	}, [images_position]);
-
-	// useEffect(() => {
-	// 	const currentElement = imageRefs[currentContentIndex]?.current;
-	// 	if (
-	// 		currentElement &&
-	// 		currentElement.clientHeight > 0 &&
-	// 		currentElement.clientWidth > 0
-	// 	) {
-	// 		const newDimensions = {
-	// 			height: currentElement.clientHeight,
-	// 			width: currentElement.clientWidth,
-	// 		};
-	// 		if (
-	// 			newDimensions.height !== parentDimension.height ||
-	// 			newDimensions.width !== parentDimension.width
-	// 		) {
-	// 			setParentDimension(newDimensions);
-	// 			setIsParentDimension(true);
-	// 		}
-	// 	} else {
-	// 		setIsParentDimension(false);
-	// 	}
-	// }, [currentContentIndex, imageRefs, parentDimension]);
 
 	// new version to get parent container's dimension, reduce unnecessary state updates
 	// prevent infinite loop bugs
@@ -1365,15 +1310,13 @@ export const ImgModule = ({
 		? slides[slideIndex]?.layout
 		: socialPosts[socialPostsIndex]?.template;
 
+  console.log("selected img url", selectedImg);
+
 	return (
 		<>
 			{/* select image modal */}
 			{createPortal(
-				<Modal
-					showModal={showModal}
-					setShowModal={setShowModal}
-					title='Media'
-				>
+				<Modal showModal={showModal} setShowModal={setShowModal} title='Media'>
 					<div className='flex grow h-[400px] w-full sm:w-[600px] flex-col overflow-auto'>
 						<div className='w-full flex flex-col' ref={typeRef}>
 							<div className='w-full grid grid-cols-5'>
@@ -1514,10 +1457,8 @@ export const ImgModule = ({
 					onDragOver={(e) => e.preventDefault()}
 					onClick={openModal}
 					className={`w-full h-full transition ease-in-out duration-150 relative ${
-						selectedImg === ''
-							? 'bg-[#E7E9EB]'
-							: canEdit
-								? 'hover:bg-[#CAD0D3]'
+							canEdit
+								? 'hover:bg-[#CAD0D3] cursor-pointer'
 								: ''
 					} flex flex-col items-center justify-center`} //${canEdit && !isImgEditMode ? 'cursor-pointer' : ''}
 					style={{
@@ -1538,7 +1479,7 @@ export const ImgModule = ({
 							<DynamicChart
 								chartType={selectedChartType}
 								chartData={chartData}
-								isPrview={!canEdit}
+								isPreview={!canEdit}
 							/>
 						</div>
 					) : embed_code &&
@@ -1550,51 +1491,13 @@ export const ImgModule = ({
 							// onMouseLeave={() => setShowImgButton(false)}
 							onClick={() => setShowModal(true)}
 						>
-							{/* {canEdit && showImgButton && (
-								<div
-									className={`absolute top-4 font-creato-medium left-0`}
-									style={{ zIndex: 53 }}
-								>
-									<ToolBar>
-										<button
-											onClick={() => setShowModal(true)}
-											className='flex flex-row items-center justify-center gap-1'
-										>
-											{
-												<>
-													<FaCheck
-														style={{
-															strokeWidth: '0.8',
-															width: '1rem',
-															height: '1rem',
-															fontWeight: 'bold',
-															color: '#344054',
-														}}
-													/>
-													Change
-												</>
-											}
-										</button>
-									</ToolBar>
-								</div>
-							)} */}
 							<div
-								// style={{
-								// 	width: '-webkit-fill-available',
-								// 	height: '-webkit-fill-available',
-								// }}
-								// className='pointer-events-none'
-								// onMouseOver={(e) => e.preventDefault()}
-								// onMouseLeave={(e) => e.preventDefault()}
-								// onMouseEnter={() => setShowImgButton(true)}
-								// onMouseLeave={() => setShowImgButton(false)}
-								// onClick={(e) => e.preventDefault()}
 								dangerouslySetInnerHTML={{
 									__html: embed_code[currentContentIndex],
 								}}
 							></div>
 						</div>
-					) : selectedImg === '' || imgLoadError ? ( // updload icon
+					) : !selectedImg || imgLoadError ? ( // updload icon
 						// if loading is fail and in editable page we show the error image
 						// otherwise(like presentation) show a empty div
 						canEdit ? (
@@ -1713,13 +1616,14 @@ export const ImgModule = ({
 									onError={(e) => {
 										console.log('failed to load image', imgsrc);
 										setImgLoadError(true);
-										updateSingleCallback('shuffle', false, {});
+										if(imgsrc)  // if we have a image url, but it is not valid
+                      updateSingleCallback('shuffle', false, {});
 									}}
 								/>
 							</Rnd>
 							{canEdit && showImgButton && (
 								<div
-									className={`absolute top-2 font-creato-medium ${
+									className={`absolute top-2 ${
 										isImgEditMode ? 'left-2' : 'left-4'
 									}`}
 									style={{ zIndex: 53 }}
@@ -1785,7 +1689,7 @@ export const ImgModule = ({
 													className='flex flex-row items-center justify-center gap-1'
 													onClick={(e) => {
 														updateSingleCallback('');
-                            e.stopPropagation();
+														e.stopPropagation();
 													}}
 												>
 													<LuTrash2
@@ -1807,7 +1711,7 @@ export const ImgModule = ({
 														className='flex flex-row items-center justify-center gap-1'
 														onClick={(e) => {
 															updateSingleCallback('shuffle', false, {});
-                              e.stopPropagation();
+															e.stopPropagation();
 														}}
 													>
 														<HiOutlineRefresh

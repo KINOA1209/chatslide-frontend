@@ -40,13 +40,13 @@ ChartJS.register(
 interface DynamicChartProps {
 	chartType: ChartType; // Use ChartType from Chart.js
 	chartData: ValueDataPoint[] | ScatterDataPoint[];
-	isPrview: boolean;
+	isPreview: boolean;
 }
 
 const DynamicChart: React.FC<DynamicChartProps> = ({
 	chartType,
 	chartData,
-	isPrview,
+	isPreview,
 }) => {
 	const chartRef = useRef(null);
 
@@ -75,34 +75,6 @@ const DynamicChart: React.FC<DynamicChartProps> = ({
 		}
 	}
 
-	// const generateDatasets = () => {
-	//     if (chartType === 'bar') {
-	//         // For bar charts, each bar should have its own dataset
-	//         return (chartData as ValueDataPoint[]).map(dp => ({
-	//             label: dp.label,
-	//             data: [dp.value],
-	//             backgroundColor: dp.color,
-	//             borderColor: dp.color,
-	//             borderWidth: 1,
-	//         }));
-	//     }  else {
-	//         // For other chart types, use a single dataset
-	//         return [{
-	//             data: chartType === 'scatter' ?
-	//                 chartData as ScatterDataPoint[] : // Use data directly for scatter charts
-	//                 (chartData as ValueDataPoint[]).map(dp => dp.value), // Map to values for other chart types
-	//             backgroundColor: chartType === 'line' ? 'rgba(54, 162, 235, 0.5)' : chartData.map(dp => 'color' in dp ? dp.color : 'rgba(54, 162, 235, 0.5)'),
-	//             borderColor: chartType === 'line' ? 'rgba(54, 162, 235, 0.5)' : '#FFFFFF',
-	//             borderWidth: 1,
-	//         }];
-	//     }
-	// };
-
-	// const data = {
-	//     datasets: generateDatasets()
-	// };
-	// console.log(data)
-
 	const data = {
 		datasets: [
 			{
@@ -129,7 +101,7 @@ const DynamicChart: React.FC<DynamicChartProps> = ({
 
 	// Define chart options
 	let options = {};
-	if (!isPrview) {
+	if (!isPreview) {
 		options = {
 			devicePixelRatio: 1.5,
 			animation: {
