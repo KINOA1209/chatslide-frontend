@@ -269,6 +269,14 @@ const MyFiles: React.FC<filesInterface> = ({
 	const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 	const [isDragging, setIsDragging] = useState(false);
 	const [showUploadOptionsMenu, setShowUploadOptionsMenu] = useState(false);
+	// const [forceUpdate, setForceUpdate] = useState(false);
+
+	useEffect(() => {
+		// This effect will trigger a re-render whenever selectedResources changes
+		// setForceUpdate((prev) => !prev);
+		console.log('resources updated, force update', resources);
+		filterResources(currentResourceType);
+	}, [resources, setResources]);
 
 	useEffect(() => {
 		if (contentRef.current) {

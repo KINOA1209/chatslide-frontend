@@ -1,4 +1,5 @@
 import Resource from '@/models/Resource';
+import moment from 'moment';
 
 export default class WebService {
 	static async getWebpageInfo(
@@ -19,12 +20,15 @@ export default class WebService {
 				throw new Error(`HTTP error! status: ${response.status}`);
 			}
 			const data = await response.json();
+			const timestamp = moment().format('MMM D, YYYY');
+
 			console.log('data', data.data);
 			return {
 				id: data.data.id,
 				name: data.data.name,
 				thumbnail_url: data.data.thumbnail_url,
 				type: 'webpage',
+				timestamp: timestamp,
 			};
 		} catch (error) {
 			throw error;
