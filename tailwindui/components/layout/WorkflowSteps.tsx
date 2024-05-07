@@ -212,7 +212,7 @@ export const projectFinishedSteps = (project: Project | null) => {
 		if (project.outlines) {
 			finishedStepsArray.push(1);
 		}
-		if (project.parsed_slides && project.parsed_slides.length > 0) {
+		if (project.presentation_slides) {
 			finishedStepsArray.push(2);
 		} else {
 			return finishedStepsArray; // if no slides, return early with outlines
