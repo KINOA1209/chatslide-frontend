@@ -78,7 +78,7 @@ export const templateDispatch = (
 		if (!canEdit) {
 			return (
 				<div
-					className='ql-editor non-editable-ql-editor'
+					className='ql-editor non-editable-ql-editor-socialpost'
 					style={{ ...style, outline: 'none' }}
 					dangerouslySetInnerHTML={{ __html: content }}
 				/>

@@ -34,8 +34,21 @@
 	cursor: auto !important;
 }
 
+.non-editable-ql-editor-socialpost,
+.non-editable-ql-editor * {
+	cursor: pointer !important;
+}
+
 // temp fix
 .ql-editor.non-editable-ql-editor ul li::before {
+	content: '• '; /* Unicode bullet symbol */
+	position: absolute;
+	margin-left: -0.55em;
+	font-size: 22px;
+	margin-top: -0.15em;
+}
+
+.ql-editor.non-editable-ql-editor-socialpost ul li::before{
 	content: '• '; /* Unicode bullet symbol */
 	position: absolute;
 	margin-left: -0.55em;
