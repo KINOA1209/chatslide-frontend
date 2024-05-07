@@ -210,27 +210,12 @@ export const ImgModule = ({
 		return '';
 	}
 
-	// useEffect(() => {
-	//     console.log(selectedQueryMode);
-	// }, [selectedQueryMode]);
-
 	useEffect(() => {
 		if (imgsrc !== '') {
 			setSelectedImg(imgsrc);
 		}
-		// console.log('imgsrc', imgsrc);
 	}, [imgsrc]);
 
-	// useEffect(() => {
-	// 	if (modified_embed_code && modified_embed_code !== '') {
-	// 		setCurrentStoredEmbedCode(modified_embed_code);
-	// 	}
-	// 	console.log('modified_embed_code', modified_embed_code);
-	// }, [modified_embed_code]);
-
-	// useEffect(() => {
-	// 	console.log('embed_code is :', embed_code);
-	// }, [embed_code]);
 
 	const handleImageDrop = (e: React.DragEvent<HTMLDivElement>) => {
 		e.preventDefault();
@@ -1500,7 +1485,7 @@ export const ImgModule = ({
 								}}
 							></div>
 						</div>
-					) : !selectedImg || imgLoadError ? ( // updload icon
+					) : !imgsrc || imgLoadError ? ( // upload icon
 						// if loading is fail and in editable page we show the error image
 						// otherwise(like presentation) show a empty div
 						canEdit ? (
