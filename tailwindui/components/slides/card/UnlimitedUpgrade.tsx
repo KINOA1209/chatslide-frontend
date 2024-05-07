@@ -10,7 +10,7 @@ import { userInEU } from '@/utils/userLocation';
 import { useEffect, useState } from 'react';
 
 export const UnlimitedUpgrade: React.FC<{}> = ({}) => {
-	const { tier, email, token, credits } = useUser();
+	const { tier, email, token, credits, user } = useUser();
 	const [useEuro, setUseEuro] = useState(false);
 
 	const isLifetime = tier.includes('LIFETIME');
@@ -40,11 +40,15 @@ export const UnlimitedUpgrade: React.FC<{}> = ({}) => {
 				<BigTitle>✅ Upgrade to Ultimate</BigTitle>
 				<Instruction>
 					<div>
-						🤫 Shhhh, snatch a lifetime deal now. Discount available until May 11,
-						2024. <br />
-						Get a lifetime upgrade to our ULTIMATE at a discounted price. 14 day
-						money back guarantee.{' '}
-						<a href='https://blog.drlambda.ai/upgrade-to-ultimate-a-one-time-payment-for-lifetime-access/' className='text-blue-600'>
+						🤫 Shhhh, snatch a lifetime deal now. Deal available until May
+						11, 2024. <br />
+						Get a lifetime upgrade to our ULTIMATE at a discounted price of{' '}
+						<b>{!useEuro ? '$' : '€'}{user?.ltd_upgrade_price || 236}</b>. 14 day money back
+						guarantee.{' '}
+						<a
+							href='https://blog.drlambda.ai/upgrade-to-ultimate-a-one-time-payment-for-lifetime-access/'
+							className='text-blue-600'
+						>
 							Learn more
 						</a>
 						.

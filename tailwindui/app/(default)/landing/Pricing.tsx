@@ -17,7 +17,7 @@ const PricingComparison: React.FC<{
 	small?: boolean;
 	showFreeTier?: boolean;
 }> = ({ extraPadding, small = false, showFreeTier = true }) => {
-	const { token, email, tier: userTier } = useUser();
+	const { token, email, tier: userTier, user } = useUser();
 	const [currency, setCurrency] = useState<string>('$');
 	const router = useRouter();
 	const [interval, setInterval] = useState<Interval>('yearly');
@@ -120,7 +120,7 @@ const PricingComparison: React.FC<{
 		// special for lifetime ultimate
 		if (interval === 'lifetime') {
 			if (tier === 'ULTIMATE') {
-				amount = 236;
+				amount = user?.ltd_upgrade_price || 236;
 				return (
 					<span className='text-green-600'>
 						{currency + amount.toFixed(2)}
