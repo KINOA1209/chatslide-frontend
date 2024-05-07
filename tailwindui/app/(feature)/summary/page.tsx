@@ -85,7 +85,6 @@ const AdvancedOptions: React.FC<{
 	setAddCitations: (value: string) => void;
 	resourceToFollowStructureFrom: Resource | undefined;
 	setResourceToFollowStructureFrom: (value: Resource) => void;
-	generationMode: string;
 }> = ({
 	outlineStructure,
 	setOutlineStructure,
@@ -98,7 +97,6 @@ const AdvancedOptions: React.FC<{
 	setAddCitations,
 	resourceToFollowStructureFrom,
 	setResourceToFollowStructureFrom,
-	generationMode,
 }) => {
 	return (
 		<>
@@ -107,21 +105,14 @@ const AdvancedOptions: React.FC<{
 
 				<RadioButton
 					name='outline_structure_mode'
-					options={
-						generationMode === 'from_topic'
-							? [
-									{ value: 'custom', text: 'General Structure' },
-									{ value: 'my_outline', text: 'Detailed Outline' },
-								]
-							: [
-									{ value: 'custom', text: 'General Structure' },
-									{ value: 'my_outline', text: 'Detailed Outline' },
-									{ value: 'follow_resource', text: 'Structure of a Source' },
-								]
-					}
+					options={[
+						{ value: 'custom', text: 'General Structure' },
+						{ value: 'my_outline', text: 'Detailed Outline' },
+						{ value: 'follow_resource', text: 'Structure of a Source' },
+					]}
 					selectedValue={structureMode}
 					setSelectedValue={setStructureMode}
-          cols={generationMode  === 'from_topic' ? 2 : 3}
+					cols={3}
 				/>
 
 				{structureMode === 'custom' ? (
@@ -131,13 +122,12 @@ const AdvancedOptions: React.FC<{
 							it here. We will write the outline based on this structure and the
 							number of pages you want.
 						</Explanation>
-            <NewInputBox
-              value={outlineStructure}
-              onChange={setOutlineStructure}
-              placeholder='Introduction, background, details, examples, conclusion.'
-              maxLength={1000}
-            />
-
+						<NewInputBox
+							value={outlineStructure}
+							onChange={setOutlineStructure}
+							placeholder='Introduction, background, details, examples, conclusion.'
+							maxLength={1000}
+						/>
 					</>
 				) : structureMode === 'my_outline' ? (
 					<WarningMessage>
@@ -662,7 +652,8 @@ export default function Topic() {
 							onClick={() => setAdvancedMode(!advancedMode)}
 							className='cursor-pointer text-blue-600'
 						>
-							{!advancedMode ? <span>Hide </span> : <span></span>} Advanced Options
+							{!advancedMode ? <span>Hide </span> : <span></span>} Advanced
+							Options
 						</div>
 					</Instruction>
 					{!advancedMode && (
@@ -680,7 +671,6 @@ export default function Topic() {
 							setResourceToFollowStructureFrom={
 								setResourceToFollowStructureFrom
 							}
-							generationMode={generationMode}
 						/>
 					)}
 				</Card>

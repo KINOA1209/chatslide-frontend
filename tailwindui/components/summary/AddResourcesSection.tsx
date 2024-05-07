@@ -128,6 +128,22 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 				return;
 			}
 
+      // if the file is larger than 10mb, error
+      if (file.size > 10 * 1024 * 1024) {
+        toast.error('File is too large! Please upload a file smaller than 10MB.', {
+          position: 'top-center',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+          containerId: 'fileManagement',
+        });
+        return;
+      }
+
 			setIsUploading(true);
 			await onFileSelected(file);
 			e.dataTransfer.clearData();
