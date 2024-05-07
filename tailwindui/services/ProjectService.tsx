@@ -347,9 +347,7 @@ class ProjectService {
 					slideData.images.filter((img: string) => img && img !== '') || [];
 				slide.theme = slideData.theme;
 				slide.content = slideData.content || ['Your content here'];
-				slide.section_title = slideData.section_title || [
-					'Your section title here',
-				];
+				slide.section_title = slideData.section_title || 'Your section title here';
 				slide.brief = slideData.brief || ['Your brief here'];
 				slide.original_title = slideData.original_title;
 				slide.title = slideData.title || '';
