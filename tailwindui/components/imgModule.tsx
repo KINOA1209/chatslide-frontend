@@ -750,6 +750,11 @@ export const ImgModule = ({
 										className='w-full h-full' // Additional CSS classes if needed
 										width={100}
 										height={100}
+                    onError={ (e) =>
+                      setSearchResult(
+                        searchResult.filter((img) => img !== url)
+                      )
+                    }
 									/>
 								</div>
 							);
@@ -1297,6 +1302,8 @@ export const ImgModule = ({
 	const layoutEntry = isSlide
 		? slides[slideIndex]?.layout
 		: socialPosts[socialPostsIndex]?.template;
+
+  console.log("selected img url", selectedImg);
 
 	return (
 		<>
