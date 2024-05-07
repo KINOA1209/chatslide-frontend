@@ -40,11 +40,11 @@ export const UnlimitedUpgrade: React.FC<{}> = ({}) => {
 				<BigTitle>✅ Upgrade to Ultimate</BigTitle>
 				<Instruction>
 					<div>
-						🤫 Shhhh, snatch a lifetime deal now. Only available until May 11,
+						🤫 Shhhh, snatch a lifetime deal now. Discount available until May 11,
 						2024. <br />
-						Get a lifetime upgrade to our Ultimate at a discounted price. 14 day
+						Get a lifetime upgrade to our ULTIMATE at a discounted price. 14 day
 						money back guarantee.{' '}
-						<a href='https://blog.drlambda.ai/upgrade-to-ultimate-a-one-time-payment-for-lifetime-access/'>
+						<a href='https://blog.drlambda.ai/upgrade-to-ultimate-a-one-time-payment-for-lifetime-access/' className='text-blue-600'>
 							Learn more
 						</a>
 						.

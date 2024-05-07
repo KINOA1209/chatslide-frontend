@@ -6,6 +6,7 @@ import { stopArrowKeyPropagation } from '@/utils/editing';
 import { useUser } from '@/hooks/use-user';
 import { BigBlueButton } from '../button/DrlambdaButton';
 import TextareaAutosize from 'react-textarea-autosize';
+import { useSlides } from '@/hooks/use-slides';
 
 interface TranscriptEditorProps {
 	slides: Slide[];
@@ -34,6 +35,7 @@ const ScriptEditor: React.FC<TranscriptEditorProps> = ({
 	);
 	const { isPaidUser } = useUser();
 	const editorRef = React.useRef<HTMLDivElement>(null);
+  const { version } = useSlides();
 
 	const updateTranscriptList = (newValue: string) => {
 		const newSlide = { ...slides[currentSlideIndex] };
@@ -42,6 +44,11 @@ const ScriptEditor: React.FC<TranscriptEditorProps> = ({
 	};
 
 	const debouncedUpdateTranscriptList = debounce(updateTranscriptList, 500);
+
+	useEffect(() => {
+    // console.log('updating script at index', currentSlideIndex, 'version', version)
+		setScript(slides[currentSlideIndex]?.transcript || '');
+	}, [currentSlideIndex, version]);
 
 	useEffect(() => {
 		if (editorRef.current) {
@@ -61,7 +68,7 @@ const ScriptEditor: React.FC<TranscriptEditorProps> = ({
 	return (
 		<div
 			ref={editorRef}
-			style={{ maxWidth: `${maxWidth}px` }}
+			style={{ width: `${maxWidth}px` }}
 			className={`w-full min-h-[4rem] border border-2 border-gray-200 rounded-lg flex flex-col overflow-y-auto my-1`} // shift left to align with slide
 		>
 			{isPaidUser || currentSlideIndex < 5 ? (

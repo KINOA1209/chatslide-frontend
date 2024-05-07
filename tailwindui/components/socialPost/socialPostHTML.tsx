@@ -2,28 +2,20 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Theme, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import AuthService from '@/services/AuthService';
 import '@/components/slides/slidesHTML.css';
-import LayoutChanger from '@/components/socialPost/socialPostLayoutChanger';
 import ThemeChanger from '@/components/socialPost/socialPostThemeChanger';
-// import {
-// 	PresentButton,
-// 	SlideLeftNavigator,
-// 	SlideRightNavigator,
-// 	SlidePagesIndicator,
-// 	AddSlideButton,
-// 	DeleteSlideButton,
-// } from '@/components/socialPost/socialPostButtons';
 import {
 	PresentButton,
-	SlideLeftNavigator,
-	SlideRightNavigator,
-	SlidePagesIndicator,
 	AddSlideButton,
 	DeleteSlideButton,
 	ChangeTemplateOptions,
 	DuplicateSlidePageButton,
 } from '@/components/slides/SlideButtons';
+import {
+	SlideRightNavigator,
+	SlideLeftNavigator,
+	SlidePagesIndicator,
+} from '@/components/slides/SlidePageIndicator';
 
 import SocialPostContainer from '@/components/socialPost/socialPostContainer';
 import ButtonWithExplanation from '../button/ButtonWithExplanation';

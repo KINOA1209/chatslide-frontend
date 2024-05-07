@@ -20,6 +20,7 @@ import TextareaAutosize from 'react-textarea-autosize';
 import { getBrand, getLogoUrl, isChatslide } from '@/utils/getHost';
 import Chats from './Chats';
 import ChatBotService from '@/services/ChatBotService';
+import { GrayLabel } from '../ui/GrayLabel';
 
 export const AIAssistantIcon: React.FC<{
 	onClick: () => void;
@@ -52,11 +53,12 @@ export const AIAssistantIcon: React.FC<{
 };
 
 interface AIAssistantChatWindowProps {
-	onToggle: () => void;
+	onToggle?: () => void;
 	slides: Slide[];
 	currentSlideIndex: number;
 	updateSlidePage: Function;
 	updateImgUrlArray: Function;
+	type?: 'script' | 'slide';
 }
 
 export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
@@ -65,6 +67,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 	currentSlideIndex,
 	updateSlidePage,
 	updateImgUrlArray,
+	type = 'slide',
 }) => {
 	// const [isChatWindowOpen, setIsChatWindowOpen] = useState(true);
 	// const toggleChatWindow = () => {
@@ -151,6 +154,8 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 				slides[currentSlideIndex],
 				project?.id || '',
 				slideIndex,
+        undefined,  // selectedText
+        type
 			);
 
 			setLoading(false);
@@ -178,6 +183,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 				} else {
 					// change the current slide
 					let content = response.slide.content;
+
 					if (content.length >= 6 && JSON.stringify(content).length > 600) {
 						// too much new content in one page, need to split into two pages
 						const mid = Math.floor(content.length / 2);
@@ -205,6 +211,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 						);
 					} else {
 						// Update state with the new slides
+            // console.log('updating script at index', currentSlideIndex)
 						updateSlidePage(currentSlideIndex, response.slide);
 						updateVersion(); // force rerender when version changes and index does not change
 					}
@@ -212,7 +219,6 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 			} else if (response.action) {
 				// not add_page action with slide
 				// send this as a document signal
-				console.log('action:', response.action);
 				let action = response.action;
 				if (action === 'upload_background') {
 					action = 'change_logo'; // for branding
@@ -220,7 +226,8 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 				if (action === 'change_font') {
 					action = 'change_template';
 				}
-				document.dispatchEvent(new Event(response.action));
+        
+				document.dispatchEvent(new Event(action));
 			}
 
 			addChatHistory(addSuccessMessage(response.chat, response.images));
@@ -238,9 +245,14 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 			console.log('chatHistory:', chatHistory);
 	}, [chatHistoryStatus]);
 
+	const pos =
+		type === 'slide'
+			? 'sm:fixed xl:relative sm:bottom-0 sm:right-0 sm:z-50 sm:w-[20rem] sm:h-[30rem] xl:h-full'
+			: 'sm:relative sm:w-[20rem] sm:h-full';
+
 	return (
 		<section
-			className={`hidden sm:flex sm:flex-col sm:fixed xl:relative sm:bottom-0 sm:right-0 sm:w-[20rem] sm:z-50 sm:h-[30rem] xl:h-full bg-white rounded-lg sm:items-center border border-2 border-gray-200`}
+			className={`hidden sm:flex ${pos} sm:flex-col bg-white rounded-lg sm:items-center border border-2 border-gray-200`}
 			ref={chatWindowRef}
 		>
 			{/* title and exit button */}
@@ -260,15 +272,19 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 				</div>
 
 				<div className='flex flex-row gap-2'>
+					{type === 'script' && <GrayLabel>Beta</GrayLabel>}
+
 					{/* Clear Chat button */}
 					<button onClick={() => clearChatHistory()}>
 						<DeleteIcon />
 					</button>
 
 					{/* exit button */}
-					<button onClick={onToggle}>
-						<FaTimes color='#5168F6' />
-					</button>
+					{onToggle && (
+						<button onClick={onToggle}>
+							<FaTimes color='#5168F6' />
+						</button>
+					)}
 				</div>
 			</div>
 
@@ -282,9 +298,18 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 					{/* welcoming text */}
 					<div className='px-3.5 py-2.5 rounded-tl-xl rounded-tr-xl rounded-br-xl border border-gray-200 justify-center items-center gap-2.5 inline-flex'>
 						<div className='max-w-[15rem] text-neutral-800 text-base font-normal tracking-tight'>
-							Welcome to {getBrand()}! I'm your AI assistant, ready to help with
-							slide design 🎨, content ideas ✍️, data organization 📊,
-							proofreading, and updating. Just type your request here!
+							{type === 'slide' ? (
+								<span>
+									Welcome to {getBrand()}! I'm your AI assistant, ready to help
+									with slide design 🎨, content ideas ✍️, data organization 📊,
+									proofreading, and updating. Just type your request here!
+								</span>
+							) : (
+								<span>
+									Welcome to {getBrand()}! I'm your AI assistant, ready to help
+									with script writing 📝, content ideas ✍️, translation 🌐, etc.
+								</span>
+							)}
 						</div>
 					</div>
 					{/* chat history render */}
@@ -321,7 +346,13 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 			<div className='w-full border-t border-gray-200 border-t-2'>
 				{!userInput && !loading && (
 					<ChatSuggestions
-						isCover={currentSlideIndex === 0}
+						type={
+							type === 'slide'
+								? currentSlideIndex === 0
+									? 'cover'
+									: 'noncover'
+								: 'script'
+						}
 						sendChat={handleSend}
 					/>
 				)}

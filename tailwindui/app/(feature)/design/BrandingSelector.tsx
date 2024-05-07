@@ -4,20 +4,24 @@ import RadioButton from '@/components/ui/RadioButton';
 import Resource from '@/models/Resource';
 import { PlusLabel } from '@/components/ui/GrayLabel';
 import { useUser } from '@/hooks/use-user';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PaywallModal from '@/components/paywallModal';
 import { useSlides } from '@/hooks/use-slides';
 import { LogoPosition } from '@/models/Slide';
 
 const brandingOptions = [
 	{
-		value: 'yes',
-		text: 'Yes',
+		value: 'default',
+		text: 'Default Logo',
 	},
 	{
 		value: 'no',
-		text: 'No',
+		text: 'No Logo',
 	},
+  {
+    value: 'custom',
+    text: 'Custom Logo',
+  }
 ];
 
 const LogoPositionOptions = [
@@ -66,6 +70,11 @@ const BrandingSelector: React.FC<{
 	} = useSlides();
 	const { isPaidUser } = useUser();
 	const [showPaywall, setShowPaywall] = useState(false);
+  const [logoMode, setLogoMode] = useState(showLogo ? selectedLogo?.length>0 ? 'custom' : 'default' : 'no');
+
+  useEffect(() => {
+    console.log('selectedLogo', selectedLogo);
+  }, [selectedLogo]);
 
 	return (
 		<div>
@@ -73,25 +82,36 @@ const BrandingSelector: React.FC<{
 				<PaywallModal
 					showModal={showPaywall}
 					setShowModal={setShowPaywall}
-					message='Unlock this feature to add your logo to your slides.'
+					message='Unlock this feature to customize logo on your slides.'
 				/>
 				<Instruction>
-					Do you want to show logo on your slides?{' '}
+					What logo do you want to put on your slides?{' '}
 					{!isPaidUser && <PlusLabel />}
 				</Instruction>
 				<RadioButton
 					options={brandingOptions}
-					selectedValue={showLogo ? 'yes' : 'no'}
+					selectedValue={logoMode}
 					setSelectedValue={(e) => {
-						if (e === 'no' && !isPaidUser) {
+						if (e !== 'default' && !isPaidUser) {
 							setShowPaywall(true);
 							return;
 						}
-						setShowLogo(e === 'yes' ? true : false);
+						setShowLogo(e !== 'no' ? true : false);
+						setLogoMode(e);
 					}}
 					name='branding'
 				/>
 			</div>
+
+			{/* customized logo */}
+			{logoMode === 'custom' && (
+				<ImageSelector
+					type='logo'
+					selectedImage={selectedLogo}
+					setSelectedImage={setSelectedLogo}
+					showQuestion={false}
+				/>
+			)}
 
 			{/* select position to put logo */}
 			{showLogo && (
@@ -101,9 +121,7 @@ const BrandingSelector: React.FC<{
 						setShowModal={setShowPaywall}
 						message='Unlock this feature to adjust your logo position'
 					/>
-					<Instruction>
-						Where do you want to put the logo?{' '}
-					</Instruction>
+					<Instruction>Where do you want to put the logo? </Instruction>
 					<RadioButton
 						options={LogoPositionOptions}
 						selectedValue={logoPosition}
@@ -117,14 +135,6 @@ const BrandingSelector: React.FC<{
 				</div>
 			)}
 
-			{/* customized logo */}
-			{showLogo && (
-				<ImageSelector
-					type='logo'
-					selectedImage={selectedLogo}
-					setSelectedImage={setSelectedLogo}
-				/>
-			)}
 			{/* background */}
 			<ImageSelector
 				type='background'

@@ -13,14 +13,16 @@ interface Props {
 	type: string;
 	selectedImage: Resource[];
 	setSelectedImage: (selectedImage: Resource[]) => void;
+	showQuestion?: boolean;
 }
 
 const ImageSelector: React.FC<Props> = ({
 	type,
 	selectedImage,
 	setSelectedImage,
+	showQuestion = true,
 }) => {
-	const [useImage, setUseImage] = useState(selectedImage.length > 0);
+	const [useImage, setUseImage] = useState(!showQuestion || selectedImage.length > 0);
 	const [showFileModal, setShowFileModal] = useState(false);
 	const { isPaidUser } = useUser();
 	const [showPaywall, setShowPaywall] = useState(false);
@@ -39,36 +41,38 @@ const ImageSelector: React.FC<Props> = ({
 				message='Upgrade for this 🌟premium feature!'
 				setShowModal={setShowPaywall}
 			/>
-			<div className='gap-1 flex flex-col justify-start'>
-				<Instruction>
-					<div>Do you want to use your own {type} for slides?</div>{' '}
-					{!isPaidUser && <PlusLabel />}
-				</Instruction>
+			{showQuestion && (
+				<div className='gap-1 flex flex-col justify-start'>
+					<Instruction>
+						<div>Do you want to use your own {type} for slides?</div>{' '}
+						{!isPaidUser && <PlusLabel />}
+					</Instruction>
 
-				<RadioButton
-					name={type}
-					options={[
-						{
-							value: 'yes',
-							text: 'Yes',
-						},
-						{
-							value: 'no',
-							text: 'No',
-						},
-					]}
-					selectedValue={useImage ? 'yes' : 'no'}
-					setSelectedValue={(value) => {
-						if (value === 'yes') {
-							if (!isPaidUser) setShowPaywall(true);
-							else setUseImage(true);
-						} else {
-							setUseImage(false);
-							setSelectedImage([]);
-						}
-					}}
-				/>
-			</div>
+					<RadioButton
+						name={type}
+						options={[
+							{
+								value: 'yes',
+								text: 'Yes',
+							},
+							{
+								value: 'no',
+								text: 'No',
+							},
+						]}
+						selectedValue={useImage ? 'yes' : 'no'}
+						setSelectedValue={(value) => {
+							if (value === 'yes') {
+								if (!isPaidUser) setShowPaywall(true);
+								else setUseImage(true);
+							} else {
+								setUseImage(false);
+								setSelectedImage([]);
+							}
+						}}
+					/>
+				</div>
+			)}
 
 			{useImage && (
 				<div

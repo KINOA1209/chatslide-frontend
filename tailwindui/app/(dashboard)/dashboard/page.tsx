@@ -207,6 +207,7 @@ export default function Dashboard() {
 			const response = await ProjectService.deleteProject(token, deleteInd);
 
 			setProjects(projects.filter((proj) => proj.id !== deleteInd));
+			setCurrentProjects(projects.filter((proj) => proj.id !== deleteInd));
 		} catch (error: any) {
 			toast.error(error.message, {
 				position: 'top-center',
@@ -403,7 +404,7 @@ export default function Dashboard() {
 				{hasFolder && (
 					<div className='w-full px-8 pt-8 flex flex-col mb-5'>
 						<Title center={false}>📂 Folders</Title>
-						<div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
+						<div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4'>
 							{activeFolder !== 'drlambda-default' ? (
 								<FolderItem
                   folder={{

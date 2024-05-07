@@ -200,7 +200,7 @@ export const BigBlueButton: React.FC<DrlambdaButtonProps> = ({
 			/>
 			<button
 				id={id}
-				className={`btn h-[36px] sm:h-[36px] w-[12rem] mx-auto sm:gap-x-2 text-white sm:font-semibold bg-Blue ${
+				className={`btn h-[36px] w-[8rem] sm:w-[12rem] mx-auto sm:gap-x-2 text-white sm:font-semibold bg-Blue ${
 					isSubmitting && 'animate-pulse cursor-progress'
 				} disabled:bg-gray-600 disabled:cursor-not-allowed
 			whitespace-nowrap rounded-xl`}
@@ -338,7 +338,7 @@ export const InversedBigBlueButton: React.FC<DrlambdaButtonProps> = ({
 }) => {
 	return (
 		<button
-			className='btn h-[36px] sm:h-[36px] w-[12rem] mx-auto sm:gap-x-2 text-Blue sm:font-semibold bg-gray-200 whitespace-nowrap rounded-xl
+			className='btn h-[36px] w-[8rem] sm:w-[12rem] mx-auto sm:gap-x-2 text-Blue sm:font-semibold bg-gray-200 whitespace-nowrap rounded-xl
 			disabled:text-gray-600 disabled:animate-pulse disabled:cursor-progress'
 			onClick={onClick}
 			disabled={isSubmitting}

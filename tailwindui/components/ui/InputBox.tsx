@@ -35,11 +35,12 @@ export const NewInputBox: React.FC<{
 	value: string;
 	onChange: (value: string) => void;
 	autoSelect?: boolean;
-	maxLength?: number;
+	maxLength: number | undefined;
 	placeholder?: string;
 	icon?: ReactNode;
 	textarea?: boolean;
 	rows?: number; // number of columns for textarea
+  id?: string;
 }> = ({
 	value,
 	onChange,
@@ -49,11 +50,12 @@ export const NewInputBox: React.FC<{
 	icon,
 	textarea = false,
 	rows,
+  id
 }) => {
 	const ref = useRef<HTMLDivElement>(null);
 
 	if (maxLength === undefined) {
-		maxLength = textarea ? 1000 : 100;
+		maxLength = textarea ? 2000 : 100;
 	}
 
 	useEffect(() => {
@@ -67,6 +69,7 @@ export const NewInputBox: React.FC<{
 		<div
 			className='h-[36px] sm:h-[36px] w-full flex flex-row flex-nowrap items-center justify-center border border-2 border-gray-200 px-3 py-2.5 gap-x-2 cursor-text rounded-lg overflow-visible'
 			ref={ref}
+      id={id}
 		>
 			{icon}
 			{!textarea ? (
@@ -95,7 +98,7 @@ export const NewInputBox: React.FC<{
 					rows={rows}
 				/>
 			)}
-			{/* when maxlength is reached, show a warning */})
+			{/* when maxlength is reached, show a warning */}
 			{/* when maxlength is reached, show a warning */}
 			{value.length >= maxLength && (
 				<WarningMessage>

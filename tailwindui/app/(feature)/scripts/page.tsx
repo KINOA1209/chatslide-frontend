@@ -39,6 +39,12 @@ import RangeSlider from '@/components/ui/RangeSlider';
 import { WrappableRow } from '@/components/layout/WrappableRow';
 import { isOpenaiVoice } from '@/components/language/voiceData';
 import Toggle from '@/components/button/Toggle';
+import { AIAssistantChatWindow } from '@/components/chatbot/AIAssistant';
+import {
+	SlideRightNavigator,
+  SlideLeftNavigator,
+  SlidePagesIndicator
+} from '@/components/slides/SlidePageIndicator';
 
 const ScriptSection = dynamic(
 	() => import('@/components/script/ScriptSection'),
@@ -47,7 +53,7 @@ const ScriptSection = dynamic(
 
 export default function WorkflowStep5() {
 	const [isSubmitting, setIsSubmitting] = useState(false);
-	const { slides, updateSlidePage } = useSlides();
+	const { slides, updateSlidePage, slideIndex, gotoPage } = useSlides();
 	const { project, updateProject } = useProject();
 	const { username, token, updateCreditsFE, isPaidUser } = useUser();
 	const router = useRouter();
@@ -381,6 +387,9 @@ export default function WorkflowStep5() {
 						/>
 					</div>
 				</Card> */}
+			</Column>
+
+			<div className='flex flex-row justify-between gap-x-4 lg:px-4 pb-4'>
 				<Card>
 					<BigTitle>📝 Scripts</BigTitle>
 					{!isOpenaiVoice(voice) && (
@@ -412,20 +421,47 @@ export default function WorkflowStep5() {
 						</Instruction>
 					)}
 
-					<div className='flex flex-col gap-y-2'>
-						{slides.map((_, index) => (
-							<ScriptSection
-								key={index}
-								slides={slides}
-								index={index}
-								voice={voice}
-								voiceStyle={style}
-								updateSlidePage={updateSlidePage}
-							/>
-						))}
+					<div className='flex flex-col gap-y-2 items-center '>
+						<ScriptSection
+							slides={slides}
+							index={slideIndex}
+							voice={voice}
+							voiceStyle={style}
+							updateSlidePage={updateSlidePage}
+						/>
+
+							<div className='flex flex-row items-center'>
+								<SlideLeftNavigator
+									currentSlideIndex={slideIndex}
+									slides={slides}
+									goToSlide={gotoPage}
+								/>
+								<SlidePagesIndicator
+									currentSlideIndex={slideIndex}
+									slides={slides}
+								/>
+								<SlideRightNavigator
+									currentSlideIndex={slideIndex}
+									slides={slides}
+									goToSlide={gotoPage}
+								/>
+							</div>
 					</div>
 				</Card>
-			</Column>
+
+				<div className='h-full flex flex-col justify-end'>
+					<div className='h-[600px] sticky bottom-0'>
+						<AIAssistantChatWindow
+							onToggle={undefined}
+							slides={slides}
+							currentSlideIndex={slideIndex}
+							updateSlidePage={updateSlidePage}
+							updateImgUrlArray={() => {}}
+							type='script'
+						/>
+					</div>
+				</div>
+			</div>
 		</div>
 	);
 }

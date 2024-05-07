@@ -15,16 +15,20 @@ const CHAT_SUGGESTIONS = {
 		'🌄 Change the background of this page',
 		'📝 Add an example to the content',
 	],
+  script: [
+    '📝 Add more details in the script',
+    '🔠 Make the script funnier',
+    '🌐 Translate script to German',
+    '💬 Make the script easier to understand',
+  ],
 };
 
 const ChatSuggestions: React.FC<{
 	language?: string;
-	isCover: boolean;
+	type: 'script' | 'cover' | 'noncover';
 	sendChat: (chat: string) => void;
-}> = ({ language, isCover, sendChat }) => {
-	const suggestions = isCover
-		? CHAT_SUGGESTIONS.cover
-		: CHAT_SUGGESTIONS.noncover;
+}> = ({ language, type, sendChat }) => {
+	const suggestions = CHAT_SUGGESTIONS[type];
 
 	return (
 		<div className='w-full'>

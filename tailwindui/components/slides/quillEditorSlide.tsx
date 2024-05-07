@@ -288,6 +288,45 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 	}, []);
 
 	useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (editorRef.current && !editorRef.current.contains(event.target as Node)) {
+                if (isTextChangeRef.current) {
+                    const currentContent = quillInstanceRef.current?.root.innerHTML;
+                    if (currentContent !== undefined) {
+                        isTextChangeRef.current = false;
+                        processAndSaveContent(currentContent);
+                    }
+                }
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [isVerticalContent]);
+
+	const processAndSaveContent = (currentContent: string) => {
+        if (isVerticalContent) {
+            const doc = new DOMParser().parseFromString(currentContent, 'text/html');
+            let extractedContent: string[] = [];
+
+            const bodyChildren = Array.from(doc.body.children);
+            bodyChildren.forEach((el) => {
+                if (el.tagName.toLowerCase() === 'ul' || el.tagName.toLowerCase() === 'ol') {
+                    const listItems = Array.from(el.querySelectorAll('li')).map(li => li.outerHTML || '');
+                    extractedContent.push(...listItems);
+                } else {
+                    extractedContent.push(el.outerHTML || el.textContent?.trim() || '');
+                }
+            });
+            handleBlur(extractedContent);
+        } else {
+            handleBlur(currentContent);
+        }
+    };
+
+	useEffect(() => {
 		if (editorRef.current && !quillInstanceRef.current) {
 			const BlockPrototype: any = Quill.import('blots/block');
 
@@ -593,35 +632,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 				const currentContent = quillInstanceRef.current?.root.innerHTML;
 				if (currentContent !== undefined) {
 					isTextChangeRef.current = false;
-					if (isVerticalContent) {
-						const doc = new DOMParser().parseFromString(
-							currentContent,
-							'text/html',
-						);
-						let extractedContent: string[] = [];
-
-						const bodyChildren = Array.from(doc.body.children);
-						bodyChildren.forEach((el) => {
-							// Check if the element is a <li> tag elements and process each list item
-							if (
-								el.tagName.toLowerCase() === 'ul' ||
-								el.tagName.toLowerCase() === 'ol'
-							) {
-								const listItems = Array.from(el.querySelectorAll('li')).map(
-									(li) => li.outerHTML || '',
-								);
-								extractedContent.push(...listItems);
-							} else {
-								// For non-list elements like <p> tag, push their outerHTML or text content
-								extractedContent.push(
-									el.outerHTML || el.textContent?.trim() || '',
-								);
-							}
-						});
-						handleBlur(extractedContent);
-					} else {
-						handleBlur(currentContent);
-					}
+					processAndSaveContent(currentContent)
 				}
 			});
 		}

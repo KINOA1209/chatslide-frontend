@@ -211,6 +211,7 @@ const OutlineVisualizer = ({
 						</div>
 
 						<div className='flex flex-row gap-4 items-center justify-center'>
+							{/* outline section */}
 							<div
 								id={String(sectionIndex)}
 								key={sectionIndex + 1}
@@ -245,6 +246,22 @@ const OutlineVisualizer = ({
 											<DeleteIcon shadow={true} />
 										</div>
 									)}
+								{hoveredSectionIndex === sectionIndex && outlineData[sectionIndex].content.length === 0 && (
+									// add detail
+									<div className='absolute -bottom-[7%] right-[10%]  z-10'>
+										{outlineData[sectionIndex].content.length <
+											maxOutlineDetailCount && (
+											<div
+												onClick={(e) => {
+													handleAddDetail(e, sectionIndex, 0);
+												}}
+											>
+												<AddTopicIcon />
+											</div>
+										)}
+									</div>
+								)}
+								{/* outline details */}
 								<div>
 									{section.content.map((content: any, detailIndex: number) => (
 										<div

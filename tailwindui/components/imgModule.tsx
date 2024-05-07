@@ -218,7 +218,7 @@ export const ImgModule = ({
 		if (imgsrc !== '') {
 			setSelectedImg(imgsrc);
 		}
-		console.log('imgsrc', imgsrc);
+		// console.log('imgsrc', imgsrc);
 	}, [imgsrc]);
 
 	// useEffect(() => {
@@ -954,14 +954,6 @@ export const ImgModule = ({
 			closeModal();
 		}
 	};
-	// const handleUpdateStoredEmbedCode = (embedCode: string) => {
-	// 	// useJSScript(embedCode);
-	// 	setCurrentStoredEmbedCode(embedCode);
-	// };
-
-	useEffect(() => {
-		console.log('currentStoredEmbedCode content', currentStoredEmbedCode);
-	}, [currentStoredEmbedCode]);
 
 	const handleConfirmClick = () => {
 		if (
@@ -1013,7 +1005,9 @@ export const ImgModule = ({
 				placeholder='Paste YouTube embed code here. Start with <iframe> tag.'
 				value={inputValue}
 				onChange={setInputValue}
+        maxLength={undefined}
 				rows={5}
+				textarea
 			/>
 
 			<div className='w-full mx-auto flex justify-center items-center'>
@@ -1789,8 +1783,9 @@ export const ImgModule = ({
 											<>
 												<button
 													className='flex flex-row items-center justify-center gap-1'
-													onClick={() => {
+													onClick={(e) => {
 														updateSingleCallback('');
+                            e.stopPropagation();
 													}}
 												>
 													<LuTrash2
@@ -1810,8 +1805,9 @@ export const ImgModule = ({
 												{project?.additional_images && (
 													<button
 														className='flex flex-row items-center justify-center gap-1'
-														onClick={() => {
+														onClick={(e) => {
 															updateSingleCallback('shuffle', false, {});
+                              e.stopPropagation();
 														}}
 													>
 														<HiOutlineRefresh
