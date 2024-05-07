@@ -465,6 +465,9 @@ export const ImgModule = ({
 			false,
 			{},
 		);
+
+    // close modal
+    closeModal();
 	};
 
 	const fetchFiles = async (file_id?: string) => {
