@@ -348,7 +348,7 @@ class ProjectService {
 				slide.theme = slideData.theme;
 				slide.content = slideData.content || ['Your content here'];
 				slide.section_title = slideData.section_title || 'Your section title here';
-				slide.brief = slideData.brief || ['Your brief here'];
+				slide.brief = slideData.brief || 'Your brief here';
 				slide.original_title = slideData.original_title;
 				slide.title = slideData.title || '';
 				slide.illustration =
