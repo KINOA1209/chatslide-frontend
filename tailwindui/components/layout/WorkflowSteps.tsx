@@ -227,7 +227,7 @@ export const projectFinishedSteps = (project: Project | null) => {
 	return finishedStepsArray;
 };
 
-export const getLastStepRedirect = (project: Project) => {
+export const getLastStepReidrect = (project: Project) => {
 	const finishedSteps = projectFinishedSteps(project);
 	console.log('finishedSteps', finishedSteps);
 	console.log('project', project.content_type);

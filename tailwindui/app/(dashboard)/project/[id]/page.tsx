@@ -9,7 +9,7 @@ import Project from '@/models/Project';
 import { useSlides } from '@/hooks/use-slides';
 import { useProject } from '@/hooks/use-project';
 import { useUser } from '@/hooks/use-user';
-import { getLastStepRedirect } from '@/components/layout/WorkflowSteps';
+import { getLastStepReidrect } from '@/components/layout/WorkflowSteps';
 import { Blank, Loading } from '@/components/ui/Loading';
 import { addIdToRedir } from '@/utils/redirWithId';
 import { useSocialPosts } from '@/hooks/use-socialpost';
@@ -74,7 +74,7 @@ const ProjectLoading = () => {
 	};
 
 	const handleRedirect = async (project: Project, project_id: string) => {
-		router.push(addIdToRedir(getLastStepRedirect(project), project_id));
+		router.push(addIdToRedir(getLastStepReidrect(project), project_id));
 	};
 
 	if (failed) {

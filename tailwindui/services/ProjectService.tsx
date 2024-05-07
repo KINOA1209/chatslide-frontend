@@ -57,7 +57,7 @@ class ProjectService {
 			//console.log('Project data:', project);
 
 			if (project?.presentation_slides) {
-				project.parsed_slides = this.parseSlides(project.presentation_slides).slides;
+				project.parsed_slides = this.parseSlides(project.presentation_slides);
 				// console.log('getSharedProjectDetails', project.parsed_slides);
 			}
 			if (project?.social_posts && project?.post_type) {
@@ -116,13 +116,11 @@ class ProjectService {
 
 			if (project?.presentation_slides) {
 				project.content_type = 'presentation';
-        const {slides, hasTemplate} = this.parseSlides(project.presentation_slides);
-				project.parsed_slides = slides;
+				project.parsed_slides = this.parseSlides(project.presentation_slides);
 				if (project.parsed_slides && project.parsed_slides.length > 0) {
 					const slide = project.parsed_slides[0];
 					project.has_scripts = slide.transcript ? true : false;
-          if (hasTemplate)
-            project.template = slide.template;
+					project.template = slide.template;
 					project.palette = slide.palette;
 				}
 			}
@@ -212,9 +210,9 @@ class ProjectService {
 		return response.ok;
 	}
 
-	static parseSlides(presentation_slides: string): {slides: Slide[], hasTemplate: boolean} {
+	static parseSlides(presentation_slides: string): Slide[] {
 		if (!presentation_slides) {
-			return {slides: [], hasTemplate: false};
+			return [];
 		}
 
 		let jsonSlides = JSON.parse(presentation_slides);
@@ -235,9 +233,6 @@ class ProjectService {
 			groups: [emptyGroup],
 			axis: { x: '', y: '' },
 		}));
-
-    let hasTemplate = false;
-
 		// mapping data to slides
 		const slidesArray: Slide[] = Object.keys(jsonSlides).map((key, index) => {
 			const slideData =
@@ -250,9 +245,6 @@ class ProjectService {
 			slide.title = slideData.title || 'New Slide';
 			slide.subtopic = slideData.subtopic || 'New Slide';
 			slide.userName = slideData.userName || '';
-      if (slideData.template) {
-        hasTemplate = true;
-      }
 			slide.template =
 				slideData.template || ('Business_Light_006' as TemplateKeys);
 			slide.palette = slideData.palette || 'Original';
@@ -318,7 +310,7 @@ class ProjectService {
 		});
 
 		//console.log('slidesArray:', slidesArray);
-		return {slides: slidesArray, hasTemplate: hasTemplate};
+		return slidesArray;
 	}
 
 	static parseSocialPosts(
