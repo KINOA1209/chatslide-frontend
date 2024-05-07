@@ -18,6 +18,13 @@ import { Blank, Loading } from '../ui/Loading';
 import { getBrand, getLogoUrl } from '@/utils/getHost';
 import MyResourcePageHeader from '@/app/(feature)/uploads/MyResourcePageHeader';
 import { MdOutlineCloudUpload } from 'react-icons/md';
+import { FiUpload } from 'react-icons/fi';
+import DesignSystemButton from '../ui/design_systems/ButtonsOrdinary';
+import { MdFolderOpen } from 'react-icons/md';
+import { FiFileText } from 'react-icons/fi';
+import { IoMdLink } from 'react-icons/io';
+import { PiImageSquare } from 'react-icons/pi';
+import { FiVideo } from 'react-icons/fi';
 
 interface UserFileList {
 	selectable: boolean;
@@ -732,7 +739,7 @@ const MyFiles: React.FC<filesInterface> = ({
 	};
 
 	return (
-		<section className='bg-white grow flex flex-col h-full w-full'>
+		<section className='bg-[#F9FAFB] grow flex flex-col h-full w-full'>
 			<ToastContainer enableMultiContainer containerId={'fileManagement'} />
 			{pageInvoked === 'resources' ? (
 				<MyResourcePageHeader
@@ -868,22 +875,202 @@ const MyFiles: React.FC<filesInterface> = ({
 			)}
 
 			{/* Filter buttons */}
-			<div className='flex flex-row gap-4'>
-				<div className='all' onClick={() => filterResources('all')}>
+			<div className='flex flex-row gap-4 px-[1rem] pt-[1rem]'>
+				<DesignSystemButton
+					isPaidFeature={false}
+					size='sm'
+					hierarchy='tertiary'
+					buttonStatus='enabled'
+					iconLeft={<MdFolderOpen />}
+					customButtonStyles={
+						currentResourceType === 'all'
+							? {
+									borderRadius: 'var(--radius-md, 8px)',
+									backgroundColor:
+										'var(--Colors-Background-bg-brand-primary, #EFF4FF)',
+								}
+							: {
+									borderRadius: 'var(--radius-md, 8px)',
+									backgroundColor:
+										'var(--Colors-Background-bg-secondary, #F9FAFB)',
+								}
+					}
+					customIconStyles={
+						currentResourceType === 'all'
+							? {
+									color: 'var(--colors-text-text-brand-secondary-700, #3538CD)',
+								}
+							: { color: 'var(--colors-text-text-quaternary-500, #667085)' }
+					}
+					customTextStyles={
+						currentResourceType === 'all'
+							? {
+									color: 'var(--colors-text-text-brand-secondary-700, #3538CD)',
+								}
+							: { color: 'var(--colors-text-text-quaternary-500, #667085)' }
+					}
+					onClick={() => filterResources('all')}
+					// text='Create New'
+					// onClick={handleStartNewProject}
+				>
 					<span>All</span>
-				</div>
-				<div className='files' onClick={() => filterResources('files')}>
+				</DesignSystemButton>
+				<DesignSystemButton
+					isPaidFeature={false}
+					size='sm'
+					hierarchy='tertiary'
+					buttonStatus='enabled'
+					iconLeft={<FiFileText />}
+					customButtonStyles={
+						currentResourceType === 'files'
+							? {
+									borderRadius: 'var(--radius-md, 8px)',
+									backgroundColor:
+										'var(--Colors-Background-bg-brand-primary, #EFF4FF)',
+								}
+							: {
+									borderRadius: 'var(--radius-md, 8px)',
+									backgroundColor:
+										'var(--Colors-Background-bg-secondary, #F9FAFB)',
+								}
+					}
+					customIconStyles={
+						currentResourceType === 'files'
+							? {
+									color: 'var(--colors-text-text-brand-secondary-700, #3538CD)',
+								}
+							: { color: 'var(--colors-text-text-quaternary-500, #667085)' }
+					}
+					customTextStyles={
+						currentResourceType === 'files'
+							? {
+									color: 'var(--colors-text-text-brand-secondary-700, #3538CD)',
+								}
+							: { color: 'var(--colors-text-text-quaternary-500, #667085)' }
+					}
+					onClick={() => filterResources('files')}
+					// text='Create New'
+					// onClick={handleStartNewProject}
+				>
 					<span>Files</span>
-				</div>
-				<div className='images' onClick={() => filterResources('images')}>
+				</DesignSystemButton>
+				<DesignSystemButton
+					isPaidFeature={false}
+					size='sm'
+					hierarchy='tertiary'
+					buttonStatus='enabled'
+					iconLeft={<IoMdLink />}
+					customButtonStyles={
+						currentResourceType === 'images'
+							? {
+									borderRadius: 'var(--radius-md, 8px)',
+									backgroundColor:
+										'var(--Colors-Background-bg-brand-primary, #EFF4FF)',
+								}
+							: {
+									borderRadius: 'var(--radius-md, 8px)',
+									backgroundColor:
+										'var(--Colors-Background-bg-secondary, #F9FAFB)',
+								}
+					}
+					customIconStyles={
+						currentResourceType === 'images'
+							? {
+									color: 'var(--colors-text-text-brand-secondary-700, #3538CD)',
+								}
+							: { color: 'var(--colors-text-text-quaternary-500, #667085)' }
+					}
+					customTextStyles={
+						currentResourceType === 'images'
+							? {
+									color: 'var(--colors-text-text-brand-secondary-700, #3538CD)',
+								}
+							: { color: 'var(--colors-text-text-quaternary-500, #667085)' }
+					}
+					onClick={() => filterResources('images')}
+					// text='Create New'
+					// onClick={handleStartNewProject}
+				>
 					<span>Images</span>
-				</div>
-				<div className='links' onClick={() => filterResources('links')}>
+				</DesignSystemButton>
+				<DesignSystemButton
+					isPaidFeature={false}
+					size='sm'
+					hierarchy='tertiary'
+					buttonStatus='enabled'
+					iconLeft={<PiImageSquare />}
+					customButtonStyles={
+						currentResourceType === 'links'
+							? {
+									borderRadius: 'var(--radius-md, 8px)',
+									backgroundColor:
+										'var(--Colors-Background-bg-brand-primary, #EFF4FF)',
+								}
+							: {
+									borderRadius: 'var(--radius-md, 8px)',
+									backgroundColor:
+										'var(--Colors-Background-bg-secondary, #F9FAFB)',
+								}
+					}
+					customIconStyles={
+						currentResourceType === 'links'
+							? {
+									color: 'var(--colors-text-text-brand-secondary-700, #3538CD)',
+								}
+							: { color: 'var(--colors-text-text-quaternary-500, #667085)' }
+					}
+					customTextStyles={
+						currentResourceType === 'links'
+							? {
+									color: 'var(--colors-text-text-brand-secondary-700, #3538CD)',
+								}
+							: { color: 'var(--colors-text-text-quaternary-500, #667085)' }
+					}
+					onClick={() => filterResources('links')}
+					// text='Create New'
+					// onClick={handleStartNewProject}
+				>
 					<span>Links</span>
-				</div>
-				<div className='videos' onClick={() => filterResources('videos')}>
+				</DesignSystemButton>
+				<DesignSystemButton
+					isPaidFeature={false}
+					size='sm'
+					hierarchy='tertiary'
+					buttonStatus='enabled'
+					iconLeft={<FiVideo />}
+					customButtonStyles={
+						currentResourceType === 'videos'
+							? {
+									borderRadius: 'var(--radius-md, 8px)',
+									backgroundColor:
+										'var(--Colors-Background-bg-brand-primary, #EFF4FF)',
+								}
+							: {
+									borderRadius: 'var(--radius-md, 8px)',
+									backgroundColor:
+										'var(--Colors-Background-bg-secondary, #F9FAFB)',
+								}
+					}
+					customIconStyles={
+						currentResourceType === 'videos'
+							? {
+									color: 'var(--colors-text-text-brand-secondary-700, #3538CD)',
+								}
+							: { color: 'var(--colors-text-text-quaternary-500, #667085)' }
+					}
+					customTextStyles={
+						currentResourceType === 'videos'
+							? {
+									color: 'var(--colors-text-text-brand-secondary-700, #3538CD)',
+								}
+							: { color: 'var(--colors-text-text-quaternary-500, #667085)' }
+					}
+					onClick={() => filterResources('videos')}
+					// text='Create New'
+					// onClick={handleStartNewProject}
+				>
 					<span>Videos</span>
-				</div>
+				</DesignSystemButton>
 			</div>
 
 			{/* rendered resources items area */}

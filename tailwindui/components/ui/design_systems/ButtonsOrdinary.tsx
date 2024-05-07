@@ -24,6 +24,8 @@ interface DesignSystemButtonProps {
 	isPaidFeature?: boolean;
 	id?: string;
 	customButtonStyles?: React.CSSProperties;
+	customTextStyles?: React.CSSProperties;
+	customIconStyles?: React.CSSProperties;
 }
 
 const DesignSystemButton: React.FC<DesignSystemButtonProps> = ({
@@ -40,6 +42,8 @@ const DesignSystemButton: React.FC<DesignSystemButtonProps> = ({
 	isPaidFeature = false,
 	id = '',
 	customButtonStyles,
+	customIconStyles,
+	customTextStyles,
 }) => {
 	// Define the CSS variables for spacing and colors
 	const [showPaywallModal, setShowPaywallModal] = useState(false);
@@ -195,8 +199,10 @@ const DesignSystemButton: React.FC<DesignSystemButtonProps> = ({
 				onClick={checkPaidUser}
 				style={{ ...buttonStyles, ...customButtonStyles }}
 			>
-				{iconLeft && <span style={{ ...iconStyles }}>{iconLeft}</span>}
-				<span style={textStyles[size]}>
+				{iconLeft && (
+					<span style={{ ...iconStyles, ...customIconStyles }}>{iconLeft}</span>
+				)}
+				<span style={{ ...textStyles[size], ...customTextStyles }}>
 					{/* {text} */}
 					{children}
 					{isPaidFeature && !isPaidUser && <PlusLabel />}
@@ -205,7 +211,11 @@ const DesignSystemButton: React.FC<DesignSystemButtonProps> = ({
 				{isSubmitting ? (
 					<SpinIcon />
 				) : (
-					iconRight && <span style={{ ...iconStyles }}>{iconRight}</span>
+					iconRight && (
+						<span style={{ ...iconStyles, ...customIconStyles }}>
+							{iconRight}
+						</span>
+					)
 				)}
 			</button>
 		</>
