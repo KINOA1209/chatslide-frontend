@@ -243,7 +243,7 @@ const PricingComparison: React.FC<{
 	};
 
 	return (
-		<div className='flex flex-col items-center overflow-y-scroll overflow-x-scroll'>
+		<div className='flex flex-col items-center overflow-y-scroll overflow-x-scroll notranslate'>
 			<MultiwayToggle
 				options={[
 					{ key: 'onetime', text: '7-Day' },
