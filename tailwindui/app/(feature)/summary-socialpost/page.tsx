@@ -193,7 +193,7 @@ export default function Topic_SocialPost() {
 
 			router.push(addIdToRedir('/socialpost', response.data.project_id));
 		} catch (error) {
-			console.error('Error:', error);
+			// console.error('Error:', error);s
 			setIsSubmitting(false);
 		}
 	};
@@ -219,9 +219,12 @@ export default function Topic_SocialPost() {
 						project?.id,
 				);
 				setIsSubmitting(false);
+				
 			}
+			throw new Error('Error when generating social posts');
 		}
-		return await response.json();
+		else
+			return await response.json();
 	}
 
 	async function addLink(link: string) {
