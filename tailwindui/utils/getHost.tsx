@@ -39,7 +39,7 @@ function isChatslide() {
 }
 
 function isLocal() {
-	return getHost().includes('localhost');
+	return getHost().includes('localhost') || getHost().includes('dev');
 }
 
 export { getHost, getOrigin, getBrand, getLogoUrl, isChatslide, isLocal };

@@ -65,7 +65,7 @@ const MyResourcePageHeader: React.FC<MyResourcePageHeaderProps> = ({
 						color: 'var(--colors-text-text-secondary-700, #344054)',
 					}}
 				>
-					<span>Resources</span>
+					<span>Uploads</span>
 				</div>
 
 				{/*upload section*/}

@@ -339,6 +339,12 @@ export default function Topic() {
 			setShowGenerationStatusModal(false);
 			return;
 		}
+		else if (generationMode === 'from_files' && selectedResources.length === 0) {
+			toast.error('Please upload at least one file.');
+			setIsSubmitting(false);
+			setShowGenerationStatusModal(false);
+			return;
+		}
 
 		const project_id = project?.id || '';
 		const knowledge_summary = project?.knowledge_summary || '';

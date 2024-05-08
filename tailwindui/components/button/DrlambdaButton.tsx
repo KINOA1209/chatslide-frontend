@@ -223,7 +223,7 @@ export const BigBlueButton: React.FC<DrlambdaButtonProps> = ({
 			) : (
 				<button
 					id={id}
-					className={`btn h-[36px] w-[8rem] sm:w-[12rem] mx-auto sm:gap-x-2 text-white sm:font-semibold bg-Blue ${
+					className={`btn h-[36px] min-w-[8rem] sm:w-[12rem] mx-auto sm:gap-x-2 text-white sm:font-semibold bg-Blue ${
 						isSubmitting && 'animate-pulse cursor-progress'
 					} disabled:bg-gray-600 disabled:cursor-not-allowed
 			whitespace-nowrap rounded-xl`}

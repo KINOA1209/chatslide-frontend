@@ -614,7 +614,7 @@ export const ImgModule = ({
 												/>
 											</svg>
 										</div>
-										My Resources
+										My Uploads
 									</button>
 									<button
 										className='cursor-pointer whitespace-nowrap py-2 flex flex-row'

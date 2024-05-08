@@ -23,7 +23,7 @@ import DesignSystemButton from '../ui/design_systems/ButtonsOrdinary';
 import { MdFolderOpen } from 'react-icons/md';
 import { FiFileText } from 'react-icons/fi';
 import { IoMdLink } from 'react-icons/io';
-import { PiImageSquare } from 'react-icons/pi';
+import { PiImageSquare, PiTagLight } from 'react-icons/pi';
 import { FiVideo } from 'react-icons/fi';
 
 interface UserFileList {
@@ -264,7 +264,7 @@ const FileManagement: React.FC<UserFileList> = ({
 				</div>
 
 				{/* timestamp*/}
-				<div className='col-span-1 h-full flex justify-end items-center w-full py-4 px-2 text-gray-600 text-[13px] font-normal leading-normal tracking-[0.12rem]'>
+				<div className='col-span-1 h-full flex justify-between items-center w-full py-4 px-2 text-gray-600 text-[13px] font-normal leading-normal tracking-[0.12rem]'>
 					{' '}
 					{resource.timestamp && (
 						<div className='hidden md:block'>
@@ -273,14 +273,13 @@ const FileManagement: React.FC<UserFileList> = ({
 								style={{
 									whiteSpace: 'nowrap',
 									color: 'var(--colors-text-text-quaternary-500, #667085)',
-									fontFamily: 'Creato Display Medium',
 									fontSize: '14px',
 									fontStyle: 'normal',
 									fontWeight: 400,
 									lineHeight: '20px',
 								}}
 							>
-								{moment(resource.timestamp).format('MMM D, YYYY')}
+								{moment(resource.timestamp).format('MMM D')}
 							</span>
 							{/* {resource.timestamp} */}
 						</div>
@@ -344,7 +343,8 @@ export const fileExtensions = {
 		'rtf',
 		'txt',
 	],
-	images: ['background', 'logo', 'png', 'jpg', 'jpeg', 'gif', 'bmp', 'svg'],
+	images: ['png', 'jpg', 'jpeg', 'gif', 'bmp', 'svg'],
+	branding: ['logo', 'background'],
 	links: ['webpage', 'html', 'htm'],
 	videos: [
 		'youtube',
@@ -476,12 +476,16 @@ const MyFiles: React.FC<filesInterface> = ({
 					getFileExtension(resource.name) || resource.type,
 				),
 			);
+		} else if (type === 'branding') {
+			filtered = resources.filter((resource) =>
+				fileExtensions.branding.includes(resource.type),
+			);
 		}
 		setFilteredResources(filtered);
 	};
 
 	const fetchFiles = async (token: string) => {
-		console.log('pageInvoked', pageInvoked);
+		// console.log('pageInvoked', pageInvoked);
 
 		//const resource_type = selectable ? ['doc', 'url'] : [];
 		const resource_type =
@@ -489,7 +493,7 @@ const MyFiles: React.FC<filesInterface> = ({
 				? ['doc', 'url', 'webpage', 'youtube']
 				: pageInvoked === 'theme'
 					? [fileType]
-					: [];
+					: []; // uploads page, all resources
 
 		ResourceService.fetchResources(resource_type, token).then((resources) => {
 			setResources(resources);
@@ -766,7 +770,7 @@ const MyFiles: React.FC<filesInterface> = ({
 	};
 
 	return (
-		<section className='bg-[#F9FAFB] grow flex flex-col h-full w-full'>
+		<section className='grow flex flex-col h-full w-full lg:px-4'>
 			<ToastContainer enableMultiContainer containerId={'fileManagement'} />
 			{pageInvoked === 'resources' ? (
 				<MyResourcePageHeader
@@ -811,83 +815,6 @@ const MyFiles: React.FC<filesInterface> = ({
 					{/* carbon connect cloud storage */}
 					{pageInvoked !== 'theme' && (
 						<div className='max-w-sm w-fit text-center pt-4 mx-4'>
-							{/* <div className='w-full mx-auto'>
-								{isPaidUser ? (
-									<CarbonConnect
-										orgName={getBrand()}
-										brandIcon={getLogoUrl()}
-										tokenFetcher={carbonTokenFetcher}
-										tags={{
-											tag1: 'tag1_value',
-											tag2: 'tag2_value',
-											tag3: 'tag3_value',
-										}}
-										maxFileSize={10000000}
-										enabledIntegrations={[
-											// {
-											//     id: IntegrationName.GOOGLE_DRIVE,
-											//     chunkSize: 1500,
-											//     overlapSize: 20,
-											//     skipEmbeddingGeneration: true,
-											// },
-											{
-												id: IntegrationName.ONEDRIVE,
-												chunkSize: 1500,
-												overlapSize: 20,
-												skipEmbeddingGeneration: true,
-											},
-											{
-												id: IntegrationName.DROPBOX,
-												chunkSize: 1500,
-												overlapSize: 20,
-												skipEmbeddingGeneration: true,
-											},
-											// {
-											// 	id: IntegrationName.NOTION,
-											// 	chunkSize: 1500,
-											// 	overlapSize: 20,
-											// 	skipEmbeddingGeneration: true,
-											// },
-											{
-												id: IntegrationName.GOOGLE_DRIVE,
-												chunkSize: 1500,
-												overlapSize: 20,
-												skipEmbeddingGeneration: true,
-											},
-										]}
-										onSuccess={(data) => handleSuccess(data)}
-										onError={(error) => console.log('Data on Error: ', error)}
-										primaryBackgroundColor='#5168f6'
-										primaryTextColor='#fafafa'
-										secondaryBackgroundColor='#f2f2f2'
-										secondaryTextColor='#000000'
-										allowMultipleFiles={true}
-										open={false}
-										chunkSize={1500}
-										overlapSize={20}
-										// entryPoint="LOCAL_FILES"
-									>
-										<BigBlueButton
-											onClick={() => {}}
-											isSubmitting={false}
-											showArrow={false}
-										>
-											Upload from Cloud ☁️
-										</BigBlueButton>
-									</CarbonConnect>
-								) : (
-									<BigBlueButton
-										onClick={() => {}}
-										isSubmitting={false}
-										showArrow={false}
-										isPaidFeature={true}
-										isPaidUser={isPaidUser}
-									>
-										Upload from Cloud ☁️
-									</BigBlueButton>
-								)}
-							</div> */}
-
 							<CloudConnectComponent
 								isPaidUser={isPaidUser}
 								getBrand={getBrand}
@@ -930,114 +857,165 @@ const MyFiles: React.FC<filesInterface> = ({
 				>
 					<span>All</span>
 				</DesignSystemButton>
-				<DesignSystemButton
-					isPaidFeature={false}
-					size='sm'
-					hierarchy='tertiary'
-					buttonStatus='enabled'
-					iconLeft={<FiFileText />}
-					customButtonStyles={
-						currentResourceType === 'files'
-							? customFilterButtonGroupStyles.selected.button
-							: customFilterButtonGroupStyles.unselected.button
-					}
-					customIconStyles={
-						currentResourceType === 'files'
-							? customFilterButtonGroupStyles.selected.icon
-							: customFilterButtonGroupStyles.unselected.icon
-					}
-					customTextStyles={
-						currentResourceType === 'files'
-							? customFilterButtonGroupStyles.selected.text
-							: customFilterButtonGroupStyles.unselected.text
-					}
-					onClick={() => filterResources('files')}
-					// text='Create New'
-					// onClick={handleStartNewProject}
-				>
-					<span>Files</span>
-				</DesignSystemButton>
-				<DesignSystemButton
-					isPaidFeature={false}
-					size='sm'
-					hierarchy='tertiary'
-					buttonStatus='enabled'
-					iconLeft={<IoMdLink />}
-					customButtonStyles={
-						currentResourceType === 'images'
-							? customFilterButtonGroupStyles.selected.button
-							: customFilterButtonGroupStyles.unselected.button
-					}
-					customIconStyles={
-						currentResourceType === 'images'
-							? customFilterButtonGroupStyles.selected.icon
-							: customFilterButtonGroupStyles.unselected.icon
-					}
-					customTextStyles={
-						currentResourceType === 'images'
-							? customFilterButtonGroupStyles.selected.text
-							: customFilterButtonGroupStyles.unselected.text
-					}
-					onClick={() => filterResources('images')}
-					// text='Create New'
-					// onClick={handleStartNewProject}
-				>
-					<span>Images</span>
-				</DesignSystemButton>
-				<DesignSystemButton
-					isPaidFeature={false}
-					size='sm'
-					hierarchy='tertiary'
-					buttonStatus='enabled'
-					iconLeft={<PiImageSquare />}
-					customButtonStyles={
-						currentResourceType === 'links'
-							? customFilterButtonGroupStyles.selected.button
-							: customFilterButtonGroupStyles.unselected.button
-					}
-					customIconStyles={
-						currentResourceType === 'links'
-							? customFilterButtonGroupStyles.selected.icon
-							: customFilterButtonGroupStyles.unselected.icon
-					}
-					customTextStyles={
-						currentResourceType === 'links'
-							? customFilterButtonGroupStyles.selected.text
-							: customFilterButtonGroupStyles.unselected.text
-					}
-					onClick={() => filterResources('links')}
-					// text='Create New'
-					// onClick={handleStartNewProject}
-				>
-					<span>Links</span>
-				</DesignSystemButton>
-				<DesignSystemButton
-					isPaidFeature={false}
-					size='sm'
-					hierarchy='tertiary'
-					buttonStatus='enabled'
-					iconLeft={<FiVideo />}
-					customButtonStyles={
-						currentResourceType === 'videos'
-							? customFilterButtonGroupStyles.selected.button
-							: customFilterButtonGroupStyles.unselected.button
-					}
-					customIconStyles={
-						currentResourceType === 'videos'
-							? customFilterButtonGroupStyles.selected.icon
-							: customFilterButtonGroupStyles.unselected.icon
-					}
-					customTextStyles={
-						currentResourceType === 'videos'
-							? customFilterButtonGroupStyles.selected.text
-							: customFilterButtonGroupStyles.unselected.text
-					}
-					onClick={() => filterResources('videos')}
-					// text='Create New'
-					// onClick={handleStartNewProject}
-				>
-					<span>Videos</span>
-				</DesignSystemButton>
+				{pageInvoked != 'theme' && (
+					<DesignSystemButton
+						isPaidFeature={false}
+						size='sm'
+						hierarchy='tertiary'
+						buttonStatus='enabled'
+						iconLeft={<FiFileText />}
+						customButtonStyles={
+							currentResourceType === 'files'
+								? customFilterButtonGroupStyles.selected.button
+								: customFilterButtonGroupStyles.unselected.button
+						}
+						customIconStyles={
+							currentResourceType === 'files'
+								? customFilterButtonGroupStyles.selected.icon
+								: customFilterButtonGroupStyles.unselected.icon
+						}
+						customTextStyles={
+							currentResourceType === 'files'
+								? customFilterButtonGroupStyles.selected.text
+								: customFilterButtonGroupStyles.unselected.text
+						}
+						onClick={() => filterResources('files')}
+						// text='Create New'
+						// onClick={handleStartNewProject}
+					>
+						<span>Files</span>
+					</DesignSystemButton>
+				)}
+				{pageInvoked != 'summary' && (
+					<DesignSystemButton
+						isPaidFeature={false}
+						size='sm'
+						hierarchy='tertiary'
+						buttonStatus='enabled'
+						iconLeft={<IoMdLink />}
+						customButtonStyles={
+							currentResourceType === 'images'
+								? customFilterButtonGroupStyles.selected.button
+								: customFilterButtonGroupStyles.unselected.button
+						}
+						customIconStyles={
+							currentResourceType === 'images'
+								? customFilterButtonGroupStyles.selected.icon
+								: customFilterButtonGroupStyles.unselected.icon
+						}
+						customTextStyles={
+							currentResourceType === 'images'
+								? customFilterButtonGroupStyles.selected.text
+								: customFilterButtonGroupStyles.unselected.text
+						}
+						onClick={() => filterResources('images')}
+						// text='Create New'
+						// onClick={handleStartNewProject}
+					>
+						<span>Images</span>
+					</DesignSystemButton>
+				)}
+				{pageInvoked != 'theme' && (
+					<DesignSystemButton
+						isPaidFeature={false}
+						size='sm'
+						hierarchy='tertiary'
+						buttonStatus='enabled'
+						iconLeft={<PiImageSquare />}
+						customButtonStyles={
+							currentResourceType === 'links'
+								? customFilterButtonGroupStyles.selected.button
+								: customFilterButtonGroupStyles.unselected.button
+						}
+						customIconStyles={
+							currentResourceType === 'links'
+								? customFilterButtonGroupStyles.selected.icon
+								: customFilterButtonGroupStyles.unselected.icon
+						}
+						customTextStyles={
+							currentResourceType === 'links'
+								? customFilterButtonGroupStyles.selected.text
+								: customFilterButtonGroupStyles.unselected.text
+						}
+						onClick={() => filterResources('links')}
+						// text='Create New'
+						// onClick={handleStartNewProject}
+					>
+						<span>Links</span>
+					</DesignSystemButton>
+				)}
+				{pageInvoked != 'theme' && (
+					<DesignSystemButton
+						isPaidFeature={false}
+						size='sm'
+						hierarchy='tertiary'
+						buttonStatus='enabled'
+						iconLeft={<FiVideo />}
+						customButtonStyles={
+							currentResourceType === 'videos'
+								? customFilterButtonGroupStyles.selected.button
+								: customFilterButtonGroupStyles.unselected.button
+						}
+						customIconStyles={
+							currentResourceType === 'videos'
+								? customFilterButtonGroupStyles.selected.icon
+								: customFilterButtonGroupStyles.unselected.icon
+						}
+						customTextStyles={
+							currentResourceType === 'videos'
+								? customFilterButtonGroupStyles.selected.text
+								: customFilterButtonGroupStyles.unselected.text
+						}
+						onClick={() => filterResources('videos')}
+						// text='Create New'
+						// onClick={handleStartNewProject}
+					>
+						<span>YouTube</span>
+					</DesignSystemButton>
+				)}
+				{pageInvoked != 'summary' && (
+					<DesignSystemButton
+						isPaidFeature={false}
+						size='sm'
+						hierarchy='tertiary'
+						buttonStatus='enabled'
+						iconLeft={<PiTagLight />}
+						customButtonStyles={
+							currentResourceType === 'branding'
+								? {
+										borderRadius: 'var(--radius-md, 8px)',
+										backgroundColor:
+											'var(--Colors-Background-bg-brand-primary, #EFF4FF)',
+									}
+								: {
+										borderRadius: 'var(--radius-md, 8px)',
+										backgroundColor:
+											'var(--Colors-Background-bg-secondary, #F9FAFB)',
+									}
+						}
+						customIconStyles={
+							currentResourceType === 'branding'
+								? {
+										color:
+											'var(--colors-text-text-brand-secondary-700, #3538CD)',
+									}
+								: { color: 'var(--colors-text-text-quaternary-500, #667085)' }
+						}
+						customTextStyles={
+							currentResourceType === 'branding'
+								? {
+										color:
+											'var(--colors-text-text-brand-secondary-700, #3538CD)',
+									}
+								: { color: 'var(--colors-text-text-quaternary-500, #667085)' }
+						}
+						onClick={() => filterResources('branding')}
+						// text='Create New'
+						// onClick={handleStartNewProject}
+					>
+						<span>Branding</span>
+					</DesignSystemButton>
+				)}
 			</div>
 
 			{/* rendered resources items area */}
@@ -1046,7 +1024,7 @@ const MyFiles: React.FC<filesInterface> = ({
 					<Blank text='You have no uploaded file' />
 				) : (
 					<div
-						className={`w-full mx-auto mt-4 px-4 pt-4 flex grow overflow-y-auto  ${
+						className={`w-full mx-auto mx-4 mt-4 flex grow overflow-y-auto ${
 							isDragging ? 'bg-blue-100 border-blue-500' : ''
 						}`}
 						onDragStart={handleDragStart}

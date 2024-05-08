@@ -193,7 +193,7 @@ const MobileMenu = ({ refList = [] }: HeaderProps) => {
 										className='flex font-medium w-full text-gray-600 hover:text-gray-900 py-2 justify-center'
 										onClick={() => setMobileNavOpen(false)}
 									>
-										My Resources
+										My Uploads
 									</Link>
 								</li>
 								<li>

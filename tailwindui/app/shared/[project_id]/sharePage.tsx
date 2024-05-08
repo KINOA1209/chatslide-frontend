@@ -123,7 +123,7 @@ const SharePage: React.FC<SharePageProps> = ({ project_id, embed = false }) => {
 				if (!project.content_type || project.content_type === 'presentation') {
 					const slides = ProjectService.parseSlides(
 						project.presentation_slides || '',
-					).slides;
+					);
 					initSlides(slides);
 					setLoading(false);
 				} else if (project.content_type === 'social_posts') {
