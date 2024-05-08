@@ -276,13 +276,11 @@ export const ResourceItem: React.FC<Resource> = ({
 	return (
 		<div
 			key={id}
-			className='flex items-center justify-left w-full'
+			className='flex items-center justify-left w-full mx-2 gap-x-2'
 			style={{
 				// width: '168px',
 				// textOverflow: 'ellipsis',
 				overflow: 'hidden',
-				// backgroundColor: 'red',
-				gap: 'var(--spacing-lg, 12px)',
 			}}
 		>
 			<div className='mx-auto my-auto flex items-center w-[40px] h-[40px]'>

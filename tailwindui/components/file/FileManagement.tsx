@@ -264,7 +264,7 @@ const FileManagement: React.FC<UserFileList> = ({
 				</div>
 
 				{/* timestamp*/}
-				<div className='col-span-1 h-full flex justify-end items-center w-full py-4 px-2 text-gray-600 text-[13px] font-normal leading-normal tracking-[0.12rem]'>
+				<div className='col-span-1 h-full flex justify-between items-center w-full py-4 px-2 text-gray-600 text-[13px] font-normal leading-normal tracking-[0.12rem]'>
 					{' '}
 					{resource.timestamp && (
 						<div className='hidden md:block'>
@@ -279,7 +279,7 @@ const FileManagement: React.FC<UserFileList> = ({
 									lineHeight: '20px',
 								}}
 							>
-								{moment(resource.timestamp).format('MMM D, YYYY')}
+								{moment(resource.timestamp).format('MMM D')}
 							</span>
 							{/* {resource.timestamp} */}
 						</div>
@@ -745,7 +745,7 @@ const MyFiles: React.FC<filesInterface> = ({
 	};
 
 	return (
-		<section className='bg-[#F9FAFB] grow flex flex-col h-full w-full'>
+		<section className='grow flex flex-col h-full w-full'>
 			<ToastContainer enableMultiContainer containerId={'fileManagement'} />
 			{pageInvoked === 'resources' ? (
 				<MyResourcePageHeader
@@ -844,7 +844,7 @@ const MyFiles: React.FC<filesInterface> = ({
 				>
 					<span>All</span>
 				</DesignSystemButton>
-				<DesignSystemButton
+				{ pageInvoked != 'theme' && <DesignSystemButton
 					isPaidFeature={false}
 					size='sm'
 					hierarchy='tertiary'
@@ -882,8 +882,9 @@ const MyFiles: React.FC<filesInterface> = ({
 					// onClick={handleStartNewProject}
 				>
 					<span>Files</span>
-				</DesignSystemButton>
-				<DesignSystemButton
+				</DesignSystemButton>}
+				{ pageInvoked != 'summary' && 
+        <DesignSystemButton
 					isPaidFeature={false}
 					size='sm'
 					hierarchy='tertiary'
@@ -921,8 +922,8 @@ const MyFiles: React.FC<filesInterface> = ({
 					// onClick={handleStartNewProject}
 				>
 					<span>Images</span>
-				</DesignSystemButton>
-				<DesignSystemButton
+				</DesignSystemButton>}
+				{ pageInvoked != 'theme' && <DesignSystemButton
 					isPaidFeature={false}
 					size='sm'
 					hierarchy='tertiary'
@@ -960,8 +961,9 @@ const MyFiles: React.FC<filesInterface> = ({
 					// onClick={handleStartNewProject}
 				>
 					<span>Links</span>
-				</DesignSystemButton>
-				<DesignSystemButton
+				</DesignSystemButton>}
+				{pageInvoked != 'theme' && 
+        <DesignSystemButton
 					isPaidFeature={false}
 					size='sm'
 					hierarchy='tertiary'
@@ -999,8 +1001,9 @@ const MyFiles: React.FC<filesInterface> = ({
 					// onClick={handleStartNewProject}
 				>
 					<span>YouTube</span>
-				</DesignSystemButton>
-				<DesignSystemButton
+				</DesignSystemButton>}
+				{pageInvoked != 'summary' && 
+        <DesignSystemButton
 					isPaidFeature={false}
 					size='sm'
 					hierarchy='tertiary'
@@ -1038,7 +1041,7 @@ const MyFiles: React.FC<filesInterface> = ({
 					// onClick={handleStartNewProject}
 				>
 					<span>Branding</span>
-				</DesignSystemButton>
+				</DesignSystemButton>}
 			</div>
 
 			{/* rendered resources items area */}
@@ -1047,7 +1050,7 @@ const MyFiles: React.FC<filesInterface> = ({
 					<Blank text='You have no uploaded file' />
 				) : (
 					<div
-						className={`w-full mx-auto mt-4 px-4 pt-4 flex grow overflow-y-auto  ${
+						className={`w-full mx-auto mx-4 mt-4 flex grow overflow-y-auto border border-gray-200 ${
 							isDragging ? 'bg-blue-100 border-blue-500' : ''
 						}`}
 						onDragStart={handleDragStart}
