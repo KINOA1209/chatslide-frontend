@@ -23,7 +23,7 @@ import DesignSystemButton from '../ui/design_systems/ButtonsOrdinary';
 import { MdFolderOpen } from 'react-icons/md';
 import { FiFileText } from 'react-icons/fi';
 import { IoMdLink } from 'react-icons/io';
-import { PiImageSquare } from 'react-icons/pi';
+import { PiImageSquare, PiTagLight } from 'react-icons/pi';
 import { FiVideo } from 'react-icons/fi';
 
 interface UserFileList {
@@ -343,7 +343,8 @@ export const fileExtensions = {
 		'rtf',
 		'txt',
 	],
-	images: ['background', 'logo', 'png', 'jpg', 'jpeg', 'gif', 'bmp', 'svg'],
+	images: ['png', 'jpg', 'jpeg', 'gif', 'bmp', 'svg'],
+  branding: ['logo', 'background'],
 	links: ['webpage', 'html', 'htm'],
 	videos: [
 		'youtube',
@@ -448,12 +449,18 @@ const MyFiles: React.FC<filesInterface> = ({
 					getFileExtension(resource.name) || resource.type,
 				),
 			);
-		}
+		} else if (type === 'branding') {
+      filtered = resources.filter((resource) =>
+        fileExtensions.branding.includes(
+          resource.type,
+        ),
+      );
+    }
 		setFilteredResources(filtered);
 	};
 
 	const fetchFiles = async (token: string) => {
-		console.log('pageInvoked', pageInvoked);
+		// console.log('pageInvoked', pageInvoked);
 
 		//const resource_type = selectable ? ['doc', 'url'] : [];
 		const resource_type =
@@ -461,7 +468,7 @@ const MyFiles: React.FC<filesInterface> = ({
 				? ['doc', 'url', 'webpage', 'youtube']
 				: pageInvoked === 'theme'
 					? [fileType]
-					: [];
+					: [];  // uploads page, all resources
 
 		ResourceService.fetchResources(resource_type, token).then((resources) => {
 			setResources(resources);
@@ -783,83 +790,6 @@ const MyFiles: React.FC<filesInterface> = ({
 					{/* carbon connect cloud storage */}
 					{pageInvoked !== 'theme' && (
 						<div className='max-w-sm w-fit text-center pt-4 mx-4'>
-							{/* <div className='w-full mx-auto'>
-								{isPaidUser ? (
-									<CarbonConnect
-										orgName={getBrand()}
-										brandIcon={getLogoUrl()}
-										tokenFetcher={carbonTokenFetcher}
-										tags={{
-											tag1: 'tag1_value',
-											tag2: 'tag2_value',
-											tag3: 'tag3_value',
-										}}
-										maxFileSize={10000000}
-										enabledIntegrations={[
-											// {
-											//     id: IntegrationName.GOOGLE_DRIVE,
-											//     chunkSize: 1500,
-											//     overlapSize: 20,
-											//     skipEmbeddingGeneration: true,
-											// },
-											{
-												id: IntegrationName.ONEDRIVE,
-												chunkSize: 1500,
-												overlapSize: 20,
-												skipEmbeddingGeneration: true,
-											},
-											{
-												id: IntegrationName.DROPBOX,
-												chunkSize: 1500,
-												overlapSize: 20,
-												skipEmbeddingGeneration: true,
-											},
-											// {
-											// 	id: IntegrationName.NOTION,
-											// 	chunkSize: 1500,
-											// 	overlapSize: 20,
-											// 	skipEmbeddingGeneration: true,
-											// },
-											{
-												id: IntegrationName.GOOGLE_DRIVE,
-												chunkSize: 1500,
-												overlapSize: 20,
-												skipEmbeddingGeneration: true,
-											},
-										]}
-										onSuccess={(data) => handleSuccess(data)}
-										onError={(error) => console.log('Data on Error: ', error)}
-										primaryBackgroundColor='#5168f6'
-										primaryTextColor='#fafafa'
-										secondaryBackgroundColor='#f2f2f2'
-										secondaryTextColor='#000000'
-										allowMultipleFiles={true}
-										open={false}
-										chunkSize={1500}
-										overlapSize={20}
-										// entryPoint="LOCAL_FILES"
-									>
-										<BigBlueButton
-											onClick={() => {}}
-											isSubmitting={false}
-											showArrow={false}
-										>
-											Upload from Cloud ☁️
-										</BigBlueButton>
-									</CarbonConnect>
-								) : (
-									<BigBlueButton
-										onClick={() => {}}
-										isSubmitting={false}
-										showArrow={false}
-										isPaidFeature={true}
-										isPaidUser={isPaidUser}
-									>
-										Upload from Cloud ☁️
-									</BigBlueButton>
-								)}
-							</div> */}
-
 							<CloudConnectComponent
 								isPaidUser={isPaidUser}
 								getBrand={getBrand}
@@ -874,7 +804,7 @@ const MyFiles: React.FC<filesInterface> = ({
 			)}
 
 			{/* Filter buttons */}
-			<div className='flex flex-row gap-4 px-[1rem] pt-[1rem]'>
+			<div className='flex flex-row flex-wrap gap-4 px-[1rem] pt-[1rem]'>
 				<DesignSystemButton
 					isPaidFeature={false}
 					size='sm'
@@ -1069,6 +999,45 @@ const MyFiles: React.FC<filesInterface> = ({
 					// onClick={handleStartNewProject}
 				>
 					<span>YouTube</span>
+				</DesignSystemButton>
+				<DesignSystemButton
+					isPaidFeature={false}
+					size='sm'
+					hierarchy='tertiary'
+					buttonStatus='enabled'
+					iconLeft={<PiTagLight />}
+					customButtonStyles={
+						currentResourceType === 'branding'
+							? {
+									borderRadius: 'var(--radius-md, 8px)',
+									backgroundColor:
+										'var(--Colors-Background-bg-brand-primary, #EFF4FF)',
+								}
+							: {
+									borderRadius: 'var(--radius-md, 8px)',
+									backgroundColor:
+										'var(--Colors-Background-bg-secondary, #F9FAFB)',
+								}
+					}
+					customIconStyles={
+						currentResourceType === 'branding'
+							? {
+									color: 'var(--colors-text-text-brand-secondary-700, #3538CD)',
+								}
+							: { color: 'var(--colors-text-text-quaternary-500, #667085)' }
+					}
+					customTextStyles={
+						currentResourceType === 'branding'
+							? {
+									color: 'var(--colors-text-text-brand-secondary-700, #3538CD)',
+								}
+							: { color: 'var(--colors-text-text-quaternary-500, #667085)' }
+					}
+					onClick={() => filterResources('branding')}
+					// text='Create New'
+					// onClick={handleStartNewProject}
+				>
+					<span>Branding</span>
 				</DesignSystemButton>
 			</div>
 
