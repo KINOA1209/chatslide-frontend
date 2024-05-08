@@ -273,7 +273,6 @@ const FileManagement: React.FC<UserFileList> = ({
 								style={{
 									whiteSpace: 'nowrap',
 									color: 'var(--colors-text-text-quaternary-500, #667085)',
-									fontFamily: 'Creato Display Medium',
 									fontSize: '14px',
 									fontStyle: 'normal',
 									fontWeight: 400,
@@ -1069,7 +1068,7 @@ const MyFiles: React.FC<filesInterface> = ({
 					// text='Create New'
 					// onClick={handleStartNewProject}
 				>
-					<span>Videos</span>
+					<span>YouTube</span>
 				</DesignSystemButton>
 			</div>
 

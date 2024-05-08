@@ -1343,7 +1343,7 @@ export const ImgModule = ({
 										handleMouseOut(e, ImgQueryMode.RESOURCE);
 									}}
 								>
-									My Resources
+									My Uploads
 								</button>
 								<button
 									className='cursor-pointer whitespace-nowrap py-2 flex flex-row justify-center items-center'
