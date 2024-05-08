@@ -344,7 +344,7 @@ export const fileExtensions = {
 		'txt',
 	],
 	images: ['png', 'jpg', 'jpeg', 'gif', 'bmp', 'svg'],
-  branding: ['logo', 'background'],
+	branding: ['logo', 'background'],
 	links: ['webpage', 'html', 'htm'],
 	videos: [
 		'youtube',
@@ -358,6 +358,33 @@ export const fileExtensions = {
 		'3gp',
 		'mpeg',
 	],
+};
+
+const customFilterButtonGroupStyles = {
+	selected: {
+		button: {
+			borderRadius: 'var(--radius-md, 8px)',
+			backgroundColor: 'var(--Colors-Background-bg-brand-primary, #EFF4FF)',
+		},
+		icon: {
+			color: 'var(--colors-text-text-brand-secondary-700, #3538CD)',
+		},
+		text: {
+			color: 'var(--colors-text-text-brand-secondary-700, #3538CD)',
+		},
+	},
+	unselected: {
+		button: {
+			borderRadius: 'var(--radius-md, 8px)',
+			backgroundColor: 'var(--Colors-Background-bg-secondary, #F9FAFB)',
+		},
+		icon: {
+			color: 'var(--colors-text-text-quaternary-500, #667085)',
+		},
+		text: {
+			color: 'var(--colors-text-text-quaternary-500, #667085)',
+		},
+	},
 };
 
 const MyFiles: React.FC<filesInterface> = ({
@@ -450,12 +477,10 @@ const MyFiles: React.FC<filesInterface> = ({
 				),
 			);
 		} else if (type === 'branding') {
-      filtered = resources.filter((resource) =>
-        fileExtensions.branding.includes(
-          resource.type,
-        ),
-      );
-    }
+			filtered = resources.filter((resource) =>
+				fileExtensions.branding.includes(resource.type),
+			);
+		}
 		setFilteredResources(filtered);
 	};
 
@@ -468,7 +493,7 @@ const MyFiles: React.FC<filesInterface> = ({
 				? ['doc', 'url', 'webpage', 'youtube']
 				: pageInvoked === 'theme'
 					? [fileType]
-					: [];  // uploads page, all resources
+					: []; // uploads page, all resources
 
 		ResourceService.fetchResources(resource_type, token).then((resources) => {
 			setResources(resources);
@@ -804,7 +829,7 @@ const MyFiles: React.FC<filesInterface> = ({
 			)}
 
 			{/* Filter buttons */}
-			<div className='flex flex-row flex-wrap gap-4 px-[1rem] pt-[1rem]'>
+			<div className='grid grid-cols-3 md:flex md:flex-row gap-4 px-[1rem] pt-[1rem]'>
 				<DesignSystemButton
 					isPaidFeature={false}
 					size='sm'
@@ -813,30 +838,18 @@ const MyFiles: React.FC<filesInterface> = ({
 					iconLeft={<MdFolderOpen />}
 					customButtonStyles={
 						currentResourceType === 'all'
-							? {
-									borderRadius: 'var(--radius-md, 8px)',
-									backgroundColor:
-										'var(--Colors-Background-bg-brand-primary, #EFF4FF)',
-								}
-							: {
-									borderRadius: 'var(--radius-md, 8px)',
-									backgroundColor:
-										'var(--Colors-Background-bg-secondary, #F9FAFB)',
-								}
+							? customFilterButtonGroupStyles.selected.button
+							: customFilterButtonGroupStyles.unselected.button
 					}
 					customIconStyles={
 						currentResourceType === 'all'
-							? {
-									color: 'var(--colors-text-text-brand-secondary-700, #3538CD)',
-								}
-							: { color: 'var(--colors-text-text-quaternary-500, #667085)' }
+							? customFilterButtonGroupStyles.selected.icon
+							: customFilterButtonGroupStyles.unselected.icon
 					}
 					customTextStyles={
 						currentResourceType === 'all'
-							? {
-									color: 'var(--colors-text-text-brand-secondary-700, #3538CD)',
-								}
-							: { color: 'var(--colors-text-text-quaternary-500, #667085)' }
+							? customFilterButtonGroupStyles.selected.text
+							: customFilterButtonGroupStyles.unselected.text
 					}
 					onClick={() => filterResources('all')}
 					// text='Create New'
@@ -844,204 +857,165 @@ const MyFiles: React.FC<filesInterface> = ({
 				>
 					<span>All</span>
 				</DesignSystemButton>
-				{ pageInvoked != 'theme' && <DesignSystemButton
-					isPaidFeature={false}
-					size='sm'
-					hierarchy='tertiary'
-					buttonStatus='enabled'
-					iconLeft={<FiFileText />}
-					customButtonStyles={
-						currentResourceType === 'files'
-							? {
-									borderRadius: 'var(--radius-md, 8px)',
-									backgroundColor:
-										'var(--Colors-Background-bg-brand-primary, #EFF4FF)',
-								}
-							: {
-									borderRadius: 'var(--radius-md, 8px)',
-									backgroundColor:
-										'var(--Colors-Background-bg-secondary, #F9FAFB)',
-								}
-					}
-					customIconStyles={
-						currentResourceType === 'files'
-							? {
-									color: 'var(--colors-text-text-brand-secondary-700, #3538CD)',
-								}
-							: { color: 'var(--colors-text-text-quaternary-500, #667085)' }
-					}
-					customTextStyles={
-						currentResourceType === 'files'
-							? {
-									color: 'var(--colors-text-text-brand-secondary-700, #3538CD)',
-								}
-							: { color: 'var(--colors-text-text-quaternary-500, #667085)' }
-					}
-					onClick={() => filterResources('files')}
-					// text='Create New'
-					// onClick={handleStartNewProject}
-				>
-					<span>Files</span>
-				</DesignSystemButton>}
-				{ pageInvoked != 'summary' && 
-        <DesignSystemButton
-					isPaidFeature={false}
-					size='sm'
-					hierarchy='tertiary'
-					buttonStatus='enabled'
-					iconLeft={<IoMdLink />}
-					customButtonStyles={
-						currentResourceType === 'images'
-							? {
-									borderRadius: 'var(--radius-md, 8px)',
-									backgroundColor:
-										'var(--Colors-Background-bg-brand-primary, #EFF4FF)',
-								}
-							: {
-									borderRadius: 'var(--radius-md, 8px)',
-									backgroundColor:
-										'var(--Colors-Background-bg-secondary, #F9FAFB)',
-								}
-					}
-					customIconStyles={
-						currentResourceType === 'images'
-							? {
-									color: 'var(--colors-text-text-brand-secondary-700, #3538CD)',
-								}
-							: { color: 'var(--colors-text-text-quaternary-500, #667085)' }
-					}
-					customTextStyles={
-						currentResourceType === 'images'
-							? {
-									color: 'var(--colors-text-text-brand-secondary-700, #3538CD)',
-								}
-							: { color: 'var(--colors-text-text-quaternary-500, #667085)' }
-					}
-					onClick={() => filterResources('images')}
-					// text='Create New'
-					// onClick={handleStartNewProject}
-				>
-					<span>Images</span>
-				</DesignSystemButton>}
-				{ pageInvoked != 'theme' && <DesignSystemButton
-					isPaidFeature={false}
-					size='sm'
-					hierarchy='tertiary'
-					buttonStatus='enabled'
-					iconLeft={<PiImageSquare />}
-					customButtonStyles={
-						currentResourceType === 'links'
-							? {
-									borderRadius: 'var(--radius-md, 8px)',
-									backgroundColor:
-										'var(--Colors-Background-bg-brand-primary, #EFF4FF)',
-								}
-							: {
-									borderRadius: 'var(--radius-md, 8px)',
-									backgroundColor:
-										'var(--Colors-Background-bg-secondary, #F9FAFB)',
-								}
-					}
-					customIconStyles={
-						currentResourceType === 'links'
-							? {
-									color: 'var(--colors-text-text-brand-secondary-700, #3538CD)',
-								}
-							: { color: 'var(--colors-text-text-quaternary-500, #667085)' }
-					}
-					customTextStyles={
-						currentResourceType === 'links'
-							? {
-									color: 'var(--colors-text-text-brand-secondary-700, #3538CD)',
-								}
-							: { color: 'var(--colors-text-text-quaternary-500, #667085)' }
-					}
-					onClick={() => filterResources('links')}
-					// text='Create New'
-					// onClick={handleStartNewProject}
-				>
-					<span>Links</span>
-				</DesignSystemButton>}
-				{pageInvoked != 'theme' && 
-        <DesignSystemButton
-					isPaidFeature={false}
-					size='sm'
-					hierarchy='tertiary'
-					buttonStatus='enabled'
-					iconLeft={<FiVideo />}
-					customButtonStyles={
-						currentResourceType === 'videos'
-							? {
-									borderRadius: 'var(--radius-md, 8px)',
-									backgroundColor:
-										'var(--Colors-Background-bg-brand-primary, #EFF4FF)',
-								}
-							: {
-									borderRadius: 'var(--radius-md, 8px)',
-									backgroundColor:
-										'var(--Colors-Background-bg-secondary, #F9FAFB)',
-								}
-					}
-					customIconStyles={
-						currentResourceType === 'videos'
-							? {
-									color: 'var(--colors-text-text-brand-secondary-700, #3538CD)',
-								}
-							: { color: 'var(--colors-text-text-quaternary-500, #667085)' }
-					}
-					customTextStyles={
-						currentResourceType === 'videos'
-							? {
-									color: 'var(--colors-text-text-brand-secondary-700, #3538CD)',
-								}
-							: { color: 'var(--colors-text-text-quaternary-500, #667085)' }
-					}
-					onClick={() => filterResources('videos')}
-					// text='Create New'
-					// onClick={handleStartNewProject}
-				>
-					<span>YouTube</span>
-				</DesignSystemButton>}
-				{pageInvoked != 'summary' && 
-        <DesignSystemButton
-					isPaidFeature={false}
-					size='sm'
-					hierarchy='tertiary'
-					buttonStatus='enabled'
-					iconLeft={<PiTagLight />}
-					customButtonStyles={
-						currentResourceType === 'branding'
-							? {
-									borderRadius: 'var(--radius-md, 8px)',
-									backgroundColor:
-										'var(--Colors-Background-bg-brand-primary, #EFF4FF)',
-								}
-							: {
-									borderRadius: 'var(--radius-md, 8px)',
-									backgroundColor:
-										'var(--Colors-Background-bg-secondary, #F9FAFB)',
-								}
-					}
-					customIconStyles={
-						currentResourceType === 'branding'
-							? {
-									color: 'var(--colors-text-text-brand-secondary-700, #3538CD)',
-								}
-							: { color: 'var(--colors-text-text-quaternary-500, #667085)' }
-					}
-					customTextStyles={
-						currentResourceType === 'branding'
-							? {
-									color: 'var(--colors-text-text-brand-secondary-700, #3538CD)',
-								}
-							: { color: 'var(--colors-text-text-quaternary-500, #667085)' }
-					}
-					onClick={() => filterResources('branding')}
-					// text='Create New'
-					// onClick={handleStartNewProject}
-				>
-					<span>Branding</span>
-				</DesignSystemButton>}
+				{pageInvoked != 'theme' && (
+					<DesignSystemButton
+						isPaidFeature={false}
+						size='sm'
+						hierarchy='tertiary'
+						buttonStatus='enabled'
+						iconLeft={<FiFileText />}
+						customButtonStyles={
+							currentResourceType === 'files'
+								? customFilterButtonGroupStyles.selected.button
+								: customFilterButtonGroupStyles.unselected.button
+						}
+						customIconStyles={
+							currentResourceType === 'files'
+								? customFilterButtonGroupStyles.selected.icon
+								: customFilterButtonGroupStyles.unselected.icon
+						}
+						customTextStyles={
+							currentResourceType === 'files'
+								? customFilterButtonGroupStyles.selected.text
+								: customFilterButtonGroupStyles.unselected.text
+						}
+						onClick={() => filterResources('files')}
+						// text='Create New'
+						// onClick={handleStartNewProject}
+					>
+						<span>Files</span>
+					</DesignSystemButton>
+				)}
+				{pageInvoked != 'summary' && (
+					<DesignSystemButton
+						isPaidFeature={false}
+						size='sm'
+						hierarchy='tertiary'
+						buttonStatus='enabled'
+						iconLeft={<IoMdLink />}
+						customButtonStyles={
+							currentResourceType === 'images'
+								? customFilterButtonGroupStyles.selected.button
+								: customFilterButtonGroupStyles.unselected.button
+						}
+						customIconStyles={
+							currentResourceType === 'images'
+								? customFilterButtonGroupStyles.selected.icon
+								: customFilterButtonGroupStyles.unselected.icon
+						}
+						customTextStyles={
+							currentResourceType === 'images'
+								? customFilterButtonGroupStyles.selected.text
+								: customFilterButtonGroupStyles.unselected.text
+						}
+						onClick={() => filterResources('images')}
+						// text='Create New'
+						// onClick={handleStartNewProject}
+					>
+						<span>Images</span>
+					</DesignSystemButton>
+				)}
+				{pageInvoked != 'theme' && (
+					<DesignSystemButton
+						isPaidFeature={false}
+						size='sm'
+						hierarchy='tertiary'
+						buttonStatus='enabled'
+						iconLeft={<PiImageSquare />}
+						customButtonStyles={
+							currentResourceType === 'links'
+								? customFilterButtonGroupStyles.selected.button
+								: customFilterButtonGroupStyles.unselected.button
+						}
+						customIconStyles={
+							currentResourceType === 'links'
+								? customFilterButtonGroupStyles.selected.icon
+								: customFilterButtonGroupStyles.unselected.icon
+						}
+						customTextStyles={
+							currentResourceType === 'links'
+								? customFilterButtonGroupStyles.selected.text
+								: customFilterButtonGroupStyles.unselected.text
+						}
+						onClick={() => filterResources('links')}
+						// text='Create New'
+						// onClick={handleStartNewProject}
+					>
+						<span>Links</span>
+					</DesignSystemButton>
+				)}
+				{pageInvoked != 'theme' && (
+					<DesignSystemButton
+						isPaidFeature={false}
+						size='sm'
+						hierarchy='tertiary'
+						buttonStatus='enabled'
+						iconLeft={<FiVideo />}
+						customButtonStyles={
+							currentResourceType === 'videos'
+								? customFilterButtonGroupStyles.selected.button
+								: customFilterButtonGroupStyles.unselected.button
+						}
+						customIconStyles={
+							currentResourceType === 'videos'
+								? customFilterButtonGroupStyles.selected.icon
+								: customFilterButtonGroupStyles.unselected.icon
+						}
+						customTextStyles={
+							currentResourceType === 'videos'
+								? customFilterButtonGroupStyles.selected.text
+								: customFilterButtonGroupStyles.unselected.text
+						}
+						onClick={() => filterResources('videos')}
+						// text='Create New'
+						// onClick={handleStartNewProject}
+					>
+						<span>YouTube</span>
+					</DesignSystemButton>
+				)}
+				{pageInvoked != 'summary' && (
+					<DesignSystemButton
+						isPaidFeature={false}
+						size='sm'
+						hierarchy='tertiary'
+						buttonStatus='enabled'
+						iconLeft={<PiTagLight />}
+						customButtonStyles={
+							currentResourceType === 'branding'
+								? {
+										borderRadius: 'var(--radius-md, 8px)',
+										backgroundColor:
+											'var(--Colors-Background-bg-brand-primary, #EFF4FF)',
+									}
+								: {
+										borderRadius: 'var(--radius-md, 8px)',
+										backgroundColor:
+											'var(--Colors-Background-bg-secondary, #F9FAFB)',
+									}
+						}
+						customIconStyles={
+							currentResourceType === 'branding'
+								? {
+										color:
+											'var(--colors-text-text-brand-secondary-700, #3538CD)',
+									}
+								: { color: 'var(--colors-text-text-quaternary-500, #667085)' }
+						}
+						customTextStyles={
+							currentResourceType === 'branding'
+								? {
+										color:
+											'var(--colors-text-text-brand-secondary-700, #3538CD)',
+									}
+								: { color: 'var(--colors-text-text-quaternary-500, #667085)' }
+						}
+						onClick={() => filterResources('branding')}
+						// text='Create New'
+						// onClick={handleStartNewProject}
+					>
+						<span>Branding</span>
+					</DesignSystemButton>
+				)}
 			</div>
 
 			{/* rendered resources items area */}

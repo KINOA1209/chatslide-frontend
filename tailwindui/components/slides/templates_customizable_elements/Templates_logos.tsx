@@ -49,7 +49,7 @@ const DrLambdaLogo: React.FC<TemplateLogoType> = ({
 						onClick={openBrandingModal}
 						src={isChatslide() ? chatslideLogoBlackText : drlambdaLogoSingle}
 						alt='Logo'
-						className='w-[8rem] h-auto'
+						className='w-[2rem] h-auto'
 					/>
 					{/* logo cover */}
 				</div>
@@ -84,7 +84,7 @@ const DrLambdaLogo: React.FC<TemplateLogoType> = ({
 						unoptimized={true}
 						src={isChatslide() ? chatslideLogoBlackText : drlambdaLogo}
 						alt='Logo'
-						className='w-[1.5rem] mr-4'
+						className='w-[6rem] mr-4'
 					/>
 					<div
 						className={`grow basis-0 opacity-50 border border-black border-opacity-40`}

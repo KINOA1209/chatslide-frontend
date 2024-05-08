@@ -40,7 +40,7 @@ export const NewInputBox: React.FC<{
 	icon?: ReactNode;
 	textarea?: boolean;
 	rows?: number; // number of columns for textarea
-  id?: string;
+	id?: string;
 }> = ({
 	value,
 	onChange,
@@ -50,7 +50,7 @@ export const NewInputBox: React.FC<{
 	icon,
 	textarea = false,
 	rows,
-  id
+	id,
 }) => {
 	const ref = useRef<HTMLDivElement>(null);
 
@@ -67,9 +67,9 @@ export const NewInputBox: React.FC<{
 
 	return (
 		<div
-			className='h-[36px] sm:h-[36px] w-full flex flex-row flex-nowrap items-center justify-center border border-2 border-gray-200 px-3 py-2.5 gap-x-2 cursor-text rounded-lg overflow-visible'
+			className='w-full flex flex-row flex-nowrap items-center justify-center border border-2 border-gray-200 px-3 py-2.5 gap-x-2 cursor-text rounded-lg overflow-visible'
 			ref={ref}
-      id={id}
+			id={id}
 		>
 			{icon}
 			{!textarea ? (

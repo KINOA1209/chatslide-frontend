@@ -391,7 +391,7 @@ export const templateDisplayNames = {
 	New_Education_009: '📚 Education',
 	Event_Report_010: '📈 Report',
 	Creative_Brief_011: ' ✨ Creative Brief',
-	// Default: '📃 Blank',
+	Default: '📃 Blank',
 	Business_002: '📎 Business',
 	Business_Dark_005: '💼 Business Dark',
 	Business_Light_006: '📄 Business Light',
