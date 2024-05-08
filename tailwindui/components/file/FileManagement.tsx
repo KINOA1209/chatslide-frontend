@@ -360,6 +360,33 @@ export const fileExtensions = {
 	],
 };
 
+const customFilterButtonGroupStyles = {
+	selected: {
+		button: {
+			borderRadius: 'var(--radius-md, 8px)',
+			backgroundColor: 'var(--Colors-Background-bg-brand-primary, #EFF4FF)',
+		},
+		icon: {
+			color: 'var(--colors-text-text-brand-secondary-700, #3538CD)',
+		},
+		text: {
+			color: 'var(--colors-text-text-brand-secondary-700, #3538CD)',
+		},
+	},
+	unselected: {
+		button: {
+			borderRadius: 'var(--radius-md, 8px)',
+			backgroundColor: 'var(--Colors-Background-bg-secondary, #F9FAFB)',
+		},
+		icon: {
+			color: 'var(--colors-text-text-quaternary-500, #667085)',
+		},
+		text: {
+			color: 'var(--colors-text-text-quaternary-500, #667085)',
+		},
+	},
+};
+
 const MyFiles: React.FC<filesInterface> = ({
 	selectable = false,
 	selectedResources,
@@ -884,30 +911,18 @@ const MyFiles: React.FC<filesInterface> = ({
 					iconLeft={<MdFolderOpen />}
 					customButtonStyles={
 						currentResourceType === 'all'
-							? {
-									borderRadius: 'var(--radius-md, 8px)',
-									backgroundColor:
-										'var(--Colors-Background-bg-brand-primary, #EFF4FF)',
-								}
-							: {
-									borderRadius: 'var(--radius-md, 8px)',
-									backgroundColor:
-										'var(--Colors-Background-bg-secondary, #F9FAFB)',
-								}
+							? customFilterButtonGroupStyles.selected.button
+							: customFilterButtonGroupStyles.unselected.button
 					}
 					customIconStyles={
 						currentResourceType === 'all'
-							? {
-									color: 'var(--colors-text-text-brand-secondary-700, #3538CD)',
-								}
-							: { color: 'var(--colors-text-text-quaternary-500, #667085)' }
+							? customFilterButtonGroupStyles.selected.icon
+							: customFilterButtonGroupStyles.unselected.icon
 					}
 					customTextStyles={
 						currentResourceType === 'all'
-							? {
-									color: 'var(--colors-text-text-brand-secondary-700, #3538CD)',
-								}
-							: { color: 'var(--colors-text-text-quaternary-500, #667085)' }
+							? customFilterButtonGroupStyles.selected.text
+							: customFilterButtonGroupStyles.unselected.text
 					}
 					onClick={() => filterResources('all')}
 					// text='Create New'
@@ -923,30 +938,18 @@ const MyFiles: React.FC<filesInterface> = ({
 					iconLeft={<FiFileText />}
 					customButtonStyles={
 						currentResourceType === 'files'
-							? {
-									borderRadius: 'var(--radius-md, 8px)',
-									backgroundColor:
-										'var(--Colors-Background-bg-brand-primary, #EFF4FF)',
-								}
-							: {
-									borderRadius: 'var(--radius-md, 8px)',
-									backgroundColor:
-										'var(--Colors-Background-bg-secondary, #F9FAFB)',
-								}
+							? customFilterButtonGroupStyles.selected.button
+							: customFilterButtonGroupStyles.unselected.button
 					}
 					customIconStyles={
 						currentResourceType === 'files'
-							? {
-									color: 'var(--colors-text-text-brand-secondary-700, #3538CD)',
-								}
-							: { color: 'var(--colors-text-text-quaternary-500, #667085)' }
+							? customFilterButtonGroupStyles.selected.icon
+							: customFilterButtonGroupStyles.unselected.icon
 					}
 					customTextStyles={
 						currentResourceType === 'files'
-							? {
-									color: 'var(--colors-text-text-brand-secondary-700, #3538CD)',
-								}
-							: { color: 'var(--colors-text-text-quaternary-500, #667085)' }
+							? customFilterButtonGroupStyles.selected.text
+							: customFilterButtonGroupStyles.unselected.text
 					}
 					onClick={() => filterResources('files')}
 					// text='Create New'
@@ -962,30 +965,18 @@ const MyFiles: React.FC<filesInterface> = ({
 					iconLeft={<IoMdLink />}
 					customButtonStyles={
 						currentResourceType === 'images'
-							? {
-									borderRadius: 'var(--radius-md, 8px)',
-									backgroundColor:
-										'var(--Colors-Background-bg-brand-primary, #EFF4FF)',
-								}
-							: {
-									borderRadius: 'var(--radius-md, 8px)',
-									backgroundColor:
-										'var(--Colors-Background-bg-secondary, #F9FAFB)',
-								}
+							? customFilterButtonGroupStyles.selected.button
+							: customFilterButtonGroupStyles.unselected.button
 					}
 					customIconStyles={
 						currentResourceType === 'images'
-							? {
-									color: 'var(--colors-text-text-brand-secondary-700, #3538CD)',
-								}
-							: { color: 'var(--colors-text-text-quaternary-500, #667085)' }
+							? customFilterButtonGroupStyles.selected.icon
+							: customFilterButtonGroupStyles.unselected.icon
 					}
 					customTextStyles={
 						currentResourceType === 'images'
-							? {
-									color: 'var(--colors-text-text-brand-secondary-700, #3538CD)',
-								}
-							: { color: 'var(--colors-text-text-quaternary-500, #667085)' }
+							? customFilterButtonGroupStyles.selected.text
+							: customFilterButtonGroupStyles.unselected.text
 					}
 					onClick={() => filterResources('images')}
 					// text='Create New'
@@ -1001,30 +992,18 @@ const MyFiles: React.FC<filesInterface> = ({
 					iconLeft={<PiImageSquare />}
 					customButtonStyles={
 						currentResourceType === 'links'
-							? {
-									borderRadius: 'var(--radius-md, 8px)',
-									backgroundColor:
-										'var(--Colors-Background-bg-brand-primary, #EFF4FF)',
-								}
-							: {
-									borderRadius: 'var(--radius-md, 8px)',
-									backgroundColor:
-										'var(--Colors-Background-bg-secondary, #F9FAFB)',
-								}
+							? customFilterButtonGroupStyles.selected.button
+							: customFilterButtonGroupStyles.unselected.button
 					}
 					customIconStyles={
 						currentResourceType === 'links'
-							? {
-									color: 'var(--colors-text-text-brand-secondary-700, #3538CD)',
-								}
-							: { color: 'var(--colors-text-text-quaternary-500, #667085)' }
+							? customFilterButtonGroupStyles.selected.icon
+							: customFilterButtonGroupStyles.unselected.icon
 					}
 					customTextStyles={
 						currentResourceType === 'links'
-							? {
-									color: 'var(--colors-text-text-brand-secondary-700, #3538CD)',
-								}
-							: { color: 'var(--colors-text-text-quaternary-500, #667085)' }
+							? customFilterButtonGroupStyles.selected.text
+							: customFilterButtonGroupStyles.unselected.text
 					}
 					onClick={() => filterResources('links')}
 					// text='Create New'
@@ -1040,30 +1019,18 @@ const MyFiles: React.FC<filesInterface> = ({
 					iconLeft={<FiVideo />}
 					customButtonStyles={
 						currentResourceType === 'videos'
-							? {
-									borderRadius: 'var(--radius-md, 8px)',
-									backgroundColor:
-										'var(--Colors-Background-bg-brand-primary, #EFF4FF)',
-								}
-							: {
-									borderRadius: 'var(--radius-md, 8px)',
-									backgroundColor:
-										'var(--Colors-Background-bg-secondary, #F9FAFB)',
-								}
+							? customFilterButtonGroupStyles.selected.button
+							: customFilterButtonGroupStyles.unselected.button
 					}
 					customIconStyles={
 						currentResourceType === 'videos'
-							? {
-									color: 'var(--colors-text-text-brand-secondary-700, #3538CD)',
-								}
-							: { color: 'var(--colors-text-text-quaternary-500, #667085)' }
+							? customFilterButtonGroupStyles.selected.icon
+							: customFilterButtonGroupStyles.unselected.icon
 					}
 					customTextStyles={
 						currentResourceType === 'videos'
-							? {
-									color: 'var(--colors-text-text-brand-secondary-700, #3538CD)',
-								}
-							: { color: 'var(--colors-text-text-quaternary-500, #667085)' }
+							? customFilterButtonGroupStyles.selected.text
+							: customFilterButtonGroupStyles.unselected.text
 					}
 					onClick={() => filterResources('videos')}
 					// text='Create New'
