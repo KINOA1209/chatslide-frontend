@@ -875,7 +875,7 @@ const MyFiles: React.FC<filesInterface> = ({
 			)}
 
 			{/* Filter buttons */}
-			<div className='flex flex-row gap-4 px-[1rem] pt-[1rem]'>
+			<div className='grid grid-cols-3 md:flex md:flex-row gap-4 px-[1rem] pt-[1rem]'>
 				<DesignSystemButton
 					isPaidFeature={false}
 					size='sm'
