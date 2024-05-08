@@ -745,7 +745,7 @@ const MyFiles: React.FC<filesInterface> = ({
 	};
 
 	return (
-		<section className='grow flex flex-col h-full w-full'>
+		<section className='grow flex flex-col h-full w-full lg:px-4'>
 			<ToastContainer enableMultiContainer containerId={'fileManagement'} />
 			{pageInvoked === 'resources' ? (
 				<MyResourcePageHeader
@@ -1050,7 +1050,7 @@ const MyFiles: React.FC<filesInterface> = ({
 					<Blank text='You have no uploaded file' />
 				) : (
 					<div
-						className={`w-full mx-auto mx-4 mt-4 flex grow overflow-y-auto border border-gray-200 ${
+						className={`w-full mx-auto mx-4 mt-4 flex grow overflow-y-auto ${
 							isDragging ? 'bg-blue-100 border-blue-500' : ''
 						}`}
 						onDragStart={handleDragStart}
