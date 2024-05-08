@@ -463,7 +463,8 @@ export default function Topic() {
 				setShowGenerationStatusModal(false);
 				setIsSubmitting(false);
 			} else {
-				console.error('Error when generating outlines:', response.status);
+				const message = await response.json()
+				console.error('Error when generating outlines:', response.status, message);
 				toast.error(
 					'Server is busy now. Please try again later. Reference code: ' +
 						project?.id,
