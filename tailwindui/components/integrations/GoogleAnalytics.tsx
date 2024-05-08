@@ -1,3 +1,4 @@
+import { isChatslide } from '@/utils/getHost';
 import React from 'react';
 import { Helmet } from 'react-helmet';
 
@@ -7,7 +8,11 @@ class GoogleAnalytics extends React.Component {
 			<Helmet>
 				<script
 					async
-					src='https://www.googletagmanager.com/gtag/js?id=G-FW9YH27P0H'
+					src={
+						'https://www.googletagmanager.com/gtag/js?id=' + isChatslide()
+							? 'G-N0355DWE48'
+							: 'G-FW9YH27P0H'
+					}
 				></script>
 				<script>
 					{`
