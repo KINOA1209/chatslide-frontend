@@ -15,17 +15,23 @@ const CHAT_SUGGESTIONS = {
 		'🌄 Change the background of this page',
 		'📝 Add an example to the content',
 	],
-  script: [
-    '📝 Add more details in the script',
-    '🔠 Make the script funnier',
-    '🌐 Translate script to German',
-    '💬 Make the script easier to understand',
-  ],
+	script: [
+		'📝 Add more details in the script',
+		'🔠 Make the script funnier',
+		'🌐 Translate script to German',
+		'💬 Make the script easier to understand',
+	],
+	chart: [
+		'💹 Japanese stock market in 2023',
+		'📊 Population in European countries',
+		'📈 40% YoY growth of company XYZ',
+    '🥧 Three companies in the market, with 50%, 35%, 15% market shares',
+	],
 };
 
 const ChatSuggestions: React.FC<{
 	language?: string;
-	type: 'script' | 'cover' | 'noncover';
+	type: 'script' | 'cover' | 'noncover' | 'chart';
 	sendChat: (chat: string) => void;
 }> = ({ language, type, sendChat }) => {
 	const suggestions = CHAT_SUGGESTIONS[type];

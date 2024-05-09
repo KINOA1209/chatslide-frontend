@@ -17,6 +17,10 @@ const ScenarioChoicePage = () => {
 
 	// Function to navigate to the "scenario-choice" page
 	const navigate = (type: string) => {
+    if(type === 'charts') {
+      router.push('/charts');
+      return;
+    }
 		sessionStorage.setItem('workflowType', type);
 		router.push('/scenario-choice');
 	};

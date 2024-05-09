@@ -11,6 +11,11 @@
 			"id": "social_posts",
 			"title": "Social Post",
 			"imageSrc": "/images/scenario/socialpost.png"
-		}
+		},
+    {
+      "id": "charts",
+      "title": "Charts (Beta)",
+      "imageSrc": "/images/scenario/charts.png"
+    }
 	]
 }

@@ -16,10 +16,8 @@ type ChatsProps = {
 	chatHistory: ChatHistory[];
 	lastMessageRef: React.MutableRefObject<HTMLDivElement | null>;
 	addChatHistory: (chat: ChatHistory) => void; // Change setChatHistory to addChatHistory
-	updateImgUrlArray: Function;
 	slides: Slide[];
 	currentSlideIndex: number;
-	updateSlidePage: Function;
 };
 
 // Component definition using an arrow function
@@ -27,10 +25,8 @@ const Chats: React.FC<ChatsProps> = ({
 	chatHistory,
 	lastMessageRef,
 	addChatHistory, // Replace setChatHistory with addChatHistory
-	updateImgUrlArray,
 	slides,
 	currentSlideIndex,
-	updateSlidePage,
 }) => {
 	const setImageSource = useImageStore((state) => state.setSourceImage);
 	// const setImageUrl = useImageStore((state) => state.setImageUrl);

@@ -986,7 +986,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 								slides={slides}
 								currentSlideIndex={slideIndex}
 								updateSlidePage={updateSlidePage}
-								updateImgUrlArray={updateImgUrlArray}
 							/>
 						</div>
 					) : (
