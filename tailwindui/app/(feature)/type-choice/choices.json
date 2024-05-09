@@ -15,7 +15,8 @@
     {
       "id": "charts",
       "title": "Charts (Beta)",
-      "imageSrc": "/images/scenario/charts.png"
+      "imageSrc": "/images/scenario/charts.png",
+      "previewOnly": true
     }
 	]
 }

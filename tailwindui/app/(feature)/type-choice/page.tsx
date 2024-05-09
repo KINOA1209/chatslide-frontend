@@ -8,38 +8,34 @@ import scenarios from './choices.json';
 import SessionStorage from '@/utils/SessionStorage';
 import AuthService from '@/services/AuthService';
 import { BackButton } from '@/components/button/DrlambdaButton';
-import { BigTitle, Title } from '@/components/ui/Text';
+import { BigTitle, Explanation, Title } from '@/components/ui/Text';
 import { Column } from '@/components/layout/Column';
+import { useUser } from '@/hooks/use-user';
+import PaywallModal from '@/components/paywallModal';
 
 const ScenarioChoicePage = () => {
 	const router = useRouter(); // Initialize the router
-	const [username, setUsername] = useState(''); // Initialize the username state
+	const { username, tier } = useUser();
+	const [showPaywall, setShowPaywall] = useState(false);
 
 	// Function to navigate to the "scenario-choice" page
 	const navigate = (type: string) => {
-    if(type === 'charts') {
-      router.push('/charts');
-      return;
-    }
+		if (type === 'charts') {
+			router.push('/charts');
+			return;
+		}
 		sessionStorage.setItem('workflowType', type);
 		router.push('/scenario-choice');
 	};
 
-	useEffect(() => {
-		const fetchUser = async () => {
-			try {
-				const username = await AuthService.getCurrentUserDisplayName();
-				setUsername(username);
-			} catch (error) {
-				console.log('No authenticated user.');
-			}
-		};
-
-		fetchUser();
-	}, []);
-
 	return (
 		<div className='flex flex-col flex-grow justify-center items-center relative'>
+			<PaywallModal
+				showModal={showPaywall}
+				setShowModal={setShowPaywall}
+				message='🥇 Upgrade to ULTIMATE to get early access!'
+			/>
+
 			<div className='absolute hidden sm:block top-5 left-5'>
 				<BackButton href='/dashboard' dark={true} text='Dashboard' />
 				<div className='block md:hidden h-[3rem]' /> {/* Spacer */}
@@ -65,7 +61,15 @@ const ScenarioChoicePage = () => {
 						>
 							<div
 								className='h-[250px] sm:h-[300px] bg-gray-300 rounded-lg shadow flex justify-center items-center cursor-pointer mb-4'
-								onClick={() => navigate(scenario.id)}
+								onClick={() => {
+									if (scenario?.previewOnly) {
+										if (!tier.includes('ULTIMATE')) {
+											setShowPaywall(true);
+											return;
+										}
+									}
+									navigate(scenario.id);
+								}}
 							>
 								<Image
 									className='mx-[20px] mh-[20px]'
@@ -78,6 +82,14 @@ const ScenarioChoicePage = () => {
 							<div className='text-center my-2 leading-snug tracking-tight whitespace-nowrap font-bold'>
 								{scenario.title}
 							</div>
+							{scenario?.previewOnly && (
+								<Explanation>
+									<div className='text-center'>
+										This feature is in Beta mode. <br />
+										Early access limited to Ultimate users.
+									</div>
+								</Explanation>
+							)}
 						</div>
 					))}
 				</div>
