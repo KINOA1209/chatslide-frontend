@@ -95,8 +95,8 @@ export default function Page() {
 						) : (
 							<div>
 								<Instruction>
-									You don't have any chart to display yet. Please upload a chart
-									to get started.
+									You don't have any chart to display yet. 
+									You can start chatting with the AI Assistant on the right.
 								</Instruction>
 
 								<Image
