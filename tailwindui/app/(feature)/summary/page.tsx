@@ -130,12 +130,21 @@ const AdvancedOptions: React.FC<{
 						/>
 					</>
 				) : structureMode === 'my_outline' ? (
-					<WarningMessage>
-						If you already have a detailed outline ready, we will not generate
-						outlines for you. But you can write your own outline in the next
-						step. The number of slide pages will depend on the length of the
-						outline you provided in the next step.
-					</WarningMessage>
+					<>
+						<WarningMessage>
+							If you already have a detailed outline ready, we will not generate
+							outlines for you. But you can write your own outline here. 
+              The number of slide pages will depend on the length of the
+							outline you provided in the next step.
+						</WarningMessage>
+            <NewInputBox
+              value={outlineStructure}
+              onChange={setOutlineStructure}
+              placeholder='Introduction, background, details, examples, conclusion.'
+              maxLength={1000}
+              textarea
+            />
+					</>
 				) : selectedResources.length == 0 ? ( // my_resource
 					<WarningMessage>Add a source to enable this feature.</WarningMessage>
 				) : (
@@ -369,6 +378,8 @@ export default function Topic() {
 			resource_to_follow_structure_from: resourceToFollowStructureFrom?.id,
 		};
 
+    console.log('outline structure', outlineStructure);
+
 		bulkUpdateProject({
 			topic: topic,
 			audience: audience,
@@ -378,6 +389,7 @@ export default function Topic() {
 			search_online: searchOnlineScope,
 			knowledge_summary: knowledge_summary,
 			add_citations: addCitations === 'yes',
+      outline_structure: outlineStructure,
 		} as Project);
 
 		// if needs to summarize resources

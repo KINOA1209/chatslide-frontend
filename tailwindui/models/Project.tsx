@@ -47,6 +47,8 @@ type Project = {
 	search_online?: string;
 	add_citations?: boolean;
 
+  outline_structure?: string;
+
 	view_count?: number;
 
 	// Social Post-specific fields
