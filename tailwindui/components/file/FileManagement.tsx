@@ -892,7 +892,7 @@ const MyFiles: React.FC<filesInterface> = ({
 						size='sm'
 						hierarchy='tertiary'
 						buttonStatus='enabled'
-						iconLeft={<IoMdLink />}
+						iconLeft={<PiImageSquare />}
 						customButtonStyles={
 							currentResourceType === 'images'
 								? customFilterButtonGroupStyles.selected.button
@@ -921,7 +921,7 @@ const MyFiles: React.FC<filesInterface> = ({
 						size='sm'
 						hierarchy='tertiary'
 						buttonStatus='enabled'
-						iconLeft={<PiImageSquare />}
+						iconLeft={<IoMdLink />}
 						customButtonStyles={
 							currentResourceType === 'links'
 								? customFilterButtonGroupStyles.selected.button
