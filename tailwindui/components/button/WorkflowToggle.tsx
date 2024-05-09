@@ -24,7 +24,7 @@ const WorkflowGPTToggle: React.FC<ToggleProps> = ({
 		<div className='toggle items-center md:flex'>
 			<div className='flex items-center rounded-3xl border bg-gray-200 px-0.5 py-0.5 my-1'>
 				<div
-					className={`w-[110px] h-[36px] px-2 py-1 flex justify-center items-center rounded-3xl ${
+					className={`w-[110px] h-[36px] px-2 py-1 flex justify-center items-center cursor-pointer rounded-3xl ${
 						isLeft ? activeBox : ''
 					} ${isLeft ? leftColor : ''}`}
 					onClick={() => setIsLeft(true)}
@@ -38,7 +38,7 @@ const WorkflowGPTToggle: React.FC<ToggleProps> = ({
 					</div>
 				</div>
 				<div
-					className={`w-[110px] h-[36px] px-2 py-1 flex justify-center items-center rounded-3xl ${
+					className={`w-[110px] h-[36px] px-2 py-1 flex justify-center items-center cursor-pointer rounded-3xl ${
 						!isLeft ? activeBox : ''
 					} ${!isLeft ? rightColor : ''}`}
 					onClick={() => setIsLeft(false)}
