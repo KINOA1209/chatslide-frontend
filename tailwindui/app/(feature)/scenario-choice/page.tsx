@@ -63,7 +63,7 @@ const ScenarioChoicePage = () => {
 							className='flex flex-col transition-transform transform-gpu hover:scale-110'
 						>
 							<div
-								className='h-[150px] md:h-[180px] xl:h-[250px] w-[150px] md:w-[180px] xl:w-[250px] bg-gray-300 rounded-lg shadow flex justify-center items-center cursor-pointer mb-4'
+								className='h-[150px] md:h-[180px] xl:h-[250px] w-[150px] md:w-[180px] xl:w-[250px] bg-gray-100 rounded-lg shadow flex justify-center items-center cursor-pointer mb-4'
 								onClick={() => navigateToSummary(scenario.id)}
 							>
 								<Image
