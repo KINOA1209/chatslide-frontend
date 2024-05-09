@@ -17,6 +17,7 @@ export const DOCUMENT_EXTENSIONS = [
 	'txt',
 	'docx',
 	'pptx',
+	'key',
 	'doc',
 	'docx',
 ];

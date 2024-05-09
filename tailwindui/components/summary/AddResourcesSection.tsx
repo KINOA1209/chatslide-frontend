@@ -228,7 +228,7 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 							</Instruction>
 							<Explanation>
 								<div className='text-center'>
-									Supports PDF, TXT, DOC, DOCX, PPT, PPTX
+									Supports PDF, TXT, DOC, DOCX, PPT, PPTX, KEY
 								</div>
 							</Explanation>
 						</div>
