@@ -1,6 +1,6 @@
 'use client';
 import DesignSystemButton from '@/components/ui/design_systems/ButtonsOrdinary';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { FiUpload } from 'react-icons/fi';
 import { FaChevronDown } from 'react-icons/fa';
 import { FaChevronUp } from 'react-icons/fa';
@@ -39,6 +39,27 @@ const MyResourcePageHeader: React.FC<MyResourcePageHeaderProps> = ({
 	handleSuccess,
 	isUploadDropdownItem,
 }) => {
+	const uploadSectionRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		// Function to handle clicks outside of the upload section
+		const handleClickOutside = (event: MouseEvent) => {
+			if (
+				uploadSectionRef.current &&
+				!uploadSectionRef.current.contains(event.target as Node)
+			) {
+				setShowUploadOptionsMenu(false);
+			}
+		};
+
+		// Add event listener when the component mounts
+		document.addEventListener('mousedown', handleClickOutside);
+
+		// Remove event listener when the component unmounts
+		return () => {
+			document.removeEventListener('mousedown', handleClickOutside);
+		};
+	}, []);
 	return (
 		// <section>
 		// 	{/* top background container of my projects title text and  */}
@@ -79,6 +100,7 @@ const MyResourcePageHeader: React.FC<MyResourcePageHeaderProps> = ({
 						gap: '1px',
 						position: 'relative',
 					}}
+					ref={uploadSectionRef}
 					onClick={() => setShowUploadOptionsMenu(!showUploadOptionsMenu)}
 				>
 					<DesignSystemButton
