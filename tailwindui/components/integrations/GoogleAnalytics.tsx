@@ -9,9 +9,8 @@ class GoogleAnalytics extends React.Component {
 				<script
 					async
 					src={
-						'https://www.googletagmanager.com/gtag/js?id=' + isChatslide()
-							? 'G-N0355DWE48'
-							: 'G-FW9YH27P0H'
+						'https://www.googletagmanager.com/gtag/js?id=' +
+						(isChatslide() ? 'G-N0355DWE48' : 'G-FW9YH27P0H')
 					}
 				></script>
 				<script>
