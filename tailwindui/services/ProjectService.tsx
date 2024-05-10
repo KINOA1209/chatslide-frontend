@@ -372,7 +372,7 @@ class ProjectService {
 	static async exportToFileBackend(
 		token: string,
 		project_id: string,
-		type: string = 'pdf',
+		type: 'pdf' | 'pptx' | 'key'
 	): Promise<void> {
 		const headers = new Headers();
 		if (token) {
@@ -380,11 +380,18 @@ class ProjectService {
 		}
 		headers.append('Content-Type', 'application/json');
 
+		let endpoint = '';
+		if (type === 'pdf') {
+			endpoint = '/api/export/export_to_pdf';
+		} else {
+			endpoint = `/api/export/export_to_pptx`;
+		}
+
 		try {
-			fetch(`/api/export/export_to_${type}`, {
+			fetch(endpoint, {
 				method: 'POST',
 				headers: headers,
-				body: JSON.stringify({ project_id: project_id }),
+				body: JSON.stringify({ project_id: project_id, to_key: type === 'key' }),
 			});
 		} catch (error) {
 			console.error('Error exporting to pdf:', error);

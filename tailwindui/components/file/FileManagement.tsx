@@ -343,6 +343,7 @@ export const fileExtensions = {
 		'rtf',
 		'txt',
 		'key',
+		'pages',
 	],
 	images: ['png', 'jpg', 'jpeg', 'gif', 'bmp', 'svg'],
 	branding: ['logo', 'background'],

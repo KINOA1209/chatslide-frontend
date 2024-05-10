@@ -84,7 +84,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 		// await generatePDF(exportSlidesRef, exportOptions);
 	}
 
-	const handleExport = async (type: string, frontend: boolean) => {
+	const handleExport = async (type: 'pptx' | 'key' | 'pdf', frontend: boolean) => {
 		if (!project) return;
 
 		setShowExportToPdfModal(false);
@@ -95,7 +95,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 		if (!frontend) {
 			waitTime += 10;
 		}
-		if (type === 'pptx') {
+		if (type === 'pptx' || type === 'key') {
 			waitTime += 20;
 		}
 
@@ -268,6 +268,19 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 						<RiSlideshow2Fill />
 						<span className='flex flex-row gap-2 items-center'>
 							PPTX {!isPaidUser && <PlusLabel />}
+						</span>
+					</BigGrayButton>
+
+					<BigGrayButton
+						onClick={() => handleExport('key', false)}
+						isSubmitting={downloading}
+						isPaidUser={isPaidUser}
+						isPaidFeature={true}
+						bgColor='bg-Gray'
+					>
+						<RiSlideshow2Fill />
+						<span className='flex flex-row gap-2 items-center'>
+							Keynote {!isPaidUser && <PlusLabel />}
 						</span>
 					</BigGrayButton>
 
