@@ -25,6 +25,9 @@ import { FiFileText } from 'react-icons/fi';
 import { IoMdLink } from 'react-icons/io';
 import { PiImageSquare, PiTagLight } from 'react-icons/pi';
 import { FiVideo } from 'react-icons/fi';
+import { MdArrowDownward } from 'react-icons/md';
+import { MdArrowUpward } from 'react-icons/md';
+import { color } from 'd3';
 
 interface UserFileList {
 	selectable: boolean;
@@ -136,7 +139,15 @@ export const CloudConnectComponent: React.FC<CloudConnectProps> = ({
 		</div>
 	);
 }; // Define a new component for the table header
-const FileTableHeader = () => (
+const FileTableHeader = ({
+	onSort,
+	sortBy,
+	sortOrder,
+}: {
+	onSort: (column: string) => void;
+	sortBy: string;
+	sortOrder: 'asc' | 'desc';
+}) => (
 	// <div className='grid bg-[#ECF1FE] border border-gray-200 grid-cols-2 md:grid-cols-3'>
 	// 	{/* <div className='hidden md:flex w-full ml-4 text-indigo-300 text-[13px] font-bold uppercase leading-normal tracking-wide'>
 	//       Type
@@ -160,7 +171,7 @@ const FileTableHeader = () => (
 	>
 		{/* <div className='hidden lg:flex col-span-1 w-full ml-4 text-indigo-300 text-[13px] font-bold uppercase leading-normal tracking-wide'> */}
 		<div
-			className='flex col-span-3 w-full capitalize '
+			className='flex col-span-3 w-full capitalize cursor-pointer'
 			style={{
 				padding: `var(--spacing-xl, 8px) var(--spacing-3xl, 8px)`,
 				whiteSpace: 'nowrap',
@@ -171,11 +182,31 @@ const FileTableHeader = () => (
 				lineHeight: '18px',
 				fontWeight: 500,
 			}}
+			onClick={() => onSort('name')}
 		>
-			<span>File name</span>
+			<div className='flex flex-row justify-center items-center gap-[4px]'>
+				<span>File name</span>
+				{sortBy === 'name' && (
+					<span>
+						{sortOrder === 'desc' ? (
+							<MdArrowDownward
+								style={{
+									color: 'var(--colors-text-text-quaternary-500, #667085);',
+								}}
+							/>
+						) : (
+							<MdArrowUpward
+								style={{
+									color: 'var(--colors-text-text-quaternary-500, #667085);',
+								}}
+							/>
+						)}
+					</span>
+				)}
+			</div>
 		</div>
 		<div
-			className='hidden md:flex col-span-1 w-full capitalize '
+			className='hidden md:flex col-span-1 w-full capitalize cursor-pointer'
 			style={{
 				padding: `var(--spacing-xl, 8px) var(--spacing-3xl, 8px)`,
 				whiteSpace: 'nowrap',
@@ -186,8 +217,28 @@ const FileTableHeader = () => (
 				lineHeight: '18px',
 				fontWeight: 500,
 			}}
+			onClick={() => onSort('timestamp')}
 		>
-			<span>Date uploaded</span>
+			<div className='flex flex-row justify-center items-center gap-[4px]'>
+				<span>Date uploaded</span>
+				{sortBy === 'timestamp' && (
+					<span>
+						{sortOrder === 'desc' ? (
+							<MdArrowDownward
+								style={{
+									color: 'var(--colors-text-text-quaternary-500, #667085);',
+								}}
+							/>
+						) : (
+							<MdArrowUpward
+								style={{
+									color: 'var(--colors-text-text-quaternary-500, #667085);',
+								}}
+							/>
+						)}
+					</span>
+				)}
+			</div>
 		</div>
 	</div>
 );
@@ -201,6 +252,22 @@ const FileManagement: React.FC<UserFileList> = ({
 }) => {
 	const [deletingIds, setDeletingIds] = useState<Array<string>>([]);
 	const { token } = useUser();
+
+	const [sortBy, setSortBy] = useState<string>('timestamp'); // Default sorting column
+	const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc'); // Default sorting order
+
+	// Function to handle sorting when clicking on table headers
+	const handleSort = (column: string) => {
+		if (column === sortBy) {
+			// Reverse the sorting order if clicking on the same column
+			console.log('current sorting column: ', column);
+			setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+		} else {
+			// If clicking on a different column, set the sorting column and order to default
+			setSortBy(column);
+			setSortOrder('asc');
+		}
+	};
 
 	const handleDeleteFile = async (
 		e: React.MouseEvent<HTMLDivElement>,
@@ -279,6 +346,7 @@ const FileManagement: React.FC<UserFileList> = ({
 									lineHeight: '20px',
 								}}
 							>
+								{/* {resource.timestamp} */}
 								{moment(resource.timestamp).format('MMM D')}
 							</span>
 							{/* {resource.timestamp} */}
@@ -313,10 +381,49 @@ const FileManagement: React.FC<UserFileList> = ({
 			{/* <div className='w-full px-4'>
         <div className='w-full border-b border-gray-300'></div>
       </div> */}
-			<FileTableHeader /> {/* Render the table header */}
-			{userfiles.map((resource) => {
+			<FileTableHeader
+				onSort={handleSort}
+				sortBy={sortBy}
+				sortOrder={sortOrder}
+			/>{' '}
+			{/* Render the table header */}
+			{/* {userfiles.map((resource) => {
 				return entry(resource);
-			})}
+			})} */}
+			{userfiles
+				.slice()
+				.sort((a, b) => {
+					let valueA: string | Date;
+					let valueB: string | Date;
+
+					if (sortBy === 'name') {
+						valueA = a.name as string;
+						valueB = b.name as string;
+					} else {
+						valueA = new Date(a.timestamp as string);
+						valueB = new Date(b.timestamp as string);
+						if (isNaN(valueA.getTime()) || isNaN(valueB.getTime())) {
+							// Parsing failed, fallback to string comparison
+							valueA = a.timestamp as string;
+							valueB = b.timestamp as string;
+						}
+					}
+
+					// Check if parsing was successful
+
+					return sortOrder === 'asc'
+						? valueA > valueB
+							? 1
+							: valueA < valueB
+								? -1
+								: 0
+						: valueA < valueB
+							? 1
+							: valueA > valueB
+								? -1
+								: 0;
+				})
+				.map((resource) => entry(resource))}
 		</div>
 	);
 };
@@ -984,32 +1091,18 @@ const MyFiles: React.FC<filesInterface> = ({
 						iconLeft={<PiTagLight />}
 						customButtonStyles={
 							currentResourceType === 'branding'
-								? {
-										borderRadius: 'var(--radius-md, 8px)',
-										backgroundColor:
-											'var(--Colors-Background-bg-brand-primary, #EFF4FF)',
-									}
-								: {
-										borderRadius: 'var(--radius-md, 8px)',
-										backgroundColor:
-											'var(--Colors-Background-bg-secondary, #F9FAFB)',
-									}
+								? customFilterButtonGroupStyles.selected.button
+								: customFilterButtonGroupStyles.unselected.button
 						}
 						customIconStyles={
 							currentResourceType === 'branding'
-								? {
-										color:
-											'var(--colors-text-text-brand-secondary-700, #3538CD)',
-									}
-								: { color: 'var(--colors-text-text-quaternary-500, #667085)' }
+								? customFilterButtonGroupStyles.selected.icon
+								: customFilterButtonGroupStyles.unselected.icon
 						}
 						customTextStyles={
 							currentResourceType === 'branding'
-								? {
-										color:
-											'var(--colors-text-text-brand-secondary-700, #3538CD)',
-									}
-								: { color: 'var(--colors-text-text-quaternary-500, #667085)' }
+								? customFilterButtonGroupStyles.selected.text
+								: customFilterButtonGroupStyles.unselected.text
 						}
 						onClick={() => filterResources('branding')}
 						// text='Create New'

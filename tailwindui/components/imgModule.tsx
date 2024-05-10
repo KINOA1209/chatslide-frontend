@@ -58,6 +58,7 @@ import IFrameEmbed, { executeScripts } from './utils/IFrameEmbed';
 import useJSScript from '@/hooks/use-JSScript';
 import { LayoutKeys } from './slides/slideLayout';
 import { Media } from '@/models/Slide';
+import YoutubeEmbed from './utils/YoutubeEmbed';
 
 interface ImgModuleProp {
 	imgsrc: string;
@@ -161,9 +162,6 @@ export const ImgModule = ({
 	media_types,
 	media_type,
 }: ImgModuleProp) => {
-	// Regular expression to find width and height attributes
-	const regex = /width="(\d+)" height="(\d+)"/;
-
 	// Replace width and height attributes with '100%'
 
 	const sourceImage = useImageStore((state) => state.sourceImage);
@@ -215,7 +213,6 @@ export const ImgModule = ({
 			setSelectedImg(imgsrc);
 		}
 	}, [imgsrc]);
-
 
 	const handleImageDrop = (e: React.DragEvent<HTMLDivElement>) => {
 		e.preventDefault();
@@ -451,8 +448,8 @@ export const ImgModule = ({
 			{},
 		);
 
-    // close modal
-    closeModal();
+		// close modal
+		closeModal();
 	};
 
 	const fetchFiles = async (file_id?: string) => {
@@ -750,11 +747,9 @@ export const ImgModule = ({
 										className='w-full h-full' // Additional CSS classes if needed
 										width={100}
 										height={100}
-                    onError={ (e) =>
-                      setSearchResult(
-                        searchResult.filter((img) => img !== url)
-                      )
-                    }
+										onError={(e) =>
+											setSearchResult(searchResult.filter((img) => img !== url))
+										}
 									/>
 								</div>
 							);
@@ -893,26 +888,29 @@ export const ImgModule = ({
 		}
 	};
 
-	const iFrameDimension = (layout: LayoutKeys) => {
-		if (layout === 'Cover_img_1_layout' || layout === 'Col_2_img_1_layout') {
-			return 'width="450px" height="500px"';
-		} else if (layout === 'Full_img_only_layout') {
-			return 'width="940px" height="520px"';
-		} else if (layout === 'Col_2_img_2_layout') {
-			return 'width="400px" height="150px"';
-		} else if (layout === 'Col_1_img_1_layout') {
-			return 'width="940px" height="150px"';
-		} else {
-			return 'width="300px" height="100px"';
-		}
-	};
+	// const iFrameDimension = (layout: LayoutKeys) => {
+	// 	if (layout === 'Cover_img_1_layout' || layout === 'Col_2_img_1_layout') {
+	// 		return 'width="450px" height="500px"';
+	// 	} else if (layout === 'Full_img_only_layout') {
+	// 		return 'width="940px" height="520px"';
+	// 	} else if (layout === 'Col_2_img_2_layout') {
+	// 		return 'width="400px" height="150px"';
+	// 	} else if (layout === 'Col_1_img_1_layout') {
+	// 		return 'width="940px" height="150px"';
+	// 	} else {
+	// 		return 'width="300px" height="100px"';
+	// 	}
+	// };
 
-	const modified_embed_code_single =
-		embed_code_single &&
-		embed_code_single.replace(
-			regex,
-			iFrameDimension(slides[slideIndex].layout),
-		);
+	// Regular expression to find width and height attributes
+	// const regex = /width="(\d+)" height="(\d+)"/;
+
+	// const modified_embed_code_single =
+	// 	embed_code_single &&
+	// 	embed_code_single.replace(
+	// 		regex,
+	// 		iFrameDimension(slides[slideIndex].layout),
+	// 	);
 
 	// const [mediaType, setMediaType] = useState({
 	// 	image: false,
@@ -920,14 +918,17 @@ export const ImgModule = ({
 	// 	chart: false,
 	// });
 	// handle all embed code related
-	const [currentStoredEmbedCode, setCurrentStoredEmbedCode] = useState<string>(
-		modified_embed_code_single || '',
+	const [currentYoutubeUrl, setCurrentYoutubeUrl] = useState<string>(
+		embed_code_single || '',
 	);
-	const [inputValue, setInputValue] = useState(currentStoredEmbedCode);
+	// const [currentStoredEmbedCode, setCurrentStoredEmbedCode] = useState<string>(
+	// 	modified_embed_code_single || '',
+	// );
+	const [inputValue, setInputValue] = useState(currentYoutubeUrl);
 	const handleDoneEmbeddingCode = () => {
 		if (selectedQueryMode === ImgQueryMode.EMBED_CODE && embed_code) {
 			let updated_embed_code = [...embed_code];
-			updated_embed_code[currentContentIndex] = currentStoredEmbedCode || '';
+			updated_embed_code[currentContentIndex] = currentYoutubeUrl || '';
 
 			let updated_media_typesArr = [
 				...(media_types || ['image', 'image', 'image']),
@@ -950,22 +951,23 @@ export const ImgModule = ({
 
 	const handleConfirmClick = () => {
 		if (
-			inputValue.startsWith('<iframe') ||
-			(inputValue.startsWith('<blockquote') &&
-				inputValue.includes('youtube.com'))
+			// inputValue.startsWith('<iframe') ||
+			// (inputValue.startsWith('<blockquote') &&
+			inputValue.includes('youtube.com')
 		) {
 			// setEmbedCode(inputValue);
-
-			const modified_embed_code_input =
-				inputValue &&
-				inputValue.replace(regex, iFrameDimension(slides[slideIndex].layout));
-			setCurrentStoredEmbedCode(modified_embed_code_input); // Update currentStoredEmbedCode in parent
+			// const modified_embed_code_input =
+			// 	inputValue &&
+			// 	inputValue.replace(regex, iFrameDimension(slides[slideIndex].layout));
+			// setCurrentStoredEmbedCode(modified_embed_code_input); // Update currentStoredEmbedCode in parent
+			setCurrentYoutubeUrl(inputValue);
 		} else {
 			// setErrorMessage(
 			// 	'Please paste embed code that starts with <iframe> or <blockquote>.',
 			// );
 			toast.error(
-				'Please paste youtube embed code that starts with <iframe> or <blockquote>.',
+				// 'Please paste youtube embed code that starts with <iframe> or <blockquote>.',
+				'Please paste in youtube video link',
 				{
 					position: 'top-center',
 					autoClose: 2000,
@@ -982,20 +984,20 @@ export const ImgModule = ({
 
 	const isConfirmDisabled = inputValue.trim() === '';
 
-	useEffect(() => {
-		executeScripts(currentStoredEmbedCode);
-	}, [currentStoredEmbedCode]);
+	// useEffect(() => {
+	// 	executeScripts(currentStoredEmbedCode);
+	// }, [currentStoredEmbedCode]);
 
 	const EmbedCodeDiv = (
 		<div className='flex flex-col gap-y-2'>
 			<ToastContainer />
 
 			<Explanation>
-				This is beta feature. Only Youtube embed code is supported for now.
+				This is beta feature. Only Youtube video link is supported for now.
 			</Explanation>
 
 			<NewInputBox
-				placeholder='Paste YouTube embed code here. Start with <iframe> tag.'
+				placeholder='Paste YouTube video link here'
 				value={inputValue}
 				onChange={setInputValue}
 				maxLength={undefined}
@@ -1019,24 +1021,27 @@ export const ImgModule = ({
 
 			<div className='w-full mx-auto flex flex-col justify-center items-center'>
 				{/* <h1>Embedding Example</h1> */}
-				<IFrameEmbed
+				{/* <IFrameEmbed
 					currentStoredEmbedCode={currentStoredEmbedCode}
 					// setCurrentStoredEmbedCode={handleUpdateStoredEmbedCode}
 					// handleConfirmClick={handleConfirmClick}
-				/>
-				{selectedQueryMode === ImgQueryMode.EMBED_CODE &&
-					currentStoredEmbedCode && (
-						<BigBlueButton
-							isSubmitting={uploading || searching}
-							onClick={(e) => {
-								e.preventDefault();
-								handleDoneEmbeddingCode();
-							}}
-							customizeStyle={{ marginTop: '6px' }}
-						>
-							Confirm
-						</BigBlueButton>
-					)}
+				/> */}
+				<YoutubeEmbed
+					layout={slides[slideIndex].layout}
+					link={currentYoutubeUrl}
+				></YoutubeEmbed>
+				{selectedQueryMode === ImgQueryMode.EMBED_CODE && currentYoutubeUrl && (
+					<BigBlueButton
+						isSubmitting={uploading || searching}
+						onClick={(e) => {
+							e.preventDefault();
+							handleDoneEmbeddingCode();
+						}}
+						customizeStyle={{ marginTop: '6px' }}
+					>
+						Confirm
+					</BigBlueButton>
+				)}
 			</div>
 		</div>
 	);
@@ -1303,6 +1308,8 @@ export const ImgModule = ({
 		? slides[slideIndex]?.layout
 		: socialPosts[socialPostsIndex]?.template;
 
+	// console.log('selected img url', selectedImg);
+
 	return (
 		<>
 			{/* select image modal */}
@@ -1448,9 +1455,7 @@ export const ImgModule = ({
 					onDragOver={(e) => e.preventDefault()}
 					onClick={openModal}
 					className={`w-full h-full transition ease-in-out duration-150 relative ${
-							canEdit
-								? 'hover:bg-[#CAD0D3] cursor-pointer'
-								: ''
+						canEdit ? 'hover:bg-[#CAD0D3] cursor-pointer' : ''
 					} flex flex-col items-center justify-center`} //${canEdit && !isImgEditMode ? 'cursor-pointer' : ''}
 					style={{
 						overflow: isImgEditMode ? 'visible' : 'hidden',
@@ -1482,11 +1487,15 @@ export const ImgModule = ({
 							// onMouseLeave={() => setShowImgButton(false)}
 							onClick={() => setShowModal(true)}
 						>
-							<div
+							{/* <div
 								dangerouslySetInnerHTML={{
 									__html: embed_code[currentContentIndex],
 								}}
-							></div>
+							></div> */}
+							<YoutubeEmbed
+								link={currentYoutubeUrl}
+								layout={slides[slideIndex].layout}
+							></YoutubeEmbed>
 						</div>
 					) : !imgsrc || imgLoadError ? ( // upload icon
 						// if loading is fail and in editable page we show the error image
@@ -1607,8 +1616,9 @@ export const ImgModule = ({
 									onError={(e) => {
 										console.log('failed to load image', imgsrc);
 										setImgLoadError(true);
-										if(imgsrc)  // if we have a image url, but it is not valid
-                      updateSingleCallback('shuffle', false, {});
+										if (imgsrc)
+											// if we have a image url, but it is not valid
+											updateSingleCallback('shuffle', false, {});
 									}}
 								/>
 							</Rnd>
