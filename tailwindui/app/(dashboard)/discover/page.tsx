@@ -24,22 +24,6 @@ export default async function Discover() {
 	return (
 		<section className='grow flex flex-col'>
 			<ToastContainer />
-			{/* top background container of my projects title text and button */}
-			{/* <div className='flex items-end w-full z-10 pt-[4rem] bg-Blue border-b-1 px-[5rem]'>
-			 */}
-			{/* <div className='grow flex flex-col'>
-				<div className='w-full max-w-7xl flex flex-wrap items-end justify-center'>
-					<div className='absolute left-10 md:left-1/2 transform md:-translate-x-1/2  text-white text-base font-bold leading-10 tracking-wide border-white border-b-2'>
-						Discover Projects
-					</div>
-
-					<div className='absolute right-5 pb-1'>
-						<DrlambdaButton isPaidFeature={false} id='start_your_project'>
-							<Link href='/scenario-choice'>Start Yours</Link>
-						</DrlambdaButton>
-					</div>
-				</div>
-			</div> */}
 			<div className='flex flex-row items-end w-full z-10 pt-[2rem] px-[2rem]'>
 				{/* flex container controlling max width */}
 				<div className='w-full flex flex-wrap items-center justify-between'>
@@ -58,24 +42,14 @@ export default async function Discover() {
 
 					{/* create new project button */}
 					<div className=''>
-						{/* <DrlambdaButton
-								isPaidFeature={false}
-								onClick={handleStartNewProject}
-								id='start_new_project'
-							>
-								Start
-							</DrlambdaButton> */}
 						<DesignSystemButton
 							id='start_new_project'
 							size='lg'
 							hierarchy='primary'
 							isPaidFeature={false}
 							buttonStatus='enabled'
-							// iconRight={AIIcon}
-							// text='Start Yours'
-							// onClick={handleStartNewProject}
 						>
-							<Link href='/scenario-choice'>Start Yours</Link>
+							<Link href='/type-choice'>Start Yours</Link>
 						</DesignSystemButton>
 					</div>
 				</div>

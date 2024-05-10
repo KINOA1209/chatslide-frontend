@@ -3,14 +3,21 @@
 	"description": "",
 	"options": [
 		{
-			"id": "presentation",
-			"title": "Slides",
-			"imageSrc": "/images/scenario/slides.png"
-		},
-		{
 			"id": "social_posts",
 			"title": "Social Post",
 			"imageSrc": "/images/scenario/socialpost.png"
-		}
+		},
+    {
+			"id": "presentation",
+			"title": "Slide / Video",
+			"imageSrc": "/images/scenario/slides.png",
+      "featured": true
+		},
+    {
+      "id": "charts",
+      "title": "Charts (Beta)",
+      "imageSrc": "/images/scenario/charts.png",
+      "previewOnly": true
+    }
 	]
 }

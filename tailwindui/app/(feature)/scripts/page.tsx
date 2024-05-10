@@ -456,7 +456,6 @@ export default function WorkflowStep5() {
 							slides={slides}
 							currentSlideIndex={slideIndex}
 							updateSlidePage={updateSlidePage}
-							updateImgUrlArray={() => {}}
 							type='script'
 						/>
 					</div>

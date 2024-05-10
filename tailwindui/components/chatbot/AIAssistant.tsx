@@ -21,6 +21,7 @@ import { getBrand, getLogoUrl, isChatslide } from '@/utils/getHost';
 import Chats from './Chats';
 import ChatBotService from '@/services/ChatBotService';
 import { GrayLabel } from '../ui/GrayLabel';
+import { SuccessMessage, WarningMessage } from '../ui/Text';
 
 export const AIAssistantIcon: React.FC<{
 	onClick: () => void;
@@ -56,9 +57,10 @@ interface AIAssistantChatWindowProps {
 	onToggle?: () => void;
 	slides: Slide[];
 	currentSlideIndex: number;
-	updateSlidePage: Function;
-	updateImgUrlArray: Function;
-	type?: 'script' | 'slide';
+	updateSlidePage?: Function;
+	type?: 'script' | 'slide' | 'chart';
+	model?: 'gpt-3.5-turbo' | 'gpt-4';
+	updateChartUrl?: (url: string) => void; // for chart type
 }
 
 export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
@@ -66,8 +68,9 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 	slides,
 	currentSlideIndex,
 	updateSlidePage,
-	updateImgUrlArray,
 	type = 'slide',
+	model = 'gpt-3.5-turbo',
+	updateChartUrl,
 }) => {
 	// const [isChatWindowOpen, setIsChatWindowOpen] = useState(true);
 	// const toggleChatWindow = () => {
@@ -147,16 +150,24 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 		try {
 			setLoading(true);
 
-			const response = await ChatBotService.chat(
-				inputToSend,
-				lastChatMessages,
-				token,
-				slides[currentSlideIndex],
-				project?.id || '',
-				slideIndex,
-        undefined,  // selectedText
-        type
-			);
+			const response =
+				type === 'chart'
+					? await ChatBotService.chatChart(
+							inputToSend,
+							lastChatMessages,
+							token,
+							model,
+						)
+					: await ChatBotService.chat(
+							inputToSend,
+							lastChatMessages,
+							token,
+							slides[currentSlideIndex],
+							project?.id || '',
+							slideIndex,
+							undefined, // selectedText
+							type,
+						);
 
 			setLoading(false);
 
@@ -211,8 +222,9 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 						);
 					} else {
 						// Update state with the new slides
-            // console.log('updating script at index', currentSlideIndex)
-						updateSlidePage(currentSlideIndex, response.slide);
+						// console.log('updating script at index', currentSlideIndex)
+						updateSlidePage &&
+							updateSlidePage(currentSlideIndex, response.slide);
 						updateVersion(); // force rerender when version changes and index does not change
 					}
 				}
@@ -226,8 +238,13 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 				if (action === 'change_font') {
 					action = 'change_template';
 				}
-        
+
 				document.dispatchEvent(new Event(action));
+			}
+
+			if (type === 'chart' && updateChartUrl) {
+				if (response?.images && response.images.length > 0)
+					updateChartUrl(response.images[0]);
 			}
 
 			addChatHistory(addSuccessMessage(response.chat, response.images));
@@ -304,11 +321,25 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 									with slide design 🎨, content ideas ✍️, data organization 📊,
 									proofreading, and updating. Just type your request here!
 								</span>
-							) : (
+							) : type === 'script' ? (
 								<span>
 									Welcome to {getBrand()}! I'm your AI assistant, ready to help
 									with script writing 📝, content ideas ✍️, translation 🌐, etc.
 								</span>
+							) : (
+								<>
+									<span>
+										Welcome to {getBrand()}! I'm your AI assistant, ready to
+										help with creating charts 📈.
+									</span>
+									<WarningMessage>
+										I am only in early beta version now. There might be a higher
+										likelihood of errors, inaccuracies, or timeouts.
+									</WarningMessage>
+                  <SuccessMessage>
+                    In the future, you will also be able to: directly add chart to your slide, use your files as sources, drag and drop to edit your charts, etc.
+                    </SuccessMessage>
+								</>
 							)}
 						</div>
 					</div>
@@ -317,10 +348,8 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 						chatHistory={chatHistory}
 						lastMessageRef={lastMessageRef}
 						addChatHistory={addChatHistory}
-						updateImgUrlArray={updateImgUrlArray}
 						slides={slides}
 						currentSlideIndex={currentSlideIndex}
-						updateSlidePage={updateSlidePage}
 					></Chats>
 
 					{loading && (
@@ -351,7 +380,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 								? currentSlideIndex === 0
 									? 'cover'
 									: 'noncover'
-								: 'script'
+								: type
 						}
 						sendChat={handleSend}
 					/>

@@ -449,6 +449,8 @@ export const fileExtensions = {
 		'csv',
 		'rtf',
 		'txt',
+		'key',
+		'pages',
 	],
 	images: ['png', 'jpg', 'jpeg', 'gif', 'bmp', 'svg'],
 	branding: ['logo', 'background'],

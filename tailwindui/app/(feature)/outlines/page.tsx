@@ -43,7 +43,7 @@ export default function WorkflowStep2() {
 	const [viewMode, setViewMode] = useState<OutlineViewMode>(
 		outlines.length ? 'card' : 'page',
 	);
-	const [outlinesPlainText, setOutlinesPlainText] = useState<string>('');
+	const [outlinesPlainText, setOutlinesPlainText] = useState<string>(outlines.length ? convertOutlineToPlainText(outlines) : (project?.outline_structure || 'You selected detailed outlines in the previous step, please write your detailed outlines here.'));
 	const { token } = useUser();
 	const language = project?.language || 'English';
 	const [loading, setLoading] = useState(false);
@@ -98,7 +98,12 @@ export default function WorkflowStep2() {
 	useEffect(() => {
 		if (viewMode === 'page') {
 			const plainText = convertOutlineToPlainText(outlines);
-			setOutlinesPlainText(plainText);
+      if (plainText.length === 0) {
+        setOutlinesPlainText(project?.outline_structure || 'You selected detailed outlines in the previous step, please write your detailed outlines here.');
+        setTextModified(true);
+      } else {
+        setOutlinesPlainText(plainText);
+      }
 			setLoading(false);
 		} else if (
 			viewMode === 'card' &&

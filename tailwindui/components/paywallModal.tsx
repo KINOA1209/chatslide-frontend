@@ -67,7 +67,7 @@ const PaywallModal: React.FC<PaywallModalProps> = ({
 						</WrappableRow>
 					</Card>
 				)}
-				<Title>🚀 Upgrade for more credits</Title>
+				{/* <Title>🚀 Upgrade for more credits</Title> */}
 				<PricingComparison />
 			</div>
 		</Modal>

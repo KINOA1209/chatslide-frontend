@@ -31,7 +31,7 @@ class ChatBotService {
 		projectId: string,
 		pageIndex: number,
 		selectedText?: string,
-    mode?: 'script' | 'slide'
+    mode?: 'script' | 'slide' | 'chart'
 	): Promise<ChatResponse> {
     // console.log('mode', mode)
 
@@ -66,6 +66,46 @@ class ChatBotService {
 			};
 		}
 	}
+
+  static async chatChart(
+    prompt: string,
+    prevPrompts: Chat[],
+    token: string,
+    model: string,
+  ): Promise<ChatResponse> {
+    // console.log('mode', mode)
+
+    const messages = [
+			...prevPrompts
+				.map(formatPrevChat)
+				.filter((x) => x !== null).filter((x) => x?.role === 'user')
+				.map((x) => x?.content)
+				.slice(-5),
+			prompt,
+		];
+
+    try {
+      const resp = await fetch('/api/chart/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + token,
+        },
+        body: JSON.stringify({
+          messages: messages,
+          model: model,
+        }),
+      });
+      const url = (await resp.json()).data.url;
+      return { chat: '📈 I have updated the chart for you', role: 'assistant', images: [url] };
+    } catch (error) {
+      console.error(error);
+      return {
+        role: 'assistant',
+        chat: '😞 Sorry, I do not understand your request, can you try again?',
+      };
+    }
+  }
 }
 
 export default ChatBotService;
