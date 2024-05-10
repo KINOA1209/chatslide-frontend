@@ -1868,10 +1868,11 @@ export const Col_2_img_2_layout = ({
 
 	return (
 		<div
+			className={'SlideCanvas'}
 			style={{
 				width: '100%',
 				height: '100%',
-				display: 'flex',
+				// display: 'flex',
 				...layoutElements.canvaCSS,
 				position: 'relative',
 			}}

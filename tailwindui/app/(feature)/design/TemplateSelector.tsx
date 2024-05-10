@@ -425,7 +425,7 @@ const TemplateSelector: React.FC<{
 						)}
 					</div>
 					<WrappableRow type='grid' cols={3}>
-						<div>
+						<div className='flex flex-col'>
 							<div className='flex flex-row items-center gap-2'>
 								<Instruction>Cover Heading</Instruction>
 								<Explanation>Change this directly in the editor.</Explanation>
@@ -439,6 +439,16 @@ const TemplateSelector: React.FC<{
 								disableResetButton={true}
 								disabled={true}
 							/>
+							<ColorPicker
+								onCustomColorChange={handleCustomTemplateBgColorChange}
+								initialColor={
+									hasSelectedCustomTemplateBgColor
+										? customTemplateBgColor ||
+											colorPreviews[palette as PaletteKeys]
+										: colorPreviews[palette as PaletteKeys]
+								} // Provide a default value if customTemplateBgColor is undefined
+								resetColorPicker={resetColorPicker}
+							></ColorPicker>
 						</div>
 
 						{/* heading */}
@@ -456,6 +466,16 @@ const TemplateSelector: React.FC<{
 								resetFontFamilyPicker={resetFontFamilyPicker}
 								disableResetButton={true}
 							/>
+							<ColorPicker
+								onCustomColorChange={handleCustomTemplateBgColorChange}
+								initialColor={
+									hasSelectedCustomTemplateBgColor
+										? customTemplateBgColor ||
+											colorPreviews[palette as PaletteKeys]
+										: colorPreviews[palette as PaletteKeys]
+								} // Provide a default value if customTemplateBgColor is undefined
+								resetColorPicker={resetColorPicker}
+							></ColorPicker>
 						</div>
 						{/* subheading */}
 						<div>
@@ -472,6 +492,16 @@ const TemplateSelector: React.FC<{
 								resetFontFamilyPicker={resetFontFamilyPicker}
 								disableResetButton={true}
 							/>
+							<ColorPicker
+								onCustomColorChange={handleCustomTemplateBgColorChange}
+								initialColor={
+									hasSelectedCustomTemplateBgColor
+										? customTemplateBgColor ||
+											colorPreviews[palette as PaletteKeys]
+										: colorPreviews[palette as PaletteKeys]
+								} // Provide a default value if customTemplateBgColor is undefined
+								resetColorPicker={resetColorPicker}
+							></ColorPicker>
 						</div>
 						{/* paragraph */}
 						<div>
@@ -488,6 +518,16 @@ const TemplateSelector: React.FC<{
 								resetFontFamilyPicker={resetFontFamilyPicker}
 								disableResetButton={false}
 							/>
+							<ColorPicker
+								onCustomColorChange={handleCustomTemplateBgColorChange}
+								initialColor={
+									hasSelectedCustomTemplateBgColor
+										? customTemplateBgColor ||
+											colorPreviews[palette as PaletteKeys]
+										: colorPreviews[palette as PaletteKeys]
+								} // Provide a default value if customTemplateBgColor is undefined
+								resetColorPicker={resetColorPicker}
+							></ColorPicker>
 						</div>
 					</WrappableRow>
 				</div>
