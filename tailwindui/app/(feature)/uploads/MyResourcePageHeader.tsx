@@ -105,7 +105,7 @@ const MyResourcePageHeader: React.FC<MyResourcePageHeaderProps> = ({
 				>
 					<DesignSystemButton
 						isPaidFeature={false}
-						size='md'
+						size='lg'
 						hierarchy='primary'
 						buttonStatus='enabled'
 						iconLeft={<FiUpload />}
@@ -113,6 +113,7 @@ const MyResourcePageHeader: React.FC<MyResourcePageHeaderProps> = ({
 							borderRadius:
 								'var(--radius-md, 8px) var(--radius-xxs, 2px) var(--radius-xxs, 2px) var(--radius-md, 8px)',
 						}}
+            isSubmitting={isSubmitting}
 						// text='Create New'
 						// onClick={handleStartNewProject}
 					>
@@ -120,7 +121,7 @@ const MyResourcePageHeader: React.FC<MyResourcePageHeaderProps> = ({
 					</DesignSystemButton>
 					<DesignSystemButton
 						isPaidFeature={false}
-						size='md'
+						size='lg'
 						hierarchy='primary'
 						buttonStatus='enabled'
 						iconLeft={

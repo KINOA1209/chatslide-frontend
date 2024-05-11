@@ -17,7 +17,7 @@ import { FaInternetExplorer, FaNewspaper, FaWikipediaW } from 'react-icons/fa';
 import { IoIosRemoveCircle, IoIosRemoveCircleOutline } from 'react-icons/io';
 import { Instruction, Explanation, BigTitle, WarningMessage } from '../ui/Text';
 import Card from '../ui/Card';
-import { determineSupportedFormats } from '../file/FileUploadButton';
+import { DOCUMENT_EXTENSIONS, determineSupportedFormats } from '../file/FileUploadButton';
 import GenModeToggle from './GenModeToggle';
 import { WrappableRow } from '../layout/WrappableRow';
 import { select } from 'd3';
@@ -228,7 +228,7 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 							</Instruction>
 							<Explanation>
 								<div className='text-center'>
-									Supports PDF, TXT, DOC, DOCX, PPT, PPTX, KEY
+									Supports {DOCUMENT_EXTENSIONS.map((ext) => ext.toUpperCase()).join(', ')}{' '}
 								</div>
 							</Explanation>
 						</div>
