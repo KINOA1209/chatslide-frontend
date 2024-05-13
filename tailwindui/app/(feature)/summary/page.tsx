@@ -76,6 +76,8 @@ const getStructureFromScenario = (scenarioType: string) => {
 const AdvancedOptions: React.FC<{
 	outlineStructure: string;
 	setOutlineStructure: (value: string) => void;
+	detailedOutline: string;
+	setDetailedOutline: (value: string) => void;
 	selectedResources: Resource[];
 	pageCountEst: number;
 	setPageCountEst: (value: number) => void;
@@ -88,6 +90,8 @@ const AdvancedOptions: React.FC<{
 }> = ({
 	outlineStructure,
 	setOutlineStructure,
+	detailedOutline,
+	setDetailedOutline,
 	selectedResources,
 	pageCountEst,
 	setPageCountEst,
@@ -107,8 +111,8 @@ const AdvancedOptions: React.FC<{
 					name='outline_structure_mode'
 					options={[
 						{ value: 'custom', text: 'General Structure' },
-						{ value: 'my_outline', text: 'My Own Outline' },
 						{ value: 'follow_resource', text: 'Structure of a Source' },
+						{ value: 'my_outline', text: '100% My Outline' },
 					]}
 					selectedValue={structureMode}
 					setSelectedValue={setStructureMode}
@@ -118,59 +122,67 @@ const AdvancedOptions: React.FC<{
 				{structureMode === 'custom' ? (
 					<>
 						<Explanation>
-							If you have a rough idea about the outline you want, you can put
-							it here. We will write the outline based on this structure and the
+							If you have a rough idea about the outline you want, select this
+							option. We will write the outline based on this structure and the
 							number of pages you want.
 						</Explanation>
 						<NewInputBox
 							value={outlineStructure}
 							onChange={setOutlineStructure}
 							placeholder='Introduction, background, details, examples, conclusion.'
-							maxLength={1000}
+							maxLength={2000}
 						/>
 					</>
 				) : structureMode === 'my_outline' ? (
 					<>
-						<WarningMessage>
-							If you already have a detailed outline ready, we will not generate
-							outlines for you. But you can write your own outline here. 
-              The number of slide pages will depend on the length of the
-							outline you provided in the next step.
-						</WarningMessage>
-            <NewInputBox
-              value={outlineStructure}
-              onChange={setOutlineStructure}
-              placeholder='Introduction, background, details, examples, conclusion.'
-              maxLength={1000}
-              textarea
-            />
+						<Explanation>
+							If you already have a detailed outline, select this option. You
+							can write your own outline here. The number of slide pages
+							generated will depend on the length of the outline you provided.
+						</Explanation>
+						<NewInputBox
+							value={detailedOutline}
+							onChange={setDetailedOutline}
+							placeholder='Your detailed outline here.'
+							maxLength={1000}
+							textarea
+						/>
+						{detailedOutline.length < 200 && (
+							<ErrorMessage>
+								At least 200 characters are required for your own outline.
+							</ErrorMessage>
+						)}
 					</>
-				) : selectedResources.length == 0 ? ( // my_resource
-					<WarningMessage>Add a source to enable this feature.</WarningMessage>
 				) : (
 					<>
 						<Explanation>
-							If you want the outline to follow the source you uploaded, select
-							one source here.
+							If you want the outline to follow a source / file you uploaded,
+							select one source here.
 						</Explanation>
-						<DropDown
-							value={resourceToFollowStructureFrom?.id}
-							onChange={(e) => {
-								const selectedResource = selectedResources.find(
-									(resource) => resource.id === e.target.value,
-								);
-								if (selectedResource) {
-									setResourceToFollowStructureFrom(selectedResource);
-								}
-							}}
-							width='30rem'
-						>
-							{selectedResources.map((resource, index) => (
-								<option key={index} value={resource.id}>
-									{resource.name.replace('.txt', '').replaceAll('_', ' ')}
-								</option>
-							))}
-						</DropDown>
+						{selectedResources.length == 0 ? ( // my_resource
+							<WarningMessage>
+								Add a source / file to enable this feature.
+							</WarningMessage>
+						) : (
+							<DropDown
+								value={resourceToFollowStructureFrom?.id}
+								onChange={(e) => {
+									const selectedResource = selectedResources.find(
+										(resource) => resource.id === e.target.value,
+									);
+									if (selectedResource) {
+										setResourceToFollowStructureFrom(selectedResource);
+									}
+								}}
+								width='30rem'
+							>
+								{selectedResources.map((resource, index) => (
+									<option key={index} value={resource.id}>
+										{resource.name.replace('.txt', '').replaceAll('_', ' ')}
+									</option>
+								))}
+							</DropDown>
+						)}
 					</>
 				)}
 			</div>
@@ -272,6 +284,7 @@ export default function Topic() {
 	const [outlineStructure, setOutlineStructure] = useState(
 		getStructureFromScenario(scenarioType),
 	);
+	const [detailedOutline, setDetailedOutline] = useState('');
 	const [structureMode, setStructureMode] = useState('custom');
 	const [resourceToFollowStructureFrom, setResourceToFollowStructureFrom] =
 		useState<Resource>();
@@ -347,8 +360,10 @@ export default function Topic() {
 			setIsSubmitting(false);
 			setShowGenerationStatusModal(false);
 			return;
-		}
-		else if (generationMode === 'from_files' && selectedResources.length === 0) {
+		} else if (
+			generationMode === 'from_files' &&
+			selectedResources.length === 0
+		) {
 			toast.error('Please upload at least one file.');
 			setIsSubmitting(false);
 			setShowGenerationStatusModal(false);
@@ -378,7 +393,7 @@ export default function Topic() {
 			resource_to_follow_structure_from: resourceToFollowStructureFrom?.id,
 		};
 
-    console.log('outline structure', outlineStructure);
+		console.log('outline structure', outlineStructure);
 
 		bulkUpdateProject({
 			topic: topic,
@@ -389,7 +404,7 @@ export default function Topic() {
 			search_online: searchOnlineScope,
 			knowledge_summary: knowledge_summary,
 			add_citations: addCitations === 'yes',
-      outline_structure: outlineStructure,
+			outline_structure: detailedOutline,
 		} as Project);
 
 		// if needs to summarize resources
@@ -463,8 +478,12 @@ export default function Topic() {
 				setShowGenerationStatusModal(false);
 				setIsSubmitting(false);
 			} else {
-				const message = await response.json()
-				console.error('Error when generating outlines:', response.status, message);
+				const message = await response.json();
+				console.error(
+					'Error when generating outlines:',
+					response.status,
+					message,
+				);
 				toast.error(
 					'Server is busy now. Please try again later. Reference code: ' +
 						project?.id,
@@ -679,6 +698,8 @@ export default function Topic() {
 						<AdvancedOptions
 							outlineStructure={outlineStructure}
 							setOutlineStructure={setOutlineStructure}
+							detailedOutline={detailedOutline}
+							setDetailedOutline={setDetailedOutline}
 							selectedResources={selectedResources}
 							pageCountEst={pageCountEst}
 							setPageCountEst={setPageCountEst}
