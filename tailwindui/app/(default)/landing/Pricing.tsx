@@ -260,7 +260,7 @@ const PricingComparison: React.FC<{
 						key: 'lifetime',
 						element: (
 							<span className='text-green-600'>
-								Lifetime <span className='text-xs'>-80%</span>
+								Lifetime <span className='text-xs'>-70%</span>
 							</span>
 						),
 					},
