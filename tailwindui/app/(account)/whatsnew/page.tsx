@@ -15,22 +15,39 @@ export default function Studio() {
 			<Panel>
 				<Card>
 					<BigTitle>Coming Next...</BigTitle>
-					<Instruction>🎤 Voice cloning</Instruction>
-					<Instruction>📂 Folders for resources</Instruction>
+					<Instruction>
+						<div>
+							<b>🎤 Voice cloning: </b>
+							Developments are mostly done, waiting for regulatory approval.
+							Expected to be released around May 27.
+						</div>
+					</Instruction>
 					<Instruction>
 						🎰 Directly add scripts, voiceover, and avatar to PPTX
 					</Instruction>
+				</Card>
+
+				<Card>
+					<BigTitle>May 12</BigTitle>
 					<Instruction>
-						📈 Price increase for ULTIMATE LIFETIME to $354 on May 11th
+						<div>
+							<b>📈 Chat with Charts (Beta): </b> The Beta version is available to all ULTIMATE users. 
+							This feature will be released to all PRO users once we believe it is stable and accurate.
+						</div>
 					</Instruction>
 					<Instruction>
-						👨🏻‍💻 We are hiring Engineering Interns
-						<a
-							href='https://twitter.com/chatslide_ai/status/1787564603997921582'
-							className='text-blue-600'
-						>
-							Help us retweet.{' '}
-						</a>
+						<div>
+							<b>🍎 Apple File Formats Support: </b> We support uploading Pages
+							and Keynotes file formats. We also support exporting to Keynotes
+							now.
+						</div>
+					</Instruction>
+					<Instruction>
+						<div>
+							<b>🏷️ Price Update: </b>
+							Price for ULTIMATE LIFETIME is updated. The current price will be
+							available until June 12.
+						</div>
 					</Instruction>
 				</Card>
 
@@ -43,7 +60,8 @@ export default function Studio() {
 								content along with your affiliate program (Rewardful) code. Earn
 								money when your audience converts to paying users. You'll
 								receive 30% of all their payments. Detailed instructions are on
-								the way...<br/>
+								the way...
+								<br />
 							</span>
 							<a href='/account' className='text-blue-600'>
 								Learn more.

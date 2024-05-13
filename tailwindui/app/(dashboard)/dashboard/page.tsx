@@ -71,11 +71,8 @@ export default function Dashboard() {
 
 	useEffect(() => {
 		//folder drlambda-default is not shown
-		if (folders.length > 1) {
-			setHasFolder(true);
-		} else {
-			setHasFolder(false);
-		}
+		const hasNonDefaultFolder = folders.some(folder => folder.folderName !== 'drlambda-default');
+		setHasFolder(hasNonDefaultFolder);
 	}, [folders]);
 
 	const fetchProjects = async () => {
@@ -295,14 +292,6 @@ export default function Dashboard() {
 				token,
 				prevFolderName,
 				renameInput,
-			);
-
-			setFolders((prevFolders) =>
-				prevFolders.map((folder) =>
-					folder.folderName === prevFolderName
-						? { ...folder, folderName: renameInput }
-						: folder,
-				),
 			);
 			setFolders((prevFolders) => {
 				// Map through folders to find and update the renamed folder

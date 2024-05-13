@@ -167,7 +167,7 @@ const Modal: React.FC<ModalProps> = ({
 					{children}
 
 					{onConfirm && (
-						<div className='gap-x-2 justify-around'>
+						<div className='gap-x-2 flex flex-row justify-around'>
 							{canClose && (
 								<InversedBigBlueButton
 									id='modal-cancel'

@@ -518,7 +518,7 @@ class ProjectService {
 	static async deleteFolder(
 		token: string,
 		folder_name: string,
-	): Promise<boolean> {
+	): Promise<any> {
 		const response = await fetch('/api/delete_project_group', {
 			method: 'POST',
 			headers: {
@@ -529,14 +529,19 @@ class ProjectService {
 				group_name: folder_name,
 			}),
 		});
-		return response.ok;
+		const responseJson = await response.json();
+
+		if (!response.ok) {
+			throw new Error(responseJson.message || 'An error occurred during deleting project');
+		}
+		return responseJson
 	}
 
 	static async renameFolder(
 		token: string,
 		prev_folder_name: string,
 		new_folder_name: string,
-	): Promise<boolean> {
+	): Promise<any> {
 		const response = await fetch('/api/change_project_group_name', {
 			method: 'POST',
 			headers: {
@@ -548,14 +553,19 @@ class ProjectService {
 				new_group_name: new_folder_name,
 			}),
 		});
-		return response.ok;
+		const responseJson = await response.json();
+
+		if (!response.ok) {
+			throw new Error(responseJson.message || 'An error occurred during renaming project');
+		}
+		return responseJson
 	}
 
 	static async moveToFolder(
 		token: string,
 		project_id: string,
 		folder_name: string,
-	): Promise<boolean> {
+	): Promise<any> {
 		const response = await fetch('/api/move_project', {
 			method: 'POST',
 			headers: {
@@ -567,7 +577,12 @@ class ProjectService {
 				group_name: folder_name,
 			}),
 		});
-		return response.ok;
+		const responseJson = await response.json();
+
+		if (!response.ok) {
+			throw new Error(responseJson.message || 'An error occurred during the moving project');
+		}
+		return responseJson
 	}
 }
 

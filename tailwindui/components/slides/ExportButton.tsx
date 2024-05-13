@@ -230,7 +230,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 				showModal={showExportToPdfModal}
 				setShowModal={setShowExportToPdfModal}
 				title='Export to PDF / PPTX'
-				description='Choose the format and quality of the export.'
+				description='Choose the format of the export.'
 			>
 				<div className='flex flex-row flex-wrap gap-4'>
 					{/* <BigGrayButton

@@ -8,7 +8,7 @@ interface Language {
 const LANGUAGES: Language[] = [
 	{ displayName: '🇺🇸 English (US)', englishName: 'English', code: 'en-US' },
 	{
-		displayName: '🇬🇧 English (UK)',
+		displayName: '🇬🇧 English (GB)',
 		englishName: 'British English',
 		code: 'en-GB',
 	},
@@ -63,6 +63,12 @@ const LANGUAGES: Language[] = [
 		englishName: 'Indonesian',
 		code: 'id-ID',
 	},
+	// malay
+	{ displayName: '🇲🇾 Bahasa Melayu', englishName: 'Malay', code: 'ms-MY' },
+	// bengali
+	{ displayName: '🇧🇩 বাংলা', englishName: 'Bengali', code: 'bn-BD' },
+	// turkish
+	{ displayName: '🇹🇷 Türkçe', englishName: 'Turkish', code: 'tr-TR' },
 ];
 
 const ACCENTS: Language[] = [
