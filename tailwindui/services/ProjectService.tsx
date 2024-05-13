@@ -83,6 +83,7 @@ class ProjectService {
 		token: string,
 		project_id: string,
 		server_side: boolean = false, // if true, fetch use abs url
+		mode: string = '',
 	): Promise<Project> {
 		//console.log(`Fetching project details.`);
 		const headers = new Headers();
@@ -102,7 +103,7 @@ class ProjectService {
 			const response = await fetch(url, {
 				method: 'POST',
 				headers: headers,
-				body: JSON.stringify({ project_id: project_id }),
+				body: JSON.stringify({ project_id: project_id, mode: mode }),
 			});
 
 			if (!response.ok) {
