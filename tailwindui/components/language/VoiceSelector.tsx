@@ -147,7 +147,7 @@ const VoiceSelector: React.FC<{
 						</div>
 
 						<div>
-							<Instruction>Tone (new choices): </Instruction>
+							<Instruction>Tone: </Instruction>
 							<DropDown
 								value={selectedVoice}
 								onChange={(e) => {
@@ -160,7 +160,7 @@ const VoiceSelector: React.FC<{
 										{formatVoiceName(voice)}
 									</option>
 								))}
-								{selectedLanguage !== 'en-UK' &&
+								{selectedLanguage !== 'en-GB' &&
 									AZURE_MULTILINGUAL_VOICE_OPTIONS[selectedGender].map(
 										(voice) => (
 											<option key={voice} value={voice}>
@@ -168,7 +168,7 @@ const VoiceSelector: React.FC<{
 											</option>
 										),
 									)}
-								{selectedLanguage !== 'en-UK' && OAI_VOICE_OPTIONS[selectedGender].map((voice) => (
+								{selectedLanguage !== 'en-GB' && OAI_VOICE_OPTIONS[selectedGender].map((voice) => (
 									<option key={voice} value={voice}>
 										{formatVoiceName(voice)}
 									</option>

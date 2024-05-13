@@ -8,7 +8,7 @@ interface Language {
 const LANGUAGES: Language[] = [
 	{ displayName: '🇺🇸 English (US)', englishName: 'English', code: 'en-US' },
 	{
-		displayName: '🇬🇧 English (UK)',
+		displayName: '🇬🇧 English (GB)',
 		englishName: 'British English',
 		code: 'en-GB',
 	},
