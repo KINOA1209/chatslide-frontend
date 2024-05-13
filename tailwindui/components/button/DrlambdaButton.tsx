@@ -390,7 +390,7 @@ export const SmallBlueButton: React.FC<DrlambdaButtonProps> = ({
 	return (
 		<button
 			onClick={onClick}
-			className={`border border-2 ${getButtonStyle()} rounded-lg text-Lavender px-2 md:px-3 py-1 text-xs md:text-sm whitespace-nowrap`}
+			className={`border border-1 ${getButtonStyle()} rounded-lg text-Lavender px-2 md:px-3 py-1 text-xs md:text-sm whitespace-nowrap`}
 			disabled={isSubmitting || disabled}
 			style={customizeStyle}
 		>

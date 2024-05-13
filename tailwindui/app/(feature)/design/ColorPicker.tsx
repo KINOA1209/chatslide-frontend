@@ -117,13 +117,13 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
 
 	return (
 		<div ref={colorPickerRef}>
-			<div className='flex flex-row gap-x-2 w-[15rem] items-center justify-between'>
+			<div className='flex flex-row gap-x-2 w-[17rem] items-center justify-start'>
 				<div style={buttonStyle} onClick={handleClick}>
 					<div style={colorPreviewStyle}></div>
 					<span>{color}</span>
 				</div>
 				<SmallBlueButton
-					customizeStyle={{ width: '5rem' }}
+					customizeStyle={{ width: '6rem' }}
 					onClick={resetColorPicker}
 				>
 					Reset
