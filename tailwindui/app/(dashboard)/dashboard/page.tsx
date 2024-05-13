@@ -59,19 +59,19 @@ export default function Dashboard() {
 		}
 	}, [activeFolder, folders]);
 
-	useEffect(() => {
-		// Example: log when projects change
-		console.log('Projects updated:', projects);
-	}, [projects]);
+	// useEffect(() => {
+	// 	// Example: log when projects change
+	// 	console.log('Projects updated:', projects);
+	// }, [projects]);
 
-	useEffect(() => {
-		console.log('Current Projects updated:', currentProjects)
-	}, [currentProjects])
+	// useEffect(() => {
+	// 	console.log('Current Projects updated:', currentProjects)
+	// }, [currentProjects])
 
-	useEffect(() => {
-		// Handle logic when folders change
-		console.log('Folders updated:', folders);
-	}, [folders]);
+	// useEffect(() => {
+	// 	// Handle logic when folders change
+	// 	console.log('Folders updated:', folders);
+	// }, [folders]);
 
 	useEffect(() => {
 		//folder drlambda-default is not shown
