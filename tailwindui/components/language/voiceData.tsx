@@ -71,10 +71,12 @@ const AZURE_VOICE_OPTIONS: LangToVoiceOptions = {
 			'en-AU-JoanneNeural',
 			'en-AU-KimNeural',
 			'en-AU-TinaNeural',
+			'en-NZ-MollyNeural',
 			'en-CA-ClaraNeural',
 			'en-IN-NeerjaNeural',
 			'en-SG-LunaNeural',
 			'en-IE-EmilyNeural',
+			'en-PK-RozinaNeural',
 		],
 		male: [
 			'en-AU-WilliamNeural',
@@ -83,10 +85,12 @@ const AZURE_VOICE_OPTIONS: LangToVoiceOptions = {
 			'en-AU-KenNeural',
 			'en-AU-NeilNeural',
 			'en-AU-TimNeural',
+			'en-NZ-MitchellNeural',
 			'en-CA-LiamNeural',
 			'en-IN-PrabhatNeural',
 			'en-SG-WayneNeural',
 			'en-IE-ConnorNeural',
+			'en-PK-UsmanNeural',
 		],
 	},
 	'es-ES': {
@@ -353,6 +357,18 @@ const AZURE_VOICE_OPTIONS: LangToVoiceOptions = {
 		female: ['id-ID-GadisNeural'],
 		male: ['id-ID-ArdiNeural'],
 	},
+	'tr-TR': {
+		female: ['tr-TR-EmelNeural'],
+		male: ['tr-TR-AhmetNeural'],
+	},
+	'ms-MY': {
+		female: ['ms-MY-YasminNeural'],
+		male: ['ms-MY-OsmanNeural'],
+	},
+	'bn-BD': {
+		female: ['bn-BD-NabanitaNeural', 'bn-IN-TanishaaNeural'],
+		male: ['bn-BD-PradeepNeural', 'bn-IN-BashkarNeural'],
+	},
 };
 
 export const AZURE_MULTILINGUAL_VOICE_OPTIONS: VoiceOptions = {
@@ -457,6 +473,12 @@ export const TONE_DISPLAY_NAMES: { [key: string]: string } = {
 	Liam: 'Liam (🇨🇦)',
 	Neerja: 'Neerja (🇮🇳)',
 	Prabhat: 'Prabhat (🇮🇳)',
+	Usman: 'Usman (🇵🇰)',
+	Rozina: 'Rozina (🇵🇰)',
+	Tanishaa: 'Tanishaa (🇮🇳)',
+	Bashkar: 'Bashkar (🇮🇳)',
+	Molly: 'Molly (🇳🇿)',
+	Mitchell: 'Mitchell (🇳🇿)',
 	Luna: 'Luna (🇸🇬)',
 	Wayne: 'Wayne (🇸🇬)',
 	Emily: 'Emily (🇮🇪)',

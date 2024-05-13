@@ -63,6 +63,12 @@ const LANGUAGES: Language[] = [
 		englishName: 'Indonesian',
 		code: 'id-ID',
 	},
+	// malay
+	{ displayName: '🇲🇾 Bahasa Melayu', englishName: 'Malay', code: 'ms-MY' },
+	// bengali
+	{ displayName: '🇧🇩 বাংলা', englishName: 'Bengali', code: 'bn-BD' },
+	// turkish
+	{ displayName: '🇹🇷 Türkçe', englishName: 'Turkish', code: 'tr-TR' },
 ];
 
 const ACCENTS: Language[] = [
