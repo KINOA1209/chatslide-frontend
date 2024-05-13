@@ -44,7 +44,7 @@ export function convertToChartData(
 			legend: 'Scatter Data', // Assign a legend for scatter data
 		};
 
-		(dataPoints as ScatterDataPoint[]).forEach((dataPoint) => {
+		Array.from(dataPoints as ScatterDataPoint[]).forEach((dataPoint) => {
 			scatterGroup.values.push(dataPoint.y);
 			scatterGroup.keys.push(dataPoint.x);
 		});

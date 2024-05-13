@@ -53,7 +53,7 @@ const DynamicChart: React.FC<DynamicChartProps> = ({
 	function handleHover(evt: ChartEvent, item: any, legend: { chart: ChartJS }) {
 		const dataset = legend.chart.data.datasets[0];
 		if (dataset.backgroundColor && Array.isArray(dataset.backgroundColor)) {
-			dataset.backgroundColor.forEach(
+			Array.from(dataset.backgroundColor).forEach(
 				(color: string, index: number, colors: string[]) => {
 					colors[index] =
 						index === item.index || color.endsWith('4D') ? color : color + '4D';

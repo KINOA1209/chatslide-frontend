@@ -307,7 +307,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 			}
 		};
 		if (Array.isArray(className)) {
-			className.forEach((current_tag: SlideKeys, idx: number) => {
+			Array.from(className).forEach((current_tag: SlideKeys, idx: number) => {
 				let updateContent:
 					| string
 					| string[]
