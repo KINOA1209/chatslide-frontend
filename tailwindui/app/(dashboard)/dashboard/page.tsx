@@ -71,8 +71,8 @@ export default function Dashboard() {
 
 	useEffect(() => {
 		//folder drlambda-default is not shown
-		const nonDefaultFoldersExist = folders.some(folder => folder.folderName !== 'drlambda-default');
-		setHasFolder(nonDefaultFoldersExist);
+		const hasNonDefaultFolder = folders.some(folder => folder.folderName !== 'drlambda-default');
+		setHasFolder(hasNonDefaultFolder);
 	}, [folders]);
 
 	const fetchProjects = async () => {
