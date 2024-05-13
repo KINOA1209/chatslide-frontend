@@ -288,43 +288,51 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 	}, []);
 
 	useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (editorRef.current && !editorRef.current.contains(event.target as Node)) {
-                if (isTextChangeRef.current) {
-                    const currentContent = quillInstanceRef.current?.root.innerHTML;
-                    if (currentContent !== undefined) {
-                        isTextChangeRef.current = false;
-                        processAndSaveContent(currentContent);
-                    }
-                }
-            }
-        };
+		const handleClickOutside = (event: MouseEvent) => {
+			if (
+				editorRef.current &&
+				!editorRef.current.contains(event.target as Node)
+			) {
+				if (isTextChangeRef.current) {
+					const currentContent = quillInstanceRef.current?.root.innerHTML;
+					if (currentContent !== undefined) {
+						isTextChangeRef.current = false;
+						processAndSaveContent(currentContent);
+					}
+				}
+			}
+		};
 
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, [isVerticalContent]);
+		document.addEventListener('mousedown', handleClickOutside);
+		return () => {
+			document.removeEventListener('mousedown', handleClickOutside);
+		};
+	}, [isVerticalContent]);
 
 	const processAndSaveContent = (currentContent: string) => {
-        if (isVerticalContent) {
-            const doc = new DOMParser().parseFromString(currentContent, 'text/html');
-            let extractedContent: string[] = [];
+		if (isVerticalContent) {
+			const doc = new DOMParser().parseFromString(currentContent, 'text/html');
+			let extractedContent: string[] = [];
 
-            const bodyChildren = Array.from(doc.body.children);
-            bodyChildren.forEach((el) => {
-                if (el.tagName.toLowerCase() === 'ul' || el.tagName.toLowerCase() === 'ol') {
-                    const listItems = Array.from(el.querySelectorAll('li')).map(li => li.outerHTML || '');
-                    extractedContent.push(...listItems);
-                } else {
-                    extractedContent.push(el.outerHTML || el.textContent?.trim() || '');
-                }
-            });
-            handleBlur(extractedContent);
-        } else {
-            handleBlur(currentContent);
-        }
-    };
+			const bodyChildren = Array.from(doc.body.children);
+			bodyChildren.forEach((el) => {
+				if (
+					el.tagName.toLowerCase() === 'ul' ||
+					el.tagName.toLowerCase() === 'ol'
+				) {
+					const listItems = Array.from(el.querySelectorAll('li')).map(
+						(li) => li.outerHTML || '',
+					);
+					extractedContent.push(...listItems);
+				} else {
+					extractedContent.push(el.outerHTML || el.textContent?.trim() || '');
+				}
+			});
+			handleBlur(extractedContent);
+		} else {
+			handleBlur(currentContent);
+		}
+	};
 
 	useEffect(() => {
 		if (editorRef.current && !quillInstanceRef.current) {
@@ -375,7 +383,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 			if (isKeyOfThemeColorConfig(templateKey)) {
 				const themeColors = themeColorConfigData[templateKey].color;
 				//console.log(customizedToolbarOptions)
-				customizedToolbarOptions.forEach((option: any) => {
+				Array.from(customizedToolbarOptions).forEach((option: any) => {
 					if (Array.isArray(option)) {
 						// Ensuring the option is an array of toolbar items
 						option.forEach((item) => {
@@ -461,14 +469,14 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 						const formats = quill.getFormat(range.index, range.length);
 						const originalListFormat = formats['list'];
 
-						Object.keys(formats).forEach((format: string) => {
+						Array.from(Object.keys(formats)).forEach((format: string) => {
 							quill.format(format, false, Quill.sources.USER);
 						});
 						if (originalListFormat) {
 							quill.format('list', originalListFormat, Quill.sources.USER);
 						}
-						(
-							Object.keys(defaultFormats) as Array<keyof typeof defaultFormats>
+						Array.from(
+							Object.keys(defaultFormats) as Array<keyof typeof defaultFormats>,
 						).forEach((formatKey) => {
 							const formatValue = defaultFormats[formatKey];
 							if (formatValue !== undefined) {
@@ -632,7 +640,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 				const currentContent = quillInstanceRef.current?.root.innerHTML;
 				if (currentContent !== undefined) {
 					isTextChangeRef.current = false;
-					processAndSaveContent(currentContent)
+					processAndSaveContent(currentContent);
 				}
 			});
 		}

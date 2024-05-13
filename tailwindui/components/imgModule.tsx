@@ -1027,7 +1027,7 @@ export const ImgModule = ({
 					// handleConfirmClick={handleConfirmClick}
 				/> */}
 				<YoutubeEmbed
-					layout={slides[slideIndex].layout}
+					layout={isSlide ? slides[slideIndex].layout : ''}
 					link={currentYoutubeUrl}
 				></YoutubeEmbed>
 				{selectedQueryMode === ImgQueryMode.EMBED_CODE && currentYoutubeUrl && (
@@ -1478,7 +1478,8 @@ export const ImgModule = ({
 								isPreview={!canEdit}
 							/>
 						</div>
-					) : embed_code &&
+					) : isSlide &&
+					  embed_code &&
 					  embed_code[currentContentIndex] &&
 					  media_types &&
 					  media_types[currentContentIndex] === 'embed' ? ( // embed code
@@ -1494,7 +1495,7 @@ export const ImgModule = ({
 							></div> */}
 							<YoutubeEmbed
 								link={currentYoutubeUrl}
-								layout={slides[slideIndex].layout}
+								layout={isSlide ? slides[slideIndex].layout : ''}
 							></YoutubeEmbed>
 						</div>
 					) : !imgsrc || imgLoadError ? ( // upload icon

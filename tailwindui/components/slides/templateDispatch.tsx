@@ -143,7 +143,7 @@ export const templateDispatch = (
 	let totalContentLength = 0;
 	let maxContentLength = 0;
 	if (slide.content) {
-		slide.content.forEach((sentence) => {
+		Array.from(slide.content).forEach((sentence) => {
 			if (sentence) {
 				totalContentLength += sentence.length;
 				if (sentence.length > maxContentLength) {

@@ -686,11 +686,14 @@ export const img_1_template3 = ({
 };
 
 export default {
+	// casual topic layouts
 	Col_2_img_1: Col_2_img_1,
 	First_page_img_1: First_page_img_1,
 	Col_1_img_0: Col_1_img_0,
+	// template2 serious subject
 	First_page_img_1_template2: First_page_img_1_template2,
 	img_0_template2: img_0_template2,
+	// template3 reading notes
 	First_page_img_1_template3: First_page_img_1_template3,
 	img_1_template3: img_1_template3,
 };
