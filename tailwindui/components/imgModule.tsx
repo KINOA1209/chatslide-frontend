@@ -1396,13 +1396,13 @@ export const ImgModule = ({
 										handleMouseOut(e, ImgQueryMode.EMBED_CODE);
 									}}
 								>
-									Embed
+									YouTube
 								</button>
 							</div>
 							{/* sliding animation */}
 							<div className='w-full bg-slate-200 mb-2'>
 								<div
-									className={`w-1/4 h-[2px] bg-black
+									className={`w-1/5 h-[2px] bg-black
 										${hoverQueryMode == ImgQueryMode.SEARCH && 'ml-0'} 
 										${hoverQueryMode == ImgQueryMode.RESOURCE && 'ml-[20%]'} 
 										${hoverQueryMode == ImgQueryMode.GENERATION && 'ml-[40%]'} 
