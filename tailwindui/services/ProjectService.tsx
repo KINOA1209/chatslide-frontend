@@ -83,7 +83,6 @@ class ProjectService {
 		token: string,
 		project_id: string,
 		server_side: boolean = false, // if true, fetch use abs url
-		mode: string = '',
 	): Promise<Project> {
 		//console.log(`Fetching project details.`);
 		const headers = new Headers();
@@ -103,7 +102,7 @@ class ProjectService {
 			const response = await fetch(url, {
 				method: 'POST',
 				headers: headers,
-				body: JSON.stringify({ project_id: project_id, mode: mode }),
+				body: JSON.stringify({ project_id: project_id }),
 			});
 
 			if (!response.ok) {
@@ -177,10 +176,11 @@ class ProjectService {
 
 				if (need_folder) {
 					return {
-						projects: data.projects,
-						empty_groups: data.empty_groups || [],
-					};
-				} else {
+						'projects': data.projects,
+						'empty_groups': data.empty_groups || []
+					}
+				}
+				else {
 					return data.projects;
 				}
 			} else {
@@ -347,8 +347,7 @@ class ProjectService {
 					slideData.images.filter((img: string) => img && img !== '') || [];
 				slide.theme = slideData.theme;
 				slide.content = slideData.content || ['Your content here'];
-				slide.section_title =
-					slideData.section_title || 'Your section title here';
+				slide.section_title = slideData.section_title || 'Your section title here';
 				slide.brief = slideData.brief || 'Your brief here';
 				slide.original_title = slideData.original_title;
 				slide.title = slideData.title || '';
@@ -356,8 +355,8 @@ class ProjectService {
 					slideData.illustration !== null
 						? slideData.illustration
 						: [
-								'https://stories.freepiklabs.com/storage/61572/life-in-a-city-cuate-9773.png',
-							];
+							'https://stories.freepiklabs.com/storage/61572/life-in-a-city-cuate-9773.png',
+						];
 				slide.quote = slideData.quote || 'Your quote here';
 				slide.source = slideData.source || '';
 				slide.chart = slideData.chart;
@@ -373,7 +372,7 @@ class ProjectService {
 	static async exportToFileBackend(
 		token: string,
 		project_id: string,
-		type: 'pdf' | 'pptx' | 'key',
+		type: 'pdf' | 'pptx' | 'key'
 	): Promise<void> {
 		const headers = new Headers();
 		if (token) {
@@ -392,10 +391,7 @@ class ProjectService {
 			fetch(endpoint, {
 				method: 'POST',
 				headers: headers,
-				body: JSON.stringify({
-					project_id: project_id,
-					to_key: type === 'key',
-				}),
+				body: JSON.stringify({ project_id: project_id, to_key: type === 'key' }),
 			});
 		} catch (error) {
 			console.error('Error exporting to pdf:', error);
@@ -514,7 +510,7 @@ class ProjectService {
 				Authorization: `Bearer ${token}`,
 			},
 			body: JSON.stringify({
-				group_name: folder_name,
+				group_name: folder_name
 			}),
 		});
 		return response.ok;
