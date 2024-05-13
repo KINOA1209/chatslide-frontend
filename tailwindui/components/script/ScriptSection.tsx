@@ -10,10 +10,7 @@ import { FiPause, FiPlay } from 'react-icons/fi';
 import Slide from '@/models/Slide';
 import { useProject } from '@/hooks/use-project';
 import VideoService from '@/services/VideoService';
-import { Loading } from '../ui/Loading';
 import { SpinIcon } from '@/app/(feature)/icons';
-import { calculateNonPresentScale } from '../slides/SlidesHTML';
-import { WrappableRow } from '../layout/WrappableRow';
 
 const ScriptSection: React.FC<{
 	slides: Array<Slide>;
@@ -22,7 +19,7 @@ const ScriptSection: React.FC<{
 	voiceStyle: string;
 	updateSlidePage: (index: number, slide: Slide) => void;
 }> = ({ slides, index, voice, voiceStyle, updateSlidePage }) => {
-	const [scale, setScale] = useState(0.4);
+	const [scale, setScale] = useState(window.innerWidth / 1920 * 0.6);
 	const [isPlaying, setIsPlaying] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 	// Add a state to store the audio element
@@ -30,15 +27,14 @@ const ScriptSection: React.FC<{
 	const { token } = useUser();
 	const { project } = useProject();
 
-	// useEffect(() => {
-	// 	const handleResize = () => {
-	// 		setScale(calculateNonPresentScale(window.innerWidth, window.innerHeight) * 0.5);
-	// 	};
-
-	// 	window.addEventListener('resize', handleResize);
-
-	// 	return () => window.removeEventListener('resize', handleResize);
-	// }, []);
+  // reset scale on resize
+  useEffect(() => {
+    const handleResize = () => {
+      setScale(window.innerWidth / 1920 * 0.6);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
 	const playScript = async () => {
 		const script = slides[index].transcript || '';
