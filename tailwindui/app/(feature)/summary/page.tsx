@@ -107,7 +107,7 @@ const AdvancedOptions: React.FC<{
 					name='outline_structure_mode'
 					options={[
 						{ value: 'custom', text: 'General Structure' },
-						{ value: 'my_outline', text: 'Detailed Outline' },
+						{ value: 'my_outline', text: 'My Own Outline' },
 						{ value: 'follow_resource', text: 'Structure of a Source' },
 					]}
 					selectedValue={structureMode}
