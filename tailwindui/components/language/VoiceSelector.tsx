@@ -160,14 +160,15 @@ const VoiceSelector: React.FC<{
 										{formatVoiceName(voice)}
 									</option>
 								))}
-								{AZURE_MULTILINGUAL_VOICE_OPTIONS[selectedGender].map(
-									(voice) => (
-										<option key={voice} value={voice}>
-											{formatVoiceName(voice)}
-										</option>
-									),
-								)}
-								{OAI_VOICE_OPTIONS[selectedGender].map((voice) => (
+								{selectedLanguage !== 'en-UK' &&
+									AZURE_MULTILINGUAL_VOICE_OPTIONS[selectedGender].map(
+										(voice) => (
+											<option key={voice} value={voice}>
+												{formatVoiceName(voice)}
+											</option>
+										),
+									)}
+								{selectedLanguage !== 'en-UK' && OAI_VOICE_OPTIONS[selectedGender].map((voice) => (
 									<option key={voice} value={voice}>
 										{formatVoiceName(voice)}
 									</option>
