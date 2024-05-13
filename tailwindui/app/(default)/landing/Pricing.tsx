@@ -120,7 +120,7 @@ const PricingComparison: React.FC<{
 		// special for lifetime ultimate
 		if (interval === 'lifetime') {
 			if (tier === 'ULTIMATE') {
-				amount = user?.ltd_upgrade_price || 236;
+				amount = user?.ltd_upgrade_price || 354;
 				return (
 					<span className='text-green-600'>
 						{currency + amount.toFixed(2)}
@@ -169,7 +169,7 @@ const PricingComparison: React.FC<{
 			case 'lifetime':
 				return (
 					<span className='text-gray-600'>
-						<s>{currency + (getOriginalPrice(tier) * 20).toFixed(2)}</s>
+						<s>{currency + (getOriginalPrice(tier) * 30).toFixed(2)}</s>
 					</span>
 				);
 		}

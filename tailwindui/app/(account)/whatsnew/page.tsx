@@ -21,9 +21,6 @@ export default function Studio() {
 						🎰 Directly add scripts, voiceover, and avatar to PPTX
 					</Instruction>
 					<Instruction>
-						📈 Price increase for ULTIMATE LIFETIME to $354 on May 11th
-					</Instruction>
-					<Instruction>
 						👨🏻‍💻 We are hiring Engineering Interns
 						<a
 							href='https://twitter.com/chatslide_ai/status/1787564603997921582'
