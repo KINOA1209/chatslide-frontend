@@ -359,7 +359,7 @@ export default function Dashboard() {
 
 						{/* create new project button */}
 						<div className='flex flex-row gap-2'>
-							{activeFolder === 'drlambda-default' && (
+							{activeFolder === 'drlambda-default' && projects.length > 0 && (
 								<DesignSystemButton
 									isPaidFeature={false}
 									size='lg'
