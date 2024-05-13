@@ -296,14 +296,6 @@ export default function Dashboard() {
 				prevFolderName,
 				renameInput,
 			);
-
-			setFolders((prevFolders) =>
-				prevFolders.map((folder) =>
-					folder.folderName === prevFolderName
-						? { ...folder, folderName: renameInput }
-						: folder,
-				),
-			);
 			setFolders((prevFolders) => {
 				// Map through folders to find and update the renamed folder
 				const updatedFolders = prevFolders.map((folder) =>
@@ -370,7 +362,7 @@ export default function Dashboard() {
 
 						{/* create new project button */}
 						<div className='flex flex-row gap-2'>
-							{activeFolder === 'drlambda-default' && (
+							{activeFolder === 'drlambda-default' && projects.length > 0 && (
 								<DesignSystemButton
 									isPaidFeature={false}
 									size='lg'

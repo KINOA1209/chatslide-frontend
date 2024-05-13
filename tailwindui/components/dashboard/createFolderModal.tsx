@@ -6,6 +6,8 @@ import { BigBlueButton } from '../button/DrlambdaButton';
 import { useUser } from '@/hooks/use-user';
 import Folder from '@/models/Folder';
 import { InputBox } from '../ui/InputBox';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const CreateFolderModal: React.FC<{
     showCreateFolderModal: boolean;
@@ -54,6 +56,16 @@ const CreateFolderModal: React.FC<{
                 } else {
                     // Handle server-side errors (e.g., group already exists)
                     console.error('Failed to create folder:', data.message);
+                    toast.error(data.message, {
+                        position: 'top-center',
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: 'light',
+                    });
                 }
             } catch (error) {
                 // Handle errors in the fetch operation
