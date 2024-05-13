@@ -71,11 +71,8 @@ export default function Dashboard() {
 
 	useEffect(() => {
 		//folder drlambda-default is not shown
-		if (folders.length > 1) {
-			setHasFolder(true);
-		} else {
-			setHasFolder(false);
-		}
+		const nonDefaultFoldersExist = folders.some(folder => folder.folderName !== 'drlambda-default');
+		setHasFolder(nonDefaultFoldersExist);
 	}, [folders]);
 
 	const fetchProjects = async () => {
@@ -362,7 +359,7 @@ export default function Dashboard() {
 
 						{/* create new project button */}
 						<div className='flex flex-row gap-2'>
-							{activeFolder === 'drlambda-default' && projects.length > 0 && (
+							{activeFolder === 'drlambda-default' && (
 								<DesignSystemButton
 									isPaidFeature={false}
 									size='lg'
