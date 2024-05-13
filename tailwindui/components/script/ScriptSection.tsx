@@ -19,7 +19,7 @@ const ScriptSection: React.FC<{
 	voiceStyle: string;
 	updateSlidePage: (index: number, slide: Slide) => void;
 }> = ({ slides, index, voice, voiceStyle, updateSlidePage }) => {
-	const [scale, setScale] = useState(window.innerWidth / 1920 * 0.6);
+	const [scale, setScale] = useState(calculateScale());
 	const [isPlaying, setIsPlaying] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 	// Add a state to store the audio element
@@ -27,10 +27,21 @@ const ScriptSection: React.FC<{
 	const { token } = useUser();
 	const { project } = useProject();
 
+  function calculateScale() {
+    const width = window.innerWidth;
+    if (width > 1024) {
+      return ((width - 400) / 1920) * 0.8; // 400 is for chatbot
+    } else if (width > 640) {
+      return (width - 400) / 1920; // vertical 
+    } else {
+      return width / 1920 * 0.8; // no chatbot
+    }
+  }
+
   // reset scale on resize
   useEffect(() => {
     const handleResize = () => {
-      setScale(window.innerWidth / 1920 * 0.6);
+      setScale(calculateScale());
     };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
