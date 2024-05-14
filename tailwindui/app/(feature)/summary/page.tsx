@@ -160,9 +160,9 @@ const AdvancedOptions: React.FC<{
 							select one source here.
 						</Explanation>
 						{selectedResources.length == 0 ? ( // my_resource
-							<WarningMessage>
+							<ErrorMessage>
 								Add a source / file to enable this feature.
-							</WarningMessage>
+							</ErrorMessage>
 						) : (
 							<DropDown
 								value={resourceToFollowStructureFrom?.id}
