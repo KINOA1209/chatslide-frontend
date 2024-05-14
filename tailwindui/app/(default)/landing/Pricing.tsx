@@ -272,6 +272,7 @@ const PricingComparison: React.FC<{
 			<Explanation>
 				{interval === 'onetime' &&
 					'You can also use this as a top-up for your other plans'}
+				{interval === 'monthly' && 'Cancel anytime'}
 				{interval === 'lifetime' && '14 day money back guarantee'}
 				{interval === 'yearly' && '3 day money back guarantee'}
 			</Explanation>
