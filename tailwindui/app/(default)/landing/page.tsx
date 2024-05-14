@@ -2191,7 +2191,10 @@ function Landing() {
 										</a>
 									</li>
 									<li className='brix---footer-list-item'>
-										<a href='/affiliate' className='brix---footer-link'>
+										<a
+											href='https://blog.drlambda.ai/how-to-make-money-with-your-high-quality-content-using-chatslide-ai/'
+											className='brix---footer-link'
+										>
 											Affiliate Program 💵
 										</a>
 									</li>
