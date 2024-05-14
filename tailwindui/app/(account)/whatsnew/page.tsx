@@ -28,11 +28,35 @@ export default function Studio() {
 				</Card>
 
 				<Card>
+					<BigTitle>May 13</BigTitle>
+					<Instruction>
+						<div>
+							<b>🧠 GPT-4o is Here: </b> Now paid users have access to the
+							latest GPT model, enjoy the faster response!
+						</div>
+					</Instruction>
+					<Instruction>
+						<div>
+							<b>🌈 Custom Text Color: </b> You can pick custom color for different
+							parts of your text on slides.
+						</div>
+					</Instruction>
+					<Instruction>
+						<div>
+							<b>👀 UX Improvements and Bugfixes: </b> We did a number of UX
+							improvements and bugfixes. The missing image issue when exporting
+							is resolved. Creating charts also gets more stable.
+						</div>
+					</Instruction>
+				</Card>
+
+				<Card>
 					<BigTitle>May 12</BigTitle>
 					<Instruction>
 						<div>
-							<b>📈 Chat with Charts (Beta): </b> The Beta version is available to all ULTIMATE users. 
-							This feature will be released to all PRO users once we believe it is stable and accurate.
+							<b>📈 Chat with Charts (Beta): </b> The Beta version is available
+							to all ULTIMATE users. This feature will be released to all PRO
+							users once we believe it is stable and accurate.
 						</div>
 					</Instruction>
 					<Instruction>
