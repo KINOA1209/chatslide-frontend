@@ -18,12 +18,14 @@ import { LogoPosition } from '@/models/Slide';
 export const BrandingButton: React.FC<{}> = () => {
 	const { project, updateProject } = useProject();
 	const {
+		slides,
 		isShowingLogo,
 		updateLogoUrl,
 		updateBackgroundUrl,
 		hideLogo,
 		showLogo,
 		removeUserName,
+		updateTemplateLogoPosition,
 	} = useSlides();
 	const { isPaidUser } = useUser();
 
@@ -39,8 +41,16 @@ export const BrandingButton: React.FC<{}> = () => {
 			document.removeEventListener('change_logo', (e) => {
 				setShowModal(true);
 			});
-    }
+		};
 	}, []);
+
+	const handleConfirm = () => {
+		updateTemplateLogoPosition(selectedTemplateLogoPosition);
+		setShowModal(false);
+	};
+
+	const [selectedTemplateLogoPosition, setSelectedTemplateLogoPosition] =
+		useState(slides[0]?.logo_position || 'BottomLeft');
 
 	return (
 		<>
@@ -49,7 +59,7 @@ export const BrandingButton: React.FC<{}> = () => {
 				setShowModal={setShowModal}
 				title='Branding'
 				description='Select customized logo and background for your slides.'
-				onConfirm={() => setShowModal(false)}
+				onConfirm={handleConfirm}
 			>
 				<BrandingSelector
 					showLogo={isShowingLogo}
@@ -83,10 +93,12 @@ export const BrandingButton: React.FC<{}> = () => {
 							updateBackgroundUrl('');
 						}
 					}}
-					logoPosition={project?.logo_position || 'BottomLeft'}
-					setLogoPosition={(selectedLogoPosition: LogoPosition) => {
-						updateProject('logo_position', selectedLogoPosition);
-					}}
+					// logoPosition={project?.logo_position || 'BottomLeft'}
+					// setLogoPosition={(selectedLogoPosition: LogoPosition) => {
+					// 	updateProject('logo_position', selectedLogoPosition);
+					// }}
+					logoPosition={selectedTemplateLogoPosition}
+					setLogoPosition={setSelectedTemplateLogoPosition}
 				/>
 				<Instruction>
 					Change branding color and fonts on
