@@ -7,6 +7,7 @@ interface YoutubeEmbedProps {
 	// width: string;
 	// height: string;
 	layout: LayoutKeys;
+	canEdit: boolean; // New prop indicating if editing is allowed
 }
 
 interface IFrameDimensions {
@@ -47,7 +48,11 @@ const getYoutubeEmbedId = (link: string): string | null => {
 	return match ? match[1] : null;
 };
 
-const YoutubeEmbed: React.FC<YoutubeEmbedProps> = ({ link, layout }) => {
+const YoutubeEmbed: React.FC<YoutubeEmbedProps> = ({
+	link,
+	layout,
+	canEdit,
+}) => {
 	const embedId = getYoutubeEmbedId(link);
 
 	if (!embedId) {
@@ -65,6 +70,17 @@ const YoutubeEmbed: React.FC<YoutubeEmbedProps> = ({ link, layout }) => {
 		return <div>Invalid YouTube link</div>;
 	}
 
+	const iframeStyle: React.CSSProperties = {
+		position: 'absolute',
+		top: 0,
+		left: 0,
+		width: '100%',
+		height: '100%',
+	};
+
+	// Conditionally apply pointer-events based on the value of canEdit
+	const iframePointerEvents = canEdit ? 'auto' : 'none';
+
 	return (
 		<div
 			className='video-responsive'
@@ -76,22 +92,19 @@ const YoutubeEmbed: React.FC<YoutubeEmbedProps> = ({ link, layout }) => {
 				position: 'relative',
 			}}
 		>
-			<iframe
-				width='100%'
-				height='100%'
-				src={`https://www.youtube.com/embed/${embedId}`}
-				frameBorder='0'
-				allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
-				allowFullScreen
-				title='Embedded youtube'
-				style={{
-					position: 'absolute',
-					top: 0,
-					left: 0,
-					width: '100%',
-					height: '100%',
-				}}
-			/>
+			{/* Conditionally render iframe based on canEdit */}
+			{
+				<iframe
+					width='100%'
+					height='100%'
+					src={`https://www.youtube.com/embed/${embedId}`}
+					frameBorder='0'
+					allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+					allowFullScreen
+					title='Embedded youtube'
+					style={{ ...iframeStyle, pointerEvents: iframePointerEvents }}
+				/>
+			}
 		</div>
 	);
 };
