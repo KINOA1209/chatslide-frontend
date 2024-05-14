@@ -232,7 +232,7 @@ export const ChangeTemplateOptions: React.FC<{}> = ({}) => {
 				showModal={showModal}
 				setShowModal={setShowModal}
 				// title='Change Template'
-				title='Set Theme'
+				title='Theme Template'
 				// description='Select a template for your slides'
 				onConfirm={handleConfirm}
 			>

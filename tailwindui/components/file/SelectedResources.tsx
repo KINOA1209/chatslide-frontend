@@ -65,7 +65,7 @@ const ResourceEntry: React.FC<ResourceEntryProps> = ({
 							<FiSearch
 								className={`w-[20px] h-[20px] ${runningOCR && 'animate-bounce'}`}
 							/>
-							OCR
+							OCR (English)
 							{!isPaidUser && <PlusLabel />}
 						</span>
 					</button>
