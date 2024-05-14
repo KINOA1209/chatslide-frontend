@@ -127,7 +127,7 @@ export const useProject = () => {
 		// remove empty entries
 		const outlinesCopy = [...outlines];
 		for (let i = 0; i < outlinesCopy.length; i++) {
-			outlinesCopy[i].content = outlinesCopy[i].content.filter((s) => {
+			outlinesCopy[i].content = outlinesCopy[i].content?.filter((s) => {
 				return s.length > 0;
 			});
 		}
