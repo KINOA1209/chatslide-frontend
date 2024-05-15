@@ -39,16 +39,16 @@ export default function ResetPassword(): JSX.Element {
 			setEmailSent(true);
 			setErrorMessage('');
 		} catch (error) {
-			console.error('Error sending code: ', error);
+			// console.error('Error sending code: ', error);
 			if (typeof error === 'string') {
 				setErrorMessage(
 					error +
-						'Sign in with Google does not support resetting password yet.',
+						' If you signed up with Google, please choose Sign In with Google',
 				);
 			} else if (error instanceof Error && error.message) {
 				setErrorMessage(
 					error.message +
-						'Sign in with Google does not support resetting password yet.',
+						' If you signed up with Google, please choose Sign In with Google',
 				);
 			} else {
 				setErrorMessage(

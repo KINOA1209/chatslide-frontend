@@ -28,6 +28,8 @@ const PdfPage: React.FC<PdfPageProps> = ({ project_id, page = 1 }) => {
 				const project = await ProjectService.getProjectDetails(
 					token,
 					project_id,
+					false,
+					'toPDF',
 				);
 
 				// Check if presentation_slides is defined before parsing

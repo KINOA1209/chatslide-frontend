@@ -73,7 +73,7 @@ const ScriptEditor: React.FC<TranscriptEditorProps> = ({
 		>
 			{isPaidUser || currentSlideIndex < 5 ? (
 				<TextareaAutosize
-					className={`grow px-4 py-2 w-full h-full border-none text-gray-700 text-xs font-normal focus:ring-0 ${tight && 'leading-tight'}`}
+					className={`grow px-4 py-2 w-full h-full border-none text-gray-700 text-xs lg:text-sm 2xl:text-base font-normal focus:ring-0 ${tight && 'leading-tight'}`}
 					value={script}
 					onChange={(e: any) => {
 						setScript(e.target.value);

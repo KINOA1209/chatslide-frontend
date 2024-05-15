@@ -101,10 +101,10 @@ const ctas = [
 		condition: ({ tier }: { tier: string }) => tier === 'PRO_LIFETIME',
 	},
 	{
-		href: '/affiliate',
+		href: 'https://blog.drlambda.ai/how-to-make-money-with-your-high-quality-content-using-chatslide-ai/',
 		imgSrc: FillOutFormImg.src,
-		alt: 'Join affiliate program',
-		instruction: 'Join affiliate program',
+		alt: 'Monetize your content',
+		instruction: 'Monetize your content',
 		emoji: '💸💸💸💸💸',
 		explanation: '5 mins',
 	},

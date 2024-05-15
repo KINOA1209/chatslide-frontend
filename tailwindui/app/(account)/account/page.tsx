@@ -349,7 +349,7 @@ const Affiliate = () => {
 				<div className='flex flex-col gap-y-1'>
 					<span>
 						Share your love for {getBrand()} and make real money by inviting
-						your friends and connections to join!
+						your friends, audiences, and connections to join!
 					</span>
 					<span>
 						You will get <strong>30%</strong> commission on all their purchases,
@@ -362,7 +362,10 @@ const Affiliate = () => {
 				</div>
 			</Instruction>
 			<Instruction>
-				<a href='/affiliate' className='text-blue-600'>
+				<a
+					href='https://blog.drlambda.ai/how-to-make-money-with-your-high-quality-content-using-chatslide-ai/'
+					className='text-blue-600'
+				>
 					Learn more about affiliate program.{' '}
 				</a>
 			</Instruction>
@@ -391,7 +394,10 @@ const Affiliate = () => {
 						maxLength={50}
 						icon={<FaMoneyBill className='text-gray-600' />}
 					/>
-					<BigBlueButton onClick={handleUpdateRewardfulCode} isSubmitting={isSubmitting}>
+					<BigBlueButton
+						onClick={handleUpdateRewardfulCode}
+						isSubmitting={isSubmitting}
+					>
 						Update
 					</BigBlueButton>
 				</div>
@@ -407,7 +413,10 @@ const Affiliate = () => {
 						this link.
 					</span>
 					<br />
-					<a href='/affiliate' className='text-blue-600'>
+					<a
+						href='https://blog.drlambda.ai/how-to-make-money-with-your-high-quality-content-using-chatslide-ai/'
+						className='text-blue-600'
+					>
 						Learn more.{' '}
 					</a>
 				</Explanation>

@@ -88,8 +88,8 @@ export default function Page() {
 								unoptimized
 								src={chartUrl}
 								alt='Chart'
-								width={400}
-								height={300}
+								width={720}
+								height={540}
 								// layout='fixed'
 							/>
 						) : (

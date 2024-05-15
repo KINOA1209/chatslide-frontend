@@ -105,16 +105,16 @@ const PricingComparison: React.FC<{
 		// apply discounts
 		switch (interval) {
 			case 'onetime':
-				amount = amount * 0.6;
+				amount = amount;
 				break;
 			case 'monthly':
-				amount = amount * (firstTime ? 0.6 : 1);
+				amount = amount * (firstTime ? 0.7 : 1);  // 30% off first time
 				break;
 			case 'yearly':
-				amount = amount * 0.6;
+				amount = amount * 0.6;  // 40% off forever
 				break;
 			case 'lifetime':
-				amount = amount * 10;
+				amount = amount * 14;  // original price is * 20, so this is a 30% off discount
 		}
 
 		// special for lifetime ultimate
@@ -124,14 +124,14 @@ const PricingComparison: React.FC<{
 				return (
 					<span className='text-green-600'>
 						{currency + amount.toFixed(2)}
-						<span className='text-xs'>-80%</span>
+						<span className='text-xs'>-70%</span>
 					</span>
 				);
 			} else {
 				return (
 					<span>
 						{currency + amount.toFixed(2)}
-						<span className='text-xs'> -50%</span>
+						<span className='text-xs'> -30%</span>
 					</span>
 				);
 			}
@@ -156,7 +156,7 @@ const PricingComparison: React.FC<{
 	const getSecondLine = (tier: Tier): string | JSX.Element => {
 		switch (interval) {
 			case 'onetime':
-				return '7 day access';
+				return '30 day access';
 			case 'monthly':
 				return 'then ' + getPrice(tier);
 			case 'yearly':
@@ -246,7 +246,7 @@ const PricingComparison: React.FC<{
 		<div className='flex flex-col items-center overflow-y-scroll overflow-x-scroll notranslate'>
 			<MultiwayToggle
 				options={[
-					{ key: 'onetime', text: '7-Day' },
+					{ key: 'onetime', text: '30-Day' },
 					{ key: 'monthly', text: 'Monthly' },
 					{
 						key: 'yearly',
@@ -272,6 +272,7 @@ const PricingComparison: React.FC<{
 			<Explanation>
 				{interval === 'onetime' &&
 					'You can also use this as a top-up for your other plans'}
+				{interval === 'monthly' && 'Cancel anytime'}
 				{interval === 'lifetime' && '14 day money back guarantee'}
 				{interval === 'yearly' && '3 day money back guarantee'}
 			</Explanation>
@@ -329,9 +330,7 @@ const PricingComparison: React.FC<{
 						</div>
 					</div>
 					<div className={`brix---pricing-content-wrapper-left${smallSuffix}`}>
-						<div className='brix---text-300-medium'>
-							📈 Smart table (coming)
-						</div>
+						<div className='brix---text-300-medium'>📈 Smart chart</div>
 					</div>
 					<div className={`brix---pricing-content-wrapper-left${smallSuffix}`}>
 						<div className='brix---text-300-medium'>
@@ -451,9 +450,7 @@ const PricingComparison: React.FC<{
 						<div className='brix---pricing-v8-title-table'>
 							<div className='brix---text-300-medium'>⬇️ Export slides</div>
 						</div>
-						<div className='brix---text-300-medium'>
-							PDF and <b>PPTX</b>
-						</div>
+						<div className='brix---text-300-medium'>PDF, PPTX, Key</div>
 					</div>
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className='brix---pricing-v8-title-table'>
@@ -568,9 +565,7 @@ const PricingComparison: React.FC<{
 						<div className='brix---pricing-v8-title-table'>
 							<div className='brix---text-300-medium'>⬇️ Export slides</div>
 						</div>
-						<div className='brix---text-300-medium'>
-							PDF and <b>PPTX</b>
-						</div>
+						<div className='brix---text-300-medium'>PDF, PPTX, Key</div>
 					</div>
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className='brix---pricing-v8-title-table'>
@@ -632,14 +627,9 @@ const PricingComparison: React.FC<{
 					</div>
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className='brix---pricing-v8-title-table'>
-							<div className='brix---text-300-medium'>
-								📈 Smart table (coming)
-							</div>
+							<div className='brix---text-300-medium'>📈 Smart chart</div>
 						</div>
-						<img
-							src='images/check-icon-brix-templates.svg'
-							alt='Check - Elements Webflow Library - BRIX Templates'
-						/>
+						<div className='brix---text-300-medium'>Coming</div>
 					</div>
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className='brix---pricing-v8-title-table'>
@@ -711,9 +701,7 @@ const PricingComparison: React.FC<{
 						<div className='brix---pricing-v8-title-table'>
 							<div className='brix---text-300-medium'>⬇️ Export slides</div>
 						</div>
-						<div className='brix---text-300-medium'>
-							PDF and <b>PPTX</b>
-						</div>
+						<div className='brix---text-300-medium'>PDF, PPTX, Key</div>
 					</div>
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className='brix---pricing-v8-title-table'>
@@ -775,14 +763,11 @@ const PricingComparison: React.FC<{
 					</div>
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className='brix---pricing-v8-title-table'>
-							<div className='brix---text-300-medium'>
-								📈 Smart table (coming)
-							</div>
+							<div className='brix---text-300-medium'>📈 Smart chart</div>
 						</div>
-						<img
-							src='images/check-icon-brix-templates.svg'
-							alt='Check - Elements Webflow Library - BRIX Templates'
-						/>
+						<div className='brix---text-300-medium'>
+							Preview
+						</div>
 					</div>
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className='brix---pricing-v8-title-table'>

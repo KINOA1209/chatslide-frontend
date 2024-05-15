@@ -87,7 +87,7 @@ const LinkInput = ({
 
 			setSelectedResources((prevList) => [pageDetails, ...prevList]);
 		} catch (error: any) {
-			console.error('Error reading webpage details: ', error);
+			console.warn('Error reading webpage details: ', error);
 			setLinkError('This webpage does not allow being read.');
 		}
 		setIsAddingLink(false);

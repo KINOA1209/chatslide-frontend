@@ -161,8 +161,11 @@ const ShareButton: React.FC<ShareButtonProps> = ({
 					{!user?.rewardful_code && (
 						<>
 							<Instruction>
-								<a href='/affiliate' className='text-blue-600'>
-									Get cash rewards for your high quality contents
+								<a
+									href='https://blog.drlambda.ai/how-to-make-money-with-your-high-quality-content-using-chatslide-ai/'
+									className='text-blue-600'
+								>
+									Monetize your high quality contents
 								</a>
 							</Instruction>
 							{/* <Explanation>

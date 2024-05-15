@@ -24,12 +24,11 @@ const LoginForm: React.FC = () => {
 			await AuthService.signIn(email, password);
 			router.push('/sso');
 		} catch (error: any) {
-			console.error(error);
+			// console.error(error);
 			let message = error.message || 'An error occurred';
 			console.log('message', message);
 			if (message == 'User does not exist.') {
-				message +=
-					' Please sign up first. Please also try Sign in with Google.';
+				message = 'Please sign up first. If you signed up with Google, please sign in with Google.';
 			}
 			toast.error(message, {
 				position: 'top-center',

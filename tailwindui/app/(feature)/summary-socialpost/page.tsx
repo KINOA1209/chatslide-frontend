@@ -286,7 +286,7 @@ export default function Topic_SocialPost() {
 
 			setSelectedResources((prevList) => [...prevList, pageDetails]);
 		} catch (error: any) {
-			console.error('Error reading webpage details: ', error);
+			console.warn('Error reading webpage details: ', error);
 			setLinkError('Error reading webpage details');
 		}
 		setIsAddingLink(false);

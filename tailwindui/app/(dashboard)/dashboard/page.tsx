@@ -65,6 +65,10 @@ export default function Dashboard() {
 	// }, [projects]);
 
 	// useEffect(() => {
+	// 	console.log('Current Projects updated:', currentProjects)
+	// }, [currentProjects])
+
+	// useEffect(() => {
 	// 	// Handle logic when folders change
 	// 	console.log('Folders updated:', folders);
 	// }, [folders]);
@@ -203,8 +207,21 @@ export default function Dashboard() {
 		try {
 			const response = await ProjectService.deleteProject(token, deleteInd);
 
-			setProjects(projects.filter((proj) => proj.id !== deleteInd));
-			setCurrentProjects(projects.filter((proj) => proj.id !== deleteInd));
+			// setProjects(projects.filter((proj) => proj.id !== deleteInd));
+			// setCurrentProjects(currentProjects.filter((proj) => proj.id !== deleteInd));
+			const updatedProjects = projects.filter(proj => proj.id !== deleteInd);
+			setProjects(updatedProjects);
+
+			// const updatedCurrentProjects = updatedProjects.filter(proj => proj.project_group_name === activeFolder);
+			// setCurrentProjects(updatedCurrentProjects);
+
+			const updatedFolders = folders.map(folder => ({
+				...folder,
+				projects: folder.projects.filter(proj => proj.id !== deleteInd)
+			}));
+
+			setFolders(updatedFolders);
+
 		} catch (error: any) {
 			toast.error(error.message, {
 				position: 'top-center',
@@ -359,7 +376,7 @@ export default function Dashboard() {
 
 						{/* create new project button */}
 						<div className='flex flex-row gap-2'>
-							{activeFolder === 'drlambda-default' && (
+							{activeFolder === 'drlambda-default' && projects.length > 0 && (
 								<DesignSystemButton
 									isPaidFeature={false}
 									size='lg'
@@ -396,16 +413,16 @@ export default function Dashboard() {
 						<div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4'>
 							{activeFolder !== 'drlambda-default' ? (
 								<FolderItem
-                  folder={{
-                    folderName: 'drlambda-default',
-                    projects: [],
-                  }}
-                  handleFolderDoubleClick={handleFolderDoubleClick}
-                  handleDeleteFolder={handleDeleteFolder}
-                  handleRenameFolder={handleRenameFolder}
-                  moveProjectToFolder={moveProjectToFolder}
-                  index={0}
-                />
+									folder={{
+										folderName: 'drlambda-default',
+										projects: [],
+									}}
+									handleFolderDoubleClick={handleFolderDoubleClick}
+									handleDeleteFolder={handleDeleteFolder}
+									handleRenameFolder={handleRenameFolder}
+									moveProjectToFolder={moveProjectToFolder}
+									index={0}
+								/>
 							) : (
 								folders
 									.filter((folder) => folder.folderName !== 'drlambda-default')
@@ -444,11 +461,10 @@ export default function Dashboard() {
 							/>
 						) : (
 							<Blank
-								text={`${
-									activeFolder === 'drlambda-default'
+								text={`${activeFolder === 'drlambda-default'
 										? "You haven't created any project yet."
 										: `No projects found in ${activeFolder}.`
-								}`}
+									}`}
 							/>
 						)
 					) : (

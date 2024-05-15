@@ -90,6 +90,9 @@ const GenerateSlidesSubmit = ({
 			return Object.values(JSON.parse(convertedOutlineJSON.data.outlines));
 		} catch (error) {
 			console.error('Failed to convert plain text to outlines:', error);
+			toast.error(
+				'Failed to convert plain text to outlines. Please try again later.',
+			);
 			return null;
 		}
 	};
@@ -107,6 +110,10 @@ const GenerateSlidesSubmit = ({
 		let convertedOutlines = null;
 		if (viewMode === 'page') {
 			convertedOutlines = await fetchData(project.language);
+			if (!convertedOutlines) {
+				setIsSubmitting(false);
+				return;
+			}
 		}
 		//console.log('before submitting', outlines)
 		//console.log('before submitting converted', convertedOutlines)
