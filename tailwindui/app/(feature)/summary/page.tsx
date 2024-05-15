@@ -38,7 +38,7 @@ import { getUserCountryCode, getUserLanguage } from '@/utils/userLocation';
 import Project from '@/models/Project';
 import { GenerationStatusProgressModal } from '@/components/ui/GenerationStatusProgressModal';
 import TextareaAutosize from 'react-textarea-autosize';
-import slides_scenarios from './../scenario-choice/slides_scenarios.json';
+import slideScenarios from '../scenario-choice/slidesScenarios';
 import RangeSlider from '@/components/ui/RangeSlider';
 import GenModeToggle from '@/components/summary/GenModeToggle';
 import { WrappableRow } from '@/components/layout/WrappableRow';
@@ -61,14 +61,14 @@ const audienceDict = {
 
 const getAudienceFromScenario = (scenarioType: string) => {
 	return (
-		slides_scenarios.options.find((scenario) => scenario.id === scenarioType)
+		slideScenarios.options.find((scenario) => scenario.id === scenarioType)
 			?.audience || 'Business_Clients'
 	);
 };
 
 const getStructureFromScenario = (scenarioType: string) => {
 	return (
-		slides_scenarios.options.find((scenario) => scenario.id === scenarioType)
+		slideScenarios.options.find((scenario) => scenario.id === scenarioType)
 			?.structure || 'Introduction, background, details, examples, conclusion.'
 	);
 };
