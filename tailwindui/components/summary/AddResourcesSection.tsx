@@ -17,7 +17,10 @@ import { FaInternetExplorer, FaNewspaper, FaWikipediaW } from 'react-icons/fa';
 import { IoIosRemoveCircle, IoIosRemoveCircleOutline } from 'react-icons/io';
 import { Instruction, Explanation, BigTitle, WarningMessage } from '../ui/Text';
 import Card from '../ui/Card';
-import { DOCUMENT_EXTENSIONS, determineSupportedFormats } from '../file/FileUploadButton';
+import {
+	DOCUMENT_EXTENSIONS,
+	determineSupportedFormats,
+} from '../file/FileUploadButton';
 import GenModeToggle from './GenModeToggle';
 import { WrappableRow } from '../layout/WrappableRow';
 import { select } from 'd3';
@@ -128,21 +131,24 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 				return;
 			}
 
-      // if the file is larger than 10mb, error
-      if (file.size > 10 * 1024 * 1024) {
-        toast.error('File is too large! Please upload a file smaller than 10MB.', {
-          position: 'top-center',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'light',
-          containerId: 'fileManagement',
-        });
-        return;
-      }
+			// if the file is larger than 10mb, error
+			if (file.size > 10 * 1024 * 1024) {
+				toast.error(
+					'File is too large! Please upload a file smaller than 10MB.',
+					{
+						position: 'top-center',
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+						theme: 'light',
+						containerId: 'fileManagement',
+					},
+				);
+				return;
+			}
 
 			setIsUploading(true);
 			await onFileSelected(file);
@@ -175,7 +181,7 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 						)}
 					</WrappableRow>
 				) : (
-					<BigTitle>📚 Supporting Sources</BigTitle>
+					<BigTitle>📚 Supporting Sources (Optional)</BigTitle>
 				)}
 				<Explanation>
 					{isRequired
@@ -228,7 +234,10 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 							</Instruction>
 							<Explanation>
 								<div className='text-center'>
-									Supports {DOCUMENT_EXTENSIONS.map((ext) => ext.toUpperCase()).join(', ')}{' '}
+									Supports{' '}
+									{DOCUMENT_EXTENSIONS.map((ext) => ext.toUpperCase()).join(
+										', ',
+									)}{' '}
 								</div>
 							</Explanation>
 						</div>
