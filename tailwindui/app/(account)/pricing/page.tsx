@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Link from 'next/link';
 import AOS from 'aos';
@@ -13,29 +13,21 @@ import { Panel } from '@/components/layout/Panel';
 import useHydrated from '@/hooks/use-hydrated';
 import { SmallBlueButton } from '@/components/button/DrlambdaButton';
 import { PricingComparison } from '@/app/(default)/landing/Pricing';
+import { useSearchParams } from 'next/navigation';
 
 const Subscription = () => {
-	const [portalURL, setPortalURL] = useState('');
-	const [showModal, setShowModal] = useState(false);
+	const params = useSearchParams();
 
-	const cancelButton = (
-		<div>
-			<Link href={portalURL} target='_blank'>
-				Cancel Subscription
-			</Link>
-		</div>
-	);
+	useEffect(() => {
+		const paid = params.get('paid');
+		if (paid === 'false') {
+			toast.error('Payment cancelled.');
+		}
+	}, []);
+
 
 	return (
 		<div className='w-full'>
-			{showModal && (
-				<FeedbackForm
-					onClose={() => setShowModal(false)}
-					message='😭 We are sorry to see you go!'
-					successDiv={cancelButton}
-					textRequired={true}
-				/>
-			)}
 
 			<Card>
 				{/* <div className='w-fit text-[#363E4A] text-[17px] font-bold'>
@@ -52,17 +44,6 @@ const Subscription = () => {
 					</Link>
 					!
 				</Title>
-
-				{portalURL && (
-					<button
-						onClick={() => {
-							setShowModal(true);
-						}}
-						className='w-full py-4 sm:px-6 flex flex-col justify-center items-center max-w-none 2xl:max-w-[80%] mx-auto'
-					>
-						Manage Subscription
-					</button>
-				)}
 			</Card>
 		</div>
 	);
