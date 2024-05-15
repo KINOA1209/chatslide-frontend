@@ -9,7 +9,7 @@ export const ScrollBar: React.FC<{
 	// Determine overflow and flex direction based on the axial prop
 	const overflowClass =
 		axial === 'x'
-			? 'overflow-x-scroll overflow-y-hidden mx-4'
+			? 'overflow-x-scroll overflow-y-hidden'
 			: 'overflow-y-scroll overflow-x-hidden my-4';
 	const flexDirClass = axial === 'x' ? 'flex-row' : 'flex-col';
 	const containerRef = useRef<HTMLDivElement>(null);

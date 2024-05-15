@@ -166,6 +166,8 @@ const TemplateSelector: React.FC<{
 		string | undefined
 	>('');
 
+	const [advancedMode, setAdvancedMode] = useState(false);
+
 	useEffect(() => {
 		// use the consistent template and palette value to reload initial font family to stay consistent
 		const initialCurrentTemplateThemeConfig = loadCustomizableElements(
@@ -481,132 +483,154 @@ const TemplateSelector: React.FC<{
 								<PaletteSelector />
 							</div>
 						)}
-
-						{showCustomColorPicker && (
-							<div>
-								<Instruction>Customize theme color</Instruction>
-								<ColorPicker
-									onCustomColorChange={handleCustomTemplateBgColorChange}
-									initialColor={
-										hasSelectedCustomTemplateBgColor
-											? customTemplateBgColor ||
-												colorPreviews[palette as PaletteKeys]
-											: colorPreviews[palette as PaletteKeys]
-									} // Provide a default value if customTemplateBgColor is undefined
-									resetColorPicker={resetColorPicker}
-								/>
-							</div>
-						)}
 					</div>
-					<WrappableRow type='grid' cols={3}>
-						<div className='flex flex-col gap-[4px]'>
-							<div className='flex flex-row items-center gap-2'>
-								<Instruction>Cover Heading</Instruction>
-								<Explanation>Change this directly in the editor.</Explanation>
-							</div>
-							<FontFamilyPicker
-								onCustomFontFamilyChange={
-									handleCustomTemplateTitleFontFamilyChange
-								}
-								selectedFontFamily={coverTitleFontFamily}
-								resetFontFamilyPicker={resetFontFamilyAndFontColorPicker}
-								disableResetButton={true}
-								disabled={true}
-							/>
-							<ColorPicker
-								onCustomColorChange={handleCustomTemplateTitleFontColorChange}
-								initialColor={
-									hasSelectedCustomizedTemplateTitleFontColor
-										? customizedTemplateTitleFontColor || '#000000'
-										: initialLoadedTitleFontColor || '#000000'
-								}
-								resetColorPicker={resetFontFamilyAndFontColorPicker}
-								disableResetButton={true}
-								disabled={true}
-							></ColorPicker>
-						</div>
 
-						{/* heading */}
-						<div className='flex flex-col gap-[4px]'>
-							<Instruction>Non-cover Heading</Instruction>
-							<FontFamilyPicker
-								onCustomFontFamilyChange={
-									handleCustomTemplateTitleFontFamilyChange
-								}
-								selectedFontFamily={
-									HasSelectedCustomizedTemplateTitleFontFamily
-										? customizedTemplateTitleFontFamily
-										: initialLoadedTitleFontFamily
-								}
-								resetFontFamilyPicker={resetFontFamilyAndFontColorPicker}
-								disableResetButton={true}
-							/>
-							<ColorPicker
-								onCustomColorChange={handleCustomTemplateTitleFontColorChange}
-								initialColor={
-									hasSelectedCustomizedTemplateTitleFontColor
-										? customizedTemplateTitleFontColor || '#000000'
-										: initialLoadedTitleFontColor || '#000000'
-								} // Provide a default value if customTemplateBgColor is undefined
-								resetColorPicker={resetFontFamilyAndFontColorPicker}
-								disableResetButton={true}
-							></ColorPicker>
+					<Instruction>
+						<div
+							onClick={() => setAdvancedMode(!advancedMode)}
+							className='cursor-pointer text-blue-600'
+						>
+							{advancedMode ? <span>Hide </span> : <span></span>} Advanced
+							Options
 						</div>
-						{/* subheading */}
-						<div className='flex flex-col gap-[4px]'>
-							<Instruction>Non-cover Subheading</Instruction>
-							<FontFamilyPicker
-								onCustomFontFamilyChange={
-									handleCustomTemplateSubtitleFontFamilyChange
-								}
-								selectedFontFamily={
-									HasSelectedCustomizedTemplateSubtitleFontFamily
-										? customizedTemplateSubtitleFontFamily
-										: initialLoadedSubtitleFontFamily
-								}
-								resetFontFamilyPicker={resetFontFamilyAndFontColorPicker}
-								disableResetButton={true}
-							/>
-							<ColorPicker
-								onCustomColorChange={
-									handleCustomTemplateSubtitleFontColorChange
-								}
-								initialColor={
-									hasSelectedCustomizedTemplateSubtitleFontColor
-										? customizedTemplateSubtitleFontColor || '#000000'
-										: initialLoadedSubtitleFontColor || '#000000'
-								} // Provide a default value if customTemplateBgColor is undefined
-								resetColorPicker={resetFontFamilyAndFontColorPicker}
-								disableResetButton={true}
-							></ColorPicker>
-						</div>
-						{/* paragraph */}
-						<div className='flex flex-col gap-[4px]'>
-							<Instruction>Non-cover Paragraph</Instruction>
-							<FontFamilyPicker
-								onCustomFontFamilyChange={
-									handleCustomTemplateContentFontFamilyChange
-								}
-								selectedFontFamily={
-									HasSelectedCustomizedTemplateContentFontFamily
-										? customizedTemplateContentFontFamily
-										: initialLoadedContentFontFamily
-								}
-								resetFontFamilyPicker={resetFontFamilyAndFontColorPicker}
-								disableResetButton={true}
-							/>
-							<ColorPicker
-								onCustomColorChange={handleCustomTemplateContentFontColorChange}
-								initialColor={
-									hasSelectedCustomizedTemplateContentFontColor
-										? customizedTemplateContentFontColor || '#000000'
-										: initialLoadedContentFontColor || '#000000'
-								} // Provide a default value if customTemplateBgColor is undefined
-								resetColorPicker={resetFontFamilyAndFontColorPicker}
-								disableResetButton={false}
-							></ColorPicker>
-						</div>
-					</WrappableRow>
+					</Instruction>
+
+					{advancedMode && (
+						<>
+							{showCustomColorPicker && (
+								<div>
+									<Instruction>Customize theme color</Instruction>
+									<ColorPicker
+										onCustomColorChange={handleCustomTemplateBgColorChange}
+										initialColor={
+											hasSelectedCustomTemplateBgColor
+												? customTemplateBgColor ||
+													colorPreviews[palette as PaletteKeys]
+												: colorPreviews[palette as PaletteKeys]
+										} // Provide a default value if customTemplateBgColor is undefined
+										resetColorPicker={resetColorPicker}
+									/>
+								</div>
+							)}
+							<WrappableRow type='grid' cols={3}>
+								<div className='flex flex-col gap-[4px]'>
+									<div className='flex flex-row items-center gap-2'>
+										<Instruction>Cover Heading</Instruction>
+										<Explanation>
+											Change this directly in the editor.
+										</Explanation>
+									</div>
+									<FontFamilyPicker
+										onCustomFontFamilyChange={
+											handleCustomTemplateTitleFontFamilyChange
+										}
+										selectedFontFamily={coverTitleFontFamily}
+										resetFontFamilyPicker={resetFontFamilyAndFontColorPicker}
+										disableResetButton={true}
+										disabled={true}
+									/>
+									<ColorPicker
+										onCustomColorChange={
+											handleCustomTemplateTitleFontColorChange
+										}
+										initialColor={
+											hasSelectedCustomizedTemplateTitleFontColor
+												? customizedTemplateTitleFontColor || '#000000'
+												: initialLoadedTitleFontColor || '#000000'
+										}
+										resetColorPicker={resetFontFamilyAndFontColorPicker}
+										disableResetButton={true}
+										disabled={true}
+									></ColorPicker>
+								</div>
+
+								{/* heading */}
+								<div className='flex flex-col gap-[4px]'>
+									<Instruction>Non-cover Heading</Instruction>
+									<FontFamilyPicker
+										onCustomFontFamilyChange={
+											handleCustomTemplateTitleFontFamilyChange
+										}
+										selectedFontFamily={
+											HasSelectedCustomizedTemplateTitleFontFamily
+												? customizedTemplateTitleFontFamily
+												: initialLoadedTitleFontFamily
+										}
+										resetFontFamilyPicker={resetFontFamilyAndFontColorPicker}
+										disableResetButton={true}
+									/>
+									<ColorPicker
+										onCustomColorChange={
+											handleCustomTemplateTitleFontColorChange
+										}
+										initialColor={
+											hasSelectedCustomizedTemplateTitleFontColor
+												? customizedTemplateTitleFontColor || '#000000'
+												: initialLoadedTitleFontColor || '#000000'
+										} // Provide a default value if customTemplateBgColor is undefined
+										resetColorPicker={resetFontFamilyAndFontColorPicker}
+										disableResetButton={true}
+									></ColorPicker>
+								</div>
+								{/* subheading */}
+								<div className='flex flex-col gap-[4px]'>
+									<Instruction>Non-cover Subheading</Instruction>
+									<FontFamilyPicker
+										onCustomFontFamilyChange={
+											handleCustomTemplateSubtitleFontFamilyChange
+										}
+										selectedFontFamily={
+											HasSelectedCustomizedTemplateSubtitleFontFamily
+												? customizedTemplateSubtitleFontFamily
+												: initialLoadedSubtitleFontFamily
+										}
+										resetFontFamilyPicker={resetFontFamilyAndFontColorPicker}
+										disableResetButton={true}
+									/>
+									<ColorPicker
+										onCustomColorChange={
+											handleCustomTemplateSubtitleFontColorChange
+										}
+										initialColor={
+											hasSelectedCustomizedTemplateSubtitleFontColor
+												? customizedTemplateSubtitleFontColor || '#000000'
+												: initialLoadedSubtitleFontColor || '#000000'
+										} // Provide a default value if customTemplateBgColor is undefined
+										resetColorPicker={resetFontFamilyAndFontColorPicker}
+										disableResetButton={true}
+									></ColorPicker>
+								</div>
+								{/* paragraph */}
+								<div className='flex flex-col gap-[4px]'>
+									<Instruction>Non-cover Paragraph</Instruction>
+									<FontFamilyPicker
+										onCustomFontFamilyChange={
+											handleCustomTemplateContentFontFamilyChange
+										}
+										selectedFontFamily={
+											HasSelectedCustomizedTemplateContentFontFamily
+												? customizedTemplateContentFontFamily
+												: initialLoadedContentFontFamily
+										}
+										resetFontFamilyPicker={resetFontFamilyAndFontColorPicker}
+										disableResetButton={true}
+									/>
+									<ColorPicker
+										onCustomColorChange={
+											handleCustomTemplateContentFontColorChange
+										}
+										initialColor={
+											hasSelectedCustomizedTemplateContentFontColor
+												? customizedTemplateContentFontColor || '#000000'
+												: initialLoadedContentFontColor || '#000000'
+										} // Provide a default value if customTemplateBgColor is undefined
+										resetColorPicker={resetFontFamilyAndFontColorPicker}
+										disableResetButton={false}
+									></ColorPicker>
+								</div>
+							</WrappableRow>
+						</>
+					)}
 				</div>
 			</div>
 			<div className='w-full mt-4 flex flex-col'>

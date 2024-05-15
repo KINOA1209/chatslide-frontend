@@ -690,11 +690,11 @@ export default function Topic() {
 							onClick={() => setAdvancedMode(!advancedMode)}
 							className='cursor-pointer text-blue-600'
 						>
-							{!advancedMode ? <span>Hide </span> : <span></span>} Advanced
+							{advancedMode ? <span>Hide </span> : <span></span>} Advanced
 							Options
 						</div>
 					</Instruction>
-					{!advancedMode && (
+					{advancedMode && (
 						<AdvancedOptions
 							outlineStructure={outlineStructure}
 							setOutlineStructure={setOutlineStructure}
