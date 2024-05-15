@@ -20,6 +20,8 @@ export type ScenarioOption = {
 	imageSrc: string;
 	audience?: string;
 	structure?: string;
+	featured?: boolean;
+	previewOnly?: boolean;
 	icon: React.JSX.Element;
 };
 

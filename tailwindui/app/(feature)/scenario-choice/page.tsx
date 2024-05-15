@@ -15,6 +15,7 @@ import { Column } from '@/components/layout/Column';
 import { Instruction, Title } from '@/components/ui/Text';
 import DesignSystemBadges from '@/components/ui/design_systems/Badges';
 import DesignSystemButton from '@/components/ui/design_systems/ButtonsOrdinary';
+import { ScenarioButton } from '../type-choice/page';
 
 const ScenarioChoicePage = () => {
 	const router = useRouter();
@@ -42,29 +43,11 @@ const ScenarioChoicePage = () => {
 		}
 	};
 
-	const SocialpostOption: FC<{ scenario: ScenarioOption }> = ({ scenario }) => {
+	const SlidesScenarioButton: FC<{ scenario: ScenarioOption }> = ({
+		scenario,
+	}) => {
 		return (
-			<>
-				<div
-					className='h-[150px] md:h-[180px] xl:h-[250px] w-[150px] md:w-[180px] xl:w-[250px] bg-gray-100 rounded-lg shadow flex justify-center items-center cursor-pointer mb-4'
-					onClick={() => navigateToSummary(scenario.id)}
-				>
-					<Image
-						className='w-[120px] md:w-[150px] xl:w-[200px]'
-						width={281}
-						height={174}
-						alt={scenario.id}
-						src={scenario.imageSrc}
-					/>
-				</div>
-				<Instruction center={true}>{scenario.title}</Instruction>
-			</>
-		);
-	};
-
-	const SlidesOption: FC<{ scenario: ScenarioOption }> = ({ scenario }) => {
-		return (
-			<>
+			<div className='transition-transform transform-gpu hover:scale-110'>
 				<DesignSystemButton
 					onClick={() => navigateToSummary(scenario.id)}
 					size='lg'
@@ -76,7 +59,7 @@ const ScenarioChoicePage = () => {
 						{scenario.title}
 					</div>
 				</DesignSystemButton>
-			</>
+			</div>
 		);
 	};
 
@@ -94,21 +77,19 @@ const ScenarioChoicePage = () => {
 				<Title>{scenarios.message}</Title>
 				{/* three types of scenarios */}
 				<div
-					className='flex flex-wrap flex-row gap-4 md:gap-6 w-full mx-auto justify-around mt-[2rem]'
+					className='flex flex-wrap flex-row gap-x-8 gap-y-6 md:gap-6 w-full mx-auto justify-center mt-[2rem]'
 					id='choice_container'
 				>
-					{scenarios.options.map((scenario) => (
-						<div
-							key={scenario.id}
-							className='flex flex-col transition-transform transform-gpu hover:scale-110'
-						>
-							{workflowType === 'presentation' ? (
-								<SlidesOption scenario={scenario} />
-							) : (
-								<SocialpostOption scenario={scenario} />
-							)}
-						</div>
-					))}
+					{scenarios.options.map((scenario) =>
+						workflowType === 'presentation' ? (
+							<SlidesScenarioButton scenario={scenario} />
+						) : (
+							<ScenarioButton
+								scenario={scenario}
+								navigate={navigateToSummary}
+							/>
+						),
+					)}
 				</div>
 			</Column>
 		</div>
