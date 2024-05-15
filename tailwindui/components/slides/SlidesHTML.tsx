@@ -83,6 +83,12 @@ export const loadCustomizableElements = (
 	hasSelectedCustomizedTemplateSubtitleFontFamily?: boolean,
 	customizedTemplateContentFontFamily?: string,
 	hasSelectedCustomizedTemplateContentFontFamily?: boolean,
+	customizedTemplateTitleFontColor?: string,
+	hasSelectedCustomizedTemplateTitleFontColor?: boolean,
+	customizedTemplateSubtitleFontColor?: string,
+	hasSelectedCustomizedTemplateSubtitleFontColor?: boolean,
+	customizedTemplateContentFontColor?: string,
+	hasSelectedCustomizedTemplateContentFontColor?: boolean,
 ) => {
 	// return (
 	// 	themeConfigData[templateName as keyof ThemeConfig] ||
@@ -148,6 +154,50 @@ export const loadCustomizableElements = (
 		};
 	}
 
+	// update content font color
+	if (
+		customizedTemplateContentFontColor &&
+		hasSelectedCustomizedTemplateContentFontColor
+	) {
+		selectedThemeElements = {
+			...selectedThemeElements,
+			contentFontCSS: {
+				...selectedThemeElements.contentFontCSS, // Preserve existing properties
+				color: customizedTemplateContentFontColor, // Update fontFamily
+			},
+			contentFontCSS_non_vertical_content: {
+				...selectedThemeElements.contentFontCSS_non_vertical_content, // Preserve existing properties
+				color: customizedTemplateContentFontColor, // Update fontFamily
+			},
+		};
+	}
+
+	// update subtitle font color
+	if (
+		customizedTemplateSubtitleFontColor &&
+		hasSelectedCustomizedTemplateSubtitleFontColor
+	) {
+		selectedThemeElements = {
+			...selectedThemeElements,
+			subtopicFontCSS: {
+				...selectedThemeElements.subtopicFontCSS, // Preserve existing titleFontCSS properties
+				color: customizedTemplateSubtitleFontColor, // Update fontFamily
+			},
+		};
+	}
+	// update title font color
+	if (
+		customizedTemplateTitleFontColor &&
+		hasSelectedCustomizedTemplateTitleFontColor
+	) {
+		selectedThemeElements = {
+			...selectedThemeElements,
+			titleFontCSS: {
+				...selectedThemeElements.titleFontCSS, // Preserve existing titleFontCSS properties
+				color: customizedTemplateTitleFontColor, // Update fontFamily
+			},
+		};
+	}
 	return selectedThemeElements;
 };
 

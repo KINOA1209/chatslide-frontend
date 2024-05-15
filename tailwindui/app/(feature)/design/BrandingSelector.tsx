@@ -18,10 +18,10 @@ const brandingOptions = [
 		value: 'no',
 		text: 'No Logo',
 	},
-  {
-    value: 'custom',
-    text: 'Custom Logo',
-  }
+	{
+		value: 'custom',
+		text: 'Custom Logo',
+	},
 ];
 
 const LogoPositionOptions = [
@@ -62,19 +62,21 @@ const BrandingSelector: React.FC<{
 	logoPosition,
 	setLogoPosition,
 }) => {
-	const {
-		// isTemplateLogoLeftSide,
-		// setIsTemplateLogoLeftSide,
-		// updateTemplateLogoPositionToLeft,
-		updateTemplateLogoPosition,
-	} = useSlides();
+	// const {
+	// 	// isTemplateLogoLeftSide,
+	// 	// setIsTemplateLogoLeftSide,
+	// 	// updateTemplateLogoPositionToLeft,
+	// 	// updateTemplateLogoPosition,
+	// } = useSlides();
 	const { isPaidUser } = useUser();
 	const [showPaywall, setShowPaywall] = useState(false);
-  const [logoMode, setLogoMode] = useState(showLogo ? selectedLogo?.length>0 ? 'custom' : 'default' : 'no');
+	const [logoMode, setLogoMode] = useState(
+		showLogo ? (selectedLogo?.length > 0 ? 'custom' : 'default') : 'no',
+	);
 
-  useEffect(() => {
-    console.log('selectedLogo', selectedLogo);
-  }, [selectedLogo]);
+	useEffect(() => {
+		console.log('selectedLogo', selectedLogo);
+	}, [selectedLogo]);
 
 	return (
 		<div>
@@ -128,7 +130,7 @@ const BrandingSelector: React.FC<{
 						setSelectedValue={(e) => {
 							// setIsTemplateLogoLeftSide(e === 'yes' ? true : false);
 							setLogoPosition(e as LogoPosition);
-							updateTemplateLogoPosition(e as LogoPosition);
+							// updateTemplateLogoPosition(e as LogoPosition); // do not update slides on design page
 						}}
 						name='logoPosition'
 					/>

@@ -1029,6 +1029,7 @@ export const ImgModule = ({
 				<YoutubeEmbed
 					layout={isSlide ? slides[slideIndex]?.layout : ''}
 					link={currentYoutubeUrl}
+					canEdit={canEdit}
 				></YoutubeEmbed>
 				{selectedQueryMode === ImgQueryMode.EMBED_CODE && currentYoutubeUrl && (
 					<BigBlueButton
@@ -1486,7 +1487,7 @@ export const ImgModule = ({
 						<div
 							// onMouseEnter={() => setShowImgButton(true)}
 							// onMouseLeave={() => setShowImgButton(false)}
-							onClick={() => setShowModal(true)}
+							onClick={() => openModal()}
 						>
 							{/* <div
 								dangerouslySetInnerHTML={{
@@ -1495,7 +1496,9 @@ export const ImgModule = ({
 							></div> */}
 							<YoutubeEmbed
 								link={currentYoutubeUrl}
+								// layout={isSlide ? slides[slideIndex].layout : ''}
 								layout={isSlide ? slides[slideIndex]?.layout : ''}
+								canEdit={canEdit}
 							></YoutubeEmbed>
 						</div>
 					) : !imgsrc || imgLoadError ? ( // upload icon

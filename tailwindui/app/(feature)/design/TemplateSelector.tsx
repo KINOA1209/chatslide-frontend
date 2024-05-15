@@ -64,6 +64,9 @@ const TemplateSelector: React.FC<{
 	setCustomizedTemplateTitleFontFamilyCallback: (font: string) => void;
 	setCustomizedTemplateSubtitleFontFamilyCallback: (font: string) => void;
 	setCustomizedTemplateContentFontFamilyCallback: (font: string) => void;
+	setCustomizedTemplateContentFontColorCallback: (font: string) => void;
+	setCustomizedTemplateSubtitleFontColorCallback: (font: string) => void;
+	setCustomizedTemplateTitleFontColorCallback: (font: string) => void;
 }> = ({
 	template,
 	setTemplate,
@@ -75,6 +78,9 @@ const TemplateSelector: React.FC<{
 	setCustomizedTemplateContentFontFamilyCallback,
 	setCustomizedTemplateSubtitleFontFamilyCallback,
 	setCustomizedTemplateTitleFontFamilyCallback,
+	setCustomizedTemplateContentFontColorCallback,
+	setCustomizedTemplateSubtitleFontColorCallback,
+	setCustomizedTemplateTitleFontColorCallback,
 }) => {
 	// should not use slides because there could be no slides object yet
 	const {
@@ -108,6 +114,24 @@ const TemplateSelector: React.FC<{
 		setCustomizedTemplateContentFontFamily,
 		HasSelectedCustomizedTemplateContentFontFamily,
 		setHasSelectedCustomizedTemplateContentFontFamily,
+		initialLoadedContentFontColor,
+		setInitialLoadedContentFontColor,
+		customizedTemplateContentFontColor,
+		setCustomizedTemplateContentFontColor,
+		hasSelectedCustomizedTemplateContentFontColor,
+		setHasSelectedCustomizedTemplateContentFontColor,
+		initialLoadedSubtitleFontColor,
+		setInitialLoadedSubtitleFontColor,
+		customizedTemplateSubtitleFontColor,
+		setCustomizedTemplateSubtitleFontColor,
+		hasSelectedCustomizedTemplateSubtitleFontColor,
+		setHasSelectedCustomizedTemplateSubtitleFontColor,
+		initialLoadedTitleFontColor,
+		setInitialLoadedTitleFontColor,
+		customizedTemplateTitleFontColor,
+		setCustomizedTemplateTitleFontColor,
+		hasSelectedCustomizedTemplateTitleFontColor,
+		setHasSelectedCustomizedTemplateTitleFontColor,
 	} = useSlides();
 	type OptionType = { value: PaletteKeys; label: JSX.Element };
 
@@ -138,20 +162,27 @@ const TemplateSelector: React.FC<{
 		string | undefined
 	>('');
 
+	const [coverTitleFontColor, setCoverTitleFontColor] = useState<
+		string | undefined
+	>('');
+
 	useEffect(() => {
 		// use the consistent template and palette value to reload initial font family to stay consistent
 		const initialCurrentTemplateThemeConfig = loadCustomizableElements(
 			template as TemplateKeys,
 			palette as PaletteKeys,
 		);
-		// console.log(
-		// 	'initialCurrentTemplate configs',
-		// 	template,
-		// 	palette,
-		// 	// currentSelectedPalette,
-		// 	initialCurrentTemplateThemeConfig,
-		// 	initialLoadedTemplateBgColor
-		// );
+		console.log(
+			'initialCurrentTemplate configs',
+			template,
+			palette,
+			// currentSelectedPalette,
+			initialCurrentTemplateThemeConfig,
+			initialLoadedTemplateBgColor,
+			initialLoadedTitleFontColor,
+			initialLoadedSubtitleFontColor,
+			initialLoadedContentFontColor,
+		);
 		// console.log("has set customized bg color", hasSelectedCustomTemplateBgColor)
 		// console.log("has set customized font", HasSelectedCustomizedTemplateTitleFontFamily)
 		setInitialLoadedTemplateBgColor(
@@ -167,8 +198,20 @@ const TemplateSelector: React.FC<{
 		setInitialLoadedContentFontFamily(
 			initialCurrentTemplateThemeConfig?.contentFontCSS?.fontFamily,
 		);
+		setInitialLoadedContentFontColor(
+			initialCurrentTemplateThemeConfig?.contentFontCSS?.color,
+		);
+		setInitialLoadedSubtitleFontColor(
+			initialCurrentTemplateThemeConfig?.subtopicFontCSS?.color,
+		);
+		setInitialLoadedTitleFontColor(
+			initialCurrentTemplateThemeConfig?.titleFontCSS?.color,
+		);
 		setCoverTitleFontFamily(
 			initialCurrentTemplateThemeConfig?.headFontCSS?.fontFamily,
+		);
+		setCoverTitleFontColor(
+			initialCurrentTemplateThemeConfig?.headFontCSS?.color,
 		);
 	}, [template, palette]); // template + palette
 
@@ -176,6 +219,27 @@ const TemplateSelector: React.FC<{
 	// 	setHasSelectedCustomTemplateBgColor(false);  // choose preset palette -> not selected customized bg color
 	// }, [palette])
 	// all update customized fonts, bgcolor, reset operations should be done on slides page not in design page, so cannot trigger update slides in template selector
+
+	const handleCustomTemplateTitleFontColorChange = (fontColor: string) => {
+		setCustomizedTemplateTitleFontColor(fontColor);
+		setCustomizedTemplateTitleFontColorCallback(fontColor);
+
+		setHasSelectedCustomizedTemplateTitleFontColor(true);
+	};
+
+	const handleCustomTemplateSubtitleFontColorChange = (fontColor: string) => {
+		setCustomizedTemplateSubtitleFontColor(fontColor);
+		setCustomizedTemplateSubtitleFontColorCallback(fontColor);
+
+		setHasSelectedCustomizedTemplateSubtitleFontColor(true);
+	};
+
+	const handleCustomTemplateContentFontColorChange = (fontColor: string) => {
+		setCustomizedTemplateContentFontColor(fontColor);
+		setCustomizedTemplateContentFontColorCallback(fontColor);
+
+		setHasSelectedCustomizedTemplateContentFontColor(true);
+	};
 
 	const handleCustomTemplateTitleFontFamilyChange = (fontFamily: string) => {
 		// console.log(
@@ -278,7 +342,7 @@ const TemplateSelector: React.FC<{
 		setHasSelectedCustomTemplateBgColor(false);
 	};
 
-	const resetFontFamilyPicker = () => {
+	const resetFontFamilyAndFontColorPicker = () => {
 		// console.log('initialLoadedTitleFontFamily', initialLoadedTitleFontFamily);
 		// updateCustomizedTitleFontFamilyForTemplate(
 		// 	initialLoadedTitleFontFamily || '',
@@ -299,6 +363,16 @@ const TemplateSelector: React.FC<{
 		setHasSelectedCustomizedTemplateTitleFontFamily(false);
 		setHasSelectedCustomizedTemplateSubtitleFontFamily(false);
 		setHasSelectedCustomizedTemplateContentFontFamily(false);
+
+		// resert font color
+		setCustomizedTemplateTitleFontColor(initialLoadedTitleFontColor || '');
+		setCustomizedTemplateSubtitleFontColor(
+			initialLoadedSubtitleFontColor || '',
+		);
+		setCustomizedTemplateContentFontColor(initialLoadedContentFontColor || '');
+		setHasSelectedCustomizedTemplateTitleFontColor(false);
+		setHasSelectedCustomizedTemplateSubtitleFontColor(false);
+		setHasSelectedCustomizedTemplateContentFontColor(false);
 	};
 
 	const PaletteSelector = () => {
@@ -425,7 +499,7 @@ const TemplateSelector: React.FC<{
 						)}
 					</div>
 					<WrappableRow type='grid' cols={3}>
-						<div className='flex flex-col'>
+						<div className='flex flex-col gap-[4px]'>
 							<div className='flex flex-row items-center gap-2'>
 								<Instruction>Cover Heading</Instruction>
 								<Explanation>Change this directly in the editor.</Explanation>
@@ -435,24 +509,25 @@ const TemplateSelector: React.FC<{
 									handleCustomTemplateTitleFontFamilyChange
 								}
 								selectedFontFamily={coverTitleFontFamily}
-								resetFontFamilyPicker={resetFontFamilyPicker}
+								resetFontFamilyPicker={resetFontFamilyAndFontColorPicker}
 								disableResetButton={true}
 								disabled={true}
 							/>
 							<ColorPicker
-								onCustomColorChange={handleCustomTemplateBgColorChange}
+								onCustomColorChange={handleCustomTemplateTitleFontColorChange}
 								initialColor={
-									hasSelectedCustomTemplateBgColor
-										? customTemplateBgColor ||
-											colorPreviews[palette as PaletteKeys]
-										: colorPreviews[palette as PaletteKeys]
-								} // Provide a default value if customTemplateBgColor is undefined
-								resetColorPicker={resetColorPicker}
+									hasSelectedCustomizedTemplateTitleFontColor
+										? customizedTemplateTitleFontColor || '#000000'
+										: initialLoadedTitleFontColor || '#000000'
+								}
+								resetColorPicker={resetFontFamilyAndFontColorPicker}
+								disableResetButton={true}
+								disabled={true}
 							></ColorPicker>
 						</div>
 
 						{/* heading */}
-						<div>
+						<div className='flex flex-col gap-[4px]'>
 							<Instruction>Non-cover Heading</Instruction>
 							<FontFamilyPicker
 								onCustomFontFamilyChange={
@@ -463,22 +538,22 @@ const TemplateSelector: React.FC<{
 										? customizedTemplateTitleFontFamily
 										: initialLoadedTitleFontFamily
 								}
-								resetFontFamilyPicker={resetFontFamilyPicker}
+								resetFontFamilyPicker={resetFontFamilyAndFontColorPicker}
 								disableResetButton={true}
 							/>
 							<ColorPicker
-								onCustomColorChange={handleCustomTemplateBgColorChange}
+								onCustomColorChange={handleCustomTemplateTitleFontColorChange}
 								initialColor={
-									hasSelectedCustomTemplateBgColor
-										? customTemplateBgColor ||
-											colorPreviews[palette as PaletteKeys]
-										: colorPreviews[palette as PaletteKeys]
+									hasSelectedCustomizedTemplateTitleFontColor
+										? customizedTemplateTitleFontColor || '#000000'
+										: initialLoadedTitleFontColor || '#000000'
 								} // Provide a default value if customTemplateBgColor is undefined
-								resetColorPicker={resetColorPicker}
+								resetColorPicker={resetFontFamilyAndFontColorPicker}
+								disableResetButton={true}
 							></ColorPicker>
 						</div>
 						{/* subheading */}
-						<div>
+						<div className='flex flex-col gap-[4px]'>
 							<Instruction>Non-cover Subheading</Instruction>
 							<FontFamilyPicker
 								onCustomFontFamilyChange={
@@ -489,22 +564,24 @@ const TemplateSelector: React.FC<{
 										? customizedTemplateSubtitleFontFamily
 										: initialLoadedSubtitleFontFamily
 								}
-								resetFontFamilyPicker={resetFontFamilyPicker}
+								resetFontFamilyPicker={resetFontFamilyAndFontColorPicker}
 								disableResetButton={true}
 							/>
 							<ColorPicker
-								onCustomColorChange={handleCustomTemplateBgColorChange}
+								onCustomColorChange={
+									handleCustomTemplateSubtitleFontColorChange
+								}
 								initialColor={
-									hasSelectedCustomTemplateBgColor
-										? customTemplateBgColor ||
-											colorPreviews[palette as PaletteKeys]
-										: colorPreviews[palette as PaletteKeys]
+									hasSelectedCustomizedTemplateSubtitleFontColor
+										? customizedTemplateSubtitleFontColor || '#000000'
+										: initialLoadedSubtitleFontColor || '#000000'
 								} // Provide a default value if customTemplateBgColor is undefined
-								resetColorPicker={resetColorPicker}
+								resetColorPicker={resetFontFamilyAndFontColorPicker}
+								disableResetButton={true}
 							></ColorPicker>
 						</div>
 						{/* paragraph */}
-						<div>
+						<div className='flex flex-col gap-[4px]'>
 							<Instruction>Non-cover Paragraph</Instruction>
 							<FontFamilyPicker
 								onCustomFontFamilyChange={
@@ -515,18 +592,18 @@ const TemplateSelector: React.FC<{
 										? customizedTemplateContentFontFamily
 										: initialLoadedContentFontFamily
 								}
-								resetFontFamilyPicker={resetFontFamilyPicker}
-								disableResetButton={false}
+								resetFontFamilyPicker={resetFontFamilyAndFontColorPicker}
+								disableResetButton={true}
 							/>
 							<ColorPicker
-								onCustomColorChange={handleCustomTemplateBgColorChange}
+								onCustomColorChange={handleCustomTemplateContentFontColorChange}
 								initialColor={
-									hasSelectedCustomTemplateBgColor
-										? customTemplateBgColor ||
-											colorPreviews[palette as PaletteKeys]
-										: colorPreviews[palette as PaletteKeys]
+									hasSelectedCustomizedTemplateContentFontColor
+										? customizedTemplateContentFontColor || '#000000'
+										: initialLoadedContentFontColor || '#000000'
 								} // Provide a default value if customTemplateBgColor is undefined
-								resetColorPicker={resetColorPicker}
+								resetColorPicker={resetFontFamilyAndFontColorPicker}
+								disableResetButton={false}
 							></ColorPicker>
 						</div>
 					</WrappableRow>
