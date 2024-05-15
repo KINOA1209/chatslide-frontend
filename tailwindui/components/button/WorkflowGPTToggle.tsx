@@ -21,7 +21,7 @@ const GPTToggle: React.FC<GPTToggleProps> = ({ setIsGpt35 }) => {
 			setShowPaymentModal(true);
 		} else {
 			setSelectedModel(model);
-			setIsGpt35(model !== 'GPT-3.5'); // Update the parent component's state
+			setIsGpt35(model === 'GPT-3.5'); // Update the parent component's state
 			// console.log('isGpt35', value);
 		}
 	};
