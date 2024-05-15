@@ -73,11 +73,11 @@
       "structure": "Introduction, company rules, employee expectations, compliance procedures."
     },
     {
-      "id": "news_report",
-      "title": "News Report",
+      "id": "recommendation",
+      "title": "Listicle",
       "imageSrc": "/images/scenario/news_report.jpg",
       "audience": "Community_Members",
-      "structure": "Introduction, background information, main story, developments, community impact."
+      "structure": "Introduction, item 1, item 2, item 3, etc."
     },
     {
       "id": "product_spec",
