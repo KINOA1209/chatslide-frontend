@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { itemToIcon } from './SurveyObject';
 
 type OnboardingSurveyButtonProps = {
 	textValue: string;
@@ -33,14 +34,14 @@ const OnboardingSurveyButton: React.FC<OnboardingSurveyButtonProps> = ({
 		<div className='relative flex items-center'>
 			<button
 				onClick={handleClick}
-				className={`rounded-full border-2 px-2 py-1 sm:px-4 sm:py-2 transition-all text-md font-normal leading-normal tracking-wide
+				className={`rounded-full border-2 px-2 py-1 sm:px-4 sm:py-2 transition-all text-md font-normal leading-normal tracking-wide flex flex-row items-center gap-2
             ${
 							selectedItems.includes(textValue)
 								? 'bg-[#E5E6FF] text-[#6366F1] border-[#6366F1]'
 								: 'bg-white text-black border-gray-300'
 						}`}
 			>
-				{textValue}
+				{itemToIcon(textValue)} <span>{textValue}</span>
 			</button>
 			{isOtherSelected && (
 				<input

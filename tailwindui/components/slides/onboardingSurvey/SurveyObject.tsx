@@ -1,3 +1,34 @@
+import {
+	FaLaptop,
+	FaBook,
+	FaFilm,
+	FaMoneyBillWave,
+	FaComments,
+	FaHospital,
+	FaBolt,
+	FaShoppingCart,
+	FaChartLine,
+	FaPray,
+	FaStore,
+	FaRedditAlien,
+	FaUserFriends,
+	FaEnvelope,
+	FaFacebook,
+	FaTiktok,
+	FaTwitter,
+	FaInstagram,
+	FaTelegram,
+	FaGraduationCap,
+	FaChalkboardTeacher,
+	FaBusinessTime,
+	FaMicroscope,
+	FaMicrophone,
+	FaFileAlt,
+	FaBookOpen,
+  FaGoogle,
+  FaProductHunt,
+} from 'react-icons/fa';
+
 type SurveySectionConfig = {
 	question: string;
 	itemsArr: string[];
@@ -9,12 +40,12 @@ const surveyObject: Record<string, SurveySectionConfig> = {
 		itemsArr: [
 			'Tech',
 			'Education',
-			'Entertainment',
+			'Media',
 			'Finance',
 			'Consulting',
-			'Health',
-			'Energy',
-			'Retail',
+			'Healthcare',
+			'Energy / Environment',
+			'Commerce',
 			'Marketing',
 			'Religion',
 			'Other',
@@ -24,18 +55,17 @@ const surveyObject: Record<string, SurveySectionConfig> = {
 	referral: {
 		question: 'Where did you find us?',
 		itemsArr: [
-			'Friend',
 			'Google',
-			'ProductHunt',
 			'AppSumo',
+			'Reddit',
+			'ProductHunt',
+			'Friend',
 			'Newsletter',
 			'Facebook',
-			'Tiktok',
+			'TikTok',
 			'X (Twitter)',
-			'Reddit',
 			'Instagram',
 			'Telegram',
-			'Yandex',
 			'Other',
 		],
 	},
@@ -43,13 +73,13 @@ const surveyObject: Record<string, SurveySectionConfig> = {
 	purpose: {
 		question: "What's the purpose of your output?",
 		itemsArr: [
-			'Teaching', // prev Education
-			'Learning', // prev Education
+			'Teaching',
+			'Learning',
+			'Coaching',
 			'Business',
 			'Marketing',
 			'Research',
 			'Conference',
-			'Training',
 			'Proposal',
 			'Storytelling',
 			'Preaching',
@@ -58,4 +88,46 @@ const surveyObject: Record<string, SurveySectionConfig> = {
 	},
 };
 
+function itemToIcon(item: string) {
+	const iconMap: { [key: string]: React.ElementType } = {
+		Tech: FaLaptop,
+		Education: FaGraduationCap,
+		Media: FaFilm,
+		Finance: FaMoneyBillWave,
+		Consulting: FaComments,
+		Healthcare: FaHospital,
+		'Energy / Environment': FaBolt,
+		Commerce: FaShoppingCart,
+		Marketing: FaChartLine,
+		Religion: FaPray,
+		Other: FaComments,
+		Google: FaGoogle,
+		AppSumo: FaStore,
+		Reddit: FaRedditAlien,
+		ProductHunt: FaProductHunt,
+		Friend: FaUserFriends,
+		Newsletter: FaEnvelope,
+		Facebook: FaFacebook,
+		TikTok: FaTiktok,
+		'X (Twitter)': FaTwitter,
+		Instagram: FaInstagram,
+		Telegram: FaTelegram,
+		Teaching: FaChalkboardTeacher,
+		Learning: FaBook,
+		Coaching: FaBusinessTime,
+		Business: FaMoneyBillWave,
+		Research: FaMicroscope,
+		Conference: FaMicrophone,
+		Proposal: FaFileAlt,
+		Storytelling: FaBookOpen,
+		Preaching: FaPray,
+	};
+
+	const IconComponent = iconMap[item] || FaComments;
+
+	return <IconComponent className='text-gray-600'/>;
+}
+
 export default surveyObject;
+
+export { itemToIcon };
