@@ -14,7 +14,7 @@ const OnboardingSurvey: React.FC<OnboardingSurveyProps> = ({ handleBack }) => {
 		string[]
 	>([]);
 	const [selectedPurposes, setSelectedPurposes] = useState<string[]>([]);
-	const [showReferralSection, setShowReferralSection] = useState(false);
+	const [showReferralSection, setShowReferralSection] = useState(true);
 	const [showPurposeSection, setShowPurposeSection] = useState(false);
 
 	// ease-in-out effect
@@ -34,13 +34,12 @@ const OnboardingSurvey: React.FC<OnboardingSurveyProps> = ({ handleBack }) => {
 		}
 	}, [showPurposeSection]);
 
-	const handleNextToReferral = () => {
-		setShowReferralSection(true);
+	const handleNextToPurpose = () => {
+		setShowPurposeSection(true);
 	};
 
-	const handleNextToPurpose = () => {
+	const handleNextToIndustry = () => {
 		setShowReferralSection(false);
-		setShowPurposeSection(true);
 	};
 
 	// handle other value when user click other button
@@ -117,7 +116,7 @@ const OnboardingSurvey: React.FC<OnboardingSurveyProps> = ({ handleBack }) => {
 	const totalSections = 3;
 	const getCurrentState = () => {
 		let currentState = 1;
-		if (showReferralSection) currentState++;
+		if (!showReferralSection) currentState++;
 		if (showPurposeSection) currentState++;
 		return currentState;
 	};
@@ -185,17 +184,6 @@ const OnboardingSurvey: React.FC<OnboardingSurveyProps> = ({ handleBack }) => {
 				</div>
 			</div>
 
-			{!showReferralSection && !showPurposeSection && (
-				<SurveySection
-					section={'industry'}
-					selectedItems={selectedIndustries}
-					toggleSelection={(item) => toggleSelection(item, 'industry')}
-					showNextSection={showReferralSection}
-					handleButtonClick={handleNextToReferral}
-					handleCustomInput={(value) => handleCustomInput(value, 'industry')}
-				/>
-			)}
-
 			{showReferralSection && (
 				<div
 					className={`transition-opacity duration-500 ${referralSectionEffect ? 'opacity-100' : 'opacity-0'}`}
@@ -205,10 +193,21 @@ const OnboardingSurvey: React.FC<OnboardingSurveyProps> = ({ handleBack }) => {
 						selectedItems={selectedReferralSources}
 						toggleSelection={(item) => toggleSelection(item, 'referral')}
 						showNextSection={showPurposeSection}
-						handleButtonClick={handleNextToPurpose}
+						handleButtonClick={handleNextToIndustry}
 						handleCustomInput={(value) => handleCustomInput(value, 'referral')}
 					/>
 				</div>
+			)}
+
+			{!showReferralSection && !showPurposeSection && (
+				<SurveySection
+					section={'industry'}
+					selectedItems={selectedIndustries}
+					toggleSelection={(item) => toggleSelection(item, 'industry')}
+					showNextSection={showReferralSection}
+					handleButtonClick={handleNextToPurpose}
+					handleCustomInput={(value) => handleCustomInput(value, 'industry')}
+				/>
 			)}
 
 			{showPurposeSection && (
