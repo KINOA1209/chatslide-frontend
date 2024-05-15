@@ -232,7 +232,7 @@ const SideBar = ({}: SideBarProps) => {
 								Join our user study and discord to earn free credits
 							</div>
 							<a
-								href='https://calendar.app.google/2uGV3B6h9UdYBHPB8'
+								href='/meet'
 								target='_blank'
 								className='block flew flex-row items-center gap-1 py-1 text-sm text-white px-2 rounded-lg hover:bg-gray-400'
 								role='menuitem'
@@ -250,13 +250,22 @@ const SideBar = ({}: SideBarProps) => {
 								Get 100 ⭐️credits
 							</a>
 							<a
-								href='https://drlambda.ai/discord'
+								href='/discord'
 								target='_blank'
 								className='block flew flex-row items-center gap-1 py-1 text-sm text-white px-2 rounded-lg hover:bg-gray-400'
 								role='menuitem'
 								id='discord-50-credits'
 							>
 								Get 50 ⭐️credits
+							</a>
+							<a
+								href='https://blog.drlambda.ai/how-to-make-money-with-your-high-quality-content-using-chatslide-ai/'
+								target='_blank'
+								className='block flew flex-row items-center gap-1 py-1 text-sm text-white px-2 rounded-lg hover:bg-gray-400'
+								role='menuitem'
+								id='discord-50-credits'
+							>
+								💸 Monetize
 							</a>
 						</>
 					)}
