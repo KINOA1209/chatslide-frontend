@@ -89,6 +89,12 @@ export const templateDispatch = (
 		HasSelectedCustomizedTemplateSubtitleFontFamily,
 		customizedTemplateContentFontFamily,
 		HasSelectedCustomizedTemplateContentFontFamily,
+		customizedTemplateTitleFontColor,
+		hasSelectedCustomizedTemplateTitleFontColor,
+		customizedTemplateSubtitleFontColor,
+		hasSelectedCustomizedTemplateSubtitleFontColor,
+		customizedTemplateContentFontColor,
+		hasSelectedCustomizedTemplateContentFontColor,
 	} = useSlides();
 	const { isPaidUser, token } = useUser();
 
@@ -230,6 +236,12 @@ export const templateDispatch = (
 		HasSelectedCustomizedTemplateSubtitleFontFamily,
 		customizedTemplateContentFontFamily,
 		HasSelectedCustomizedTemplateContentFontFamily,
+		customizedTemplateTitleFontColor,
+		hasSelectedCustomizedTemplateTitleFontColor,
+		customizedTemplateSubtitleFontColor,
+		hasSelectedCustomizedTemplateSubtitleFontColor,
+		customizedTemplateContentFontColor,
+		hasSelectedCustomizedTemplateContentFontColor,
 	);
 
 	// const initialTemplateTitleFontFamily =

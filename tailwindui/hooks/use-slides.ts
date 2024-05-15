@@ -60,6 +60,55 @@ const useHasSelectedCustomTemplateBgColor = createBearStore<boolean>()(
 	true,
 );
 
+// font color customizations
+
+const useInitialLoadedSubtitleFontColor = createBearStore<string | undefined>()(
+	'initialLoadedSubtitleFontColor',
+	'#000000',
+	true,
+);
+const useCustomizedTemplateSubtitleFontColor = createBearStore<
+	string | undefined
+>()('customizedTemplateSubtitleFontColor', '', true);
+
+const useHasSelectedCustomizedTemplateSubtitleFontColor =
+	createBearStore<boolean>()(
+		'hasSelectedCustomizedTemplateSubtitleFontColor',
+		false,
+		true,
+	);
+
+const useInitialLoadedTitleFontColor = createBearStore<string | undefined>()(
+	'initialLoadedTitleFontColor',
+	'#000000',
+	true,
+);
+const useCustomizedTemplateTitleFontColor = createBearStore<
+	string | undefined
+>()('customizedTemplateTitleFontColor', '', true);
+const useHasSelectedCustomizedTemplateTitleFontColor =
+	createBearStore<boolean>()(
+		'hasSelectedCustomizedTemplateTitleFontColor',
+		false,
+		true,
+	);
+
+const useInitialLoadedContentFontColor = createBearStore<string | undefined>()(
+	'initialLoadedContentFontColor',
+	'#000000',
+	true,
+);
+const useCustomizedTemplateContentFontColor = createBearStore<
+	string | undefined
+>()('customizedTemplateContentFontColor', '', true);
+const useHasSelectedCustomizedTemplateContentFontColor =
+	createBearStore<boolean>()(
+		'hasSelectedCustomizedTemplateContentFontColor',
+		false,
+		true,
+	);
+
+// font family customizations
 const useInitialLoadedSubtitleFontFamily = createBearStore<
 	string | undefined
 >()('initialLoadedSubtitleFontFamily', 'Arial', true);
@@ -158,6 +207,37 @@ export const useSlides = () => {
 	} = useHasSelectedCustomTemplateBgColor();
 	const { initialLoadedTemplateBgColor, setInitialLoadedTemplateBgColor } =
 		useInitialLoadedTemplateBgColor();
+	// for customized font color
+	const { initialLoadedContentFontColor, setInitialLoadedContentFontColor } =
+		useInitialLoadedContentFontColor();
+	const { initialLoadedSubtitleFontColor, setInitialLoadedSubtitleFontColor } =
+		useInitialLoadedSubtitleFontColor();
+	const { initialLoadedTitleFontColor, setInitialLoadedTitleFontColor } =
+		useInitialLoadedTitleFontColor();
+	const {
+		hasSelectedCustomizedTemplateContentFontColor,
+		setHasSelectedCustomizedTemplateContentFontColor,
+	} = useHasSelectedCustomizedTemplateContentFontColor();
+	const {
+		hasSelectedCustomizedTemplateSubtitleFontColor,
+		setHasSelectedCustomizedTemplateSubtitleFontColor,
+	} = useHasSelectedCustomizedTemplateSubtitleFontColor();
+	const {
+		hasSelectedCustomizedTemplateTitleFontColor,
+		setHasSelectedCustomizedTemplateTitleFontColor,
+	} = useHasSelectedCustomizedTemplateTitleFontColor();
+	const {
+		customizedTemplateTitleFontColor,
+		setCustomizedTemplateTitleFontColor,
+	} = useCustomizedTemplateTitleFontColor();
+	const {
+		customizedTemplateSubtitleFontColor,
+		setCustomizedTemplateSubtitleFontColor,
+	} = useCustomizedTemplateSubtitleFontColor();
+	const {
+		customizedTemplateContentFontColor,
+		setCustomizedTemplateContentFontColor,
+	} = useCustomizedTemplateContentFontColor();
 	// for customized font family
 	// title font
 	const { initialLoadedTitleFontFamily, setInitialLoadedTitleFontFamily } =
@@ -541,13 +621,16 @@ export const useSlides = () => {
 		debouncedSyncSlides(newSlides, true);
 	};
 
-	const changeTemplateAndPaletteAndBgColorAndFont = (
+	const changeTemplateAndPaletteAndBgColorAndFontFamilyAndColor = (
 		newTemplate: TemplateKeys,
 		newPalette: PaletteKeys,
 		newBgColor: string,
 		newTitleFontFamily: string,
 		newSubtitleFontFamily: string,
 		newContentFontFamily: string,
+		newTitleFontColor: string,
+		newSubtitleFontColor: string,
+		newContentFontCOlor: string,
 	) => {
 		console.log(
 			'-- changeTemplateAndPaletteAndBgColorAndFont:',
@@ -557,6 +640,9 @@ export const useSlides = () => {
 			newTitleFontFamily,
 			newSubtitleFontFamily,
 			newContentFontFamily,
+			newTitleFontColor,
+			newSubtitleFontColor,
+			newContentFontCOlor,
 		);
 
 		let newSlides = slides.map((slide, index) => {
@@ -578,6 +664,15 @@ export const useSlides = () => {
 				contentFontFamily: HasSelectedCustomizedTemplateContentFontFamily
 					? customizedTemplateContentFontFamily
 					: initialLoadedContentFontFamily,
+				titleFontColor: hasSelectedCustomizedTemplateTitleFontColor
+					? customizedTemplateTitleFontColor
+					: initialLoadedTitleFontColor,
+				subtitleFontColor: hasSelectedCustomizedTemplateSubtitleFontColor
+					? customizedTemplateSubtitleFontColor
+					: initialLoadedSubtitleFontColor,
+				contentFontColor: hasSelectedCustomizedTemplateContentFontColor
+					? customizedTemplateContentFontColor
+					: initialLoadedContentFontColor,
 
 				// images_position: [{}, {}, {}],// comment this line because it cause the image position to be wrong after changing template and palette
 			};
@@ -623,6 +718,9 @@ export const useSlides = () => {
 		setCustomizedTemplateContentFontFamily(slides[0].contentFontFamily);
 		setCustomizedTemplateSubtitleFontFamily(slides[0].subtitleFontFamily);
 		setCustomizedTemplateTitleFontFamily(slides[0].titleFontFamily);
+		setCustomizedTemplateTitleFontColor(slides[0].titleFontColor);
+		setCustomizedTemplateSubtitleFontColor(slides[0].subtitleFontColor);
+		setCustomizedTemplateContentFontColor(slides[0].contentFontColor);
 
 		setHasSelectedCustomizedTemplateContentFontFamily(
 			!!slides[0].contentFontFamily,
@@ -632,6 +730,13 @@ export const useSlides = () => {
 		);
 		setHasSelectedCustomizedTemplateTitleFontFamily(
 			!!slides[0].titleFontFamily,
+		);
+		setHasSelectedCustomizedTemplateTitleFontColor(!!slides[0].titleFontColor);
+		setHasSelectedCustomizedTemplateSubtitleFontColor(
+			!!slides[0].subtitleFontColor,
+		);
+		setHasSelectedCustomizedTemplateContentFontColor(
+			!!slides[0].contentFontColor,
 		);
 
 		setCustomTemplateBgColor(slides[0].background_color);
@@ -714,7 +819,7 @@ export const useSlides = () => {
 		// updateBranding,
 		changeTemplate,
 		changePalette,
-		changeTemplateAndPaletteAndBgColorAndFont,
+		changeTemplateAndPaletteAndBgColorAndFontFamilyAndColor,
 		initSlides,
 		slidesHistory,
 		slidesHistoryIndex,
@@ -771,6 +876,26 @@ export const useSlides = () => {
 		setCustomizedTemplateContentFontFamily,
 		HasSelectedCustomizedTemplateContentFontFamily,
 		setHasSelectedCustomizedTemplateContentFontFamily,
+		initialLoadedContentFontColor,
+		setInitialLoadedContentFontColor,
+		customizedTemplateContentFontColor,
+		setCustomizedTemplateContentFontColor,
+		hasSelectedCustomizedTemplateContentFontColor,
+		setHasSelectedCustomizedTemplateContentFontColor,
+		// subtitle font color
+		initialLoadedSubtitleFontColor,
+		setInitialLoadedSubtitleFontColor,
+		customizedTemplateSubtitleFontColor,
+		setCustomizedTemplateSubtitleFontColor,
+		hasSelectedCustomizedTemplateSubtitleFontColor,
+		setHasSelectedCustomizedTemplateSubtitleFontColor,
+		// title font color
+		initialLoadedTitleFontColor,
+		setInitialLoadedTitleFontColor,
+		customizedTemplateTitleFontColor,
+		setCustomizedTemplateTitleFontColor,
+		hasSelectedCustomizedTemplateTitleFontColor,
+		setHasSelectedCustomizedTemplateTitleFontColor,
 		// isTemplateLogoLeftSide,
 		// setIsTemplateLogoLeftSide,
 		// updateTemplateLogoPositionToLeft,

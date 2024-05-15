@@ -7,12 +7,16 @@ interface ColorPickerProps {
 	onCustomColorChange: (color: string) => void;
 	initialColor: string; // Accept initial color prop
 	resetColorPicker: () => void;
+	disableResetButton?: boolean;
+	disabled?: boolean;
 }
 
 export const ColorPicker: React.FC<ColorPickerProps> = ({
 	onCustomColorChange,
 	initialColor, // Receive initial color prop
 	resetColorPicker,
+	disableResetButton,
+	disabled,
 }) => {
 	const [displayColorPicker, setDisplayColorPicker] = useState<boolean>(false);
 	const [color, setColor] = useState<string>(initialColor); // Initialize color with initialColor
@@ -118,16 +122,25 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
 	return (
 		<div ref={colorPickerRef}>
 			<div className='flex flex-row gap-x-2 w-[15rem] items-center justify-between'>
-				<div style={buttonStyle} onClick={handleClick}>
+				<button
+					style={buttonStyle}
+					onClick={handleClick}
+					disabled={disabled}
+					className={`${disabled ? 'bg-[#F2F2F2]' : ''}`}
+				>
 					<div style={colorPreviewStyle}></div>
 					<span>{color}</span>
-				</div>
-				<SmallBlueButton
-					customizeStyle={{ width: '5rem' }}
-					onClick={resetColorPicker}
-				>
-					Reset
-				</SmallBlueButton>
+				</button>
+				{disableResetButton ? (
+					<></>
+				) : (
+					<SmallBlueButton
+						customizeStyle={{ width: '5rem' }}
+						onClick={resetColorPicker}
+					>
+						Reset All
+					</SmallBlueButton>
+				)}
 			</div>
 
 			{displayColorPicker && (

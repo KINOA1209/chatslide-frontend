@@ -288,6 +288,9 @@ class ProjectService {
 			slide.titleFontFamily = slideData.titleFontFamily || '';
 			slide.subtitleFontFamily = slideData.subtitleFontFamily || '';
 			slide.contentFontFamily = slideData.contentFontFamily || '';
+			slide.titleFontColor = slideData.titleFontColor || '';
+			slide.subtitleFontColor = slideData.subtitleFontColor || '';
+			slide.contentFontColor = slideData.contentFontColor || '';
 			// slide.show_logo = slideData.hasOwnProperty('show_logo')
 			// 	? slideData.show_logo
 			// 	: true;
@@ -515,10 +518,7 @@ class ProjectService {
 		}
 	}
 
-	static async deleteFolder(
-		token: string,
-		folder_name: string,
-	): Promise<any> {
+	static async deleteFolder(token: string, folder_name: string): Promise<any> {
 		const response = await fetch('/api/delete_project_group', {
 			method: 'POST',
 			headers: {
@@ -532,9 +532,11 @@ class ProjectService {
 		const responseJson = await response.json();
 
 		if (!response.ok) {
-			throw new Error(responseJson.message || 'An error occurred during deleting project');
+			throw new Error(
+				responseJson.message || 'An error occurred during deleting project',
+			);
 		}
-		return responseJson
+		return responseJson;
 	}
 
 	static async renameFolder(
@@ -556,9 +558,11 @@ class ProjectService {
 		const responseJson = await response.json();
 
 		if (!response.ok) {
-			throw new Error(responseJson.message || 'An error occurred during renaming project');
+			throw new Error(
+				responseJson.message || 'An error occurred during renaming project',
+			);
 		}
-		return responseJson
+		return responseJson;
 	}
 
 	static async moveToFolder(
@@ -580,9 +584,11 @@ class ProjectService {
 		const responseJson = await response.json();
 
 		if (!response.ok) {
-			throw new Error(responseJson.message || 'An error occurred during the moving project');
+			throw new Error(
+				responseJson.message || 'An error occurred during the moving project',
+			);
 		}
-		return responseJson
+		return responseJson;
 	}
 }
 

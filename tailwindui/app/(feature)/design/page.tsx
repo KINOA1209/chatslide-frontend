@@ -96,15 +96,24 @@ export default function DesignPage() {
 		initialLoadedContentFontFamily,
 		initialLoadedSubtitleFontFamily,
 		initialLoadedTitleFontFamily,
+		initialLoadedTitleFontColor,
+		initialLoadedContentFontColor,
+		initialLoadedSubtitleFontColor,
 		initialLoadedTemplateBgColor,
 		customTemplateBgColor,
 		customizedTemplateContentFontFamily,
 		customizedTemplateTitleFontFamily,
 		customizedTemplateSubtitleFontFamily,
+		customizedTemplateContentFontColor,
+		customizedTemplateSubtitleFontColor,
+		customizedTemplateTitleFontColor,
 		hasSelectedCustomTemplateBgColor,
 		HasSelectedCustomizedTemplateContentFontFamily,
 		HasSelectedCustomizedTemplateSubtitleFontFamily,
 		HasSelectedCustomizedTemplateTitleFontFamily,
+		hasSelectedCustomizedTemplateContentFontColor,
+		hasSelectedCustomizedTemplateTitleFontColor,
+		hasSelectedCustomizedTemplateSubtitleFontColor,
 	} = useSlides();
 	const { isTourActive, startTour, setIsTourActive } = useTourStore();
 	const { token, isPaidUser } = useUser();
@@ -148,6 +157,32 @@ export default function DesignPage() {
 			? customizedTemplateContentFontFamily
 			: initialLoadedContentFontFamily || 'Arial',
 	);
+
+	// selected customized font color
+	const [
+		selectedTemplateContentFontColor,
+		setSelectedTemplateContentFontColor,
+	] = useState(
+		hasSelectedCustomizedTemplateContentFontColor
+			? customizedTemplateContentFontColor
+			: initialLoadedContentFontColor || '#000000',
+	);
+
+	const [
+		selectedTemplateSubtitleFontColor,
+		setSelectedTemplateSubtitleFontColor,
+	] = useState(
+		hasSelectedCustomizedTemplateSubtitleFontColor
+			? customizedTemplateSubtitleFontColor
+			: initialLoadedSubtitleFontColor || '#000000',
+	);
+
+	const [selectedTemplateTitleFontColor, setSelectedTemplateTitleFontColor] =
+		useState(
+			hasSelectedCustomizedTemplateTitleFontColor
+				? customizedTemplateTitleFontColor
+				: initialLoadedTitleFontColor || '#000000',
+		);
 
 	const [selectedLogo, setSelectedLogo] = useState<Resource[]>(
 		project?.selected_logo || [],
@@ -264,6 +299,9 @@ export default function DesignPage() {
 						titleFontFamily: selectedTemplateTitleFontFamily,
 						subtitleFontFamily: selectedTemplateSubtitleFontFamily,
 						contentFontFamily: selectedTemplateContentFontFamily,
+						titleFontColor: selectedTemplateTitleFontColor,
+						subtitleFontColor: selectedTemplateSubtitleFontColor,
+						contentFontColor: selectedTemplateContentFontColor,
 						logo: showLogo ? 'Default' : '',
 						logo_url: selectedLogo?.[0]?.thumbnail_url || '',
 						background_url: selectedBackground?.[0]?.thumbnail_url || '',
@@ -382,6 +420,15 @@ export default function DesignPage() {
 							}
 							setCustomizedTemplateTitleFontFamilyCallback={
 								setSelectedTemplateTitleFontFamily
+							}
+							setCustomizedTemplateContentFontColorCallback={
+								setSelectedTemplateContentFontColor
+							}
+							setCustomizedTemplateSubtitleFontColorCallback={
+								setSelectedTemplateSubtitleFontColor
+							}
+							setCustomizedTemplateTitleFontColorCallback={
+								setSelectedTemplateTitleFontColor
 							}
 						/>
 

@@ -60,7 +60,6 @@ export const PresentButton: React.FC<PresentButtonProps> = ({
 	);
 };
 
-
 export const AddSlideButton: React.FC<{
 	currentSlideIndex: number;
 	addPage: () => void;
@@ -147,7 +146,8 @@ export const ChangeTemplateOptions: React.FC<{}> = ({}) => {
 		updateCustomizedSubtitleFontFamilyForTemplate,
 		updateCustomizedContentFontFamilyForTemplate,
 	} = useSlides();
-	const { changeTemplateAndPaletteAndBgColorAndFont } = useSlides();
+	const { changeTemplateAndPaletteAndBgColorAndFontFamilyAndColor } =
+		useSlides();
 	const [selectedTemplate, setSelectedTemplate] = useState<TemplateKeys>(
 		slides[0]?.template || 'Default',
 	);
@@ -164,6 +164,16 @@ export const ChangeTemplateOptions: React.FC<{}> = ({}) => {
 	const [selectedTemplateBgColor, setSelectedTemplateBgColor] = useState(
 		slides[0]?.background_color || '#FFFFFF',
 	);
+	const [selectedTemplateTitleFontColor, setSelectedTemplateTitleFontColor] =
+		useState(slides[0]?.titleFontColor || '#000000');
+	const [
+		selectedTemplateSubtitleFontColor,
+		setSelectedTemplateSubtitleFontColor,
+	] = useState(slides[0]?.subtitleFontColor || '#000000');
+	const [
+		selectedTemplateContentFontColor,
+		setSelectedTemplateContentFontColor,
+	] = useState(slides[0]?.contentFontColor || '#000000');
 	const [selectedTemplateTitleFontFamily, setSelectedTemplateTitleFontFamily] =
 		useState(slides[0]?.titleFontFamily || 'Arial');
 	const [
@@ -178,13 +188,16 @@ export const ChangeTemplateOptions: React.FC<{}> = ({}) => {
 	const handleConfirm = () => {
 		// console.log('selectedTemplate all configs:', selectedTemplate, selectedPaletteOption, selectedTemplateBgColor, selectedTemplateTitleFontFamily, selectedTemplateSubtitleFontFamily, selectedTemplateContentFontFamily);
 		// if (!hasSelectedCustomTemplateBgColor) {
-		changeTemplateAndPaletteAndBgColorAndFont(
+		changeTemplateAndPaletteAndBgColorAndFontFamilyAndColor(
 			selectedTemplate,
 			selectedPaletteOption,
 			selectedTemplateBgColor,
 			selectedTemplateTitleFontFamily,
 			selectedTemplateSubtitleFontFamily,
 			selectedTemplateContentFontFamily,
+			selectedTemplateTitleFontColor,
+			selectedTemplateSubtitleFontColor,
+			selectedTemplateContentFontColor,
 		);
 		// }
 		// when confirm, set the selected palette color code to background color
@@ -245,6 +258,15 @@ export const ChangeTemplateOptions: React.FC<{}> = ({}) => {
 						}
 						setCustomizedTemplateTitleFontFamilyCallback={
 							setSelectedTemplateTitleFontFamily
+						}
+						setCustomizedTemplateContentFontColorCallback={
+							setSelectedTemplateContentFontColor
+						}
+						setCustomizedTemplateSubtitleFontColorCallback={
+							setSelectedTemplateSubtitleFontColor
+						}
+						setCustomizedTemplateTitleFontColorCallback={
+							setSelectedTemplateTitleFontColor
 						}
 					/>
 				</div>
