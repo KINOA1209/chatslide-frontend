@@ -1,3 +1,6 @@
+'use client';
+
+
 import React, { useEffect, useState } from 'react';
 import ReferralLink from '../ReferralLink';
 import Modal from './Modal';
@@ -9,21 +12,27 @@ import Image from 'next/image';
 import { Instruction } from './Text';
 import UserService from '@/services/UserService';
 import { getBrand } from '@/utils/getHost';
+import { NewInputBox } from './InputBox';
 
 interface FeedbackFormProps {
 	onClose: () => void;
 	message?: string;
 	successDiv?: JSX.Element;
 	textRequired?: boolean;
+	instructionText?: string;
 }
 
 interface FeedbackButtonProps {
+	displayText?: string;
+	instructionText?: string;
 	timeout?: number;
 	message?: string;
 	textRequired?: boolean;
 }
 
 const FeedbackButton: React.FC<FeedbackButtonProps> = ({
+	displayText = 'Feedback',
+	instructionText,
 	timeout = 0,
 	message = '',
 	textRequired = false,
@@ -70,26 +79,15 @@ const FeedbackButton: React.FC<FeedbackButtonProps> = ({
 	}, [timerFinished]);
 
 	return (
-		<div className='absolute bottom-0 -right-36 hidden sm:block z-30'>
-			<button
-				onClick={handleOpenModal}
-				className='bg-Blue text-white font-bold flex flex-row items-center py-1 px-2 gap-x-2 rounded-2xl focus:outline-none focus:shadow-outline-blue active:bg-blue-700'
-			>
-				<Image
-					src={Laura}
-					alt='Laura'
-					width={30}
-					height={30}
-					style={{ borderRadius: '50%' }}
-				/>
-				<span>Talk with us</span>
-			</button>
+		<div className='z-30'>
+			<BigBlueButton onClick={handleOpenModal}>{displayText}</BigBlueButton>
 
 			{showModal && (
 				<FeedbackForm
 					onClose={handleCloseModal}
 					message={message}
 					textRequired={textRequired}
+					instructionText={instructionText}
 				/>
 			)}
 		</div>
@@ -101,6 +99,7 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({
 	message,
 	successDiv,
 	textRequired,
+	instructionText = 'Please leave your feedback below:',
 }) => {
 	const [rating, setRating] = useState<number>(0);
 	const [feedbackText, setFeedbackText] = useState<string>('');
@@ -116,9 +115,9 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({
 	};
 
 	const handleFeedbackTextChange = (
-		event: React.ChangeEvent<HTMLTextAreaElement>,
+		text: string
 	) => {
-		setFeedbackText(event.target.value);
+		setFeedbackText(text);
 	};
 
 	function getEmojiForStar(star: number) {
@@ -211,7 +210,6 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({
 		<Modal
 			showModal={true}
 			setShowModal={onClose}
-			position='fixed bottom-0 left-0'
 			width='400px'
 		>
 			<div className='bg-white'>
@@ -258,18 +256,21 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({
 						</div>
 						<div className='mt-4'>
 							<Instruction>
-								Tell us what you think about this slides or {getBrand()}:
+								{instructionText}
 							</Instruction>
 							{/* Increase the number of rows for the textarea to make it taller */}
-							<textarea
-								className='resize-none w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 text-black'
-								rows={3} // Increase the number of rows here to make the text field larger
+
+							<NewInputBox
+							  onChange={handleFeedbackTextChange}
 								value={feedbackText}
-								onChange={handleFeedbackTextChange}
-							></textarea>
+								maxLength={2000}
+								placeholder='Your feedback here...'
+								textarea
+							/>
+
 						</div>
 						<Instruction>
-							Want help? Book a meeting with me{' '}
+							Alternatively, book a meeting with me{' '}
 							<a
 								href='https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ3Ly0YZMnlcouxHwvv7cUsVLziVxNPfqNBoDl8H9D9ob6sn9-WMDg7Uu0ZTPzUlKjXFjmMBeJGS'
 								className='underline text-blue-600'

@@ -242,32 +242,6 @@ export const BigBlueButton: React.FC<DrlambdaButtonProps> = ({
 	);
 };
 
-export const EarlyAccessButton: React.FC<{
-	project_id?: string;
-	feature: string;
-}> = ({ project_id = '', feature }) => {
-	const { username, token } = useUser();
-
-	return (
-		<>
-			<ToastContainer />
-			<BigBlueButton
-				onClick={() => {
-					UserService.submitFeedback(
-						5,
-						`${username} wants to join the pilot program for ${feature} feature`,
-						project_id,
-						token,
-					);
-					toast.success(`You are added to the ${feature} waitlist, thank you!`);
-				}}
-			>
-				Join Waitlist
-			</BigBlueButton>
-		</>
-	);
-};
-
 export const BigGrayButton: React.FC<DrlambdaButtonProps> = ({
 	children,
 	onClick,

@@ -4,7 +4,7 @@ import { Panel } from '@/components/layout/Panel';
 import { Column } from '@/components/layout/Column';
 import { BigTitle, Explanation, Instruction } from '@/components/ui/Text';
 import { PlusLabel, ProLabel } from '@/components/ui/GrayLabel';
-import { EarlyAccessButton } from '@/components/button/DrlambdaButton';
+import FeedbackButton from '@/components/ui/feedback';
 
 export default function Studio() {
 	// avoid hydration error during development caused by persistence
@@ -25,13 +25,19 @@ export default function Studio() {
 					<Instruction>
 						🎰 Directly add scripts, voiceover, and avatar to PPTX
 					</Instruction>
+
+					<FeedbackButton
+						instructionText='What features would you like to see next?'
+						displayText='Ask for more features!'
+					/>
 				</Card>
 
 				<Card>
 					<BigTitle>May 16</BigTitle>
 					<Instruction>
 						<div>
-							<b>⚡️ Fast File Processing: </b> Now we can read and export your files at a higher speed.
+							<b>⚡️ Fast File Processing: </b> Now we can read and export your
+							files at a higher speed.
 						</div>
 					</Instruction>
 					<Instruction>
