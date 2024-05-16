@@ -3,15 +3,11 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import '@/app/css/workflow-scenario-choice.css';
-import Image from 'next/image';
 import workflowTypeOptions from './options';
-import SessionStorage from '@/utils/SessionStorage';
-import AuthService from '@/services/AuthService';
 import { BackButton } from '@/components/button/DrlambdaButton';
 import { BigTitle, Explanation, Title } from '@/components/ui/Text';
 import { Column } from '@/components/layout/Column';
 import { useUser } from '@/hooks/use-user';
-import PaywallModal from '@/components/paywallModal';
 import useHydrated from '@/hooks/use-hydrated';
 import { ScenarioOption } from '../scenario-choice/slidesScenarios';
 import ScenarioButton from './ScenarioButton';

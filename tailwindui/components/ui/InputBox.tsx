@@ -66,15 +66,15 @@ export const NewInputBox: React.FC<{
 	}, []);
 
 	return (
-		<div
-			className={
-				'w-full flex flex-col flex-nowrap items-center justify-center border border-2 border-gray-200 px-3 py-2.5 gap-x-2 cursor-text rounded-lg overflow-visible ' +
-				(textarea ? 'h-[200px]' : 'h-[36px]')
-			}
-			ref={ref}
-			id={id}
-		>
-			<div className='w-full flex flex-row flex-nowrap items-center justify-center gap-x-2'>
+		<div className='flex flex-col'>
+			<div
+				className={
+					'w-full flex flex-col flex-nowrap items-center justify-center border border-2 border-gray-200 px-3 py-2.5 gap-x-2 cursor-text rounded-lg overflow-visible ' +
+					(textarea ? 'h-[200px]' : 'h-[36px]')
+				}
+				ref={ref}
+				id={id}
+			>
 				{icon}
 				{!textarea ? (
 					<input
@@ -103,7 +103,6 @@ export const NewInputBox: React.FC<{
 					/>
 				)}
 			</div>
-      
 			{/* when maxlength is reached, show a warning */}
 			{value.length >= maxLength && (
 				<WarningMessage>

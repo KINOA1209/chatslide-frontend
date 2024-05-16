@@ -157,7 +157,12 @@ const TemplateSelector: React.FC<{
 
 	useEffect(() => {
 		setFinalPaletteOptions(paletteOptions); // Update finalPaletteOptions when paletteOptions changes
+    
 	}, [paletteOptions]);
+
+  useEffect(() => {
+    resetFontFamilyAndFontColorPicker();
+  }, [template, palette]);
 
 	const [coverTitleFontFamily, setCoverTitleFontFamily] = useState<
 		string | undefined
