@@ -15,7 +15,7 @@ import { Column } from '@/components/layout/Column';
 import { Instruction, Title } from '@/components/ui/Text';
 import DesignSystemBadges from '@/components/ui/design_systems/Badges';
 import DesignSystemButton from '@/components/ui/design_systems/ButtonsOrdinary';
-import { ScenarioButton } from '../type-choice/page';
+import ScenarioButton from '../type-choice/ScenarioButton';
 
 const ScenarioChoicePage = () => {
 	const router = useRouter();
