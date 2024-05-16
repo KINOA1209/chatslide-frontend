@@ -252,7 +252,19 @@
 	src: url('/fonts/BigShouldersDisplay-SemiBold.ttf') format('truetype');
 	/* Add more src declarations for different font weights or styles if needed */
 }
-
+/* RobotoCondensed font family */
+@font-face {
+	font-family: 'Roboto Condensed Medium';
+	src: url('/fonts/RobotoCondensed-Medium.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'Roboto Condensed Regular';
+	src: url('/fonts/RobotoCondensed-Regular.ttf') format('truetype');
+}
+@font-face {
+	font-family: 'Roboto Condensed Bold';
+	src: url('/fonts/RobotoCondensed-Bold.ttf') format('truetype');
+}
 /* 
 @font-face {
 	font-family: 'Cormorant';

@@ -48,7 +48,7 @@
 	margin-top: -0.15em;
 }
 
-.ql-editor.non-editable-ql-editor-socialpost ul li::before{
+.ql-editor.non-editable-ql-editor-socialpost ul li::before {
 	content: '• '; /* Unicode bullet symbol */
 	position: absolute;
 	margin-left: -0.55em;
@@ -147,6 +147,9 @@ $font-families: (
 	'Poppins Medium',
 	'Poppins SemiBold',
 	'Poppins Bold',
+	'Roboto Condensed Regular',
+	'Roboto Condensed Medium',
+	'Roboto Condensed Bold',
 	'Rubik',
 	'Sansita Swashed Regular',
 	'Sansita Swashed Medium',

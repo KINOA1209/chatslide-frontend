@@ -41,6 +41,7 @@ const availablePalettes: availablePalettesObject = {
 		'Catskill White',
 	],
 	Creative_Brief_011: ['Serenade', 'Seashell'],
+	Business_Review_012: ['Cod Gray'],
 };
 
 export const lightColorPalette: PaletteKeys[] = [
@@ -64,6 +65,7 @@ export const darkColorPalette: PaletteKeys[] = [
 	'Shark Black',
 	'Perfume',
 	'Azalea',
+	'Cod Gray',
 ];
 
 export default availablePalettes;

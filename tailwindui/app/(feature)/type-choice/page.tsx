@@ -9,7 +9,8 @@ import { BigTitle, Explanation, Title } from '@/components/ui/Text';
 import { Column } from '@/components/layout/Column';
 import { useUser } from '@/hooks/use-user';
 import useHydrated from '@/hooks/use-hydrated';
-import { ScenarioButton } from '@/components/button/ScenarioButton';
+import { ScenarioOption } from '../scenario-choice/slidesScenarios';
+import ScenarioButton from './ScenarioButton';
 
 const ScenarioChoicePage = () => {
 	const router = useRouter(); // Initialize the router
@@ -49,7 +50,11 @@ const ScenarioChoicePage = () => {
 					id='choice_container'
 				>
 					{workflowTypeOptions.options.map((scenario) => (
-						<ScenarioButton key={scenario.id} scenario={scenario} navigate={navigate} />
+						<ScenarioButton
+							key={scenario.id}
+							scenario={scenario}
+							navigate={navigate}
+						/>
 					))}
 				</div>
 			</Column>

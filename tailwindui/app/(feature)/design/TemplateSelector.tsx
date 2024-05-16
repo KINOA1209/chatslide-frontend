@@ -50,6 +50,7 @@ export const colorPreviews: Record<PaletteKeys, string> = {
 	'Catskill White': '#EEF5F7',
 	Serenade: '#FFF2E6',
 	Seashell: '#F1F1F1',
+	'Cod Gray': '#FFFFFF',
 	// Add more color previews for other palette keys if needed
 };
 
@@ -482,12 +483,13 @@ const TemplateSelector: React.FC<{
 					</div>
 					{/* Render color palette options only if there are more than one */}
 					<div className='paletteChoice w-full gap-y-2'>
-						{!hasSelectedCustomTemplateBgColor && paletteOptions.length > 1 && (
-							<div>
-								<Instruction>Theme color</Instruction>
-								<PaletteSelector />
-							</div>
-						)}
+						{!hasSelectedCustomTemplateBgColor &&
+							paletteOptions[0] !== 'Original' && (
+								<div>
+									<Instruction>Theme color</Instruction>
+									<PaletteSelector />
+								</div>
+							)}
 					</div>
 
 					<Instruction>
