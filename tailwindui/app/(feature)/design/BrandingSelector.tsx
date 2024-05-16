@@ -6,13 +6,13 @@ import { PlusLabel } from '@/components/ui/GrayLabel';
 import { useUser } from '@/hooks/use-user';
 import { useEffect, useState } from 'react';
 import PaywallModal from '@/components/paywallModal';
-import { useSlides } from '@/hooks/use-slides';
 import { LogoPosition } from '@/models/Slide';
+import { getBrand } from '@/utils/getHost';
 
 const brandingOptions = [
 	{
 		value: 'default',
-		text: 'Default Logo',
+		text: getBrand() + ' Logo',
 	},
 	{
 		value: 'no',
