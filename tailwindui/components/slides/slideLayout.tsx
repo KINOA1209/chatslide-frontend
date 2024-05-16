@@ -311,7 +311,12 @@ export const Cover_img_0_layout = ({
 		>
 			<div
 				className={`SlideUserNameAndHeadColumn`}
-				style={layoutElements.columnCSS}
+				style={{
+					...layoutElements.columnCSS,
+					backgroundColor: themeElements.userNamaAndHeadColumnBackgroundColor
+						? themeElements.userNamaAndHeadColumnBackgroundColor
+						: '',
+				}}
 			>
 				<div
 					// className={`${themeElements.userNameFont} ${themeElements.userNameFontColor}`}
@@ -440,7 +445,12 @@ export const Cover_img_1_layout = ({
 		>
 			<div
 				className={`SlideUserNameAndHeadColumn`}
-				style={layoutElements.columnCSS}
+				style={{
+					...layoutElements.columnCSS,
+					backgroundColor: themeElements.userNamaAndHeadColumnBackgroundColor
+						? themeElements.userNamaAndHeadColumnBackgroundColor
+						: '',
+				}}
 			>
 				<div
 					className={`SlideUserName`}
@@ -568,53 +578,71 @@ export const Col_1_img_0_layout = ({
 		<div
 			ref={containerRef}
 			className={`SlideCanva`}
-			style={{ ...layoutElements.canvaCSS, position: 'relative' }}
+			style={{
+				...layoutElements.canvaCSS,
+				position: 'relative',
+				// backgroundColor: themeElements.slideCanvasBackgroundColor
+				// 	? themeElements.slideCanvasBackgroundColor
+				// 	: '',
+			}}
 		>
 			<div
-				className={`SlideTitleAndSubtopicBox`}
 				style={{
-					...layoutElements.titleAndSubtopicBoxCSS,
-					zIndex: 50,
-					backgroundColor: themeElements.titleAndSubtopicBoxBackgroundColor
-						? themeElements.titleAndSubtopicBoxBackgroundColor
+					display: 'flex',
+					flexDirection: 'column', // Equivalent to flex-col
+					...layoutElements.titleAndContentColumnCSS,
+					backgroundColor: themeElements.slideColumnBackgroundColor
+						? themeElements.slideColumnBackgroundColor
 						: '',
 				}}
 			>
+				{' '}
 				<div
-					ref={topicRef}
-					className={`topicBox`}
-					style={layoutElements.topicCSS}
+					className={`SlideTitleAndSubtopicBox`}
+					style={{
+						...layoutElements.titleAndSubtopicBoxCSS,
+						zIndex: 50,
+						backgroundColor: themeElements.titleAndSubtopicBoxBackgroundColor
+							? themeElements.titleAndSubtopicBoxBackgroundColor
+							: '',
+					}}
 				>
-					{topic}
+					<div
+						ref={topicRef}
+						className={`topicBox`}
+						style={layoutElements.topicCSS}
+					>
+						{topic}
+					</div>
+					<div
+						className={`subtopicBox`}
+						ref={subtopicRef}
+						style={layoutElements.subtopicCSS}
+					>
+						{subtopic}
+					</div>
 				</div>
 				<div
-					className={`subtopicBox`}
-					ref={subtopicRef}
-					style={layoutElements.subtopicCSS}
+					className='SlideTitlesAndCOntentDivider opacity-50 border border-neutral-900 border-opacity-40'
+					style={layoutElements.titlesAndContentDividerCSS}
+				></div>
+				<div
+					className='SlideColumn'
+					style={{ ...layoutElements.columnCSS, zIndex: 40 }}
 				>
-					{subtopic}
+					<div
+						className='SlideContent'
+						style={{
+							...layoutElements.contentCSS, // Spread the existing styles first
+							maxHeight:
+								maxContentHeight !== null ? `${maxContentHeight}px` : 'none',
+						}}
+					>
+						{content}
+					</div>
 				</div>
 			</div>
 
-			<div
-				className='SlideTitlesAndCOntentDivider opacity-50 border border-neutral-900 border-opacity-40'
-				style={layoutElements.titlesAndContentDividerCSS}
-			></div>
-			<div
-				className='SlideColumn'
-				style={{ ...layoutElements.columnCSS, zIndex: 40 }}
-			>
-				<div
-					className='SlideContent'
-					style={{
-						...layoutElements.contentCSS, // Spread the existing styles first
-						maxHeight:
-							maxContentHeight !== null ? `${maxContentHeight}px` : 'none',
-					}}
-				>
-					{content}
-				</div>
-			</div>
 			<div
 				style={{
 					...layoutElements.logoCSS,
@@ -717,172 +745,187 @@ export const Col_2_img_0_layout = ({
 			}}
 		>
 			<div
-				className={`SlideTopicAndSubtopicBox`}
+				className='SlideTitleSubtitleContentColumn'
 				style={{
-					...layoutElements.titleAndSubtopicBoxCSS,
-					zIndex: 50,
-					backgroundColor: themeElements.titleAndSubtopicBoxBackgroundColor
-						? themeElements.titleAndSubtopicBoxBackgroundColor
+					display: 'flex',
+					flexDirection: 'column', // Equivalent to flex-col
+					...layoutElements.titleAndContentColumnCSS,
+					backgroundColor: themeElements.slideColumnBackgroundColor
+						? themeElements.slideColumnBackgroundColor
 						: '',
 				}}
 			>
-				<div className={`SlideTopic`} style={layoutElements.topicCSS}>
-					{topic}
-				</div>
-				<div className={`SlideSubtopic`} style={layoutElements.subtopicCSS}>
-					{subtopic}
-				</div>
-			</div>
-
-			<div
-				className={`w-full flex SlideContentContainer`}
-				style={{
-					...layoutElements.contentContainerCSS,
-					zIndex: 40,
-					gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
-				}}
-			>
-				<div className='Column1' style={layoutElements.contentCSS}>
-					<div
-						className={`SlideContentIndex`}
-						style={layoutElements.contentIndexCSS}
-					>
-						{1}
+				<div
+					className={`SlideTopicAndSubtopicBox`}
+					style={{
+						...layoutElements.titleAndSubtopicBoxCSS,
+						zIndex: 50,
+						backgroundColor: themeElements.titleAndSubtopicBoxBackgroundColor
+							? themeElements.titleAndSubtopicBoxBackgroundColor
+							: '',
+					}}
+				>
+					<div className={`SlideTopic`} style={layoutElements.topicCSS}>
+						{topic}
 					</div>
-					<div
-						className={`SlideContentIndexTextDivider`}
-						style={layoutElements.contentIndexTextDividerCSS}
-					></div>
-
-					{showEditorBoxCol1 && (
-						<>
-							{setUpdatedContentCol1((prevContent: JSX.Element[]) => [
-								addANewEditorBox({
-									handleSlideEdit: handleSlideEdit,
-									isVerticalContent: false,
-									themeElements: themeElements,
-									fontSize: '16pt',
-									contentIndex: 0,
-									slideIndex: slideIndex,
-									slides: slides,
-								}),
-								...prevContent.slice(1),
-							])}
-							{setShowEditorBoxCol1(false)}
-						</>
-					)}
-					{/* {updatedContent.length === 0 && showAddButton && (
-					<div
-						className={`btn btn-primary ${addButtonStyle} ${addButtonHoverStyle}`}
-						// onClick={handleAddTextColumn}
-						onClick={() =>
-							handleAddTextColumn({
-								handleSlideEdit: handleSlideEdit,
-								isVerticalContent: false,
-								themeElements: themeElements,
-								fontSize: '16pt',
-								contentIndex: 0,
-								slideIndex: slideIndex,
-								slides: slides,
-								setUpdatedContent: setUpdatedContent,
-								setShowAddButton: setShowAddButton,
-								shouldShowAddButton: updatedContent.length <= 1,
-							})
-						}
-					>
-						<RiAddLine className={addIconStyle} />
-						Add One Column of text
+					<div className={`SlideSubtopic`} style={layoutElements.subtopicCSS}>
+						{subtopic}
 					</div>
-				)} */}
-					{/* {updatedContent.slice(0, 1).map((item, index) => ( */}
-					{updatedContentCol1.map((item, index) => (
-						<React.Fragment key={`contentText_${index}`}>
-							<ul
-								key={`contentText_${index}`}
-								className={`SlideContentText`}
-								style={{
-									...layoutElements.contentTextCSS,
-									flex: index === updatedContentCol1.length - 1 ? 1 : 0,
-								}}
-							>
-								<li style={{ width: '100%' }}>{item}</li>
-							</ul>
-						</React.Fragment>
-					))}
 				</div>
 
-				<div className='Column2' style={layoutElements.contentCSS}>
-					<div
-						className={`SlideContentIndex`}
-						style={layoutElements.contentIndexCSS}
-					>
-						{2}
-					</div>
-					<div
-						className={`SlideContentIndexTextDivider`}
-						style={layoutElements.contentIndexTextDividerCSS}
-					></div>
-					{/* {updatedContent.length === 1 && showAddButton && (
-					<div
-						className={`btn btn-primary ${addButtonStyle} ${addButtonHoverStyle}`}
-						// onClick={handleAddColumn}
-						onClick={() =>
-							handleAddTextColumn({
-								handleSlideEdit: handleSlideEdit,
-								isVerticalContent: false,
-								themeElements: themeElements,
-								fontSize: '16pt',
-								contentIndex: 1,
-								slideIndex: slideIndex,
-								slides: slides,
-								setUpdatedContent: setUpdatedContent,
-								setShowAddButton: setShowAddButton,
-								shouldShowAddButton: updatedContent.length <= 1,
-							})
-						}
-					>
+				<div
+					className={`w-full flex SlideContentContainer`}
+					style={{
+						...layoutElements.contentContainerCSS,
+						zIndex: 40,
+						gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+						// backgroundColor: themeElements.slideContentContainerBackgroundColor
+						// 	? themeElements.slideContentContainerBackgroundColor
+						// 	: '',
+					}}
+				>
+					<div className='Column1' style={layoutElements.contentCSS}>
+						<div
+							className={`SlideContentIndex`}
+							style={layoutElements.contentIndexCSS}
+						>
+							{1}
+						</div>
 						<div
 							className={`SlideContentIndexTextDivider`}
 							style={layoutElements.contentIndexTextDividerCSS}
 						></div>
-						<RiAddLine className={addIconStyle} />
-						Add One Column of text
+
+						{showEditorBoxCol1 && (
+							<>
+								{setUpdatedContentCol1((prevContent: JSX.Element[]) => [
+									addANewEditorBox({
+										handleSlideEdit: handleSlideEdit,
+										isVerticalContent: false,
+										themeElements: themeElements,
+										fontSize: '16pt',
+										contentIndex: 0,
+										slideIndex: slideIndex,
+										slides: slides,
+									}),
+									...prevContent.slice(1),
+								])}
+								{setShowEditorBoxCol1(false)}
+							</>
+						)}
+						{/* {updatedContent.length === 0 && showAddButton && (
+				<div
+					className={`btn btn-primary ${addButtonStyle} ${addButtonHoverStyle}`}
+					// onClick={handleAddTextColumn}
+					onClick={() =>
+						handleAddTextColumn({
+							handleSlideEdit: handleSlideEdit,
+							isVerticalContent: false,
+							themeElements: themeElements,
+							fontSize: '16pt',
+							contentIndex: 0,
+							slideIndex: slideIndex,
+							slides: slides,
+							setUpdatedContent: setUpdatedContent,
+							setShowAddButton: setShowAddButton,
+							shouldShowAddButton: updatedContent.length <= 1,
+						})
+					}
+				>
+					<RiAddLine className={addIconStyle} />
+					Add One Column of text
+				</div>
+			)} */}
+						{/* {updatedContent.slice(0, 1).map((item, index) => ( */}
+						{updatedContentCol1.map((item, index) => (
+							<React.Fragment key={`contentText_${index}`}>
+								<ul
+									key={`contentText_${index}`}
+									className={`SlideContentText`}
+									style={{
+										...layoutElements.contentTextCSS,
+										flex: index === updatedContentCol1.length - 1 ? 1 : 0,
+									}}
+								>
+									<li style={{ width: '100%' }}>{item}</li>
+								</ul>
+							</React.Fragment>
+						))}
 					</div>
-				)} */}
-					{showEditorBoxCol2 && (
-						<>
-							{setUpdatedContentCol2((prevContent: JSX.Element[]) => [
-								// ...prevContent.slice(0, 1),
-								addANewEditorBox({
-									handleSlideEdit: handleSlideEdit,
-									isVerticalContent: false,
-									themeElements: themeElements,
-									fontSize: '16pt',
-									contentIndex: 1,
-									slideIndex: slideIndex,
-									slides: slides,
-								}),
-								// ...prevContent.slice(2),
-								...prevContent.slice(1),
-							])}
-							{setShowEditorBoxCol2(false)}
-						</>
-					)}
-					{/* {updatedContent.slice(1, 2).map((item, index) => ( */}
-					{updatedContentCol2.map((item, index) => (
-						<React.Fragment key={`contentText_${index + 1}`}>
-							<ul
-								key={`contentText_${index}`}
-								className={`SlideContentText`}
-								style={{
-									...layoutElements.contentTextCSS,
-									flex: index === updatedContentCol2.length - 1 ? 1 : 0,
-								}}
-							>
-								<li style={{ width: '100%' }}>{item}</li>
-							</ul>
-						</React.Fragment>
-					))}
+
+					<div className='Column2' style={layoutElements.contentCSS}>
+						<div
+							className={`SlideContentIndex`}
+							style={layoutElements.contentIndexCSS}
+						>
+							{2}
+						</div>
+						<div
+							className={`SlideContentIndexTextDivider`}
+							style={layoutElements.contentIndexTextDividerCSS}
+						></div>
+						{/* {updatedContent.length === 1 && showAddButton && (
+				<div
+					className={`btn btn-primary ${addButtonStyle} ${addButtonHoverStyle}`}
+					// onClick={handleAddColumn}
+					onClick={() =>
+						handleAddTextColumn({
+							handleSlideEdit: handleSlideEdit,
+							isVerticalContent: false,
+							themeElements: themeElements,
+							fontSize: '16pt',
+							contentIndex: 1,
+							slideIndex: slideIndex,
+							slides: slides,
+							setUpdatedContent: setUpdatedContent,
+							setShowAddButton: setShowAddButton,
+							shouldShowAddButton: updatedContent.length <= 1,
+						})
+					}
+				>
+					<div
+						className={`SlideContentIndexTextDivider`}
+						style={layoutElements.contentIndexTextDividerCSS}
+					></div>
+					<RiAddLine className={addIconStyle} />
+					Add One Column of text
+				</div>
+			)} */}
+						{showEditorBoxCol2 && (
+							<>
+								{setUpdatedContentCol2((prevContent: JSX.Element[]) => [
+									// ...prevContent.slice(0, 1),
+									addANewEditorBox({
+										handleSlideEdit: handleSlideEdit,
+										isVerticalContent: false,
+										themeElements: themeElements,
+										fontSize: '16pt',
+										contentIndex: 1,
+										slideIndex: slideIndex,
+										slides: slides,
+									}),
+									// ...prevContent.slice(2),
+									...prevContent.slice(1),
+								])}
+								{setShowEditorBoxCol2(false)}
+							</>
+						)}
+						{/* {updatedContent.slice(1, 2).map((item, index) => ( */}
+						{updatedContentCol2.map((item, index) => (
+							<React.Fragment key={`contentText_${index + 1}`}>
+								<ul
+									key={`contentText_${index}`}
+									className={`SlideContentText`}
+									style={{
+										...layoutElements.contentTextCSS,
+										flex: index === updatedContentCol2.length - 1 ? 1 : 0,
+									}}
+								>
+									<li style={{ width: '100%' }}>{item}</li>
+								</ul>
+							</React.Fragment>
+						))}
+					</div>
 				</div>
 			</div>
 
@@ -992,272 +1035,287 @@ export const Col_3_img_0_layout = ({
 			}}
 		>
 			<div
+				className='SlideTitleSubtitleContentColumn'
 				style={{
-					...layoutElements.titleAndSubtopicBoxCSS,
-					zIndex: 50,
-					backgroundColor: themeElements.titleAndSubtopicBoxBackgroundColor
-						? themeElements.titleAndSubtopicBoxBackgroundColor
+					display: 'flex',
+					flexDirection: 'column', // Equivalent to flex-col
+					...layoutElements.titleAndContentColumnCSS,
+					backgroundColor: themeElements.slideColumnBackgroundColor
+						? themeElements.slideColumnBackgroundColor
 						: '',
 				}}
 			>
-				<div style={layoutElements.topicCSS}>{topic}</div>
-				<div style={layoutElements.subtopicCSS}>{subtopic}</div>
-			</div>
+				<div
+					style={{
+						...layoutElements.titleAndSubtopicBoxCSS,
+						zIndex: 50,
+						backgroundColor: themeElements.titleAndSubtopicBoxBackgroundColor
+							? themeElements.titleAndSubtopicBoxBackgroundColor
+							: '',
+					}}
+				>
+					<div style={layoutElements.topicCSS}>{topic}</div>
+					<div style={layoutElements.subtopicCSS}>{subtopic}</div>
+				</div>
 
-			<div
-				className={`w-full flex SlideContentContainer`}
-				style={{
-					...layoutElements.contentContainerCSS,
-					zIndex: 40,
-					gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
-				}}
-			>
-				{/* {Array.isArray(content) &&
-					content.map((item, index) => (
+				<div
+					className={`w-full flex SlideContentContainer`}
+					style={{
+						...layoutElements.contentContainerCSS,
+						zIndex: 40,
+						gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
+						// backgroundColor: themeElements.slideContentContainerBackgroundColor
+						// 	? themeElements.slideContentContainerBackgroundColor
+						// 	: '',
+					}}
+				>
+					{/* {Array.isArray(content) &&
+				content.map((item, index) => (
+					<div
+						// className='flex flex-col gap-[0.5rem]'
+						key={index}
+						style={{
+							...layoutElements.contentCSS,
+							display: item === null || index > 2 ? 'none' : 'flex', // or 'flex' based on your layout
+						}}
+					>
+						<div style={layoutElements.contentIndexCSS}>{index + 1}</div>
 						<div
-							// className='flex flex-col gap-[0.5rem]'
+							// className='opacity-50 border border-neutral-900 border-opacity-40'
+							style={layoutElements.contentIndexTextDividerCSS}
+						></div>
+						<ul
 							key={index}
-							style={{
-								...layoutElements.contentCSS,
-								display: item === null || index > 2 ? 'none' : 'flex', // or 'flex' based on your layout
-							}}
+							// className={`flex flex-row w-full h-full grow `}
+							style={layoutElements.contentTextCSS}
 						>
-							<div style={layoutElements.contentIndexCSS}>{index + 1}</div>
-							<div
-								// className='opacity-50 border border-neutral-900 border-opacity-40'
-								style={layoutElements.contentIndexTextDividerCSS}
-							></div>
-							<ul
-								key={index}
-								// className={`flex flex-row w-full h-full grow `}
-								style={layoutElements.contentTextCSS}
-							>
-								<li className='contentBulletPoint' style={{ width: '100%' }}>
-									{item}
-								</li>
-							</ul>
-						</div>
-					))} */}
-				<div className='Column1' style={layoutElements.contentCSS}>
-					<div
-						className={`SlideContentIndex`}
-						style={layoutElements.contentIndexCSS}
-					>
-						{1}
+							<li className='contentBulletPoint' style={{ width: '100%' }}>
+								{item}
+							</li>
+						</ul>
 					</div>
-					<div
-						className={`SlideContentIndexTextDivider`}
-						style={layoutElements.contentIndexTextDividerCSS}
-					></div>
-
-					{showEditorBoxCol1 && (
-						<>
-							{setUpdatedContentCol1((prevContent: JSX.Element[]) => [
-								addANewEditorBox({
-									handleSlideEdit: handleSlideEdit,
-									isVerticalContent: false,
-									themeElements: themeElements,
-									fontSize: '16pt',
-									contentIndex: 0,
-									slideIndex: slideIndex,
-									slides: slides,
-								}),
-								...prevContent.slice(1),
-							])}
-							{setShowEditorBoxCol1(false)}
-						</>
-					)}
-					{updatedContentCol1.map((item, index) => (
-						<React.Fragment key={`contentText_${index}`}>
-							<ul
-								key={`contentText_${index}`}
-								className={`SlideContentText`}
-								style={{
-									...layoutElements.contentTextCSS,
-									flex: index === updatedContentCol1.length - 1 ? 1 : 0,
-								}}
-							>
-								<li style={{ width: '100%' }}>{item}</li>
-							</ul>
-						</React.Fragment>
-					))}
-				</div>
-
-				<div className='Column2' style={layoutElements.contentCSS}>
-					<div
-						className={`SlideContentIndex`}
-						style={layoutElements.contentIndexCSS}
-					>
-						{2}
-					</div>
-					<div
-						className={`SlideContentIndexTextDivider`}
-						style={layoutElements.contentIndexTextDividerCSS}
-					></div>
-					{/* {updatedContent.length === 1 && showAddButton && (
+				))} */}
+					<div className='Column1' style={layoutElements.contentCSS}>
 						<div
-							className={`btn btn-primary ${addButtonStyle} ${addButtonHoverStyle}`}
-							// onClick={handleAddColumn}
-							onClick={() =>
-								handleAddTextColumn({
-									handleSlideEdit: handleSlideEdit,
-									isVerticalContent: false,
-									themeElements: themeElements,
-									fontSize: '16pt',
-									contentIndex: 1,
-									slideIndex: slideIndex,
-									slides: slides,
-									setUpdatedContent: setUpdatedContent,
-									setShowAddButton: setShowAddButton,
-									shouldShowAddButton: updatedContent.length <= 2,
-								})
-							}
+							className={`SlideContentIndex`}
+							style={layoutElements.contentIndexCSS}
 						>
-							<div
-								className={`SlideContentIndexTextDivider`}
-								style={layoutElements.contentIndexTextDividerCSS}
-							></div>
-							<RiAddLine className={addIconStyle} />
-							Add One Column of text
+							{1}
 						</div>
-					)} */}
-					{/* {updatedContent.length === 1 && (
-						// Update the state and show/hide button
-						<>
-							{setUpdatedContent((prevContent: JSX.Element[]) => [
-								...prevContent,
-								<div
-									key={`content_${Date.now()}`}
-									className={`${slideIndex === 0 ? 'hidden' : ''}`}
+						<div
+							className={`SlideContentIndexTextDivider`}
+							style={layoutElements.contentIndexTextDividerCSS}
+						></div>
+
+						{showEditorBoxCol1 && (
+							<>
+								{setUpdatedContentCol1((prevContent: JSX.Element[]) => [
+									addANewEditorBox({
+										handleSlideEdit: handleSlideEdit,
+										isVerticalContent: false,
+										themeElements: themeElements,
+										fontSize: '16pt',
+										contentIndex: 0,
+										slideIndex: slideIndex,
+										slides: slides,
+									}),
+									...prevContent.slice(1),
+								])}
+								{setShowEditorBoxCol1(false)}
+							</>
+						)}
+						{updatedContentCol1.map((item, index) => (
+							<React.Fragment key={`contentText_${index}`}>
+								<ul
+									key={`contentText_${index}`}
+									className={`SlideContentText`}
+									style={{
+										...layoutElements.contentTextCSS,
+										flex: index === updatedContentCol1.length - 1 ? 1 : 0,
+									}}
 								>
-									<QuillEditable
-										content={''}
-										handleBlur={(newContent: string | string[]) =>
-											handleSlideEdit(
-												newContent,
-												slideIndex,
-												'content',
-												1,
-												true,
-											)
-										}
-										style={{
-											...themeElements.contentFontCSS_non_vertical_content,
-											fontSize: '16pt',
-										}}
-										isVerticalContent={false}
-										templateKey={slides[slideIndex].template}
-									/>
-								</div>,
-							])}
-						</>
-					)} */}
-					{showEditorBoxCol2 && (
-						<>
-							{setUpdatedContentCol2((prevContent: JSX.Element[]) => [
-								// ...prevContent.slice(0, 1),
-								addANewEditorBox({
-									handleSlideEdit: handleSlideEdit,
-									isVerticalContent: false,
-									themeElements: themeElements,
-									fontSize: '16pt',
-									contentIndex: 1,
-									slideIndex: slideIndex,
-									slides: slides,
-								}),
-								...prevContent.slice(1),
-							])}
-							{setShowEditorBoxCol2(false)}
-						</>
-					)}
-
-					{updatedContentCol2.map((item, index) => (
-						<React.Fragment key={`contentText_${index + 1} `}>
-							<ul
-								key={`contentText_${index} `}
-								className={`SlideContentText`}
-								style={{
-									...layoutElements.contentTextCSS,
-									flex: index === updatedContentCol2.length - 1 ? 1 : 0,
-								}}
-							>
-								<li style={{ width: '100%' }}>{item}</li>
-							</ul>
-						</React.Fragment>
-					))}
-				</div>
-
-				<div className='Column3' style={layoutElements.contentCSS}>
-					<div
-						className={`SlideContentIndex`}
-						style={layoutElements.contentIndexCSS}
-					>
-						{3}
+									<li style={{ width: '100%' }}>{item}</li>
+								</ul>
+							</React.Fragment>
+						))}
 					</div>
-					<div
-						className={`SlideContentIndexTextDivider`}
-						style={layoutElements.contentIndexTextDividerCSS}
-					></div>
-					{/* {updatedContent.length === 2 && showAddButton && (
+
+					<div className='Column2' style={layoutElements.contentCSS}>
 						<div
-							className={`btn btn-primary ${addButtonStyle} ${addButtonHoverStyle}`}
-							// onClick={handleAddColumn}
-							onClick={() =>
-								handleAddTextColumn({
-									handleSlideEdit: handleSlideEdit,
-									isVerticalContent: false,
-									themeElements: themeElements,
-									fontSize: '16pt',
-									contentIndex: 2,
-									slideIndex: slideIndex,
-									slides: slides,
-									setUpdatedContent: setUpdatedContent,
-									setShowAddButton: setShowAddButton,
-									shouldShowAddButton: updatedContent.length <= 2,
-								})
-							}
+							className={`SlideContentIndex`}
+							style={layoutElements.contentIndexCSS}
 						>
-							<div
-								className={`SlideContentIndexTextDivider`}
-								style={layoutElements.contentIndexTextDividerCSS}
-							></div>
-							<RiAddLine className={addIconStyle} />
-							Add One Column of text
+							{2}
 						</div>
-					)} */}
-					{/* Editor Box for Column 3 */}
-					{showEditorBoxCol3 && (
-						<>
-							{setUpdatedContentCol3((prevContent: JSX.Element[]) => [
-								// ...prevContent.slice(0, 2),
-								addANewEditorBox({
-									handleSlideEdit: handleSlideEdit,
-									isVerticalContent: false,
-									themeElements: themeElements,
-									fontSize: '16pt',
-									contentIndex: 2,
-									slideIndex: slideIndex,
-									slides: slides,
-								}),
-								...prevContent.slice(1),
-							])}
-							{setShowEditorBoxCol3(false)}
-						</>
-					)}
-					{updatedContentCol3.map((item, index) => (
-						<React.Fragment key={`contentText_${index + 2} `}>
-							<ul
-								key={`contentText_${index} `}
-								className={`SlideContentText`}
-								style={{
-									...layoutElements.contentTextCSS,
-									flex: index === updatedContentCol3.length - 1 ? 1 : 0,
-								}}
+						<div
+							className={`SlideContentIndexTextDivider`}
+							style={layoutElements.contentIndexTextDividerCSS}
+						></div>
+						{/* {updatedContent.length === 1 && showAddButton && (
+					<div
+						className={`btn btn-primary ${addButtonStyle} ${addButtonHoverStyle}`}
+						// onClick={handleAddColumn}
+						onClick={() =>
+							handleAddTextColumn({
+								handleSlideEdit: handleSlideEdit,
+								isVerticalContent: false,
+								themeElements: themeElements,
+								fontSize: '16pt',
+								contentIndex: 1,
+								slideIndex: slideIndex,
+								slides: slides,
+								setUpdatedContent: setUpdatedContent,
+								setShowAddButton: setShowAddButton,
+								shouldShowAddButton: updatedContent.length <= 2,
+							})
+						}
+					>
+						<div
+							className={`SlideContentIndexTextDivider`}
+							style={layoutElements.contentIndexTextDividerCSS}
+						></div>
+						<RiAddLine className={addIconStyle} />
+						Add One Column of text
+					</div>
+				)} */}
+						{/* {updatedContent.length === 1 && (
+					// Update the state and show/hide button
+					<>
+						{setUpdatedContent((prevContent: JSX.Element[]) => [
+							...prevContent,
+							<div
+								key={`content_${Date.now()}`}
+								className={`${slideIndex === 0 ? 'hidden' : ''}`}
 							>
-								<li style={{ width: '100%' }}>{item}</li>
-							</ul>
-						</React.Fragment>
-					))}
+								<QuillEditable
+									content={''}
+									handleBlur={(newContent: string | string[]) =>
+										handleSlideEdit(
+											newContent,
+											slideIndex,
+											'content',
+											1,
+											true,
+										)
+									}
+									style={{
+										...themeElements.contentFontCSS_non_vertical_content,
+										fontSize: '16pt',
+									}}
+									isVerticalContent={false}
+									templateKey={slides[slideIndex].template}
+								/>
+							</div>,
+						])}
+					</>
+				)} */}
+						{showEditorBoxCol2 && (
+							<>
+								{setUpdatedContentCol2((prevContent: JSX.Element[]) => [
+									// ...prevContent.slice(0, 1),
+									addANewEditorBox({
+										handleSlideEdit: handleSlideEdit,
+										isVerticalContent: false,
+										themeElements: themeElements,
+										fontSize: '16pt',
+										contentIndex: 1,
+										slideIndex: slideIndex,
+										slides: slides,
+									}),
+									...prevContent.slice(1),
+								])}
+								{setShowEditorBoxCol2(false)}
+							</>
+						)}
+
+						{updatedContentCol2.map((item, index) => (
+							<React.Fragment key={`contentText_${index + 1} `}>
+								<ul
+									key={`contentText_${index} `}
+									className={`SlideContentText`}
+									style={{
+										...layoutElements.contentTextCSS,
+										flex: index === updatedContentCol2.length - 1 ? 1 : 0,
+									}}
+								>
+									<li style={{ width: '100%' }}>{item}</li>
+								</ul>
+							</React.Fragment>
+						))}
+					</div>
+
+					<div className='Column3' style={layoutElements.contentCSS}>
+						<div
+							className={`SlideContentIndex`}
+							style={layoutElements.contentIndexCSS}
+						>
+							{3}
+						</div>
+						<div
+							className={`SlideContentIndexTextDivider`}
+							style={layoutElements.contentIndexTextDividerCSS}
+						></div>
+						{/* {updatedContent.length === 2 && showAddButton && (
+					<div
+						className={`btn btn-primary ${addButtonStyle} ${addButtonHoverStyle}`}
+						// onClick={handleAddColumn}
+						onClick={() =>
+							handleAddTextColumn({
+								handleSlideEdit: handleSlideEdit,
+								isVerticalContent: false,
+								themeElements: themeElements,
+								fontSize: '16pt',
+								contentIndex: 2,
+								slideIndex: slideIndex,
+								slides: slides,
+								setUpdatedContent: setUpdatedContent,
+								setShowAddButton: setShowAddButton,
+								shouldShowAddButton: updatedContent.length <= 2,
+							})
+						}
+					>
+						<div
+							className={`SlideContentIndexTextDivider`}
+							style={layoutElements.contentIndexTextDividerCSS}
+						></div>
+						<RiAddLine className={addIconStyle} />
+						Add One Column of text
+					</div>
+				)} */}
+						{/* Editor Box for Column 3 */}
+						{showEditorBoxCol3 && (
+							<>
+								{setUpdatedContentCol3((prevContent: JSX.Element[]) => [
+									// ...prevContent.slice(0, 2),
+									addANewEditorBox({
+										handleSlideEdit: handleSlideEdit,
+										isVerticalContent: false,
+										themeElements: themeElements,
+										fontSize: '16pt',
+										contentIndex: 2,
+										slideIndex: slideIndex,
+										slides: slides,
+									}),
+									...prevContent.slice(1),
+								])}
+								{setShowEditorBoxCol3(false)}
+							</>
+						)}
+						{updatedContentCol3.map((item, index) => (
+							<React.Fragment key={`contentText_${index + 2} `}>
+								<ul
+									key={`contentText_${index} `}
+									className={`SlideContentText`}
+									style={{
+										...layoutElements.contentTextCSS,
+										flex: index === updatedContentCol3.length - 1 ? 1 : 0,
+									}}
+								>
+									<li style={{ width: '100%' }}>{item}</li>
+								</ul>
+							</React.Fragment>
+						))}
+					</div>
 				</div>
 			</div>
 
@@ -1388,17 +1446,22 @@ export const Col_2_img_1_layout = ({
 
 	return (
 		<div
-			// className='w-full h-full flex flex-row gap-[2rem] justify-start items-start'
+			className='SlideCanvas'
 			ref={containerRef}
 			style={{ ...layoutElements.canvaCSS, position: 'relative' }}
 		>
 			{/* column 1 for text content */}
 			<div
-				// className={`w-1/2 flex flex-col items-start h-full gap-[0.1rem]`}
-				style={layoutElements.columnCSS}
+				className={`SlideTopicSubtopicContentContainer`}
+				style={{
+					...layoutElements.columnCSS,
+					// backgroundColor: themeElements.slideColumnBackgroundColor
+					// 	? themeElements.slideColumnBackgroundColor
+					// 	: '',
+				}}
 			>
 				<div
-					// className='flex flex-col'
+					className='SlideTopicSubtopicContainer'
 					// topic subtopic box zindex 40 prevent covering content text
 					style={{
 						...layoutElements.titleAndSubtopicBoxCSS,
@@ -1409,11 +1472,15 @@ export const Col_2_img_1_layout = ({
 						width: '100%',
 					}}
 				>
-					<div className={``} ref={topicRef} style={layoutElements.topicCSS}>
+					<div
+						className={`SlideTopic`}
+						ref={topicRef}
+						style={layoutElements.topicCSS}
+					>
 						{topic}
 					</div>
 					<div
-						className={``}
+						className={`SlideSubTopic`}
 						ref={subtopicRef}
 						style={layoutElements.subtopicCSS}
 					>
@@ -1423,8 +1490,14 @@ export const Col_2_img_1_layout = ({
 
 				{/* contents */}
 				<div
-					className='w-full flex'
-					style={{ ...layoutElements.contentContainerCSS, zIndex: 40 }}
+					className='w-full flex SlideContentContainer'
+					style={{
+						...layoutElements.contentContainerCSS,
+						zIndex: 40,
+						backgroundColor: themeElements.slideContentContainerBackgroundColor
+							? themeElements.slideContentContainerBackgroundColor
+							: '',
+					}}
 				>
 					<div
 						className={`w-full`}
@@ -1439,7 +1512,7 @@ export const Col_2_img_1_layout = ({
 			</div>
 			{/* column 2 for img container */}
 			<div
-				// className={`w-1/2 h-[90%] rounded-md overflow-hidden items-center`}
+				className={`SlideImageContainer`}
 				style={{
 					...layoutElements.imageContainerCSS,
 					zIndex: imgHigherZIndex ? 100 : 20,
@@ -1597,18 +1670,23 @@ export const Col_1_img_1_layout = ({
 	return (
 		<div
 			ref={containerRef}
-			className='w-full h-full'
+			className='SlideCanvas w-full h-full'
 			style={{ ...layoutElements.canvaCSS, position: 'relative' }}
 		>
 			{/* area for topic, subtopic and contents */}
 			<div
-				// className='w-full grid grid-cols-1'
-				style={layoutElements.columnCSS}
+				className='SlideColumn'
+				style={{
+					...layoutElements.columnCSS,
+					// backgroundColor: themeElements.slideColumnBackgroundColor
+					// 	? themeElements.slideColumnBackgroundColor
+					// 	: '',
+				}}
 			>
 				{/* row1 for topic and subtopic */}
 
 				<div
-					// className='flex flex-col'
+					className='SlideTopicAndSubtopic'
 					style={{
 						...layoutElements.titleAndSubtopicBoxCSS,
 						zIndex: '50',
@@ -1618,10 +1696,10 @@ export const Col_1_img_1_layout = ({
 					}}
 					ref={topicAndSubtopicRef}
 				>
-					<div className={``} style={layoutElements.topicCSS}>
+					<div className={`SlideTopic`} style={layoutElements.topicCSS}>
 						{topic}
 					</div>
-					<div className={``} style={layoutElements.subtopicCSS}>
+					<div className={`SlideSubtopic`} style={layoutElements.subtopicCSS}>
 						{subtopic}
 					</div>
 				</div>
@@ -1629,7 +1707,7 @@ export const Col_1_img_1_layout = ({
 				{/* row2 for image */}
 				{/* image section */}
 				<div
-					// className='h-[15rem] grow rounded-md overflow-hidden'
+					className='SlideImgaeContainer'
 					style={{
 						...layoutElements.imageContainerCSS,
 						zIndex: imgHigherZIndex ? 100 : 20,
@@ -1669,6 +1747,9 @@ export const Col_1_img_1_layout = ({
 						maxHeight:
 							maxContentHeight !== null ? `${maxContentHeight}px` : 'none',
 						zIndex: 40,
+						backgroundColor: themeElements.slideContentContainerBackgroundColor
+							? themeElements.slideContentContainerBackgroundColor
+							: '',
 					}}
 				>
 					{/* {Array.isArray(content) &&
@@ -1698,6 +1779,7 @@ export const Col_1_img_1_layout = ({
 			</div>
 
 			<div
+				className={`SlideLogo`}
 				style={{
 					...layoutElements.logoCSS,
 					display: `${isShowingLogo ? 'contents' : 'none'}`,
@@ -1878,12 +1960,12 @@ export const Col_2_img_2_layout = ({
 			}}
 		>
 			<div
-				// className='flex flex-col gap-[0.5rem]'
+				className='SlideColumn'
 				style={layoutElements.columnCSS}
 				ref={containerRef}
 			>
 				<div
-					// className='flex flex-col justify-center items-center'
+					className='slideTopicAndSubtopic'
 					style={{
 						...layoutElements.titleAndSubtopicBoxCSS,
 						zIndex: 50,
@@ -1893,17 +1975,17 @@ export const Col_2_img_2_layout = ({
 					}}
 					ref={topicAndSubtopicRef}
 				>
-					<div className={``} style={layoutElements.topicCSS}>
+					<div className={`SlideTopic`} style={layoutElements.topicCSS}>
 						{topic}
 					</div>
-					<div className={``} style={layoutElements.subtopicCSS}>
+					<div className={`SlideSubtopic`} style={layoutElements.subtopicCSS}>
 						{subtopic}
 					</div>
 				</div>
 
 				{/* two columns of images */}
 				<div
-					// className='w-full grid grid-cols-2 gap-[2rem]'
+					className='SlideImageContainer'
 					style={{
 						...layoutElements.imageContainerCSS,
 						zIndex: imgHigherZIndex ? 100 : 20,
@@ -1985,6 +2067,9 @@ export const Col_2_img_2_layout = ({
 						...layoutElements.contentContainerCSS,
 						zIndex: 40,
 						gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+						backgroundColor: themeElements.slideContentContainerBackgroundColor
+							? themeElements.slideContentContainerBackgroundColor
+							: '',
 					}}
 				>
 					<div className='Column1' style={layoutElements.contentCSS}>
@@ -2371,6 +2456,9 @@ export const Col_3_img_3_layout = ({
 						...layoutElements.contentContainerCSS,
 						zIndex: 40,
 						gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
+						backgroundColor: themeElements.slideContentContainerBackgroundColor
+							? themeElements.slideContentContainerBackgroundColor
+							: '',
 					}}
 				>
 					{/* {Array.isArray(content) &&

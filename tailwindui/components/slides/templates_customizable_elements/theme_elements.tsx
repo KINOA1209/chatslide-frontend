@@ -24,6 +24,7 @@ import { Simplistic_008_TemplateThemeConfig } from './templatesThemeConfigDetail
 import { New_Education_009_TemplateThemeConfig } from './templatesThemeConfigDetails/New_Education_009_TemplateThemeConfigDetails';
 import { Event_Report_010_TemplateThemeConfig } from './templatesThemeConfigDetails/Event_Report_010_TemplateThemeConfigDetails';
 import { Creative_Brief_011_TemplateThemeConfig } from './templatesThemeConfigDetails/Creative_Brief_011_TemplateThemeConfigDetails';
+import { Business_Review_012_TemplateThemeConfig } from './templatesThemeConfigDetails/Business_Review_012_TemplateThemeConfigDetails';
 
 export type ThemeElements = {
 	backgroundColorCover?: string;
@@ -47,10 +48,16 @@ export type ThemeElements = {
 	userNameFontColor?: React.CSSProperties | string;
 	headFontCSS: React.CSSProperties;
 	contentFontCSS_non_vertical_content: React.CSSProperties;
-	titleAndSubtopicBoxBackgroundColor?: string;
 	headFontAlignment?: React.CSSProperties;
 	userNameAlignment?: React.CSSProperties;
 	isGradientBackground?: boolean;
+	// customize boxes background color
+	titleAndSubtopicBoxBackgroundColor?: string;
+	imageContainerBackgroundColor?: string;
+	slideColumnBackgroundColor?: string;
+	userNamaAndHeadColumnBackgroundColor?: string;
+	slideCanvasBackgroundColor?: string;
+	slideContentContainerBackgroundColor?: string;
 };
 
 export type ThemeConfig = {
@@ -92,6 +99,7 @@ const themeConfigData: ThemeConfig = {
 	New_Education_009: New_Education_009_TemplateThemeConfig,
 	Event_Report_010: Event_Report_010_TemplateThemeConfig,
 	Creative_Brief_011: Creative_Brief_011_TemplateThemeConfig,
+	Business_Review_012: Business_Review_012_TemplateThemeConfig,
 };
 
 export default themeConfigData;

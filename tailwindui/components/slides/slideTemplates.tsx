@@ -258,6 +258,10 @@ const Event_Report_010_template = generateTemplate('Event_Report_010_template');
 const Creative_Brief_011_template = generateTemplate(
 	'Creative_Brief_011_template',
 );
+
+const Business_Review_012_template = generateTemplate(
+	'Business_Review_012_template',
+);
 export interface MainSlideProps {
 	user_name: JSX.Element;
 	title: JSX.Element;
@@ -357,6 +361,7 @@ export type PaletteKeys =
 	| 'Customize'
 	| 'Serenade'
 	| 'Seashell'
+	| 'Cod Gray'
 	| '';
 
 // add template keys here
@@ -384,6 +389,7 @@ export const availableTemplates = {
 	New_Education_009: New_Education_009_template,
 	Event_Report_010: Event_Report_010_template,
 	Creative_Brief_011: Creative_Brief_011_template,
+	Business_Review_012: Business_Review_012_template,
 };
 
 export const templateDisplayNames = {
@@ -391,6 +397,7 @@ export const templateDisplayNames = {
 	New_Education_009: '📚 Education',
 	Event_Report_010: '📈 Report',
 	Creative_Brief_011: ' ✨ Creative Brief',
+	Business_Review_012: '🔍 Business Review',
 	Default: '📃 Blank',
 	Business_002: '📎 Business',
 	Business_Dark_005: '💼 Business Dark',
