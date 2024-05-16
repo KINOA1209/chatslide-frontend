@@ -28,6 +28,40 @@ export default function Studio() {
 				</Card>
 
 				<Card>
+					<BigTitle>May 16</BigTitle>
+					<Instruction>
+						<div>
+							<b>⚡️ Fast File Processing: </b> Now we can read and export your files at a higher speed.
+						</div>
+					</Instruction>
+					<Instruction>
+						<div>
+							<b>💛 UX Improvements: </b> More UX improvements on the summary
+							page and design page of the slides workflow.
+						</div>
+					</Instruction>
+					<Instruction>
+						<div>
+							<b>💲 Price Adjustments: </b> The onetime price for PLUS and PRO
+							tiers are adjusted.
+						</div>
+					</Instruction>
+					<Instruction>
+						<div>
+							<b>💸 Monetize Your Content: </b> Get paid for your shared content
+							when they drive conversion!
+						</div>
+						<a
+							className='text-blue-600'
+							href='https://blog.drlambda.ai/how-to-make-money-with-your-high-quality-content-using-chatslide-ai/'
+						>
+							Learn more
+						</a>
+						.
+					</Instruction>
+				</Card>
+
+				<Card>
 					<BigTitle>May 13</BigTitle>
 					<Instruction>
 						<div>
@@ -37,8 +71,8 @@ export default function Studio() {
 					</Instruction>
 					<Instruction>
 						<div>
-							<b>🌈 Custom Text Color: </b> You can pick custom color for different
-							parts of your text on slides.
+							<b>🌈 Custom Text Color: </b> You can pick custom color for
+							different parts of your text on slides.
 						</div>
 					</Instruction>
 					<Instruction>
