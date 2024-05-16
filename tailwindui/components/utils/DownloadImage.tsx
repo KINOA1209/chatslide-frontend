@@ -28,24 +28,18 @@ export async function getImageDataUrl(
 export async function downloadImage(
 	topic: string,
 	ref: React.RefObject<HTMLDivElement>,
-): Promise<void> {
+): Promise<string | null> {
 	if (ref.current && areAllImagesLoaded(ref.current)) {
 		try {
-			// await new Promise((resolve) => setTimeout(resolve, 1000));
-			//console.log('ref', ref.current);
 			const dataUrl = await domToPng(ref.current);
-			console.log(dataUrl);
-			const link = document.createElement('a');
-			link.href = dataUrl;
-			link.download = (topic ? topic : 'drlambda') + '.png';
-			document.body.appendChild(link);
-			link.click();
-			document.body.removeChild(link);
+			return dataUrl;
 		} catch (error) {
 			console.error('Error capturing image:', error);
+			return null;
 		}
 	} else {
 		console.log('Waiting for images to load');
+		return null;
 	}
 }
 
