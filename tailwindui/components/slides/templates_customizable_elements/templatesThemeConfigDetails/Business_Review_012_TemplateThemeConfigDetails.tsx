@@ -13,29 +13,29 @@ export const Business_Review_012_TemplateThemeConfig: {
 		backgroundColor: '#111111', //Lin: Text box color #E4F9F6, shapes of color #01B99F, #4747F3, #FFC8FF, #FF846C, #FECEB7
 		// backgroundColorCoverImg0: '#ACEAE1',
 		titleFontCSS: {
-			fontSize: '14pt', // text-3xl in points
+			fontSize: '12pt', // text-3xl in points
 			fontWeight: 'normal', // font-bold,(Lin: 700)
-			fontFamily: 'Big Shoulders Display Bold', // font-nimbus-sans-bold
+			fontFamily: 'Roboto Condensed Regular', // font-nimbus-sans-bold
 			lineHeight: 1.2, // leading-[110%] is equivalent to a line height of 1.1
 			// whiteSpace: 'nowrap', // whitespace-nowrap},
-			color: '#333330', // text-[#8C1515] color
+			color: '#111111', // text-[#8C1515] color
 			opacity: 0.7,
 		},
 		subtopicFontCSS: {
 			opacity: 1, // opacity-70
 			fontWeight: 'normal', // font-nimbus-sans-bold (Lin: 500)
-			fontFamily: 'Big Shoulders Display SemiBold', // font-nimbus-sans-bold
+			fontFamily: 'Roboto Condensed Medium', // font-nimbus-sans-bold
 			fontSize: '24pt', // text-xl in points
 			fontStyle: 'normal', // font-normal
 			lineHeight: 1, // leading-[150%] is equivalent to a line height of 1.5
-			color: '#333330', // text-red-800 color
+			color: '#111111', // text-red-800 color
 		},
 		contentFontCSS: {
 			fontSize: '12pt', // text-base in points (assuming 1rem is 1pt)
 			fontWeight: 'normal', // font-normal (Lin: 400)
 			fontFamily: 'Inter Regular', // font-nimbus-sans-regular
 			lineHeight: 1.5, // leading-9 is equivalent to a line height of 1.5
-			color: '#333330', // text-zinc-800 color
+			color: '#111111', // text-zinc-800 color
 			display: 'list-item',
 		},
 		// userNameFont: 'text-sm font-creato-regular  font-normal leading-[100%]',
@@ -46,22 +46,22 @@ export const Business_Review_012_TemplateThemeConfig: {
 			fontFamily: 'Inter Regular',
 			lineHeight: '140%', // Equivalent to leading-[140%]
 			letterSpacing: '0.026rem', // Equivalent to tracking-[0.026rem]
-			color: '#333330', // Equivalent to text-[#3D3D3D]
+			color: '#111111', // Equivalent to text-[#3D3D3D]
 			opacity: '0.7',
 		},
 		headFontCSS: {
 			fontSize: '32pt', // text-4xl in points (assuming 1rem is 1pt)
 			fontWeight: 'normal', // font-bold, (Lin: 700)
-			fontFamily: 'Big Shoulders Display Bold', // font-nimbus-sans-bold
+			fontFamily: 'Roboto Condensed Regular',
 			lineHeight: 1.2, // leading-[120%] is equivalent to a line height of 1.2
-			color: '#333330', // text-white color
+			color: '#111111', // text-white color
 		},
 		contentFontCSS_non_vertical_content: {
 			fontSize: '12pt', // text-base in points (assuming 1rem is 1pt)
 			fontWeight: 'normal', // font-normal (Lin: 400)
 			fontFamily: 'Inter Regular', // font-nimbus-sans-regular
 			lineHeight: 1.5, // leading-9 is equivalent to a line height of 1.5
-			color: '#333330', // text-zinc-800 color
+			color: '#111111', // text-zinc-800 color
 		},
 	},
 };
