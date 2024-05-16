@@ -144,7 +144,7 @@ const AdvancedOptions: React.FC<{
 							value={detailedOutline}
 							onChange={setDetailedOutline}
 							placeholder='Your detailed outline here.'
-							maxLength={1000}
+							maxLength={2000}
 							textarea
 						/>
 						{detailedOutline.length < 200 && (
