@@ -1,3 +1,6 @@
+'use client';
+
+
 import { useUser } from "@/hooks/use-user";
 import { ToastContainer, toast } from "react-toastify";
 import { BigBlueButton } from "./DrlambdaButton";

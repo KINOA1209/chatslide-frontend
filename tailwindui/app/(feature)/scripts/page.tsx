@@ -25,7 +25,6 @@ import useHydrated from '@/hooks/use-hydrated';
 import {
 	BigBlueButton,
 	DropDown,
-	EarlyAccessButton,
 } from '@/components/button/DrlambdaButton';
 import UserService from '@/services/UserService';
 import AvatarSelector from '@/components/language/AvatarSelector';
