@@ -429,7 +429,7 @@ const PricingComparison: React.FC<{
 							<div className='brix---text-300-medium'>🌟 GPT</div>
 						</div>
 						<div className='brix---text-300-medium'>
-							3.5 and <b>4</b>
+							3.5, 4, and <b>4o</b>
 						</div>
 					</div>
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
@@ -544,7 +544,7 @@ const PricingComparison: React.FC<{
 							<div className='brix---text-300-medium'>🌟 GPT</div>
 						</div>
 						<div className='brix---text-300-medium'>
-							3.5 and <b>4</b>
+							3.5, 4, and <b>4o</b>
 						</div>
 					</div>
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
@@ -680,7 +680,7 @@ const PricingComparison: React.FC<{
 							<div className='brix---text-300-medium'>🌟 GPT</div>
 						</div>
 						<div className='brix---text-300-medium'>
-							3.5 and <b>4</b>
+							3.5, 4, and <b>4o</b>
 						</div>
 					</div>
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>

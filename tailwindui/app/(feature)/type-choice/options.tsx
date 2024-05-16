@@ -19,7 +19,7 @@ const options: ScenarioOption[] = [
 	},
 	{
 		id: 'charts',
-		title: 'Charts (Beta)',
+		title: 'Charts (Beta+)',
 		imageSrc: '/images/scenario/charts.png',
 		icon: <FaChartBar />,
 		previewOnly: true,
