@@ -5,9 +5,8 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Home, Logo } from '../ui/logo';
 import DropdownButton from '@/components/utils/dropdown';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import GoogleAnalytics from '@/components/integrations/GoogleAnalytics';
-import Hotjar from '@/components/integrations/Hotjar';
 // import AuthService from "../utils/AuthService";
 import { Auth, Hub } from 'aws-amplify';
 import AuthService from '../../services/AuthService';
@@ -15,6 +14,7 @@ import { useUser } from '@/hooks/use-user';
 import { getBrand } from '@/utils/getHost';
 import Modal from '../ui/Modal';
 import useHydrated from '@/hooks/use-hydrated';
+import { publiclyAvailable } from './SideBar';
 
 interface HeaderProps {
 	loginRequired: boolean;
@@ -30,6 +30,7 @@ const Header = ({
 	// const [username, setUsername] = useState(null);
 	const [loading, setLoading] = useState(true);
 
+  const path = usePathname();
 	const router = useRouter();
 	const { token, signOut } = useUser();
 
@@ -68,7 +69,7 @@ const Header = ({
 
 	if (!useHydrated()) return <></>;
 
-	if (!token && loginRequired) {
+	if (!token && loginRequired && !publiclyAvailable(path)) {
 		return (
 			<Modal
 				showModal={true}

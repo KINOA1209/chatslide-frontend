@@ -17,6 +17,14 @@ import { usePathname } from 'next/navigation';
 import { Logo } from '../ui/logo';
 import { getBrand } from '@/utils/getHost';
 
+export function publiclyAvailable(path: string): boolean {
+	return (
+		path.includes('/discover') ||
+		path.includes('/pricing') ||
+		path.includes('/whatsnew')
+	);
+}
+
 interface SideBarProps {}
 const SideBar = ({}: SideBarProps) => {
 	const [top, setTop] = useState<boolean>(true);
@@ -91,14 +99,6 @@ const SideBar = ({}: SideBarProps) => {
 		return credits + ' ⭐️';
 	}
 
-	function publiclyAvailable(): boolean {
-		return (
-			path.includes('/discover') ||
-			path.includes('/pricing') ||
-			path.includes('/whatsnew')
-		);
-	}
-
 	// avoid hydration error during development caused by persistence
 	if (!useHydrated()) return <></>;
 
@@ -106,7 +106,7 @@ const SideBar = ({}: SideBarProps) => {
 		return <></>;
 
 	if (userStatus == UserStatus.Failed || !uid) {
-		if (publiclyAvailable())
+		if (publiclyAvailable(path))
 			return <></>; // do not show sidebar if user is a visitor
 		else
 			return (
