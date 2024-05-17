@@ -8,16 +8,12 @@ import { ToolBar } from '@/components/ui/ToolBar';
 import ButtonWithExplanation from '@/components/button/ButtonWithExplanation';
 import { GoDownload } from 'react-icons/go';
 import { Column } from '@/components/layout/Column';
-import GPTToggle from '@/components/button/WorkflowGPTToggle';
-import { Panel } from '@/components/layout/Panel';
 import { BigTitle, Instruction } from '@/components/ui/Text';
-import { FaSave } from 'react-icons/fa';
 import useHydrated from '@/hooks/use-hydrated';
 
 export default function Page() {
 	const [chartUrl, setChartUrl] = useState('');
 	const [urlHistory, setUrlHistory] = useState(['/images/scenario/charts.png']);
-	const [isGpt35, setIsGpt35] = useState(false);
 
 	function updateChartUrl(url: string) {
 		setChartUrl(url);
@@ -37,8 +33,6 @@ export default function Page() {
 
 			<Column>
 				<div className='w-full flex flex-col items-center justify-center gap-y-2'>
-					<GPTToggle setIsGpt35={setIsGpt35} />
-
 					{/* <Card>
             <BigTitle>📈 Chart</BigTitle>
           </Card> */}
@@ -118,7 +112,6 @@ export default function Page() {
 				slides={[]}
 				currentSlideIndex={0}
 				type='chart'
-				model={isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4'}
 				updateChartUrl={updateChartUrl}
 			/>
 		</div>

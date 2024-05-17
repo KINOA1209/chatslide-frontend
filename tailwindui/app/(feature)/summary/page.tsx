@@ -13,7 +13,7 @@ import { useUser } from '@/hooks/use-user';
 import { Step } from 'react-joyride';
 import MyCustomJoyride from '@/components/user_onboarding/MyCustomJoyride';
 import StepsSummaryPage from '@/components/user_onboarding/StepsSummaryPage';
-import { GPTToggleWithExplanation } from '@/components/button/WorkflowGPTToggle';
+import GPTToggle from '@/components/button/WorkflowGPTToggle';
 import AddResourcesSection from '@/components/summary/AddResourcesSection';
 import useHydrated from '@/hooks/use-hydrated';
 import { useProject } from '@/hooks/use-project';
@@ -266,7 +266,7 @@ export default function Topic() {
 	);
 	const [searchOnlineScope, setSearchOnlineScope] = useState('');
 
-	const [isGpt35, setIsGpt35] = useState(true);
+	const [llmModel, setLlmModel] = useState('GPT-3.5');
 
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [summarizing, setSummarizing] = useState(false);
@@ -338,7 +338,7 @@ export default function Topic() {
 	}
 
 	function getEstWriteOutlineTime() {
-		const base = isGpt35 ? 15 : 25;
+		const base = (llmModel === 'GPT-3.5') ? 15 : 25;
 		return Math.min(30, base + selectedResources.length * 5);
 	}
 
@@ -380,7 +380,7 @@ export default function Topic() {
 			language: language,
 			project_id: project_id,
 			resources: selectedResources.map((resource: Resource) => resource.id),
-			model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4',
+			model_name: (llmModel === 'GPT-3.5') ? 'gpt-3.5-turbo' : 'gpt-4o',
 			//schoolTemplate: schoolTemplate,
 			scenario_type: scenarioType,
 			generation_mode: generationMode,
@@ -580,7 +580,7 @@ export default function Topic() {
 			{/* main content */}
 			<Column>
 				<div className='flex flex-row justify-center'>
-					<GPTToggleWithExplanation setIsGpt35={setIsGpt35} />
+					<GPTToggle model={llmModel} setModel={setLlmModel} />
 				</div>
 
 				{/* Project Summary section */}

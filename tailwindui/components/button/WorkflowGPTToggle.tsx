@@ -7,21 +7,25 @@ import { useUser } from '@/hooks/use-user';
 import MultiwayToggle from './MultiwayToggle';
 
 interface GPTToggleProps {
-	setIsGpt35: (value: boolean) => void;
+	model?: string;
+	small?: boolean;
+	setModel: (value: string) => void;
 }
 
-const GPTToggle: React.FC<GPTToggleProps> = ({ setIsGpt35 }) => {
+const GPTToggle: React.FC<GPTToggleProps> = ({
+	model = 'GPT-3.5',
+	small = false,
+	setModel,
+}) => {
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
 	const { isPaidUser } = useUser();
-	const [selectedModel, setSelectedModel] = useState('GPT-3.5');
 
 	const handleChange = (model: string) => {
 		if (model !== 'GPT-3.5' && !isPaidUser) {
 			// if switched to right (GPT-4) and user is not paid
 			setShowPaymentModal(true);
 		} else {
-			setSelectedModel(model);
-			setIsGpt35(model === 'GPT-3.5'); // Update the parent component's state
+			setModel(model);
 			// console.log('isGpt35', value);
 		}
 	};
@@ -29,12 +33,19 @@ const GPTToggle: React.FC<GPTToggleProps> = ({ setIsGpt35 }) => {
 	return (
 		<div className='user-onboarding-GPTToggle'>
 			<MultiwayToggle
-				options={[
-					{ key: 'GPT-3.5', text: 'GPT-3.5 ⚡️' },
-					{ key: 'GPT-4', text: 'GPT-4 🚀' },
-					{ key: 'GPT-4o', text: 'GPT-4 Omni 🧠' },
-				]}
-				selectedKey={selectedModel}
+				options={
+					small
+						? [
+								{ key: 'GPT-3.5', text: 'GPT-3.5 ⚡️' },
+								{ key: 'GPT-4o', text: 'GPT-4o 🧠' },
+							]
+						: [
+								{ key: 'GPT-3.5', text: 'GPT-3.5 ⚡️' },
+								{ key: 'GPT-4', text: 'GPT-4 🚀' },
+								{ key: 'GPT-4o', text: 'GPT-4o 🧠' },
+							]
+				}
+				selectedKey={model}
 				setSelectedKey={handleChange}
 			/>
 
@@ -48,22 +59,3 @@ const GPTToggle: React.FC<GPTToggleProps> = ({ setIsGpt35 }) => {
 };
 
 export default GPTToggle;
-
-interface GPTToggleWithExplanationProps {
-	setIsGpt35: (isGpt35: boolean) => void;
-	// Add any other props you might need
-}
-
-export const GPTToggleWithExplanation: FunctionComponent<
-	GPTToggleWithExplanationProps
-> = ({ setIsGpt35 }) => {
-
-	return (
-		<div>
-			{/* gpt model switch area */}
-			<div className='self-end flex flex-row gap-4 cursor-pointer'>
-				<GPTToggle setIsGpt35={setIsGpt35} />
-			</div>
-		</div>
-	);
-};
