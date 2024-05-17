@@ -75,8 +75,16 @@ const BrandingSelector: React.FC<{
 	);
 
 	useEffect(() => {
-		console.log('selectedLogo', selectedLogo);
-	}, [selectedLogo]);
+		// rerender on showLogo, selectedLogo, selectedBackground change
+		setLogoMode(
+			showLogo ? (selectedLogo?.length > 0 ? 'custom' : 'default') : 'no',
+		);
+	}, [showLogo, selectedLogo, selectedBackground]);
+
+
+	// useEffect(() => {
+	// 	console.log('selectedLogo', selectedLogo);
+	// }, [selectedLogo]);
 
 	return (
 		<div>

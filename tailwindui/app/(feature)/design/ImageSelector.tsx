@@ -4,7 +4,7 @@ import FileUploadModal from '@/components/file/FileUploadModal';
 import PaywallModal from '@/components/paywallModal';
 import { useUser } from '@/hooks/use-user';
 import Resource from '@/models/Resource';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { PlusLabel } from '@/components/ui/GrayLabel';
 import { Instruction } from '@/components/ui/Text';
 import RadioButton from '@/components/ui/RadioButton';
@@ -33,6 +33,10 @@ const ImageSelector: React.FC<Props> = ({
 		);
 		setSelectedImage(newSelectedImage as Resource[]);
 	};
+
+	useEffect(() => {
+		setUseImage(selectedImage.length > 0);
+	}, [selectedImage]);
 
 	return (
 		<div>
