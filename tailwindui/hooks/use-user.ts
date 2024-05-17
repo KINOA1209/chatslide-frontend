@@ -163,11 +163,12 @@ export const useUser = () => {
 		if (expiration_date) setExpirationDate(expiration_date);
 	};
 
-	const updateCreditsFE = async (delta: number) => {
+	const updateCreditsFE = (delta: number): number => {
 		console.log('updating credits by ', delta);
-		if (credits === 'Unlimited') return;
+		if (credits === 'Unlimited') return 1000000;
 		const creditsNum = parseInt(credits);
 		setCredits((credits) => (creditsNum + delta).toString());
+		return creditsNum + delta;
 	};
 
 	useEffect(() => {

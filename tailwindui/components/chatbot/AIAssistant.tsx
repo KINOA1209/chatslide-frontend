@@ -127,7 +127,15 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 		);
 
 		if (model === 'GPT-4o') {
-			updateCreditsFE(-5);
+			const remainingCredits = updateCreditsFE(-5);
+			if (remainingCredits < 0) {
+				addChatHistory(
+					addErrorMessage(
+						'😞 Sorry, you have run out of credits. Please upgrade to continue using the AI assistant.',
+					),
+				);
+				return;
+			}
 		}
 
 		const inputToSend =
