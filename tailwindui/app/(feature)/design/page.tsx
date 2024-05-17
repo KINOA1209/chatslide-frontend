@@ -46,6 +46,8 @@ import Slide, { LogoPosition } from '@/models/Slide';
 import ProjectService from '@/services/ProjectService';
 import { BigBlueButton } from '@/components/button/DrlambdaButton';
 import { WrappableRow } from '@/components/layout/WrappableRow';
+import DesignSystemBadges from '@/components/ui/design_systems/Badges';
+import DesignSystemButton from '@/components/ui/design_systems/ButtonsOrdinary';
 const colorPreviews: any = dynamic(
 	() => import('@/app/(feature)/design/TemplateSelector'),
 	{
@@ -529,18 +531,26 @@ export default function DesignPage() {
 					</Card>
 
 					<Card>
-						<BigTitle>⚙️ Design Profiles</BigTitle>
+						<BigTitle>⚙️ Settings</BigTitle>
 						<Instruction>
 							You can save all the settings on this page to your profile, and
 							apply it in the future for a deck with the same design.
 						</Instruction>
-						<WrappableRow type='flex'>
-							<BigBlueButton onClick={saveToDefaultProfile}>
+						<WrappableRow type='flex' justify='around'>
+							<DesignSystemButton
+								onClick={saveToDefaultProfile}
+								size='md'
+								hierarchy='secondary'
+							>
 								Save to Profile
-							</BigBlueButton>
-							<BigBlueButton onClick={loadFromProfile}>
+							</DesignSystemButton>
+							<DesignSystemButton
+								onClick={loadFromProfile}
+								size='md'
+								hierarchy='secondary'
+							>
 								Load from Profile
-							</BigBlueButton>
+							</DesignSystemButton>
 						</WrappableRow>
 					</Card>
 				</Panel>

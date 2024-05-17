@@ -14,7 +14,7 @@ interface DesignSystemButtonProps {
 	children?: ReactNode;
 	size: 'sm' | 'md' | 'lg' | 'xl' | '2xl';
 	hierarchy: 'primary' | 'secondary' | 'tertiary';
-	buttonStatus: 'enabled' | 'disabled';
+	buttonStatus?: 'enabled' | 'disabled';
 	iconLeft?: React.ReactNode;
 	iconRight?: React.ReactNode;
 	// text: string;
@@ -32,7 +32,7 @@ const DesignSystemButton: React.FC<DesignSystemButtonProps> = ({
 	children,
 	size,
 	hierarchy,
-	buttonStatus,
+	buttonStatus = 'enabled',
 	iconLeft,
 	iconRight,
 	// text,
@@ -104,7 +104,7 @@ const DesignSystemButton: React.FC<DesignSystemButtonProps> = ({
 			disabled: '#98A2B3',
 		},
 		tertiary: {
-			enabled: '#FFFFFF',
+			enabled: '#444CE7',
 			disabled: '#98A2B3',
 		},
 	};
