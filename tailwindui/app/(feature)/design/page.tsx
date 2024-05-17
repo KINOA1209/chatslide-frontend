@@ -354,12 +354,12 @@ export default function DesignPage() {
 			imageAmount,
 			imageLicense,
 		};
-		sessionStorage.setItem('defaultProfile', JSON.stringify(defaultProfile));
+		localStorage.setItem('defaultProfile', JSON.stringify(defaultProfile));
 		toast.success('Profile saved successfully');
 	};
 
 	const loadFromProfile = () => {
-		const profile = sessionStorage.getItem('defaultProfile');
+		const profile = localStorage.getItem('defaultProfile');
 		if (profile) {
 			const {
 				template,
