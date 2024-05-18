@@ -62,29 +62,21 @@ const BrandingSelector: React.FC<{
 	logoPosition,
 	setLogoPosition,
 }) => {
-	// const {
-	// 	// isTemplateLogoLeftSide,
-	// 	// setIsTemplateLogoLeftSide,
-	// 	// updateTemplateLogoPositionToLeft,
-	// 	// updateTemplateLogoPosition,
-	// } = useSlides();
 	const { isPaidUser } = useUser();
 	const [showPaywall, setShowPaywall] = useState(false);
-	const [logoMode, setLogoMode] = useState(
-		showLogo ? (selectedLogo?.length > 0 ? 'custom' : 'default') : 'no',
-	);
+	const [logoMode, setLogoMode] = useState(isPaidUser ? 'no' : 'default');
 
 	useEffect(() => {
-		// rerender on showLogo, selectedLogo, selectedBackground change
-		setLogoMode(
-			showLogo ? (selectedLogo?.length > 0 ? 'custom' : 'default') : 'no',
-		);
-	}, [showLogo, selectedLogo, selectedBackground]);
-
-
-	// useEffect(() => {
-	// 	console.log('selectedLogo', selectedLogo);
-	// }, [selectedLogo]);
+		if (logoMode === 'no') {
+			setSelectedLogo([]);
+			setShowLogo(false);
+		} else if (logoMode === 'custom') {
+			setShowLogo(selectedLogo.length > 0 ? true : false);
+		} else if (logoMode === 'default') {
+			setSelectedLogo([]);
+			setShowLogo(true);
+		}
+	}, [logoMode, selectedLogo]);
 
 	return (
 		<div>
@@ -106,7 +98,6 @@ const BrandingSelector: React.FC<{
 							setShowPaywall(true);
 							return;
 						}
-						setShowLogo(e !== 'no' ? true : false);
 						setLogoMode(e);
 					}}
 					name='branding'
