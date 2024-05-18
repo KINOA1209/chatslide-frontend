@@ -25,7 +25,6 @@ const SurveySection: React.FC<SurveySectionProps> = ({
 	handleCustomInput,
 	ref,
 }) => {
-	const isButtonEnabled = selectedItems.length > 0;
 	const sectionObject = surveyStaticDataObject[section];
 
 	return (
@@ -49,7 +48,6 @@ const SurveySection: React.FC<SurveySectionProps> = ({
 					<div className='mt-6 flex justify-end gap-x-4'>
 						<BigBlueButton
 							onClick={handleButtonClick}
-							disabled={!isButtonEnabled}
 						>
 							{isLastSection ? 'Submit' : 'Next'}
 						</BigBlueButton>
