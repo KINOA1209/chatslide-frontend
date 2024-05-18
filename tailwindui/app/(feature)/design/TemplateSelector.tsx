@@ -180,19 +180,6 @@ const TemplateSelector: React.FC<{
 		);
 	}, [template, palette]);
 
-	useEffect(() => {
-		// rerender the whole div
-		setAdvancedMode(true);
-	}, [
-		customTemplateBgColor,
-		customizedTemplateTitleFontFamily,
-		customizedTemplateSubtitleFontFamily,
-		customizedTemplateContentFontFamily,
-		customizedTemplateContentFontColor,
-		customizedTemplateSubtitleFontColor,
-		customizedTemplateTitleFontColor,
-	]);
-
 	const handleCustomTemplateBgColorChange = (color: string) => {
 		setCustomTemplateBgColor(color);
 		setCustomizedTemplateBgColorCallback(color);
