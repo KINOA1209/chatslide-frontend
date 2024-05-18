@@ -541,6 +541,7 @@ export default function DesignPage() {
 								onClick={saveToDefaultProfile}
 								size='md'
 								hierarchy='secondary'
+								width='12rem'
 							>
 								Save to Profile
 							</DesignSystemButton>
@@ -548,6 +549,7 @@ export default function DesignPage() {
 								onClick={loadFromProfile}
 								size='md'
 								hierarchy='secondary'
+								width='12rem'
 							>
 								Load from Profile
 							</DesignSystemButton>
