@@ -17,6 +17,7 @@ import UserService from '@/services/UserService';
 import { toast } from 'react-toastify';
 import { ToastContainer } from 'react-toastify';
 import { useUser } from '@/hooks/use-user';
+import DesignSystemButton from '../ui/design_systems/ButtonsOrdinary';
 
 type DrlambdaButtonProps = {
 	children: ReactNode;
@@ -200,44 +201,45 @@ export const BigBlueButton: React.FC<DrlambdaButtonProps> = ({
 				setShowModal={setShowPaywallModal}
 				message='Upgrade to unlock more features. 🚀'
 			/>
-			{isUploadDropdownItem ? (
-				<button
-					className='block px-[10px] py-[9px] text-sm text-[#182230] rounded-md  hover:bg-zinc-100 w-full text-left'
-					onClick={
-						isPaidFeature && !isPaidUser
-							? () => setShowPaywallModal(true)
-							: onClick
-					}
-					style={{
-						display: 'flex',
-						flexDirection: 'row',
-						alignItems: 'center',
-						justifyContent: 'flex-start',
-						gap: 'var(--spacing-lg, 12px)',
-						borderBottom:
-							'1px solid var(--Colors-Border-border-secondary, #EAECF0)',
-					}}
-				>
-					{children}
-				</button>
-			) : (
-				<button
-					id={id}
-					className={`btn h-[36px] min-w-[8rem] sm:w-[12rem] mx-auto sm:gap-x-2 text-white sm:font-semibold bg-Blue ${
-						isSubmitting && 'animate-pulse cursor-progress'
-					} disabled:bg-gray-600 disabled:cursor-not-allowed
-			whitespace-nowrap rounded-xl`}
-					onClick={
-						isPaidFeature && !isPaidUser
-							? () => setShowPaywallModal(true)
-							: onClick
-					}
-					disabled={isSubmitting || disabled}
-					style={customizeStyle}
-				>
-					{children}
-				</button>
-			)}
+			<div className='w-[12rem]'>
+				{isUploadDropdownItem ? (
+					<DesignSystemButton
+						onClick={
+							isPaidFeature && !isPaidUser
+								? () => setShowPaywallModal(true)
+								: onClick
+						}
+						size='sm'
+						hierarchy='primary'
+						isSubmitting={isSubmitting || disabled}
+						customButtonStyles={{
+							display: 'flex',
+							flexDirection: 'row',
+							alignItems: 'center',
+							justifyContent: 'flex-start',
+							gap: 'var(--spacing-lg, 12px)',
+							borderBottom:
+								'1px solid var(--Colors-Border-border-secondary, #EAECF0)',
+						}}
+					>
+						{children}
+					</DesignSystemButton>
+				) : (
+					<DesignSystemButton
+						onClick={
+							isPaidFeature && !isPaidUser
+								? () => setShowPaywallModal(true)
+								: onClick
+						}
+						size='sm'
+						hierarchy='primary'
+						isSubmitting={isSubmitting || disabled}
+						customButtonStyles={customizeStyle}
+					>
+						{children}
+					</DesignSystemButton>
+				)}
+			</div>
 		</>
 	);
 };
@@ -259,9 +261,7 @@ export const BigGrayButton: React.FC<DrlambdaButtonProps> = ({
 				setShowModal={setShowPaywallModal}
 				message='Upgrade to unlock more features. 🚀'
 			/>
-			<button
-				className='btn min-w-[100px] sm:min-w-[120px] h-[36px] sm:gap-x-2 text-gray-800 text-sm bg-gray-300 whitespace-nowrap rounded-xl
-				disabled:bg-gray-600 disabled:animate-pulse disabled:cursor-not-allowed'
+			<DesignSystemButton
 				onClick={(e) => {
 					if (isPaidFeature && !isPaidUser) {
 						setShowPaywallModal(true);
@@ -269,10 +269,12 @@ export const BigGrayButton: React.FC<DrlambdaButtonProps> = ({
 						onClick && onClick(e);
 					}
 				}}
-				disabled={isSubmitting}
+				size='sm'
+				hierarchy='secondary'
+				isSubmitting={isSubmitting}
 			>
 				{children}
-			</button>
+			</DesignSystemButton>
 		</div>
 	);
 };
@@ -335,14 +337,14 @@ export const InversedBigBlueButton: React.FC<DrlambdaButtonProps> = ({
 	isPaidFeature = false,
 }) => {
 	return (
-		<button
-			className='btn h-[36px] w-[8rem] sm:w-[12rem] mx-auto sm:gap-x-2 text-Blue sm:font-semibold bg-gray-200 whitespace-nowrap rounded-xl
-			disabled:text-gray-600 disabled:animate-pulse disabled:cursor-progress'
+		<DesignSystemButton
 			onClick={onClick}
-			disabled={isSubmitting}
+			size='sm'
+			hierarchy='secondary'
+			isSubmitting={isSubmitting}
 		>
 			{children}
-		</button>
+		</DesignSystemButton>
 	);
 };
 

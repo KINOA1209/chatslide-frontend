@@ -384,7 +384,7 @@ export default function Dashboard() {
 									buttonStatus='enabled'
 									onClick={handleCreateFolderClick}
 								>
-									Create Folder
+									<span className='whitespace-nowrap'>Create Folder</span>
 								</DesignSystemButton>
 							)}
 							<DesignSystemButton
@@ -396,7 +396,7 @@ export default function Dashboard() {
 								// text='Create New'
 								onClick={handleStartNewProject}
 							>
-								Start New Project
+								<span className='whitespace-nowrap'>Start New Project</span>
 							</DesignSystemButton>
 						</div>
 					</div>
@@ -461,10 +461,11 @@ export default function Dashboard() {
 							/>
 						) : (
 							<Blank
-								text={`${activeFolder === 'drlambda-default'
+								text={`${
+									activeFolder === 'drlambda-default'
 										? "You haven't created any project yet."
 										: `No projects found in ${activeFolder}.`
-									}`}
+								}`}
 							/>
 						)
 					) : (

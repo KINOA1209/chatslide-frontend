@@ -31,7 +31,7 @@ const SaveScriptsButton: React.FC<Props> = ({ slides }) => {
 	return (
 		<BigGrayButton onClick={handleSaveScripts}>
 			<div className='flex flex-row items-center gap-x-2'>
-				<FaDownload className='text-gray-800' />
+				<FaDownload />
 				Save Scripts
 			</div>
 		</BigGrayButton>

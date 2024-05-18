@@ -26,6 +26,7 @@ interface DesignSystemButtonProps {
 	customButtonStyles?: React.CSSProperties;
 	customTextStyles?: React.CSSProperties;
 	customIconStyles?: React.CSSProperties;
+  width?: string;
 }
 
 const DesignSystemButton: React.FC<DesignSystemButtonProps> = ({
@@ -44,6 +45,7 @@ const DesignSystemButton: React.FC<DesignSystemButtonProps> = ({
 	customButtonStyles,
 	customIconStyles,
 	customTextStyles,
+  width = '100%',
 }) => {
 	// Define the CSS variables for spacing and colors
 	const [showPaywallModal, setShowPaywallModal] = useState(false);
@@ -57,8 +59,8 @@ const DesignSystemButton: React.FC<DesignSystemButtonProps> = ({
 	}
 	const spacing = {
 		sm: {
-			paddingTop: '8px',
-			paddingBottom: '8px',
+			paddingTop: '5px',
+			paddingBottom: '5px',
 			paddingLeft: '12px',
 			paddingRight: '12px',
 		},
@@ -117,6 +119,7 @@ const DesignSystemButton: React.FC<DesignSystemButtonProps> = ({
 			spacing[size]?.paddingLeft || spacing.md.paddingLeft
 		}`,
 		justifyContent: 'center',
+    width: width,
 		alignItems: 'center',
 		gap: 'var(--spacing-xs, 4px)',
 		borderRadius: 'var(--radius-md, 8px)',
@@ -128,7 +131,7 @@ const DesignSystemButton: React.FC<DesignSystemButtonProps> = ({
 	const textStyles = {
 		sm: {
 			color: `var(--Component-colors-Components-Buttons-${hierarchy}-button-${hierarchy}-fg, ${fontColors[hierarchy][buttonStatus]})`,
-			fontFamily: 'Inter SemiBold',
+			fontFamily: 'Inter',
 			fontSize: '14px',
 			fontStyle: 'normal',
 			fontWeight: 600,
@@ -202,7 +205,7 @@ const DesignSystemButton: React.FC<DesignSystemButtonProps> = ({
 				{iconLeft && (
 					<span style={{ ...iconStyles, ...customIconStyles }}>{iconLeft}</span>
 				)}
-				<span style={{ ...textStyles[size], ...customTextStyles }}>
+				<span className='flex flex-row items-center gap-x-2' style={{ ...textStyles[size], ...customTextStyles }}>
 					{/* {text} */}
 					{children}
 					{isPaidFeature && !isPaidUser && <PlusLabel />}
