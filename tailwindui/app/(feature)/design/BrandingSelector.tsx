@@ -64,19 +64,23 @@ const BrandingSelector: React.FC<{
 }) => {
 	const { isPaidUser } = useUser();
 	const [showPaywall, setShowPaywall] = useState(false);
-	const [logoMode, setLogoMode] = useState(isPaidUser ? 'no' : 'default');
+	const [logoMode, setLogoMode] = useState<'no' | 'default' | 'custom'>(
+		isPaidUser ? 'no' : 'default',
+	);
 
 	useEffect(() => {
+		console.log('logoMode', logoMode);
+
 		if (logoMode === 'no') {
 			setSelectedLogo([]);
 			setShowLogo(false);
 		} else if (logoMode === 'custom') {
-			setShowLogo(selectedLogo.length > 0 ? true : false);
+			setShowLogo(true);
 		} else if (logoMode === 'default') {
 			setSelectedLogo([]);
 			setShowLogo(true);
 		}
-	}, [logoMode, selectedLogo]);
+	}, [logoMode, setSelectedLogo, setShowLogo]);
 
 	return (
 		<div>
@@ -93,19 +97,19 @@ const BrandingSelector: React.FC<{
 				<RadioButton
 					options={brandingOptions}
 					selectedValue={logoMode}
-					setSelectedValue={(e) => {
-						if (e !== 'default' && !isPaidUser) {
+					setSelectedValue={(mode) => {
+						if (mode !== 'default' && !isPaidUser) {
 							setShowPaywall(true);
 							return;
 						}
-						setLogoMode(e);
+						setLogoMode(mode as 'no' | 'default' | 'custom');
 					}}
 					name='branding'
 				/>
 			</div>
 
 			{/* customized logo */}
-			{logoMode === 'custom' && (
+			{logoMode == 'custom' && (
 				<ImageSelector
 					type='logo'
 					selectedImage={selectedLogo}
