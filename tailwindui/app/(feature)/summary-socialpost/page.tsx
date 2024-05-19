@@ -193,7 +193,7 @@ export default function Topic_SocialPost() {
 			} as Project);
 
 			router.push(addIdToRedir('/socialpost', response.data.project_id));
-			router.refresh();
+			// router.refresh();
 		} catch (error) {
 			// console.error('Error:', error);s
 			setIsSubmitting(false);
