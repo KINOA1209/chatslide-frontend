@@ -43,6 +43,13 @@ const QuillEditable = dynamic(
 // for col2img2 image layout, default is on the bottom side
 // for col3img3 image layout, default is on the top side
 
+interface MainSlideProps extends BaseMainSlideProps {
+	brandingColor?: string;
+	themeElements: ThemeElements;
+	layoutElements: LayoutElements;
+	showContentBulletPoint?: boolean;
+}
+
 export type LayoutKeys =
 	| ''
 	| 'Cover_img_0_layout'
@@ -225,13 +232,6 @@ export const handleAddTextColumn = ({
 	]);
 	setShowAddButton(shouldShowAddButton);
 };
-
-interface MainSlideProps extends BaseMainSlideProps {
-	brandingColor?: string;
-	themeElements: ThemeElements;
-	layoutElements: LayoutElements;
-	showContentBulletPoint?: boolean;
-}
 
 const filterEmptyLines = (
 	content: JSX.Element[] | JSX.Element,

@@ -334,6 +334,7 @@ class ProjectService {
 		post_type: string,
 	): SocialPostSlide[] {
 		const parse_slide = JSON.parse(social_posts);
+		console.log('parsed_slide is', parse_slide);
 		const slidesArray: SocialPostSlide[] = Object.keys(parse_slide).map(
 			(key, index) => {
 				const slideData = parse_slide[key];
@@ -356,6 +357,32 @@ class ProjectService {
 						slide.template = slideData.template || 'img_1_template3';
 					}
 				}
+				if (index === 0) {
+					if (post_type === 'casual_topic') {
+						slide.layout = slideData.layout || 'First_page_img_1_casual_topic';
+					} else if (post_type === 'serious_subject') {
+						slide.English_title = slideData.English_title;
+						slide.layout =
+							slideData.layout || 'First_page_img_1_serious_subject';
+					} else if (post_type === 'reading_notes') {
+						slide.layout = slideData.layout || 'First_page_img_1_reading_notes';
+					}
+				}
+				if (index === slideData.length - 1) {
+					slide.layout = 'last_page_layout';
+				} else {
+					if (post_type === 'casual_topic') {
+						slide.layout = slideData.layout || 'Col_1_img_0_casual_topic';
+					} else if (post_type === 'serious_subject') {
+						slide.layout = slideData.layout || 'img_0_serious_subject';
+					} else if (post_type === 'reading_notes') {
+						slide.layout = slideData.layout || 'Col_1_img_1_reading_notes';
+					}
+				}
+				slide.template_theme = slide.template_theme || 'classic';
+				slide.last_page_content =
+					slideData.last_page_content || 'Thank you! Follow to learn more!';
+				slide.last_page_title = slideData.last_page_title || 'Like & Share';
 				slide.keywords = slideData.keywords || '';
 				slide.topic = slideData.topic || 'Your topic here';
 				slide.subtopic = slideData.subtopic;

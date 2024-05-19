@@ -136,6 +136,7 @@ export type TemplateLogoType = {
 	darkBGLogo?: StaticImageData;
 	// isLogoLeftSide?: boolean;
 	logoPosition?: LogoPosition;
+	logoPositionConfig?: React.CSSProperties;
 };
 // generate school template logo logic
 

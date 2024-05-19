@@ -1,7 +1,7 @@
-import { ThemeElements } from '../theme_elements';
+import { SocialPostThemeElements } from '../theme_elements';
 import '@/components/socialPost/socialPostCustomFonts.css';
 
-export const seriousDefault: ThemeElements = {
+export const seriousDefault: SocialPostThemeElements = {
 	originalTitleCoverCSS: {
 		color: '#1B1C22',
 		fontWeight: 'bold',

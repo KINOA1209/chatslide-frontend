@@ -179,6 +179,7 @@ export default function Topic_SocialPost() {
 
 		try {
 			const response = await callSocialPost(formData as FormatData);
+			console.log('response from handle social post submit:', response);
 			//console.log(outlinesJson)
 			//const searchImagesResponse = await callSearchImages(JSON.stringify(formData.topic))
 			setIsSubmitting(false);
@@ -192,6 +193,7 @@ export default function Topic_SocialPost() {
 			} as Project);
 
 			router.push(addIdToRedir('/socialpost', response.data.project_id));
+			router.refresh();
 		} catch (error) {
 			// console.error('Error:', error);s
 			setIsSubmitting(false);
@@ -200,6 +202,7 @@ export default function Topic_SocialPost() {
 
 	// api/social_posts helper function
 	async function callSocialPost(formData: FormatData) {
+		console.log('callSocialPost api:', formData);
 		const response = await fetch('/api/social_posts', {
 			method: 'POST',
 			headers: {
@@ -219,12 +222,9 @@ export default function Topic_SocialPost() {
 						project?.id,
 				);
 				setIsSubmitting(false);
-				
 			}
 			throw new Error('Error when generating social posts');
-		}
-		else
-			return await response.json();
+		} else return await response.json();
 	}
 
 	async function addLink(link: string) {

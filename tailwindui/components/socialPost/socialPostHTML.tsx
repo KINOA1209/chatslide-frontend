@@ -20,9 +20,7 @@ import {
 import SocialPostContainer from '@/components/socialPost/socialPostContainer';
 import ButtonWithExplanation from '../button/ButtonWithExplanation';
 import { templateDispatch } from '@/components/socialPost/socialPostTemplateDispatch';
-import templates, {
-	templateSamples,
-} from '@/components/socialPost/socialPostTemplates';
+import { socialPostAvailableLayouts } from '@/components/socialPost/socialPostTemplates';
 import { ThemeObject } from '@/components/socialPost/socialPostThemeChanger';
 import { useProject } from '@/hooks/use-project';
 import { useUser } from '@/hooks/use-user';

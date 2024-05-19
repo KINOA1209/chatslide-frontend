@@ -1,6 +1,6 @@
-import { ThemeElements } from '../theme_elements';
+import { SocialPostThemeElements } from '../theme_elements';
 
-export const readingDefault: ThemeElements = {
+export const readingDefault: SocialPostThemeElements = {
 	readingtitleCSS: {
 		color: '#121212',
 		fontFamily: 'Cormorant',

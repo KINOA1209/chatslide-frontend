@@ -1,4 +1,7 @@
-import templates from '@/components/socialPost/socialPostTemplates';
+import {
+	socialPostAvailableLayouts,
+	generateSocialPostTemplateLogo,
+} from '@/components/socialPost/socialPostTemplates';
 import {
 	CompanyIconWhite,
 	CompanyIconBlack,
@@ -11,14 +14,52 @@ import SocialPostSlide, { SlideKeys } from '@/models/SocialPost';
 import Chart, { Group } from '@/models/Chart';
 import ImagesPosition from '@/models/ImagesPosition';
 import { useProject } from '@/hooks/use-project';
-import themeConfigData from './templates_customizable_elements/theme_elements';
+import SocialPostThemeConfigData, {
+	SocialPostThemeConfig,
+	SocialPostThemeElements,
+} from './templates_customizable_elements/theme_elements';
 import { PostTypeKeys } from './templates_customizable_elements/theme_elements';
 import processContent from '@/components/slides/quillEditorSlide';
-
+import { Default_SocialPost_TemplateThemeConfig } from './templates_customizable_elements/default_template/theme_config';
+import SocialPostLayoutConfigData, {
+	SocialPostLayoutKeys,
+	SocialPostTemplateKeys,
+} from './socialPostLayouts';
+import layoutConfigData from '../slides/templates_customizable_elements/layout_elements';
+import drlambdaLogoBadgeWhiteBG from '@/public/images/template/drlambdaLogoBadgeWhiteBG.png';
 const QuillEditable = dynamic(
 	() => import('@/components/slides/quillEditorSlide'),
 	{ ssr: false },
 );
+
+export const loadSocialPostCustomizableElements = (
+	templateName: string,
+	post_type: string,
+) => {
+	// return (
+	// 	themeConfigData[templateName as keyof ThemeConfig] ||
+	// 	Default_TemplateThemeConfig
+	// );
+	const themeElements =
+		SocialPostThemeConfigData[templateName as SocialPostTemplateKeys] ||
+		Default_SocialPost_TemplateThemeConfig;
+	let selectedThemeElements = themeElements[post_type as PostTypeKeys];
+	// console.log('loaded theme configurations is:', selectedThemeElements);
+
+	return selectedThemeElements;
+};
+
+export const loadSocialPostLayoutConfigElements = (
+	templateName: string,
+	layoutOption: string,
+) => {
+	const templateElements =
+		SocialPostLayoutConfigData[templateName as keyof SocialPostThemeConfig] ||
+		{};
+	const selectedLayoutOptionElements =
+		templateElements[layoutOption as SocialPostLayoutKeys] || {};
+	return selectedLayoutOptionElements;
+};
 
 export const templateDispatch = (
 	slide: SocialPostSlide,
@@ -56,17 +97,38 @@ export const templateDispatch = (
 	} else if (!canEdit) {
 		keyPrefix = 'preview';
 	}
-	const Template = templates[slide.template as keyof typeof templates];
+	const ChosenLayout =
+		socialPostAvailableLayouts[
+			slide.layout as keyof typeof socialPostAvailableLayouts
+		];
 	const { project } = useProject();
 	const post_type: PostTypeKeys =
 		(project?.post_type as PostTypeKeys) || 'casual_topic';
-	const themeElements = themeConfigData[post_type];
+
+	// TODO: change the hardcode to real social post template name passed in
+	const themeElements =
+		// SocialPostThemeConfigData['classic'][post_type] ||
+		// Default_SocialPost_TemplateThemeConfig;
+		loadSocialPostCustomizableElements(slide.template_theme, post_type) ||
+		Default_SocialPost_TemplateThemeConfig[post_type];
+
+	const socialPostLayoutElements = loadSocialPostLayoutConfigElements(
+		slide.template_theme as SocialPostTemplateKeys,
+		slide.layout as SocialPostLayoutKeys,
+	);
 
 	const getUpdateCallback = (post_type: string, slideIndex: number) => {
 		return post_type === 'reading_notes'
 			? updateIllustrationUrlArray(slideIndex)
 			: updateImgUrlArray(slideIndex);
 	};
+	// useEffect(() => {
+	// 	console.log(
+	// 		'slide.template:',
+	// 		slide.template,
+	// 		SocialPostLayoutConfigData['classic'][slide.template] || {},
+	// 	);
+	// }, []);
 
 	const generateContentElement = (
 		content: string,
@@ -127,7 +189,7 @@ export const templateDispatch = (
 
 	if (index === 0) {
 		return (
-			<Template
+			<ChosenLayout
 				//autoSave={saveSlides}
 				key={keyPrefix + index.toString()}
 				handleSlideEdit={handleSlideEdit}
@@ -155,24 +217,24 @@ export const templateDispatch = (
 				topic={generateContentElement(
 					slide.topic,
 					'topic',
-					themeElements.topicCSS || {},
+					themeElements?.topicCSS || {},
 				)}
 				keywords={generateContentElement(
 					Array.isArray(slide.keywords)
 						? slide.keywords.join(' | ')
 						: slide.keywords,
 					'keywords',
-					themeElements.keywordCoverCSS || {},
+					themeElements?.keywordCoverCSS || {},
 				)}
 				original_title={generateContentElement(
 					slide.original_title,
 					'original_title',
-					themeElements.originalTitleCoverCSS || {},
+					themeElements?.originalTitleCoverCSS || {},
 				)}
 				title={generateContentElement(
 					slide.title,
 					'title',
-					themeElements.readingtitleCSS || {},
+					themeElements?.readingtitleCSS || {},
 				)}
 				subtopic={<></>}
 				quote={<></>}
@@ -181,11 +243,29 @@ export const templateDispatch = (
 				content={[<></>]}
 				brief={<></>}
 				section_title={<></>}
+				layoutElements={socialPostLayoutElements}
+				themeElements={themeElements}
+				last_page_title={generateContentElement(
+					slide.last_page_title,
+					'last_page_title',
+					themeElements?.lastPageTitleCSS || {},
+				)}
+				last_page_content={generateContentElement(
+					slide.last_page_content,
+					'last_page_content',
+					themeElements?.lastPageContentCSS || {},
+				)}
+				social_post_template_logo={generateSocialPostTemplateLogo({
+					logoWidth: 8,
+					logoHeight: 1.5,
+					logoBadge: drlambdaLogoBadgeWhiteBG,
+					logoStyleConfig: socialPostLayoutElements?.logoCSS || {},
+				})}
 			/>
 		);
 	} else {
 		return (
-			<Template
+			<ChosenLayout
 				canEdit={canEdit}
 				key={keyPrefix + index.toString()}
 				icon={
@@ -212,39 +292,39 @@ export const templateDispatch = (
 				subtopic={generateContentElement(
 					slide.subtopic,
 					'subtopic',
-					themeElements.subtopicCSS || {},
+					themeElements?.subtopicCSS || {},
 				)}
 				keywords={generateContentElement(
 					slide.keywords,
 					'keywords',
-					themeElements.keywordCSS || {},
+					themeElements?.keywordCSS || {},
 					undefined,
 					false,
 				)}
 				section_title={generateContentElement(
 					slide.section_title,
 					'section_title',
-					themeElements.sectionTitleCSS || {},
+					themeElements?.sectionTitleCSS || {},
 				)}
 				original_title={generateContentElement(
 					slide.original_title,
 					'original_title',
-					themeElements.originalTitleCSS || {},
+					themeElements?.originalTitleCSS || {},
 				)}
 				brief={generateContentElement(
 					slide.brief,
 					'brief',
-					themeElements.briefCSS || {},
+					themeElements?.briefCSS || {},
 				)}
 				quote={generateContentElement(
 					slide.quote,
 					'quote',
-					themeElements.quoteCSS || {},
+					themeElements?.quoteCSS || {},
 				)}
 				source={generateContentElement(
 					slide.source,
 					'source',
-					themeElements.sourceCSS || {},
+					themeElements?.sourceCSS || {},
 				)}
 				content={slide.content.map((content: string, contentIndex: number) => {
 					return (
@@ -254,7 +334,7 @@ export const templateDispatch = (
 							{generateContentElement(
 								content,
 								'content',
-								themeElements.contentCSS || {},
+								themeElements?.contentCSS || {},
 								contentIndex,
 							)}
 							{post_type === 'casual_topic' && <hr className='my-[15px]'></hr>}
@@ -264,6 +344,24 @@ export const templateDispatch = (
 				title={<></>}
 				English_title={<></>}
 				topic={<></>}
+				layoutElements={socialPostLayoutElements}
+				themeElements={themeElements}
+				last_page_title={generateContentElement(
+					slide.last_page_title,
+					'last_page_title',
+					themeElements?.lastPageTitleCSS || {},
+				)}
+				last_page_content={generateContentElement(
+					slide.last_page_content,
+					'last_page_content',
+					themeElements?.lastPageContentCSS || {},
+				)}
+				social_post_template_logo={generateSocialPostTemplateLogo({
+					logoWidth: 8,
+					logoHeight: 1.5,
+					logoBadge: drlambdaLogoBadgeWhiteBG,
+					logoStyleConfig: socialPostLayoutElements?.logoCSS || {},
+				})}
 			/>
 		);
 	}
