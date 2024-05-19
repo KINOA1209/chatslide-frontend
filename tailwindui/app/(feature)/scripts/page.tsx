@@ -145,7 +145,7 @@ export default function WorkflowStep5() {
 
 					<BigBlueButton onClick={handleSubmitVideo}>
 						Yes, Regenerate Video
-					</BigBlueButton>
+					</BigBlueButton> :
 				</div>
 			</Modal>
 		);
@@ -160,11 +160,23 @@ export default function WorkflowStep5() {
 			project.id,
 			token,
 		);
-		if (hasRunningVideoJob) setShowConfirmRegenModal(true);
-		else handleSubmitVideo();
+		if (hasRunningVideoJob || !canSubmitVideo()) {
+			setShowConfirmRegenModal(true);
+		}
+		else{
+			handleSubmitVideo();
+		} 
 	}
 
 	async function handleSubmitVideo() {
+		if (canSubmitVideo()) {
+			setLastSubmissionTime();
+		} else {
+			toast.error('Please wait at least 5 minutes between video submissions.');
+			setIsSubmitting(false);
+			return;
+		}
+
 		console.log('handleSubmitVideo');
 		if (!project) {
 			console.error('No project found');
@@ -226,12 +238,7 @@ export default function WorkflowStep5() {
 
 	useEffect(() => {
 		if (isSubmitting) {
-			if (canSubmitVideo()) {
-				confirmVideoJob();
-				setLastSubmissionTime();
-			} else {
-				toast.error('You have already subummitted another video request in 5 minutes, please wait 5 minutes between video submissions.');
-			}
+			confirmVideoJob();
 			setIsSubmitting(false);
 		}
 	}, [isSubmitting]);
