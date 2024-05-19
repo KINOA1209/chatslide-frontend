@@ -12,8 +12,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import '@/app/css/workflow-edit-topic-css/topic_style.css';
 
 // Your project's global imports
-// import ContentWithImageImg from '@/public/images/summary/content_with_image.png';
-// import ContentOnlyImg from '@/public/images/summary/content_only.png';
 import MoreImagesImg from '@/public/images/design/more_images.png';
 import FewerImagesImg from '@/public/images/design/fewer_images.png';
 
@@ -22,7 +20,6 @@ import useHydrated from '@/hooks/use-hydrated';
 import { useProject } from '@/hooks/use-project';
 import useTourStore from '@/components/user_onboarding/TourStore';
 import availablePalettes from '@/components/slides/palette';
-// import { TemplateKeys, getTemplateFromAudicence } from '@/components/slides/slideTemplates';
 import { GenerationStatusProgressModal } from '@/components/ui/GenerationStatusProgressModal';
 
 // UI Components and Layouts
@@ -30,12 +27,7 @@ import Card from '@/components/ui/Card';
 import RadioButton, { RadioButtonOption } from '@/components/ui/RadioButton';
 import { Panel } from '@/components/layout/Panel';
 import { Column } from '@/components/layout/Column';
-import {
-	BigTitle,
-	Explanation,
-	Instruction,
-	Title,
-} from '@/components/ui/Text';
+import { BigTitle, Explanation, Instruction } from '@/components/ui/Text';
 import WorkflowStepsBanner from '@/components/layout/WorkflowStepsBanner';
 import GenerateSlidesSubmit from '@/components/outline/GenerateSlidesSubmit';
 
@@ -52,6 +44,10 @@ import { addIdToRedir } from '@/utils/redirWithId';
 import SlidesService from '@/services/SlidesService';
 import Slide, { LogoPosition } from '@/models/Slide';
 import ProjectService from '@/services/ProjectService';
+import { BigBlueButton } from '@/components/button/DrlambdaButton';
+import { WrappableRow } from '@/components/layout/WrappableRow';
+import DesignSystemBadges from '@/components/ui/design_systems/Badges';
+import DesignSystemButton from '@/components/ui/design_systems/ButtonsOrdinary';
 const colorPreviews: any = dynamic(
 	() => import('@/app/(feature)/design/TemplateSelector'),
 	{
@@ -87,7 +83,6 @@ export default function DesignPage() {
 		useState(false);
 
 	const handleGenerationStatusModal = () => {
-		// console.log('user Research Modal toggled');
 		setShowGenerationStatusModal(!showGenerationStatusModal);
 	};
 	const {
@@ -114,6 +109,12 @@ export default function DesignPage() {
 		hasSelectedCustomizedTemplateContentFontColor,
 		hasSelectedCustomizedTemplateTitleFontColor,
 		hasSelectedCustomizedTemplateSubtitleFontColor,
+		setCustomizedTemplateContentFontFamily,
+		setCustomizedTemplateTitleFontFamily,
+		setCustomizedTemplateSubtitleFontFamily,
+		setCustomizedTemplateContentFontColor,
+		setCustomizedTemplateSubtitleFontColor,
+		setCustomizedTemplateTitleFontColor,
 	} = useSlides();
 	const { isTourActive, startTour, setIsTourActive } = useTourStore();
 	const { token, isPaidUser } = useUser();
@@ -129,7 +130,6 @@ export default function DesignPage() {
 			'Original',
 	);
 
-	// once slides object is created we should use slides object's info to set template, palette, background color and font etc
 	const [selectedTemplateBgColor, setSelectedTemplateBgColor] = useState(
 		hasSelectedCustomTemplateBgColor
 			? customTemplateBgColor
@@ -158,7 +158,6 @@ export default function DesignPage() {
 			: initialLoadedContentFontFamily || 'Arial',
 	);
 
-	// selected customized font color
 	const [
 		selectedTemplateContentFontColor,
 		setSelectedTemplateContentFontColor,
@@ -204,25 +203,10 @@ export default function DesignPage() {
 
 	useEffect(() => {
 		if (project?.parsed_slides && project?.parsed_slides?.length !== 0) {
-			// console.log("setting the palette to be", project?.parsed_slides[0].palette)
-			// setTemplate(project?.parsed_slides[0].template)
 			setTemplate(slides[0].template);
-			// setColorPalette(project?.parsed_slides[0].palette)
 			setColorPalette(slides[0].palette);
 		}
-
-		// console.log("current project parsed slides", project.parsed_slides)
 	}, []);
-
-	// Initialize the palette state with the first available palette for the current template
-	// useEffect(() => {
-	// 	if (template && availablePalettes) {
-	// 		const paletteForTemplate = availablePalettes[template];
-	// 		if (paletteForTemplate && paletteForTemplate.length > 0) {
-	// 			setColorPalette(paletteForTemplate[0]);
-	// 		}
-	// 	}
-	// }, [template]);
 
 	const [imageAmount, setImageAmount] = useState('more_images');
 	const imageAmountOptions: RadioButtonOption[] = [
@@ -254,7 +238,6 @@ export default function DesignPage() {
 		},
 	];
 
-	// if project does not have logo property, update depending on isPaidUser
 	if (project?.logo === undefined) {
 		updateProject('logo', isPaidUser ? '' : 'Default');
 	}
@@ -295,7 +278,7 @@ export default function DesignPage() {
 						palette: colorPalette,
 						background_color: hasSelectedCustomTemplateBgColor
 							? selectedTemplateBgColor
-							: undefined, // only when selected custom template bg color is true we set background color
+							: undefined,
 						titleFontFamily: selectedTemplateTitleFontFamily,
 						subtitleFontFamily: selectedTemplateSubtitleFontFamily,
 						contentFontFamily: selectedTemplateContentFontFamily,
@@ -327,7 +310,6 @@ export default function DesignPage() {
 
 				router.push(addIdToRedir('/slides'));
 			} else {
-				// Handle the case where one of the variables is undefined
 				console.error('One or more required variables are undefined.');
 			}
 		} catch (e) {
@@ -346,7 +328,6 @@ export default function DesignPage() {
 				const parsedSlides = ProjectService.parseSlides(
 					project.presentation_slides,
 				);
-				// updateProject('parsed_slides', parsedSlides);
 				initSlides(parsedSlides);
 				setShowGenerationStatusModal(true);
 				viewSlidesSubmit();
@@ -355,17 +336,87 @@ export default function DesignPage() {
 		}
 	}, [isSubmitting]);
 
-	// avoid hydration error during development caused by persistence
 	if (!useHydrated()) return <></>;
+
+	const saveToDefaultProfile = () => {
+		const defaultProfile = {
+			template,
+			colorPalette,
+			selectedTemplateBgColor,
+			selectedTemplateTitleFontFamily,
+			selectedTemplateSubtitleFontFamily,
+			selectedTemplateContentFontFamily,
+			selectedTemplateContentFontColor,
+			selectedTemplateSubtitleFontColor,
+			selectedTemplateTitleFontColor,
+			selectedLogo,
+			selectedBackground,
+			showLogo,
+			selectedLogoPosition,
+			imageAmount,
+			imageLicense,
+		};
+		localStorage.setItem('defaultProfile', JSON.stringify(defaultProfile));
+		toast.success('Profile saved successfully');
+	};
+
+	const loadFromProfile = () => {
+		const profile = localStorage.getItem('defaultProfile');
+		if (profile) {
+			const {
+				template,
+				colorPalette,
+				selectedTemplateBgColor,
+				selectedTemplateTitleFontFamily,
+				selectedTemplateSubtitleFontFamily,
+				selectedTemplateContentFontFamily,
+				selectedTemplateContentFontColor,
+				selectedTemplateSubtitleFontColor,
+				selectedTemplateTitleFontColor,
+				selectedLogo,
+				selectedBackground,
+				showLogo,
+				selectedLogoPosition,
+				imageAmount,
+				imageLicense,
+			} = JSON.parse(profile);
+
+			setTemplate(template);
+			setColorPalette(colorPalette);
+			setSelectedTemplateBgColor(selectedTemplateBgColor);
+
+			setSelectedTemplateTitleFontFamily(selectedTemplateTitleFontFamily);
+			setSelectedTemplateSubtitleFontFamily(selectedTemplateSubtitleFontFamily);
+			setSelectedTemplateContentFontFamily(selectedTemplateContentFontFamily);
+			setSelectedTemplateContentFontColor(selectedTemplateContentFontColor);
+			setSelectedTemplateSubtitleFontColor(selectedTemplateSubtitleFontColor);
+			setSelectedTemplateTitleFontColor(selectedTemplateTitleFontColor);
+
+			setCustomizedTemplateContentFontFamily(selectedTemplateContentFontFamily);
+			setCustomizedTemplateTitleFontFamily(selectedTemplateTitleFontFamily);
+			setCustomizedTemplateSubtitleFontFamily(
+				selectedTemplateSubtitleFontFamily,
+			);
+			setCustomizedTemplateContentFontColor(selectedTemplateContentFontColor);
+			setCustomizedTemplateSubtitleFontColor(selectedTemplateSubtitleFontColor);
+			setCustomizedTemplateTitleFontColor(selectedTemplateTitleFontColor);
+
+			setSelectedLogo(selectedLogo);
+			setSelectedBackground(selectedBackground);
+			setShowLogo(showLogo);
+			setSelectedLogoPosition(selectedLogoPosition);
+			setImageAmount(imageAmount);
+			setImageLicense(imageLicense);
+
+			toast.success('Profile loaded successfully');
+		} else {
+			toast.error('No profile found');
+		}
+	};
 
 	return (
 		<section className='relative'>
-			{/* user tutorial */}
-			{/* <div className='absolute right-[3rem] top-[7rem] flex flex-col items-end space-x-4'>
-				<ActionsToolBar startTour={startTour} onlyShowTutorial={true} />
-			</div> */}
 			<ToastContainer />
-			{/* user research modal */}
 			{showGenerationStatusModal && (
 				<GenerationStatusProgressModal
 					onClick={handleGenerationStatusModal}
@@ -381,7 +432,7 @@ export default function DesignPage() {
 				nextIsPaidFeature={false}
 				nextText={isSubmitting ? 'Designing Slides' : 'Design Slides'}
 				handleClickingGeneration={handleGenerationStatusModal}
-				lastStep={project?.presentation_slides ? false : true} // if the slide is not yet generated, dont show next step
+				lastStep={project?.presentation_slides ? false : true}
 			/>
 
 			<PaywallModal
@@ -392,14 +443,12 @@ export default function DesignPage() {
 
 			<Column>
 				<Panel>
-					{/* design */}
 					<Card>
 						<BigTitle>✍️ Design</BigTitle>
 						<Explanation>
 							Customize the design for your slide, you can also skip this step
 							and use the default
 						</Explanation>
-						{/* template */}
 						<TemplateSelector
 							template={template}
 							setTemplate={setTemplate}
@@ -432,7 +481,6 @@ export default function DesignPage() {
 							}
 						/>
 
-						{/* images */}
 						<div>
 							<Instruction>
 								How many images do you want to generate?
@@ -480,6 +528,32 @@ export default function DesignPage() {
 							logoPosition={selectedLogoPosition}
 							setLogoPosition={setSelectedLogoPosition}
 						/>
+					</Card>
+
+					<Card>
+						<BigTitle>⚙️ Settings</BigTitle>
+						<Instruction>
+							You can save all the settings on this page to your profile, and
+							apply it in the future for a deck with the same design.
+						</Instruction>
+						<WrappableRow type='flex' justify='around'>
+							<DesignSystemButton
+								onClick={saveToDefaultProfile}
+								size='md'
+								hierarchy='secondary'
+								width='12rem'
+							>
+								Save to Profile
+							</DesignSystemButton>
+							<DesignSystemButton
+								onClick={loadFromProfile}
+								size='md'
+								hierarchy='secondary'
+								width='12rem'
+							>
+								Load from Profile
+							</DesignSystemButton>
+						</WrappableRow>
 					</Card>
 				</Panel>
 			</Column>

@@ -4,7 +4,7 @@ import FileUploadModal from '@/components/file/FileUploadModal';
 import PaywallModal from '@/components/paywallModal';
 import { useUser } from '@/hooks/use-user';
 import Resource from '@/models/Resource';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { PlusLabel } from '@/components/ui/GrayLabel';
 import { Instruction } from '@/components/ui/Text';
 import RadioButton from '@/components/ui/RadioButton';
@@ -22,10 +22,10 @@ const ImageSelector: React.FC<Props> = ({
 	setSelectedImage,
 	showQuestion = true,
 }) => {
-	const [useImage, setUseImage] = useState(!showQuestion || selectedImage.length > 0);
 	const [showFileModal, setShowFileModal] = useState(false);
 	const { isPaidUser } = useUser();
 	const [showPaywall, setShowPaywall] = useState(false);
+	const [selectedValue, setSelectedValue] = useState(showQuestion ? 'no' : 'yes');
 
 	const removeImageAtIndex = (indexToRemove: number) => {
 		const newSelectedImage = selectedImage.filter(
@@ -33,6 +33,10 @@ const ImageSelector: React.FC<Props> = ({
 		);
 		setSelectedImage(newSelectedImage as Resource[]);
 	};
+
+	// useEffect(() => {
+	// 	setUseImage(selectedImage.length > 0);
+	// }, [selectedImage]);
 
 	return (
 		<div>
@@ -60,21 +64,21 @@ const ImageSelector: React.FC<Props> = ({
 								text: 'No',
 							},
 						]}
-						selectedValue={useImage ? 'yes' : 'no'}
+						selectedValue={selectedValue}
 						setSelectedValue={(value) => {
 							if (value === 'yes') {
 								if (!isPaidUser) setShowPaywall(true);
-								else setUseImage(true);
+								else setSelectedValue('yes');
 							} else {
-								setUseImage(false);
 								setSelectedImage([]);
+								setSelectedValue('no');
 							}
 						}}
 					/>
 				</div>
 			)}
 
-			{useImage && (
+			{selectedValue === 'yes' && (
 				<div
 					className={`transition-opacity duration-300 ease-in-out gap-1 flex flex-rol justify-start mt-2`}
 				>
@@ -91,7 +95,7 @@ const ImageSelector: React.FC<Props> = ({
 				</div>
 			)}
 
-			{useImage && (
+			{selectedValue === 'yes' && (
 				<div className='mt-[10px]'>
 					<SelectedResourcesList
 						selectedResources={selectedImage}

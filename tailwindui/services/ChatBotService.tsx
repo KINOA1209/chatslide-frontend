@@ -31,7 +31,8 @@ class ChatBotService {
 		projectId: string,
 		pageIndex: number,
 		selectedText?: string,
-    mode?: 'script' | 'slide' | 'chart'
+    mode?: 'script' | 'slide' | 'chart',
+		model?: 'gpt-3.5-turbo' | 'gpt-4' | 'gpt-4o',
 	): Promise<ChatResponse> {
     // console.log('mode', mode)
 
@@ -54,7 +55,8 @@ class ChatBotService {
 						.slice(-5),
 					page_index: pageIndex,
 					selected_text: selectedText,
-          mode: mode
+          mode: mode,
+					model: model,
 				}),
 			});
 			return { ...(await resp.json()).data, role: 'assistant' };
@@ -71,7 +73,7 @@ class ChatBotService {
     prompt: string,
     prevPrompts: Chat[],
     token: string,
-    model: string,
+    model: 'gpt-3.5-turbo' | 'gpt-4' | 'gpt-4o',
   ): Promise<ChatResponse> {
     // console.log('mode', mode)
 

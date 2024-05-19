@@ -1,4 +1,4 @@
-import { EarlyAccessButton } from '@/components/button/DrlambdaButton';
+import { EarlyAccessButton } from '@/components/button/FunctionalButton';
 import { Column } from '@/components/layout/Column';
 import { Panel } from '@/components/layout/Panel';
 import { UnlimitedUpgrade } from '@/components/slides/card/UnlimitedUpgrade';

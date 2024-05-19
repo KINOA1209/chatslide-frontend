@@ -14,9 +14,7 @@ import Project from '@/models/Project';
 import SlidesService from '@/services/SlidesService';
 import Slide from '@/models/Slide';
 import { getBrand } from '@/utils/getHost';
-import {
-	convertPlainTextToOutlines,
-} from '@/components/outline/OutlineUtils';
+import { convertPlainTextToOutlines } from '@/components/outline/OutlineUtils';
 
 // this class has no UI, it is used to submit the outline to the backend when isSubmitting is true
 const GenerateSlidesSubmit = ({
@@ -139,11 +137,8 @@ const GenerateSlidesSubmit = ({
 			has_scripts: false, // in case it is re-generated
 		} as Project);
 
-		// if we have resources, but no extra knowledge, we need to query the vector database
-		if (
-			!project.extra_knowledge &&
-			(selectedResources.length > 0 || project.search_online)
-		) {
+		// if we have resources, we need to query the vector database
+		if (selectedResources.length > 0 || project.search_online) {
 			try {
 				console.log('resources', selectedResources);
 				console.log('querying vector database');

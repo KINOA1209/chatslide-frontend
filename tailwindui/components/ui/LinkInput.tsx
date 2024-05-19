@@ -29,11 +29,31 @@ const LinkInput = ({
 		}
 	};
 
+  const isGDriveLink = (url: string): boolean => {
+		const googleDocsPattern =
+			/^https:\/\/docs\.google\.com\/document\/d\/[\w-]+\/?/;
+		const googleSlidesPattern =
+			/^https:\/\/docs\.google\.com\/presentation\/d\/[\w-]+\/?/;
+
+		if (googleDocsPattern.test(url)) {
+			return true;
+		} else if (googleSlidesPattern.test(url)) {
+			return true;
+		} else {
+			return false;
+		}
+	};
+
 	async function addLink(link: string) {
 		if (!isValidUrl(link)) {
 			setLinkError('This does not seem like a valid link.');
 			return;
 		}
+    if(isGDriveLink(link)){
+      setLinkError('Google Drive links are not supported. Please download the file and upload it. Or use upload from cloud feature.');
+      return;
+    }
+
 		// check if it is like file:///path/to/file
 		if (link.startsWith('file:///')) {
 			setLinkError(

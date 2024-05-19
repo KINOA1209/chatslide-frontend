@@ -25,7 +25,7 @@ import useHydrated from '@/hooks/use-hydrated';
 import {
 	BigBlueButton,
 	DropDown,
-	EarlyAccessButton,
+	InversedBigBlueButton,
 } from '@/components/button/DrlambdaButton';
 import UserService from '@/services/UserService';
 import AvatarSelector from '@/components/language/AvatarSelector';
@@ -135,19 +135,19 @@ export default function WorkflowStep5() {
 					video? <br />
 					This will cancel the current job and start a new one.
 				</Instruction>
-				<div className='flex flex-col gap-2 items-center'>
-					<BigBlueButton
+				<WrappableRow type='flex' justify='between'>
+					<InversedBigBlueButton
 						onClick={() => {
 							router.push(addIdToRedir('/video'));
 						}}
 					>
 						No, View Running Job
-					</BigBlueButton>
+					</InversedBigBlueButton>
 
 					<BigBlueButton onClick={handleSubmitVideo}>
 						Yes, Regenerate Video
 					</BigBlueButton>
-				</div>
+				</WrappableRow>
 			</Modal>
 		);
 	};
@@ -161,11 +161,24 @@ export default function WorkflowStep5() {
 			project.id,
 			token,
 		);
-		if (hasRunningVideoJob) setShowConfirmRegenModal(true);
-		else handleSubmitVideo();
+		if (hasRunningVideoJob || !canSubmitVideo()) {
+			setShowConfirmRegenModal(true);
+		}
+		else{
+			handleSubmitVideo();
+			setLastSubmissionTime();
+		} 
 	}
 
 	async function handleSubmitVideo() {
+		if (canSubmitVideo()) {
+			setLastSubmissionTime();
+		} else {
+			toast.error('Please wait at least 5 minutes between video submissions.');
+			setIsSubmitting(false);
+			return;
+		}
+
 		console.log('handleSubmitVideo');
 		if (!project) {
 			console.error('No project found');
@@ -207,6 +220,23 @@ export default function WorkflowStep5() {
 		};
 		generateVideo();
 	}
+
+	// Function to check if a video was submitted within the last 5 minutes
+	const canSubmitVideo = () => {
+		const lastSubmissionTime = localStorage.getItem('lastSubmissionTime');
+		if (lastSubmissionTime) {
+			const currentTime = new Date().getTime();
+			const timeDifference = currentTime - parseInt(lastSubmissionTime, 10);
+			return timeDifference > 5 * 60 * 1000; // 5 minutes in milliseconds
+		}
+		return true; // If no submission has been made before
+	};
+
+	// Function to set the current time as the last submission time in localStorage
+	const setLastSubmissionTime = () => {
+		const currentTime = new Date().getTime();
+		localStorage.setItem('lastSubmissionTime', currentTime.toString());
+	};
 
 	useEffect(() => {
 		if (isSubmitting) {
@@ -321,7 +351,7 @@ export default function WorkflowStep5() {
 						)}
 					</WrappableRow>
 
-					<div>
+					{/* <div>
 						<Instruction>Transition Between Slides:</Instruction>
 						<WrappableRow type='grid' cols={2}>
 							<DropDown
@@ -340,7 +370,7 @@ export default function WorkflowStep5() {
 								/>
 							)}
 						</WrappableRow>
-					</div>
+					</div> */}
 				</Card>
 
 				<Card>
@@ -430,22 +460,22 @@ export default function WorkflowStep5() {
 							updateSlidePage={updateSlidePage}
 						/>
 
-							<div className='flex flex-row items-center'>
-								<SlideLeftNavigator
-									currentSlideIndex={slideIndex}
-									slides={slides}
-									goToSlide={gotoPage}
-								/>
-								<SlidePagesIndicator
-									currentSlideIndex={slideIndex}
-									slides={slides}
-								/>
-								<SlideRightNavigator
-									currentSlideIndex={slideIndex}
-									slides={slides}
-									goToSlide={gotoPage}
-								/>
-							</div>
+						<div className='flex flex-row items-center'>
+							<SlideLeftNavigator
+								currentSlideIndex={slideIndex}
+								slides={slides}
+								goToSlide={gotoPage}
+							/>
+							<SlidePagesIndicator
+								currentSlideIndex={slideIndex}
+								slides={slides}
+							/>
+							<SlideRightNavigator
+								currentSlideIndex={slideIndex}
+								slides={slides}
+								goToSlide={gotoPage}
+							/>
+						</div>
 					</div>
 				</Card>
 

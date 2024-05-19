@@ -21,7 +21,8 @@ import { getBrand, getLogoUrl, isChatslide } from '@/utils/getHost';
 import Chats from './Chats';
 import ChatBotService from '@/services/ChatBotService';
 import { GrayLabel } from '../ui/GrayLabel';
-import { SuccessMessage, WarningMessage } from '../ui/Text';
+import { Explanation, SuccessMessage, WarningMessage } from '../ui/Text';
+import GPTToggle from '../button/WorkflowGPTToggle';
 
 export const AIAssistantIcon: React.FC<{
 	onClick: () => void;
@@ -59,7 +60,6 @@ interface AIAssistantChatWindowProps {
 	currentSlideIndex: number;
 	updateSlidePage?: Function;
 	type?: 'script' | 'slide' | 'chart';
-	model?: 'gpt-3.5-turbo' | 'gpt-4';
 	updateChartUrl?: (url: string) => void; // for chart type
 }
 
@@ -69,23 +69,18 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 	currentSlideIndex,
 	updateSlidePage,
 	type = 'slide',
-	model = 'gpt-3.5-turbo',
 	updateChartUrl,
 }) => {
-	// const [isChatWindowOpen, setIsChatWindowOpen] = useState(true);
-	// const toggleChatWindow = () => {
-	// 	setIsChatWindowOpen(!isChatWindowOpen);
-	// };
-	// fixed right-0 top-[5rem]
 	const [userInput, setUserInput] = useState('');
 	const { chatHistory, addChatHistory, clearChatHistory, chatHistoryStatus } =
 		useChatHistory();
 	const { updateVersion, setSlides, setSlideIndex, slideIndex } = useSlides();
 	const [loading, setLoading] = useState(false);
-	const { token } = useUser();
+	const { token, updateCreditsFE } = useUser();
 	const lastMessageRef = useRef<HTMLDivElement>(null); // Ensure you have a ref for the last message
 	const { project } = useProject();
 	const chatWindowRef = useRef<HTMLDivElement>(null);
+	const [model, setModel] = useState(type !== 'chart' ? 'GPT-3.5' : 'GPT-4o');
 
 	const handleEnter = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
 		if (event.key === 'Enter') {
@@ -130,6 +125,19 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 			'extraInput:',
 			extraInput,
 		);
+
+		if (model === 'GPT-4o') {
+			const remainingCredits = updateCreditsFE(-5);
+			if (remainingCredits < 0) {
+				addChatHistory(
+					addErrorMessage(
+						'😞 Sorry, you have run out of credits. Please upgrade to continue using the AI assistant.',
+					),
+				);
+				return;
+			}
+		}
+
 		const inputToSend =
 			extraInput !== undefined ? String(extraInput) : userInput;
 
@@ -156,7 +164,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 							inputToSend,
 							lastChatMessages,
 							token,
-							model,
+							model === 'GPT-3.5' ? 'gpt-3.5-turbo' : 'gpt-4o',
 						)
 					: await ChatBotService.chat(
 							inputToSend,
@@ -167,6 +175,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 							slideIndex,
 							undefined, // selectedText
 							type,
+							model === 'GPT-3.5' ? 'gpt-3.5-turbo' : 'gpt-4o',
 						);
 
 			setLoading(false);
@@ -289,7 +298,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 				</div>
 
 				<div className='flex flex-row gap-2'>
-					{type === 'script' && <GrayLabel>Beta</GrayLabel>}
+					{type !== 'slide' && <GrayLabel>Beta</GrayLabel>}
 
 					{/* Clear Chat button */}
 					<button onClick={() => clearChatHistory()}>
@@ -303,6 +312,16 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 						</button>
 					)}
 				</div>
+			</div>
+
+			{/* GPT version */}
+			<div className='w-full p-2 border-t-1 border-b-1 border-gray-200 flex flex-col items-center'>
+				<GPTToggle model={model} setModel={setModel} small />
+				{model === 'GPT-4o' ? (
+					<Explanation>Powerful, 5⭐️ per chat.</Explanation>
+				) : (
+					<Explanation>Fast, no credit cost.</Explanation>
+				)}
 			</div>
 
 			{/* chat history text area */}
@@ -336,9 +355,11 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 										I am only in early beta version now. There might be a higher
 										likelihood of errors, inaccuracies, or timeouts.
 									</WarningMessage>
-                  <SuccessMessage>
-                    In the future, you will also be able to: directly add chart to your slide, use your files as sources, drag and drop to edit your charts, etc.
-                    </SuccessMessage>
+									<SuccessMessage>
+										In the future, you will also be able to: directly add chart
+										to your slide, use your files as sources, drag and drop to
+										edit your charts, etc.
+									</SuccessMessage>
 								</>
 							)}
 						</div>

@@ -4,7 +4,7 @@ import { Panel } from '@/components/layout/Panel';
 import { Column } from '@/components/layout/Column';
 import { BigTitle, Explanation, Instruction } from '@/components/ui/Text';
 import { PlusLabel, ProLabel } from '@/components/ui/GrayLabel';
-import { EarlyAccessButton } from '@/components/button/DrlambdaButton';
+import FeedbackButton from '@/components/ui/feedback';
 
 export default function Studio() {
 	// avoid hydration error during development caused by persistence
@@ -25,13 +25,48 @@ export default function Studio() {
 					<Instruction>
 						🎰 Directly add scripts, voiceover, and avatar to PPTX
 					</Instruction>
+
+					<FeedbackButton
+						instructionText='What features would you like to see next?'
+						displayText='Ask for more features!'
+					/>
 				</Card>
 
+				<Card>
+					<BigTitle>May 17</BigTitle>
+					<Instruction>
+						<div>
+							<b>⚙️ Design Profile: </b> Now you can save your design profile
+							(all settings on your design page). You can apply the profile to
+							any slide deck you create later.
+						</div>
+					</Instruction>
+					<Instruction>
+						<div>
+							<b>📦 Download Social Post: </b> Social Post can be downloaded in
+							a zip file, no need to download page by page!
+						</div>
+					</Instruction>
+					<Instruction>
+						<div>
+							<b>🧠 GPT-4o for Chatbot: </b> You can turn on GPT-4o for your
+							chats with slide, scripts, and charts. It will cost 5 credit per
+							message. GPT-3.5 is still free for chats.
+						</div>
+					</Instruction>
+					<Instruction>
+						<div>
+							<b>🔍 New Slide Template: Business Review</b> is available for
+							slides.
+						</div>
+					</Instruction>
+				</Card>
 				<Card>
 					<BigTitle>May 16</BigTitle>
 					<Instruction>
 						<div>
-							<b>⚡️ Fast File Processing: </b> Now we can read and export your files at a higher speed.
+							<b>⚡️ Fast File Processing: </b> Now we can read and export your
+							files at a higher speed.
 						</div>
 					</Instruction>
 					<Instruction>

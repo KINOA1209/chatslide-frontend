@@ -6,13 +6,13 @@ import { PlusLabel } from '@/components/ui/GrayLabel';
 import { useUser } from '@/hooks/use-user';
 import { useEffect, useState } from 'react';
 import PaywallModal from '@/components/paywallModal';
-import { useSlides } from '@/hooks/use-slides';
 import { LogoPosition } from '@/models/Slide';
+import { getBrand } from '@/utils/getHost';
 
 const brandingOptions = [
 	{
 		value: 'default',
-		text: 'Default Logo',
+		text: getBrand() + ' Logo',
 	},
 	{
 		value: 'no',
@@ -62,21 +62,25 @@ const BrandingSelector: React.FC<{
 	logoPosition,
 	setLogoPosition,
 }) => {
-	// const {
-	// 	// isTemplateLogoLeftSide,
-	// 	// setIsTemplateLogoLeftSide,
-	// 	// updateTemplateLogoPositionToLeft,
-	// 	// updateTemplateLogoPosition,
-	// } = useSlides();
 	const { isPaidUser } = useUser();
 	const [showPaywall, setShowPaywall] = useState(false);
-	const [logoMode, setLogoMode] = useState(
-		showLogo ? (selectedLogo?.length > 0 ? 'custom' : 'default') : 'no',
+	const [logoMode, setLogoMode] = useState<'no' | 'default' | 'custom'>(
+		isPaidUser ? 'no' : 'default',
 	);
 
 	useEffect(() => {
-		console.log('selectedLogo', selectedLogo);
-	}, [selectedLogo]);
+		console.log('logoMode', logoMode);
+
+		if (logoMode === 'no') {
+			setSelectedLogo([]);
+			setShowLogo(false);
+		} else if (logoMode === 'custom') {
+			setShowLogo(true);
+		} else if (logoMode === 'default') {
+			setSelectedLogo([]);
+			setShowLogo(true);
+		}
+	}, [logoMode, setSelectedLogo, setShowLogo]);
 
 	return (
 		<div>
@@ -93,20 +97,19 @@ const BrandingSelector: React.FC<{
 				<RadioButton
 					options={brandingOptions}
 					selectedValue={logoMode}
-					setSelectedValue={(e) => {
-						if (e !== 'default' && !isPaidUser) {
+					setSelectedValue={(mode) => {
+						if (mode !== 'default' && !isPaidUser) {
 							setShowPaywall(true);
 							return;
 						}
-						setShowLogo(e !== 'no' ? true : false);
-						setLogoMode(e);
+						setLogoMode(mode as 'no' | 'default' | 'custom');
 					}}
 					name='branding'
 				/>
 			</div>
 
 			{/* customized logo */}
-			{logoMode === 'custom' && (
+			{logoMode == 'custom' && (
 				<ImageSelector
 					type='logo'
 					selectedImage={selectedLogo}

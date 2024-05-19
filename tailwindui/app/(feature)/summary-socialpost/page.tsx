@@ -16,7 +16,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import FileUploadModal from '@/components/file/FileUploadModal';
 import SelectedResourcesList from '@/components/file/SelectedResources';
 import { useUser } from '@/hooks/use-user';
-import { GPTToggleWithExplanation } from '@/components/button/WorkflowGPTToggle';
+import GPTToggle from '@/components/button/WorkflowGPTToggle';
 import { IoIosLink } from 'react-icons/io';
 import { useProject } from '@/hooks/use-project';
 import { addIdToRedir } from '@/utils/redirWithId';
@@ -51,7 +51,7 @@ export default function Topic_SocialPost() {
 	const [linkError, setLinkError] = useState('');
 	const [topicError, setTopicError] = useState('');
 	const [urlIsYoutube, setUrlIsYoutube] = useState(false);
-	const [isGpt35, setIsGpt35] = useState(true);
+	const [llmModel, setLlmModel] = useState('GPT-3.5');
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
 	const [showProjectPopup, setProjectPopup] = useState(false);
 	const [showLanguagePopup, setLanguagePopup] = useState(false);
@@ -132,7 +132,7 @@ export default function Topic_SocialPost() {
 			language: language,
 			project_id: project_id,
 			resources: selectedResources.map((resource: Resource) => resource.id),
-			model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4',
+			model_name: llmModel === 'GPT-3.5' ? 'gpt-3.5-turbo' : 'gpt-4',
 			post_style: postStyle,
 			knowledge_summary: knowledge_summary,
 		};
@@ -401,7 +401,7 @@ export default function Topic_SocialPost() {
 				/>
 				{/* main content */}
 				<div className='gap-y-4 w-full flex flex-col items-center'>
-					<GPTToggleWithExplanation setIsGpt35={setIsGpt35} />
+					<GPTToggle model={llmModel} setModel={setLlmModel} />
 
 					{/* Project Summary section */}
 					<div className='w-full lg:w-2/3  px-3 my-3 lg:my-1'>
