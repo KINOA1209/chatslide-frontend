@@ -207,9 +207,31 @@ export default function WorkflowStep5() {
 		generateVideo();
 	}
 
+	// Function to check if a video was submitted within the last 5 minutes
+	const canSubmitVideo = () => {
+		const lastSubmissionTime = localStorage.getItem('lastSubmissionTime');
+		if (lastSubmissionTime) {
+			const currentTime = new Date().getTime();
+			const timeDifference = currentTime - parseInt(lastSubmissionTime, 10);
+			return timeDifference > 5 * 60 * 1000; // 5 minutes in milliseconds
+		}
+		return true; // If no submission has been made before
+	};
+
+	// Function to set the current time as the last submission time in localStorage
+	const setLastSubmissionTime = () => {
+		const currentTime = new Date().getTime();
+		localStorage.setItem('lastSubmissionTime', currentTime.toString());
+	};
+
 	useEffect(() => {
 		if (isSubmitting) {
-			confirmVideoJob();
+			if (canSubmitVideo()) {
+				confirmVideoJob();
+				setLastSubmissionTime();
+			} else {
+				toast.error('You have already subummitted another video request in 5 minutes, please wait 5 minutes between video submissions.');
+			}
 			setIsSubmitting(false);
 		}
 	}, [isSubmitting]);
@@ -429,22 +451,22 @@ export default function WorkflowStep5() {
 							updateSlidePage={updateSlidePage}
 						/>
 
-							<div className='flex flex-row items-center'>
-								<SlideLeftNavigator
-									currentSlideIndex={slideIndex}
-									slides={slides}
-									goToSlide={gotoPage}
-								/>
-								<SlidePagesIndicator
-									currentSlideIndex={slideIndex}
-									slides={slides}
-								/>
-								<SlideRightNavigator
-									currentSlideIndex={slideIndex}
-									slides={slides}
-									goToSlide={gotoPage}
-								/>
-							</div>
+						<div className='flex flex-row items-center'>
+							<SlideLeftNavigator
+								currentSlideIndex={slideIndex}
+								slides={slides}
+								goToSlide={gotoPage}
+							/>
+							<SlidePagesIndicator
+								currentSlideIndex={slideIndex}
+								slides={slides}
+							/>
+							<SlideRightNavigator
+								currentSlideIndex={slideIndex}
+								slides={slides}
+								goToSlide={gotoPage}
+							/>
+						</div>
 					</div>
 				</Card>
 
