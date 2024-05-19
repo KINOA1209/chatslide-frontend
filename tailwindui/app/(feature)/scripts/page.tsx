@@ -320,7 +320,7 @@ export default function WorkflowStep5() {
 						)}
 					</WrappableRow>
 
-					<div>
+					{/* <div>
 						<Instruction>Transition Between Slides:</Instruction>
 						<WrappableRow type='grid' cols={2}>
 							<DropDown
@@ -339,7 +339,7 @@ export default function WorkflowStep5() {
 								/>
 							)}
 						</WrappableRow>
-					</div>
+					</div> */}
 				</Card>
 
 				<Card>
