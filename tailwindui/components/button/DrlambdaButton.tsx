@@ -337,14 +337,16 @@ export const InversedBigBlueButton: React.FC<DrlambdaButtonProps> = ({
 	isPaidFeature = false,
 }) => {
 	return (
-		<DesignSystemButton
-			onClick={onClick}
-			size='sm'
-			hierarchy='secondary'
-			isSubmitting={isSubmitting}
-		>
-			{children}
-		</DesignSystemButton>
+		<div className='w-[12rem]'>
+			<DesignSystemButton
+				onClick={onClick}
+				size='sm'
+				hierarchy='secondary'
+				isSubmitting={isSubmitting}
+			>
+				{children}
+			</DesignSystemButton>
+		</div>
 	);
 };
 
