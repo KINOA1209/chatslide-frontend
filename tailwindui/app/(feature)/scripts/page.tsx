@@ -25,6 +25,7 @@ import useHydrated from '@/hooks/use-hydrated';
 import {
 	BigBlueButton,
 	DropDown,
+	InversedBigBlueButton,
 } from '@/components/button/DrlambdaButton';
 import UserService from '@/services/UserService';
 import AvatarSelector from '@/components/language/AvatarSelector';
@@ -134,19 +135,19 @@ export default function WorkflowStep5() {
 					video? <br />
 					This will cancel the current job and start a new one.
 				</Instruction>
-				<div className='flex flex-col gap-2 items-center'>
-					<BigBlueButton
+				<WrappableRow type='flex' justify='between'>
+					<InversedBigBlueButton
 						onClick={() => {
 							router.push(addIdToRedir('/video'));
 						}}
 					>
 						No, View Running Job
-					</BigBlueButton>
+					</InversedBigBlueButton>
 
 					<BigBlueButton onClick={handleSubmitVideo}>
 						Yes, Regenerate Video
-					</BigBlueButton> :
-				</div>
+					</BigBlueButton>
+				</WrappableRow>
 			</Modal>
 		);
 	};
@@ -165,6 +166,7 @@ export default function WorkflowStep5() {
 		}
 		else{
 			handleSubmitVideo();
+			setLastSubmissionTime();
 		} 
 	}
 
