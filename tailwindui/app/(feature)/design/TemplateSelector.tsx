@@ -140,8 +140,9 @@ const TemplateSelector: React.FC<{
 		setFinalPaletteOptions(paletteOptions);
 	}, [paletteOptions]);
 
+	//change template or palette, reset font color
 	useEffect(() => {
-		resetFontFamilyAndFontColorPicker();
+		resetFontColorPicker();
 	}, [template, palette]);
 
 	useEffect(() => {
@@ -255,7 +256,7 @@ const TemplateSelector: React.FC<{
 		}
 	};
 
-	const resetColorPicker = () => {
+	const resetTemplateBgColorPicker = () => {
 		setCustomTemplateBgColor(
 			initialLoadedTemplateBgColor || colorPreviews[palette as PaletteKeys],
 		);
@@ -265,12 +266,41 @@ const TemplateSelector: React.FC<{
 		setHasSelectedCustomTemplateBgColor(false);
 	};
 
+	const resetFontColorPicker = () => {
+		setCustomizedTemplateTitleFontColor(initialLoadedTitleFontColor || '');
+		setCustomizedTemplateSubtitleFontColor(
+			initialLoadedSubtitleFontColor || '',
+		);
+		setCustomizedTemplateContentFontColor(initialLoadedContentFontColor || '');
+		setCustomizedTemplateTitleFontColorCallback(
+			initialLoadedTitleFontColor || '',
+		);
+		setCustomizedTemplateSubtitleFontColorCallback(
+			initialLoadedSubtitleFontColor || '',
+		);
+		setCustomizedTemplateContentFontColorCallback(
+			initialLoadedContentFontColor || '',
+		);
+		setHasSelectedCustomizedTemplateTitleFontColor(false);
+		setHasSelectedCustomizedTemplateSubtitleFontColor(false);
+		setHasSelectedCustomizedTemplateContentFontColor(false);
+	};
+
 	const resetFontFamilyAndFontColorPicker = () => {
 		setCustomizedTemplateTitleFontFamily(initialLoadedTitleFontFamily || '');
 		setCustomizedTemplateSubtitleFontFamily(
 			initialLoadedSubtitleFontFamily || '',
 		);
 		setCustomizedTemplateContentFontFamily(
+			initialLoadedContentFontFamily || '',
+		);
+		setCustomizedTemplateTitleFontFamilyCallback(
+			initialLoadedTitleFontFamily || '',
+		);
+		setCustomizedTemplateSubtitleFontFamilyCallback(
+			initialLoadedSubtitleFontFamily || '',
+		);
+		setCustomizedTemplateContentFontFamilyCallback(
 			initialLoadedContentFontFamily || '',
 		);
 		setHasSelectedCustomizedTemplateTitleFontFamily(false);
@@ -282,6 +312,15 @@ const TemplateSelector: React.FC<{
 			initialLoadedSubtitleFontColor || '',
 		);
 		setCustomizedTemplateContentFontColor(initialLoadedContentFontColor || '');
+		setCustomizedTemplateTitleFontColorCallback(
+			initialLoadedTitleFontColor || '',
+		);
+		setCustomizedTemplateSubtitleFontColorCallback(
+			initialLoadedSubtitleFontColor || '',
+		);
+		setCustomizedTemplateContentFontColorCallback(
+			initialLoadedContentFontColor || '',
+		);
 		setHasSelectedCustomizedTemplateTitleFontColor(false);
 		setHasSelectedCustomizedTemplateSubtitleFontColor(false);
 		setHasSelectedCustomizedTemplateContentFontColor(false);
@@ -416,7 +455,7 @@ const TemplateSelector: React.FC<{
 													colorPreviews[palette as PaletteKeys]
 												: colorPreviews[palette as PaletteKeys]
 										}
-										resetColorPicker={resetColorPicker}
+										resetColorPicker={resetTemplateBgColorPicker}
 									/>
 								</div>
 							)}
@@ -442,9 +481,10 @@ const TemplateSelector: React.FC<{
 											handleCustomTemplateTitleFontColorChange
 										}
 										initialColor={
-											hasSelectedCustomizedTemplateTitleFontColor
-												? customizedTemplateTitleFontColor || '#000000'
-												: initialLoadedTitleFontColor || '#000000'
+											// hasSelectedCustomizedTemplateTitleFontColor
+											// 	? customizedTemplateTitleFontColor || '#000000'
+											// 	: initialLoadedTitleFontColor || '#000000'
+											'#FFFFFF'
 										}
 										resetColorPicker={resetFontFamilyAndFontColorPicker}
 										disableResetButton={true}
