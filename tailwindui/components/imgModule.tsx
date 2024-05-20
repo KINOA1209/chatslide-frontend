@@ -1,5 +1,4 @@
 import React, { CSSProperties, useEffect, useRef, useState } from 'react';
-import AuthService from '@/services/AuthService';
 import { createPortal } from 'react-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import ResourceService from '@/services/ResourceService';
@@ -16,31 +15,23 @@ import {
 	convertFromChartData,
 } from './chart/chartDataConvert';
 import Chart from '@/models/Chart';
-import { Rnd } from 'react-rnd';
 import { ResourceIcon } from './ui/ResourceItem';
 
-import ImagesPosition from '@/models/ImagesPosition';
-import {
-	initializeImageData,
-	onDragStart,
-	onDragStop,
-	onResizeStart,
-	onResizeStop,
-	onMouseLeave,
-} from '@/components/slides/drag_resize/dragAndResizeFunction';
-import '@/components/slides/drag_resize/dragAndResizeCSS.css';
+import ImagePosition from '@/models/ImagePosition';
 import { removeTags, useSlides } from '@/hooks/use-slides';
 import { LayoutElements } from './slides/templates_customizable_elements/layout_elements';
 import Modal from './ui/Modal';
 import { InputBox, NewInputBox } from './ui/InputBox';
 import { SpinIcon } from '@/app/(feature)/icons';
-import { FaCheck, FaSearch, FaTrash } from 'react-icons/fa';
+import {
+	FaArrowsAltH,
+	FaCheck,
+	FaCompressArrowsAlt,
+	FaExpandArrowsAlt,
+	FaSearch,
+} from 'react-icons/fa';
 import DrlambdaButton, { BigBlueButton } from './button/DrlambdaButton';
 import { ToolBar } from './ui/ToolBar';
-import ButtonWithExplanation from './button/ButtonWithExplanation';
-import { index } from 'd3';
-import { GoPencil } from 'react-icons/go';
-import { IoMdResize } from 'react-icons/io';
 import { Blank } from './ui/Loading';
 import { useImageStore } from '@/hooks/use-img-store';
 import { LuTrash2 } from 'react-icons/lu';
@@ -54,15 +45,19 @@ import { WordSelector } from './slides/WordSelector';
 import { useSocialPosts } from '@/hooks/use-socialpost';
 import { MdImageSearch } from 'react-icons/md';
 import { IoMdCrop } from 'react-icons/io';
-import IFrameEmbed, { executeScripts } from './utils/IFrameEmbed';
-import useJSScript from '@/hooks/use-JSScript';
-import { LayoutKeys } from './slides/slideLayout';
 import { Media } from '@/models/Slide';
 import YoutubeEmbed from './utils/YoutubeEmbed';
 
 interface ImgModuleProp {
 	imgsrc: string;
-	updateSingleCallback: Function;
+	// updateSingleCallback: (
+	// 	imgSrc?: string,
+	// 	ischart?: boolean,
+	// 	image_position?: ImagePosition,
+	// 	embed_code_single?: string,
+	// 	media_type?: Media,
+	// ) => void;
+  updateSingleCallback: Function;
 	chartArr: Chart[];
 	ischartArr: boolean[];
 	handleSlideEdit: Function;
@@ -73,7 +68,7 @@ interface ImgModuleProp {
 	// isImgEditMode: boolean;
 	// setShowImgButton: React.Dispatch<React.SetStateAction<boolean>>;
 	// zoomLevel: number;
-	images_position: ImagesPosition[];
+	image_positions: ImagePosition[];
 	layoutElements?: LayoutElements;
 	customImageStyle?: React.CSSProperties;
 	setImgHigherZIndex?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -149,7 +144,7 @@ export const ImgModule = ({
 	// isImgEditMode,
 	// setShowImgButton,
 	// zoomLevel,
-	images_position,
+	image_positions,
 	layoutElements,
 	customImageStyle,
 	setImgHigherZIndex,
@@ -178,7 +173,8 @@ export const ImgModule = ({
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
 	const { token, updateCreditsFE } = useUser();
 	const { socialPosts, socialPostsIndex } = useSocialPosts();
-	const [objectFit, setObjectFit] = useState(defaultObjectFit);
+
+  const [imagePosition, setImagePosition] = useState<ImagePosition>(image_positions[currentContentIndex] || defaultObjectFit);
 
 	const [hoverQueryMode, setHoverQueryMode] = useState<ImgQueryMode>(
 		ImgQueryMode.SEARCH,
@@ -234,7 +230,7 @@ export const ImgModule = ({
 				['media_types', 'is_chart'],
 			);
 
-			updateSingleCallback(droppedImageUrl, false, {});
+			updateSingleCallback(droppedImageUrl, false, 'contain');
 		}
 	};
 
@@ -445,7 +441,7 @@ export const ImgModule = ({
 		updateSingleCallback(
 			decodeImageUrl((e.target as HTMLImageElement).getAttribute('src')),
 			false,
-			{},
+			'contain',
 		);
 
 		// close modal
@@ -888,36 +884,6 @@ export const ImgModule = ({
 		}
 	};
 
-	// const iFrameDimension = (layout: LayoutKeys) => {
-	// 	if (layout === 'Cover_img_1_layout' || layout === 'Col_2_img_1_layout') {
-	// 		return 'width="450px" height="500px"';
-	// 	} else if (layout === 'Full_img_only_layout') {
-	// 		return 'width="940px" height="520px"';
-	// 	} else if (layout === 'Col_2_img_2_layout') {
-	// 		return 'width="400px" height="150px"';
-	// 	} else if (layout === 'Col_1_img_1_layout') {
-	// 		return 'width="940px" height="150px"';
-	// 	} else {
-	// 		return 'width="300px" height="100px"';
-	// 	}
-	// };
-
-	// Regular expression to find width and height attributes
-	// const regex = /width="(\d+)" height="(\d+)"/;
-
-	// const modified_embed_code_single =
-	// 	embed_code_single &&
-	// 	embed_code_single.replace(
-	// 		regex,
-	// 		iFrameDimension(slides[slideIndex].layout),
-	// 	);
-
-	// const [mediaType, setMediaType] = useState({
-	// 	image: false,
-	// 	embed: true,
-	// 	chart: false,
-	// });
-	// handle all embed code related
 	const [currentYoutubeUrl, setCurrentYoutubeUrl] = useState<string>(
 		embed_code_single || '',
 	);
@@ -1075,70 +1041,16 @@ export const ImgModule = ({
 		</div>
 	);
 
-	//for drag and resize
-
-	const [imageSize, setImageSize] = useState({ width: 0, height: 0 });
 	const imageRefs = Array(3)
 		.fill(null)
 		.map(() => useRef<HTMLDivElement>(null));
 	//const [isDraggingOrResizing, setIsDraggingOrResizing] = useState(false); //distinguish openModal and drag
-	const [hasInteracted, setHasInteracted] = useState(false);
-	const [imagesDimensions, setImagesDimensions] = useState<
-		(
-			| ImagesPosition
-			| { x?: number; y?: number; height?: number; width?: number }
-		)[]
-	>([]);
-	const [startPos, setStartPos] = useState<Array<{ x: number; y: number }>>(
-		Array(3).fill({ x: 0, y: 0 }),
-	);
 	const [isImgEditMode, setIsImgEditMode] = useState(false);
 	const [showImgButton, setShowImgButton] = useState(false);
-	const [zoomLevel, setZoomLevel] = useState(100);
-	const [parentDimension, setParentDimension] = useState({
-		height: 0,
-		width: 0,
-	});
-	const [isParentDimension, setIsParentDimension] = useState(false);
 	const [imgLoadError, setImgLoadError] = useState(false);
-	const prevDimensionRef = useRef(parentDimension);
-
-	//handler for drag and resize also autosave
-	const handleSave = onMouseLeave(
-		slideIndex,
-		imagesDimensions,
-		hasInteracted,
-		setHasInteracted,
-		setShowImgButton,
-		handleSlideEdit,
-	);
-	const handleDragStart = onDragStart(
-		//setIsDraggingOrResizing,
-		startPos,
-		setStartPos,
-		setHasInteracted,
-	);
-	const handleResizeStart = onResizeStart(
-		//setIsDraggingOrResizing,
-		setHasInteracted,
-	);
-	const handleDragStop = onDragStop(
-		imagesDimensions,
-		setImagesDimensions,
-		startPos,
-		//setIsDraggingOrResizing,
-	);
-	const handleResizeStop = onResizeStop(
-		imagesDimensions,
-		setImagesDimensions,
-		//setIsDraggingOrResizing,
-	);
 
 	const toggleImgEditMode = (event: any) => {
 		event.stopPropagation();
-		if (isImgEditMode) {
-			handleSave();
-		}
 		// prevent enlarge image on preview section
 		if (canEdit) {
 			setIsImgEditMode(!isImgEditMode);
@@ -1146,105 +1058,16 @@ export const ImgModule = ({
 		}
 	};
 
-	const customScale = (
-		width: number,
-		height: number,
-		parentWidth: number,
-		parentHeight: number,
-	) => {
-		const aspectRatio = width / height;
-		const parentAspectRatio = parentWidth / parentHeight;
-		let newWidth, newHeight, newX, newY;
+	function changePosition(index: number, position: ImagePosition) {
+    console.log('changePosition', index, position);
+		updateSingleCallback(imgsrc, false, position);
+    setImagePosition(position);
 
-		// vertical image initialization (perform as contain)
-		// vertical image: image is taller than its wide
-		if (aspectRatio <= 1) {
-			newWidth = parentWidth;
-			newHeight = parentWidth / aspectRatio;
-			newX = 0;
-			newY = (parentHeight - newHeight) / 2;
-		} else {
-			// Compare the aspect ratios to decide how to scale
-			if (aspectRatio > parentAspectRatio) {
-				// Image is wider than the container proportionally
-				newWidth = parentHeight * aspectRatio;
-				newHeight = parentHeight;
-				newX = (parentWidth - newWidth) / 2; // Center horizontally
-				newY = 0;
-			} else {
-				// Image is taller than the container proportionally
-				newWidth = parentWidth;
-				newHeight = parentWidth / aspectRatio;
-				newX = 0; // Align to left
-				newY = (parentHeight - newHeight) / 2; // Center vertically
-			}
-		}
-		return { width: newWidth, height: newHeight, x: newX, y: newY };
-	};
+    const newPositions = [...image_positions];
+    newPositions[index] = position;
 
-	//reposition to default if images changed
-	useEffect(() => {
-		// make sure we got non-zero value for parentDimension
-		if (
-			isParentDimension &&
-			images_position[currentContentIndex] &&
-			Object.keys(images_position[currentContentIndex]).length == 0
-		) {
-			const img = new window.Image();
-			img.src = imgsrc;
-			img.onload = () => {
-				const {
-					height: newHeight,
-					width: newWidth,
-					x: newX,
-					y: newY,
-				} = customScale(
-					img.naturalWidth,
-					img.naturalHeight,
-					parentDimension.width,
-					parentDimension.height,
-				);
-				if (newWidth !== imageSize.width || newHeight !== imageSize.height) {
-					setImageSize({ width: newWidth, height: newHeight });
-				}
-				const updatedDimensions = [...imagesDimensions];
-				updatedDimensions[currentContentIndex] = {
-					...updatedDimensions[currentContentIndex],
-					width: newWidth,
-					height: newHeight,
-					x: newX,
-					y: newY,
-				};
-				setImagesDimensions(updatedDimensions);
-			};
-		}
-	}, [imgsrc, isParentDimension]);
-
-	useEffect(() => {
-		const initializedData = initializeImageData(images_position, imageRefs);
-		setImagesDimensions(initializedData);
-	}, [images_position]);
-
-	// new version to get parent container's dimension, reduce unnecessary state updates
-	// prevent infinite loop bugs
-	useEffect(() => {
-		const currentElement = imageRefs[currentContentIndex]?.current;
-		if (currentElement) {
-			const { clientHeight, clientWidth } = currentElement;
-			// Only update if there's a real change in dimensions
-			if (
-				clientHeight !== parentDimension.height ||
-				clientWidth !== parentDimension.width
-			) {
-				setParentDimension({ height: clientHeight, width: clientWidth });
-				setIsParentDimension(clientHeight > 0 && clientWidth > 0);
-			}
-		} else {
-			if (isParentDimension) {
-				setIsParentDimension(false);
-			}
-		}
-	}, [currentContentIndex, imageRefs]);
+    handleSlideEdit([newPositions], index, ['image_positions']);
+	}
 
 	//detect the mouse click event is outside the image container or not, if it's, trigger autosave
 	useEffect(() => {
@@ -1263,39 +1086,6 @@ export const ImgModule = ({
 			document.removeEventListener('mousedown', handleClickOutside);
 		};
 	}, [currentContentIndex, imageRefs, isImgEditMode, toggleImgEditMode]);
-
-	//resize indicator
-	const circle_indicator: CSSProperties = {
-		width: '15px',
-		height: '15px',
-		backgroundColor: 'white',
-		border: '1px solid magenta',
-		borderRadius: '50%',
-		zIndex: 53,
-		position: 'absolute',
-	};
-
-	const rectangular_indicator: CSSProperties = {
-		borderRadius: '35%',
-		backgroundColor: 'white',
-		border: '1px solid magenta',
-		zIndex: 53,
-		position: 'absolute',
-	};
-
-	const rectangular_horizontal: CSSProperties = {
-		width: '25px',
-		height: '10px',
-		left: '50%',
-		transform: 'translateX(-50%)',
-	};
-
-	const rectangular_vertical: CSSProperties = {
-		width: '10px',
-		height: '25px',
-		top: '50%',
-		transform: 'translateY(-50%)',
-	};
 
 	const showIconsFunctionText = (layout: string) => {
 		if (layout === 'Col_2_img_2_layout' || layout === 'Col_3_img_3_layout') {
@@ -1530,13 +1320,7 @@ export const ImgModule = ({
 						// image
 
 						<div
-							className={`
-						${isImgEditMode ? 'rndContainerWithOutBorder' : ''}
-						${!isSlide ? 'absolute top-0 left-0 w-full h-full' : ''}
-					`}
-							style={{
-								...layoutElements?.rndContainerCSS,
-							}}
+							className={`flex justify-center items-center absolute top-0 left-0 w-full h-full`}
 							ref={imageRefs[currentContentIndex]}
 							onMouseEnter={() => setShowImgButton(true)}
 							onMouseLeave={() => setShowImgButton(false)}
@@ -1551,81 +1335,32 @@ export const ImgModule = ({
 									}}
 								/>
 							)}
-							<Rnd
-								className={`${isImgEditMode ? 'rndContainerWithBorder' : ''}`}
-								style={{ ...layoutElements?.rndCSS }}
-								size={{
-									width:
-										imagesDimensions[currentContentIndex]?.width ??
-										'max-content',
-									//imageRefs[currentContentIndex]?.current?.clientWidth ??
-									//imageSize.width ? imageSize.width : ,
-									height:
-										imagesDimensions[currentContentIndex]?.height ?? 'auto',
-									// imageRefs[currentContentIndex]?.current?.clientHeight ??
-									//imageSize.height ? imageSize.height : 'auto',
+							<Image
+								unoptimized={imgsrc?.includes('freepik') ? false : true}
+								objectFit={imagePosition}
+								layout='fill'
+								// style={{
+								//   // objectFit: {image_positions[currentContentIndex]},
+								// 	height: '100%',
+								// 	width: '100%',
+								// }}
+								src={imgsrc}
+								alt='Image'
+								className={`transition ease-in-out duration-150 ${
+									canEdit
+										? isImgEditMode
+											? 'brightness-100'
+											: 'hover:brightness-50'
+										: ''
+								}`}
+								onError={(e) => {
+									console.log('failed to load image', imgsrc);
+									setImgLoadError(true);
+									if (imgsrc)
+										// if we have a image url, but it is not valid
+										updateSingleCallback('shuffle', false, {});
 								}}
-								position={{
-									x: imagesDimensions[currentContentIndex]?.x ?? 0,
-									y: imagesDimensions[currentContentIndex]?.y ?? 0,
-								}}
-								enableResizing={canEdit && isImgEditMode}
-								lockAspectRatio={false}
-								disableDragging={
-									!canEdit || !showImgButton || !isImgEditMode || showModal
-								}
-								onDragStart={handleDragStart(currentContentIndex)}
-								onDragStop={handleDragStop(currentContentIndex)}
-								onResizeStart={handleResizeStart}
-								onResizeStop={handleResizeStop(currentContentIndex)}
-								resizeHandleStyles={{
-									topLeft: { ...circle_indicator, left: '-7px' },
-									topRight: { ...circle_indicator, right: '-7px' },
-									bottomLeft: { ...circle_indicator, left: '-7px' },
-									bottomRight: { ...circle_indicator, right: '-7px' },
-									top: { ...rectangular_indicator, ...rectangular_horizontal },
-									bottom: {
-										...rectangular_indicator,
-										...rectangular_horizontal,
-									},
-									left: { ...rectangular_indicator, ...rectangular_vertical },
-									right: { ...rectangular_indicator, ...rectangular_vertical },
-								}}
-							>
-								<Image
-									unoptimized={imgsrc?.includes('freepik') ? false : true}
-									style={{
-										//dont use contain, it will make resize feature always resize based on aspect ratio
-										objectFit: 'fill',
-										height: '100%',
-										//width: 'auto',
-										width: '100%',
-										// borderRadius: customImageStyle?.borderRadius,
-										//transform: `scale(${zoomLevel / 100})`,
-										//transformOrigin: 'center center',
-									}}
-									src={imgsrc}
-									alt='Image'
-									// layout='contain'
-									width={960}
-									height={540}
-									// objectFit='contain'
-									className={`transition ease-in-out duration-150 ${
-										canEdit
-											? isImgEditMode
-												? 'brightness-100'
-												: 'hover:brightness-50'
-											: ''
-									}`}
-									onError={(e) => {
-										console.log('failed to load image', imgsrc);
-										setImgLoadError(true);
-										if (imgsrc)
-											// if we have a image url, but it is not valid
-											updateSingleCallback('shuffle', false, {});
-									}}
-								/>
-							</Rnd>
+							/>
 							{canEdit && showImgButton && (
 								<div
 									className={`absolute top-2 ${
@@ -1652,12 +1387,11 @@ export const ImgModule = ({
 												</span>
 											</button>
 										)}
-
-										<button
-											onClick={toggleImgEditMode}
-											className='flex flex-row items-center justify-center gap-1'
-										>
-											{!isImgEditMode ? (
+										{!isImgEditMode ? (
+											<button
+												onClick={toggleImgEditMode}
+												className='flex flex-row items-center justify-center gap-1'
+											>
 												<>
 													<IoMdCrop
 														style={{
@@ -1672,21 +1406,93 @@ export const ImgModule = ({
 														{showIconsFunctionText(layoutEntry) ? 'Resize' : ''}
 													</span>
 												</>
-											) : (
-												<>
+											</button>
+										) : (
+											<>
+												<button
+													onClick={() =>
+														changePosition(currentContentIndex, 'contain')
+													}
+													className='flex flex-row items-center justify-center gap-1'
+												>
+													<FaCompressArrowsAlt
+														style={{
+															strokeWidth: '0.8',
+															width: '1.2rem',
+															height: '1.2rem',
+															// fontWeight: 'bold',
+															color: '#344054',
+															marginRight: '0.5rem',
+														}}
+													/>
+													<span>
+														{showIconsFunctionText(layoutEntry)
+															? 'Contain'
+															: ''}
+													</span>
+												</button>
+												<button
+													onClick={() =>
+														changePosition(currentContentIndex, 'cover')
+													}
+													className='flex flex-row items-center justify-center gap-1'
+												>
+													<FaExpandArrowsAlt
+														style={{
+															strokeWidth: '0.8',
+															width: '1.2rem',
+															height: '1.2rem',
+															// fontWeight: 'bold',
+															color: '#344054',
+															marginRight: '0.5rem',
+														}}
+													/>
+													<span>
+														{showIconsFunctionText(layoutEntry) ? 'Cover' : ''}
+													</span>
+												</button>
+												<button
+													onClick={() =>
+														changePosition(currentContentIndex, 'fill')
+													}
+													className='flex flex-row items-center justify-center gap-1'
+												>
+													<FaArrowsAltH
+														style={{
+															strokeWidth: '0.8',
+															width: '1.2rem',
+															height: '1.2rem',
+															// fontWeight: 'bold',
+															color: '#344054',
+															marginRight: '0.5rem',
+														}}
+													/>
+													<span>
+														{showIconsFunctionText(layoutEntry)
+															? 'Stretch'
+															: ''}
+													</span>
+												</button>
+												<button
+													onClick={toggleImgEditMode}
+													className='flex flex-row items-center justify-center gap-1'
+												>
 													<FaCheck
 														style={{
 															strokeWidth: '0.8',
-															width: '1rem',
-															height: '1rem',
+															width: '1.2rem',
+															height: '1.2rem',
 															fontWeight: 'bold',
 															color: '#344054',
+															marginRight: '0.5rem',
 														}}
 													/>
-													Apply
-												</>
-											)}
-										</button>
+													<span>
+														{showIconsFunctionText(layoutEntry) ? 'Done' : ''}
+													</span>
+												</button>
+											</>
+										)}
 
 										{!isImgEditMode && (
 											<>
