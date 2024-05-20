@@ -580,7 +580,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 							convertedDelta.insert('\n');
 						}
 					}
-				} else if (item.trim() === '') {
+				} else if (item && item.trim() === '') {
 					// Handle case where item is meant to represent an empty line (like pressing Enter)
 					itemDelta.insert('\n');
 				} else {
