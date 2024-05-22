@@ -10,6 +10,7 @@ import 'aos/dist/aos.css';
 import ReferralLink from '@/components/ReferralLink';
 import DrlambdaButton, {
 	BigBlueButton,
+	InversedBigBlueButton,
 } from '@/components/button/DrlambdaButton';
 import { NewInputBox } from '@/components/ui/InputBox';
 import { FaInbox, FaKey, FaMoneyBill, FaRegStar, FaStar, FaUser } from 'react-icons/fa';
@@ -23,6 +24,7 @@ import { Column } from '@/components/layout/Column';
 import { getBrand } from '@/utils/getHost';
 import { UnlimitedUpgrade } from '@/components/slides/card/UnlimitedUpgrade';
 import { trackRewardfulConversion } from '@/components/integrations/Rewardful';
+import { WrappableRow } from '@/components/layout/WrappableRow';
 
 const Profile = () => {
 	const { username, email, token, setUsername, user } = useUser();
@@ -180,6 +182,7 @@ const Referral = () => {
 	);
 };
 
+// unused
 const OpenAIKey = () => {
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const { token, user } = useUser();
@@ -427,13 +430,23 @@ const Affiliate = () => {
 
 const CreditHistory = () => {
 	const { credits } = useUser();
+	const router = useRouter();
 
 	return (
 		<div className='w-full'>
 			<Instruction>⭐️ Credit Balance</Instruction>
-			<BigTitle>
-				<>{credits}</>
-			</BigTitle>
+			<WrappableRow type='flex' justify='between'>
+				<BigTitle>
+					<>{credits}</>
+				</BigTitle>
+				<InversedBigBlueButton
+					onClick={() => {
+						router.push('/pricing');
+					}}
+				>
+					Mange Subscription
+				</InversedBigBlueButton>
+			</WrappableRow>
 		</div>
 	);
 };
@@ -477,9 +490,9 @@ export default function Account() {
 					<div id='referral'>
 						<Referral />
 					</div>
-					<div id='openai'>
+					{/* <div id='openai'>
 						<OpenAIKey />
-					</div>
+					</div> */}
 					<div id='promo'>
 						<ApplyPromo />
 					</div>
