@@ -129,27 +129,29 @@ const Profile = () => {
 							icon={<FaInbox className='text-gray-600' />}
 						/>
 
-						<BigBlueButton
+						<InversedBigBlueButton
 							id='update-email'
 							onClick={handleSubmitUsernameAndEmail}
 							isSubmitting={isSubmitting}
+              width='8rem'
 						>
 							Update
-						</BigBlueButton>
+						</InversedBigBlueButton>
 					</div>
 				</div>
 			</div>
 			<div className='w-full'>
 				<Instruction>🔐 Change Password</Instruction>
 				<div className='items-center justify-center flex flex-row'>
-					<BigBlueButton
+					<InversedBigBlueButton
 						id='change-password'
 						onClick={() => {
 							window.location.href = '/reset-password';
 						}}
+            width='12rem'
 					>
 						Change Password
-					</BigBlueButton>
+					</InversedBigBlueButton>
 				</div>
 			</div>
 			<div className='w-full'>
@@ -167,13 +169,14 @@ const Profile = () => {
 							icon={<FaUser className='text-gray-600' />}
 						/>
 
-						<BigBlueButton
+						<InversedBigBlueButton
 							id='update-username'
 							onClick={handleSubmitUsernameAndEmail}
 							isSubmitting={isSubmitting}
+              width='8rem'
 						>
 							Update
-						</BigBlueButton>
+						</InversedBigBlueButton>
 					</div>
 				</div>
 			</div>
@@ -241,13 +244,14 @@ const OpenAIKey = () => {
 						icon={<FaKey className='text-gray-600' />}
 					/>
 
-					<BigBlueButton
+					<InversedBigBlueButton
 						id='update-oai-key'
 						onClick={updateKey}
 						isSubmitting={isSubmitting}
+            width='8rem'
 					>
 						Update
-					</BigBlueButton>
+					</InversedBigBlueButton>
 				</div>
 			</div>
 		</div>
@@ -321,13 +325,14 @@ const ApplyPromo = () => {
 						icon={<FaStar className='text-gray-600' />}
 					/>
 
-					<BigBlueButton
+					<InversedBigBlueButton
 						id='apply-promo'
 						onClick={applyPromo}
 						isSubmitting={isSubmitting}
+            width='8rem'
 					>
 						Apply
-					</BigBlueButton>
+					</InversedBigBlueButton>
 				</div>
 			</div>
 		</div>
@@ -409,12 +414,13 @@ const Affiliate = () => {
 						maxLength={50}
 						icon={<FaMoneyBill className='text-gray-600' />}
 					/>
-					<BigBlueButton
+					<InversedBigBlueButton
 						onClick={handleUpdateRewardfulCode}
 						isSubmitting={isSubmitting}
+            width='8rem'
 					>
 						Update
-					</BigBlueButton>
+					</InversedBigBlueButton>
 				</div>
 			</div>
 
@@ -465,6 +471,7 @@ const CreditHistory = () => {
 						onClick={() => {
 							router.push(stripeLink);
 						}}
+            width='12rem'
 					>
 						Mange Subscription
 					</InversedBigBlueButton>
