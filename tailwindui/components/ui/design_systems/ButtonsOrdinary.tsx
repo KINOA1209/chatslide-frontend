@@ -198,7 +198,7 @@ const DesignSystemButton: React.FC<DesignSystemButtonProps> = ({
 			/>
 			<button
 				id={'primary-' + id}
-				disabled={isSubmitting}
+				disabled={isSubmitting || buttonStatus === 'disabled'}
 				onClick={checkPaidUser}
 				style={{ ...buttonStyles, ...customButtonStyles }}
 			>

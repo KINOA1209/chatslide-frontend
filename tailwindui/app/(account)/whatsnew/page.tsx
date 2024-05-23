@@ -26,10 +26,31 @@ export default function Studio() {
 						🎰 Directly add scripts, voiceover, and avatar to PPTX
 					</Instruction>
 
+					<Instruction>📓 Teams features</Instruction>
+
 					<FeedbackButton
 						instructionText='What features would you like to see next?'
 						displayText='Ask for more features!'
 					/>
+				</Card>
+
+				<Card>
+					<BigTitle>May 23</BigTitle>
+					<Instruction>
+						<div>
+							<b>🎤 Audio Files as Sources: </b> You can now upload your audio
+							files as a source, it can be a podcast, a class recording, etc. We
+							support formats like MP3, M4A and WAV.
+						</div>
+					</Instruction>
+
+					<Instruction>
+						<div>
+							<b>🌐 Improved Webpage Reading: </b> Now the AI can read the
+							webpages (either provided by you or searched online) faster and
+							more accurate.
+						</div>
+					</Instruction>
 				</Card>
 
 				<Card>

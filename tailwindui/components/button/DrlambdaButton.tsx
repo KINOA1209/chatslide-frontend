@@ -31,8 +31,8 @@ type DrlambdaButtonProps = {
 	isFlashing?: boolean;
 	id?: string;
 	customizeStyle?: React.CSSProperties;
-	wfull?: boolean;
 	isUploadDropdownItem?: boolean;
+	width?: string;
 };
 
 const DrlambdaButton: React.FC<DrlambdaButtonProps> = ({
@@ -87,7 +87,7 @@ const DrlambdaButton: React.FC<DrlambdaButtonProps> = ({
 				id={'primary-' + id}
 				disabled={isSubmitting}
 				onClick={checkPaidUser}
-				className={`sm:min-w-[8rem] lg:min-w-[12rem] px-2 h-[36px] sm:h-[36px] ${getButtonBg()} disabled:animate-pulse rounded-[0.4375rem] flex justify-center items-center gap-2 cursor-pointer }`}
+				className={`sm:min-w-[6rem] lg:min-w-[12rem] px-2 h-[36px] sm:h-[36px] ${getButtonBg()} disabled:animate-pulse rounded-[0.4375rem] flex justify-center items-center gap-2 cursor-pointer }`}
 			>
 				{isSubmitting && <SpinIcon />}
 				<span className='text-[#5168F6] font-semibold tracking-tight whitespace-nowrap flex flex-row gap-2'>
@@ -138,7 +138,7 @@ export const DrlambdaLink: React.FC<DrlambdaLinkProps> = ({
 			href={link}
 			target={newWindow ? '_blank' : '_self'}
 			rel={newWindow ? 'noopener noreferrer' : undefined} // Important for security reasons
-			className={`sm:min-w-[8rem] lg:w-[12rem] h-[36px] sm:h-[36px] ${style} rounded-3xl flex justify-center items-center gap-2 cursor-pointer`}
+			className={`sm:min-w-[6rem] lg:w-[12rem] h-[36px] sm:h-[36px] ${style} rounded-3xl flex justify-center items-center gap-2 cursor-pointer`}
 		>
 			<div className='flex flex-row justify-center items-center'>
 				<span className='font-semibold tracking-tight whitespace-nowrap'>
@@ -189,8 +189,8 @@ export const BigBlueButton: React.FC<DrlambdaButtonProps> = ({
 	isPaidFeature = false,
 	id,
 	customizeStyle,
-	wfull = false,
 	isUploadDropdownItem,
+	width = '12rem',
 }) => {
 	const [showPaywallModal, setShowPaywallModal] = useState(false);
 
@@ -201,18 +201,16 @@ export const BigBlueButton: React.FC<DrlambdaButtonProps> = ({
 				setShowModal={setShowPaywallModal}
 				message='Upgrade to unlock more features. 🚀'
 			/>
-			<div className='w-[12rem]'>
+			<div id={id} className='mx-auto'>
 				{isUploadDropdownItem ? (
-					<DesignSystemButton
+					<button
+						className='block px-[10px] py-[9px] text-sm text-[#182230] rounded-md  hover:bg-zinc-100 w-full text-left'
 						onClick={
 							isPaidFeature && !isPaidUser
 								? () => setShowPaywallModal(true)
 								: onClick
 						}
-						size='sm'
-						hierarchy='primary'
-						isSubmitting={isSubmitting || disabled}
-						customButtonStyles={{
+						style={{
 							display: 'flex',
 							flexDirection: 'row',
 							alignItems: 'center',
@@ -223,7 +221,7 @@ export const BigBlueButton: React.FC<DrlambdaButtonProps> = ({
 						}}
 					>
 						{children}
-					</DesignSystemButton>
+					</button>
 				) : (
 					<DesignSystemButton
 						onClick={
@@ -235,6 +233,7 @@ export const BigBlueButton: React.FC<DrlambdaButtonProps> = ({
 						hierarchy='primary'
 						isSubmitting={isSubmitting || disabled}
 						customButtonStyles={customizeStyle}
+						width={width}
 					>
 						{children}
 					</DesignSystemButton>
@@ -335,18 +334,18 @@ export const InversedBigBlueButton: React.FC<DrlambdaButtonProps> = ({
 	isSubmitting = false,
 	isPaidUser,
 	isPaidFeature = false,
+	width = '12rem',
 }) => {
 	return (
-		<div className='w-[12rem]'>
-			<DesignSystemButton
-				onClick={onClick}
-				size='sm'
-				hierarchy='secondary'
-				isSubmitting={isSubmitting}
-			>
-				{children}
-			</DesignSystemButton>
-		</div>
+		<DesignSystemButton
+			onClick={onClick}
+			size='sm'
+			hierarchy='secondary'
+			isSubmitting={isSubmitting}
+			width={width}
+		>
+			{children}
+		</DesignSystemButton>
 	);
 };
 

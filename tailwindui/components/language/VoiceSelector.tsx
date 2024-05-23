@@ -52,6 +52,11 @@ export const getVoiceStyles = (voice: string): string[] => {
 	return ['', ...styles];
 };
 
+export const isClonedVoice = (voice: string): boolean => {
+  // @joseph: add your logic here
+  return false;
+}
+
 const VoiceSelector: React.FC<{
 	selectedVoice: string;
 	setSelectedVoice: (language: string) => void;
@@ -155,6 +160,7 @@ const VoiceSelector: React.FC<{
 									setSelectedVoice(e.target.value);
 								}}
 							>
+								{/*  @joseph: add user's voice ids here */}
 								{voiceOptions.map((voice) => (
 									<option key={voice} value={voice}>
 										{formatVoiceName(voice)}
@@ -168,14 +174,14 @@ const VoiceSelector: React.FC<{
 											</option>
 										),
 									)}
-								{selectedLanguage !== 'en-GB' && OAI_VOICE_OPTIONS[selectedGender].map((voice) => (
-									<option key={voice} value={voice}>
-										{formatVoiceName(voice)}
-									</option>
-								))}
+								{selectedLanguage !== 'en-GB' &&
+									OAI_VOICE_OPTIONS[selectedGender].map((voice) => (
+										<option key={voice} value={voice}>
+											{formatVoiceName(voice)}
+										</option>
+									))}
 							</DropDown>
 						</div>
-
 						<div>
 							<Instruction>Style: </Instruction>
 							<DropDown
@@ -214,6 +220,12 @@ const VoiceSelector: React.FC<{
 					🎧 Hi-Fi voices have a much better voice quality. It will cost 100⭐️
 					per video. If you use avatar, the total cost is 400⭐️ per video. This
 					may change in the future.
+				</Explanation>
+			)}
+			{isClonedVoice(selectedVoice) && (
+				<Explanation>
+					🎧 This voice is a clone of your voice. It is Hi-Fi only. It will cost
+					100⭐️ per video.
 				</Explanation>
 			)}
 			{selectedLanguage !== originalLanguageCode &&

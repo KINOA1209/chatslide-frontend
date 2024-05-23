@@ -36,7 +36,7 @@ const PricingComparison: React.FC<{
 			if (tier === 'FREE') {
 				return '✅ Included';
 			} else if (tier === 'PLUS') {
-				return '⚙️ Manage Subscription';
+				return '✅ Current Plan';
 			} else {
 				return '🌟 Claim Offer';
 			}
@@ -45,7 +45,7 @@ const PricingComparison: React.FC<{
 			if (tier === 'FREE' || tier === 'PLUS') {
 				return '✅ Included';
 			} else if (tier === 'PRO') {
-				return '⚙️ Manage Subscription';
+				return '✅ Current Plan';
 			} else {
 				return '🌟 Claim Offer';
 			}
@@ -54,7 +54,7 @@ const PricingComparison: React.FC<{
 			if (tier === 'FREE' || tier === 'PLUS' || tier === 'PRO') {
 				return '✅ Included';
 			} else {
-				return '⚙️ Manage Subscription';
+				return '✅ Current Plan';
 			}
 		}
 		return '';

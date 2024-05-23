@@ -543,7 +543,7 @@ export default function DesignPage() {
 					</Card>
 
 					<Card>
-						<BigTitle>⚙️ Settings</BigTitle>
+						<BigTitle>⚙️ Settings (beta)</BigTitle>
 						<Instruction>
 							You can save all the settings on this page to your profile, and
 							apply it in the future for a deck with the same design.
@@ -562,6 +562,9 @@ export default function DesignPage() {
 								size='md'
 								hierarchy='secondary'
 								width='12rem'
+                buttonStatus={
+                  localStorage.getItem('defaultProfile') ? 'enabled' : 'disabled'
+                }
 							>
 								Load from Profile
 							</DesignSystemButton>

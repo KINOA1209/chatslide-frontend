@@ -538,8 +538,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				| Media[],
 			className: string,
 		) => {
-      console.log('applying update', content, className);
-
 			if (className === 'head') {
 				currentSlide.head = content as string;
 			} else if (className === 'title') {

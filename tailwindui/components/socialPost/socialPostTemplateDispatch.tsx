@@ -313,9 +313,7 @@ export const templateDispatch = (
 				illustration={slide.illustration as string[]}
 				charts={slide.chart || defaultChartArr}
 				ischarts={slide.is_chart}
-				image_positions={
-					slide.image_positions || ['contain', 'contain', 'contain']
-				}
+				image_positions={slide.image_positions || [{}, {}, {}]}
 				canEdit={canEdit}
 				imgs={slide.images}
 				border_start={slide.theme?.border_start || '#937C67'}
@@ -455,9 +453,7 @@ export const templateDispatch = (
 				illustration={slide.illustration as string[]}
 				charts={slide.chart || defaultChartArr}
 				ischarts={slide.is_chart}
-				image_positions={
-					slide.image_positions || ['contain', 'contain', 'contain']
-				}
+				image_positions={slide.image_positions || [{}, {}, {}]}
 				handleSlideEdit={handleSlideEdit}
 				update_callback={getUpdateCallback(
 					project?.post_type || 'casual_topic',

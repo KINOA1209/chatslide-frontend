@@ -13,12 +13,24 @@ import DrlambdaButton, {
 	InversedBigBlueButton,
 } from '@/components/button/DrlambdaButton';
 import { NewInputBox } from '@/components/ui/InputBox';
-import { FaInbox, FaKey, FaMoneyBill, FaRegStar, FaStar, FaUser } from 'react-icons/fa';
+import {
+	FaInbox,
+	FaKey,
+	FaMoneyBill,
+	FaRegStar,
+	FaStar,
+	FaUser,
+} from 'react-icons/fa';
 import { useUser } from '@/hooks/use-user';
 import useHydrated from '@/hooks/use-hydrated';
 import SessionStorage from '@/utils/SessionStorage';
 import Card from '@/components/ui/Card';
-import { BigTitle, Explanation, Instruction, Title } from '@/components/ui/Text';
+import {
+	BigTitle,
+	Explanation,
+	Instruction,
+	Title,
+} from '@/components/ui/Text';
 import { Panel } from '@/components/layout/Panel';
 import { Column } from '@/components/layout/Column';
 import { getBrand } from '@/utils/getHost';
@@ -117,27 +129,29 @@ const Profile = () => {
 							icon={<FaInbox className='text-gray-600' />}
 						/>
 
-						<BigBlueButton
+						<InversedBigBlueButton
 							id='update-email'
 							onClick={handleSubmitUsernameAndEmail}
 							isSubmitting={isSubmitting}
+              width='8rem'
 						>
 							Update
-						</BigBlueButton>
+						</InversedBigBlueButton>
 					</div>
 				</div>
 			</div>
 			<div className='w-full'>
 				<Instruction>🔐 Change Password</Instruction>
 				<div className='items-center justify-center flex flex-row'>
-					<BigBlueButton
+					<InversedBigBlueButton
 						id='change-password'
 						onClick={() => {
 							window.location.href = '/reset-password';
 						}}
+            width='12rem'
 					>
 						Change Password
-					</BigBlueButton>
+					</InversedBigBlueButton>
 				</div>
 			</div>
 			<div className='w-full'>
@@ -155,13 +169,14 @@ const Profile = () => {
 							icon={<FaUser className='text-gray-600' />}
 						/>
 
-						<BigBlueButton
+						<InversedBigBlueButton
 							id='update-username'
 							onClick={handleSubmitUsernameAndEmail}
 							isSubmitting={isSubmitting}
+              width='8rem'
 						>
 							Update
-						</BigBlueButton>
+						</InversedBigBlueButton>
 					</div>
 				</div>
 			</div>
@@ -229,13 +244,14 @@ const OpenAIKey = () => {
 						icon={<FaKey className='text-gray-600' />}
 					/>
 
-					<BigBlueButton
+					<InversedBigBlueButton
 						id='update-oai-key'
 						onClick={updateKey}
 						isSubmitting={isSubmitting}
+            width='8rem'
 					>
 						Update
-					</BigBlueButton>
+					</InversedBigBlueButton>
 				</div>
 			</div>
 		</div>
@@ -309,13 +325,14 @@ const ApplyPromo = () => {
 						icon={<FaStar className='text-gray-600' />}
 					/>
 
-					<BigBlueButton
+					<InversedBigBlueButton
 						id='apply-promo'
 						onClick={applyPromo}
 						isSubmitting={isSubmitting}
+            width='8rem'
 					>
 						Apply
-					</BigBlueButton>
+					</InversedBigBlueButton>
 				</div>
 			</div>
 		</div>
@@ -328,22 +345,22 @@ const Affiliate = () => {
 		user?.rewardful_code || '',
 	);
 	const router = useRouter();
-  const [isSubmitting, setIsSubmitting] = useState(false);
+	const [isSubmitting, setIsSubmitting] = useState(false);
 
 	useEffect(() => {
 		setRewardfulCode(user?.rewardful_code || '');
 	}, [user]);
 
-  async function handleUpdateRewardfulCode() {
-    setIsSubmitting(true);
-    try {
-      await UserService.updateRewardfulCode(rewardfulCode, token);
-      toast.success('Rewardful code updated successfully');
-    } catch (error) {
-      toast.error('Failed to update rewardful code');
-    }
-    setIsSubmitting(false);
-  }
+	async function handleUpdateRewardfulCode() {
+		setIsSubmitting(true);
+		try {
+			await UserService.updateRewardfulCode(rewardfulCode, token);
+			toast.success('Rewardful code updated successfully');
+		} catch (error) {
+			toast.error('Failed to update rewardful code');
+		}
+		setIsSubmitting(false);
+	}
 
 	return (
 		<Card>
@@ -397,12 +414,13 @@ const Affiliate = () => {
 						maxLength={50}
 						icon={<FaMoneyBill className='text-gray-600' />}
 					/>
-					<BigBlueButton
+					<InversedBigBlueButton
 						onClick={handleUpdateRewardfulCode}
 						isSubmitting={isSubmitting}
+            width='8rem'
 					>
 						Update
-					</BigBlueButton>
+					</InversedBigBlueButton>
 				</div>
 			</div>
 
@@ -429,8 +447,17 @@ const Affiliate = () => {
 };
 
 const CreditHistory = () => {
-	const { credits } = useUser();
+	const { credits, token } = useUser();
 	const router = useRouter();
+	const [stripeLink, setStripeLink] = useState('');
+
+	useEffect(() => {
+		async function fetchStripeLink() {
+			const link = await UserService.createStripePortalSession(token);
+			setStripeLink(link);
+		}
+		fetchStripeLink();
+	}, []);
 
 	return (
 		<div className='w-full'>
@@ -439,13 +466,16 @@ const CreditHistory = () => {
 				<BigTitle>
 					<>{credits}</>
 				</BigTitle>
-				<InversedBigBlueButton
-					onClick={() => {
-						router.push('/pricing');
-					}}
-				>
-					Mange Subscription
-				</InversedBigBlueButton>
+				{stripeLink && (
+					<InversedBigBlueButton
+						onClick={() => {
+							router.push(stripeLink);
+						}}
+            width='12rem'
+					>
+						Mange Subscription
+					</InversedBigBlueButton>
+				)}
 			</WrappableRow>
 		</div>
 	);
@@ -500,7 +530,7 @@ export default function Account() {
 
 				<UnlimitedUpgrade />
 
-        <Affiliate />
+				<Affiliate />
 			</Panel>
 		</Column>
 	);
