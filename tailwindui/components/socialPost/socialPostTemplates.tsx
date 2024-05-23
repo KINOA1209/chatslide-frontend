@@ -1415,7 +1415,8 @@ export const last_page_layout = ({
 					className='LastPageContentBox'
 					style={{ ...layoutElements?.lastPageContentCSS }}
 				>
-					{content}
+					{/* {content} */}
+					{last_page_content}
 				</div>
 				<div
 					className='userNameAndLogoAndIndicatorBox'

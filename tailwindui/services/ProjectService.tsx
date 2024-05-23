@@ -336,6 +336,7 @@ class ProjectService {
 	): SocialPostSlide[] {
 		const parse_slide = JSON.parse(social_posts);
 		console.log('parsed_social_post is', parse_slide);
+
 		const slidesArray: SocialPostSlide[] = Object.keys(parse_slide).map(
 			(key, index) => {
 				const slideData = parse_slide[key];
@@ -368,8 +369,7 @@ class ProjectService {
 					} else if (post_type === 'reading_notes') {
 						slide.layout = slideData.layout || 'First_page_img_1_reading_notes';
 					}
-				}
-				if (index === slideData.length - 1) {
+				} else if (index === slideData.length - 1) {
 					slide.layout = 'last_page_layout';
 				} else {
 					if (post_type === 'casual_topic') {

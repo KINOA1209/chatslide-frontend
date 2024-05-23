@@ -317,7 +317,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 				currentSlide.layout = content as SocialPostLayoutKeys;
 			} else if (className === 'last_page_content') {
 				if (typeof contentIndex === 'number' && contentIndex >= 0) {
-					let newContent = [...currentSlide.content];
+					let newContent = [...currentSlide.last_page_content];
 					newContent[contentIndex] = content as string;
 					currentSlide.last_page_content = newContent;
 				} else {

@@ -125,7 +125,7 @@ export const templateDispatch = (
 	toggleEditMathMode: () => void = () => {}, // Replace with your default function if you have one
 	isLastPage: boolean = false,
 ): JSX.Element => {
-	const { isPaidUser, token } = useUser();
+	const { isPaidUser, token, username } = useUser();
 	// const [currUserName, setCurrUserName] = useState('');
 	// useEffect(() => {
 	// 	const fetchUser = async () => {
@@ -139,6 +139,10 @@ export const templateDispatch = (
 
 	// 	fetchUser();
 	// }, []);
+	const { project } = useProject();
+	const post_type: PostTypeKeys =
+		(project?.post_type as PostTypeKeys) || 'casual_topic';
+
 	let keyPrefix = '';
 	if (exportToPdfMode) {
 		keyPrefix = 'exportToPdf';
@@ -147,19 +151,61 @@ export const templateDispatch = (
 	}
 
 	// Normalize slide.layout to ensure it's always a string
-	const currLayout = Array.isArray(slide.layout)
+	let currLayout: SocialPostLayoutKeys = Array.isArray(slide.layout)
 		? slide.layout[0]
 		: slide.layout;
+
 	// console.log('current layout: ', currLayout);
-	const layoutKey: SocialPostLayoutKeys =
-		socialPostAvailableLayouts.hasOwnProperty(currLayout)
-			? currLayout
-			: // : 'Col_1_img_0_casual_topic';
-				'Col_2_img_1_left_casual_topic';
+	// const layoutKey: SocialPostLayoutKeys =
+	// 	socialPostAvailableLayouts.hasOwnProperty(currLayout)
+	// 		? currLayout
+	// 		: // : 'Col_1_img_0_casual_topic';
+	// 			'Col_2_img_1_left_casual_topic';
 	// console.log('normalize layout: ', layoutKey);
+
+	// correct layout for template if current index is 0 or slides.length-1 but layout is not corresponding to current index layout
+	if (index === 0) {
+		if (
+			post_type === 'casual_topic' &&
+			currLayout !== 'First_page_img_1_casual_topic'
+		) {
+			currLayout = 'First_page_img_1_casual_topic';
+		} else if (
+			post_type === 'serious_subject' &&
+			currLayout !== 'First_page_img_1_serious_subject'
+		) {
+			currLayout = 'First_page_img_1_serious_subject';
+		} else if (
+			post_type === 'reading_notes' &&
+			currLayout !== 'First_page_img_1_reading_notes'
+		) {
+			currLayout = 'First_page_img_1_reading_notes';
+		}
+	} else if (isLastPage) {
+		if (currLayout !== 'last_page_layout') {
+			currLayout = 'last_page_layout';
+		}
+	} else {
+		if (post_type === 'casual_topic') {
+			currLayout = socialPostAvailableLayouts.hasOwnProperty(currLayout)
+				? currLayout
+				: // : 'Col_1_img_0_casual_topic';
+					'Col_2_img_1_left_casual_topic';
+		} else if (post_type === 'serious_subject') {
+			currLayout = socialPostAvailableLayouts.hasOwnProperty(currLayout)
+				? currLayout
+				: // : 'Col_1_img_0_casual_topic';
+					'img_0_serious_subject';
+		} else if (post_type === 'reading_notes') {
+			currLayout = socialPostAvailableLayouts.hasOwnProperty(currLayout)
+				? currLayout
+				: // : 'Col_1_img_0_casual_topic';
+					'Col_1_img_1_reading_notes';
+		}
+	}
 	const ChosenLayout =
 		socialPostAvailableLayouts[
-			layoutKey as keyof typeof socialPostAvailableLayouts
+			currLayout as keyof typeof socialPostAvailableLayouts
 		];
 	// console.log('slide.layout', slide.layout);
 
@@ -167,13 +213,9 @@ export const templateDispatch = (
 		? slide.last_page_content
 		: slide.last_page_content
 			? [slide.last_page_content]
-			: [];
+			: [''];
 
-	const currUserName = slide.user_name || 'Created using DrLambda';
-
-	const { project } = useProject();
-	const post_type: PostTypeKeys =
-		(project?.post_type as PostTypeKeys) || 'casual_topic';
+	const currUserName = username || 'Created using DrLambda';
 
 	// TODO: change the hardcode to real social post template name passed in
 	const themeElements =
@@ -186,8 +228,8 @@ export const templateDispatch = (
 		loadSocialPostLayoutConfigElements(
 			slide.template_theme as SocialPostTemplateKeys,
 			// slide.layout as SocialPostLayoutKeys,
-			layoutKey as SocialPostLayoutKeys,
-		) || Classis_SocialPost_TemplateLayoutsConfig[layoutKey];
+			currLayout as SocialPostLayoutKeys,
+		) || Classis_SocialPost_TemplateLayoutsConfig[currLayout];
 
 	const getUpdateCallback = (post_type: string, slideIndex: number) => {
 		return post_type === 'reading_notes'
@@ -218,9 +260,11 @@ export const templateDispatch = (
 				/>
 			);
 		} else {
+			const key = `${keyPrefix}-${contentTag}-${index}-${contentIndex ?? ''}`;
 			if (contentIndex !== undefined) {
 				return (
 					<QuillEditable
+						key={key}
 						content={content}
 						handleBlur={(newContent) =>
 							handleSlideEdit(newContent, index, contentTag, contentIndex, true)
@@ -233,6 +277,7 @@ export const templateDispatch = (
 			} else {
 				return (
 					<QuillEditable
+						key={key}
 						content={content}
 						handleBlur={(newContent) =>
 							handleSlideEdit(newContent, index, contentTag, undefined, true)
@@ -268,7 +313,9 @@ export const templateDispatch = (
 				illustration={slide.illustration as string[]}
 				charts={slide.chart || defaultChartArr}
 				ischarts={slide.is_chart}
-				image_positions={slide.image_positions || ['contain', 'contain', 'contain']}
+				image_positions={
+					slide.image_positions || ['contain', 'contain', 'contain']
+				}
 				canEdit={canEdit}
 				imgs={slide.images}
 				border_start={slide.theme?.border_start || '#937C67'}
@@ -408,7 +455,9 @@ export const templateDispatch = (
 				illustration={slide.illustration as string[]}
 				charts={slide.chart || defaultChartArr}
 				ischarts={slide.is_chart}
-				image_positions={slide.image_positions || ['contain', 'contain', 'contain']}
+				image_positions={
+					slide.image_positions || ['contain', 'contain', 'contain']
+				}
 				handleSlideEdit={handleSlideEdit}
 				update_callback={getUpdateCallback(
 					project?.post_type || 'casual_topic',
@@ -456,6 +505,7 @@ export const templateDispatch = (
 					themeElements?.sourceCSS || {},
 				)}
 				content={slide.content.map((content: string, contentIndex: number) => {
+					// console.log('content, contentIndex: ', content, contentIndex);
 					return (
 						<div
 							key={keyPrefix + index.toString() + '_' + contentIndex.toString()}
@@ -463,7 +513,7 @@ export const templateDispatch = (
 							{generateContentElement(
 								content,
 								'content',
-								isLastPage
+								isLastPage && currLayout === 'last_page_layout'
 									? themeElements?.lastPageContentCSS || {}
 									: themeElements?.contentCSS || {},
 								contentIndex,
@@ -487,16 +537,26 @@ export const templateDispatch = (
 				)}
 				last_page_content={lastPageContentArray.map(
 					(content: string, contentIndex: number) => {
+						// console.log(
+						// 	'last page content, contentIndex: ',
+						// 	content,
+						// 	contentIndex,
+						// );
 						return (
 							<div
-								key={
-									keyPrefix + index.toString() + '_' + contentIndex.toString()
-								}
+								// key={
+								// 	keyPrefix +
+								// 	'_last_page_content' +
+								// 	index.toString() +
+								// 	'_' +
+								// 	contentIndex.toString()
+								// }
+								key={`${keyPrefix}_last_page_content_${index}_${contentIndex}`}
 							>
 								{generateContentElement(
 									content,
 									'last_page_content',
-									themeElements?.contentCSS || {},
+									themeElements?.lastPageContentCSS || {},
 									contentIndex,
 								)}
 							</div>
