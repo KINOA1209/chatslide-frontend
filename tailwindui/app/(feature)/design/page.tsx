@@ -562,6 +562,9 @@ export default function DesignPage() {
 								size='md'
 								hierarchy='secondary'
 								width='12rem'
+                buttonStatus={
+                  localStorage.getItem('defaultProfile') ? 'enabled' : 'disabled'
+                }
 							>
 								Load from Profile
 							</DesignSystemButton>
