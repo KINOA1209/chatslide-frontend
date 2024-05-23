@@ -5,6 +5,7 @@ import { UnlimitedUpgrade } from '@/components/slides/card/UnlimitedUpgrade';
 import Card from '@/components/ui/Card';
 import { ProLabel } from '@/components/ui/GrayLabel';
 import { BigTitle, Explanation, Instruction } from '@/components/ui/Text';
+import VoiceCloning from './VoiceCloning';
 
 export default function Studio() {
 	// avoid hydration error during development caused by persistence
@@ -14,34 +15,7 @@ export default function Studio() {
 		<Column>
 			<Panel>
 				<UnlimitedUpgrade />
-				<Card>
-					<BigTitle>
-						🎙️ Voice Cloning <ProLabel />
-					</BigTitle>
-					<Instruction>
-						Record your voice, and use your voice clone in your videos.
-					</Instruction>
-
-					<Explanation>
-						📆 Coming soon, expected in May, 2024. <br />
-						Learn more about our future plans on our{' '}
-						<a
-							href='https://blog.drlambda.ai/drlambda-product-roadmap/'
-							className='text-blue-600'
-						>
-							roadmap
-						</a>
-						. <br />
-						Join our{' '}
-						<a href='discord' className='text-blue-600'>
-							Discord
-						</a>{' '}
-						channel to get up to date information.
-					</Explanation>
-
-					<EarlyAccessButton feature='voice cloning' />
-				</Card>
-
+				<VoiceCloning />
 				<Card>
 					<BigTitle>
 						🦹‍♂️ Avatar Cloning <ProLabel />
