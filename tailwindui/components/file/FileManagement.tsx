@@ -126,7 +126,7 @@ export const CloudConnectComponent: React.FC<CloudConnectProps> = ({
 					isPaidUser={isPaidUser}
 					isUploadDropdownItem={isUploadDropdownItem}
 				>
-					{isUploadDropdownItem ? (
+					{!isUploadDropdownItem ? (
 						<span>Upload from Cloud ☁️</span>
 					) : (
 						<>

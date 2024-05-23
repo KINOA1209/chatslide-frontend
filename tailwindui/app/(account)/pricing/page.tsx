@@ -11,7 +11,7 @@ import { Title } from '@/components/ui/Text';
 import Card from '@/components/ui/Card';
 import { Panel } from '@/components/layout/Panel';
 import useHydrated from '@/hooks/use-hydrated';
-import { SmallBlueButton } from '@/components/button/DrlambdaButton';
+import { BigBlueButton, InversedBigBlueButton, SmallBlueButton } from '@/components/button/DrlambdaButton';
 import { PricingComparison } from '@/app/(default)/landing/Pricing';
 import { useSearchParams } from 'next/navigation';
 
@@ -88,9 +88,9 @@ export default function SubscriptionAndUserResearch() {
 				<Subscription />
 				<Card>
 					<Title>Earn free credits⭐ by joining our user study</Title>
-					<SmallBlueButton onClick={handleUserResearchModal}>
+					<BigBlueButton onClick={handleUserResearchModal}>
 						{'Join today!'}
-					</SmallBlueButton>
+					</BigBlueButton>
 				</Card>
 			</Panel>
 		</div>

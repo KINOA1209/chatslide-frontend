@@ -32,7 +32,7 @@ type DrlambdaButtonProps = {
 	id?: string;
 	customizeStyle?: React.CSSProperties;
 	isUploadDropdownItem?: boolean;
-  width?: string;
+	width?: string;
 };
 
 const DrlambdaButton: React.FC<DrlambdaButtonProps> = ({
@@ -190,7 +190,7 @@ export const BigBlueButton: React.FC<DrlambdaButtonProps> = ({
 	id,
 	customizeStyle,
 	isUploadDropdownItem,
-  width = '12rem',
+	width = '12rem',
 }) => {
 	const [showPaywallModal, setShowPaywallModal] = useState(false);
 
@@ -203,16 +203,14 @@ export const BigBlueButton: React.FC<DrlambdaButtonProps> = ({
 			/>
 			<div id={id} className='mx-auto'>
 				{isUploadDropdownItem ? (
-					<DesignSystemButton
+					<button
+						className='block px-[10px] py-[9px] text-sm text-[#182230] rounded-md  hover:bg-zinc-100 w-full text-left'
 						onClick={
 							isPaidFeature && !isPaidUser
 								? () => setShowPaywallModal(true)
 								: onClick
 						}
-						size='sm'
-						hierarchy='primary'
-						isSubmitting={isSubmitting || disabled}
-						customButtonStyles={{
+						style={{
 							display: 'flex',
 							flexDirection: 'row',
 							alignItems: 'center',
@@ -221,10 +219,9 @@ export const BigBlueButton: React.FC<DrlambdaButtonProps> = ({
 							borderBottom:
 								'1px solid var(--Colors-Border-border-secondary, #EAECF0)',
 						}}
-						width={width}
 					>
 						{children}
-					</DesignSystemButton>
+					</button>
 				) : (
 					<DesignSystemButton
 						onClick={
@@ -337,7 +334,7 @@ export const InversedBigBlueButton: React.FC<DrlambdaButtonProps> = ({
 	isSubmitting = false,
 	isPaidUser,
 	isPaidFeature = false,
-  width = '12rem',
+	width = '12rem',
 }) => {
 	return (
 		<DesignSystemButton
