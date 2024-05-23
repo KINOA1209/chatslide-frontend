@@ -1,16 +1,17 @@
 import {
 	socialPostAvailableLayouts,
 	generateSocialPostTemplateLogo,
+	generateSocialPostTemplateIndicatorElement,
 } from '@/components/socialPost/socialPostTemplates';
 import {
 	CompanyIconWhite,
 	CompanyIconBlack,
 } from '@/components/socialPost/socialPostIcons';
-import React, { CSSProperties, useEffect, useRef } from 'react';
+import React, { CSSProperties, useEffect, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import 'quill/dist/quill.bubble.css';
 import '@/components/socialPost/quillEditor.scss';
-import SocialPostSlide, { SlideKeys } from '@/models/SocialPost';
+import { SocialPostSlide, SlideKeys } from '@/models/SocialPost';
 import Chart, { Group } from '@/models/Chart';
 import ImagesPosition from '@/models/ImagesPosition';
 import { useProject } from '@/hooks/use-project';
@@ -20,17 +21,42 @@ import SocialPostThemeConfigData, {
 } from './templates_customizable_elements/theme_elements';
 import { PostTypeKeys } from './templates_customizable_elements/theme_elements';
 import processContent from '@/components/slides/quillEditorSlide';
-import { Default_SocialPost_TemplateThemeConfig } from './templates_customizable_elements/default_template/theme_config';
-import SocialPostLayoutConfigData, {
+import { Classic_SocialPost_TemplateThemeConfig } from './templates_customizable_elements/classic_template/theme_config';
+import { Classis_SocialPost_TemplateLayoutsConfig } from './templates_customizable_elements/classic_template/layout_config';
+import {
+	SocialPostLayoutConfigData,
 	SocialPostLayoutKeys,
 	SocialPostTemplateKeys,
 } from './socialPostLayouts';
 import layoutConfigData from '../slides/templates_customizable_elements/layout_elements';
 import drlambdaLogoBadgeWhiteBG from '@/public/images/template/drlambdaLogoBadgeWhiteBG.png';
+import { useUser } from '@/hooks/use-user';
+import AuthService from '@/services/AuthService';
 const QuillEditable = dynamic(
 	() => import('@/components/slides/quillEditorSlide'),
 	{ ssr: false },
 );
+import classicTemplateThemeCoverPageIndicator from '@/public/images/socialpost/classicTemplateThemeCoverPageIndicator.png';
+import classicTemplateThemeLastPageIndicator from '@/public/images/socialpost/classicTemplateThemeLastPageIndicator.png';
+import { StaticImageData } from 'next/image';
+
+export const templateThemeKeyAndIndicatorImgMap: Record<
+	SocialPostTemplateKeys,
+	StaticImageData
+> = {
+	classic: classicTemplateThemeCoverPageIndicator,
+	default: classicTemplateThemeCoverPageIndicator, // placeholder for now
+	bold: classicTemplateThemeCoverPageIndicator, // placeholder for now
+};
+
+export const templateThemeKeyAndIndicatorImgMapLastPage: Record<
+	SocialPostTemplateKeys,
+	StaticImageData
+> = {
+	classic: classicTemplateThemeLastPageIndicator,
+	default: classicTemplateThemeLastPageIndicator, // placeholder for now
+	bold: classicTemplateThemeLastPageIndicator, // placeholder for now
+};
 
 export const loadSocialPostCustomizableElements = (
 	templateName: string,
@@ -42,8 +68,11 @@ export const loadSocialPostCustomizableElements = (
 	// );
 	const themeElements =
 		SocialPostThemeConfigData[templateName as SocialPostTemplateKeys] ||
-		Default_SocialPost_TemplateThemeConfig;
-	let selectedThemeElements = themeElements[post_type as PostTypeKeys];
+		Classic_SocialPost_TemplateThemeConfig;
+	let selectedThemeElements =
+		themeElements[post_type as PostTypeKeys] ||
+		Classic_SocialPost_TemplateThemeConfig[post_type as PostTypeKeys] ||
+		{};
 	// console.log('loaded theme configurations is:', selectedThemeElements);
 
 	return selectedThemeElements;
@@ -55,9 +84,13 @@ export const loadSocialPostLayoutConfigElements = (
 ) => {
 	const templateElements =
 		SocialPostLayoutConfigData[templateName as keyof SocialPostThemeConfig] ||
-		{};
+		Classis_SocialPost_TemplateLayoutsConfig;
 	const selectedLayoutOptionElements =
-		templateElements[layoutOption as SocialPostLayoutKeys] || {};
+		templateElements[layoutOption as SocialPostLayoutKeys] ||
+		Classis_SocialPost_TemplateLayoutsConfig[
+			layoutOption as SocialPostLayoutKeys
+		] ||
+		{};
 	return selectedLayoutOptionElements;
 };
 
@@ -90,17 +123,54 @@ export const templateDispatch = (
 		images_position: ImagesPosition[],
 	) => void = () => () => {},
 	toggleEditMathMode: () => void = () => {}, // Replace with your default function if you have one
+	isLastPage: boolean = false,
 ): JSX.Element => {
+	const { isPaidUser, token } = useUser();
+	// const [currUserName, setCurrUserName] = useState('');
+	// useEffect(() => {
+	// 	const fetchUser = async () => {
+	// 		try {
+	// 			const username = await AuthService.getCurrentUserDisplayName();
+	// 			setCurrUserName(username);
+	// 		} catch (error) {
+	// 			console.log('No authenticated user.');
+	// 		}
+	// 	};
+
+	// 	fetchUser();
+	// }, []);
 	let keyPrefix = '';
 	if (exportToPdfMode) {
 		keyPrefix = 'exportToPdf';
 	} else if (!canEdit) {
 		keyPrefix = 'preview';
 	}
+
+	// Normalize slide.layout to ensure it's always a string
+	const currLayout = Array.isArray(slide.layout)
+		? slide.layout[0]
+		: slide.layout;
+	// console.log('current layout: ', currLayout);
+	const layoutKey: SocialPostLayoutKeys =
+		socialPostAvailableLayouts.hasOwnProperty(currLayout)
+			? currLayout
+			: // : 'Col_1_img_0_casual_topic';
+				'Col_2_img_1_left_casual_topic';
+	// console.log('normalize layout: ', layoutKey);
 	const ChosenLayout =
 		socialPostAvailableLayouts[
-			slide.layout as keyof typeof socialPostAvailableLayouts
+			layoutKey as keyof typeof socialPostAvailableLayouts
 		];
+	// console.log('slide.layout', slide.layout);
+
+	const lastPageContentArray = Array.isArray(slide.last_page_content)
+		? slide.last_page_content
+		: slide.last_page_content
+			? [slide.last_page_content]
+			: [];
+
+	const currUserName = slide.user_name || 'Created using DrLambda';
+
 	const { project } = useProject();
 	const post_type: PostTypeKeys =
 		(project?.post_type as PostTypeKeys) || 'casual_topic';
@@ -110,12 +180,14 @@ export const templateDispatch = (
 		// SocialPostThemeConfigData['classic'][post_type] ||
 		// Default_SocialPost_TemplateThemeConfig;
 		loadSocialPostCustomizableElements(slide.template_theme, post_type) ||
-		Default_SocialPost_TemplateThemeConfig[post_type];
+		Classic_SocialPost_TemplateThemeConfig[post_type];
 
-	const socialPostLayoutElements = loadSocialPostLayoutConfigElements(
-		slide.template_theme as SocialPostTemplateKeys,
-		slide.layout as SocialPostLayoutKeys,
-	);
+	const socialPostLayoutElements =
+		loadSocialPostLayoutConfigElements(
+			slide.template_theme as SocialPostTemplateKeys,
+			// slide.layout as SocialPostLayoutKeys,
+			layoutKey as SocialPostLayoutKeys,
+		) || Classis_SocialPost_TemplateLayoutsConfig[layoutKey];
 
 	const getUpdateCallback = (post_type: string, slideIndex: number) => {
 		return post_type === 'reading_notes'
@@ -210,6 +282,28 @@ export const templateDispatch = (
 						<CompanyIconBlack />
 					)
 				}
+				user_name={
+					isPaidUser ? (
+						generateContentElement(
+							currUserName,
+							// currUserName,
+							'user_name',
+							{
+								...(themeElements?.userNameCSS || {}),
+							},
+						)
+					) : (
+						<div
+							key={0}
+							className={`rounded-md outline-2 ${!exportToPdfMode} ${
+								index !== 0 ? 'hidden' : ''
+							}`}
+							style={themeElements?.userNameCSS || {}}
+							contentEditable={false}
+							dangerouslySetInnerHTML={{ __html: currUserName }}
+						/>
+					)
+				}
 				update_callback={getUpdateCallback(
 					project?.post_type || 'casual_topic',
 					index,
@@ -245,21 +339,34 @@ export const templateDispatch = (
 				section_title={<></>}
 				layoutElements={socialPostLayoutElements}
 				themeElements={themeElements}
-				last_page_title={generateContentElement(
-					slide.last_page_title,
-					'last_page_title',
-					themeElements?.lastPageTitleCSS || {},
-				)}
-				last_page_content={generateContentElement(
-					slide.last_page_content,
-					'last_page_content',
-					themeElements?.lastPageContentCSS || {},
-				)}
+				last_page_title={<></>}
+				last_page_content={[<></>]}
 				social_post_template_logo={generateSocialPostTemplateLogo({
-					logoWidth: 8,
-					logoHeight: 1.5,
+					logoWidth: 90,
+					logoHeight: 35,
 					logoBadge: drlambdaLogoBadgeWhiteBG,
 					logoStyleConfig: socialPostLayoutElements?.logoCSS || {},
+				})}
+				page_turn_indicator={generateSocialPostTemplateIndicatorElement({
+					logoWidth: 65,
+					logoHeight: 65,
+					indicatorCoverPage:
+						templateThemeKeyAndIndicatorImgMap[slide.template_theme],
+					indicatorLastPage:
+						templateThemeKeyAndIndicatorImgMap[slide.template_theme],
+					logoStyleConfig: socialPostLayoutElements?.indicatorCSS || {},
+					isLastPage: false,
+				})}
+				page_index_number={index}
+				last_page_like_indicator={generateSocialPostTemplateIndicatorElement({
+					logoWidth: 65,
+					logoHeight: 65,
+					indicatorCoverPage:
+						templateThemeKeyAndIndicatorImgMap[slide.template_theme],
+					indicatorLastPage:
+						templateThemeKeyAndIndicatorImgMap[slide.template_theme],
+					logoStyleConfig: socialPostLayoutElements?.indicatorCSS || {},
+					isLastPage: false,
 				})}
 			/>
 		);
@@ -273,6 +380,28 @@ export const templateDispatch = (
 						<CompanyIconWhite />
 					) : (
 						<CompanyIconBlack />
+					)
+				}
+				user_name={
+					isPaidUser ? (
+						generateContentElement(
+							// slide.user_name,
+							currUserName,
+							'user_name',
+							{
+								...(themeElements?.userNameCSS || {}),
+							},
+						)
+					) : (
+						<div
+							key={0}
+							className={`rounded-md outline-2 ${!exportToPdfMode} ${
+								index !== 0 ? 'hidden' : ''
+							}`}
+							style={themeElements?.userNameCSS || {}}
+							contentEditable={false}
+							dangerouslySetInnerHTML={{ __html: currUserName }}
+						/>
 					)
 				}
 				imgs={slide.images as string[]}
@@ -334,16 +463,21 @@ export const templateDispatch = (
 							{generateContentElement(
 								content,
 								'content',
-								themeElements?.contentCSS || {},
+								isLastPage
+									? themeElements?.lastPageContentCSS || {}
+									: themeElements?.contentCSS || {},
 								contentIndex,
 							)}
-							{post_type === 'casual_topic' && <hr className='my-[15px]'></hr>}
 						</div>
 					);
 				})}
 				title={<></>}
 				English_title={<></>}
-				topic={<></>}
+				topic={generateContentElement(
+					slide.topic,
+					'topic',
+					themeElements?.lastPageTitleCSS || {},
+				)}
 				layoutElements={socialPostLayoutElements}
 				themeElements={themeElements}
 				last_page_title={generateContentElement(
@@ -351,16 +485,46 @@ export const templateDispatch = (
 					'last_page_title',
 					themeElements?.lastPageTitleCSS || {},
 				)}
-				last_page_content={generateContentElement(
-					slide.last_page_content,
-					'last_page_content',
-					themeElements?.lastPageContentCSS || {},
+				last_page_content={lastPageContentArray.map(
+					(content: string, contentIndex: number) => {
+						return (
+							<div
+								key={
+									keyPrefix + index.toString() + '_' + contentIndex.toString()
+								}
+							>
+								{generateContentElement(
+									content,
+									'last_page_content',
+									themeElements?.contentCSS || {},
+									contentIndex,
+								)}
+							</div>
+						);
+					},
 				)}
 				social_post_template_logo={generateSocialPostTemplateLogo({
-					logoWidth: 8,
-					logoHeight: 1.5,
+					logoWidth: 90,
+					logoHeight: 35,
 					logoBadge: drlambdaLogoBadgeWhiteBG,
 					logoStyleConfig: socialPostLayoutElements?.logoCSS || {},
+				})}
+				page_turn_indicator={generateSocialPostTemplateIndicatorElement({
+					logoWidth: 65,
+					logoHeight: 65,
+					logoBadge: templateThemeKeyAndIndicatorImgMap[slide.template_theme],
+					logoStyleConfig: socialPostLayoutElements?.indicatorCSS || {},
+				})}
+				page_index_number={index}
+				last_page_like_indicator={generateSocialPostTemplateIndicatorElement({
+					logoWidth: 65,
+					logoHeight: 65,
+					indicatorCoverPage:
+						templateThemeKeyAndIndicatorImgMap[slide.template_theme],
+					indicatorLastPage:
+						templateThemeKeyAndIndicatorImgMapLastPage[slide.template_theme],
+					logoStyleConfig: socialPostLayoutElements?.indicatorCSS || {},
+					isLastPage: true,
 				})}
 			/>
 		);

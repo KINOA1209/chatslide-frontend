@@ -21,6 +21,15 @@ export type SocialPostLayoutElements = {
 	imageContainerCSS?: React.CSSProperties;
 	imageCSS?: React.CSSProperties;
 	logoCSS?: React.CSSProperties;
+	indicatorCSS?: React.CSSProperties;
+	pageNumberIndexCSS?: React.CSSProperties;
+	pageNumberIndexContainerCSS?: React.CSSProperties;
+	imageAndTextContentContainerCSS?: React.CSSProperties;
+	// last page specific CSS properties
+	lastPageTitleCSS?: React.CSSProperties;
+	lastPageContentCSS?: React.CSSProperties;
+	userNameAndLogoAndIndicatorBoxCSS?: React.CSSProperties;
+	userNameAndLogoBoxCSS?: React.CSSProperties;
 };
 
 export type SocialPostLayoutKeys =
@@ -48,9 +57,9 @@ export type SocialPostLayoutsConfig = {
 	};
 };
 
-const SocialPostLayoutConfigData: SocialPostLayoutsConfig = {
+export const SocialPostLayoutConfigData: SocialPostLayoutsConfig = {
 	classic: Classis_SocialPost_TemplateLayoutsConfig,
 	// default: Default_SocialPost_TemplateLayoutsConfig,
 };
 
-export default SocialPostLayoutConfigData;
+// export default SocialPostLayoutConfigData;

@@ -4,51 +4,452 @@ import {
 } from '../../socialPostLayouts';
 
 export const Classis_SocialPost_TemplateLayoutsConfig: {
-	[key in SocialPostLayoutKeys]: SocialPostLayoutElements;
+	[key in SocialPostLayoutKeys]?: SocialPostLayoutElements;
 } = {
-	// | 'Col_2_img_1_right_casual_topic' // new layout
-	// | 'Col_2_img_1_left_casual_topic' // new layout
-	// | 'First_page_img_1_casual_topic'
-	// | 'Col_1_img_0_casual_topic'
-	// // template2 serious subject
-	// | 'First_page_img_1_serious_subject'
-	// | 'img_0_serious_subject'
-	// // template3 reading notes
-	// | 'First_page_img_1_reading_notes'
-	// | 'Col_1_img_1_reading_notes'
-	// | 'Col_1_img_0_reading_notes'
-	// // last page layout
-	// | 'last_page_layout';
 	//casual
-	Col_2_img_1_left_casual_topic: {},
-	Col_2_img_1_right_casual_topic: {},
+	Col_2_img_1_left_casual_topic: {
+		canvasCSS: {
+			width: '100%',
+			height: '100%',
+			background: '#F5F1E2',
+			border: 'none',
+		},
+		columnCSS: {
+			padding: '100px 0px 100px 0px',
+			display: 'flex',
+			flexDirection: 'column',
+			gap: '20px',
+			height: '100%',
+			width: '100%',
+		},
+		pageNumberIndexCSS: {
+			color: '#F5F1E2',
+			fontFamily: 'Georgia',
+			fontSize: '42px',
+			fontStyle: 'normal',
+			fontWeight: 400,
+			lineHeight: 'normal',
+		},
+		pageNumberIndexContainerCSS: {
+			display: 'flex',
+			width: '68px',
+			height: '68px',
+			gap: '8px',
+			padding: '14px 10px 22px 10px',
+			justifyContent: 'center',
+			alignItems: 'center',
+			borderRadius: '999px',
+			border: '2px solid #333330',
+			background: '#333330',
+			alignSelf: 'center',
+			zIndex: 30,
+			position: 'absolute',
+			top: '160px',
+		},
+		subtopicCSS: {
+			position: 'relative',
+			zIndex: 30,
+			paddingLeft: '40px',
+			paddingRight: '40px',
+			maxHeight: '65px',
+		},
+		imageAndTextContentContainerCSS: {
+			// display: 'flex',
+			// flexDirection: 'row',
+			display: 'grid',
+			gridTemplateColumns: 'repeat(2, minmax(0,1fr))', //
+			gap: '4px',
+			width: '100%',
+			marginTop: '34px',
+			// height: '200px',
+			// maxHeight: '400px',
+		},
+		imageContainerCSS: {
+			order: 0,
+			// width: '100%',
+			// height: '100%',
+			height: '200px',
+			width: '100%', // equivalent to w-full
+			borderRadius:
+				'var(--radius-none, 0px) var(--radius-none, 0px) 96px var(--radius-none, 0px)',
+			// border: '10px solid black',
+		},
+
+		contentCSS: {
+			display: 'flex',
+			flexDirection: 'column',
+			gap: '10px',
+			order: 1,
+			maxHeight: '225px',
+			// overflow: 'scroll', // if set, will cause editor tooltip hidden
+			marginTop: '34px',
+		},
+		logoCSS: {
+			zIndex: 30,
+			position: 'relative',
+			alignSelf: 'center',
+			maxWidth: '100px',
+		},
+	},
+	Col_2_img_1_right_casual_topic: {
+		canvasCSS: {
+			width: '100%',
+			height: '100%',
+			background: '#F5F1E2',
+			border: 'none',
+		},
+		columnCSS: {
+			padding: '100px 0px 100px 0px',
+			display: 'flex',
+			flexDirection: 'column',
+			gap: '20px',
+			height: '100%',
+			width: '100%',
+		},
+		pageNumberIndexCSS: {
+			color: '#F5F1E2',
+			fontFamily: 'Georgia',
+			fontSize: '42px',
+			fontStyle: 'normal',
+			fontWeight: 400,
+			lineHeight: 'normal',
+		},
+		pageNumberIndexContainerCSS: {
+			display: 'flex',
+			width: '68px',
+			height: '68px',
+			gap: '8px',
+			padding: '14px 10px 22px 10px',
+			justifyContent: 'center',
+			alignItems: 'center',
+			borderRadius: '999px',
+			border: '2px solid #333330',
+			background: '#333330',
+			alignSelf: 'center',
+			zIndex: 30,
+			position: 'absolute',
+			top: '160px',
+		},
+		subtopicCSS: {
+			position: 'relative',
+			zIndex: 30,
+			paddingLeft: '40px',
+			paddingRight: '40px',
+			maxHeight: '65px',
+		},
+		imageAndTextContentContainerCSS: {
+			// display: 'flex',
+			// flexDirection: 'row',
+			display: 'grid',
+			gridTemplateColumns: 'repeat(2, minmax(0,1fr))', //
+			gap: '4px',
+			width: '100%',
+			height: 'auto',
+			marginTop: '34px',
+			// maxHeight: '400px',
+		},
+		imageContainerCSS: {
+			order: 1,
+			// width: '100%',
+			height: '200px',
+			width: '100%', // equivalent to w-full
+			borderRadius:
+				'var(--radius-none, 0px) var(--radius-none, 0px) var(--radius-none, 0px) 96px',
+			// border: '10px solid black',
+		},
+
+		contentCSS: {
+			display: 'flex',
+			flexDirection: 'column',
+			gap: '10px',
+			order: 0,
+			maxHeight: '225px',
+			// overflow: 'scroll',
+			marginTop: '34px',
+		},
+		logoCSS: {
+			zIndex: 30,
+			position: 'relative',
+			alignSelf: 'center',
+			maxWidth: '100px',
+		},
+	},
 	Col_1_img_0_casual_topic: {
 		canvasCSS: {
 			width: '100%',
 			height: '100%',
-			background: 'white',
+			background: '#F5F1E2',
 			border: 'none',
+		},
+		pageNumberIndexCSS: {
+			color: '#F5F1E2',
+			fontFamily: 'Georgia',
+			fontSize: '42px',
+			fontStyle: 'normal',
+			fontWeight: 400,
+			lineHeight: 'normal',
+		},
+		pageNumberIndexContainerCSS: {
+			display: 'flex',
+			width: '68px',
+			height: '68px',
+			gap: '8px',
+			padding: '14px 10px 22px 10px',
+			justifyContent: 'center',
+			alignItems: 'center',
+			borderRadius: '999px',
+			border: '2px solid #333330',
+			background: '#333330',
+			alignSelf: 'center',
+			zIndex: 30,
+			position: 'absolute',
+			top: '160px',
+		},
+		contentCSS: {
+			display: 'flex',
+			flexDirection: 'column',
+			gap: '10px',
+			height: '210px',
+			width: '100%',
+			marginTop: '88px',
+		},
+		subtopicCSS: {
+			position: 'relative',
+			zIndex: 30,
+			maxHeight: '65px',
+		},
+		columnCSS: {
+			padding: '100px 40px 100px 40px',
+			display: 'flex',
+			flexDirection: 'column',
+			gap: '20px',
+			width: '100%',
+			height: '100%',
+		},
+		logoCSS: {
+			zIndex: 30,
+			position: 'relative',
+			alignSelf: 'center',
+			maxWidth: '100px',
 		},
 	},
 	First_page_img_1_casual_topic: {
 		canvasCSS: {
 			width: '100%',
 			height: '100%',
-			background: 'white',
+			background: '#F5F1E2',
 			border: 'none',
 		},
-		topicAndKeywordsContainerCSS: {
+		columnCSS: {
+			padding: '100px 40px 100px 40px',
 			display: 'flex',
 			flexDirection: 'column',
+			width: '100%',
+			height: '100%',
+			// maxHeight: '400px',
+		},
+		topicCSS: {
+			position: 'relative',
+			zIndex: 30,
+			maxHeight: '135px',
+		},
+
+		userNameCSS: {
+			// paddingTop: '150px',
+			zIndex: 30,
+			position: 'relative',
+			// maxWidth: '260px',
+		},
+		logoCSS: { zIndex: 30, position: 'relative', maxWidth: '100px' },
+		indicatorCSS: {
+			zIndex: 30,
+			width: 'auto',
+		},
+		userNameAndLogoAndIndicatorBoxCSS: {
+			display: 'flex',
+			flexDirection: 'row',
+			justifyContent: 'space-between',
+			alignItems: 'center',
+			maxHeight: '100px',
+			width: '100%',
+			// position: 'relative',
+			marginTop: '240px',
+		},
+		userNameAndLogoBoxCSS: {
+			display: 'flex',
+			flexDirection: 'column',
+			gap: '14px',
 		},
 	},
 	//serious
-	First_page_img_1_serious_subject: {},
-	img_0_serious_subject: {},
+	First_page_img_1_serious_subject: {
+		canvasCSS: {
+			width: '100%',
+			height: '100%',
+			background: '#F5F1E2',
+			border: 'none',
+		},
+		columnCSS: {
+			padding: '100px 40px 100px 40px',
+			display: 'flex',
+			flexDirection: 'column',
+			width: '100%',
+			height: '100%',
+			// maxHeight: '400px',
+		},
+		originalTitleCSS: {
+			position: 'relative',
+			zIndex: 30,
+			maxHeight: '135px',
+		},
+
+		userNameCSS: {
+			// paddingTop: '150px',
+			zIndex: 30,
+			position: 'relative',
+			// maxWidth: '260px',
+		},
+		logoCSS: { zIndex: 30, position: 'relative', maxWidth: '100px' },
+		indicatorCSS: {
+			zIndex: 30,
+			width: 'auto',
+		},
+		userNameAndLogoAndIndicatorBoxCSS: {
+			display: 'flex',
+			flexDirection: 'row',
+			justifyContent: 'space-between',
+			alignItems: 'center',
+			maxHeight: '100px',
+			width: '100%',
+			// position: 'relative',
+			marginTop: '240px',
+		},
+		userNameAndLogoBoxCSS: {
+			display: 'flex',
+			flexDirection: 'column',
+			gap: '14px',
+		},
+	},
+	img_0_serious_subject: {
+		canvasCSS: {
+			width: '100%',
+			height: '100%',
+			background: '#F5F1E2',
+			border: 'none',
+		},
+		pageNumberIndexCSS: {
+			color: '#F5F1E2',
+			fontFamily: 'Georgia',
+			fontSize: '42px',
+			fontStyle: 'normal',
+			fontWeight: 400,
+			lineHeight: 'normal',
+		},
+		pageNumberIndexContainerCSS: {
+			display: 'flex',
+			width: '68px',
+			height: '68px',
+			gap: '8px',
+			padding: '14px 10px 22px 10px',
+			justifyContent: 'center',
+			alignItems: 'center',
+			borderRadius: '999px',
+			border: '2px solid #333330',
+			background: '#333330',
+			alignSelf: 'center',
+			zIndex: 30,
+			position: 'absolute',
+			top: '180px',
+		},
+		contentCSS: {
+			display: 'flex',
+			flexDirection: 'column',
+			gap: '10px',
+			height: '210px',
+			width: '100%',
+			marginTop: '74px',
+		},
+		sectionTitleCSS: {
+			position: 'relative',
+			zIndex: 30,
+			maxHeight: '65px',
+		},
+		columnCSS: {
+			padding: '100px 40px 100px 40px',
+			display: 'flex',
+			flexDirection: 'column',
+			gap: '20px',
+			width: '100%',
+			height: '100%',
+		},
+		logoCSS: {
+			zIndex: 30,
+			position: 'relative',
+			alignSelf: 'center',
+			maxWidth: '100px',
+		},
+	},
 	//reading notes
 	First_page_img_1_reading_notes: {},
 	Col_1_img_0_reading_notes: {},
 	Col_1_img_1_reading_notes: {},
 	// last page
-	last_page_layout: {},
+	last_page_layout: {
+		canvasCSS: {
+			width: '100%',
+			height: '100%',
+			background: '#F5F1E2',
+			border: 'none',
+		},
+		columnCSS: {
+			padding: '100px 40px 100px 40px',
+			display: 'flex',
+			flexDirection: 'column',
+			width: '100%',
+			height: '100%',
+			// maxHeight: '400px',
+		},
+		lastPageTitleCSS: {
+			position: 'relative',
+			zIndex: 30,
+			maxHeight: '135px',
+		},
+		lastPageContentCSS: {
+			position: 'relative',
+			zIndex: 30,
+			display: 'flex',
+			flexDirection: 'column',
+			gap: '10px',
+			marginTop: '40px',
+			// marginBottom: '170px',
+			height: '300px',
+			// maxHeight: '400px',
+			// overflow: 'scroll',
+		},
+		userNameCSS: {
+			// paddingTop: '150px',
+			zIndex: 30,
+			position: 'relative',
+			// maxWidth: '260px',
+		},
+		logoCSS: { zIndex: 30, position: 'relative', maxWidth: '100px' },
+		indicatorCSS: {
+			zIndex: 30,
+			width: 'auto',
+		},
+		userNameAndLogoAndIndicatorBoxCSS: {
+			display: 'flex',
+			flexDirection: 'row',
+			justifyContent: 'space-between',
+			alignItems: 'center',
+			maxHeight: '100px',
+			width: '100%',
+			// position: 'relative',
+		},
+		userNameAndLogoBoxCSS: {
+			display: 'flex',
+			flexDirection: 'column',
+			gap: '14px',
+		},
+	},
 };

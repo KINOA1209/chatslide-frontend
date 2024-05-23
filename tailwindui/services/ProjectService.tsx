@@ -1,6 +1,6 @@
 import { LayoutKeys } from '@/components/slides/slideLayout';
 import { TemplateKeys } from '@/components/slides/slideTemplates';
-import SocialPostSlide from '@/models/SocialPost';
+import { SocialPostSlide } from '@/models/SocialPost';
 import Project from '@/models/Project';
 import Slide from '@/models/Slide';
 import Chart, { Group } from '@/models/Chart';
@@ -334,7 +334,7 @@ class ProjectService {
 		post_type: string,
 	): SocialPostSlide[] {
 		const parse_slide = JSON.parse(social_posts);
-		console.log('parsed_slide is', parse_slide);
+		console.log('parsed_social_post is', parse_slide);
 		const slidesArray: SocialPostSlide[] = Object.keys(parse_slide).map(
 			(key, index) => {
 				const slideData = parse_slide[key];
@@ -380,15 +380,23 @@ class ProjectService {
 					}
 				}
 				slide.template_theme = slide.template_theme || 'classic';
-				slide.last_page_content =
-					slideData.last_page_content || 'Thank you! Follow to learn more!';
+				slide.last_page_content = slideData.last_page_content || [
+					'Thank you!',
+					'Follow to learn more!',
+				];
 				slide.last_page_title = slideData.last_page_title || 'Like & Share';
 				slide.keywords = slideData.keywords || '';
 				slide.topic = slideData.topic || 'Your topic here';
 				slide.subtopic = slideData.subtopic;
 				slide.images =
 					slideData.images.filter((img: string) => img && img !== '') || [];
-				slide.theme = slideData.theme;
+				slide.theme = slideData.theme || {
+					border_start: '',
+					border_end: '',
+					cover_start: '',
+					cover_end: '',
+				};
+				slide.user_name = slideData.user_name || '';
 				slide.content = slideData.content || ['Your content here'];
 				slide.section_title =
 					slideData.section_title || 'Your section title here';

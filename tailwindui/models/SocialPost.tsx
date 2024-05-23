@@ -30,7 +30,8 @@ export interface SlideElement {
 		| 'layout'
 		| 'template_theme'
 		| 'last_page_title'
-		| 'last_page_content';
+		| 'last_page_content'
+		| 'user_name';
 	content: string | string[];
 }
 
@@ -56,9 +57,11 @@ export type SlideKeys =
 	| 'layout'
 	| 'template_theme'
 	| 'last_page_title'
-	| 'last_page_content';
+	| 'last_page_content'
+	| 'user_name';
 
-export default class SocialPostSlide {
+export class SocialPostSlide {
+	user_name: string;
 	topic: string;
 	subtopic: string;
 	keywords: string;
@@ -80,7 +83,7 @@ export default class SocialPostSlide {
 	is_chart: boolean[];
 	layout: SocialPostLayoutKeys; // new
 	last_page_title: string;
-	last_page_content: string;
+	last_page_content: string[];
 
 	constructor() {
 		const emptyGroup: Group = {
@@ -90,6 +93,7 @@ export default class SocialPostSlide {
 			legend: '',
 		};
 
+		this.user_name = '';
 		this.topic = 'Your topic';
 		this.subtopic = 'Your subtopic';
 		this.keywords = 'Your keywords';
@@ -122,7 +126,7 @@ export default class SocialPostSlide {
 			axis: { x: '', y: '' },
 		}));
 		this.template_theme = 'classic';
-		this.last_page_content = 'Thank you! Follow to learn more!';
+		this.last_page_content = ['Thank you!', 'Follow to learn more!'];
 		this.last_page_title = 'Like & Share';
 	}
 }

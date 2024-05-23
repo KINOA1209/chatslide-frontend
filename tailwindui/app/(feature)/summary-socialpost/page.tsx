@@ -135,6 +135,7 @@ export default function Topic_SocialPost() {
 			model_name: llmModel === 'GPT-3.5' ? 'gpt-3.5-turbo' : 'gpt-4',
 			post_style: postStyle,
 			knowledge_summary: knowledge_summary,
+			require_last_page: true, // to require an exxtra page for last page (like & share)
 		};
 		bulkUpdateProject({
 			topic: topic,
