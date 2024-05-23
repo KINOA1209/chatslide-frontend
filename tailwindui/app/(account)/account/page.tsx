@@ -13,12 +13,24 @@ import DrlambdaButton, {
 	InversedBigBlueButton,
 } from '@/components/button/DrlambdaButton';
 import { NewInputBox } from '@/components/ui/InputBox';
-import { FaInbox, FaKey, FaMoneyBill, FaRegStar, FaStar, FaUser } from 'react-icons/fa';
+import {
+	FaInbox,
+	FaKey,
+	FaMoneyBill,
+	FaRegStar,
+	FaStar,
+	FaUser,
+} from 'react-icons/fa';
 import { useUser } from '@/hooks/use-user';
 import useHydrated from '@/hooks/use-hydrated';
 import SessionStorage from '@/utils/SessionStorage';
 import Card from '@/components/ui/Card';
-import { BigTitle, Explanation, Instruction, Title } from '@/components/ui/Text';
+import {
+	BigTitle,
+	Explanation,
+	Instruction,
+	Title,
+} from '@/components/ui/Text';
 import { Panel } from '@/components/layout/Panel';
 import { Column } from '@/components/layout/Column';
 import { getBrand } from '@/utils/getHost';
@@ -328,22 +340,22 @@ const Affiliate = () => {
 		user?.rewardful_code || '',
 	);
 	const router = useRouter();
-  const [isSubmitting, setIsSubmitting] = useState(false);
+	const [isSubmitting, setIsSubmitting] = useState(false);
 
 	useEffect(() => {
 		setRewardfulCode(user?.rewardful_code || '');
 	}, [user]);
 
-  async function handleUpdateRewardfulCode() {
-    setIsSubmitting(true);
-    try {
-      await UserService.updateRewardfulCode(rewardfulCode, token);
-      toast.success('Rewardful code updated successfully');
-    } catch (error) {
-      toast.error('Failed to update rewardful code');
-    }
-    setIsSubmitting(false);
-  }
+	async function handleUpdateRewardfulCode() {
+		setIsSubmitting(true);
+		try {
+			await UserService.updateRewardfulCode(rewardfulCode, token);
+			toast.success('Rewardful code updated successfully');
+		} catch (error) {
+			toast.error('Failed to update rewardful code');
+		}
+		setIsSubmitting(false);
+	}
 
 	return (
 		<Card>
@@ -429,8 +441,17 @@ const Affiliate = () => {
 };
 
 const CreditHistory = () => {
-	const { credits } = useUser();
+	const { credits, token } = useUser();
 	const router = useRouter();
+	const [stripeLink, setStripeLink] = useState('');
+
+	useEffect(() => {
+		async function fetchStripeLink() {
+			const link = await UserService.createStripePortalSession(token);
+			setStripeLink(link);
+		}
+		fetchStripeLink();
+	}, []);
 
 	return (
 		<div className='w-full'>
@@ -439,13 +460,15 @@ const CreditHistory = () => {
 				<BigTitle>
 					<>{credits}</>
 				</BigTitle>
-				<InversedBigBlueButton
-					onClick={() => {
-						router.push('/pricing');
-					}}
-				>
-					Mange Subscription
-				</InversedBigBlueButton>
+				{stripeLink && (
+					<InversedBigBlueButton
+						onClick={() => {
+							router.push(stripeLink);
+						}}
+					>
+						Mange Subscription
+					</InversedBigBlueButton>
+				)}
 			</WrappableRow>
 		</div>
 	);
@@ -500,7 +523,7 @@ export default function Account() {
 
 				<UnlimitedUpgrade />
 
-        <Affiliate />
+				<Affiliate />
 			</Panel>
 		</Column>
 	);
