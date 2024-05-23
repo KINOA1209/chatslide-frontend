@@ -24,8 +24,10 @@ import { useLocalImgs } from './slideTemplates';
 import { ThemeElements } from './templates_customizable_elements/theme_elements';
 // import { LayoutElements } from './templates_customizable_elements/layout_elements';
 import { LayoutElements } from '@/components/slides/templates_customizable_elements/layout_elements';
-import ImagePosition from '@/models/ImagePosition';
+import ImagesPosition from '@/models/ImagesPosition';
 import { useSlides } from '@/hooks/use-slides';
+import ResizeSlider from './drag_resize/resize_slider';
+import '@/components/slides/drag_resize/dragAndResizeCSS.css';
 import dynamic from 'next/dynamic';
 import Slide, { Media, SlideKeys } from '@/models/Slide';
 const QuillEditable = dynamic(
@@ -385,7 +387,7 @@ export const Cover_img_1_layout = ({
 	handleSlideEdit,
 	currentSlideIndex,
 	isShowingLogo,
-	image_positions,
+	images_position,
 	embed_code,
 	media_types,
 }: MainSlideProps) => {
@@ -394,7 +396,7 @@ export const Cover_img_1_layout = ({
 		(
 			imgSrc: string,
 			ischart: boolean,
-			image_position: ImagePosition,
+			image_position: ImagesPosition,
 			embed_code_single: string,
 			media_type: Media,
 		) => {
@@ -406,10 +408,10 @@ export const Cover_img_1_layout = ({
 			if (index >= newIsCharts.length) newIsCharts.push(ischart);
 			else newIsCharts[index] = ischart;
 
-			const newImagePosition = [...image_positions];
-			if (index >= newImagePosition.length)
-				newImagePosition.push(image_position);
-			else newImagePosition[index] = image_position;
+			const newImagesPosition = [...images_position];
+			if (index >= newImagesPosition.length)
+				newImagesPosition.push(image_position);
+			else newImagesPosition[index] = image_position;
 
 			const newEmbedCode = [...embed_code];
 			if (index >= newEmbedCode.length) newEmbedCode.push(embed_code_single);
@@ -422,7 +424,7 @@ export const Cover_img_1_layout = ({
 			update_callback(
 				newImgs,
 				newIsCharts,
-				newImagePosition,
+				newImagesPosition,
 				newEmbedCode,
 				newMediaTypes,
 			);
@@ -480,7 +482,7 @@ export const Cover_img_1_layout = ({
 					currentSlideIndex={currentSlideIndex}
 					currentContentIndex={0}
 					canEdit={canEdit}
-					image_positions={image_positions}
+					images_position={images_position}
 					layoutElements={layoutElements}
 					customImageStyle={layoutElements.imageCSS}
 					// additional_images={imgs.slice(3)}
@@ -1364,7 +1366,7 @@ export const Col_2_img_1_layout = ({
 	handleSlideEdit,
 	currentSlideIndex,
 	isShowingLogo,
-	image_positions,
+	images_position,
 	embed_code,
 	media_types,
 }: MainSlideProps) => {
@@ -1373,7 +1375,7 @@ export const Col_2_img_1_layout = ({
 		(
 			imgSrc: string,
 			ischart: boolean,
-			image_position: ImagePosition,
+			image_position: ImagesPosition,
 			embed_code_single: string,
 			media_type: Media,
 		) => {
@@ -1385,10 +1387,10 @@ export const Col_2_img_1_layout = ({
 			if (index >= newIsCharts.length) newIsCharts.push(ischart);
 			else newIsCharts[index] = ischart;
 
-			const newImagePosition = [...image_positions];
-			if (index >= newImagePosition.length)
-				newImagePosition.push(image_position);
-			else newImagePosition[index] = image_position;
+			const newImagesPosition = [...images_position];
+			if (index >= newImagesPosition.length)
+				newImagesPosition.push(image_position);
+			else newImagesPosition[index] = image_position;
 
 			const newEmbedCode = [...embed_code];
 			if (index >= newEmbedCode.length) newEmbedCode.push(embed_code_single);
@@ -1401,7 +1403,7 @@ export const Col_2_img_1_layout = ({
 			update_callback(
 				newImgs,
 				newIsCharts,
-				newImagePosition,
+				newImagesPosition,
 				newEmbedCode,
 				newMediaTypes,
 			);
@@ -1525,7 +1527,7 @@ export const Col_2_img_1_layout = ({
 					currentSlideIndex={currentSlideIndex}
 					currentContentIndex={0}
 					canEdit={canEdit}
-					image_positions={image_positions}
+					images_position={images_position}
 					layoutElements={layoutElements}
 					customImageStyle={layoutElements.imageCSS}
 					setImgHigherZIndex={setImgHigherZIndex}
@@ -1584,7 +1586,7 @@ export const Col_1_img_1_layout = ({
 	handleSlideEdit,
 	currentSlideIndex,
 	isShowingLogo,
-	image_positions,
+	images_position,
 	embed_code,
 	media_types,
 }: MainSlideProps) => {
@@ -1593,7 +1595,7 @@ export const Col_1_img_1_layout = ({
 		(
 			imgSrc: string,
 			ischart: boolean,
-			image_position: ImagePosition,
+			image_position: ImagesPosition,
 			embed_code_single: string,
 			media_type: Media,
 		) => {
@@ -1605,10 +1607,10 @@ export const Col_1_img_1_layout = ({
 			if (index >= newIsCharts.length) newIsCharts.push(ischart);
 			else newIsCharts[index] = ischart;
 
-			const newImagePosition = [...image_positions];
-			if (index >= newImagePosition.length)
-				newImagePosition.push(image_position);
-			else newImagePosition[index] = image_position;
+			const newImagesPosition = [...images_position];
+			if (index >= newImagesPosition.length)
+				newImagesPosition.push(image_position);
+			else newImagesPosition[index] = image_position;
 
 			const newEmbedCode = [...embed_code];
 			if (index >= newEmbedCode.length) newEmbedCode.push(embed_code_single);
@@ -1621,7 +1623,7 @@ export const Col_1_img_1_layout = ({
 			update_callback(
 				newImgs,
 				newIsCharts,
-				newImagePosition,
+				newImagesPosition,
 				newEmbedCode,
 				newMediaTypes,
 			);
@@ -1721,7 +1723,7 @@ export const Col_1_img_1_layout = ({
 						currentSlideIndex={currentSlideIndex}
 						currentContentIndex={0}
 						canEdit={canEdit}
-						image_positions={image_positions}
+						images_position={images_position}
 						layoutElements={layoutElements}
 						customImageStyle={layoutElements.imageCSS}
 						setImgHigherZIndex={setImgHigherZIndex}
@@ -1825,7 +1827,7 @@ export const Col_2_img_2_layout = ({
 	handleSlideEdit,
 	currentSlideIndex,
 	isShowingLogo,
-	image_positions,
+	images_position,
 	embed_code,
 	media_types,
 }: MainSlideProps) => {
@@ -1834,7 +1836,7 @@ export const Col_2_img_2_layout = ({
 		(
 			imgSrc: string,
 			ischart: boolean,
-			image_position: ImagePosition,
+			image_position: ImagesPosition,
 			embed_code_single: string,
 			media_type: Media,
 		) => {
@@ -1846,10 +1848,10 @@ export const Col_2_img_2_layout = ({
 			if (index >= newIsCharts.length) newIsCharts.push(ischart);
 			else newIsCharts[index] = ischart;
 
-			const newImagePosition = [...image_positions];
-			if (index >= newImagePosition.length)
-				newImagePosition.push(image_position);
-			else newImagePosition[index] = image_position;
+			const newImagesPosition = [...images_position];
+			if (index >= newImagesPosition.length)
+				newImagesPosition.push(image_position);
+			else newImagesPosition[index] = image_position;
 
 			const newEmbedCode = [...embed_code];
 			if (index >= newEmbedCode.length) newEmbedCode.push(embed_code_single);
@@ -1862,7 +1864,7 @@ export const Col_2_img_2_layout = ({
 			update_callback(
 				newImgs,
 				newIsCharts,
-				newImagePosition,
+				newImagesPosition,
 				newEmbedCode,
 				newMediaTypes,
 			);
@@ -2012,7 +2014,7 @@ export const Col_2_img_2_layout = ({
 							currentSlideIndex={currentSlideIndex}
 							currentContentIndex={0}
 							canEdit={canEdit}
-							image_positions={image_positions}
+							images_position={images_position}
 							layoutElements={layoutElements}
 							customImageStyle={layoutElements.imageCSS}
 							setImgHigherZIndex={setImgHigherZIndex}
@@ -2045,7 +2047,7 @@ export const Col_2_img_2_layout = ({
 							currentSlideIndex={currentSlideIndex}
 							currentContentIndex={1}
 							canEdit={canEdit}
-							image_positions={image_positions}
+							images_position={images_position}
 							layoutElements={layoutElements}
 							customImageStyle={layoutElements.imageCSS}
 							setImgHigherZIndex={setImgHigherZIndex}
@@ -2216,7 +2218,7 @@ export const Col_3_img_3_layout = ({
 	handleSlideEdit,
 	currentSlideIndex,
 	isShowingLogo,
-	image_positions,
+	images_position,
 	embed_code,
 	media_types,
 }: MainSlideProps) => {
@@ -2225,7 +2227,7 @@ export const Col_3_img_3_layout = ({
 		(
 			imgSrc: string,
 			ischart: boolean,
-			image_position: ImagePosition,
+			image_position: ImagesPosition,
 			embed_code_single: string,
 			media_type: Media,
 		) => {
@@ -2237,10 +2239,10 @@ export const Col_3_img_3_layout = ({
 			if (index >= newIsCharts.length) newIsCharts.push(ischart);
 			else newIsCharts[index] = ischart;
 
-			const newImagePosition = [...image_positions];
-			if (index >= newImagePosition.length)
-				newImagePosition.push(image_position);
-			else newImagePosition[index] = image_position;
+			const newImagesPosition = [...images_position];
+			if (index >= newImagesPosition.length)
+				newImagesPosition.push(image_position);
+			else newImagesPosition[index] = image_position;
 
 			const newEmbedCode = [...embed_code];
 			if (index >= newEmbedCode.length) newEmbedCode.push(embed_code_single);
@@ -2253,7 +2255,7 @@ export const Col_3_img_3_layout = ({
 			update_callback(
 				newImgs,
 				newIsCharts,
-				newImagePosition,
+				newImagesPosition,
 				newEmbedCode,
 				newMediaTypes,
 			);
@@ -2355,7 +2357,7 @@ export const Col_3_img_3_layout = ({
 							currentSlideIndex={currentSlideIndex}
 							currentContentIndex={0}
 							canEdit={canEdit}
-							image_positions={image_positions}
+							images_position={images_position}
 							layoutElements={layoutElements}
 							customImageStyle={layoutElements.imageCSS}
 							setImgHigherZIndex={setImgHigherZIndex}
@@ -2379,7 +2381,7 @@ export const Col_3_img_3_layout = ({
 							currentSlideIndex={currentSlideIndex}
 							currentContentIndex={1}
 							canEdit={canEdit}
-							image_positions={image_positions}
+							images_position={images_position}
 							layoutElements={layoutElements}
 							customImageStyle={layoutElements.imageCSS}
 							setImgHigherZIndex={setImgHigherZIndex}
@@ -2403,7 +2405,7 @@ export const Col_3_img_3_layout = ({
 							currentSlideIndex={currentSlideIndex}
 							currentContentIndex={2}
 							canEdit={canEdit}
-							image_positions={image_positions}
+							images_position={images_position}
 							layoutElements={layoutElements}
 							customImageStyle={layoutElements.imageCSS}
 							setImgHigherZIndex={setImgHigherZIndex}
@@ -2682,7 +2684,7 @@ export const Full_img_only_layout = ({
 	handleSlideEdit,
 	currentSlideIndex,
 	isShowingLogo,
-	image_positions,
+	images_position,
 	embed_code,
 	media_types,
 }: MainSlideProps) => {
@@ -2691,7 +2693,7 @@ export const Full_img_only_layout = ({
 		(
 			imgSrc: string,
 			ischart: boolean,
-			image_position: ImagePosition,
+			image_position: ImagesPosition,
 			embed_code_single: string,
 			media_type: Media,
 		) => {
@@ -2703,10 +2705,10 @@ export const Full_img_only_layout = ({
 			if (index >= newIsCharts.length) newIsCharts.push(ischart);
 			else newIsCharts[index] = ischart;
 
-			const newImagePosition = [...image_positions];
-			if (index >= newImagePosition.length)
-				newImagePosition.push(image_position);
-			else newImagePosition[index] = image_position;
+			const newImagesPosition = [...images_position];
+			if (index >= newImagesPosition.length)
+				newImagesPosition.push(image_position);
+			else newImagesPosition[index] = image_position;
 
 			const newEmbedCode = [...embed_code];
 			if (index >= newEmbedCode.length) newEmbedCode.push(embed_code_single);
@@ -2719,7 +2721,7 @@ export const Full_img_only_layout = ({
 			update_callback(
 				newImgs,
 				newIsCharts,
-				newImagePosition,
+				newImagesPosition,
 				newEmbedCode,
 				newMediaTypes,
 			);
@@ -2755,7 +2757,7 @@ export const Full_img_only_layout = ({
 						currentSlideIndex={currentSlideIndex}
 						currentContentIndex={0}
 						canEdit={canEdit}
-						image_positions={image_positions}
+						images_position={images_position}
 						layoutElements={layoutElements}
 						customImageStyle={layoutElements.imageCSS}
 						setImgHigherZIndex={setImgHigherZIndex}

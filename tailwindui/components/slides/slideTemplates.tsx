@@ -34,7 +34,7 @@ import {
 import Image from 'next/image';
 import { Media, SlideKeys } from '@/models/Slide';
 import Chart from '@/models/Chart';
-import ImagePosition from '@/models/ImagePosition';
+import ImagesPosition from '@/models/ImagesPosition';
 
 import { ThemeElements } from './templates_customizable_elements/theme_elements';
 import { LayoutElements } from './templates_customizable_elements/layout_elements';
@@ -62,7 +62,7 @@ export const generateTemplate = (templateName: string) => {
 		handleSlideEdit,
 		currentSlideIndex,
 		isShowingLogo,
-		image_positions,
+		images_position,
 		palette,
 		themeElements,
 		layoutElements,
@@ -147,7 +147,7 @@ export const generateTemplate = (templateName: string) => {
 						handleSlideEdit={handleSlideEdit}
 						currentSlideIndex={currentSlideIndex}
 						isShowingLogo={isShowingLogo}
-						image_positions={image_positions}
+						images_position={images_position}
 						embed_code={embed_code}
 						media_types={media_types}
 					></ChosenLayoutNonCover>
@@ -206,7 +206,7 @@ export const generateTemplate = (templateName: string) => {
 						handleSlideEdit={handleSlideEdit}
 						currentSlideIndex={currentSlideIndex}
 						isShowingLogo={isShowingLogo}
-						image_positions={image_positions}
+						images_position={images_position}
 						embed_code={embed_code}
 						media_types={media_types}
 					></ChosenLayoutCover>
@@ -273,7 +273,7 @@ export interface MainSlideProps {
 	update_callback: (
 		imgs: string[],
 		ischart: boolean[],
-		image_positions: ImagePosition[],
+		images_position: ImagesPosition[],
 		embed_code: string[],
 		media_types: Media[],
 	) => void;
@@ -290,7 +290,7 @@ export interface MainSlideProps {
 	handleSlideEdit: Function;
 	currentSlideIndex: number;
 	isShowingLogo?: boolean;
-	image_positions: ImagePosition[];
+	images_position: ImagesPosition[];
 	palette?: PaletteKeys;
 	template?: TemplateKeys;
 	themeElements: ThemeElements;

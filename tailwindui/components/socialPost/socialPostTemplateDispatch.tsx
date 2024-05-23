@@ -9,7 +9,7 @@ import 'quill/dist/quill.bubble.css';
 import '@/components/socialPost/quillEditor.scss';
 import SocialPostSlide, { SlideKeys } from '@/models/SocialPost';
 import Chart, { Group } from '@/models/Chart';
-import ImagePosition from '@/models/ImagePosition';
+import ImagesPosition from '@/models/ImagesPosition';
 import { useProject } from '@/hooks/use-project';
 import themeConfigData from './templates_customizable_elements/theme_elements';
 import { PostTypeKeys } from './templates_customizable_elements/theme_elements';
@@ -39,14 +39,14 @@ export const templateDispatch = (
 	) => (
 		urls: string[],
 		ischart: boolean[],
-		image_positions: ImagePosition[],
+		images_position: ImagesPosition[],
 	) => void = () => () => {}, // Replace with your default function if you have one
 	updateIllustrationUrlArray: (
 		slideIndex: number,
 	) => (
 		urls: string[],
 		ischart: boolean[],
-		image_positions: ImagePosition[],
+		images_position: ImagesPosition[],
 	) => void = () => () => {},
 	toggleEditMathMode: () => void = () => {}, // Replace with your default function if you have one
 ): JSX.Element => {
@@ -134,7 +134,7 @@ export const templateDispatch = (
 				illustration={slide.illustration as string[]}
 				charts={slide.chart || defaultChartArr}
 				ischarts={slide.is_chart}
-				image_positions={slide.image_positions || ['contain', 'contain', 'contain']}
+				images_position={slide.images_position || [{}, {}, {}]}
 				canEdit={canEdit}
 				imgs={slide.images}
 				border_start={slide.theme?.border_start || '#937C67'}
@@ -199,7 +199,7 @@ export const templateDispatch = (
 				illustration={slide.illustration as string[]}
 				charts={slide.chart || defaultChartArr}
 				ischarts={slide.is_chart}
-				image_positions={slide.image_positions || ['contain', 'contain', 'contain']}
+				images_position={slide.images_position || [{}, {}, {}]}
 				handleSlideEdit={handleSlideEdit}
 				update_callback={getUpdateCallback(
 					project?.post_type || 'casual_topic',

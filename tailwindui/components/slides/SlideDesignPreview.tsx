@@ -61,7 +61,7 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 			newSlide.template = template;
 			newSlide.palette = color_theme;
 			newSlide.layout = layoutKey as keyof typeof layoutOptions;
-			newSlide.image_positions = slides[0]?.image_positions;
+			newSlide.images_position = slides[0]?.images_position;
 			// add background url and logo_url for preview
 			newSlide.background_url =
 				project?.selected_background?.[0]?.thumbnail_url || '';

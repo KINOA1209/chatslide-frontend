@@ -28,7 +28,7 @@ import { useProject } from '@/hooks/use-project';
 import { useUser } from '@/hooks/use-user';
 import SocialPostSlide, { SlideKeys } from '@/models/SocialPost';
 import { useSocialPosts } from '@/hooks/use-socialpost';
-import ImagePosition from '@/models/ImagePosition';
+import ImagesPosition from '@/models/ImagesPosition';
 import Chart from '@/models/Chart';
 import { ToolBar } from '../ui/ToolBar';
 import ShareButton from '@/components/button/ShareButton';
@@ -221,7 +221,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 			| string
 			| string[]
 			| ThemeObject
-			| Array<string | string[] | Chart[] | boolean[] | ImagePosition[]>
+			| Array<string | string[] | Chart[] | boolean[] | ImagesPosition[]>
 			| ThemeObject,
 		slideIndex: number,
 		tag: SlideKeys | SlideKeys[],
@@ -242,7 +242,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 				| string[]
 				| Chart[]
 				| boolean[]
-				| ImagePosition[]
+				| ImagesPosition[]
 				| ThemeObject,
 			className: string,
 		) => {
@@ -300,8 +300,8 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 				currentSlide.chart = content as Chart[];
 			} else if (className === 'is_chart') {
 				currentSlide.is_chart = content as boolean[];
-			} else if (className === 'image_positions') {
-				currentSlide.image_positions = content as ImagePosition[];
+			} else if (className === 'images_position') {
+				currentSlide.images_position = content as ImagesPosition[];
 			} else {
 				console.error(`Unknown tag: ${tag}`);
 			}
@@ -313,7 +313,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 					| string[]
 					| Chart[]
 					| boolean[]
-					| ImagePosition[]
+					| ImagesPosition[]
 					| ThemeObject;
 				if (Array.isArray(content)) {
 					if (idx < content.length) {
@@ -332,7 +332,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 			});
 		} else {
 			applyUpdate(
-				content as string | string[] | Chart[] | boolean[] | ImagePosition[],
+				content as string | string[] | Chart[] | boolean[] | ImagesPosition[],
 				className,
 			);
 		}
@@ -365,7 +365,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 		const updateImgUrl = (
 			urls: string[],
 			ischart: boolean[],
-			image_positions: ImagePosition[],
+			images_position: ImagesPosition[],
 		) => {
 			urls = urls.map((url) => (url === null ? '' : url));
 			const shuffleIndex = urls.indexOf('shuffle');
@@ -388,10 +388,10 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 			console.log('updateImgUrlArray called');
 			console.log('urls', urls);
 			console.log('prevUrls', prevUrls);
-			handleSlideEdit([urls, ischart, image_positions], slideIndex, [
+			handleSlideEdit([urls, ischart, images_position], slideIndex, [
 				'images',
 				'is_chart',
-				'image_positions',
+				'images_position',
 			]);
 		};
 		return updateImgUrl;
@@ -401,7 +401,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 		const updateIllustrationUrl = (
 			urls: string[],
 			ischart: boolean[],
-			image_positions: ImagePosition[],
+			images_position: ImagesPosition[],
 		) => {
 			urls = urls.map((url) => (url === null ? '' : url));
 			const shuffleIndex = urls.indexOf('shuffle');
@@ -424,10 +424,10 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 			console.log('updateIllustrationUrlArray called');
 			console.log('urls', urls);
 			console.log('prevUrls', prevUrls);
-			handleSlideEdit([urls, ischart, image_positions], slideIndex, [
+			handleSlideEdit([urls, ischart, images_position], slideIndex, [
 				'illustration',
 				'is_chart',
-				'image_positions',
+				'images_position',
 			]);
 		};
 		return updateIllustrationUrl;

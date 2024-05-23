@@ -1,7 +1,7 @@
 import { LayoutKeys } from '@/components/slides/slideLayout';
 import { PaletteKeys, TemplateKeys } from '@/components/slides/slideTemplates';
 import Chart, { Group } from '@/models/Chart';
-import ImagePosition from './ImagePosition';
+import ImagesPosition from './ImagesPosition';
 
 export interface SlideElement {
 	type: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'ul' | 'li' | 'br' | 'div';
@@ -45,7 +45,7 @@ export type SlideKeys =
 	| 'additional_images'
 	| 'chart'
 	| 'is_chart'
-	| 'image_positions'
+	| 'images_position'
 	| 'palette'
 	| 'embed_code'
 	| 'media_types'
@@ -68,7 +68,7 @@ export default class Slide {
 	is_chart: boolean[]; // deprecated, if is_chart[i] is false, then use image[i] for visualization, else use chart[i]
 	media_types: Media[]; // use this instead of is_chart
 	images: string[]; // urls of images
-	image_positions: ImagePosition[];
+	images_position: ImagesPosition[];
 	chart: Chart[]; // data of charts
 	layout: LayoutKeys;
 	embed_code?: string[];
@@ -116,7 +116,7 @@ export default class Slide {
 			groups: [emptyGroup],
 			axis: { x: '', y: '' },
 		}));
-		this.image_positions = ['contain', 'contain', 'contain'],
+		this.images_position = [{}, {}, {}];
 		this.layout = 'Col_2_img_1_layout';
 		this.logo = 'Default';
 		this.additional_images = [];
