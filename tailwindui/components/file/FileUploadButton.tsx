@@ -12,7 +12,19 @@ export const MEDIA_EXTENSIONS = [
 	'gif',
 	'avif',
 ];
-export const DOCUMENT_EXTENSIONS = ['pdf', 'txt', 'docx', 'doc', 'pages', 'pptx', 'ppt', 'key'];
+export const DOCUMENT_EXTENSIONS = [
+	'pdf',
+	'txt',
+	'docx',
+	'doc',
+	'pages',
+	'pptx',
+	'ppt',
+	'key',
+	'mp3',
+	'wav',
+	'm4a',
+];
 export const ALL_EXTENSIONS = [...MEDIA_EXTENSIONS, ...DOCUMENT_EXTENSIONS];
 
 const determineSupportedFormats = (pageInvoked: string) => {

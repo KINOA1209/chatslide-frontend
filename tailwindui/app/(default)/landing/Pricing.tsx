@@ -28,9 +28,6 @@ const PricingComparison: React.FC<{
 		if (!token) {
 			return 'Sign up to Start';
 		}
-		if (interval === 'onetime' && tier === 'ULTIMATE') {
-			return '⏹️ Unavailable';
-		}
 		if (userTier.includes('CANCELLED') || userTier === 'FREE') {
 			if (tier === 'FREE') return '✅ Current Plan';
 			else return '🌟 Claim Offer';
@@ -39,7 +36,7 @@ const PricingComparison: React.FC<{
 			if (tier === 'FREE') {
 				return '✅ Included';
 			} else if (tier === 'PLUS') {
-				return '✅ Current Plan';
+				return '⚙️ Manage Subscription';
 			} else {
 				return '🌟 Claim Offer';
 			}
@@ -48,7 +45,7 @@ const PricingComparison: React.FC<{
 			if (tier === 'FREE' || tier === 'PLUS') {
 				return '✅ Included';
 			} else if (tier === 'PRO') {
-				return '✅ Current Plan';
+				return '⚙️ Manage Subscription';
 			} else {
 				return '🌟 Claim Offer';
 			}
@@ -57,7 +54,7 @@ const PricingComparison: React.FC<{
 			if (tier === 'FREE' || tier === 'PLUS' || tier === 'PRO') {
 				return '✅ Included';
 			} else {
-				return '✅ Current Plan';
+				return '⚙️ Manage Subscription';
 			}
 		}
 		return '';

@@ -1,6 +1,6 @@
 import { ThemeObject } from '@/components/socialPost/socialPostThemeChanger';
 import Chart, { Group } from '@/models/Chart';
-import ImagesPosition from './ImagesPosition';
+import ImagePosition from './ImagePosition';
 import {
 	SocialPostLayoutKeys,
 	SocialPostTemplateKeys,
@@ -26,7 +26,7 @@ export interface SlideElement {
 		| 'theme'
 		| 'chart'
 		| 'is_chart'
-		| 'images_position'
+		| 'image_positions'
 		| 'layout'
 		| 'template_theme'
 		| 'last_page_title'
@@ -53,7 +53,7 @@ export type SlideKeys =
 	| 'theme'
 	| 'chart'
 	| 'is_chart'
-	| 'images_position'
+	| 'image_positions'
 	| 'layout'
 	| 'template_theme'
 	| 'last_page_title'
@@ -78,7 +78,7 @@ export class SocialPostSlide {
 	source: string;
 	theme: ThemeObject;
 	template_theme: SocialPostTemplateKeys;
-	images_position: ImagesPosition[];
+	image_positions: ImagePosition[];
 	chart: Chart[];
 	is_chart: boolean[];
 	layout: SocialPostLayoutKeys; // new
@@ -118,7 +118,7 @@ export class SocialPostSlide {
 			cover_end: '',
 		};
 		this.is_chart = [false, false, false];
-		this.images_position = [];
+		this.image_positions = [];
 		this.chart = Array.from({ length: 3 }, () => ({
 			type: '',
 			title: '',

@@ -441,7 +441,7 @@ export const useSlides = () => {
 		newSlide.logo = slides[index].logo;
 		newSlide.logo_url = slides[index].logo_url;
 		newSlide.background_url = slides[index].background_url;
-		newSlide.images_position = slides[index].images_position;
+		newSlide.image_positions = slides[index].image_positions;
 		const newSlides = [...slides];
 		newSlides.splice(index + 1, 0, newSlide);
 		setSlides(newSlides);
@@ -579,7 +579,7 @@ export const useSlides = () => {
 			return {
 				...slide,
 				palette: newPalette,
-				images_position: [{}, {}, {}],
+				// image_positions: ['contain', 'contain', 'contain'],
 			};
 		});
 		newSlides = newSlides.map((slide, index) => {
@@ -602,7 +602,11 @@ export const useSlides = () => {
 	const changeTemplate = (newTemplate: TemplateKeys) => {
 		console.log('Changing template to:', newTemplate);
 		let newSlides = slides.map((slide, index) => {
-			return { ...slide, template: newTemplate, images_position: [{}, {}, {}] };
+			return {
+				...slide,
+				template: newTemplate,
+				// image_positions: ['contain', 'contain', 'contain'],
+			};
 		});
 		newSlides = newSlides.map((slide, index) => {
 			return {
@@ -674,7 +678,7 @@ export const useSlides = () => {
 					? customizedTemplateContentFontColor
 					: initialLoadedContentFontColor,
 
-				// images_position: [{}, {}, {}],// comment this line because it cause the image position to be wrong after changing template and palette
+				// image_positions: [{}, {}, {}],// comment this line because it cause the image position to be wrong after changing template and palette
 			};
 		});
 		newSlides = newSlides.map((slide, index) => {

@@ -279,12 +279,24 @@ export default function DesignPage() {
 						background_color: hasSelectedCustomTemplateBgColor
 							? selectedTemplateBgColor
 							: undefined,
-						titleFontFamily: selectedTemplateTitleFontFamily,
-						subtitleFontFamily: selectedTemplateSubtitleFontFamily,
-						contentFontFamily: selectedTemplateContentFontFamily,
-						titleFontColor: selectedTemplateTitleFontColor,
-						subtitleFontColor: selectedTemplateSubtitleFontColor,
-						contentFontColor: selectedTemplateContentFontColor,
+						titleFontFamily: HasSelectedCustomizedTemplateTitleFontFamily
+							? selectedTemplateTitleFontFamily
+							: '',
+						subtitleFontFamily: HasSelectedCustomizedTemplateSubtitleFontFamily
+							? selectedTemplateSubtitleFontFamily
+							: '',
+						contentFontFamily: HasSelectedCustomizedTemplateContentFontFamily
+							? selectedTemplateContentFontFamily
+							: '',
+						titleFontColor: hasSelectedCustomizedTemplateTitleFontColor
+							? selectedTemplateTitleFontColor
+							: '',
+						subtitleFontColor: hasSelectedCustomizedTemplateSubtitleFontColor
+							? selectedTemplateSubtitleFontColor
+							: '',
+						contentFontColor: hasSelectedCustomizedTemplateContentFontColor
+							? selectedTemplateContentFontColor
+							: '',
 						logo: showLogo ? 'Default' : '',
 						logo_url: selectedLogo?.[0]?.thumbnail_url || '',
 						background_url: selectedBackground?.[0]?.thumbnail_url || '',

@@ -940,6 +940,7 @@ const MyFiles: React.FC<filesInterface> = ({
 			{/* Filter buttons */}
 			<div className='grid grid-cols-3 md:flex md:flex-row gap-4 px-[1rem] pt-[1rem]'>
 				<DesignSystemButton
+				  width='12rem'
 					isPaidFeature={false}
 					size='sm'
 					hierarchy='tertiary'
@@ -968,6 +969,7 @@ const MyFiles: React.FC<filesInterface> = ({
 				</DesignSystemButton>
 				{pageInvoked != 'theme' && (
 					<DesignSystemButton
+					  width='12rem'
 						isPaidFeature={false}
 						size='sm'
 						hierarchy='tertiary'
@@ -997,6 +999,7 @@ const MyFiles: React.FC<filesInterface> = ({
 				)}
 				{pageInvoked != 'summary' && (
 					<DesignSystemButton
+					  width='12rem'
 						isPaidFeature={false}
 						size='sm'
 						hierarchy='tertiary'
@@ -1026,6 +1029,7 @@ const MyFiles: React.FC<filesInterface> = ({
 				)}
 				{pageInvoked != 'theme' && (
 					<DesignSystemButton
+					  width='12rem'
 						isPaidFeature={false}
 						size='sm'
 						hierarchy='tertiary'
@@ -1055,6 +1059,7 @@ const MyFiles: React.FC<filesInterface> = ({
 				)}
 				{pageInvoked != 'theme' && (
 					<DesignSystemButton
+					  width='12rem'
 						isPaidFeature={false}
 						size='sm'
 						hierarchy='tertiary'
@@ -1084,6 +1089,7 @@ const MyFiles: React.FC<filesInterface> = ({
 				)}
 				{pageInvoked != 'summary' && (
 					<DesignSystemButton
+					  width='12rem'
 						isPaidFeature={false}
 						size='sm'
 						hierarchy='tertiary'

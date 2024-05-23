@@ -5,6 +5,7 @@ import Project from '@/models/Project';
 import Slide from '@/models/Slide';
 import Chart, { Group } from '@/models/Chart';
 import Folder from '@/models/Folder';
+import ImagePosition from '@/models/ImagePosition';
 
 export interface ProjectAndFolder {
 	projects: Project[];
@@ -275,7 +276,7 @@ class ProjectService {
 			slide.is_chart = slideData.is_chart || [false, false, false];
 			slide.media_types = slideData.media_types || ['image', 'image', 'image'];
 			slide.embed_code = slideData.embed_code || ['', '', ''];
-			slide.images_position = slideData.images_position;
+			slide.image_positions = slideData.image_positions as ImagePosition[];
 			// console.log(
 			//     'slideData.content.length',
 			//     slideData.content.length        // );
@@ -413,7 +414,7 @@ class ProjectService {
 				slide.source = slideData.source || '';
 				slide.chart = slideData.chart;
 				slide.is_chart = slideData.is_chart || [false, false, false];
-				slide.images_position = slideData.images_position;
+				slide.image_positions = slideData.image_positions;
 
 				return slide;
 			},

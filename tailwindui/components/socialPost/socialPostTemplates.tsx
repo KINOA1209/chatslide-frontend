@@ -11,7 +11,7 @@ import { h5Style } from './Styles';
 import 'quill/dist/quill.bubble.css';
 import '@/components/socialPost/quillEditor.scss';
 import Chart from '@/models/Chart';
-import ImagesPosition from '@/models/ImagesPosition';
+import ImagePosition from '@/models/ImagePosition';
 import { useSocialPosts } from '@/hooks/use-socialpost';
 import '@/components/socialPost/socialPostCustomFonts.css';
 import { getBrand } from '@/utils/getHost';
@@ -47,7 +47,7 @@ interface MainSlidePropsSocialPost {
 	update_callback: (
 		imgs: string[],
 		ischart: boolean[],
-		images_position: ImagesPosition[],
+		image_positions: ImagePosition[],
 	) => void;
 	canEdit: boolean;
 	//autoSave: Function;
@@ -58,7 +58,7 @@ interface MainSlidePropsSocialPost {
 	topic: JSX.Element;
 	charts: Chart[];
 	ischarts: boolean[];
-	images_position: ImagesPosition[];
+	image_positions: ImagePosition[];
 	handleSlideEdit: Function;
 	layoutElements: SocialPostLayoutElements;
 	themeElements: SocialPostThemeElements;
@@ -311,7 +311,7 @@ export const First_page_img_1_casual_topic = ({
 	canEdit,
 	charts,
 	ischarts,
-	images_position,
+	image_positions,
 	handleSlideEdit,
 	layoutElements,
 	themeElements,
@@ -325,7 +325,7 @@ export const First_page_img_1_casual_topic = ({
 	// });
 	const updateImgAtIndex =
 		(index: number) =>
-		(imgSrc: string, ischart: boolean, image_position: ImagesPosition) => {
+		(imgSrc: string, ischart: boolean, image_position: ImagePosition) => {
 			const newImgs = [...imgs];
 			if (index >= newImgs.length) newImgs.push(imgSrc);
 			else newImgs[index] = imgSrc;
@@ -334,12 +334,12 @@ export const First_page_img_1_casual_topic = ({
 			if (index >= newIsCharts.length) newIsCharts.push(ischart);
 			else newIsCharts[index] = ischart;
 
-			const newImagesPosition = [...images_position];
-			if (index >= newImagesPosition.length)
-				newImagesPosition.push(image_position);
-			else newImagesPosition[index] = image_position;
+			const newImagePosition = [...image_positions];
+			if (index >= newImagePosition.length)
+				newImagePosition.push(image_position);
+			else newImagePosition[index] = image_position;
 
-			update_callback(newImgs, newIsCharts, newImagesPosition);
+			update_callback(newImgs, newIsCharts, newImagePosition);
 		};
 
 	const { socialPostsIndex, setSocialPostsIndex } = useSocialPosts();
@@ -379,7 +379,7 @@ export const First_page_img_1_casual_topic = ({
 						handleSlideEdit={handleSlideEdit}
 						canEdit={canEdit}
 						currentSlideIndex={socialPostsIndex}
-						images_position={images_position}
+						image_positions={image_positions}
 						isSlide={false}
 						isSocialPostTemp1Cover={true}
 						currentContentIndex={0}
@@ -629,7 +629,7 @@ export const Col_2_img_1_left_casual_topic = ({
 	canEdit,
 	charts,
 	ischarts,
-	images_position,
+	image_positions,
 	handleSlideEdit,
 	layoutElements,
 	themeElements,
@@ -639,7 +639,7 @@ export const Col_2_img_1_left_casual_topic = ({
 }: MainSlidePropsSocialPost) => {
 	const updateImgAtIndex =
 		(index: number) =>
-		(imgSrc: string, ischart: boolean, image_position: ImagesPosition) => {
+		(imgSrc: string, ischart: boolean, image_position: ImagePosition) => {
 			const newImgs = [...imgs];
 			if (index >= newImgs.length) newImgs.push(imgSrc);
 			else newImgs[index] = imgSrc;
@@ -648,12 +648,12 @@ export const Col_2_img_1_left_casual_topic = ({
 			if (index >= newIsCharts.length) newIsCharts.push(ischart);
 			else newIsCharts[index] = ischart;
 
-			const newImagesPosition = [...images_position];
-			if (index >= newImagesPosition.length)
-				newImagesPosition.push(image_position);
-			else newImagesPosition[index] = image_position;
+			const newImagePosition = [...image_positions];
+			if (index >= newImagePosition.length)
+				newImagePosition.push(image_position);
+			else newImagePosition[index] = image_position;
 
-			update_callback(newImgs, newIsCharts, newImagesPosition);
+			update_callback(newImgs, newIsCharts, newImagePosition);
 		};
 
 	const { socialPostsIndex, setSocialPostsIndex } = useSocialPosts();
@@ -728,7 +728,7 @@ export const Col_2_img_1_left_casual_topic = ({
 							layoutElements={layoutElements}
 							customImageStyle={layoutElements.imageContainerCSS}
 							currentSlideIndex={socialPostsIndex}
-							images_position={images_position}
+							image_positions={image_positions}
 							isSlide={false}
 							isSocialPostTemp1Cover={true}
 							currentContentIndex={0}
@@ -766,7 +766,7 @@ export const Col_2_img_1_Right_casual_topic = ({
 	canEdit,
 	charts,
 	ischarts,
-	images_position,
+	image_positions,
 	handleSlideEdit,
 	layoutElements,
 	themeElements,
@@ -776,7 +776,7 @@ export const Col_2_img_1_Right_casual_topic = ({
 }: MainSlidePropsSocialPost) => {
 	const updateImgAtIndex =
 		(index: number) =>
-		(imgSrc: string, ischart: boolean, image_position: ImagesPosition) => {
+		(imgSrc: string, ischart: boolean, image_position: ImagePosition) => {
 			const newImgs = [...imgs];
 			if (index >= newImgs.length) newImgs.push(imgSrc);
 			else newImgs[index] = imgSrc;
@@ -785,7 +785,7 @@ export const Col_2_img_1_Right_casual_topic = ({
 			if (index >= newIsCharts.length) newIsCharts.push(ischart);
 			else newIsCharts[index] = ischart;
 
-			const newImagesPosition = [...images_position];
+			const newImagesPosition = [...image_positions];
 			if (index >= newImagesPosition.length)
 				newImagesPosition.push(image_position);
 			else newImagesPosition[index] = image_position;
@@ -865,7 +865,7 @@ export const Col_2_img_1_Right_casual_topic = ({
 							layoutElements={layoutElements}
 							customImageStyle={layoutElements.imageContainerCSS}
 							currentSlideIndex={socialPostsIndex}
-							images_position={images_position}
+							image_positions={image_positions}
 							isSlide={false}
 							isSocialPostTemp1Cover={true}
 							currentContentIndex={0}
@@ -912,7 +912,7 @@ export const First_page_img_1_serious_subject = ({
 	canEdit,
 	charts,
 	ischarts,
-	images_position,
+	image_positions,
 	handleSlideEdit,
 	layoutElements,
 	themeElements,
@@ -922,7 +922,7 @@ export const First_page_img_1_serious_subject = ({
 }: MainSlidePropsSocialPost) => {
 	const updateImgAtIndex =
 		(index: number) =>
-		(imgSrc: string, ischart: boolean, image_position: ImagesPosition) => {
+		(imgSrc: string, ischart: boolean, image_position: ImagePosition) => {
 			const newImgs = [...imgs];
 			if (index >= newImgs.length) newImgs.push(imgSrc);
 			else newImgs[index] = imgSrc;
@@ -931,12 +931,12 @@ export const First_page_img_1_serious_subject = ({
 			if (index >= newIsCharts.length) newIsCharts.push(ischart);
 			else newIsCharts[index] = ischart;
 
-			const newImagesPosition = [...images_position];
-			if (index >= newImagesPosition.length)
-				newImagesPosition.push(image_position);
-			else newImagesPosition[index] = image_position;
+			const newImagePosition = [...image_positions];
+			if (index >= newImagePosition.length)
+				newImagePosition.push(image_position);
+			else newImagePosition[index] = image_position;
 
-			update_callback(newImgs, newIsCharts, newImagesPosition);
+			update_callback(newImgs, newIsCharts, newImagePosition);
 		};
 
 	const [username, setUsername] = useState(null);
@@ -1109,14 +1109,14 @@ export const First_page_img_1_reading_notes = ({
 	canEdit,
 	charts,
 	ischarts,
-	images_position,
+	image_positions,
 	handleSlideEdit,
 	layoutElements,
 	themeElements,
 }: MainSlidePropsSocialPost) => {
 	const updateImgAtIndex =
 		(index: number) =>
-		(imgSrc: string, ischart: boolean, image_position: ImagesPosition) => {
+		(imgSrc: string, ischart: boolean, image_position: ImagePosition) => {
 			const newImgs = [...illustration];
 			if (index >= newImgs.length) newImgs.push(imgSrc);
 			else newImgs[index] = imgSrc;
@@ -1125,12 +1125,12 @@ export const First_page_img_1_reading_notes = ({
 			if (index >= newIsCharts.length) newIsCharts.push(ischart);
 			else newIsCharts[index] = ischart;
 
-			const newImagesPosition = [...images_position];
-			if (index >= newImagesPosition.length)
-				newImagesPosition.push(image_position);
-			else newImagesPosition[index] = image_position;
+			const newImagePosition = [...image_positions];
+			if (index >= newImagePosition.length)
+				newImagePosition.push(image_position);
+			else newImagePosition[index] = image_position;
 
-			update_callback(newImgs, newIsCharts, newImagesPosition);
+			update_callback(newImgs, newIsCharts, newImagePosition);
 		};
 	const { socialPostsIndex, setSocialPostsIndex } = useSocialPosts();
 	return (
@@ -1173,7 +1173,7 @@ export const First_page_img_1_reading_notes = ({
 						handleSlideEdit={handleSlideEdit}
 						canEdit={canEdit}
 						currentSlideIndex={socialPostsIndex}
-						images_position={images_position}
+						image_positions={image_positions}
 						isSlide={false}
 						currentContentIndex={0}
 						search_illustration={true}
@@ -1194,14 +1194,14 @@ export const Col_1_img_0_reading_notes = ({
 	canEdit,
 	charts,
 	ischarts,
-	images_position,
+	image_positions,
 	handleSlideEdit,
 	layoutElements,
 	themeElements,
 }: MainSlidePropsSocialPost) => {
 	const updateImgAtIndex =
 		(index: number) =>
-		(imgSrc: string, ischart: boolean, image_position: ImagesPosition) => {
+		(imgSrc: string, ischart: boolean, image_position: ImagePosition) => {
 			const newImgs = [...illustration];
 			if (index >= newImgs.length) newImgs.push(imgSrc);
 			else newImgs[index] = imgSrc;
@@ -1210,7 +1210,7 @@ export const Col_1_img_0_reading_notes = ({
 			if (index >= newIsCharts.length) newIsCharts.push(ischart);
 			else newIsCharts[index] = ischart;
 
-			const newImagesPosition = [...images_position];
+			const newImagesPosition = [...image_positions];
 			if (index >= newImagesPosition.length)
 				newImagesPosition.push(image_position);
 			else newImagesPosition[index] = image_position;
@@ -1259,7 +1259,7 @@ export const Col_1_img_0_reading_notes = ({
 						handleSlideEdit={handleSlideEdit}
 						canEdit={canEdit}
 						currentSlideIndex={socialPostsIndex}
-						images_position={images_position}
+						image_positions={image_positions}
 						isSlide={false}
 						currentContentIndex={0}
 					/>
@@ -1285,14 +1285,14 @@ export const Col_1_img_1_reading_notes = ({
 	canEdit,
 	charts,
 	ischarts,
-	images_position,
+	image_positions,
 	handleSlideEdit,
 	layoutElements,
 	themeElements,
 }: MainSlidePropsSocialPost) => {
 	const updateImgAtIndex =
 		(index: number) =>
-		(imgSrc: string, ischart: boolean, image_position: ImagesPosition) => {
+		(imgSrc: string, ischart: boolean, image_position: ImagePosition) => {
 			const newImgs = [...illustration];
 			if (index >= newImgs.length) newImgs.push(imgSrc);
 			else newImgs[index] = imgSrc;
@@ -1301,12 +1301,12 @@ export const Col_1_img_1_reading_notes = ({
 			if (index >= newIsCharts.length) newIsCharts.push(ischart);
 			else newIsCharts[index] = ischart;
 
-			const newImagesPosition = [...images_position];
-			if (index >= newImagesPosition.length)
-				newImagesPosition.push(image_position);
-			else newImagesPosition[index] = image_position;
+			const newImagePosition = [...image_positions];
+			if (index >= newImagePosition.length)
+				newImagePosition.push(image_position);
+			else newImagePosition[index] = image_position;
 
-			update_callback(newImgs, newIsCharts, newImagesPosition);
+			update_callback(newImgs, newIsCharts, newImagePosition);
 		};
 	const { socialPostsIndex, setSocialPostsIndex } = useSocialPosts();
 	return (
@@ -1350,7 +1350,7 @@ export const Col_1_img_1_reading_notes = ({
 						handleSlideEdit={handleSlideEdit}
 						canEdit={canEdit}
 						currentSlideIndex={socialPostsIndex}
-						images_position={images_position}
+						image_positions={image_positions}
 						isSlide={false}
 						currentContentIndex={0}
 					/>
@@ -1378,7 +1378,7 @@ export const last_page_layout = ({
 	canEdit,
 	charts,
 	ischarts,
-	images_position,
+	image_positions,
 	handleSlideEdit,
 	layoutElements,
 	themeElements,

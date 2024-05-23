@@ -80,7 +80,7 @@ const BrandingSelector: React.FC<{
 			setSelectedLogo([]);
 			setShowLogo(true);
 		}
-	}, [logoMode, setSelectedLogo, setShowLogo]);
+	}, [logoMode]);
 
 	return (
 		<div>
