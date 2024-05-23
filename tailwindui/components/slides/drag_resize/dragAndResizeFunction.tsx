@@ -1,14 +1,14 @@
-import ImagesPosition from '@/models/ImagesPosition';
+import ImagePosition from '@/models/ImagePosition';
 
 export const initializeImageData = (
-	images_position: Array<ImagesPosition | {}>,
+	image_positions: Array<ImagePosition | {}>,
 	refs: React.RefObject<HTMLElement>[],
-): ImagesPosition[] => {
-	const positions = images_position || [{}, {}, {}];
+): ImagePosition[] => {
+	const positions = image_positions || [{}, {}, {}];
 	return positions.map((pos, index) => {
 		if (pos && Object.keys(pos).length !== 0) {
 			// If position data is available, use it directly
-			return pos as ImagesPosition;
+			return pos as ImagePosition;
 		} else {
 			return {};
 		}
@@ -20,7 +20,7 @@ export const onMouseLeave =
 	(
 		slideIdx: number,
 		imagesDimensions: (
-			| ImagesPosition
+			| ImagePosition
 			| { x?: number; y?: number; height?: number; width?: number }
 		)[],
 		hasInteracted: boolean,
@@ -30,7 +30,7 @@ export const onMouseLeave =
 	) =>
 	() => {
 		if (hasInteracted) {
-			handleSlideEdit([imagesDimensions], slideIdx, ['images_position']);
+			handleSlideEdit([imagesDimensions], slideIdx, ['image_positions']);
 			setHasInteracted(false);
 		}
 		setShowImgButton(false);
@@ -60,13 +60,13 @@ export const onDragStart =
 export const onDragStop =
 	(
 		imagesDimensions: (
-			| ImagesPosition
+			| ImagePosition
 			| { x?: number; y?: number; height?: number; width?: number }
 		)[],
 		setImagesDimensions: React.Dispatch<
 			React.SetStateAction<
 				(
-					| ImagesPosition
+					| ImagePosition
 					| { x?: number; y?: number; height?: number; width?: number }
 				)[]
 			>
@@ -111,13 +111,13 @@ export const onResizeStart =
 export const onResizeStop =
 	(
 		imagesDimensions: (
-			| ImagesPosition
+			| ImagePosition
 			| { x?: number; y?: number; height?: number; width?: number }
 		)[],
 		setImagesDimensions: React.Dispatch<
 			React.SetStateAction<
 				(
-					| ImagesPosition
+					| ImagePosition
 					| { x?: number; y?: number; height?: number; width?: number }
 				)[]
 			>

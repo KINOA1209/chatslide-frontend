@@ -19,7 +19,7 @@ import Chart from '@/models/Chart';
 import { Rnd } from 'react-rnd';
 import { ResourceIcon } from './ui/ResourceItem';
 
-import ImagesPosition from '@/models/ImagesPosition';
+import ImagePosition from '@/models/ImagePosition';
 import {
 	initializeImageData,
 	onDragStart,
@@ -73,7 +73,7 @@ interface ImgModuleProp {
 	// isImgEditMode: boolean;
 	// setShowImgButton: React.Dispatch<React.SetStateAction<boolean>>;
 	// zoomLevel: number;
-	images_position: ImagesPosition[];
+	image_positions: ImagePosition[];
 	layoutElements?: LayoutElements;
 	customImageStyle?: React.CSSProperties;
 	setImgHigherZIndex?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -149,7 +149,7 @@ export const ImgModule = ({
 	// isImgEditMode,
 	// setShowImgButton,
 	// zoomLevel,
-	images_position,
+	image_positions,
 	layoutElements,
 	customImageStyle,
 	setImgHigherZIndex,
@@ -1085,7 +1085,7 @@ export const ImgModule = ({
 	const [hasInteracted, setHasInteracted] = useState(false);
 	const [imagesDimensions, setImagesDimensions] = useState<
 		(
-			| ImagesPosition
+			| ImagePosition
 			| { x?: number; y?: number; height?: number; width?: number }
 		)[]
 	>([]);
@@ -1136,7 +1136,7 @@ export const ImgModule = ({
 
 	const toggleImgEditMode = (event: any) => {
 		event.stopPropagation();
-    event.preventDefault();
+		event.preventDefault();
 		if (isImgEditMode) {
 			handleSave();
 		}
@@ -1188,8 +1188,8 @@ export const ImgModule = ({
 		// make sure we got non-zero value for parentDimension
 		if (
 			isParentDimension &&
-			images_position[currentContentIndex] &&
-			Object.keys(images_position[currentContentIndex]).length == 0
+			image_positions[currentContentIndex] &&
+			Object.keys(image_positions[currentContentIndex]).length == 0
 		) {
 			const img = new window.Image();
 			img.src = imgsrc;
@@ -1222,9 +1222,9 @@ export const ImgModule = ({
 	}, [imgsrc, isParentDimension]);
 
 	useEffect(() => {
-		const initializedData = initializeImageData(images_position, imageRefs);
+		const initializedData = initializeImageData(image_positions, imageRefs);
 		setImagesDimensions(initializedData);
-	}, [images_position]);
+	}, [image_positions]);
 
 	// new version to get parent container's dimension, reduce unnecessary state updates
 	// prevent infinite loop bugs
@@ -1696,7 +1696,7 @@ export const ImgModule = ({
 													onClick={(e) => {
 														updateSingleCallback('');
 														e.stopPropagation();
-                            e.preventDefault();
+														e.preventDefault();
 													}}
 												>
 													<LuTrash2
@@ -1718,7 +1718,7 @@ export const ImgModule = ({
 														className='flex flex-row items-center justify-center gap-1'
 														onClick={(e) => {
 															updateSingleCallback('shuffle', false, {});
-                              e.preventDefault();
+															e.preventDefault();
 															e.stopPropagation();
 														}}
 													>
