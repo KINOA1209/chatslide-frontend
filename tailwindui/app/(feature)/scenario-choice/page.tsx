@@ -72,7 +72,7 @@ const ScenarioChoicePage = () => {
 				<BackButton href='/type-choice' dark={true} text='Type Choice' />
 			</div>
 			<div className='block md:hidden h-[3rem]' /> {/* Spacer */}
-			<Column>
+			<Column width='100vw'>
 				{/* title */}
 				<Title>{scenarios.message}</Title>
 				{/* three types of scenarios */}
