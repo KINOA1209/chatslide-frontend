@@ -51,6 +51,12 @@ export default function Studio() {
 							more accurate.
 						</div>
 					</Instruction>
+
+          <Instruction>
+            <div>
+              <b>🪟 Apply Layout to All Pages: </b> You can select a favorite layout for all of your non-cover slide pages. 
+            </div>
+          </Instruction>
 				</Card>
 
 				<Card>
