@@ -1136,6 +1136,7 @@ export const ImgModule = ({
 
 	const toggleImgEditMode = (event: any) => {
 		event.stopPropagation();
+    event.preventDefault();
 		if (isImgEditMode) {
 			handleSave();
 		}
@@ -1695,6 +1696,7 @@ export const ImgModule = ({
 													onClick={(e) => {
 														updateSingleCallback('');
 														e.stopPropagation();
+                            e.preventDefault();
 													}}
 												>
 													<LuTrash2
@@ -1716,6 +1718,7 @@ export const ImgModule = ({
 														className='flex flex-row items-center justify-center gap-1'
 														onClick={(e) => {
 															updateSingleCallback('shuffle', false, {});
+                              e.preventDefault();
 															e.stopPropagation();
 														}}
 													>
