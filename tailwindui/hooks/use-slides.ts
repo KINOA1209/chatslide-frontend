@@ -9,6 +9,7 @@ import Project from '@/models/Project';
 import debounce from 'lodash.debounce';
 import SlidesService from '@/services/SlidesService';
 import dynamic from 'next/dynamic';
+import { LayoutKeys } from '@/components/slides/slideLayout';
 // import { colorPreviews } from '@/app/(feature)/design/TemplateSelector';
 // Dynamically import the component with SSR disabled
 const colorPreviews: any = dynamic(
@@ -429,6 +430,36 @@ export const useSlides = () => {
 		debouncedSyncSlides(newSlides, true);
 	};
 
+	const updateLayoutAllNonCoverPages = (newLayout: LayoutKeys) => {
+		console.log('Changing layout to:', newLayout);
+
+		// apply the layout to all pages after index 0
+
+		let newSlides = slides.map((slide, index) => {
+			if (index === 0) {
+				return slide;
+			}
+			return {
+				...slide,
+				layout: newLayout,
+				content: slide.content.filter((element) => {
+					//need to filter out <p><br></p>, <li><p><br></p></li>, <li><span ...></span></li> or <li><span ...>  </span></li>
+					//multipe space also should be filtered
+					const isEmptyOrWhitespace =
+						!element.trim() ||
+						/^<(\w+)(\s+[^>]*)?>\s*<\/\1>$/.test(element.trim());
+					const hasOnlyEmptyHTML =
+						/<(p|li)(\s+[^>]*)?>\s*(<[^>]+>\s*)*<\/\1>/.test(element.trim());
+					return !isEmptyOrWhitespace && !hasOnlyEmptyHTML;
+				}),
+			};
+		});
+
+		setSlides(newSlides);
+		updateSlideHistory(newSlides);
+		debouncedSyncSlides(newSlides, true);
+	};
+
 	useEffect(() => {
 		void init();
 	}, []);
@@ -843,6 +874,7 @@ export const useSlides = () => {
 		hideLogo,
 		updateLogoUrl,
 		updateBackgroundUrl,
+		updateLayoutAllNonCoverPages,
 		isPresenting,
 		setIsPresenting,
 		setSlides,
