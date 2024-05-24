@@ -4,4 +4,3 @@ export default interface VoiceProfile {
     training_file_path: string;
     preview_url: string;
   }
-  
