@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { BigGrayButton } from '../button/DrlambdaButton';
 import { getImageDataUrl } from '../utils/DownloadImage';
-import SocialPostSlide from '@/models/SocialPost';
+import { SocialPostSlide } from '@/models/SocialPost';
 import SocialPostContainer from '@/components/socialPost/socialPostContainer';
 import { templateDispatch } from '@/components/socialPost/socialPostTemplateDispatch';
 import SessionStorage from '@/utils/SessionStorage';

@@ -27,7 +27,7 @@ export async function trackRewardfulConversion(email: string) {
 			window.rewardful('convert', { email: email });
 		}
 	} catch (error) {
-		console.error('Error tracking Rewardful conversion:', error);
+		console.warn('Error tracking Rewardful conversion:', error);
 	}
 }
 

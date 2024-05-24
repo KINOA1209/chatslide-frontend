@@ -79,7 +79,7 @@ const FeedbackButton: React.FC<FeedbackButtonProps> = ({
 	}, [timerFinished]);
 
 	return (
-		<div className='z-30'>
+		<div className='z-30 mx-auto'>
 			<BigBlueButton onClick={handleOpenModal}>{displayText}</BigBlueButton>
 
 			{showModal && (

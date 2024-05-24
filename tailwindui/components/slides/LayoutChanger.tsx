@@ -5,6 +5,7 @@ import ButtonWithExplanation from '../button/ButtonWithExplanation';
 import { FiLayout } from 'react-icons/fi';
 import Modal from '../ui/Modal';
 import Slide from '@/models/Slide';
+import { useSlides } from '@/hooks/use-slides';
 type LayoutProps = {
 	currentSlideIndex: number;
 	slides: Slide[]; //{ layout: string }[];
@@ -23,6 +24,11 @@ const LayoutChanger: React.FC<LayoutProps> = ({
 	availableLayouts,
 }) => {
 	const [showModal, setShowModal] = React.useState(false);
+	const [applyToAll, setApplyToAll] = React.useState(false);
+	const [selectedLayout, setSelectedLayout] = React.useState<LayoutKeys | null>(
+		null,
+	);
+	const { updateLayoutAllNonCoverPages } = useSlides();
 
 	const availableLayoutsNonCover = availableLayouts.main; // Assuming main contains non-cover layouts
 	const availableLayoutsCover = availableLayouts.cover; // Add your cover layouts here
@@ -88,6 +94,10 @@ const LayoutChanger: React.FC<LayoutProps> = ({
 				setShowModal={setShowModal}
 				onConfirm={() => {
 					setShowModal(false);
+
+					if (applyToAll && selectedLayout) {
+						updateLayoutAllNonCoverPages(selectedLayout);
+					}
 				}}
 				title='Change Page Layout'
 			>
@@ -101,9 +111,10 @@ const LayoutChanger: React.FC<LayoutProps> = ({
 							return (
 								<div
 									key={`layout-${index}-${currLayout}`} // Use the name as the key
-									onClick={(e) =>
-										updateLayout(e, currLayout.name, currentSlideIndex)
-									}
+									onClick={(e) => {
+										updateLayout(e, currLayout.name, currentSlideIndex);
+										setSelectedLayout(currLayout.name);
+									}}
 									className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-[3px] outline-slate-300 hover:outline-[#5168F6]'
 								>
 									<img
@@ -116,9 +127,10 @@ const LayoutChanger: React.FC<LayoutProps> = ({
 							return (
 								<div
 									key={`layout-${index}-${currLayout}`} // Use the name as the key
-									onClick={(e) =>
-										updateLayout(e, currLayout.name, currentSlideIndex)
-									}
+									onClick={(e) => {
+										updateLayout(e, currLayout.name, currentSlideIndex);
+										setSelectedLayout(currLayout.name);
+									}}
 									className='w-full aspect-video bg-white rounded-md overflow-hidden cursor-pointer outline outline-[#5168F6] outline-[3px]'
 								>
 									<img
@@ -132,6 +144,19 @@ const LayoutChanger: React.FC<LayoutProps> = ({
 							return <></>;
 						}
 					})}
+
+					{/* apply to all checkbox */}
+					<div className='col-span-3'>
+						<label className='flex items-center space-x-2'>
+							<input
+								type='checkbox'
+								className='form-checkbox text-blue-500'
+								checked={applyToAll}
+								onChange={() => setApplyToAll(!applyToAll)}
+							/>
+							<span>Apply to all non-cover slides</span>
+						</label>
+					</div>
 				</div>
 			</Modal>
 		</>

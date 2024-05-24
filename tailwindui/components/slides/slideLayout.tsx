@@ -26,6 +26,8 @@ import { ThemeElements } from './templates_customizable_elements/theme_elements'
 import { LayoutElements } from '@/components/slides/templates_customizable_elements/layout_elements';
 import ImagePosition from '@/models/ImagePosition';
 import { useSlides } from '@/hooks/use-slides';
+import ResizeSlider from './drag_resize/resize_slider';
+import '@/components/slides/drag_resize/dragAndResizeCSS.css';
 import dynamic from 'next/dynamic';
 import Slide, { Media, SlideKeys } from '@/models/Slide';
 const QuillEditable = dynamic(
@@ -40,6 +42,13 @@ const QuillEditable = dynamic(
 // for col2img1 image layout, default is on the right side
 // for col2img2 image layout, default is on the bottom side
 // for col3img3 image layout, default is on the top side
+
+interface MainSlideProps extends BaseMainSlideProps {
+	brandingColor?: string;
+	themeElements: ThemeElements;
+	layoutElements: LayoutElements;
+	showContentBulletPoint?: boolean;
+}
 
 export type LayoutKeys =
 	| ''
@@ -223,13 +232,6 @@ export const handleAddTextColumn = ({
 	]);
 	setShowAddButton(shouldShowAddButton);
 };
-
-interface MainSlideProps extends BaseMainSlideProps {
-	brandingColor?: string;
-	themeElements: ThemeElements;
-	layoutElements: LayoutElements;
-	showContentBulletPoint?: boolean;
-}
 
 const filterEmptyLines = (
 	content: JSX.Element[] | JSX.Element,

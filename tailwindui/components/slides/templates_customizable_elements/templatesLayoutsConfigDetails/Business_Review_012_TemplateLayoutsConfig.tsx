@@ -17,7 +17,7 @@ export const Business_Review_012_TemplateLayoutsConfig: {
 			marginTop: '25px', // Equivalent to pt-[1rem]
 			marginLeft: '25px', // Equivalent to px-[2rem], for left padding
 			marginRight: '25px', // Equivalent to px-[2rem], for right padding
-			marginBottom: '45px',
+			marginBottom: '25px',
 			padding: '25px',
 			borderRadius: '24px',
 			width: '100%',
@@ -66,7 +66,7 @@ export const Business_Review_012_TemplateLayoutsConfig: {
 			marginTop: '25px', // Equivalent to pt-[1rem]
 			marginLeft: '25px', // Equivalent to px-[2rem], for left padding
 			marginRight: '0px', // Equivalent to px-[2rem], for right padding
-			marginBottom: '45px',
+			marginBottom: '25px',
 			padding: '25px',
 			borderRadius: '24px',
 			width: '50%',
@@ -118,7 +118,7 @@ export const Business_Review_012_TemplateLayoutsConfig: {
 			display: 'flex',
 			alignItems: 'center',
 			zIndex: 20,
-			padding: '25px 25px 45px 0px', // top right bottom left
+			padding: '25px 25px 25px 0px', // top right bottom left
 			// position: 'absolute',
 			// top: '0px',
 			// left: '0px',
@@ -164,7 +164,7 @@ export const Business_Review_012_TemplateLayoutsConfig: {
 			marginTop: '25px', // Equivalent to pt-[1rem]
 			marginLeft: '25px', // Equivalent to px-[2rem], for left padding
 			marginRight: '25px', // Equivalent to px-[2rem], for right padding
-			marginBottom: '45px',
+			marginBottom: '25px',
 			padding: '25px',
 			borderRadius: '24px',
 			height: '100%',
@@ -236,7 +236,7 @@ export const Business_Review_012_TemplateLayoutsConfig: {
 			marginTop: '25px', // Equivalent to pt-[1rem]
 			marginLeft: '25px', // Equivalent to px-[2rem], for left padding
 			marginRight: '25px', // Equivalent to px-[2rem], for right padding
-			marginBottom: '45px',
+			marginBottom: '25px',
 			// padding: '25px',
 			borderRadius: '24px',
 			height: '100%',
@@ -308,7 +308,7 @@ export const Business_Review_012_TemplateLayoutsConfig: {
 			marginTop: '25px', // Equivalent to pt-[1rem]
 			marginLeft: '25px', // Equivalent to px-[2rem], for left padding
 			marginRight: '25px', // Equivalent to px-[2rem], for right padding
-			marginBottom: '45px',
+			marginBottom: '25px',
 			// padding: '25px',
 			borderRadius: '24px',
 			height: '100%',
@@ -412,7 +412,7 @@ export const Business_Review_012_TemplateLayoutsConfig: {
 			display: 'flex',
 			alignItems: 'center', // equivalent to items-center
 
-			padding: '25px 25px 45px 0px', // top right bottom left
+			padding: '25px 25px 25px 0px', // top right bottom left
 		},
 		imageCSS: {
 			borderRadius: '24px', // border radius 1.25rem for image
@@ -430,7 +430,7 @@ export const Business_Review_012_TemplateLayoutsConfig: {
 			// marginBottom: '45px',
 			// padding: '25px',
 			borderRadius: '0px 0px 24px 24px',
-			marginBottom: '45px',
+			marginBottom: '25px',
 		},
 		contentCSS: {
 			// borderLeft: '1px solid #C2C2C2',
@@ -460,7 +460,7 @@ export const Business_Review_012_TemplateLayoutsConfig: {
 			marginTop: '25px', // Equivalent to pt-[1rem]
 			marginLeft: '25px', // Equivalent to px-[2rem], for left padding
 			marginRight: '25px', // Equivalent to px-[2rem], for right padding
-			marginBottom: '45px',
+			marginBottom: '25px',
 			// padding: '25px',
 			borderRadius: '24px',
 		},
@@ -537,14 +537,14 @@ export const Business_Review_012_TemplateLayoutsConfig: {
 		},
 		columnCSS: {
 			width: '100%',
-			height: '100%',
+			// height: '100%',
 			display: 'grid',
 			gridTemplateColumns: '1fr',
 			gridAutoRows: '25% 25% auto',
 			marginTop: '25px', // Equivalent to pt-[1rem]
 			marginLeft: '25px', // Equivalent to px-[2rem], for left padding
 			marginRight: '25px', // Equivalent to px-[2rem], for right padding
-			marginBottom: '45px',
+			marginBottom: '25px',
 			// gap: '10px',
 		},
 		titleAndSubtopicBoxCSS: {
@@ -574,7 +574,7 @@ export const Business_Review_012_TemplateLayoutsConfig: {
 			order: 2,
 			zIndex: 20,
 			gap: '6px',
-			padding: '6px 0px 45px 0px',
+			padding: '6px 0px 0px 0px',
 			// marginTop: '6px',
 		},
 		imageCSS: {
@@ -609,14 +609,14 @@ export const Business_Review_012_TemplateLayoutsConfig: {
 		},
 		columnCSS: {
 			width: '100%',
-			height: '100%',
+			// height: '100%',
 			display: 'grid',
 			gridTemplateColumns: '1fr',
 			gridAutoRows: '25% 25% auto',
 			marginTop: '25px', // Equivalent to pt-[1rem]
 			marginLeft: '25px', // Equivalent to px-[2rem], for left padding
 			marginRight: '25px', // Equivalent to px-[2rem], for right padding
-			marginBottom: '45px',
+			marginBottom: '25px',
 			// gap: '10px',
 		},
 		titleAndSubtopicBoxCSS: {
@@ -646,7 +646,7 @@ export const Business_Review_012_TemplateLayoutsConfig: {
 			order: 2,
 			zIndex: 20,
 			gap: '6px',
-			padding: '6px 0px 45px 0px',
+			padding: '6px 0px 0px 0px',
 			// marginTop: '6px',
 		},
 		imageCSS: {
@@ -682,7 +682,7 @@ export const Business_Review_012_TemplateLayoutsConfig: {
 
 		imageContainerCSS: {
 			width: '100%', // equivalent to w-full
-			padding: '25px 25px 45px 25px',
+			padding: '25px 25px 25px 25px',
 		},
 		imageCSS: {
 			height: '100%', // equivalent to h-[11rem]

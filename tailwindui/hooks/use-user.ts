@@ -44,6 +44,7 @@ const PAID_TIERS = [
 	'PRO_MONTHLY',
 	'PRO_YEARLY',
 	'PRO_LIFETIME',
+  'ULTIMATE_ONETIME',
 	'ULTIMATE_MONTHLY',
 	'ULTIMATE_YEARLY',
 	'ULTIMATE_LIFETIME',
@@ -84,7 +85,7 @@ export const useUser = () => {
 				let username = await AuthService.getCurrentUserDisplayName();
 
 				const user = await UserService.getUserCreditsAndTier(idToken);
-        console.log(' -- initUser: ', user);
+				console.log(' -- initUser: ', user);
 				setUser(user);
 
 				const {

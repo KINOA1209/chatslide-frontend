@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
-import SocialPostSlide from '@/models/SocialPost';
+import { SocialPostSlide } from '@/models/SocialPost';
 import SocialPostContainer from '@/components/socialPost/socialPostContainer';
 import { templateDispatch } from '@/components/socialPost/socialPostTemplateDispatch';
 import { downloadImage } from '../utils/DownloadImage';

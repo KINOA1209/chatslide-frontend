@@ -16,6 +16,7 @@ import {
 import Card from '@/components/ui/Card';
 import { useProject } from '@/hooks/use-project';
 import VoiceSelector, {
+	isClonedVoice,
 	previewVoice,
 } from '@/components/language/VoiceSelector';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -42,8 +43,8 @@ import Toggle from '@/components/button/Toggle';
 import { AIAssistantChatWindow } from '@/components/chatbot/AIAssistant';
 import {
 	SlideRightNavigator,
-  SlideLeftNavigator,
-  SlidePagesIndicator
+	SlideLeftNavigator,
+	SlidePagesIndicator,
 } from '@/components/slides/SlidePageIndicator';
 
 const ScriptSection = dynamic(
@@ -163,11 +164,10 @@ export default function WorkflowStep5() {
 		);
 		if (hasRunningVideoJob || !canSubmitVideo()) {
 			setShowConfirmRegenModal(true);
-		}
-		else{
+		} else {
 			handleSubmitVideo();
 			setLastSubmissionTime();
-		} 
+		}
 	}
 
 	async function handleSubmitVideo() {
@@ -386,7 +386,7 @@ export default function WorkflowStep5() {
 						The credit cost for videos with avatar is 400⭐️ per video. This may
 						change in the future.
 					</Explanation>
-					{isOpenaiVoice(voice) ? (
+					{isOpenaiVoice(voice) || isClonedVoice(voice) ? (
 						<WarningMessage>
 							The voice you selected does not support avatars yet.
 						</WarningMessage>

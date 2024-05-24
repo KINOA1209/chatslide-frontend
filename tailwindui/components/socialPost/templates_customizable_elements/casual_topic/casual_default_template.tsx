@@ -1,6 +1,6 @@
-import { ThemeElements } from '../theme_elements';
+import { SocialPostThemeElements } from '../theme_elements';
 
-export const casualDefault: ThemeElements = {
+export const casualDefault: SocialPostThemeElements = {
 	topicCSS: {
 		fontSize: '44pt',
 		fontWeight: 'bold',

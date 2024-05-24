@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import { useRouter } from 'next/navigation';
 import WorkflowStepsBanner from '@/components/layout/WorkflowStepsBanner';
-import SocialPostSlide from '@/models/SocialPost';
+import { SocialPostSlide } from '@/models/SocialPost';
 import { ThemeObject } from '@/components/socialPost/socialPostThemeChanger';
 import useHydrated from '@/hooks/use-hydrated';
 import SessionStorage from '@/utils/SessionStorage';

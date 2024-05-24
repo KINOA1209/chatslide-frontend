@@ -116,7 +116,7 @@ export default class Slide {
 			groups: [emptyGroup],
 			axis: { x: '', y: '' },
 		}));
-		this.image_positions = ['contain', 'contain', 'contain'],
+		this.image_positions = [{}, {}, {}];
 		this.layout = 'Col_2_img_1_layout';
 		this.logo = 'Default';
 		this.additional_images = [];

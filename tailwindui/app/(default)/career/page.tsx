@@ -91,57 +91,61 @@ export default function Career() {
 						</div>
 						<div className='flex flex-col md:flex-row items-center pb-8'>
 							<div>
-								{/* <h3 className='h3 text-xl mb-2'>Frontend Developer</h3>
-                <p className='text-base text-gray-600'>
-                  Are you a dynamic Frontend Developer, eager to craft web
-                  applications that stand out? We invite you to join our vibrant
-                  team and enhance the digital experiences we offer.
-                  <br />
-                  <br />
-                  <strong>Role Insight:</strong>
-                  <br />
-                  Collaborate with our design and backend teams to produce
-                  top-notch web applications. This role is perfect for
-                  developers proficient in React, Zustand, and modern web
-                  technologies looking to make a significant impact.
-                  <br />
-                  <br />
-                  <strong>Key Tasks:</strong>
-                  <br />
-                  - Develop and maintain user-centric features using React.js.
-                  <br />
-                  - Build reusable components for future deployment.
-                  <br />
-                  - Translate high-fidelity designs into impeccable code.
-                  <br />
-                  - Optimize applications for diverse devices and browsers.
-                  <br />
-                  - Stay updated with cutting-edge web technologies.
-                  <br />
-                  <br />
-                  <strong>What You Bring:</strong>
-                  <br />
-                  - Strong proficiency in JavaScript, React.js, and context manager like Zustand.
-                  <br />
-                  - Knowledge of RESTful APIs and modern authentication
-                  mechanisms.
-                  <br />
-                  - Expertise in HTML5, Tailwindcss, and responsive design.
-                  <br />
-                  - The knack to interpret business needs into technical
-                  solutions.
-                  <br />
-                  <br />
-                  <strong>Preferred Expertise:</strong>
-                  <br />
-                  - A degree in Computer Science or a related field.
-                  <br />
-                  - Familiarity with CSS pre-processors like SASS.
-                  <br />
-                  - Hands-on experience with Git, project management tool like Jira.
-                  <br />
-                </p> */}
-								{/* <br /> */}
+								<h3 className='h3 text-xl mb-2'>Frontend Developer Intern</h3>
+								<p className='text-base text-gray-600'>
+									Are you a dynamic Frontend Developer, eager to craft web
+									applications that stand out? We invite you to join our vibrant
+									team and enhance the digital experiences we offer.
+									<br />
+									<br />
+									<strong>Role Insight:</strong>
+									<br />
+									Collaborate with our design and backend teams to produce
+									top-notch web applications. This role is perfect for
+									developers proficient in React, Zustand, and modern web
+									technologies looking to make a significant impact.
+									<br />
+									<br />
+									<strong>Key Tasks:</strong>
+									<br />
+									- Develop and maintain user-centric features using React.js.
+									<br />
+									- Build reusable components for future deployment.
+									<br />
+									- Translate high-fidelity designs into impeccable code.
+									<br />
+									- Optimize applications for diverse devices and browsers.
+									<br />
+									- Stay updated with cutting-edge web technologies.
+									<br />
+									<br />
+									<strong>What You Bring:</strong>
+                  <br /> 
+                  - 1+ year of experience in frontend development.
+									<br />
+									- Strong proficiency in JavaScript, React.js, and context
+									manager like Zustand.
+									<br />
+									- Knowledge of RESTful APIs and modern authentication
+									mechanisms.
+									<br />
+									- Expertise in HTML5, Tailwindcss, and responsive design.
+									<br />
+									- The knack to interpret business needs into technical
+									solutions.
+									<br />
+									<br />
+									<strong>Preferred Expertise:</strong>
+									<br />
+									- A degree in Computer Science or a related field.
+									<br />
+									- Familiarity with CSS pre-processors like SASS.
+									<br />
+									- Hands-on experience with Git, project management tool like
+									Jira.
+									<br />
+								</p>
+								<br />
 								<h3 className='h3 text-xl mb-2' id='backend'>
 									Backend Developer Intern
 								</h3>
@@ -183,6 +187,8 @@ export default function Career() {
 									<br />
 									<br />
 									<strong>What You Bring:</strong>
+                  <br />
+                  - 1+ year of experience in backend development.
 									<br />
 									- Proficiency in Python and familiarity with Flask framework.
 									<br />
@@ -212,77 +218,73 @@ export default function Career() {
 									<br />
 									<br />
 								</p>
-								<h3 className='h3 text-xl mb-2' id='infra'>
-									Infrastructure Engineer
-								</h3>
+								<h3 className='h3 text-xl mb-2'>Data Scientist Intern</h3>
 								<p className='text-base text-gray-600'>
-									Are you an adept Infrastructure Engineer with a passion for
-									developing and maintaining scalable, high-availability
-									systems? We're seeking a proactive individual to join our
-									forward-thinking team, driving the evolution of our
-									infrastructure to support our growing needs.
+									Are you a passionate Data Scientist eager to delve into data
+									and derive meaningful insights? Join our dynamic team and
+									contribute to data-driven decision-making processes.
 									<br />
 									<br />
 									<strong>Role Insight:</strong>
 									<br />
-									Engage in the design and implementation of robust
-									infrastructure solutions, focusing on cloud services,
-									microservices architecture, and distributed systems. This role
-									is suited for engineers skilled in AWS, Lambda, Amplify,
-									Vercel, and who are excited about optimizing infrastructure
-									for performance and reliability.
+									Collaborate with cross-functional teams to analyze and
+									interpret complex data sets. This role is ideal for
+									individuals proficient in Python, SQL, and machine learning
+									frameworks who want to make a significant impact through data.
 									<br />
 									<br />
 									<strong>Key Tasks:</strong>
 									<br />
-									- Architect and deploy cloud solutions using AWS, including
-									services like Lambda and Amplify.
+									- Collect, clean, and preprocess data from various sources.
 									<br />
-									- Lead the transition to a microservice architecture, ensuring
-									seamless integration and deployment.
+									- Develop and implement data models and algorithms to solve
+									business problems.
 									<br />
-									- Implement and manage CDN solutions to improve content
-									delivery speed and efficiency.
+									- Perform exploratory data analysis and generate reports.
 									<br />
-									- Design and maintain distributed systems, encompassing
-									databases, S3 storage, and more, for optimal scalability and
-									availability.
+									- Visualize data insights using tools like Matplotlib,
+									Seaborn, or Tableau.
 									<br />
-									- Ensure infrastructure security and compliance with best
-									practices.
+									- Collaborate with engineering and product teams to integrate
+									data-driven features.
 									<br />
-									- Automate infrastructure provisioning and deployment
-									processes.
+									- Stay updated with the latest trends and technologies in data
+									science.
 									<br />
 									<br />
 									<strong>What You Bring:</strong>
+                  <br />
+                  - 1+ year of experience in data analysis or data science.
 									<br />
-									- Profound knowledge in AWS cloud services and infrastructure
-									as code tools.
+									- Proficiency in Python and libraries such as Pandas, NumPy,
+									and Scikit-learn.
 									<br />
-									- Experience in setting up and managing microservice
-									architectures.
+									- Experience with SQL for database querying and manipulation.
 									<br />
-									- Understanding of distributed systems, including database
-									management, file storage (S3), and networking.
+									- Knowledge of machine learning algorithms and their
+									applications.
 									<br />
-									- Ability to design, implement, and manage CDN strategies for
-									global content distribution.
+									- Strong analytical and problem-solving skills.
 									<br />
-									- Familiarity with containerization and orchestration tools
-									(e.g., Docker, Kubernetes).
+									- Ability to communicate complex data insights to
+									non-technical stakeholders.
 									<br />
 									<br />
 									<strong>Preferred Expertise:</strong>
 									<br />
-									- A degree in Computer Science, Engineering, or a relevant
-									field.
+									- Currently pursuing a degree in Data Science, Computer
+									Science, Statistics, or a related field.
 									<br />
-									- Certifications in AWS or other cloud technologies.
+									- Familiarity with big data technologies such as Hadoop or
+									Spark.
 									<br />
-									- Experience with infrastructure monitoring and logging tools.
+									- Experience with data visualization tools like Tableau or
+									Power BI.
 									<br />
-									- Proficiency in automation and scripting languages.
+									- Hands-on experience with version control systems like Git.
+									<br />
+									- Strong attention to detail and ability to work in a
+									fast-paced environment.
 									<br />
 								</p>
 							</div>
