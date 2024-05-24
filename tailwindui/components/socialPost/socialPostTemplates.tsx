@@ -27,8 +27,9 @@ import drlambdaLogoBadgeBlackBG from '@/public/images/template/drlambdaLogoBadge
 import drlambdaLogoBadgeWhiteBG from '@/public/images/template/drlambdaLogoBadgeWhiteBG.png';
 import classicTemplateThemeLastPageIndicator from '@/public/images/socialpost/classicTemplateThemeLastPageIndicator.png';
 import {
-	templateThemeKeyAndIndicatorImgMap,
+	templateThemeKeyAndIndicatorImgMapCoverPage,
 	templateThemeKeyAndIndicatorImgMapLastPage,
+	templateThemeKeyAndIndicatorImgMapNonCoverPage,
 } from './socialPostTemplateDispatch';
 interface MainSlidePropsSocialPost {
 	subtopic: JSX.Element;
@@ -69,6 +70,7 @@ interface MainSlidePropsSocialPost {
 	page_turn_indicator: JSX.Element;
 	page_index_number: number;
 	last_page_like_indicator: JSX.Element;
+	useIllustraion?: boolean;
 }
 
 const socialPostTemplateLogoPositionConfig = {
@@ -95,12 +97,14 @@ export type socialPostTemplateLogoType = {
 	// darkBGLogo?: StaticImageData;
 	logoBadge?: StaticImageData;
 	indicatorCoverPage?: StaticImageData;
+	indicatorNonCoverPage?: StaticImageData;
 	indicatorLastPage?: StaticImageData;
 	// isLogoLeftSide?: boolean;
 	logoPosition?: LogoPosition;
 	logoStyleConfig?: React.CSSProperties;
 	isLastPage?: boolean;
 	template_theme?: SocialPostTemplateKeys;
+	currPageIndex?: number;
 };
 
 export const generateSocialPostTemplateLogo = ({
@@ -130,23 +134,30 @@ export const generateSocialPostTemplateIndicatorElement = ({
 	logoHeight,
 	logoStyleConfig,
 	isLastPage,
+	logoBadge,
 	indicatorCoverPage,
 	indicatorLastPage,
+	indicatorNonCoverPage,
 	template_theme,
 }: socialPostTemplateLogoType) => {
 	const fallbackSrcLastPage =
 		templateThemeKeyAndIndicatorImgMapLastPage[template_theme || 'classic'];
 	const fallbackSrcCoverPage =
-		templateThemeKeyAndIndicatorImgMap[template_theme || 'classic'];
+		templateThemeKeyAndIndicatorImgMapCoverPage[template_theme || 'classic'];
+	const fallbackSrcNonCoverPage =
+		templateThemeKeyAndIndicatorImgMapNonCoverPage[template_theme || 'classic'];
 
 	// console.log(
 	// 	'fallbackSrcLastPage, fallbackSrcCoverPage',
 	// 	fallbackSrcLastPage,
 	// 	fallbackSrcCoverPage,
 	// );
-	const src = isLastPage
-		? indicatorLastPage?.src || fallbackSrcLastPage
-		: indicatorCoverPage?.src || fallbackSrcCoverPage;
+	const src = indicatorNonCoverPage
+		? indicatorNonCoverPage?.src || fallbackSrcNonCoverPage
+		: isLastPage
+			? indicatorLastPage?.src || fallbackSrcLastPage
+			: indicatorCoverPage?.src || fallbackSrcCoverPage;
+
 	return (
 		<div style={{ ...logoStyleConfig }}>
 			<Image
@@ -162,142 +173,6 @@ export const generateSocialPostTemplateIndicatorElement = ({
 		</div>
 	);
 };
-
-// const useLocalImgs = (
-// 	imgs: string[],
-// 	imgCount: number,
-// 	update_callback: (imgs: string[]) => void,
-// ) => {
-// 	if (imgs === undefined) {
-// 		imgs = [];
-// 	}
-
-// 	const initialImgs = useMemo(() => {
-// 		let cleanedImgs = imgs.filter((url) => url !== '');
-// 		if (cleanedImgs.length > imgCount) {
-// 			cleanedImgs = cleanedImgs.slice(0, imgCount);
-// 		} else if (cleanedImgs.length < imgCount) {
-// 			cleanedImgs = [
-// 				...cleanedImgs,
-// 				...new Array(imgCount - cleanedImgs.length).fill(''),
-// 			];
-// 		}
-// 		return cleanedImgs;
-// 	}, [imgs, imgCount]);
-
-// 	const [localImgs, setLocalImgs] = useState<string[]>(initialImgs);
-
-// 	useEffect(() => {
-// 		update_callback(localImgs);
-// 	}, [localImgs]);
-
-// 	const updateImgAtIndex = (index: number) => {
-// 		const updateLocalImgs = (url: string) => {
-// 			const newLocalImgs = [...localImgs];
-// 			newLocalImgs[index] = url;
-// 			setLocalImgs(newLocalImgs);
-// 			//console.log('updateLocalImgs', newLocalImgs)
-// 		};
-// 		return updateLocalImgs;
-// 	};
-
-// 	return { localImgs, updateImgAtIndex };
-// };
-
-// export const First_page_img_1 = ({
-// 	topic,
-// 	keywords,
-// 	imgs,
-// 	border_start,
-// 	border_end,
-// 	cover_start,
-// 	cover_end,
-// 	update_callback,
-// 	canEdit,
-// 	charts,
-// 	ischarts,
-// 	images_position,
-// 	handleSlideEdit,
-// 	layoutElements,
-// 	themeElements,
-// }: MainSlidePropsSocialPost) => {
-// 	const updateImgAtIndex =
-// 		(index: number) =>
-// 		(imgSrc: string, ischart: boolean, image_position: ImagesPosition) => {
-// 			const newImgs = [...imgs];
-// 			if (index >= newImgs.length) newImgs.push(imgSrc);
-// 			else newImgs[index] = imgSrc;
-
-// 			const newIsCharts = [...ischarts];
-// 			if (index >= newIsCharts.length) newIsCharts.push(ischart);
-// 			else newIsCharts[index] = ischart;
-
-// 			const newImagesPosition = [...images_position];
-// 			if (index >= newImagesPosition.length)
-// 				newImagesPosition.push(image_position);
-// 			else newImagesPosition[index] = image_position;
-
-// 			update_callback(newImgs, newIsCharts, newImagesPosition);
-// 		};
-
-// 	const { socialPostsIndex, setSocialPostsIndex } = useSocialPosts();
-// 	const [imgHigherZIndex, setImgHigherZIndex] = useState(false);
-// 	return (
-// 		<div
-// 			className='relative gap-[32px] flex justify-center items-center'
-// 			style={{
-// 				width: '100%',
-// 				height: '100%',
-// 				background: 'white',
-// 				border: 'none',
-// 			}}
-// 		>
-// 			<div
-// 				className='absolute top-0 left-0 w-full h-full'
-// 				style={{
-// 					border: '12px solid transparent',
-// 					backgroundImage: `linear-gradient(white, white), radial-gradient(circle at top left, ${border_start}, ${border_end})`,
-// 					backgroundOrigin: 'border-box',
-// 					backgroundClip: 'content-box, border-box',
-// 					zIndex: imgHigherZIndex ? 999 : 2,
-// 				}}
-// 			>
-// 				<ImgModule
-// 					imgsrc={imgs?.[0]}
-// 					updateSingleCallback={updateImgAtIndex(0)}
-// 					chartArr={charts}
-// 					ischartArr={ischarts}
-// 					handleSlideEdit={handleSlideEdit}
-// 					canEdit={canEdit}
-// 					currentSlideIndex={socialPostsIndex}
-// 					images_position={images_position}
-// 					isSlide={false}
-// 					isSocialPostTemp1Cover={true}
-// 					currentContentIndex={0}
-// 					setImgHigherZIndex={setImgHigherZIndex}
-// 				/>
-// 			</div>
-// 			<div className='w-full h-full mx-[3%] flex flex-col justify-between'>
-// 				<div className='min-h-[50%] max-h-[67%] mt-[20%] px-[3%] z-[10]'>
-// 					{topic}
-// 				</div>
-
-// 				<div
-// 					className='mb-[6%] mx-[auto] z-[9]'
-// 					style={{
-// 						border: '3px solid #FFF',
-// 						borderRadius: '5px',
-// 						background: 'rgba(0, 0, 0, 0.4)',
-// 						backdropFilter: 'blur(24px)',
-// 						maxWidth: '93%',
-// 					}}
-// 				>
-// 					{keywords}
-// 				</div>
-// 			</div>
-// 		</div>
-// 	);
-// };
 
 export const First_page_img_1_casual_topic = ({
 	topic,
@@ -318,6 +193,8 @@ export const First_page_img_1_casual_topic = ({
 	social_post_template_logo,
 	user_name,
 	page_turn_indicator,
+	useIllustraion,
+	illustration,
 }: MainSlidePropsSocialPost) => {
 	// useEffect(() => {
 	// 	// console.log('First_page_img_1 configs: ', layoutElements, themeElements);
@@ -372,7 +249,7 @@ export const First_page_img_1_casual_topic = ({
 					}}
 				>
 					<ImgModule
-						imgsrc={imgs?.[0]}
+						imgsrc={useIllustraion ? illustration?.[0] : imgs?.[0]}
 						updateSingleCallback={updateImgAtIndex(0)}
 						chartArr={charts}
 						ischartArr={ischarts}
@@ -636,6 +513,8 @@ export const Col_2_img_1_left_casual_topic = ({
 	social_post_template_logo,
 	user_name,
 	page_index_number,
+	useIllustraion,
+	illustration,
 }: MainSlidePropsSocialPost) => {
 	const updateImgAtIndex =
 		(index: number) =>
@@ -719,7 +598,7 @@ export const Col_2_img_1_left_casual_topic = ({
 					>
 						{/* <div className='ImageBox' style={{ ...layoutElements?.imageCSS }}> */}
 						<ImgModule
-							imgsrc={imgs?.[0]}
+							imgsrc={useIllustraion ? illustration?.[0] : imgs?.[0]}
 							updateSingleCallback={updateImgAtIndex(0)}
 							chartArr={charts}
 							ischartArr={ischarts}
@@ -773,6 +652,8 @@ export const Col_2_img_1_Right_casual_topic = ({
 	social_post_template_logo,
 	user_name,
 	page_index_number,
+	useIllustraion,
+	illustration,
 }: MainSlidePropsSocialPost) => {
 	const updateImgAtIndex =
 		(index: number) =>
@@ -856,7 +737,7 @@ export const Col_2_img_1_Right_casual_topic = ({
 					>
 						{/* <div className='ImageBox' style={{ ...layoutElements?.imageCSS }}> */}
 						<ImgModule
-							imgsrc={imgs?.[0]}
+							imgsrc={useIllustraion ? illustration?.[0] : imgs?.[0]}
 							updateSingleCallback={updateImgAtIndex(0)}
 							chartArr={charts}
 							ischartArr={ischarts}
@@ -1103,6 +984,9 @@ export const img_0_serious_subject = ({
 export const First_page_img_1_reading_notes = ({
 	illustration,
 	title,
+	user_name,
+	social_post_template_logo,
+	page_turn_indicator,
 	border_start,
 	border_end,
 	update_callback,
@@ -1113,6 +997,7 @@ export const First_page_img_1_reading_notes = ({
 	handleSlideEdit,
 	layoutElements,
 	themeElements,
+	useIllustraion,
 }: MainSlidePropsSocialPost) => {
 	const updateImgAtIndex =
 		(index: number) =>
@@ -1133,59 +1018,132 @@ export const First_page_img_1_reading_notes = ({
 			update_callback(newImgs, newIsCharts, newImagePosition);
 		};
 	const { socialPostsIndex, setSocialPostsIndex } = useSocialPosts();
+	// useEffect(() => {
+	// 	console.log('reading note use illustration?', useIllustraion);
+	// }, []);
 	return (
 		<div
-			style={{
-				width: '100%',
-				height: '100%',
-				backgroundSize: 'cover',
-				display: 'flex',
-				flexDirection: 'row',
-				justifyContent: 'flex-start',
-				alignItems: 'flex-start',
-				boxSizing: 'border-box',
-				border: 'none',
-				position: 'relative',
-				backgroundColor: 'white',
-			}}
+			// className='relative gap-[32px] flex justify-center items-center'
+			className='SocialPostCanvas'
+			style={{ position: 'relative', ...layoutElements?.canvasCSS }}
 		>
 			<div
-				className='w-full h-full flex flex-col justify-between'
-				style={{
-					border: '8px solid transparent',
-					backgroundImage: `linear-gradient(white, white), radial-gradient(circle at top left, ${border_start}, ${border_end})`,
-					backgroundOrigin: 'border-box',
-					backgroundClip: 'content-box, border-box',
-				}}
+				className='SocialPostColumn'
+				style={{ ...layoutElements?.columnCSS }}
 			>
-				<div className='mx-[auto]'>{title}</div>
 				<div
-					className='w-full h-1/2 flex'
+					className='SocialPostReadingNotesTitleBox'
+					style={{ ...layoutElements?.readingTitleCSS, zIndex: 60 }}
+				>
+					{title}
+				</div>
+
+				{/* <div className='userNameBox' style={{ ...layoutElements?.userNameCSS }}>
+					{user_name}
+				</div>
+				<div
+					className='SocialPostLogoBox'
+					style={{ ...layoutElements?.logoCSS }}
+				>
+					{social_post_template_logo}
+				</div>
+
+				<div
+					className='pageTurnIndicator'
+					style={{ ...layoutElements?.indicatorCSS }}
+				>
+					{page_turn_indicator}
+				</div> */}
+				<div
+					className='userNameAndLogoAndIndicatorBox'
 					style={{
-						borderRadius: '20px',
+						...layoutElements?.userNameAndLogoAndIndicatorBoxCSS,
 					}}
 				>
-					<ImgModule
-						imgsrc={illustration[0]}
-						updateSingleCallback={updateImgAtIndex(0)}
-						chartArr={charts}
-						ischartArr={ischarts}
-						handleSlideEdit={handleSlideEdit}
-						canEdit={canEdit}
-						currentSlideIndex={socialPostsIndex}
-						image_positions={image_positions}
-						isSlide={false}
-						currentContentIndex={0}
-						search_illustration={true}
-					/>
+					<div
+						className='userNameAndLogoBox'
+						style={{
+							...layoutElements?.userNameAndLogoBoxCSS,
+						}}
+					>
+						<div
+							className='userNameBox'
+							style={{ ...layoutElements?.userNameCSS, zIndex: 50 }}
+						>
+							{user_name}
+						</div>
+						<div
+							className='SocialPostLogoBox'
+							style={{ ...layoutElements?.logoCSS, zIndex: 30 }}
+						>
+							{social_post_template_logo}
+						</div>
+					</div>
+
+					<div
+						className='LastPageLikeIndicator'
+						style={{ ...layoutElements?.indicatorCSS }}
+					>
+						{page_turn_indicator}
+					</div>
 				</div>
 			</div>
 		</div>
 	);
+	// return (
+	// 	<div
+	// 		style={{
+	// 			width: '100%',
+	// 			height: '100%',
+	// 			backgroundSize: 'cover',
+	// 			display: 'flex',
+	// 			flexDirection: 'row',
+	// 			justifyContent: 'flex-start',
+	// 			alignItems: 'flex-start',
+	// 			boxSizing: 'border-box',
+	// 			border: 'none',
+	// 			position: 'relative',
+	// 			backgroundColor: 'white',
+	// 		}}
+	// 	>
+	// 		<div
+	// 			className='w-full h-full flex flex-col justify-between'
+	// 			style={{
+	// 				border: '8px solid transparent',
+	// 				backgroundImage: `linear-gradient(white, white), radial-gradient(circle at top left, ${border_start}, ${border_end})`,
+	// 				backgroundOrigin: 'border-box',
+	// 				backgroundClip: 'content-box, border-box',
+	// 			}}
+	// 		>
+	// 			<div className='mx-[auto]'>{title}</div>
+	// 			<div
+	// 				className='w-full h-1/2 flex'
+	// 				style={{
+	// 					borderRadius: '20px',
+	// 				}}
+	// 			>
+	// 				<ImgModule
+	// 					imgsrc={illustration[0]}
+	// 					updateSingleCallback={updateImgAtIndex(0)}
+	// 					chartArr={charts}
+	// 					ischartArr={ischarts}
+	// 					handleSlideEdit={handleSlideEdit}
+	// 					canEdit={canEdit}
+	// 					currentSlideIndex={socialPostsIndex}
+	// 					image_positions={image_positions}
+	// 					isSlide={false}
+	// 					currentContentIndex={0}
+	// 					search_illustration={true}
+	// 				/>
+	// 			</div>
+	// 		</div>
+	// 	</div>
+	// );
 };
 
 export const Col_1_img_0_reading_notes = ({
 	illustration,
+	imgs,
 	quote,
 	source,
 	border_start,
@@ -1198,6 +1156,9 @@ export const Col_1_img_0_reading_notes = ({
 	handleSlideEdit,
 	layoutElements,
 	themeElements,
+	social_post_template_logo,
+	page_index_number,
+	page_turn_indicator,
 }: MainSlidePropsSocialPost) => {
 	const updateImgAtIndex =
 		(index: number) =>
@@ -1220,63 +1181,122 @@ export const Col_1_img_0_reading_notes = ({
 	const { socialPostsIndex, setSocialPostsIndex } = useSocialPosts();
 	return (
 		<div
-			style={{
-				width: '100%',
-				height: '100%',
-				backgroundSize: 'cover',
-				display: 'flex',
-				flexDirection: 'row',
-				justifyContent: 'flex-start',
-				alignItems: 'flex-start',
-				boxSizing: 'border-box',
-				border: 'none',
-				position: 'relative',
-				backgroundColor: 'white',
-			}}
+			// className='relative gap-[32px] flex justify-center items-center'
+			className='SocialPostCanvas'
+			style={{ position: 'relative', ...layoutElements?.canvasCSS }}
 		>
 			<div
-				className='w-full h-full flex flex-col justify-between'
+				className='horizontalDivider'
 				style={{
-					border: '8px solid transparent',
-					backgroundImage: `linear-gradient(white, white), radial-gradient(circle at top left, ${border_start}, ${border_end})`,
-					backgroundOrigin: 'border-box',
-					backgroundClip: 'content-box, border-box',
-					fontFamily: 'Cormorant, sans-serif',
+					width: '100%',
+					height: '1px',
+					background: '#333330',
+					position: 'absolute',
+					top: '61%',
+					// left: '50%',
+					zIndex: 20,
 				}}
+			></div>
+			<div
+				className='NonCoverPageIndicator'
+				style={{ ...layoutElements?.indicatorCSS, zIndex: 30 }}
+			>
+				{page_turn_indicator}
+			</div>
+			<div
+				className='SocialPostColumn'
+				style={{ ...layoutElements?.columnCSS }}
 			>
 				<div
-					className='w-full h-1/2 flex'
+					className='SocialPostQuoteSharingQuoteBox'
+					style={{ ...layoutElements?.quoteCSS, zIndex: 60 }}
+				>
+					{quote}
+				</div>
+
+				<div
+					className='QuoteSourceAndLogoBox'
 					style={{
-						borderRadius: '20px',
-						overflow: 'hidden',
+						...layoutElements?.sourceAndLogoBoxCSS,
 					}}
 				>
-					<ImgModule
-						imgsrc={illustration[0]}
-						updateSingleCallback={updateImgAtIndex(0)}
-						chartArr={charts}
-						ischartArr={ischarts}
-						handleSlideEdit={handleSlideEdit}
-						canEdit={canEdit}
-						currentSlideIndex={socialPostsIndex}
-						image_positions={image_positions}
-						isSlide={false}
-						currentContentIndex={0}
-					/>
-				</div>
-				<div id='asterisk_section' className='mx-[auto] text-center'>
-					*
-				</div>
-				<div className='px-[7%]'>{quote}</div>
-				<div id='source_section' className='mb-[10%]'>
-					{source}
+					<div
+						className='SocialPostQuoteSharingSourceBox'
+						style={{ ...layoutElements?.sourceCSS, zIndex: 50 }}
+					>
+						{source}
+					</div>
+					<div
+						className='SocialPostLogoBox'
+						style={{ ...layoutElements?.logoCSS, zIndex: 30 }}
+					>
+						{social_post_template_logo}
+					</div>
 				</div>
 			</div>
 		</div>
 	);
+	// return (
+	// 	<div
+	// 		style={{
+	// 			width: '100%',
+	// 			height: '100%',
+	// 			backgroundSize: 'cover',
+	// 			display: 'flex',
+	// 			flexDirection: 'row',
+	// 			justifyContent: 'flex-start',
+	// 			alignItems: 'flex-start',
+	// 			boxSizing: 'border-box',
+	// 			border: 'none',
+	// 			position: 'relative',
+	// 			backgroundColor: 'white',
+	// 		}}
+	// 	>
+	// 		<div
+	// 			className='w-full h-full flex flex-col justify-between'
+	// 			style={{
+	// 				border: '8px solid transparent',
+	// 				backgroundImage: `linear-gradient(white, white), radial-gradient(circle at top left, ${border_start}, ${border_end})`,
+	// 				backgroundOrigin: 'border-box',
+	// 				backgroundClip: 'content-box, border-box',
+	// 				fontFamily: 'Cormorant, sans-serif',
+	// 			}}
+	// 		>
+	// 			<div
+	// 				className='w-full h-1/2 flex'
+	// 				style={{
+	// 					borderRadius: '20px',
+	// 					overflow: 'hidden',
+	// 				}}
+	// 			>
+	// 				<ImgModule
+	// 					imgsrc={illustration[0]}
+	// 					updateSingleCallback={updateImgAtIndex(0)}
+	// 					chartArr={charts}
+	// 					ischartArr={ischarts}
+	// 					handleSlideEdit={handleSlideEdit}
+	// 					canEdit={canEdit}
+	// 					currentSlideIndex={socialPostsIndex}
+	// 					image_positions={image_positions}
+	// 					isSlide={false}
+	// 					currentContentIndex={0}
+	// 				/>
+	// 			</div>
+	// 			<div id='asterisk_section' className='mx-[auto] text-center'>
+	// 				*
+	// 			</div>
+	// 			<div className='px-[7%]'>{quote}</div>
+	// 			<div id='source_section' className='mb-[10%]'>
+	// 				{source}
+	// 			</div>
+	// 		</div>
+	// 	</div>
+	// );
 };
+
 export const Col_1_img_1_reading_notes = ({
 	illustration,
+	imgs,
 	quote,
 	source,
 	border_start,
@@ -1289,6 +1309,10 @@ export const Col_1_img_1_reading_notes = ({
 	handleSlideEdit,
 	layoutElements,
 	themeElements,
+	page_index_number,
+	social_post_template_logo,
+	useIllustraion,
+	page_turn_indicator,
 }: MainSlidePropsSocialPost) => {
 	const updateImgAtIndex =
 		(index: number) =>
@@ -1308,63 +1332,151 @@ export const Col_1_img_1_reading_notes = ({
 
 			update_callback(newImgs, newIsCharts, newImagePosition);
 		};
+	const [imgHigherZIndex, setImgHigherZIndex] = useState(false);
 	const { socialPostsIndex, setSocialPostsIndex } = useSocialPosts();
 	return (
 		<div
-			style={{
-				width: '100%',
-				height: '100%',
-				backgroundSize: 'cover',
-				display: 'flex',
-				flexDirection: 'row',
-				justifyContent: 'flex-start',
-				alignItems: 'flex-start',
-				boxSizing: 'border-box',
-				border: 'none',
-				position: 'relative',
-				backgroundColor: 'white',
-			}}
+			// className='relative gap-[32px] flex justify-center items-center'
+			className='SocialPostCanvas'
+			style={{ position: 'relative', ...layoutElements?.canvasCSS }}
 		>
 			<div
-				className='w-full h-full flex flex-col justify-between'
+				className='horizontalDivider'
 				style={{
-					border: '8px solid transparent',
+					width: '100%',
+					height: '1px',
+					background: '#333330',
+					position: 'absolute',
+					top: '61%',
+					// left: '50%',
+					zIndex: 20,
+				}}
+			></div>
+			<div
+				className='SocialPostImageContainer'
+				style={{
+					// border: '12px solid transparent',
 					backgroundImage: `linear-gradient(white, white), radial-gradient(circle at top left, ${border_start}, ${border_end})`,
-					backgroundOrigin: 'border-box',
-					backgroundClip: 'content-box, border-box',
-					fontFamily: 'Cormorant, sans-serif',
+					// backgroundOrigin: 'border-box',
+					// backgroundClip: 'content-box, border-box',
+					zIndex: imgHigherZIndex ? 999 : 20,
+
+					// zIndex: 20,
+					...layoutElements?.imageContainerCSS,
 				}}
 			>
+				<ImgModule
+					imgsrc={useIllustraion ? illustration?.[0] : imgs?.[0]}
+					updateSingleCallback={updateImgAtIndex(0)}
+					chartArr={charts}
+					ischartArr={ischarts}
+					handleSlideEdit={handleSlideEdit}
+					canEdit={canEdit}
+					customImageStyle={layoutElements.imageContainerCSS}
+					currentSlideIndex={socialPostsIndex}
+					image_positions={image_positions}
+					isSlide={false}
+					isSocialPostTemp1Cover={true}
+					currentContentIndex={0}
+					setImgHigherZIndex={setImgHigherZIndex}
+				/>
+			</div>
+
+			<div
+				className='NonCoverPageIndicator'
+				style={{ ...layoutElements?.indicatorCSS, zIndex: 30 }}
+			>
+				{page_turn_indicator}
+			</div>
+			<div
+				className='SocialPostColumn'
+				style={{ ...layoutElements?.columnCSS }}
+			>
 				<div
-					className='w-full h-1/2 flex'
+					className='SocialPostQuoteSharingQuoteBox'
+					style={{ ...layoutElements?.quoteCSS, zIndex: 60 }}
+				>
+					{quote}
+				</div>
+
+				<div
+					className='QuoteSourceAndLogoBox'
 					style={{
-						borderRadius: '20px',
-						overflow: 'hidden',
+						...layoutElements?.sourceAndLogoBoxCSS,
 					}}
 				>
-					<ImgModule
-						imgsrc={illustration[0]}
-						updateSingleCallback={updateImgAtIndex(0)}
-						chartArr={charts}
-						ischartArr={ischarts}
-						handleSlideEdit={handleSlideEdit}
-						canEdit={canEdit}
-						currentSlideIndex={socialPostsIndex}
-						image_positions={image_positions}
-						isSlide={false}
-						currentContentIndex={0}
-					/>
-				</div>
-				<div id='asterisk_section' className='mx-[auto] text-center'>
-					*
-				</div>
-				<div className='px-[7%]'>{quote}</div>
-				<div id='source_section' className='mb-[10%]'>
-					{source}
+					<div
+						className='SocialPostQuoteSharingSourceBox'
+						style={{ ...layoutElements?.sourceCSS, zIndex: 50 }}
+					>
+						{source}
+					</div>
+					<div
+						className='SocialPostLogoBox'
+						style={{ ...layoutElements?.logoCSS, zIndex: 30 }}
+					>
+						{social_post_template_logo}
+					</div>
 				</div>
 			</div>
 		</div>
 	);
+	// return (
+	// 	<div
+	// 		style={{
+	// 			width: '100%',
+	// 			height: '100%',
+	// 			backgroundSize: 'cover',
+	// 			display: 'flex',
+	// 			flexDirection: 'row',
+	// 			justifyContent: 'flex-start',
+	// 			alignItems: 'flex-start',
+	// 			boxSizing: 'border-box',
+	// 			border: 'none',
+	// 			position: 'relative',
+	// 			backgroundColor: 'white',
+	// 		}}
+	// 	>
+	// 		<div
+	// 			className='w-full h-full flex flex-col justify-between'
+	// 			style={{
+	// 				border: '8px solid transparent',
+	// 				backgroundImage: `linear-gradient(white, white), radial-gradient(circle at top left, ${border_start}, ${border_end})`,
+	// 				backgroundOrigin: 'border-box',
+	// 				backgroundClip: 'content-box, border-box',
+	// 				fontFamily: 'Cormorant, sans-serif',
+	// 			}}
+	// 		>
+	// 			<div
+	// 				className='w-full h-1/2 flex'
+	// 				style={{
+	// 					borderRadius: '20px',
+	// 					overflow: 'hidden',
+	// 				}}
+	// 			>
+	// 				<ImgModule
+	// 					imgsrc={illustration[0]}
+	// 					updateSingleCallback={updateImgAtIndex(0)}
+	// 					chartArr={charts}
+	// 					ischartArr={ischarts}
+	// 					handleSlideEdit={handleSlideEdit}
+	// 					canEdit={canEdit}
+	// 					currentSlideIndex={socialPostsIndex}
+	// 					image_positions={image_positions}
+	// 					isSlide={false}
+	// 					currentContentIndex={0}
+	// 				/>
+	// 			</div>
+	// 			<div id='asterisk_section' className='mx-[auto] text-center'>
+	// 				*
+	// 			</div>
+	// 			<div className='px-[7%]'>{quote}</div>
+	// 			<div id='source_section' className='mb-[10%]'>
+	// 				{source}
+	// 			</div>
+	// 		</div>
+	// 	</div>
+	// );
 };
 
 export const last_page_layout = ({

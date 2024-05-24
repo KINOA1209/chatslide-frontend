@@ -30,6 +30,7 @@ export type SocialPostLayoutElements = {
 	lastPageContentCSS?: React.CSSProperties;
 	userNameAndLogoAndIndicatorBoxCSS?: React.CSSProperties;
 	userNameAndLogoBoxCSS?: React.CSSProperties;
+	sourceAndLogoBoxCSS?: React.CSSProperties;
 };
 
 export type SocialPostLayoutKeys =

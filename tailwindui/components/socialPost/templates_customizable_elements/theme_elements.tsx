@@ -20,6 +20,7 @@ export type SocialPostThemeElements = {
 	sourceCSS?: React.CSSProperties;
 	lastPageTitleCSS?: React.CSSProperties;
 	lastPageContentCSS?: React.CSSProperties;
+	useIllustraion?: boolean;
 };
 
 export type PostTypeKeys = 'casual_topic' | 'serious_subject' | 'reading_notes';

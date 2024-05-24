@@ -38,9 +38,10 @@ const QuillEditable = dynamic(
 );
 import classicTemplateThemeCoverPageIndicator from '@/public/images/socialpost/classicTemplateThemeCoverPageIndicator.png';
 import classicTemplateThemeLastPageIndicator from '@/public/images/socialpost/classicTemplateThemeLastPageIndicator.png';
+import classicTemplateThemeNonCoverPageIndicator from '@/public/images/socialpost/classicTemplateThemeNonCoverPageIndicator.png';
 import { StaticImageData } from 'next/image';
 
-export const templateThemeKeyAndIndicatorImgMap: Record<
+export const templateThemeKeyAndIndicatorImgMapCoverPage: Record<
 	SocialPostTemplateKeys,
 	StaticImageData
 > = {
@@ -56,6 +57,15 @@ export const templateThemeKeyAndIndicatorImgMapLastPage: Record<
 	classic: classicTemplateThemeLastPageIndicator,
 	default: classicTemplateThemeLastPageIndicator, // placeholder for now
 	bold: classicTemplateThemeLastPageIndicator, // placeholder for now
+};
+
+export const templateThemeKeyAndIndicatorImgMapNonCoverPage: Record<
+	SocialPostTemplateKeys,
+	StaticImageData
+> = {
+	classic: classicTemplateThemeNonCoverPageIndicator,
+	default: classicTemplateThemeNonCoverPageIndicator, // placeholder for now
+	bold: classicTemplateThemeNonCoverPageIndicator, // placeholder for now
 };
 
 export const loadSocialPostCustomizableElements = (
@@ -231,6 +241,8 @@ export const templateDispatch = (
 			currLayout as SocialPostLayoutKeys,
 		) || Classis_SocialPost_TemplateLayoutsConfig[currLayout];
 
+	const willUseIllustraion: boolean = themeElements?.useIllustraion || false;
+
 	const getUpdateCallback = (post_type: string, slideIndex: number) => {
 		return post_type === 'reading_notes'
 			? updateIllustrationUrlArray(slideIndex)
@@ -395,24 +407,35 @@ export const templateDispatch = (
 				page_turn_indicator={generateSocialPostTemplateIndicatorElement({
 					logoWidth: 65,
 					logoHeight: 65,
+					indicatorNonCoverPage: isLastPage
+						? undefined
+						: templateThemeKeyAndIndicatorImgMapNonCoverPage[
+								slide.template_theme
+							],
 					indicatorCoverPage:
-						templateThemeKeyAndIndicatorImgMap[slide.template_theme],
+						templateThemeKeyAndIndicatorImgMapCoverPage[slide.template_theme],
 					indicatorLastPage:
-						templateThemeKeyAndIndicatorImgMap[slide.template_theme],
+						templateThemeKeyAndIndicatorImgMapLastPage[slide.template_theme],
 					logoStyleConfig: socialPostLayoutElements?.indicatorCSS || {},
-					isLastPage: false,
+					isLastPage: isLastPage,
 				})}
 				page_index_number={index}
 				last_page_like_indicator={generateSocialPostTemplateIndicatorElement({
 					logoWidth: 65,
 					logoHeight: 65,
+					indicatorNonCoverPage: isLastPage
+						? undefined
+						: templateThemeKeyAndIndicatorImgMapNonCoverPage[
+								slide.template_theme
+							],
 					indicatorCoverPage:
-						templateThemeKeyAndIndicatorImgMap[slide.template_theme],
+						templateThemeKeyAndIndicatorImgMapCoverPage[slide.template_theme],
 					indicatorLastPage:
-						templateThemeKeyAndIndicatorImgMap[slide.template_theme],
+						templateThemeKeyAndIndicatorImgMapLastPage[slide.template_theme],
 					logoStyleConfig: socialPostLayoutElements?.indicatorCSS || {},
-					isLastPage: false,
+					isLastPage: isLastPage,
 				})}
+				useIllustraion={willUseIllustraion}
 			/>
 		);
 	} else {
@@ -568,20 +591,35 @@ export const templateDispatch = (
 				page_turn_indicator={generateSocialPostTemplateIndicatorElement({
 					logoWidth: 65,
 					logoHeight: 65,
-					logoBadge: templateThemeKeyAndIndicatorImgMap[slide.template_theme],
+					indicatorNonCoverPage: isLastPage
+						? undefined
+						: templateThemeKeyAndIndicatorImgMapNonCoverPage[
+								slide.template_theme
+							],
+					indicatorCoverPage:
+						templateThemeKeyAndIndicatorImgMapCoverPage[slide.template_theme],
+					indicatorLastPage:
+						templateThemeKeyAndIndicatorImgMapLastPage[slide.template_theme],
 					logoStyleConfig: socialPostLayoutElements?.indicatorCSS || {},
+					isLastPage: isLastPage,
 				})}
 				page_index_number={index}
 				last_page_like_indicator={generateSocialPostTemplateIndicatorElement({
 					logoWidth: 65,
 					logoHeight: 65,
+					indicatorNonCoverPage: isLastPage
+						? undefined
+						: templateThemeKeyAndIndicatorImgMapNonCoverPage[
+								slide.template_theme
+							],
 					indicatorCoverPage:
-						templateThemeKeyAndIndicatorImgMap[slide.template_theme],
+						templateThemeKeyAndIndicatorImgMapCoverPage[slide.template_theme],
 					indicatorLastPage:
 						templateThemeKeyAndIndicatorImgMapLastPage[slide.template_theme],
 					logoStyleConfig: socialPostLayoutElements?.indicatorCSS || {},
-					isLastPage: true,
+					isLastPage: isLastPage,
 				})}
+				useIllustraion={willUseIllustraion}
 			/>
 		);
 	}
