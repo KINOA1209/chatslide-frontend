@@ -52,6 +52,7 @@ export const useProject = () => {
 
 	const initProject = async (project: Project) => {
 		console.log('-- initProject', project);
+		// console.log('inited Project', project);
 		setProject(project);
 		if (project.outlines)
 			setOutlines(Object.values(JSON.parse(project.outlines)) || []);

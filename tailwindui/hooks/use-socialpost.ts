@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { createBearStore } from '@/utils/create-bear-store';
-import SocialPostSlide from '@/models/SocialPost';
+import { SocialPostSlide } from '@/models/SocialPost';
 import Project from '@/models/Project';
 import { useProject } from './use-project';
 import { useUser } from './use-user';

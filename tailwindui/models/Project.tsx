@@ -1,7 +1,7 @@
 import { PaletteKeys, TemplateKeys } from '@/components/slides/slideTemplates';
 import Resource from './Resource';
 import Slide, { LogoPosition } from './Slide';
-import SocialPostSlide from './SocialPost';
+import { SocialPostSlide } from './SocialPost';
 
 type Project = {
 	id: string;
@@ -47,7 +47,7 @@ type Project = {
 	search_online?: string;
 	add_citations?: boolean;
 
-  outline_structure?: string;
+	outline_structure?: string;
 
 	view_count?: number;
 

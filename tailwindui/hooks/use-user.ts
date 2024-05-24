@@ -85,7 +85,7 @@ export const useUser = () => {
 				let username = await AuthService.getCurrentUserDisplayName();
 
 				const user = await UserService.getUserCreditsAndTier(idToken);
-        console.log(' -- initUser: ', user);
+				console.log(' -- initUser: ', user);
 				setUser(user);
 
 				const {

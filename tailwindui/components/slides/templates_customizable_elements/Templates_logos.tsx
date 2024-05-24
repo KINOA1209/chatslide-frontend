@@ -5,9 +5,10 @@ import drlambdaLogo from '@/public/images/template/drlambdaLogo.png';
 import drlambdaLogoSingle from '@/public/images/template/drlambdaLogoSingle.png';
 import drlambdaLogoBadgeBlackBG from '@/public/images/template/drlambdaLogoBadgeBlackBG.png';
 import drlambdaLogoBadgeWhiteBG from '@/public/images/template/drlambdaLogoBadgeWhiteBG.png';
-import chatslideLogo from '@/public/images/template/chatslide_color_notext.svg';
-import chatslideLogoBlackText from '@/public/images/template/chatslide_color.svg';
-import chatslideLogoWhiteText from '@/public/images/template/chatslide_color_white_text.svg';
+// import chatslideLogo from '@/public/images/template/chatslide_color_notext.svg';
+// import chatslideLogoBlackText from '@/public/images/template/chatslide_color.svg';
+// import chatslideLogoWhiteText from '@/public/images/template/chatslide_color_white_text.svg';
+import chatSlideLogoWithBackground from '@/public/images/template/chatSlideLogoWithBackground.svg';
 import BerkeleyLogo from '@/public/images/template/Berkeley/Berkeley_logo.png';
 import BerkeleyLogoWhite from '@/public/images/template/Berkeley/Berkeley_logo_white.png';
 import StanfordLogo from '@/public/images/template/Stanford/StanfordLogo.png';
@@ -47,7 +48,9 @@ const DrLambdaLogo: React.FC<TemplateLogoType> = ({
 				>
 					<Image
 						onClick={openBrandingModal}
-						src={isChatslide() ? chatslideLogoBlackText : drlambdaLogoSingle}
+						src={
+							isChatslide() ? chatSlideLogoWithBackground : drlambdaLogoSingle
+						}
 						alt='Logo'
 						className='w-[2rem] h-auto'
 					/>
@@ -82,7 +85,7 @@ const DrLambdaLogo: React.FC<TemplateLogoType> = ({
 					<Image
 						onClick={openBrandingModal}
 						unoptimized={true}
-						src={isChatslide() ? chatslideLogoBlackText : drlambdaLogo}
+						src={isChatslide() ? chatSlideLogoWithBackground : drlambdaLogo}
 						alt='Logo'
 						className='w-[6rem] mr-4'
 					/>
@@ -133,6 +136,7 @@ export type TemplateLogoType = {
 	darkBGLogo?: StaticImageData;
 	// isLogoLeftSide?: boolean;
 	logoPosition?: LogoPosition;
+	logoPositionConfig?: React.CSSProperties;
 };
 // generate school template logo logic
 
@@ -343,8 +347,8 @@ export const Fun_Education_004_TemplateLogo: React.FC<TemplateLogoType> = (
 ) =>
 	generateTemplateLogo({
 		...props,
-		coverLogo: isChatslide() ? chatslideLogoBlackText : drlambdaLogo,
-		nonCoverLogo: isChatslide() ? chatslideLogoBlackText : drlambdaLogo,
+		coverLogo: isChatslide() ? chatSlideLogoWithBackground : drlambdaLogo,
+		nonCoverLogo: isChatslide() ? chatSlideLogoWithBackground : drlambdaLogo,
 		logoWidth: 8, // Adjust the width as needed
 		// isLogoLeftSide: isTemplateLogoLeftSide,
 	});
@@ -354,8 +358,8 @@ export const Business_Dark_005_TemplateLogo: React.FC<TemplateLogoType> = (
 ) =>
 	generateTemplateLogo({
 		...props,
-		coverLogo: isChatslide() ? chatslideLogoWhiteText : drlambdaLogo,
-		nonCoverLogo: isChatslide() ? chatslideLogoWhiteText : drlambdaLogo,
+		coverLogo: isChatslide() ? chatSlideLogoWithBackground : drlambdaLogo,
+		nonCoverLogo: isChatslide() ? chatSlideLogoWithBackground : drlambdaLogo,
 		logoWidth: 8, // Adjust the width as needed
 		// isLogoLeftSide: isTemplateLogoLeftSide,
 	});
@@ -365,8 +369,8 @@ export const Business_002_TemplateLogo: React.FC<TemplateLogoType> = (
 ) =>
 	generateTemplateLogo({
 		...props,
-		coverLogo: isChatslide() ? chatslideLogoWhiteText : drlambdaLogo,
-		nonCoverLogo: isChatslide() ? chatslideLogoWhiteText : drlambdaLogo,
+		coverLogo: isChatslide() ? chatSlideLogoWithBackground : drlambdaLogo,
+		nonCoverLogo: isChatslide() ? chatSlideLogoWithBackground : drlambdaLogo,
 		logoWidth: 8, // Adjust the width as needed
 		// isLogoLeftSide: isTemplateLogoLeftSide,
 	});
@@ -376,8 +380,8 @@ export const Clean_Lifestyle_003_TemplateLogo: React.FC<TemplateLogoType> = (
 ) =>
 	generateTemplateLogo({
 		...props,
-		coverLogo: isChatslide() ? chatslideLogoBlackText : drlambdaLogo,
-		nonCoverLogo: isChatslide() ? chatslideLogoBlackText : drlambdaLogo,
+		coverLogo: isChatslide() ? chatSlideLogoWithBackground : drlambdaLogo,
+		nonCoverLogo: isChatslide() ? chatSlideLogoWithBackground : drlambdaLogo,
 		logoWidth: 8, // Adjust the width as needed
 		// isLogoLeftSide: isTemplateLogoLeftSide,
 	});
@@ -387,8 +391,8 @@ export const Fun_Education_001_TemplateLogo: React.FC<TemplateLogoType> = (
 ) =>
 	generateTemplateLogo({
 		...props,
-		coverLogo: isChatslide() ? chatslideLogoBlackText : drlambdaLogo,
-		nonCoverLogo: isChatslide() ? chatslideLogoBlackText : drlambdaLogo,
+		coverLogo: isChatslide() ? chatSlideLogoWithBackground : drlambdaLogo,
+		nonCoverLogo: isChatslide() ? chatSlideLogoWithBackground : drlambdaLogo,
 		logoWidth: 8, // Adjust the width as needed
 		// isLogoLeftSide: isTemplateLogoLeftSide,
 	});
@@ -398,8 +402,8 @@ export const Fun_Vibrant_007_TemplateLogo: React.FC<TemplateLogoType> = (
 ) =>
 	generateTemplateLogo({
 		...props,
-		coverLogo: isChatslide() ? chatslideLogoBlackText : drlambdaLogo,
-		nonCoverLogo: isChatslide() ? chatslideLogoBlackText : drlambdaLogo,
+		coverLogo: isChatslide() ? chatSlideLogoWithBackground : drlambdaLogo,
+		nonCoverLogo: isChatslide() ? chatSlideLogoWithBackground : drlambdaLogo,
 		logoWidth: 8, // Adjust the width as needed
 		// isLogoLeftSide: isTemplateLogoLeftSide,
 	});
@@ -409,8 +413,8 @@ export const Business_Light_006_TemplateLogo: React.FC<TemplateLogoType> = (
 ) =>
 	generateTemplateLogo({
 		...props,
-		coverLogo: isChatslide() ? chatslideLogoBlackText : drlambdaLogo,
-		nonCoverLogo: isChatslide() ? chatslideLogoBlackText : drlambdaLogo,
+		coverLogo: isChatslide() ? chatSlideLogoWithBackground : drlambdaLogo,
+		nonCoverLogo: isChatslide() ? chatSlideLogoWithBackground : drlambdaLogo,
 		logoWidth: 8, // Adjust the width as needed
 		// isLogoLeftSide: isTemplateLogoLeftSide,
 	});
@@ -433,10 +437,10 @@ export const Simplistic_008_TemplateLogo: React.FC<TemplateLogoType> = (
 		// coverLogo: isChatslide() ? chatslideLogoText : drlambdaLogo,
 		// nonCoverLogo: isChatslide() ? chatslideLogoText : drlambdaLogo,
 		lightBGLogo: isChatslide()
-			? chatslideLogoBlackText
+			? chatSlideLogoWithBackground
 			: drlambdaLogoBadgeWhiteBG,
 		darkBGLogo: isChatslide()
-			? chatslideLogoWhiteText
+			? chatSlideLogoWithBackground
 			: drlambdaLogoBadgeBlackBG,
 		logoWidth: 8, // Adjust the width as needed
 		logoHeight: 1.5,
@@ -451,10 +455,10 @@ export const New_Education_009_TemplateLogo: React.FC<TemplateLogoType> = (
 		// coverLogo: drlambdaLogo,
 		// nonCoverLogo: drlambdaLogo,
 		lightBGLogo: isChatslide()
-			? chatslideLogoBlackText
+			? chatSlideLogoWithBackground
 			: drlambdaLogoBadgeWhiteBG,
 		darkBGLogo: isChatslide()
-			? chatslideLogoWhiteText
+			? chatSlideLogoWithBackground
 			: drlambdaLogoBadgeBlackBG,
 		logoWidth: 8, // Adjust the width as needed
 		logoHeight: 1.5,
@@ -469,10 +473,10 @@ export const Event_Report_010_TemplateLogo: React.FC<TemplateLogoType> = (
 		// coverLogo: drlambdaLogo,
 		// nonCoverLogo: drlambdaLogo,
 		lightBGLogo: isChatslide()
-			? chatslideLogoBlackText
+			? chatSlideLogoWithBackground
 			: drlambdaLogoBadgeWhiteBG,
 		darkBGLogo: isChatslide()
-			? chatslideLogoWhiteText
+			? chatSlideLogoWithBackground
 			: drlambdaLogoBadgeBlackBG,
 		logoWidth: 8, // Adjust the width as needed
 		logoHeight: 1.5,
@@ -487,10 +491,10 @@ export const Creative_Brief_011_TemplateLogo: React.FC<TemplateLogoType> = (
 		// coverLogo: drlambdaLogo,
 		// nonCoverLogo: drlambdaLogo,
 		lightBGLogo: isChatslide()
-			? chatslideLogoBlackText
+			? chatSlideLogoWithBackground
 			: drlambdaLogoBadgeWhiteBG,
 		darkBGLogo: isChatslide()
-			? chatslideLogoWhiteText
+			? chatSlideLogoWithBackground
 			: drlambdaLogoBadgeBlackBG,
 		logoWidth: 8, // Adjust the width as needed
 		logoHeight: 1.5,
@@ -505,10 +509,10 @@ export const Business_Review_012_TemplateLogo: React.FC<TemplateLogoType> = (
 		// coverLogo: drlambdaLogo,
 		// nonCoverLogo: drlambdaLogo,
 		lightBGLogo: isChatslide()
-			? chatslideLogoBlackText
+			? chatSlideLogoWithBackground
 			: drlambdaLogoBadgeWhiteBG,
 		darkBGLogo: isChatslide()
-			? chatslideLogoWhiteText
+			? chatSlideLogoWithBackground
 			: drlambdaLogoBadgeBlackBG,
 		logoWidth: 8, // Adjust the width as needed
 		logoHeight: 1.5,

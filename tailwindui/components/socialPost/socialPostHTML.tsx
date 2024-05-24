@@ -20,13 +20,11 @@ import {
 import SocialPostContainer from '@/components/socialPost/socialPostContainer';
 import ButtonWithExplanation from '../button/ButtonWithExplanation';
 import { templateDispatch } from '@/components/socialPost/socialPostTemplateDispatch';
-import templates, {
-	templateSamples,
-} from '@/components/socialPost/socialPostTemplates';
+import { socialPostAvailableLayouts } from '@/components/socialPost/socialPostTemplates';
 import { ThemeObject } from '@/components/socialPost/socialPostThemeChanger';
 import { useProject } from '@/hooks/use-project';
 import { useUser } from '@/hooks/use-user';
-import SocialPostSlide, { SlideKeys } from '@/models/SocialPost';
+import { SocialPostSlide, SlideKeys } from '@/models/SocialPost';
 import { useSocialPosts } from '@/hooks/use-socialpost';
 import ImagePosition from '@/models/ImagePosition';
 import Chart from '@/models/Chart';
@@ -36,6 +34,10 @@ import ExportToPngButton from '@/components/socialPost/socialPostPngButton';
 import { getOrigin } from '@/utils/getHost';
 import { RiArrowGoBackFill, RiArrowGoForwardFill } from 'react-icons/ri';
 import { calculateNonPresentScale } from '../slides/SlidesHTML';
+import {
+	SocialPostLayoutKeys,
+	SocialPostTemplateKeys,
+} from './socialPostLayouts';
 
 type SlidesHTMLProps = {
 	isViewing?: boolean; // viewing another's shared project
@@ -222,7 +224,9 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 			| string[]
 			| ThemeObject
 			| Array<string | string[] | Chart[] | boolean[] | ImagePosition[]>
-			| ThemeObject,
+			| ThemeObject
+			| SocialPostTemplateKeys
+			| SocialPostLayoutKeys,
 		slideIndex: number,
 		tag: SlideKeys | SlideKeys[],
 		contentIndex?: number,
@@ -243,7 +247,10 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 				| Chart[]
 				| boolean[]
 				| ImagePosition[]
-				| ThemeObject,
+				| ThemeObject
+				| SocialPostTemplateKeys
+				| SocialPostLayoutKeys,
+
 			className: string,
 		) => {
 			if (className === 'subtopic') {
@@ -262,6 +269,8 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 				}
 			} else if (className === 'template') {
 				currentSlide.template = content as string;
+			} else if (className === 'user_name') {
+				currentSlide.user_name = content as string;
 			} else if (className === 'images') {
 				currentSlide.images = content as string[];
 			} else if (className == 'section_title') {
@@ -300,8 +309,22 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 				currentSlide.chart = content as Chart[];
 			} else if (className === 'is_chart') {
 				currentSlide.is_chart = content as boolean[];
-			} else if (className === 'image_positions') {
+			} else if (className === 'images_position') {
 				currentSlide.image_positions = content as ImagePosition[];
+			} else if (className === 'template_theme') {
+				currentSlide.template_theme = content as SocialPostTemplateKeys;
+			} else if (className === 'layout') {
+				currentSlide.layout = content as SocialPostLayoutKeys;
+			} else if (className === 'last_page_content') {
+				if (typeof contentIndex === 'number' && contentIndex >= 0) {
+					let newContent = [...currentSlide.last_page_content];
+					newContent[contentIndex] = content as string;
+					currentSlide.last_page_content = newContent;
+				} else {
+					console.error(`Invalid contentIndex: ${contentIndex}`);
+				}
+			} else if (className === 'last_page_title') {
+				currentSlide.last_page_title = content as string;
 			} else {
 				console.error(`Unknown tag: ${tag}`);
 			}
@@ -449,6 +472,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 			updateImgUrlArray,
 			updateIllustrationUrlArray,
 			toggleEditMode,
+			socialPosts.length - 1 === index,
 		);
 	};
 	return (

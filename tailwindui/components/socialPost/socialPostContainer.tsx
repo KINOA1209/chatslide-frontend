@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import SocialPostSlide from '@/models/SocialPost';
+import { SocialPostSlide } from '@/models/SocialPost';
 import { templateDispatch as defaultTemplateDispatch } from '@/components/socialPost/socialPostTemplateDispatch';
 import { ThemeObject } from '@/components/socialPost/socialPostThemeChanger';
 
@@ -61,7 +61,7 @@ const SocialPostContainer: React.FC<SlideContainerProps> = ({
 			ref={containerRef}
 			style={{
 				boxShadow: isPresenting ? 'none' : '0 2px 10px rgba(0, 0, 0, 0.5)',
-				width: isPresenting ? '80vw' : `${450 * scale}px`,
+				width: isPresenting ? '80vw' : `${480 * scale}px`,
 				height: isPresenting ? '100vh' : `${600 * scale}px`,
 				// zIndex: !isViewing && !isPresenting ? 10 : 50,
 			}}
@@ -71,7 +71,7 @@ const SocialPostContainer: React.FC<SlideContainerProps> = ({
 				className='h-full w-full'
 				ref={slideRef}
 				style={{
-					width: '450px',
+					width: '480px',
 					height: '600px',
 					transformOrigin: 'top left',
 					transform: `scale(${scale})`,

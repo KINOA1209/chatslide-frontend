@@ -59,6 +59,7 @@ import useJSScript from '@/hooks/use-JSScript';
 import { LayoutKeys } from './slides/slideLayout';
 import { Media } from '@/models/Slide';
 import YoutubeEmbed from './utils/YoutubeEmbed';
+import { SocialPostLayoutKeys } from './socialPost/socialPostLayouts';
 
 interface ImgModuleProp {
 	imgsrc: string;
@@ -1298,8 +1299,23 @@ export const ImgModule = ({
 		transform: 'translateY(-50%)',
 	};
 
-	const showIconsFunctionText = (layout: string) => {
-		if (layout === 'Col_2_img_2_layout' || layout === 'Col_3_img_3_layout') {
+	type CombinedLayoutKeys = LayoutKeys | SocialPostLayoutKeys;
+	const showIconsFunctionText = (layout: CombinedLayoutKeys) => {
+		// console.log(
+		// 	'passed in layout test',
+		// 	layout === 'Col_2_img_2_layout' ||
+		// 		layout === 'Col_3_img_3_layout' ||
+		// 		layout === 'Col_2_img_1_left_casual_topic' ||
+		// 		layout === 'Col_2_img_1_right_casual_topic' ||
+		// 		layout === 'Col_1_img_1_reading_notes',
+		// );
+		if (
+			layout === 'Col_2_img_2_layout' ||
+			layout === 'Col_3_img_3_layout' ||
+			layout === 'Col_2_img_1_left_casual_topic' ||
+			layout === 'Col_2_img_1_right_casual_topic' ||
+			layout === 'Col_1_img_1_reading_notes'
+		) {
 			return false;
 		} else {
 			return true;
@@ -1308,7 +1324,8 @@ export const ImgModule = ({
 
 	const layoutEntry = isSlide
 		? slides[slideIndex]?.layout
-		: socialPosts[socialPostsIndex]?.template;
+		: // : socialPosts[socialPostsIndex]?.template;
+			socialPosts[socialPostsIndex]?.layout;
 
 	// console.log('selected img url', selectedImg);
 

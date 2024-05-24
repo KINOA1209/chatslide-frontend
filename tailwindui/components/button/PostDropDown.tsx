@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { DropDown } from './DrlambdaButton';
-import SocialPostSlide from '@/models/SocialPost';
+import { SocialPostSlide } from '@/models/SocialPost';
 import Slide, { SlideKeys } from '@/models/Slide';
 import AuthService from '@/services/AuthService';
 import ProjectService from '@/services/ProjectService';
