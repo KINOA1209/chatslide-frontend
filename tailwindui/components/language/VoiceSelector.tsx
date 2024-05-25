@@ -20,15 +20,27 @@ import {
 import { DropDown } from '../button/DrlambdaButton';
 import { useProject } from '@/hooks/use-project';
 import { WrappableRow } from '../layout/WrappableRow';
+import { useUser } from '@/hooks/use-user';
+import { useClonedVoices } from '@/components/language/ClonedVoicesContext';
+import VoiceProfile from '@/models/VoiceProfile';
 
 export const previewVoice = async (
 	voice: string,
 	language: string = 'en-US',
+	clonedVoices: VoiceProfile[],
+	uid: string,
 ) => {
 	try {
 		let audio_url = `/voice/${voice}.mp3`;
 		console.log('previewing voice:', voice);
-		if (voice.includes('Multilingual') || isOpenaiVoice(voice)) {
+		const isClonedVoice = voice.startsWith('elabs_');
+		
+		if (isClonedVoice) {
+			const clonedVoiceProfile = clonedVoices.find(profile => `elabs_${profile.voice_id}` === voice);
+			if (clonedVoiceProfile && clonedVoiceProfile.preview_url) {
+				audio_url = `/api/voice/download?filename=${encodeURIComponent(clonedVoiceProfile.preview_url)}&foldername=${encodeURIComponent(uid)}`;
+			}
+		} else if (voice.includes('Multilingual') || isOpenaiVoice(voice)) {
 			if (
 				['en', 'fr', 'de', 'es', 'zh', 'it', 'pt', 'ru'].includes(
 					language.split('-')[0],
@@ -39,6 +51,7 @@ export const previewVoice = async (
 				audio_url = `/voice/${voice}/en.mp3`;
 			}
 		}
+
 		const audioElement = new Audio(audio_url);
 		audioElement.play(); // Play the voice
 		console.log('playing audio:', audioElement);
@@ -51,11 +64,6 @@ export const getVoiceStyles = (voice: string): string[] => {
 	const styles = AZURE_VOICE_STYLES[voice] ?? [];
 	return ['', ...styles];
 };
-
-export const isClonedVoice = (voice: string): boolean => {
-  // @joseph: add your logic here
-  return false;
-}
 
 const VoiceSelector: React.FC<{
 	selectedVoice: string;
@@ -70,6 +78,7 @@ const VoiceSelector: React.FC<{
 		);
 		return selectedLanguage?.code ?? 'en-US';
 	};
+
 	const { project } = useProject();
 	const originalLanguageCode = getCodeFromLanguage(project?.language);
 	const [selectedLanguage, setSelectedLanguage] =
@@ -78,39 +87,44 @@ const VoiceSelector: React.FC<{
 		'female',
 	);
 	const [voiceOptions, setVoiceOptions] = useState<string[]>([]);
+	const { clonedVoices } = useClonedVoices();
+	const { uid } = useUser();
 
 	// Update voice options based on selected language and gender
 	useEffect(() => {
 		const voices = AZURE_VOICE_OPTIONS[selectedLanguage]?.[selectedGender] ?? [
 			'Default',
 		];
-		setVoiceOptions(voices);
-		setSelectedVoice(voices[0]);
-	}, [selectedLanguage, selectedGender]);
+		const clonedVoiceNames = clonedVoices.map((voiceProfile) => `elabs_${voiceProfile.voice_id}`);
+		setVoiceOptions([...clonedVoiceNames, ...voices]);
+		setSelectedVoice(clonedVoiceNames[0] ?? voices[0]);
+	}, [selectedLanguage, selectedGender, clonedVoices]);
 
 	const formatVoiceName = (voiceName: string): string => {
+		const isCloned = voiceName.startsWith('elabs_');
+		const formattedName = isCloned ? clonedVoices.find((voice) => `elabs_${voice.voice_id}` === voiceName)?.name : voiceName;
+		if (isCloned) {
+			return formattedName + ' 🔄';
+		}
+
 		if (isOpenaiVoice(voiceName)) {
-			// capitalize the first letter and return
 			return voiceName.charAt(0).toUpperCase() + voiceName.slice(1) + ' 🌐 🎧';
 		}
 
 		const styleAvailableText = AZURE_VOICE_STYLES[voiceName] ? ' 😊' : '';
 
-		// Ensure the string is long enough to avoid negative substring indices
 		if (voiceName.length > 12) {
-			// remove `en-US-` and `Neural` from the voice name
 			let formattedName = voiceName.substring(6, voiceName.length - 6);
-			// Capitalize the first letter and return
 			formattedName =
 				formattedName.charAt(0).toUpperCase() + formattedName.slice(1);
-
 			formattedName = TONE_DISPLAY_NAMES[formattedName] ?? formattedName;
 			return formattedName + styleAvailableText;
 		}
 
-		// If the name is not in the expected format, return it as is or handle accordingly
 		return voiceName;
 	};
+
+	const isClonedVoice = (voice: string) => clonedVoices.some(profile => profile.name === voice);
 
 	return (
 		<>
@@ -156,11 +170,11 @@ const VoiceSelector: React.FC<{
 							<DropDown
 								value={selectedVoice}
 								onChange={(e) => {
-									previewVoice(e.target.value, selectedLanguage);
+									previewVoice(e.target.value, selectedLanguage, clonedVoices, uid);
 									setSelectedVoice(e.target.value);
 								}}
 							>
-								{/*  @joseph: add user's voice ids here */}
+								{/*  Add user's voice ids here */}
 								{voiceOptions.map((voice) => (
 									<option key={voice} value={voice}>
 										{formatVoiceName(voice)}

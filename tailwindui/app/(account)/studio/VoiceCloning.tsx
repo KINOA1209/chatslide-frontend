@@ -1,6 +1,6 @@
 'use client';
 
-import { BigBlueButton, DropDown } from '@/components/button/DrlambdaButton';
+import { BigBlueButton, DropDown, InversedBigBlueButton } from '@/components/button/DrlambdaButton';
 import Card from '@/components/ui/Card';
 import { NewInputBox } from '@/components/ui/InputBox';
 import { BigTitle, Instruction } from '@/components/ui/Text';
@@ -12,6 +12,7 @@ import VoiceCloneService from '@/services/VoiceService';
 import { useUser } from '@/hooks/use-user';
 import VoiceProfile from '@/models/VoiceProfile';
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import { toast } from 'react-toastify';
 
 const VoiceCloning = () => {
 	const [selectedLanguageCode, setSelectedLanguageCode] = useState<string>('en-US');
@@ -35,7 +36,6 @@ const VoiceCloning = () => {
 		try {
 			const profiles = await VoiceCloneService.getVoiceProfiles(token);
 			setVoiceProfiles(profiles);
-			console.log('Voice profiles:', profiles);
 			if (profiles.length > 0) {
 				setSelectedProfile(profiles[0]);
 			}
@@ -113,7 +113,7 @@ const VoiceCloning = () => {
 			try {
 				setCloning(true);
 				const result = await VoiceCloneService.cloneVoice(formData, token);
-				alert('Voice clone created successfully!');
+				toast.success('Voice cloned successfully!');
 				await fetchVoiceProfiles();
 			} catch (error: any) {
 				console.error('Error cloning voice:', error.message);
@@ -196,7 +196,7 @@ const VoiceCloning = () => {
 					maxLength={20}
 					onChange={setVoiceName}
 				/>
-				<BigBlueButton onClick={handleCloneVoice} disabled={cloning}>
+				<InversedBigBlueButton onClick={handleCloneVoice} disabled={cloning}>
 					{cloning ? (
 						<>
 							<i className="fas fa-spin"></i> Cloning...
@@ -206,7 +206,7 @@ const VoiceCloning = () => {
 							<i className="fas fa-clone"></i> Clone
 						</>
 					)}
-				</BigBlueButton>
+				</InversedBigBlueButton>
 				{recordedAudio && (
 					<audio controls>
 						<source src={URL.createObjectURL(recordedAudio)} type="audio/wav" />

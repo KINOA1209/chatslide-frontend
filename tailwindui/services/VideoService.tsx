@@ -21,7 +21,7 @@ export default class VideoService {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
-				Authorization: `Bearer ${userToken}`, // Replace this with your actual auth header
+				Authorization: `Bearer ${userToken}`,
 			},
 			body: JSON.stringify({
 				project_id: project_id,
@@ -36,7 +36,7 @@ export default class VideoService {
 				background_music: bgm,
 				bgm_volume: bgmVolume,
 				credit_cost: creditCost,
-        transition_type: transitionType,
+        		transition_type: transitionType,
 			}),
 		});
 	}
