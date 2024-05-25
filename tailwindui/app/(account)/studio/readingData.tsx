@@ -3,7 +3,7 @@ export const readingData: Record<string, string> = {
   
 Regular physical activity is crucial for maintaining a healthy weight and boosting mental well-being. It is recommended to engage in at least one hundred and fifties minutes of moderate aerobic exercise or seventy five minutes of exercise each week.
   
-Adequate sleep is also essential for overall health. Most adults need between seven to nie hours of sleep per night to function optimally. Good sleep practices, such as maintaining a regular sleep schedule and creating a comfortable sleep environment, can improve sleep quality.
+Adequate sleep is also essential for overall health. Most adults need between seven to nine hours of sleep per night to function optimally. Good sleep practices, such as maintaining a regular sleep schedule and creating a comfortable sleep environment, can improve sleep quality.
   
 Lastly, managing stress through meditation, or hobbies can enhance both mental and physical health. By incorporating these elements into your daily routine, you can significantly improve your overall well-being and quality of life.`,
 
@@ -11,7 +11,7 @@ Lastly, managing stress through meditation, or hobbies can enhance both mental a
   
 Regular physical activity is crucial for maintaining a healthy weight and boosting mental well-being. It is recommended to engage in at least one hundred and fifties minutes of moderate aerobic exercise or seventy five minutes of exercise each week.
   
-Adequate sleep is also essential for overall health. Most adults need between seven to nie hours of sleep per night to function optimally. Good sleep practices, such as maintaining a regular sleep schedule and creating a comfortable sleep environment, can improve sleep quality.
+Adequate sleep is also essential for overall health. Most adults need between seven to nine hours of sleep per night to function optimally. Good sleep practices, such as maintaining a regular sleep schedule and creating a comfortable sleep environment, can improve sleep quality.
   
 Lastly, managing stress through meditation, or hobbies can enhance both mental and physical health. By incorporating these elements into your daily routine, you can significantly improve your overall well-being and quality of life.`,
   
@@ -19,7 +19,7 @@ Lastly, managing stress through meditation, or hobbies can enhance both mental a
   
 Regular physical activity is crucial for maintaining a healthy weight and boosting mental well-being. It is recommended to engage in at least one hundred and fifties minutes of moderate aerobic exercise or seventy five minutes of exercise each week.
   
-Adequate sleep is also essential for overall health. Most adults need between seven to nie hours of sleep per night to function optimally. Good sleep practices, such as maintaining a regular sleep schedule and creating a comfortable sleep environment, can improve sleep quality.
+Adequate sleep is also essential for overall health. Most adults need between seven to nine hours of sleep per night to function optimally. Good sleep practices, such as maintaining a regular sleep schedule and creating a comfortable sleep environment, can improve sleep quality.
   
 Lastly, managing stress through meditation, or hobbies can enhance both mental and physical health. By incorporating these elements into your daily routine, you can significantly improve your overall well-being and quality of life.`,
 
