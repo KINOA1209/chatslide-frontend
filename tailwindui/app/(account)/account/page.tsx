@@ -453,11 +453,12 @@ const CreditHistory = () => {
 
 	useEffect(() => {
 		async function fetchStripeLink() {
+      if(!token) return;
 			const link = await UserService.createStripePortalSession(token);
 			setStripeLink(link);
 		}
 		fetchStripeLink();
-	}, []);
+	}, [token]);
 
 	return (
 		<div className='w-full'>

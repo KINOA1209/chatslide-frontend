@@ -215,6 +215,9 @@ const PricingComparison: React.FC<{
 	};
 
 	const handleManageSubscription = async (token: string) => {
+    if(!token) {
+      return;
+    }
 		try {
 			const url = await UserService.createStripePortalSession(token);
 			router.push(url);
