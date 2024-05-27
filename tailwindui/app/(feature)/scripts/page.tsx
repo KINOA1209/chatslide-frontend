@@ -16,7 +16,6 @@ import {
 import Card from '@/components/ui/Card';
 import { useProject } from '@/hooks/use-project';
 import VoiceSelector, {
-	isClonedVoice,
 	previewVoice,
 } from '@/components/language/VoiceSelector';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -46,6 +45,7 @@ import {
 	SlideLeftNavigator,
 	SlidePagesIndicator,
 } from '@/components/slides/SlidePageIndicator';
+import { ClonedVoicesProvider, useClonedVoices } from '@/components/language/ClonedVoicesContext';
 
 const ScriptSection = dynamic(
 	() => import('@/components/script/ScriptSection'),
@@ -171,6 +171,7 @@ export default function WorkflowStep5() {
 	}
 
 	async function handleSubmitVideo() {
+
 		if (canSubmitVideo()) {
 			setLastSubmissionTime();
 		} else {
@@ -227,7 +228,8 @@ export default function WorkflowStep5() {
 		if (lastSubmissionTime) {
 			const currentTime = new Date().getTime();
 			const timeDifference = currentTime - parseInt(lastSubmissionTime, 10);
-			return timeDifference > 5 * 60 * 1000; // 5 minutes in milliseconds
+			return true;
+			// return timeDifference > 5 * 60 * 1000; // 5 minutes in milliseconds
 		}
 		return true; // If no submission has been made before
 	};
@@ -285,13 +287,15 @@ export default function WorkflowStep5() {
 					<Instruction>
 						Select the voice you want to use for your video.
 					</Instruction>
-					<VoiceSelector
-						selectedVoice={voice}
-						setSelectedVoice={setVoice}
-						style={style}
-						setStyle={setStyle}
-						isHD={voiceIsHD}
-					/>
+						<ClonedVoicesProvider>
+							<VoiceSelector
+								selectedVoice={voice}
+								setSelectedVoice={setVoice}
+								style={style}
+								setStyle={setStyle}
+								isHD={voiceIsHD}
+							/>
+						</ClonedVoicesProvider>
 				</Card>
 
 				<Card>
@@ -386,7 +390,8 @@ export default function WorkflowStep5() {
 						The credit cost for videos with avatar is 400⭐️ per video. This may
 						change in the future.
 					</Explanation>
-					{isOpenaiVoice(voice) || isClonedVoice(voice) ? (
+					{/* TODO: is ClonedVoice */}
+					{isOpenaiVoice(voice) ? (
 						<WarningMessage>
 							The voice you selected does not support avatars yet.
 						</WarningMessage>
