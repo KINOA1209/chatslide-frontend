@@ -1,10 +1,19 @@
 'use client';
 
-import { BigBlueButton, DropDown, InversedBigBlueButton } from '@/components/button/DrlambdaButton';
+import {
+	BigBlueButton,
+	DropDown,
+	InversedBigBlueButton,
+} from '@/components/button/DrlambdaButton';
 import Card from '@/components/ui/Card';
 import { NewInputBox } from '@/components/ui/InputBox';
-import { BigTitle, Instruction } from '@/components/ui/Text';
-import { ProLabel } from '@/components/ui/GrayLabel';
+import {
+	BigTitle,
+	ErrorMessage,
+	Instruction,
+	WarningMessage,
+} from '@/components/ui/Text';
+import { BetaLabel, GrayLabel, ProLabel } from '@/components/ui/GrayLabel';
 import { useState, useRef, useEffect } from 'react';
 import { readingData } from './readingData';
 import { LANGUAGES_WITH_ACCENTS } from '@/components/language/languageData';
@@ -12,24 +21,34 @@ import VoiceCloneService from '@/services/VoiceService';
 import { useUser } from '@/hooks/use-user';
 import VoiceProfile from '@/models/VoiceProfile';
 import { toast } from 'react-toastify';
+import { WrappableRow } from '@/components/layout/WrappableRow';
+import { FaClone, FaTrash } from 'react-icons/fa';
+import PaywallModal from '@/components/paywallModal';
 
 const VoiceCloning = () => {
-	const [selectedLanguageCode, setSelectedLanguageCode] = useState<string>('en-US');
-	const [inputBoxText, setInputBoxText] = useState<string>(readingData['en-US']);
+	const [selectedLanguageCode, setSelectedLanguageCode] =
+		useState<string>('en-US');
+	const [inputBoxText, setInputBoxText] = useState<string>(
+		readingData['en-US'],
+	);
 	const [recordedAudio, setRecordedAudio] = useState<null | Blob>(null);
 	const [isRecording, setIsRecording] = useState<boolean>(false);
 	const [timeLeft, setTimeLeft] = useState<number>(60);
+	const [audioLength, setAudioLength] = useState<number>(0);
 	const mediaRecorderRef = useRef<MediaRecorder | null>(null);
 	const audioChunksRef = useRef<Blob[]>([]);
 	const timerRef = useRef<NodeJS.Timeout | null>(null);
-	const { token, uid } = useUser();
+	const { token, uid, tier } = useUser();
 	const [voiceProfiles, setVoiceProfiles] = useState<VoiceProfile[]>([]);
-	const [selectedProfile, setSelectedProfile] = useState<VoiceProfile | null>(null);
+	const [selectedProfile, setSelectedProfile] = useState<VoiceProfile | null>(
+		null,
+	);
 	const [voiceName, setVoiceName] = useState<string>('');
 	const [customRecording, setCustomRecording] = useState<string>('');
 	const [customerInput, setCustomerInput] = useState<string>('');
 	const [loading, setLoading] = useState(false);
 	const [cloning, setCloning] = useState(false);
+  const [showPaywallModal, setShowPaywallModal] = useState(false);
 
 	const fetchVoiceProfiles = async () => {
 		try {
@@ -47,7 +66,9 @@ const VoiceCloning = () => {
 		fetchVoiceProfiles();
 	}, [token]);
 
-	const handleLanguageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+	const handleLanguageChange = (
+		event: React.ChangeEvent<HTMLSelectElement>,
+	) => {
 		const code = event.target.value;
 		setSelectedLanguageCode(code);
 		setInputBoxText(readingData[code]);
@@ -64,6 +85,7 @@ const VoiceCloning = () => {
 			if (timerRef.current) {
 				clearInterval(timerRef.current);
 				timerRef.current = null;
+				setAudioLength(60 - timeLeft);
 			}
 			setTimeLeft(60);
 		} else {
@@ -75,7 +97,9 @@ const VoiceCloning = () => {
 				audioChunksRef.current.push(event.data);
 			};
 			mediaRecorderRef.current.onstop = () => {
-				const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/mp3' });
+				const audioBlob = new Blob(audioChunksRef.current, {
+					type: 'audio/mp3',
+				});
 				setRecordedAudio(audioBlob);
 				audioChunksRef.current = [];
 			};
@@ -83,7 +107,7 @@ const VoiceCloning = () => {
 			setIsRecording(true);
 
 			timerRef.current = setInterval(() => {
-				setTimeLeft(prevTime => {
+				setTimeLeft((prevTime) => {
 					if (prevTime <= 1) {
 						mediaRecorderRef.current?.stop();
 						setIsRecording(false);
@@ -99,15 +123,22 @@ const VoiceCloning = () => {
 
 	const handleCloneVoice = async () => {
 		if (voiceName.trim() === '') {
-			alert('Please enter a name for the voice profile.');
+			toast.error('Please enter a name for the voice profile.');
 			return;
 		}
+    if (!tier.includes('ULTIMATE')) {
+      setShowPaywallModal(true);
+      return;
+    }
 		if (recordedAudio) {
 			const formData = new FormData();
 			formData.append('file', recordedAudio, 'recording.mp3');
 			formData.append('name', voiceName);
 			formData.append('description', 'A description of the voice clone');
-			formData.append('labels', JSON.stringify({ genre: 'narrative', age: '30s' }));
+			formData.append(
+				'labels',
+				JSON.stringify({ genre: 'narrative', age: '30s' }),
+			);
 
 			try {
 				setCloning(true);
@@ -120,7 +151,7 @@ const VoiceCloning = () => {
 				setCloning(false);
 			}
 		} else {
-			alert('Please record your voice first.');
+			toast.error('Please record your voice first.');
 		}
 	};
 
@@ -133,7 +164,7 @@ const VoiceCloning = () => {
 				stability: 0.65,
 				similarity_boost: 0.3,
 				style: 0.3,
-			}
+			},
 		};
 		try {
 			const result = await VoiceCloneService.generateVoice(requestData, token);
@@ -143,18 +174,26 @@ const VoiceCloning = () => {
 		} finally {
 			setLoading(false);
 		}
-	}
+	};
 
 	const handleProfileChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-		const profile = voiceProfiles.find(profile => profile.name === event.target.value);
+		const profile = voiceProfiles.find(
+			(profile) => profile.name === event.target.value,
+		);
 		setSelectedProfile(profile || null);
 	};
 
 	const handleDeleteProfile = async () => {
 		if (selectedProfile) {
+      setVoiceProfiles(
+        voiceProfiles.filter((profile) => profile.voice_id !== selectedProfile.voice_id)
+      )
 			try {
 				setLoading(true);
-				await VoiceCloneService.deleteVoiceProfile(selectedProfile.voice_id, token);
+				await VoiceCloneService.deleteVoiceProfile(
+					selectedProfile.voice_id,
+					token,
+				);
 				setSelectedProfile(null);
 				setCustomRecording('');
 				await fetchVoiceProfiles();
@@ -164,21 +203,43 @@ const VoiceCloning = () => {
 				setLoading(false);
 			}
 		}
-	}
+	};
 
 	return (
 		<>
+      <PaywallModal
+        showModal={showPaywallModal}
+        setShowModal={setShowPaywallModal}
+        message='Upgrade to get an early access to Beta features. 🚀'
+      />
 			<Card>
-				<BigTitle>🎙️ Create New Voice Profile <ProLabel /> </BigTitle>
-				<Instruction> Please select a language, read the provided text aloud, and click the Record button to start recording. After recording, click the Clone button to create your voice clone. </Instruction>
-				<DropDown
-					value={selectedLanguageCode}
-					onChange={handleLanguageChange}
-				>
-					{LANGUAGES_WITH_ACCENTS.map(lang => (
-						<option key={lang.code} value={lang.code}>{lang.displayName}</option>
-					))}
-				</DropDown>
+				<BigTitle>
+					🎙️ Create New Voice Profile <BetaLabel />{' '}
+				</BigTitle>
+        { !tier.includes('ULTIMATE') && 
+        <WarningMessage>
+          ⚠️ This feature is in Beta version. It is only available for ULTIMATE users.
+          Access to this feature by PRO users is coming soon.
+        </WarningMessage>
+        }
+				<WrappableRow type='grid' cols={2}>
+					<Instruction>Select a language:</Instruction>
+					<DropDown
+						value={selectedLanguageCode}
+						onChange={handleLanguageChange}
+					>
+						{LANGUAGES_WITH_ACCENTS.map((lang) => (
+							<option key={lang.code} value={lang.code}>
+								{lang.displayName}
+							</option>
+						))}
+					</DropDown>
+				</WrappableRow>
+				<Instruction>
+					Click the record button, and read the text below for at least 30
+					seconds.
+				</Instruction>
+
 				<NewInputBox
 					onChange={handleInputBoxChange}
 					value={inputBoxText}
@@ -189,66 +250,104 @@ const VoiceCloning = () => {
 					<i className={isRecording ? 'fas fa-stop' : 'fas fa-microphone'}></i>
 					{isRecording ? ` Stop Recording (${timeLeft}s)` : ' Record'}
 				</BigBlueButton>
-				<NewInputBox
-					placeholder="Enter a name for the voice profile"
-					value={voiceName}
-					maxLength={20}
-					onChange={setVoiceName}
-				/>
-				<InversedBigBlueButton onClick={handleCloneVoice} disabled={cloning}>
-					{cloning ? (
-						<>
-							<i className="fas fa-spin"></i> Cloning...
-						</>
-					) : (
-						<>
-							<i className="fas fa-clone"></i> Clone
-						</>
-					)}
-				</InversedBigBlueButton>
+
 				{recordedAudio && (
-					<audio controls>
-						<source src={URL.createObjectURL(recordedAudio)} type="audio/wav" />
-					</audio>
+					<WrappableRow type='grid' cols={2}>
+						<Instruction>Preview your recording:</Instruction>
+						<audio controls className='mx-auto h-[36px]'>
+							<source
+								src={URL.createObjectURL(recordedAudio)}
+								type='audio/wav'
+							/>
+						</audio>
+					</WrappableRow>
 				)}
-			</Card>
-			<Card>
-				<BigTitle>📂 Existing Voice Profiles <ProLabel /> </BigTitle>
-				<Instruction> Select a voice profile to view details and listen to the training file and preview. </Instruction>
-				<DropDown
-					onChange={handleProfileChange}
-					value={selectedProfile?.name || ''}
-				>
-					{voiceProfiles.map(profile => (
-						<option key={profile.voice_id} value={profile.name}>
-							{profile.name}
-						</option>
-					))}
-				</DropDown>
-				{selectedProfile ? (
-					<>
-						<p>Name: {selectedProfile.name}</p>
-						<p>Training Voice:</p>
-						<audio key={selectedProfile.training_file_path} controls>
-							<source src={`/api/voice/download?filename=${encodeURIComponent(selectedProfile.training_file_path)}&foldername=${encodeURIComponent(uid)}`} type="audio/mp3" />
-						</audio>
-						<p>Preview Voice:</p>
-						<audio key={selectedProfile.preview_url} controls>
-							<source src={`/api/voice/download?filename=${encodeURIComponent(selectedProfile.preview_url)}&foldername=${encodeURIComponent(uid)}`} type="audio/mp3" />
-						</audio>
-						<BigBlueButton onClick={handleDeleteProfile} disabled={loading}>
-							{loading ? (
+
+				{/* if the audio is not 60s, show an error */}
+				{audioLength < 30 ? (
+					<WarningMessage>
+						Please record for at least 30 seconds.
+					</WarningMessage>
+				) : (
+					<div className='flex flex-row items-center justify-center gap-x-2'>
+						<NewInputBox
+							placeholder='Enter a name'
+							value={voiceName}
+							maxLength={20}
+							onChange={setVoiceName}
+						/>
+						<InversedBigBlueButton
+							width='8rem'
+							onClick={handleCloneVoice}
+							isSubmitting={cloning}
+							disabled={audioLength < 30 || cloning}
+						>
+							{cloning ? (
 								<>
-									<i className="fas fa-spin"></i>
+									<FaClone /> Cloning...
 								</>
 							) : (
 								<>
-									<i className="fas fa-trash"></i> Delete
+									<FaClone /> Clone
 								</>
 							)}
-						</BigBlueButton>
+						</InversedBigBlueButton>
+					</div>
+				)}
+			</Card>
+			<Card>
+				<BigTitle>
+					📂 Existing Voice Profiles <BetaLabel />{' '}
+				</BigTitle>
+
+				{voiceProfiles.length > 0 && (
+					<>
+						<Instruction>
+							{' '}
+							Select a voice profile to view details and listen to the training
+							file and preview.{' '}
+						</Instruction>
+						<WrappableRow type='flex'>
+							<DropDown
+								onChange={handleProfileChange}
+								value={selectedProfile?.name || ''}
+							>
+								{voiceProfiles.map((profile) => (
+									<option key={profile.voice_id} value={profile.name}>
+										{profile.name}
+									</option>
+								))}
+							</DropDown>
+							<InversedBigBlueButton
+								onClick={handleDeleteProfile}
+								disabled={loading}
+								width='4rem'
+							>
+								Delete
+							</InversedBigBlueButton>
+						</WrappableRow>
+					</>
+				)}
+				{selectedProfile ? (
+					<>
+						{/* <p>Name: {selectedProfile.name}</p>
+						<p>Training Voice:</p>
+						<audio key={selectedProfile.training_file_path} controls>
+							<source
+								src={`/api/voice/download?filename=${encodeURIComponent(selectedProfile.training_file_path)}&foldername=${encodeURIComponent(uid)}`}
+								type='audio/mp3'
+							/>
+						</audio>
+						<p>Preview Voice:</p>
+						<audio key={selectedProfile.preview_url} controls>
+							<source
+								src={`/api/voice/download?filename=${encodeURIComponent(selectedProfile.preview_url)}&foldername=${encodeURIComponent(uid)}`}
+								type='audio/mp3'
+							/>
+						</audio> */}
+
 						<NewInputBox
-							placeholder="Enter text to generate voice"
+							placeholder='Enter text to preview voice'
 							value={customerInput}
 							maxLength={2000}
 							onChange={setCustomerInput}
@@ -257,22 +356,25 @@ const VoiceCloning = () => {
 						<BigBlueButton onClick={handleGenerateVoice} disabled={loading}>
 							{loading ? (
 								<>
-									<i className="fas fa-spin"></i>
+									<i className='fas fa-spin'></i>
 								</>
 							) : (
 								<>
-									<i className="fas fa-play"></i> Generate
+									<i className='fas fa-play'></i> Generate
 								</>
 							)}
 						</BigBlueButton>
 						{customRecording && (
 							<audio controls>
-								<source src={customRecording} type="audio/mp3" />
+								<source src={customRecording} type='audio/mp3' />
 							</audio>
 						)}
 					</>
-				): (
-					<p>🤔️ No voice profiles found. Create your own Voice Profile now! </p>
+				) : (
+					<p>
+						🤔️ No voice profiles found. Please create a voice profile using the
+						section above.{' '}
+					</p>
 				)}
 			</Card>
 		</>

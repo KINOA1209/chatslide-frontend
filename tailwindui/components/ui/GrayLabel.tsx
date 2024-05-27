@@ -39,3 +39,7 @@ export const ProLabel: React.FC = () => {
 export const TextLabel: React.FC<InputBoxProps> = ({ children }) => {
 	return <div className={`text-sm text-gray-700`}>{children}</div>;
 };
+
+export const BetaLabel: React.FC = () => {
+  return <GrayLabel>Beta</GrayLabel>;
+}

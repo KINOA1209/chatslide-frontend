@@ -332,6 +332,7 @@ export const InversedBigBlueButton: React.FC<DrlambdaButtonProps> = ({
 	children,
 	onClick,
 	isSubmitting = false,
+  disabled = false,
 	isPaidUser,
 	isPaidFeature = false,
 	width = '12rem',
@@ -343,6 +344,7 @@ export const InversedBigBlueButton: React.FC<DrlambdaButtonProps> = ({
 			hierarchy='secondary'
 			isSubmitting={isSubmitting}
 			width={width}
+      buttonStatus={!disabled ? 'enabled' : 'disabled'}
 		>
 			{children}
 		</DesignSystemButton>
