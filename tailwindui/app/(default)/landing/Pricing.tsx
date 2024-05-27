@@ -87,7 +87,7 @@ const PricingComparison: React.FC<{
 			case 'PLUS':
 				return 9.9;
 			case 'PRO':
-				return 14.9;
+				return 19.9;
 			case 'ULTIMATE':
 				return 59.9;
 		}
