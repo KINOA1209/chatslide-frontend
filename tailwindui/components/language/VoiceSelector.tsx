@@ -27,15 +27,15 @@ import VoiceProfile from '@/models/VoiceProfile';
 export const previewVoice = async (
 	voice: string,
 	language: string = 'en-US',
-	clonedVoices: VoiceProfile[],
-	uid: string,
+	clonedVoices?: VoiceProfile[],
+	uid?: string,
 ) => {
 	try {
 		let audio_url = `/voice/${voice}.mp3`;
 		console.log('previewing voice:', voice);
 		const isClonedVoice = voice.startsWith('elabs_');
 		
-		if (isClonedVoice) {
+		if (isClonedVoice && clonedVoices && uid) {
 			const clonedVoiceProfile = clonedVoices.find(profile => `elabs_${profile.voice_id}` === voice);
 			if (clonedVoiceProfile && clonedVoiceProfile.preview_url) {
 				audio_url = `/api/voice/download?filename=${encodeURIComponent(clonedVoiceProfile.preview_url)}&foldername=${encodeURIComponent(uid)}`;

@@ -11,7 +11,6 @@ import { LANGUAGES_WITH_ACCENTS } from '@/components/language/languageData';
 import VoiceCloneService from '@/services/VoiceService';
 import { useUser } from '@/hooks/use-user';
 import VoiceProfile from '@/models/VoiceProfile';
-import '@fortawesome/fontawesome-free/css/all.min.css';
 import { toast } from 'react-toastify';
 
 const VoiceCloning = () => {
