@@ -35,6 +35,24 @@ export default function Studio() {
 				</Card>
 
 				<Card>
+					<BigTitle>May 27</BigTitle>
+					<Instruction>
+						<div>
+							<b>🎤 Voice Cloning (Beta): </b> Voice cloning is available for
+							ULTIMATE users to use. You can use this to clone your voice and then create video with the cloned voice. 
+              PRO users will have access to this in one week. 
+						</div>
+					</Instruction>
+
+					<Instruction>
+						<div>
+							<b>📱 New Social Post Template: </b> The template for quote
+							sharing is updated.
+						</div>
+					</Instruction>
+				</Card>
+
+				<Card>
 					<BigTitle>May 23</BigTitle>
 					<Instruction>
 						<div>
