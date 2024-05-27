@@ -24,6 +24,7 @@ import { toast } from 'react-toastify';
 import { WrappableRow } from '@/components/layout/WrappableRow';
 import { FaClone, FaTrash } from 'react-icons/fa';
 import PaywallModal from '@/components/paywallModal';
+import useHydrated from '@/hooks/use-hydrated';
 
 const VoiceCloning = () => {
 	const [selectedLanguageCode, setSelectedLanguageCode] =
@@ -48,7 +49,7 @@ const VoiceCloning = () => {
 	const [customerInput, setCustomerInput] = useState<string>('');
 	const [loading, setLoading] = useState(false);
 	const [cloning, setCloning] = useState(false);
-  const [showPaywallModal, setShowPaywallModal] = useState(false);
+	const [showPaywallModal, setShowPaywallModal] = useState(false);
 
 	const fetchVoiceProfiles = async () => {
 		try {
@@ -126,10 +127,10 @@ const VoiceCloning = () => {
 			toast.error('Please enter a name for the voice profile.');
 			return;
 		}
-    if (!tier.includes('ULTIMATE')) {
-      setShowPaywallModal(true);
-      return;
-    }
+		if (!tier.includes('ULTIMATE')) {
+			setShowPaywallModal(true);
+			return;
+		}
 		if (recordedAudio) {
 			const formData = new FormData();
 			formData.append('file', recordedAudio, 'recording.mp3');
@@ -185,9 +186,11 @@ const VoiceCloning = () => {
 
 	const handleDeleteProfile = async () => {
 		if (selectedProfile) {
-      setVoiceProfiles(
-        voiceProfiles.filter((profile) => profile.voice_id !== selectedProfile.voice_id)
-      )
+			setVoiceProfiles(
+				voiceProfiles.filter(
+					(profile) => profile.voice_id !== selectedProfile.voice_id,
+				),
+			);
 			try {
 				setLoading(true);
 				await VoiceCloneService.deleteVoiceProfile(
@@ -205,23 +208,26 @@ const VoiceCloning = () => {
 		}
 	};
 
+	// avoid hydration error during development caused by persistence
+	if (!useHydrated()) return <></>;
+
 	return (
 		<>
-      <PaywallModal
-        showModal={showPaywallModal}
-        setShowModal={setShowPaywallModal}
-        message='Upgrade to get an early access to Beta features. 🚀'
-      />
+			<PaywallModal
+				showModal={showPaywallModal}
+				setShowModal={setShowPaywallModal}
+				message='Upgrade to get an early access to Beta features. 🚀'
+			/>
 			<Card>
 				<BigTitle>
 					🎙️ Create New Voice Profile <BetaLabel />{' '}
 				</BigTitle>
-        { !tier.includes('ULTIMATE') && 
-        <WarningMessage>
-          ⚠️ This feature is in Beta version. It is only available for ULTIMATE users.
-          Access to this feature by PRO users is coming soon.
-        </WarningMessage>
-        }
+				{!tier.includes('ULTIMATE') && (
+					<WarningMessage>
+						⚠️ This feature is in Beta version. It is only available for
+						ULTIMATE users. Access to this feature by PRO users is coming soon.
+					</WarningMessage>
+				)}
 				<WrappableRow type='grid' cols={2}>
 					<Instruction>Select a language:</Instruction>
 					<DropDown
