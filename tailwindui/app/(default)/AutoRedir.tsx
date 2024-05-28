@@ -5,14 +5,14 @@ import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 export default function AutoRedir() {
-	const { uid } = useUser();
+	const { token } = useUser();
 	const router = useRouter();
 
   useEffect(() => {
 		const currentSearchParams = new URLSearchParams(window.location.search);
 		const searchParamsString = currentSearchParams.toString();
 
-		if (uid) {
+		if (token) {
 			router.push(
 				'/dashboard' + (searchParamsString ? `?${searchParamsString}` : ''),
 			);
@@ -21,7 +21,7 @@ export default function AutoRedir() {
 				'/landing' + (searchParamsString ? `?${searchParamsString}` : ''),
 			);
 		}
-	}, [uid]);
+	}, [token]);
 
   return <></>
 }

@@ -5,12 +5,12 @@ import Link from 'next/link';
 import useHydrated from '@/hooks/use-hydrated';
 
 export const JoinUsBanner: React.FC = () => {
-	const { uid } = useUser();
+	const { token } = useUser();
 
 	// avoid hydration error during development caused by persistence
 	if (!useHydrated()) return <></>;
 
-	if (uid && uid !== '') {
+	if (token && token !== '') {
 		return null;
 	}
 

@@ -4,11 +4,11 @@ import { useUser } from '@/hooks/use-user';
 import React, { useEffect, useRef, useState } from 'react';
 
 const AuthButtons: React.FC = () => {
-	const { uid } = useUser();
+	const { token } = useUser();
 
 	return (
 		<div className='flex items-center justify-center'>
-			{uid ? (
+			{token ? (
 				<div className='navigation-button-wrap'>
 					<a
 						className='button-primary'

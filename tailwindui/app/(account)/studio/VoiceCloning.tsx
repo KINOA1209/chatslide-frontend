@@ -39,7 +39,7 @@ const VoiceCloning = () => {
 	const mediaRecorderRef = useRef<MediaRecorder | null>(null);
 	const audioChunksRef = useRef<Blob[]>([]);
 	const timerRef = useRef<NodeJS.Timeout | null>(null);
-	const { token, uid, tier } = useUser();
+	const { token, tier } = useUser();
 	const [voiceProfiles, setVoiceProfiles] = useState<VoiceProfile[]>([]);
 	const [selectedProfile, setSelectedProfile] = useState<VoiceProfile | null>(
 		null,

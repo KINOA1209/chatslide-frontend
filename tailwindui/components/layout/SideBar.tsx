@@ -28,7 +28,7 @@ export function publiclyAvailable(path: string): boolean {
 interface SideBarProps {}
 const SideBar = ({}: SideBarProps) => {
 	const [top, setTop] = useState<boolean>(true);
-	const { uid, credits, tier, userStatus, expirationDate } = useUser();
+	const { token, credits, tier, userStatus, expirationDate } = useUser();
 	const router = useRouter();
 	const [isMobile, setIsMobile] = useState<boolean>(false);
 	const { signOut } = useUser();
@@ -105,7 +105,7 @@ const SideBar = ({}: SideBarProps) => {
 	if (userStatus == UserStatus.Initing || userStatus == UserStatus.NotInited)
 		return <></>;
 
-	if (userStatus == UserStatus.Failed || !uid) {
+	if (userStatus == UserStatus.Failed || !token) {
 		if (publiclyAvailable(path))
 			return <></>; // do not show sidebar if user is a visitor
 		else

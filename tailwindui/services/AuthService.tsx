@@ -128,7 +128,7 @@ class AuthService {
 	async getCurrentUserTokenAndEmail() {
 		try {
 			const user = await AmplifyAuth.currentAuthenticatedUser();
-			const uid = user.attributes.username || user.attributes.sub;
+			const uid = user.attributes.username || user.attributes.sub;  // this is different from the uid in decoded from token if user logs in with google 
 			const session = await AmplifyAuth.currentSession();
 
 			const email = user.attributes['email'];

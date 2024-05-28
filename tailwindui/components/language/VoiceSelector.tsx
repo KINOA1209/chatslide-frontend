@@ -88,7 +88,7 @@ const VoiceSelector: React.FC<{
 	);
 	const [voiceOptions, setVoiceOptions] = useState<string[]>([]);
 	const { clonedVoices } = useClonedVoices();
-	const { uid } = useUser();
+	const { uid } = useUser();  // todo: @joseph: change this to token
 
 	// Update voice options based on selected language and gender
 	useEffect(() => {
