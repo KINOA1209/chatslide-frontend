@@ -183,7 +183,7 @@ export const useUser = () => {
 		user,
 		username,
 		token,
-		uid,  // this is different from the uid in decoded from token if user logs in with google, use token and decode it in backend
+		// uid,  // this is different from the uid in decoded from token if user logs in with google, use token and decode it in backend
 		email,
 		credits,
 		updateCreditsFE,
