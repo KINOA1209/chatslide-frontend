@@ -114,6 +114,7 @@ const VoiceCloning = () => {
 						setIsRecording(false);
 						clearInterval(timerRef.current!);
 						timerRef.current = null;
+						setAudioLength(60);
 						return 60;
 					}
 					return prevTime - 1;
