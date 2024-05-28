@@ -116,16 +116,6 @@ export const useUser = () => {
 
 				mixpanel.identify(uid);
 
-				window.steyAIRecord?.identify({
-					uid: uid,
-					info: {
-						email: email,
-						username: username,
-					},
-				});
-
-				console.log('-- Identified user in steyAIRecord');
-
 				setCredits(credits);
 				setTier(subscription_tier);
 				setUid(uid);
