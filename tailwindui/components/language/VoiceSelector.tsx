@@ -23,22 +23,27 @@ import { WrappableRow } from '../layout/WrappableRow';
 import { useUser } from '@/hooks/use-user';
 import { useClonedVoices } from '@/components/language/ClonedVoicesContext';
 import VoiceProfile from '@/models/VoiceProfile';
+import VoiceCloneService from '@/services/VoiceService';
 
 export const previewVoice = async (
 	voice: string,
 	language: string = 'en-US',
 	clonedVoices?: VoiceProfile[],
-	uid?: string,
+	token?: string,
 ) => {
 	try {
 		let audio_url = `/voice/${voice}.mp3`;
 		console.log('previewing voice:', voice);
 		const isClonedVoice = voice.startsWith('elabs_');
 		
-		if (isClonedVoice && clonedVoices && uid) {
+		if (isClonedVoice && clonedVoices && token) {
 			const clonedVoiceProfile = clonedVoices.find(profile => `elabs_${profile.voice_id}` === voice);
 			if (clonedVoiceProfile && clonedVoiceProfile.preview_url) {
-				audio_url = `/api/voice/download?filename=${encodeURIComponent(clonedVoiceProfile.preview_url)}&foldername=${encodeURIComponent(uid)}`;
+				try {
+					audio_url = await VoiceCloneService.downloadAudio(clonedVoiceProfile.preview_url, token);
+				  } catch (error: any) {
+					console.error('Error downloading audio:', error.message);
+				  }
 			}
 		} else if (voice.includes('Multilingual') || isOpenaiVoice(voice)) {
 			if (
@@ -88,7 +93,7 @@ const VoiceSelector: React.FC<{
 	);
 	const [voiceOptions, setVoiceOptions] = useState<string[]>([]);
 	const { clonedVoices } = useClonedVoices();
-	const { uid } = useUser();  // todo: @joseph: change this to token
+	const { token } = useUser();
 
 	// Update voice options based on selected language and gender
 	useEffect(() => {
@@ -170,7 +175,7 @@ const VoiceSelector: React.FC<{
 							<DropDown
 								value={selectedVoice}
 								onChange={(e) => {
-									previewVoice(e.target.value, selectedLanguage, clonedVoices, uid);
+									previewVoice(e.target.value, selectedLanguage, clonedVoices, token);
 									setSelectedVoice(e.target.value);
 								}}
 							>

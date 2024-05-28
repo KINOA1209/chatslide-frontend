@@ -75,4 +75,22 @@ export default class VoiceCloneService {
           throw new Error('Error when deleting voice profile: ' + errorResp.message);
         }
       }
+
+      static async downloadAudio(filename: string, token: string) {
+        const response = await fetch(`/api/voice/download?filename=${encodeURIComponent(filename)}`, {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+    
+        if (response.ok) {
+          const audioBlob = await response.blob();
+          const audioUrl = URL.createObjectURL(audioBlob);
+          return audioUrl;
+        } else {
+          const errorResp = await response.json();
+          throw new Error('Error when downloading audio: ' + errorResp.message);
+        }
+      }
   }
