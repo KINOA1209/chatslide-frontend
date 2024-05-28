@@ -37,7 +37,7 @@ export const generateMetadata = (options: MetadataOptions = {}): any => {
 			type: 'website',
 			images: [
 				{
-					url: `${getOrigin()}/images/ogimage_${getBrand()}.png`,
+					url: `${getOrigin()}/images/ogimage_${getBrand(true)}.png`,
 					width: 800,
 					height: 440,
 					alt: getBrand(),
@@ -51,7 +51,7 @@ export const generateMetadata = (options: MetadataOptions = {}): any => {
 			creator: '@drlambda_ai',
 			title,
 			description,
-			image: `${getOrigin()}/images/ogimage_${getBrand()}.png`,
+			image: `${getOrigin()}/images/ogimage_${getBrand(true)}.png`,
 		},
 	};
 };
