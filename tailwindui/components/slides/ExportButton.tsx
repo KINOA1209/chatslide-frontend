@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Slide from '../../models/Slide';
 import PaywallModal from '../paywallModal';
 import { BigGrayButton, DropDown } from '../button/DrlambdaButton';
-import { FaRegFilePdf } from 'react-icons/fa';
+import { FaImage, FaRegFilePdf } from 'react-icons/fa';
 import { generatePdf } from '../utils/DownloadImage';
 import ProjectService from '@/services/ProjectService';
 import { useUser } from '@/hooks/use-user';
@@ -83,6 +83,18 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 		}
 		// await generatePDF(exportSlidesRef, exportOptions);
 	}
+
+  const downloadThumbnail = () => {
+    const url = project?.thumbnail_url;
+    if (url) {
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'thumbnail.png';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  }
 
 	const handleExport = async (type: 'pptx' | 'key' | 'pdf', frontend: boolean) => {
 		if (!project) return;
@@ -229,7 +241,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 			<Modal
 				showModal={showExportToPdfModal}
 				setShowModal={setShowExportToPdfModal}
-				title='Export to PDF / PPTX'
+				title='Download and Export'
 				description='Choose the format of the export.'
 			>
 				<div className='flex flex-row flex-wrap gap-4'>
@@ -242,6 +254,19 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 						<FaRegFilePdf />
 						<span>PDF (medium)</span>
 					</BigGrayButton> */}
+
+					<BigGrayButton
+						onClick={() => downloadThumbnail()}
+						isSubmitting={downloading}
+						isPaidUser={isPaidUser}
+						isPaidFeature={true}
+						bgColor='bg-Gray'
+					>
+						<FaImage />
+						<span className='flex flex-row gap-2 items-center'>
+							Thumbnail
+						</span>
+					</BigGrayButton>
 
 					<BigGrayButton
 						onClick={() => handleExport('pdf', false)}
