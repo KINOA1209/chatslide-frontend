@@ -182,7 +182,7 @@ const LinkInput = ({
 						onClick={(e) => (e.target as HTMLInputElement).select()}
 						onPaste={(e) => {
 							// console.log('pasting');
-							addLink(linkUrl);
+              addLink(e.clipboardData.getData('text'));
 						}}
 						onKeyDown={(e) => {
 							if (e.key === 'Enter') {
