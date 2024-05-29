@@ -333,6 +333,10 @@ const VoiceCloning = () => {
 								Delete
 							</InversedBigBlueButton>
 						</WrappableRow>
+
+            <Instruction>
+              You can select this voice profile when you are generating video. 
+            </Instruction>
 					</>
 				)}
 				{selectedProfile ? (
