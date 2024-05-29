@@ -287,19 +287,24 @@ export default function WorkflowStep5() {
 					<Instruction>
 						Select the voice you want to use for your video.
 					</Instruction>
-          <Instruction>
-            Voice cloning is now available for ULTIMATE users. 
-            <a href='/studio' className='text-blue-600'>Clone it here </a> and use it in your videos.
-          </Instruction>
-						<ClonedVoicesProvider>
-							<VoiceSelector
-								selectedVoice={voice}
-								setSelectedVoice={setVoice}
-								style={style}
-								setStyle={setStyle}
-								isHD={voiceIsHD}
-							/>
-						</ClonedVoicesProvider>
+					<Instruction>
+						<span>
+							Voice cloning is now available for ULTIMATE users.{' '}
+							<a href='/studio' className='text-blue-600'>
+								Clone it here{' '}
+							</a>{' '}
+							and use it in your videos.
+						</span>
+					</Instruction>
+					<ClonedVoicesProvider>
+						<VoiceSelector
+							selectedVoice={voice}
+							setSelectedVoice={setVoice}
+							style={style}
+							setStyle={setStyle}
+							isHD={voiceIsHD}
+						/>
+					</ClonedVoicesProvider>
 				</Card>
 
 				<Card>
