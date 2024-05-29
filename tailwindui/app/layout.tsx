@@ -2,7 +2,6 @@ import './css/style.css';
 import React from 'react';
 import Script from 'next/script';
 import { getBrand, getOrigin, isChatslide, isLocal } from '@/utils/getHost';
-import Abotify from '@/components/integrations/Abotify';
 
 interface MetadataOptions {
 	title?: string;
@@ -94,6 +93,16 @@ document.body.appendChild(el);
 				`}
 							</Script>
 
+							<Script id='clarity'>
+								{`
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "mje9x5g3v5");
+				`}
+							</Script>
+
 							<Script id='mixpanel'>
 								{`
 (function (f, b) {
@@ -151,7 +160,6 @@ if (!b.__SV) {
 })(document, window.mixpanel || []);
 				`}
 							</Script>
-
 						</>
 					)}
 				</head>
@@ -161,8 +169,6 @@ if (!b.__SV) {
 					<div className='Simpleflex flex-col min-h-screen overflow-hidden supports-[overflow:clip]:overflow-clip'>
 						{children}
 					</div>
-
-					{/* <Abotify /> */}
 				</body>
 			</html>
 		</>
