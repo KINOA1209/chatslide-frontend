@@ -3,6 +3,7 @@
 import { BigBlueButton } from '@/components/button/DrlambdaButton';
 import Card from '@/components/ui/Card';
 import { BigTitle, Instruction } from '@/components/ui/Text';
+import useHydrated from '@/hooks/use-hydrated';
 import { useUser } from '@/hooks/use-user';
 import UserService from '@/services/UserService';
 import { isChatslide } from '@/utils/getHost';
@@ -34,17 +35,23 @@ export const UnlimitedUpgrade: React.FC<{}> = ({}) => {
 		}
 	}
 
+	// avoid hydration error during development caused by persistence
+	if (!useHydrated()) return <></>;
+
 	if (credits != 'Unlimited')
 		return (
 			<Card>
 				<BigTitle>✅ Upgrade to Ultimate</BigTitle>
 				<Instruction>
 					<div>
-						🤫 Shhhh, snatch a lifetime deal now. Deal available until June
-						11, 2024. <br />
+						🤫 Shhhh, snatch a lifetime deal now. Deal available until June 11,
+						2024. <br />
 						Get a lifetime upgrade to our ULTIMATE at a discounted price of{' '}
-						<b>{!useEuro ? '$' : '€'}{user?.ltd_upgrade_price || 356}</b>. 14 day money back
-						guarantee.{' '}
+						<b>
+							{!useEuro ? '$' : '€'}
+							{user?.ltd_upgrade_price || 356}
+						</b>
+						. 14 day money back guarantee.{' '}
 						<a
 							href='https://blog.drlambda.ai/upgrade-to-ultimate-a-one-time-payment-for-lifetime-access/'
 							className='text-blue-600'
