@@ -93,7 +93,7 @@ document.body.appendChild(el);
 				`}
 							</Script>
 
-							<Script id='clarity'>
+							<Script id='ms_clarity'>
 								{`
     (function(c,l,a,r,i,t,y){
         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
