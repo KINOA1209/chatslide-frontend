@@ -398,6 +398,10 @@ export function isOpenaiVoice(voice: string): boolean {
 	);
 }
 
+export function isELabsVoice(voice: string): boolean {
+  return voice.startsWith('elabs_');
+}
+
 export function isMultilingualVoice(voice: string): boolean {
 	return voice.includes('Multilingual') || isOpenaiVoice(voice);
 }
