@@ -50,7 +50,14 @@ export type SocialPostLayoutKeys =
 	// last page layout
 	| 'last_page_layout';
 
+// Define the type
 export type SocialPostTemplateKeys = 'classic' | 'default' | 'bold';
+
+// Define the array of options
+export const socialPostTemplateOptions: SocialPostTemplateKeys[] = [
+	'classic',
+	'default',
+];
 
 export type SocialPostLayoutsConfig = {
 	[socialPostThemeKey in SocialPostTemplateKeys]?: {
@@ -60,7 +67,7 @@ export type SocialPostLayoutsConfig = {
 
 export const SocialPostLayoutConfigData: SocialPostLayoutsConfig = {
 	classic: Classis_SocialPost_TemplateLayoutsConfig,
-	// default: Default_SocialPost_TemplateLayoutsConfig,
+	default: Default_SocialPost_TemplateLayoutsConfig,
 };
 
 // export default SocialPostLayoutConfigData;

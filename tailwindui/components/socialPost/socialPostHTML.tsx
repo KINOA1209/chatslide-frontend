@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Theme, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '@/components/slides/slidesHTML.css';
+import Select from 'react-select';
 import ThemeChanger from '@/components/socialPost/socialPostThemeChanger';
 import {
 	PresentButton,
@@ -10,7 +11,10 @@ import {
 	DeleteSlideButton,
 	ChangeTemplateOptions,
 	DuplicateSlidePageButton,
+	ChangeSlideTemplateButton,
+	SlidesBrandingButton,
 } from '@/components/slides/SlideButtons';
+import { MdOutlineClose } from 'react-icons/md';
 import {
 	SlideRightNavigator,
 	SlideLeftNavigator,
@@ -31,13 +35,22 @@ import Chart from '@/models/Chart';
 import { ToolBar } from '../ui/ToolBar';
 import ShareButton from '@/components/button/ShareButton';
 import ExportToPngButton from '@/components/socialPost/socialPostPngButton';
-import { getOrigin } from '@/utils/getHost';
+import { getBrand, getOrigin } from '@/utils/getHost';
 import { RiArrowGoBackFill, RiArrowGoForwardFill } from 'react-icons/ri';
 import { calculateNonPresentScale } from '../slides/SlidesHTML';
 import {
 	SocialPostLayoutKeys,
 	SocialPostTemplateKeys,
+	socialPostTemplateOptions,
 } from './socialPostLayouts';
+import { LuPalette } from 'react-icons/lu';
+import { usePathname } from 'next/navigation';
+import PaywallModal from '../paywallModal';
+import { Instruction } from '../ui/Text';
+import Resource from '@/models/Resource';
+import { PlusLabel } from '../ui/GrayLabel';
+import RadioButton from '../ui/RadioButton';
+import ImageSelector from '@/app/(feature)/design/ImageSelector';
 
 type SlidesHTMLProps = {
 	isViewing?: boolean; // viewing another's shared project
@@ -45,11 +58,92 @@ type SlidesHTMLProps = {
 	res_scenario: string;
 };
 
+interface TemplateSelectionBoxProps {
+	defaultSelection: SocialPostTemplateKeys;
+	selectionOptions: SocialPostTemplateKeys[];
+	handleSelectionChange: (selectedOption: SocialPostTemplateKeys) => void;
+}
+const TemplateSelectionBox: React.FC<TemplateSelectionBoxProps> = ({
+	defaultSelection,
+	selectionOptions,
+	handleSelectionChange,
+}) => {
+	return (
+		<Select
+			isSearchable={false}
+			options={selectionOptions.map((option) => ({
+				value: option,
+				label: option,
+			}))}
+			onChange={(selectedOption) => {
+				if (selectedOption) {
+					handleSelectionChange(selectedOption.value as SocialPostTemplateKeys);
+				}
+			}}
+			value={{
+				value: defaultSelection,
+				label: defaultSelection,
+			}}
+			styles={{
+				control: (provided) => ({
+					...provided,
+					width: '15rem',
+					height: '36px',
+					borderRadius: '8px',
+					borderColor: '#e5e7eb',
+					borderWidth: '2px',
+					fontSize: '14px',
+				}),
+
+				indicatorSeparator: () => ({ display: 'none' }),
+				menu: (provided) => ({ ...provided, zIndex: 999 }),
+				option: (provided, state) => ({
+					...provided,
+					backgroundColor: state.isSelected ? '#d1d5db' : '#ffffff',
+					color: state.isSelected ? '#4b5563' : '#000000',
+					':hover': {
+						backgroundColor: '#d1d5db',
+					},
+				}),
+				input: (provided) => ({
+					...provided,
+					blurInputOnSelect: true,
+					border: 'none',
+					outline: 'none',
+					height: '100%',
+					padding: '0',
+				}),
+			}}
+		></Select>
+	);
+};
+
 const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 	isViewing = false,
 	borderColorOptions,
 	res_scenario,
 }) => {
+	// const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+
+	// useEffect(() => {
+	// 	const handleResize = () => {
+	// 		if (window.innerWidth < 640) {
+	// 			setIsSidebarOpen(false);
+	// 		} else {
+	// 			setIsSidebarOpen(true);
+	// 		}
+	// 	};
+
+	// 	// Set initial state based on current window width
+	// 	handleResize();
+
+	// 	// Add event listener for window resize
+	// 	window.addEventListener('resize', handleResize);
+
+	// 	// Cleanup event listener on component unmount
+	// 	return () => window.removeEventListener('resize', handleResize);
+	// }, []);
+
 	const { token } = useUser();
 	const [showShareModal, setShowShareModal] = useState(false);
 	const { project, updateProject } = useProject();
@@ -69,6 +163,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 	const [presentScale, setPresentScale] = useState(
 		Math.min(dimensions.width / 450, dimensions.height / 600),
 	);
+
 	//const nonPresentScale = Math.min(1, presentScale * 0.6);
 	const [nonPresentScale, setNonPresentScale] = useState(
 		calculateNonPresentScale(
@@ -80,6 +175,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 		),
 	);
 	const [showTheme, setShowTheme] = useState(false);
+
 	const {
 		socialPosts,
 		setSocialPosts,
@@ -101,10 +197,73 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 		redoChange,
 		socialPostsHistory,
 		socialPostsHistoryIndex,
+		updateSocialPostTemplateTheme,
+		socialPostLogoMode,
+		setSocialPostLogoMode,
+		socialPostCustomLogoResource,
+		setSocialPostCustomLogoResource,
 	} = useSocialPosts();
+	const availableSectionNames = ['theme', 'branding'];
+	const [openSection, setOpenSection] = useState('');
+	const toggleSection = (section: string) => {
+		if (availableSectionNames.includes(section)) {
+			setOpenSection((prevSection) => (prevSection === section ? '' : section));
+		}
+	};
+
+	// branding related
+	const brandingOptions = [
+		{
+			value: 'default',
+			text: getBrand() + ' Logo',
+		},
+		{
+			value: 'no',
+			text: 'No Logo',
+		},
+		{
+			value: 'custom',
+			text: 'Custom Logo',
+		},
+	];
+	// const [showLogo, setShowLogo] = useState<boolean>(true);
+	// const [selectedLogo, setSelectedLogo] = useState<Resource[]>(
+	// 	socialPostCustomLogoResource || [],
+	// );
+	const { isPaidUser } = useUser();
+	const [showPaywall, setShowPaywall] = useState(false);
+	// const [logoMode, setLogoMode] = useState<'no' | 'default' | 'custom'>(
+	// 	socialPostLogoMode || 'default',
+	// );
+
+	useEffect(() => {
+		// console.log('logoMode', logoMode);
+		// console.log('selectedLogo', selectedLogo);
+		if (socialPostLogoMode === 'no') {
+			// setSelectedLogo([]);
+			setSocialPostCustomLogoResource([]);
+			// setShowLogo(false);
+		} else if (socialPostLogoMode === 'custom') {
+			// setShowLogo(true);
+		} else if (socialPostLogoMode === 'default') {
+			// setSelectedLogo([]);
+			setSocialPostCustomLogoResource([]);
+			// setShowLogo(true);
+		}
+	}, [socialPostLogoMode]);
+
 	const canUndo = socialPostsHistoryIndex > 0;
 	const canRedo = socialPostsHistoryIndex < socialPostsHistory.length - 1;
-
+	// const [isThemeCustomizationSectionOpen, setIsThemeCustomizationSectionOpen] =
+	// 	useState(false);
+	// const [
+	// 	isBrandingCustomizationSectionOpen,
+	// 	setIsBrandingCustomizationSectionOpen,
+	// ] = useState(false);
+	const [currentSelectedTemplate, setCurrentSelectedTemplate] =
+		useState<SocialPostTemplateKeys>(
+			socialPosts[socialPostsIndex]?.template_theme || 'classic',
+		);
 	useEffect(() => {
 		document.addEventListener('add_page', handleAddPage);
 		document.addEventListener('duplicate_page', handleDuplicatePage);
@@ -473,11 +632,32 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 			updateIllustrationUrlArray,
 			toggleEditMode,
 			socialPosts.length - 1 === index,
+			// logoMode,
+			socialPostLogoMode,
+			// selectedLogo[0]?.thumbnail_url,
+			socialPostCustomLogoResource[0]?.thumbnail_url,
 		);
 	};
+
+	const handleSocialPostTemplateSelectionChange = (
+		selectedOption: SocialPostTemplateKeys,
+	) => {
+		setCurrentSelectedTemplate(selectedOption);
+	};
+
+	useEffect(() => {
+		updateSocialPostTemplateTheme(currentSelectedTemplate);
+	}, [currentSelectedTemplate]);
 	return (
-		<div>
-			<div className='flex flex-col items-center justify-center gap-4'>
+		<div
+			style={{
+				display: 'flex',
+				flexDirection: 'row',
+				alignItems: 'flex-start',
+				justifyContent: 'space-between',
+			}}
+		>
+			<div className='SocialPostMainContainerDisplay flex flex-col items-center justify-center gap-4'>
 				<ToolBar>
 					{!isViewing && (
 						<>
@@ -549,6 +729,30 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 								deletePage={handleDeletePage}
 								currentSlideIndex={socialPostsIndex}
 							/>
+
+							<button
+							// onClick={() => {
+							// 	setIsThemeCustomizationSectionOpen(
+							// 		!isThemeCustomizationSectionOpen,
+							// 	);
+							// }}
+							>
+								<ChangeSlideTemplateButton
+									slides={socialPosts}
+									// onChangeTemplate={() => {
+									// 	setIsThemeCustomizationSectionOpen((prev) => !prev);
+									// }}
+									onToggleChangeTemplateButton={() => toggleSection('theme')}
+									currentSlideIndex={socialPostsIndex}
+								/>
+							</button>
+
+							<SlidesBrandingButton
+								slides={socialPosts}
+								currentSlideIndex={socialPostsIndex}
+								onToggleBrandingButton={() => toggleSection('branding')}
+							></SlidesBrandingButton>
+
 							<div className='h-8 w-0.5 bg-gray-200'></div>
 						</>
 					)}
@@ -679,7 +883,117 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 					</div>
 				</div>
 			</div>
+
+			{
+				// the section that can customize the social post theme
+				<div
+					className={`ThemeCustomizationSection ${openSection === 'theme' ? 'block' : 'hidden'} w-auto h-auto bg-blue-500 xl:bg-yellow-500 xl:static fixed bottom-[10%] left-1/2 transform -translate-x-1/2 xl:transform-none`}
+				>
+					<div className='ThemeSectionTitleAndExitButton flex flex-row justify-between items-center'>
+						<span
+							style={{
+								color: '#242731',
+								fontFamily: 'Creato Display Bold',
+								fontSize: '1.5rem',
+								fontStyle: 'normal',
+								fontWeight: 'bold',
+								lineHeight: '2rem',
+							}}
+						>
+							Theme
+						</span>
+						<div>
+							<MdOutlineClose style={{ color: '#98A2B3' }}></MdOutlineClose>
+						</div>
+					</div>
+					<hr
+						style={{
+							borderTop: '1px solid #E7E9EB',
+							// margin: '0.75rem 0.5rem 0.75rem 0.5rem',
+						}}
+					/>
+					<div className='ThemeTemplateSelectionBox flex flex-col'>
+						<span>Theme Template</span>
+						{/* selection box */}
+						<TemplateSelectionBox
+							defaultSelection={currentSelectedTemplate}
+							selectionOptions={socialPostTemplateOptions}
+							handleSelectionChange={handleSocialPostTemplateSelectionChange}
+						></TemplateSelectionBox>
+					</div>
+				</div>
+			}
+
+			{
+				// the section that can customize the social post branding (logo)
+				<div
+					className={`LogoBrandingCustomizationSection ${openSection === 'branding' ? 'block' : 'hidden'} w-auto min-w-[15rem] h-auto bg-blue-500 xl:bg-yellow-500 xl:static fixed bottom-[10%] left-1/2 transform -translate-x-1/2 xl:transform-none`}
+				>
+					<div className='BrandingSectionTitleAndExitButton flex flex-row justify-between items-center'>
+						<span
+							style={{
+								color: '#242731',
+								fontFamily: 'Creato Display Bold',
+								fontSize: '1.5rem',
+								fontStyle: 'normal',
+								fontWeight: 'bold',
+								lineHeight: '2rem',
+							}}
+						>
+							Branding
+						</span>
+						<div>
+							<MdOutlineClose style={{ color: '#98A2B3' }}></MdOutlineClose>
+						</div>
+					</div>
+					<hr
+						style={{
+							borderTop: '1px solid #E7E9EB',
+							// margin: '0.75rem 0.5rem 0.75rem 0.5rem',
+						}}
+					/>
+					<div className='BrandingLogoRadioButtons flex flex-col text-sm'>
+						<div>
+							<PaywallModal
+								showModal={showPaywall}
+								setShowModal={setShowPaywall}
+								message='Unlock this feature to customize logo on your slides.'
+							/>
+							<Instruction>
+								What logo do you want to put on your slides?{' '}
+								{!isPaidUser && <PlusLabel />}
+							</Instruction>
+							<RadioButton
+								options={brandingOptions}
+								cols={2}
+								selectedValue={socialPostLogoMode}
+								setSelectedValue={(mode) => {
+									if (mode !== 'default' && !isPaidUser) {
+										setShowPaywall(true);
+										return;
+									}
+									// setLogoMode(mode as 'no' | 'default' | 'custom');
+									setSocialPostLogoMode(mode as 'no' | 'default' | 'custom');
+								}}
+								name='branding'
+							/>
+							{/* customized logo */}
+							{socialPostLogoMode == 'custom' && (
+								<ImageSelector
+									type='logo'
+									// selectedImage={selectedLogo}
+									selectedImage={socialPostCustomLogoResource}
+									// setSelectedImage={setSelectedLogo}
+									setSelectedImage={setSocialPostCustomLogoResource}
+									showQuestion={false}
+								/>
+							)}
+						</div>
+					</div>
+				</div>
+			}
 		</div>
 	);
 };
+
 export default SocialPostHTML;

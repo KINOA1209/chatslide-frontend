@@ -6,6 +6,8 @@ import { useProject } from './use-project';
 import { useUser } from './use-user';
 import debounce from 'lodash.debounce';
 import { useChatHistory } from './use-chat-history';
+import { SocialPostTemplateKeys } from '@/components/socialPost/socialPostLayouts';
+import Resource from '@/models/Resource';
 
 const useSocialPostsBear = createBearStore<SocialPostSlide[]>()(
 	'socialPosts',
@@ -17,6 +19,7 @@ const useSocialPostsIndex = createBearStore<number>()(
 	0,
 	true,
 );
+
 const useSocialPostsVersion = createBearStore<number>()(
 	'socialPostVersion',
 	0,
@@ -30,6 +33,17 @@ const useSocialPostsHistoryBear = createBearStore<SocialPostSlide[][]>()(
 const useSocialPostsHistoryIndex = createBearStore<number>()(
 	'socialPostsHistoryIndex',
 	0,
+	true,
+);
+
+const useSocialPostLogoMode = createBearStore<'no' | 'default' | 'custom'>()(
+	'socialPostLogoMode',
+	'default',
+	true,
+);
+const useSocialPostCustomLogoResource = createBearStore<Resource[]>()(
+	'socialPostCustomLogoResource',
+	[],
 	true,
 );
 
@@ -64,6 +78,9 @@ export const useSocialPosts = () => {
 	const { socialPostsHistoryIndex, setSocialPostsHistoryIndex } =
 		useSocialPostsHistoryIndex();
 	const { clearChatHistory } = useChatHistory();
+	const { socialPostLogoMode, setSocialPostLogoMode } = useSocialPostLogoMode();
+	const { socialPostCustomLogoResource, setSocialPostCustomLogoResource } =
+		useSocialPostCustomLogoResource();
 
 	const init = async () => {
 		if (socialPostsStatus !== SocialPostsStatus.NotInited) return;
@@ -121,6 +138,22 @@ export const useSocialPosts = () => {
 		updateVersion();
 		updateSocialPostHistory(newSlides);
 		debouncedSyncSocialPosts(newSlides);
+	};
+
+	const updateSocialPostTemplateTheme = (
+		selectedTemplate: SocialPostTemplateKeys,
+	) => {
+		console.log('-- update social post template theme to: ', selectedTemplate);
+		let newSocialPost = socialPosts.map((slide, index) => {
+			return {
+				...slide,
+				template_theme: selectedTemplate,
+			};
+		});
+		setSocialPosts(newSocialPost);
+		updateVersion();
+		updateSocialPostHistory(newSocialPost);
+		debouncedSyncSocialPosts(newSocialPost);
 	};
 
 	const updateSocialPostsPage = (
@@ -286,5 +319,10 @@ export const useSocialPosts = () => {
 		redoChange,
 		socialPostsHistory,
 		socialPostsHistoryIndex,
+		updateSocialPostTemplateTheme,
+		socialPostLogoMode,
+		setSocialPostLogoMode,
+		socialPostCustomLogoResource,
+		setSocialPostCustomLogoResource,
 	};
 };

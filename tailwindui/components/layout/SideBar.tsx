@@ -140,7 +140,7 @@ const SideBar = ({}: SideBarProps) => {
 			{/* toggle sidebar button */}
 			<button
 				className={`rounded-full p-1.5 absolute top-5 ${
-					isSidebarOpen ? 'left-[240px]' : 'left-[48px]'
+					isSidebarOpen ? 'left-[242px]' : 'left-[32px]'
 				} focus:outline-none`}
 				onClick={toggleSidebar}
 				style={{

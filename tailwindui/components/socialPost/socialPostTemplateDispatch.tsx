@@ -27,6 +27,7 @@ import {
 	SocialPostLayoutConfigData,
 	SocialPostLayoutKeys,
 	SocialPostTemplateKeys,
+	socialPostTemplateOptions,
 } from './socialPostLayouts';
 import layoutConfigData from '../slides/templates_customizable_elements/layout_elements';
 import drlambdaLogoBadgeWhiteBG from '@/public/images/template/drlambdaLogoBadgeWhiteBG.png';
@@ -78,6 +79,7 @@ export const loadSocialPostCustomizableElements = (
 	// );
 	const themeElements =
 		SocialPostThemeConfigData[templateName as SocialPostTemplateKeys] ||
+		// SocialPostThemeConfigData['default'] || // for testing only
 		Classic_SocialPost_TemplateThemeConfig;
 	let selectedThemeElements =
 		themeElements[post_type as PostTypeKeys] ||
@@ -94,6 +96,7 @@ export const loadSocialPostLayoutConfigElements = (
 ) => {
 	const templateElements =
 		SocialPostLayoutConfigData[templateName as keyof SocialPostThemeConfig] ||
+		// SocialPostLayoutConfigData['default'] || // for testing only
 		Classis_SocialPost_TemplateLayoutsConfig;
 	const selectedLayoutOptionElements =
 		templateElements[layoutOption as SocialPostLayoutKeys] ||
@@ -134,6 +137,8 @@ export const templateDispatch = (
 	) => void = () => () => {},
 	toggleEditMathMode: () => void = () => {}, // Replace with your default function if you have one
 	isLastPage: boolean = false,
+	logoMode: 'no' | 'default' | 'custom' = 'default',
+	customLogoUrl: string = '',
 ): JSX.Element => {
 	const { isPaidUser, token, username } = useUser();
 	// const [currUserName, setCurrUserName] = useState('');
@@ -160,6 +165,24 @@ export const templateDispatch = (
 		keyPrefix = 'preview';
 	}
 
+	// make sure slide.template_theme is valid otherwise use default value
+	// Normalize slide.layout to ensure it's always a string
+
+	let validTemplate_theme: SocialPostTemplateKeys =
+		slide.template_theme &&
+		socialPostTemplateOptions.includes(
+			slide.template_theme as SocialPostTemplateKeys,
+		)
+			? (slide.template_theme as SocialPostTemplateKeys)
+			: 'classic';
+	// console.log(
+	// 	'slide.template_theme',
+	// 	slide.template_theme,
+	// 	socialPostTemplateOptions,
+	// 	socialPostTemplateOptions.includes(
+	// 		slide.template_theme as SocialPostTemplateKeys,
+	// 	)
+	// );
 	// Normalize slide.layout to ensure it's always a string
 	let currLayout: SocialPostLayoutKeys = Array.isArray(slide.layout)
 		? slide.layout[0]
@@ -229,15 +252,14 @@ export const templateDispatch = (
 
 	// TODO: change the hardcode to real social post template name passed in
 	const themeElements =
-		// SocialPostThemeConfigData['classic'][post_type] ||
-		// Default_SocialPost_TemplateThemeConfig;
-		loadSocialPostCustomizableElements(slide.template_theme, post_type) ||
+		loadSocialPostCustomizableElements(validTemplate_theme, post_type) ||
 		Classic_SocialPost_TemplateThemeConfig[post_type];
+	// loadSocialPostCustomizableElements('default', post_type); // testing only
 
 	const socialPostLayoutElements =
 		loadSocialPostLayoutConfigElements(
-			slide.template_theme as SocialPostTemplateKeys,
-			// slide.layout as SocialPostLayoutKeys,
+			validTemplate_theme as SocialPostTemplateKeys,
+			// 'default', // testing only
 			currLayout as SocialPostLayoutKeys,
 		) || Classis_SocialPost_TemplateLayoutsConfig[currLayout];
 
@@ -400,9 +422,11 @@ export const templateDispatch = (
 				last_page_content={[<></>]}
 				social_post_template_logo={generateSocialPostTemplateLogo({
 					logoWidth: 90,
-					logoHeight: 35,
+					logoHeight: 30,
 					logoBadge: drlambdaLogoBadgeWhiteBG,
 					logoStyleConfig: socialPostLayoutElements?.logoCSS || {},
+					logoMode: logoMode || 'default',
+					customLogoUrl: customLogoUrl || '',
 				})}
 				page_turn_indicator={generateSocialPostTemplateIndicatorElement({
 					logoWidth: 65,
@@ -410,12 +434,12 @@ export const templateDispatch = (
 					indicatorNonCoverPage: isLastPage
 						? undefined
 						: templateThemeKeyAndIndicatorImgMapNonCoverPage[
-								slide.template_theme
+								validTemplate_theme
 							],
 					indicatorCoverPage:
-						templateThemeKeyAndIndicatorImgMapCoverPage[slide.template_theme],
+						templateThemeKeyAndIndicatorImgMapCoverPage[validTemplate_theme],
 					indicatorLastPage:
-						templateThemeKeyAndIndicatorImgMapLastPage[slide.template_theme],
+						templateThemeKeyAndIndicatorImgMapLastPage[validTemplate_theme],
 					logoStyleConfig: socialPostLayoutElements?.indicatorCSS || {},
 					isLastPage: isLastPage,
 				})}
@@ -426,12 +450,12 @@ export const templateDispatch = (
 					indicatorNonCoverPage: isLastPage
 						? undefined
 						: templateThemeKeyAndIndicatorImgMapNonCoverPage[
-								slide.template_theme
+								validTemplate_theme
 							],
 					indicatorCoverPage:
-						templateThemeKeyAndIndicatorImgMapCoverPage[slide.template_theme],
+						templateThemeKeyAndIndicatorImgMapCoverPage[validTemplate_theme],
 					indicatorLastPage:
-						templateThemeKeyAndIndicatorImgMapLastPage[slide.template_theme],
+						templateThemeKeyAndIndicatorImgMapLastPage[validTemplate_theme],
 					logoStyleConfig: socialPostLayoutElements?.indicatorCSS || {},
 					isLastPage: isLastPage,
 				})}
@@ -584,9 +608,11 @@ export const templateDispatch = (
 				)}
 				social_post_template_logo={generateSocialPostTemplateLogo({
 					logoWidth: 90,
-					logoHeight: 35,
+					logoHeight: 30,
 					logoBadge: drlambdaLogoBadgeWhiteBG,
 					logoStyleConfig: socialPostLayoutElements?.logoCSS || {},
+					logoMode: logoMode || 'default',
+					customLogoUrl: customLogoUrl || '',
 				})}
 				page_turn_indicator={generateSocialPostTemplateIndicatorElement({
 					logoWidth: 65,
@@ -594,12 +620,12 @@ export const templateDispatch = (
 					indicatorNonCoverPage: isLastPage
 						? undefined
 						: templateThemeKeyAndIndicatorImgMapNonCoverPage[
-								slide.template_theme
+								validTemplate_theme
 							],
 					indicatorCoverPage:
-						templateThemeKeyAndIndicatorImgMapCoverPage[slide.template_theme],
+						templateThemeKeyAndIndicatorImgMapCoverPage[validTemplate_theme],
 					indicatorLastPage:
-						templateThemeKeyAndIndicatorImgMapLastPage[slide.template_theme],
+						templateThemeKeyAndIndicatorImgMapLastPage[validTemplate_theme],
 					logoStyleConfig: socialPostLayoutElements?.indicatorCSS || {},
 					isLastPage: isLastPage,
 				})}
@@ -610,12 +636,12 @@ export const templateDispatch = (
 					indicatorNonCoverPage: isLastPage
 						? undefined
 						: templateThemeKeyAndIndicatorImgMapNonCoverPage[
-								slide.template_theme
+								validTemplate_theme
 							],
 					indicatorCoverPage:
-						templateThemeKeyAndIndicatorImgMapCoverPage[slide.template_theme],
+						templateThemeKeyAndIndicatorImgMapCoverPage[validTemplate_theme],
 					indicatorLastPage:
-						templateThemeKeyAndIndicatorImgMapLastPage[slide.template_theme],
+						templateThemeKeyAndIndicatorImgMapLastPage[validTemplate_theme],
 					logoStyleConfig: socialPostLayoutElements?.indicatorCSS || {},
 					isLastPage: isLastPage,
 				})}

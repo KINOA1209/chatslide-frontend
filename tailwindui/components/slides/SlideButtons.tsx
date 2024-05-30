@@ -12,6 +12,10 @@ import { PaletteKeys, TemplateKeys } from './slideTemplates';
 import availablePalettes from './palette';
 import { useProject } from '@/hooks/use-project';
 import { useSlides } from '@/hooks/use-slides';
+import Slide from '@/models/Slide';
+import brandingIcon from 'public/icons/button/show_logo.svg';
+import Image from 'next/image';
+import { SocialPostSlide } from '@/models/SocialPost';
 
 type SaveButtonProps = {
 	saveSlides: () => void;
@@ -106,6 +110,49 @@ export const DuplicateSlidePageButton: React.FC<{
 				</button>
 			}
 			explanation={'Duplicate Page'}
+		/>
+	);
+};
+
+export const SlidesBrandingButton: React.FC<{
+	currentSlideIndex: number;
+	slides: Slide[] | SocialPostSlide[];
+	onToggleBrandingButton: () => void;
+}> = ({ currentSlideIndex, slides, onToggleBrandingButton }) => {
+	return (
+		<ButtonWithExplanation
+			button={
+				<button className='w-[24px]' onClick={onToggleBrandingButton}>
+					<Image src={brandingIcon} alt='Branding' width={24} height={24} />
+				</button>
+			}
+			explanation={'Branding'}
+		></ButtonWithExplanation>
+	);
+};
+
+export const ChangeSlideTemplateButton: React.FC<{
+	currentSlideIndex: number;
+	slides: Slide[] | SocialPostSlide[];
+	onToggleChangeTemplateButton: () => void;
+}> = ({ currentSlideIndex, slides, onToggleChangeTemplateButton }) => {
+	return (
+		<ButtonWithExplanation
+			button={
+				<button onClick={onToggleChangeTemplateButton}>
+					<LuPalette
+						style={{
+							strokeWidth: '2',
+							flex: '1',
+							width: '1.5rem',
+							height: '1.5rem',
+							fontWeight: 'bold',
+							color: '#344054',
+						}}
+					/>
+				</button>
+			}
+			explanation={'Change Template'}
 		/>
 	);
 };
