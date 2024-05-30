@@ -400,24 +400,28 @@ export const Cover_img_1_layout = ({
 			embed_code_single: string,
 			media_type: Media,
 		) => {
-			const newImgs = [...imgs];
+			// Ensure that the arrays are initialized
+			const newImgs = Array.isArray(imgs) ? [...imgs] : [];
+			const newIsCharts = Array.isArray(ischarts) ? [...ischarts] : [];
+			const newImagePosition = Array.isArray(image_positions)
+				? [...image_positions]
+				: [];
+			const newEmbedCode = Array.isArray(embed_code) ? [...embed_code] : [];
+			const newMediaTypes = Array.isArray(media_types) ? [...media_types] : [];
+
 			if (index >= newImgs.length) newImgs.push(imgSrc);
 			else newImgs[index] = imgSrc;
 
-			const newIsCharts = [...ischarts];
 			if (index >= newIsCharts.length) newIsCharts.push(ischart);
 			else newIsCharts[index] = ischart;
 
-			const newImagePosition = [...image_positions];
 			if (index >= newImagePosition.length)
 				newImagePosition.push(image_position);
 			else newImagePosition[index] = image_position;
 
-			const newEmbedCode = [...embed_code];
 			if (index >= newEmbedCode.length) newEmbedCode.push(embed_code_single);
 			else newEmbedCode[index] = embed_code_single;
 
-			const newMediaTypes = [...media_types];
 			if (index >= newMediaTypes.length) newMediaTypes.push(media_type);
 			else newMediaTypes[index] = media_type;
 
@@ -1379,24 +1383,28 @@ export const Col_2_img_1_layout = ({
 			embed_code_single: string,
 			media_type: Media,
 		) => {
-			const newImgs = [...imgs];
+			// Ensure that the arrays are initialized
+			const newImgs = Array.isArray(imgs) ? [...imgs] : [];
+			const newIsCharts = Array.isArray(ischarts) ? [...ischarts] : [];
+			const newImagePosition = Array.isArray(image_positions)
+				? [...image_positions]
+				: [];
+			const newEmbedCode = Array.isArray(embed_code) ? [...embed_code] : [];
+			const newMediaTypes = Array.isArray(media_types) ? [...media_types] : [];
+
 			if (index >= newImgs.length) newImgs.push(imgSrc);
 			else newImgs[index] = imgSrc;
 
-			const newIsCharts = [...ischarts];
 			if (index >= newIsCharts.length) newIsCharts.push(ischart);
 			else newIsCharts[index] = ischart;
 
-			const newImagePosition = [...image_positions];
 			if (index >= newImagePosition.length)
 				newImagePosition.push(image_position);
 			else newImagePosition[index] = image_position;
 
-			const newEmbedCode = [...embed_code];
 			if (index >= newEmbedCode.length) newEmbedCode.push(embed_code_single);
 			else newEmbedCode[index] = embed_code_single;
 
-			const newMediaTypes = [...media_types];
 			if (index >= newMediaTypes.length) newMediaTypes.push(media_type);
 			else newMediaTypes[index] = media_type;
 
@@ -1599,24 +1607,28 @@ export const Col_1_img_1_layout = ({
 			embed_code_single: string,
 			media_type: Media,
 		) => {
-			const newImgs = [...imgs];
+			// Ensure that the arrays are initialized
+			const newImgs = Array.isArray(imgs) ? [...imgs] : [];
+			const newIsCharts = Array.isArray(ischarts) ? [...ischarts] : [];
+			const newImagePosition = Array.isArray(image_positions)
+				? [...image_positions]
+				: [];
+			const newEmbedCode = Array.isArray(embed_code) ? [...embed_code] : [];
+			const newMediaTypes = Array.isArray(media_types) ? [...media_types] : [];
+
 			if (index >= newImgs.length) newImgs.push(imgSrc);
 			else newImgs[index] = imgSrc;
 
-			const newIsCharts = [...ischarts];
 			if (index >= newIsCharts.length) newIsCharts.push(ischart);
 			else newIsCharts[index] = ischart;
 
-			const newImagePosition = [...image_positions];
 			if (index >= newImagePosition.length)
 				newImagePosition.push(image_position);
 			else newImagePosition[index] = image_position;
 
-			const newEmbedCode = [...embed_code];
 			if (index >= newEmbedCode.length) newEmbedCode.push(embed_code_single);
 			else newEmbedCode[index] = embed_code_single;
 
-			const newMediaTypes = [...media_types];
 			if (index >= newMediaTypes.length) newMediaTypes.push(media_type);
 			else newMediaTypes[index] = media_type;
 
@@ -1840,24 +1852,28 @@ export const Col_2_img_2_layout = ({
 			embed_code_single: string,
 			media_type: Media,
 		) => {
-			const newImgs = [...imgs];
+			// Ensure that the arrays are initialized
+			const newImgs = Array.isArray(imgs) ? [...imgs] : [];
+			const newIsCharts = Array.isArray(ischarts) ? [...ischarts] : [];
+			const newImagePosition = Array.isArray(image_positions)
+				? [...image_positions]
+				: [];
+			const newEmbedCode = Array.isArray(embed_code) ? [...embed_code] : [];
+			const newMediaTypes = Array.isArray(media_types) ? [...media_types] : [];
+
 			if (index >= newImgs.length) newImgs.push(imgSrc);
 			else newImgs[index] = imgSrc;
 
-			const newIsCharts = [...ischarts];
 			if (index >= newIsCharts.length) newIsCharts.push(ischart);
 			else newIsCharts[index] = ischart;
 
-			const newImagePosition = [...image_positions];
 			if (index >= newImagePosition.length)
 				newImagePosition.push(image_position);
 			else newImagePosition[index] = image_position;
 
-			const newEmbedCode = [...embed_code];
 			if (index >= newEmbedCode.length) newEmbedCode.push(embed_code_single);
 			else newEmbedCode[index] = embed_code_single;
 
-			const newMediaTypes = [...media_types];
 			if (index >= newMediaTypes.length) newMediaTypes.push(media_type);
 			else newMediaTypes[index] = media_type;
 
@@ -2231,24 +2247,28 @@ export const Col_3_img_3_layout = ({
 			embed_code_single: string,
 			media_type: Media,
 		) => {
-			const newImgs = [...imgs];
+			// Ensure that the arrays are initialized
+			const newImgs = Array.isArray(imgs) ? [...imgs] : [];
+			const newIsCharts = Array.isArray(ischarts) ? [...ischarts] : [];
+			const newImagePosition = Array.isArray(image_positions)
+				? [...image_positions]
+				: [];
+			const newEmbedCode = Array.isArray(embed_code) ? [...embed_code] : [];
+			const newMediaTypes = Array.isArray(media_types) ? [...media_types] : [];
+
 			if (index >= newImgs.length) newImgs.push(imgSrc);
 			else newImgs[index] = imgSrc;
 
-			const newIsCharts = [...ischarts];
 			if (index >= newIsCharts.length) newIsCharts.push(ischart);
 			else newIsCharts[index] = ischart;
 
-			const newImagePosition = [...image_positions];
 			if (index >= newImagePosition.length)
 				newImagePosition.push(image_position);
 			else newImagePosition[index] = image_position;
 
-			const newEmbedCode = [...embed_code];
 			if (index >= newEmbedCode.length) newEmbedCode.push(embed_code_single);
 			else newEmbedCode[index] = embed_code_single;
 
-			const newMediaTypes = [...media_types];
 			if (index >= newMediaTypes.length) newMediaTypes.push(media_type);
 			else newMediaTypes[index] = media_type;
 
@@ -2697,24 +2717,28 @@ export const Full_img_only_layout = ({
 			embed_code_single: string,
 			media_type: Media,
 		) => {
-			const newImgs = [...imgs];
+			// Ensure that the arrays are initialized
+			const newImgs = Array.isArray(imgs) ? [...imgs] : [];
+			const newIsCharts = Array.isArray(ischarts) ? [...ischarts] : [];
+			const newImagePosition = Array.isArray(image_positions)
+				? [...image_positions]
+				: [];
+			const newEmbedCode = Array.isArray(embed_code) ? [...embed_code] : [];
+			const newMediaTypes = Array.isArray(media_types) ? [...media_types] : [];
+
 			if (index >= newImgs.length) newImgs.push(imgSrc);
 			else newImgs[index] = imgSrc;
 
-			const newIsCharts = [...ischarts];
 			if (index >= newIsCharts.length) newIsCharts.push(ischart);
 			else newIsCharts[index] = ischart;
 
-			const newImagePosition = [...image_positions];
 			if (index >= newImagePosition.length)
 				newImagePosition.push(image_position);
 			else newImagePosition[index] = image_position;
 
-			const newEmbedCode = [...embed_code];
 			if (index >= newEmbedCode.length) newEmbedCode.push(embed_code_single);
 			else newEmbedCode[index] = embed_code_single;
 
-			const newMediaTypes = [...media_types];
 			if (index >= newMediaTypes.length) newMediaTypes.push(media_type);
 			else newMediaTypes[index] = media_type;
 
