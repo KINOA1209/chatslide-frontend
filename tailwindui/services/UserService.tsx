@@ -215,16 +215,7 @@ class UserService {
         ltd_upgrade_price: data['ltd_upgrade_price'],
 			};
 		} catch (error) {
-			const { email, idToken } =
-				await AuthService.getCurrentUserTokenAndEmail();
-			console.error(`Failed to fetch user credits: ${email}`, error);
-			return {
-				id: '',
-				name: '',
-				email: '',
-				credits: '0',
-				subscription_tier: 'FREE',
-			};
+			throw error;
 		}
 	}
 
