@@ -10,7 +10,6 @@ import SessionStorage from '@/utils/SessionStorage';
 import { useUser, UserStatus } from '@/hooks/use-user';
 import ProjectService from '@/services/ProjectService';
 import TeamService from '@/services/TeamService';
-import UserService from '@/services/UserService';
 import { groupProjectsByFolder } from '@/components/dashboard/folder_helper';
 import FolderList from '@/components/dashboard/FolderList';
 import ProjectSection from '@/components/dashboard/ProjectSection';
@@ -18,7 +17,7 @@ import DashboardHeader from '@/components/dashboard/DashboardHeader';
 import CreateFolderModal from '@/components/dashboard/CreateFolderModal';
 import Project from '@/models/Project';
 import Folder from '@/models/Folder';
-import { set } from 'lodash';
+import UserService from '@/services/UserService';
 
 export default function Dashboard() {
 
@@ -66,18 +65,19 @@ export default function Dashboard() {
 
   const fetchProjects = async () => {
     try {
-		if (isTeamMode) {
-			const response = await TeamService.getUserTeams(token);
-			console.log(response);
-			if (response.all_teams.length === 0) {
-				SetNoTeam(true);
-			}
-			setCurrentTeam(response.all_teams[0]);
-		}
+      if (isTeamMode) {
+        const response = await TeamService.getUserTeams(token);
+        console.log(response);
+        if (response.all_teams.length === 0) {
+          SetNoTeam(true);
+        }
+        setCurrentTeam(response.all_teams[0]);
+      }
       const response = isTeamMode && !NoTeam
         ? await TeamService.getTeamProjects(currentTeam, token)
         : await ProjectService.getProjects(token, false, false, true);
 
+      console.log('isTeamMode', isTeamMode, 'project', response);
       if (Array.isArray(response)) {
         setProjects(response);
       } else {
@@ -114,7 +114,12 @@ export default function Dashboard() {
         return f;
       });
       setFolders(updatedFolders);
-      ProjectService.moveToFolder(token, draggingProjectId, folder.folderName);
+      if (isTeamMode) {
+        console.log('team', currentTeam);
+        TeamService.moveProjectToFolder(currentTeam, draggingProjectId, folder.folderName, token);
+      } else {
+        ProjectService.moveToFolder(token, draggingProjectId, folder.folderName);
+      }
     }
   };
 
@@ -172,6 +177,7 @@ export default function Dashboard() {
 
   const handleStartNewProject = () => {
     sessionStorage.clear();
+    sessionStorage.setItem('team', currentTeam);
     router.push('/type-choice');
   };
 
@@ -193,7 +199,11 @@ export default function Dashboard() {
       throw 'Error';
     }
     try {
-      await ProjectService.deleteFolder(token, deleteFolderName);
+      if (isTeamMode) {
+        await TeamService.deleteFolder(currentTeam, 'project', deleteFolderName, token);
+      } else {
+        await ProjectService.deleteFolder(token, deleteFolderName);
+      }
       setFolders(folders.filter((folder) => folder.folderName !== deleteFolderName));
     } catch (error: any) {
       toast.error(error.message, { position: 'top-center', autoClose: 5000, theme: 'light' });
@@ -214,7 +224,11 @@ export default function Dashboard() {
       return;
     }
     try {
-      await ProjectService.renameFolder(token, prevFolderName, renameInput);
+      if (isTeamMode) {
+        await TeamService.renameFolder(currentTeam, 'project', prevFolderName, renameInput, token);
+      } else {
+        await ProjectService.renameFolder(token, prevFolderName, renameInput);
+      }
       setFolders((prevFolders) => {
         const updatedFolders = prevFolders.map((folder) =>
           folder.folderName === prevFolderName ? { ...folder, folderName: renameInput } : folder,
@@ -245,6 +259,7 @@ export default function Dashboard() {
           handleBackToDefaultFolder={handleBackToDefaultFolder}
           moveProjectToFolder={moveProjectToFolder}
           isTeamMode={isTeamMode} 
+          teamId={currentTeam}
         />
         {hasFolder && (
           <FolderList
@@ -277,6 +292,8 @@ export default function Dashboard() {
           showCreateFolderModal={showCreateFolderModal}
           setShowCreateFolderModal={setShowCreateFolderModal}
           setFolders={setFolders}
+          isTeamMode={isTeamMode}
+          teamId={currentTeam}
         />
         <Modal
           showModal={showDeleteFolderModal}

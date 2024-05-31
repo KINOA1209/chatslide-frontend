@@ -413,12 +413,14 @@ export default function Topic() {
 			try {
 				console.log('resources', selectedResources);
 				console.log('summarizing resources');
+				const team_id = sessionStorage.getItem('team') || '';
 				const response = await ResourceService.summarizeResource(
 					project_id,
 					selectedResources.map((r: Resource) => r.id),
 					topic,
 					audience,
 					language,
+					team_id,
 					token,
 					searchOnlineScope,
 					scenarioType,

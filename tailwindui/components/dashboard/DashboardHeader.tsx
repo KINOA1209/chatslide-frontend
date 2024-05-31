@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import DesignSystemButton from '@/components/ui/design_systems/ButtonsOrdinary';
 import Project from '@/models/Project';
 import Folder from '@/models/Folder';
+import TeamService from '@/services/TeamService';
+import TeamModal from './TeamModal';
+import { useUser } from '@/hooks/use-user';
 
 interface DashboardHeaderProps {
   activeFolder: string;
@@ -12,6 +15,7 @@ interface DashboardHeaderProps {
   handleBackToDefaultFolder: () => void;
   moveProjectToFolder: (folder: Folder) => void;
   isTeamMode: boolean;
+  teamId: string;
 }
 
 const DashboardHeader: React.FC<DashboardHeaderProps> = ({
@@ -22,8 +26,14 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
   handleBackToDefaultFolder,
   moveProjectToFolder,
   isTeamMode,
+  teamId
 }) => {
+
   const router = useRouter();
+  const [inviteCode, setInviteCode] = useState('');
+  const [showTeamManagement, setShowTeamManagement] = useState(false);
+  const [error, setError] = useState('');
+  const { token } = useUser();
 
   return (
     <div className='flex flex-row items-end w-full z-10 pt-[2rem] px-[2rem]'>
@@ -43,9 +53,11 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
             });
           }}
         >
-          {activeFolder === 'drlambda-default'
-            ? 'My Projects'
-            : `My Projects > ${activeFolder}`}
+          {isTeamMode 
+            ? 'Team Projects'
+            : activeFolder === 'drlambda-default'
+              ? 'My Projects'
+              : `My Projects > ${activeFolder}`}
         </div>
 
         <div className='flex flex-row gap-2'>
@@ -60,19 +72,30 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
               <span className='whitespace-nowrap'>Create Folder</span>
             </DesignSystemButton>
           )}
-            <div>
-            {isTeamMode && (
-                <DesignSystemButton
+
+          {isTeamMode && (
+            <>
+              <DesignSystemButton
                 isPaidFeature={false}
-                size="lg"
-                hierarchy="secondary"
-                buttonStatus="enabled"
-                onClick={() => router.push('/discover')}
-                >
-                <span className="whitespace-nowrap">Discover</span>
-                </DesignSystemButton>
-            )}
-            </div>
+                size='lg'
+                hierarchy='secondary'
+                buttonStatus='enabled'
+                onClick={() => setShowTeamManagement(true)}
+              >
+                <span className='whitespace-nowrap'>Invite Members</span>
+              </DesignSystemButton>
+              {inviteCode && (
+                <div className='text-[16px] font-medium leading-[24px] tracking-wide'>
+                  Invite Code: {inviteCode}
+                </div>
+              )}
+              {error && (
+                <div className='text-[16px] font-medium leading-[24px] tracking-wide text-red-500'>
+                  Error: {error}
+                </div>
+              )}
+            </>
+          )}
 
           <DesignSystemButton
             isPaidFeature={false}
@@ -85,6 +108,13 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
           </DesignSystemButton>
         </div>
       </div>
+      {showTeamManagement && (
+        <TeamModal
+          showModal={showTeamManagement}
+          setShowModal={setShowTeamManagement}
+          teamId={teamId}
+        />
+      )}
     </div>
   );
 };

@@ -17,6 +17,14 @@ const Title: React.FC<{ center?: boolean; children: React.ReactNode }> = ({
 		);
 };
 
+const SmallTitle: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+	return (
+		<div className='block text-grey-700 text-sm font-bold mb-2'>
+			{children}
+		</div>
+	);
+}
+
 const BigTitle: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 	return (
 		<div className='text-neutral-800 text-2xl font-bold py-1 flex flex-row items-center gap-x-2'>
@@ -92,6 +100,7 @@ const ExplanationPopup: React.FC<{ children: React.ReactNode }> = ({
 
 export {
 	Title,
+	SmallTitle,
 	BigTitle,
 	Instruction,
 	Explanation,

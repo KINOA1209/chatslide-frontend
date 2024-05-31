@@ -83,6 +83,7 @@ class ResourceService {
 		topic: string,
 		audience: string,
 		language: string,
+		team_id: string,
 		token: string,
 		search_online?: string,
 		scenario_type?: string,
@@ -110,6 +111,7 @@ class ResourceService {
 					scenario_type: scenario_type,
 					structure_mode: structureMode,
 					resource_to_follow_structure_from: resourceToFollowStructureFrom,
+					team_id: team_id,
 				}),
 			});
 
@@ -132,6 +134,7 @@ class ResourceService {
 					language: language,
 					search_online: search_online,
 					post_style: post_style,
+					team_id: team_id,
 				}),
 			});
 
