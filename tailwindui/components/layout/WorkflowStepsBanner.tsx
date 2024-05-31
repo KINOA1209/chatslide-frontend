@@ -16,6 +16,7 @@ interface YourComponentProps {
 	nextText?: string;
 	handleClickingGeneration?: () => void;
 	workflow?: string;
+	showLoadingButton?: boolean;
 }
 
 const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
@@ -29,6 +30,7 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 	nextText = 'Next',
 	handleClickingGeneration,
 	workflow = 'slides',
+	showLoadingButton = false,
 }) => {
 	const [showPing, setShowPing] = useState(true);
 
@@ -75,7 +77,17 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 				>
 					<ProjectProgress currentInd={currentIndex} />
 				</div>
-				{!lastStep ? (
+				{lastStep ? (
+					// empty div to keep the layout consistent
+					<div className='min-w-[10rem] sm:min-w-[12rem]'></div>
+				) : showLoadingButton ? (
+					<DrlambdaButton
+						isSubmitting={true}
+            disabled={true}
+					>
+            Loading...
+					</DrlambdaButton>
+				) : (
 					<div className='user-onboarding-generate relative'>
 						{isSubmitting && (
 							<div
@@ -114,14 +126,12 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 							</span>
 						)}
 					</div>
-				) : (
-					// empty div to keep the layout consistent
-					<div className='min-w-[10rem] sm:min-w-[12rem]'></div>
 				)}
 			</div>
 
 			<div className='py-2 w-full flex-auto text-center self-center bg-yellow-100 font-small leading-snug tracking-tight sm:hidden'>
-				Use our desktop version to see all the functionalities, including AI Chatbot. 
+				Use our desktop version to see all the functionalities, including AI
+				Chatbot.
 			</div>
 		</section>
 	);
