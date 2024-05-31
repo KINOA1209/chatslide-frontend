@@ -118,6 +118,10 @@ const imageLicenseOptions: RadioButtonOption[] = [
 		value: 'giphy',
 		text: 'Gif',
 	},
+	{
+		value: 'icon',
+		text: 'Icon',
+	}
 ];
 
 const getImageLicenseExplanation = (license: string) => {
@@ -410,7 +414,7 @@ export const ImgModule = ({
 
 	const decodeImageUrl = (url: string | null): string => {
 		if (!url) return '';
-		if (url.includes('freepik')) {
+		if (url.includes('freepik') || url.includes('icons8')) {
 			const urlMatch = url.match(/url=([^&]+)/);
 			if (urlMatch && urlMatch[1]) {
 				const decodedUrl = decodeURIComponent(decodeURIComponent(urlMatch[1]));
@@ -676,7 +680,7 @@ export const ImgModule = ({
 						selectedValue={imageLicense}
 						setSelectedValue={setImageLicense}
 						name='imageLicense'
-						cols={5}
+						cols={3}
 					/>
 
 					<Explanation>{getImageLicenseExplanation(imageLicense)}</Explanation>
@@ -722,7 +726,7 @@ export const ImgModule = ({
 								>
 									<Image
 										src={url} // URL of the image
-										unoptimized={!url?.includes('freepik')}
+										unoptimized={!url?.includes('freepik') && !url.includes('icons8')}
 										alt='searched image'
 										layout='responsive'
 										objectFit='contain' // This will keep the aspect ratio and make sure the image fits within the container
@@ -741,7 +745,7 @@ export const ImgModule = ({
 								>
 									<Image
 										src={url} // URL of the image
-										unoptimized={url?.includes('freepik') ? false : true}
+										unoptimized={url?.includes('freepik') || url?.includes('icons8') ? false : true}
 										alt='selected image'
 										layout='responsive'
 										objectFit='contain' // This will keep the aspect ratio and make sure the image fits within the container
@@ -1611,7 +1615,7 @@ export const ImgModule = ({
 								}}
 							>
 								<Image
-									unoptimized={imgsrc?.includes('freepik') ? false : true}
+									unoptimized={imgsrc?.includes('freepik') || imgsrc?.includes('icons8') ? false : true}
 									style={{
 										//dont use contain, it will make resize feature always resize based on aspect ratio
 										objectFit: 'fill',
