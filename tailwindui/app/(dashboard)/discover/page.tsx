@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import ProjectTable from '../ProjectTable';
+import ProjectTable from '../../../components/dashboard/ProjectTable';
 import DrlambdaButton from '@/components/button/DrlambdaButton';
 import ProjectService from '@/services/ProjectService';
 import Link from 'next/link';

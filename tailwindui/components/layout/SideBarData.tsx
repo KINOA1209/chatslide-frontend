@@ -2,7 +2,7 @@
 import React from 'react';
 import { FaDiscord } from 'react-icons/fa';
 import { GoHome, GoFile, GoDiscussionOutdated, GoGear } from 'react-icons/go';
-import { IoExitOutline, IoMicOutline } from 'react-icons/io5';
+import { IoExitOutline, IoMicOutline, IoPeople, IoPeopleOutline } from 'react-icons/io5';
 import { LuNewspaper } from 'react-icons/lu';
 import { RiDiscordLine } from 'react-icons/ri';
 
@@ -34,6 +34,11 @@ export const SideBarData: SideBarItem[] = [
 		title: 'Studio',
 		icon: <IoMicOutline />,
 		path: '/studio',
+	},
+	{	
+		title: 'Team',
+		icon: <IoPeopleOutline />,
+		path: '/dashboard?mode=team',
 	},
 	{
 		title: 'Discover',
