@@ -39,7 +39,7 @@ export default function Dashboard() {
   const [prevFolderName, setPrevFolderName] = useState('');
   const [draggingProjectId, setDraggingProjectId] = useState<string>('');
   const router = useRouter();
-  const [NoTeam, SetNoTeam] = useState(false);
+  const [NoTeam, setNoTeam] = useState(false);
   const [currentTeam, setCurrentTeam] = useState('');
   const searchParams = useSearchParams();
   const mode = searchParams.get('mode');
@@ -65,14 +65,7 @@ export default function Dashboard() {
 
   const fetchProjects = async () => {
     try {
-      if (isTeamMode) {
-        const response = await TeamService.getUserTeams(token);
-        console.log(response);
-        if (response.all_teams.length === 0) {
-          SetNoTeam(true);
-        }
-        setCurrentTeam(response.all_teams[0]);
-      }
+      console.log(currentTeam);
       const response = isTeamMode && !NoTeam
         ? await TeamService.getTeamProjects(currentTeam, token)
         : await ProjectService.getProjects(token, false, false, true);
@@ -134,6 +127,16 @@ export default function Dashboard() {
         updateCreditsAndTier();
       }
     }
+    if (isTeamMode) {
+      const response = await TeamService.getUserTeams(token);
+      console.log(response);
+      if (response.all_teams.length === 0) {
+        setNoTeam(true);
+        router.push('/team');
+      } else {
+        setCurrentTeam(response.all_teams[0]);
+      }
+    }
     fetchProjects();
     const surveyFinished = await UserService.checkSurveyFinished(token);
     if (!surveyFinished) {
@@ -177,6 +180,7 @@ export default function Dashboard() {
 
   const handleStartNewProject = () => {
     sessionStorage.clear();
+    console.log('team', currentTeam);
     sessionStorage.setItem('team', currentTeam);
     router.push('/type-choice');
   };
