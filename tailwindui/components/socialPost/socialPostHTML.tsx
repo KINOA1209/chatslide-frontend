@@ -757,7 +757,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 						</>
 					)}
 
-					{res_scenario !== 'serious_subject' && !isViewing && (
+					{/* {res_scenario !== 'serious_subject' && !isViewing && (
 						<ThemeChanger
 							openTheme={openTheme}
 							showTheme={showTheme}
@@ -766,7 +766,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 							borderColorOptions={borderColorOptions}
 							handleSlideEdit={handleSlideEdit}
 						/>
-					)}
+					)} */}
 
 					{/* {res_scenario === 'casual_topic' && !isViewing && socialPostsIndex != 0 && (
 						<LayoutChanger

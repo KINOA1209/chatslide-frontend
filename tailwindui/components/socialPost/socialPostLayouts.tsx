@@ -31,6 +31,7 @@ export type SocialPostLayoutElements = {
 	userNameAndLogoAndIndicatorBoxCSS?: React.CSSProperties;
 	userNameAndLogoBoxCSS?: React.CSSProperties;
 	sourceAndLogoBoxCSS?: React.CSSProperties;
+	horizontalDividerCSS?: React.CSSProperties;
 };
 
 export type SocialPostLayoutKeys =

@@ -110,8 +110,8 @@ export type socialPostTemplateLogoType = {
 };
 
 export const generateSocialPostTemplateLogo = ({
-	logoWidth = 90,
-	logoHeight = 35,
+	logoWidth = 30,
+	logoHeight = 30,
 	logoBadge,
 	logoStyleConfig,
 	logoMode,
@@ -121,7 +121,7 @@ export const generateSocialPostTemplateLogo = ({
 		return <></>;
 	} else
 		return (
-			<div style={{ ...logoStyleConfig }}>
+			<div style={{ ...logoStyleConfig, maxWidth: '45px' }}>
 				<Image
 					// onClick={openBrandingModal}
 					unoptimized={true}
@@ -133,8 +133,9 @@ export const generateSocialPostTemplateLogo = ({
 				`}
 					// 'https://dev.drlambda.ai/api/jpg?filename=drlambdaLogoSingle.png&foldername=drlambda-resources/cc10f68d-d2c5-4eee-b49b-691400587da6'
 					alt='Template Logo'
-					className={`w-auto h-[${logoHeight}px]`}
+					// className={`w-auto h-[${logoHeight}px]`}
 					style={{ objectFit: 'contain' }}
+					// style={{ width: logoWidth, height: logoHeight }}
 				/>
 			</div>
 		);
@@ -239,42 +240,41 @@ export const First_page_img_1_casual_topic = ({
 			style={{ position: 'relative', ...layoutElements?.canvasCSS }}
 		>
 			<div
+				className='SocialPostImageContainer'
+				style={{
+					// border: '12px solid transparent',
+					backgroundImage: `linear-gradient(white, white), radial-gradient(circle at top left, ${border_start}, ${border_end})`,
+					// backgroundOrigin: 'border-box',
+					// backgroundClip: 'content-box, border-box',
+					zIndex: imgHigherZIndex ? 999 : 2,
+					position: 'absolute',
+					left: 0,
+					top: 0,
+					width: '100%',
+					height: '100%',
+					// zIndex: 20,
+					...layoutElements?.imageContainerCSS,
+				}}
+			>
+				<ImgModule
+					imgsrc={useIllustraion ? illustration?.[0] : imgs?.[0]}
+					updateSingleCallback={updateImgAtIndex(0)}
+					chartArr={charts}
+					ischartArr={ischarts}
+					handleSlideEdit={handleSlideEdit}
+					canEdit={canEdit}
+					currentSlideIndex={socialPostsIndex}
+					image_positions={image_positions}
+					isSlide={false}
+					isSocialPostTemp1Cover={true}
+					currentContentIndex={0}
+					setImgHigherZIndex={setImgHigherZIndex}
+				/>
+			</div>
+			<div
 				className='SocialPostColumn'
 				style={{ ...layoutElements?.columnCSS }}
 			>
-				<div
-					className='SocialPostImageContainer'
-					style={{
-						// border: '12px solid transparent',
-						backgroundImage: `linear-gradient(white, white), radial-gradient(circle at top left, ${border_start}, ${border_end})`,
-						// backgroundOrigin: 'border-box',
-						// backgroundClip: 'content-box, border-box',
-						zIndex: imgHigherZIndex ? 999 : 2,
-						position: 'absolute',
-						left: 0,
-						top: 0,
-						width: '100%',
-						height: '100%',
-						// zIndex: 20,
-						...layoutElements?.imageContainerCSS,
-					}}
-				>
-					<ImgModule
-						imgsrc={useIllustraion ? illustration?.[0] : imgs?.[0]}
-						updateSingleCallback={updateImgAtIndex(0)}
-						chartArr={charts}
-						ischartArr={ischarts}
-						handleSlideEdit={handleSlideEdit}
-						canEdit={canEdit}
-						currentSlideIndex={socialPostsIndex}
-						image_positions={image_positions}
-						isSlide={false}
-						isSocialPostTemp1Cover={true}
-						currentContentIndex={0}
-						setImgHigherZIndex={setImgHigherZIndex}
-					/>
-				</div>
-
 				<div
 					className='SocialPostTopicBox'
 					style={{ ...layoutElements?.topicCSS, zIndex: 60 }}
@@ -321,7 +321,7 @@ export const First_page_img_1_casual_topic = ({
 							style={{
 								...layoutElements?.logoCSS,
 								zIndex: 30,
-								maxHeight: '30px',
+								// maxHeight: '30px',
 							}}
 						>
 							{social_post_template_logo}
@@ -329,7 +329,7 @@ export const First_page_img_1_casual_topic = ({
 					</div>
 
 					<div
-						className='LastPageLikeIndicator'
+						className='pageIndicator'
 						style={{ ...layoutElements?.indicatorCSS }}
 					>
 						{page_turn_indicator}
@@ -412,6 +412,7 @@ export const Col_1_img_0_casual_topic = ({
 					top: '32%',
 					// left: '50%',
 					zIndex: 20,
+					...layoutElements?.horizontalDividerCSS,
 				}}
 			></div>
 			<div
@@ -445,7 +446,7 @@ export const Col_1_img_0_casual_topic = ({
 				</div>
 				<div
 					className='SocialPostLogoBox'
-					style={{ ...layoutElements?.logoCSS, zIndex: 30, maxHeight: '30px' }}
+					style={{ ...layoutElements?.logoCSS, zIndex: 30 }}
 				>
 					{social_post_template_logo}
 				</div>
@@ -571,6 +572,7 @@ export const Col_2_img_1_left_casual_topic = ({
 					top: '32%',
 					// left: '50%',
 					zIndex: 20,
+					...layoutElements?.horizontalDividerCSS,
 				}}
 			></div>
 			<div
@@ -640,7 +642,7 @@ export const Col_2_img_1_left_casual_topic = ({
 
 				<div
 					className='SocialPostLogoBox'
-					style={{ ...layoutElements?.logoCSS, zIndex: 30, maxHeight: '30px' }}
+					style={{ ...layoutElements?.logoCSS, zIndex: 30 }}
 				>
 					{social_post_template_logo}
 				</div>
@@ -710,6 +712,7 @@ export const Col_2_img_1_Right_casual_topic = ({
 					top: '32%',
 					// left: '50%',
 					zIndex: 20,
+					...layoutElements?.horizontalDividerCSS,
 				}}
 			></div>
 			<div
@@ -779,7 +782,7 @@ export const Col_2_img_1_Right_casual_topic = ({
 
 				<div
 					className='SocialPostLogoBox'
-					style={{ ...layoutElements?.logoCSS, zIndex: 30, maxHeight: '30px' }}
+					style={{ ...layoutElements?.logoCSS, zIndex: 30 }}
 				>
 					{social_post_template_logo}
 				</div>
@@ -906,7 +909,7 @@ export const First_page_img_1_serious_subject = ({
 							style={{
 								...layoutElements?.logoCSS,
 								zIndex: 30,
-								maxHeight: '30px',
+								// maxHeight: '30px',
 							}}
 						>
 							{social_post_template_logo}
@@ -990,7 +993,7 @@ export const img_0_serious_subject = ({
 				</div>
 				<div
 					className='SocialPostLogoBox'
-					style={{ ...layoutElements?.logoCSS, zIndex: 30, maxHeight: '30px' }}
+					style={{ ...layoutElements?.logoCSS, zIndex: 30 }}
 				>
 					{social_post_template_logo}
 				</div>
@@ -1096,7 +1099,7 @@ export const First_page_img_1_reading_notes = ({
 							style={{
 								...layoutElements?.logoCSS,
 								zIndex: 30,
-								maxHeight: '30px',
+								// maxHeight: '30px',
 							}}
 						>
 							{social_post_template_logo}
@@ -1254,7 +1257,7 @@ export const Col_1_img_0_reading_notes = ({
 						style={{
 							...layoutElements?.logoCSS,
 							zIndex: 30,
-							maxHeight: '30px',
+							// maxHeight: '30px',
 						}}
 					>
 						{social_post_template_logo}
@@ -1443,7 +1446,7 @@ export const Col_1_img_1_reading_notes = ({
 						style={{
 							...layoutElements?.logoCSS,
 							zIndex: 30,
-							maxHeight: '30px',
+							// maxHeight: '30px',
 						}}
 					>
 						{social_post_template_logo}
@@ -1581,7 +1584,10 @@ export const last_page_layout = ({
 						</div>
 						<div
 							className='SocialPostLogoBox'
-							style={{ ...layoutElements?.logoCSS, maxHeight: '30px' }}
+							style={{
+								...layoutElements?.logoCSS,
+								// maxHeight: '30px',
+							}}
 						>
 							{social_post_template_logo}
 						</div>

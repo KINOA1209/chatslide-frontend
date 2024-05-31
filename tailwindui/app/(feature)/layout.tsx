@@ -17,7 +17,7 @@ export default function WorkflowLayout({
 	return (
 		<>
 			<div className='Workflow-layout flex flex-row h-screen w-screen'>
-				<div className='hidden sm:flex'>
+				<div className='hidden sm:flex xl:absolute xl:top-[80px]'>
 					{/* only show SideBar on mid-large screen */}
 					<SideBar />
 				</div>

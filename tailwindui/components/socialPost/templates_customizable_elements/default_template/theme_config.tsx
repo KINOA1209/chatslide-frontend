@@ -5,7 +5,7 @@ export const Default_SocialPost_TemplateThemeConfig: {
 	[key in PostTypeKeys]?: SocialPostThemeElements;
 } = {
 	casual_topic: {
-		useIllustraion: false,
+		useIllustraion: true,
 		topicCSS: {
 			fontSize: '30pt',
 			fontWeight: 'bold',
@@ -66,7 +66,7 @@ export const Default_SocialPost_TemplateThemeConfig: {
 		},
 	},
 	serious_subject: {
-		useIllustraion: false,
+		useIllustraion: true,
 		// originalTitleCoverCSS: {
 		// 	color: '#1B1C22',
 		// 	fontWeight: 'bold',
@@ -179,7 +179,7 @@ export const Default_SocialPost_TemplateThemeConfig: {
 		},
 	},
 	reading_notes: {
-		useIllustraion: false,
+		useIllustraion: true,
 		readingtitleCSS: {
 			// color: '#121212',
 			// fontFamily: 'Cormorant',

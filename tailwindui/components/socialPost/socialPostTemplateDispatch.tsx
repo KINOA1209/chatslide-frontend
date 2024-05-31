@@ -31,6 +31,7 @@ import {
 } from './socialPostLayouts';
 import layoutConfigData from '../slides/templates_customizable_elements/layout_elements';
 import drlambdaLogoBadgeWhiteBG from '@/public/images/template/drlambdaLogoBadgeWhiteBG.png';
+import drLambdaSquareLogoWhiteBGBlackText from '@/public/images/logo/drLambdaSquareLogo.png';
 import { useUser } from '@/hooks/use-user';
 import AuthService from '@/services/AuthService';
 const QuillEditable = dynamic(
@@ -423,7 +424,7 @@ export const templateDispatch = (
 				social_post_template_logo={generateSocialPostTemplateLogo({
 					logoWidth: 90,
 					logoHeight: 30,
-					logoBadge: drlambdaLogoBadgeWhiteBG,
+					logoBadge: drLambdaSquareLogoWhiteBGBlackText,
 					logoStyleConfig: socialPostLayoutElements?.logoCSS || {},
 					logoMode: logoMode || 'default',
 					customLogoUrl: customLogoUrl || '',
@@ -609,7 +610,7 @@ export const templateDispatch = (
 				social_post_template_logo={generateSocialPostTemplateLogo({
 					logoWidth: 90,
 					logoHeight: 30,
-					logoBadge: drlambdaLogoBadgeWhiteBG,
+					logoBadge: drLambdaSquareLogoWhiteBGBlackText,
 					logoStyleConfig: socialPostLayoutElements?.logoCSS || {},
 					logoMode: logoMode || 'default',
 					customLogoUrl: customLogoUrl || '',
