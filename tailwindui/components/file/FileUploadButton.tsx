@@ -113,7 +113,7 @@ export const FileUploadButton: FC<FileUploadButtonProps> = ({
 
 	return (
 		<div className='max-w-sm flex flex-col items-center'>
-			<ToastContainer enableMultiContainer containerId={'upload'} />
+			<ToastContainer containerId={'upload'} />
 			<input
 				type='file'
 				id='file-upload'

@@ -149,7 +149,7 @@ const ProgressBox: React.FC<ProgressBoxProps> = ({
 
 	return (
 		<div className='w-fit select-none grow-0'>
-			<ToastContainer />
+			{/* <ToastContainer /> */}
 			<div className='flex flex-row items-start justify-center gap-x-4'>
 				<FaChevronCircleLeft
 					className={`h-[30px] ${stepAvailable(currentInd - 1) ? 'text-white cursor-pointer' : 'text-gray-400 cursor-not-allowed'}`}

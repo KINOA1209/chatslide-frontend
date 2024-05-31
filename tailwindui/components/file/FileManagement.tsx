@@ -880,7 +880,7 @@ const MyFiles: React.FC<filesInterface> = ({
 
 	return (
 		<section className='grow flex flex-col h-full w-full lg:px-4'>
-			<ToastContainer enableMultiContainer containerId={'fileManagement'} />
+			<ToastContainer containerId={'fileManagement'} />
 			{pageInvoked === 'resources' ? (
 				<MyResourcePageHeader
 					showUploadOptionsMenu={showUploadOptionsMenu}
