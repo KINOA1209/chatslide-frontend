@@ -957,6 +957,7 @@ export const img_0_serious_subject = ({
 					top: '35%',
 					// left: '50%',
 					zIndex: 20,
+					...layoutElements?.horizontalDividerCSS,
 				}}
 			></div>
 			<div
@@ -1005,6 +1006,7 @@ export const img_0_serious_subject = ({
 // reading notes type layouts
 export const First_page_img_1_reading_notes = ({
 	illustration,
+	imgs,
 	title,
 	user_name,
 	social_post_template_logo,
@@ -1039,7 +1041,9 @@ export const First_page_img_1_reading_notes = ({
 
 			update_callback(newImgs, newIsCharts, newImagePosition);
 		};
+
 	const { socialPostsIndex, setSocialPostsIndex } = useSocialPosts();
+	const [imgHigherZIndex, setImgHigherZIndex] = useState(false);
 	// useEffect(() => {
 	// 	console.log('reading note use illustration?', useIllustraion);
 	// }, []);
@@ -1049,6 +1053,38 @@ export const First_page_img_1_reading_notes = ({
 			className='SocialPostCanvas'
 			style={{ position: 'relative', ...layoutElements?.canvasCSS }}
 		>
+			<div
+				className='SocialPostImageContainer'
+				style={{
+					// border: '12px solid transparent',
+					backgroundImage: `linear-gradient(white, white), radial-gradient(circle at top left, ${border_start}, ${border_end})`,
+					// backgroundOrigin: 'border-box',
+					// backgroundClip: 'content-box, border-box',
+					zIndex: imgHigherZIndex ? 999 : 2,
+					position: 'absolute',
+					left: 0,
+					top: 0,
+					width: '100%',
+					height: '100%',
+					// zIndex: 20,
+					...layoutElements?.imageContainerCSS,
+				}}
+			>
+				<ImgModule
+					imgsrc={useIllustraion ? illustration?.[0] : imgs?.[0]}
+					updateSingleCallback={updateImgAtIndex(0)}
+					chartArr={charts}
+					ischartArr={ischarts}
+					handleSlideEdit={handleSlideEdit}
+					canEdit={canEdit}
+					currentSlideIndex={socialPostsIndex}
+					image_positions={image_positions}
+					isSlide={false}
+					isSocialPostTemp1Cover={true}
+					currentContentIndex={0}
+					setImgHigherZIndex={setImgHigherZIndex}
+				/>
+			</div>
 			<div
 				className='SocialPostColumn'
 				style={{ ...layoutElements?.columnCSS }}
@@ -1221,6 +1257,7 @@ export const Col_1_img_0_reading_notes = ({
 					top: '61%',
 					// left: '50%',
 					zIndex: 20,
+					...layoutElements?.horizontalDividerCSS,
 				}}
 			></div>
 			<div
@@ -1380,6 +1417,7 @@ export const Col_1_img_1_reading_notes = ({
 					top: '61%',
 					// left: '50%',
 					zIndex: 20,
+					...layoutElements?.horizontalDividerCSS,
 				}}
 			></div>
 			<div

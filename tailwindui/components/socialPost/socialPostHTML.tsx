@@ -203,7 +203,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 		socialPostCustomLogoResource,
 		setSocialPostCustomLogoResource,
 	} = useSocialPosts();
-	const availableSectionNames = ['theme', 'branding'];
+	const availableSectionNames = ['theme', 'branding', ''];
 	const [openSection, setOpenSection] = useState('');
 	const toggleSection = (section: string) => {
 		if (availableSectionNames.includes(section)) {
@@ -211,19 +211,22 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 		}
 	};
 
-	// branding related
+	useEffect(() => {
+		console.log('open section is:', openSection);
+	}, [openSection, setOpenSection]);
+
 	const brandingOptions = [
 		{
 			value: 'default',
-			text: getBrand() + ' Logo',
+			text: getBrand(),
 		},
 		{
 			value: 'no',
-			text: 'No Logo',
+			text: 'None',
 		},
 		{
 			value: 'custom',
-			text: 'Custom Logo',
+			text: 'Customize',
 		},
 	];
 	// const [showLogo, setShowLogo] = useState<boolean>(true);
@@ -887,7 +890,15 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 			{
 				// the section that can customize the social post theme
 				<div
-					className={`ThemeCustomizationSection ${openSection === 'theme' ? 'block' : 'hidden'} w-auto h-auto bg-blue-500 xl:bg-yellow-500 xl:static fixed bottom-[10%] left-1/2 transform -translate-x-1/2 xl:transform-none`}
+					className={`ThemeCustomizationSection ${openSection === 'theme' ? 'flex ' : 'hidden'} flex-col w-auto h-auto bg-[#FFFFFF] xl:static fixed bottom-[50%] left-1/2 transform -translate-x-1/2 xl:transform-none cursor-pointer`}
+					style={{
+						borderRadius: 'var(--radius-md, 8px)',
+						border: '1px solid var(--Colors-Border-border-secondary, #EAECF0)',
+						boxShadow:
+							'0px 12px 16px -4px rgba(16, 24, 40, 0.08), 0px 4px 6px -2px rgba(16, 24, 40, 0.03)',
+						padding: '16px',
+						gap: '16px',
+					}}
 				>
 					<div className='ThemeSectionTitleAndExitButton flex flex-row justify-between items-center'>
 						<span
@@ -902,7 +913,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 						>
 							Theme
 						</span>
-						<div>
+						<div onClick={() => toggleSection('')}>
 							<MdOutlineClose style={{ color: '#98A2B3' }}></MdOutlineClose>
 						</div>
 					</div>
@@ -912,14 +923,27 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 							// margin: '0.75rem 0.5rem 0.75rem 0.5rem',
 						}}
 					/>
-					<div className='ThemeTemplateSelectionBox flex flex-col'>
-						<span>Theme Template</span>
-						{/* selection box */}
-						<TemplateSelectionBox
-							defaultSelection={currentSelectedTemplate}
-							selectionOptions={socialPostTemplateOptions}
-							handleSelectionChange={handleSocialPostTemplateSelectionChange}
-						></TemplateSelectionBox>
+					<div className='ThemeTemplateSelectionBox flex flex-col gap-[16px]'>
+						<div className={`titleAndSelectionBox flex flex-col gap-[4px]`}>
+							<span
+								style={{
+									color: 'var(--colors-text-text-secondary-700, #344054)',
+									// fontFamily: 'Creato Display Medium',
+									fontSize: '14px',
+									fontStyle: 'normal',
+									fontWeight: 'bold',
+									lineHeight: '20px',
+								}}
+							>
+								Theme Template
+							</span>
+							{/* selection box */}
+							<TemplateSelectionBox
+								defaultSelection={currentSelectedTemplate}
+								selectionOptions={socialPostTemplateOptions}
+								handleSelectionChange={handleSocialPostTemplateSelectionChange}
+							></TemplateSelectionBox>
+						</div>
 					</div>
 				</div>
 			}
@@ -927,7 +951,15 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 			{
 				// the section that can customize the social post branding (logo)
 				<div
-					className={`LogoBrandingCustomizationSection ${openSection === 'branding' ? 'block' : 'hidden'} w-auto min-w-[15rem] h-auto bg-blue-500 xl:bg-yellow-500 xl:static fixed bottom-[10%] left-1/2 transform -translate-x-1/2 xl:transform-none`}
+					className={`LogoBrandingCustomizationSection ${openSection === 'branding' ? 'flex' : 'hidden'} flex-col w-auto min-w-[15rem] h-auto bg-[#FFFFFF] xl:static fixed bottom-[50%] left-1/2 transform -translate-x-1/2 xl:transform-none cursor-pointer`}
+					style={{
+						borderRadius: 'var(--radius-md, 8px)',
+						border: '1px solid var(--Colors-Border-border-secondary, #EAECF0)',
+						boxShadow:
+							'0px 12px 16px -4px rgba(16, 24, 40, 0.08), 0px 4px 6px -2px rgba(16, 24, 40, 0.03)',
+						padding: '16px',
+						gap: '16px',
+					}}
 				>
 					<div className='BrandingSectionTitleAndExitButton flex flex-row justify-between items-center'>
 						<span
@@ -942,7 +974,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 						>
 							Branding
 						</span>
-						<div>
+						<div onClick={() => toggleSection('')}>
 							<MdOutlineClose style={{ color: '#98A2B3' }}></MdOutlineClose>
 						</div>
 					</div>
@@ -952,20 +984,30 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 							// margin: '0.75rem 0.5rem 0.75rem 0.5rem',
 						}}
 					/>
-					<div className='BrandingLogoRadioButtons flex flex-col text-sm'>
-						<div>
-							<PaywallModal
-								showModal={showPaywall}
-								setShowModal={setShowPaywall}
-								message='Unlock this feature to customize logo on your slides.'
-							/>
-							<Instruction>
-								What logo do you want to put on your slides?{' '}
-								{!isPaidUser && <PlusLabel />}
-							</Instruction>
+					<div className='BrandingLogoRadioButtons flex flex-col gap-[16px] text-sm'>
+						<PaywallModal
+							showModal={showPaywall}
+							setShowModal={setShowPaywall}
+							message='Unlock this feature to customize logo on your slides.'
+						/>
+						<div className={`titleAndRadioButtons flex flex-col gap-[4px]`}>
+							<span
+								style={{
+									color: 'var(--colors-text-text-secondary-700, #344054)',
+									// fontFamily: 'Creato Display Medium',
+									fontSize: '14px',
+									fontStyle: 'normal',
+									fontWeight: 'bold',
+									lineHeight: '20px',
+								}}
+							>
+								Logo type
+							</span>
+							<span>{!isPaidUser && <PlusLabel />}</span>
+
 							<RadioButton
 								options={brandingOptions}
-								cols={2}
+								cols={1}
 								selectedValue={socialPostLogoMode}
 								setSelectedValue={(mode) => {
 									if (mode !== 'default' && !isPaidUser) {
@@ -989,6 +1031,12 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 								/>
 							)}
 						</div>
+						{/* <div>
+							<Instruction>
+								What logo do you want to put on your slides?{' '}
+							</Instruction>
+							
+						</div> */}
 					</div>
 				</div>
 			}

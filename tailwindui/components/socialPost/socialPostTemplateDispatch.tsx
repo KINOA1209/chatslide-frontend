@@ -189,6 +189,29 @@ export const templateDispatch = (
 		? slide.layout[0]
 		: slide.layout;
 
+	// to solve overflow problem for quote sharing for default templayte by use different layout according to word counting
+	let ModifiedSlideQuote = slide.quote;
+	if (
+		!isLastPage &&
+		index !== 0 &&
+		validTemplate_theme === 'default' &&
+		post_type === 'reading_notes'
+	) {
+		// console.log(slide.quote);
+		// add quote marks to slide quote for default template only
+		ModifiedSlideQuote = `"${ModifiedSlideQuote}"`;
+		const wordCount = slide.quote.split(' ').length;
+		if (wordCount > 15) {
+			currLayout = 'Col_1_img_0_reading_notes';
+		} else {
+			currLayout = 'Col_1_img_1_reading_notes';
+		}
+	}
+
+	// useEffect(() => {
+	// 	console.log('slide.quote', slide.quote);
+	// }, []);
+
 	// console.log('current layout: ', currLayout);
 	// const layoutKey: SocialPostLayoutKeys =
 	// 	socialPostAvailableLayouts.hasOwnProperty(currLayout)
@@ -370,6 +393,9 @@ export const templateDispatch = (
 							'user_name',
 							{
 								...(themeElements?.userNameCSS || {}),
+								textAlign: socialPostLayoutElements.userNameCSS
+									? socialPostLayoutElements.userNameCSS.textAlign
+									: 'left',
 							},
 						)
 					) : (
@@ -378,7 +404,12 @@ export const templateDispatch = (
 							className={`rounded-md outline-2 ${!exportToPdfMode} ${
 								index !== 0 ? 'hidden' : ''
 							}`}
-							style={themeElements?.userNameCSS || {}}
+							style={{
+								...(themeElements?.userNameCSS || {}),
+								textAlign: socialPostLayoutElements.userNameCSS
+									? socialPostLayoutElements.userNameCSS.textAlign
+									: 'left',
+							}}
 							contentEditable={false}
 							dangerouslySetInnerHTML={{ __html: currUserName }}
 						/>
@@ -388,28 +419,40 @@ export const templateDispatch = (
 					project?.post_type || 'casual_topic',
 					index,
 				)}
-				topic={generateContentElement(
-					slide.topic,
-					'topic',
-					themeElements?.topicCSS || {},
-				)}
+				topic={generateContentElement(slide.topic, 'topic', {
+					...(themeElements?.topicCSS || {}),
+					textAlign: socialPostLayoutElements.topicCSS
+						? socialPostLayoutElements.topicCSS.textAlign
+						: 'left',
+				})}
 				keywords={generateContentElement(
 					Array.isArray(slide.keywords)
 						? slide.keywords.join(' | ')
 						: slide.keywords,
 					'keywords',
-					themeElements?.keywordCoverCSS || {},
+					{
+						...(themeElements?.keywordCoverCSS || {}),
+						textAlign: socialPostLayoutElements.keywordsCSS
+							? socialPostLayoutElements.keywordsCSS.textAlign
+							: 'left',
+					},
 				)}
 				original_title={generateContentElement(
 					slide.original_title,
 					'original_title',
-					themeElements?.originalTitleCoverCSS || {},
+					{
+						...(themeElements?.originalTitleCoverCSS || {}),
+						textAlign: socialPostLayoutElements.originalTitleCSS
+							? socialPostLayoutElements.originalTitleCSS.textAlign
+							: 'left',
+					},
 				)}
-				title={generateContentElement(
-					slide.title,
-					'title',
-					themeElements?.readingtitleCSS || {},
-				)}
+				title={generateContentElement(slide.title, 'title', {
+					...(themeElements?.readingtitleCSS || {}),
+					textAlign: socialPostLayoutElements.readingTitleCSS
+						? socialPostLayoutElements.readingTitleCSS.textAlign
+						: 'left',
+				})}
 				subtopic={<></>}
 				quote={<></>}
 				source={<></>}
@@ -483,6 +526,9 @@ export const templateDispatch = (
 							'user_name',
 							{
 								...(themeElements?.userNameCSS || {}),
+								textAlign: socialPostLayoutElements.userNameCSS
+									? socialPostLayoutElements.userNameCSS.textAlign
+									: 'left',
 							},
 						)
 					) : (
@@ -491,7 +537,12 @@ export const templateDispatch = (
 							className={`rounded-md outline-2 ${!exportToPdfMode} ${
 								index !== 0 ? 'hidden' : ''
 							}`}
-							style={themeElements?.userNameCSS || {}}
+							style={{
+								...(themeElements?.userNameCSS || {}),
+								textAlign: socialPostLayoutElements.userNameCSS
+									? socialPostLayoutElements.userNameCSS.textAlign
+									: 'left',
+							}}
 							contentEditable={false}
 							dangerouslySetInnerHTML={{ __html: currUserName }}
 						/>
@@ -511,43 +562,62 @@ export const templateDispatch = (
 				border_end={slide.theme?.border_end || '#4F361F'}
 				cover_start={slide.theme?.cover_start || '#725947 0%'}
 				cover_end={slide.theme?.cover_end || 'rgba(0, 0, 0, 0.00) 100%'}
-				subtopic={generateContentElement(
-					slide.subtopic,
-					'subtopic',
-					themeElements?.subtopicCSS || {},
-				)}
+				subtopic={generateContentElement(slide.subtopic, 'subtopic', {
+					...(themeElements?.subtopicCSS || {}),
+					textAlign: socialPostLayoutElements.subtopicCSS
+						? socialPostLayoutElements.subtopicCSS.textAlign
+						: 'left',
+				})}
 				keywords={generateContentElement(
 					slide.keywords,
 					'keywords',
-					themeElements?.keywordCSS || {},
+					{
+						...(themeElements?.keywordCSS || {}),
+						textAlign: socialPostLayoutElements.keywordsCSS
+							? socialPostLayoutElements.keywordsCSS.textAlign
+							: 'left',
+					},
 					undefined,
 					false,
 				)}
 				section_title={generateContentElement(
 					slide.section_title,
 					'section_title',
-					themeElements?.sectionTitleCSS || {},
+					{
+						...(themeElements?.sectionTitleCSS || {}),
+						textAlign: socialPostLayoutElements.sectionTitleCSS
+							? socialPostLayoutElements.sectionTitleCSS.textAlign
+							: 'left',
+					},
 				)}
 				original_title={generateContentElement(
 					slide.original_title,
 					'original_title',
-					themeElements?.originalTitleCSS || {},
+					{
+						...(themeElements?.originalTitleCSS || {}),
+						textAlign: socialPostLayoutElements.originalTitleCSS
+							? socialPostLayoutElements.originalTitleCSS.textAlign
+							: 'left',
+					},
 				)}
-				brief={generateContentElement(
-					slide.brief,
-					'brief',
-					themeElements?.briefCSS || {},
-				)}
-				quote={generateContentElement(
-					slide.quote,
-					'quote',
-					themeElements?.quoteCSS || {},
-				)}
-				source={generateContentElement(
-					slide.source,
-					'source',
-					themeElements?.sourceCSS || {},
-				)}
+				brief={generateContentElement(slide.brief, 'brief', {
+					...(themeElements?.briefCSS || {}),
+					textAlign: socialPostLayoutElements.briefCSS
+						? socialPostLayoutElements.briefCSS.textAlign
+						: 'left',
+				})}
+				quote={generateContentElement(ModifiedSlideQuote, 'quote', {
+					...(themeElements?.quoteCSS || {}),
+					textAlign: socialPostLayoutElements.quoteCSS
+						? socialPostLayoutElements.quoteCSS.textAlign
+						: 'left',
+				})}
+				source={generateContentElement(slide.source, 'source', {
+					...(themeElements?.sourceCSS || {}),
+					textAlign: socialPostLayoutElements.sourceCSS
+						? socialPostLayoutElements.sourceCSS.textAlign
+						: 'left',
+				})}
 				content={slide.content.map((content: string, contentIndex: number) => {
 					// console.log('content, contentIndex: ', content, contentIndex);
 					return (
@@ -558,8 +628,18 @@ export const templateDispatch = (
 								content,
 								'content',
 								isLastPage && currLayout === 'last_page_layout'
-									? themeElements?.lastPageContentCSS || {}
-									: themeElements?.contentCSS || {},
+									? {
+											...(themeElements?.lastPageContentCSS || {}),
+											textAlign: socialPostLayoutElements.lastPageContentCSS
+												? socialPostLayoutElements.lastPageContentCSS.textAlign
+												: 'left',
+										}
+									: {
+											...(themeElements?.contentCSS || {}),
+											textAlign: socialPostLayoutElements.contentCSS
+												? socialPostLayoutElements.contentCSS.textAlign
+												: 'left',
+										},
 								contentIndex,
 							)}
 						</div>
@@ -567,17 +647,23 @@ export const templateDispatch = (
 				})}
 				title={<></>}
 				English_title={<></>}
-				topic={generateContentElement(
-					slide.topic,
-					'topic',
-					themeElements?.lastPageTitleCSS || {},
-				)}
+				topic={generateContentElement(slide.topic, 'topic', {
+					...(themeElements?.lastPageTitleCSS || {}),
+					textAlign: socialPostLayoutElements.lastPageTitleCSS
+						? socialPostLayoutElements.lastPageTitleCSS.textAlign
+						: 'left',
+				})}
 				layoutElements={socialPostLayoutElements}
 				themeElements={themeElements}
 				last_page_title={generateContentElement(
 					slide.last_page_title,
 					'last_page_title',
-					themeElements?.lastPageTitleCSS || {},
+					{
+						...(themeElements?.lastPageTitleCSS || {}),
+						textAlign: socialPostLayoutElements.lastPageTitleCSS
+							? socialPostLayoutElements.lastPageTitleCSS.textAlign
+							: 'left',
+					},
 				)}
 				last_page_content={lastPageContentArray.map(
 					(content: string, contentIndex: number) => {
@@ -600,7 +686,12 @@ export const templateDispatch = (
 								{generateContentElement(
 									content,
 									'last_page_content',
-									themeElements?.lastPageContentCSS || {},
+									{
+										...(themeElements?.lastPageContentCSS || {}),
+										textAlign: socialPostLayoutElements.lastPageContentCSS
+											? socialPostLayoutElements.lastPageContentCSS.textAlign
+											: 'left',
+									},
 									contentIndex,
 								)}
 							</div>

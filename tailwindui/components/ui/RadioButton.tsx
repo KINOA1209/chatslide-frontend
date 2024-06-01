@@ -24,7 +24,7 @@ const RadioButton: React.FC<RadioButtonProps> = ({
 	cols = 4,
 }) => {
 	return (
-		<div className={`grid grid-cols-2 md:grid-cols-${cols} gap-x-3`}>
+		<div className={`grid grid-cols-1 md:grid-cols-${cols} gap-x-3`}>
 			{options.map(({ img, value, text, icon }) => (
 				<div
 					key={value}

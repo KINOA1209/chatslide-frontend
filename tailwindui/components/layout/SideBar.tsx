@@ -135,6 +135,7 @@ const SideBar = ({}: SideBarProps) => {
 			style={{
 				paddingLeft: 'var(--spacing-xl, 0.5rem)',
 				paddingRight: 'var(--spacing-xl, 0.5rem)',
+				borderRight: '1px solid var(--Colors-Border-border-secondary, #EAECF0)',
 			}}
 		>
 			{/* toggle sidebar button */}

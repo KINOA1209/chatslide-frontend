@@ -61,7 +61,7 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 	}, [isSubmitting]);
 
 	return (
-		<section className='sticky top-0 z-10 flex flex-col'>
+		<section className='sticky top-0 z-10 flex flex-col w-[100vw]'>
 			<div className='relative w-full h-[80px] flex flex-row items-center bg-[#5168F6] gap-x-2 lg:gap-x-4 px-2 lg:px-4 xl:px-6'>
 				{currentIndex === 0 ? (
 					<BackButton href='/scenario-choice' text='Scenario' />
@@ -121,7 +121,8 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 			</div>
 
 			<div className='py-2 w-full flex-auto text-center self-center bg-yellow-100 font-small leading-snug tracking-tight sm:hidden'>
-				Use our desktop version to see all the functionalities, including AI Chatbot. 
+				Use our desktop version to see all the functionalities, including AI
+				Chatbot.
 			</div>
 		</section>
 	);
