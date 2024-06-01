@@ -67,10 +67,15 @@ const SideBarItem: React.FC<SidebarItemProps> = ({
 					href={path}
 					target={target}
 					className={
-						'w-full block flex flex-row items-center py-2 text-white rounded-lg hover:bg-gray-400 cursor-pointer ' +
-						(isSidebarOpen ? 'px-2 gap-2' : 'justify-center')
+						'w-full block flex flex-row items-center py-2 rounded-lg hover:bg-[#F2F4F7]  cursor-pointer ' +
+						(isSidebarOpen
+							? 'py-[0.5rem] px-[0.75rem] gap-2'
+							: 'justify-center')
 					}
 					role='menuitem'
+					style={{
+						color: 'var(--colors-text-text-secondary-700, #344054)',
+					}}
 				>
 					{icon}
 					{isSidebarOpen ? title : '\u200B'}
@@ -87,9 +92,14 @@ const SideBarItem: React.FC<SidebarItemProps> = ({
 						<div
 							key={index}
 							onClick={() => handleSubMenuClick(subMenu)}
-							className='block flex flex-row items-center gap-2 py-2 text-white px-4 rounded-lg hover:bg-gray-400 cursor-pointer'
+							className='block flex flex-row items-center gap-2 rounded-lg hover:bg-[#F2F4F7] cursor-pointer'
 							role='menuitem'
 							id={'submenu-item-' + subMenu.title}
+							style={{
+								color: 'var(--colors-text-text-secondary-700, #344054)',
+								padding:
+									'var(--spacing-md, 0.5rem) var(--spacing-lg, 0.75rem) var(--spacing-md, 0.5rem) var(--spacing-lg, 1.75rem)',
+							}}
 						>
 							{subMenu.title}
 						</div>

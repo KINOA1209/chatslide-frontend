@@ -486,6 +486,7 @@ export const Classis_SocialPost_TemplateLayoutsConfig: {
 			flexDirection: 'column',
 			gap: '14px',
 			alignSelf: 'center',
+			alignItems: 'center',
 		},
 	},
 	Col_1_img_1_reading_notes: {
@@ -536,6 +537,7 @@ export const Classis_SocialPost_TemplateLayoutsConfig: {
 			flexDirection: 'column',
 			gap: '14px',
 			alignSelf: 'center',
+			alignItems: 'center',
 		},
 		imageContainerCSS: {
 			borderRadius: '999px',

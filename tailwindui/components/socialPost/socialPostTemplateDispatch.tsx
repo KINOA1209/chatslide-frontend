@@ -27,9 +27,11 @@ import {
 	SocialPostLayoutConfigData,
 	SocialPostLayoutKeys,
 	SocialPostTemplateKeys,
+	socialPostTemplateOptions,
 } from './socialPostLayouts';
 import layoutConfigData from '../slides/templates_customizable_elements/layout_elements';
 import drlambdaLogoBadgeWhiteBG from '@/public/images/template/drlambdaLogoBadgeWhiteBG.png';
+import drLambdaSquareLogoWhiteBGBlackText from '@/public/images/logo/drLambdaSquareLogo.png';
 import { useUser } from '@/hooks/use-user';
 import AuthService from '@/services/AuthService';
 const QuillEditable = dynamic(
@@ -78,6 +80,7 @@ export const loadSocialPostCustomizableElements = (
 	// );
 	const themeElements =
 		SocialPostThemeConfigData[templateName as SocialPostTemplateKeys] ||
+		// SocialPostThemeConfigData['default'] || // for testing only
 		Classic_SocialPost_TemplateThemeConfig;
 	let selectedThemeElements =
 		themeElements[post_type as PostTypeKeys] ||
@@ -94,6 +97,7 @@ export const loadSocialPostLayoutConfigElements = (
 ) => {
 	const templateElements =
 		SocialPostLayoutConfigData[templateName as keyof SocialPostThemeConfig] ||
+		// SocialPostLayoutConfigData['default'] || // for testing only
 		Classis_SocialPost_TemplateLayoutsConfig;
 	const selectedLayoutOptionElements =
 		templateElements[layoutOption as SocialPostLayoutKeys] ||
@@ -134,6 +138,8 @@ export const templateDispatch = (
 	) => void = () => () => {},
 	toggleEditMathMode: () => void = () => {}, // Replace with your default function if you have one
 	isLastPage: boolean = false,
+	logoMode: 'no' | 'default' | 'custom' = 'default',
+	customLogoUrl: string = '',
 ): JSX.Element => {
 	const { isPaidUser, token, username } = useUser();
 	// const [currUserName, setCurrUserName] = useState('');
@@ -160,10 +166,51 @@ export const templateDispatch = (
 		keyPrefix = 'preview';
 	}
 
+	// make sure slide.template_theme is valid otherwise use default value
+	// Normalize slide.layout to ensure it's always a string
+
+	let validTemplate_theme: SocialPostTemplateKeys =
+		slide.template_theme &&
+		socialPostTemplateOptions.includes(
+			slide.template_theme as SocialPostTemplateKeys,
+		)
+			? (slide.template_theme as SocialPostTemplateKeys)
+			: 'classic';
+	// console.log(
+	// 	'slide.template_theme',
+	// 	slide.template_theme,
+	// 	socialPostTemplateOptions,
+	// 	socialPostTemplateOptions.includes(
+	// 		slide.template_theme as SocialPostTemplateKeys,
+	// 	)
+	// );
 	// Normalize slide.layout to ensure it's always a string
 	let currLayout: SocialPostLayoutKeys = Array.isArray(slide.layout)
 		? slide.layout[0]
 		: slide.layout;
+
+	// to solve overflow problem for quote sharing for default templayte by use different layout according to word counting
+	let ModifiedSlideQuote = slide.quote;
+	if (
+		!isLastPage &&
+		index !== 0 &&
+		validTemplate_theme === 'default' &&
+		post_type === 'reading_notes'
+	) {
+		// console.log(slide.quote);
+		// add quote marks to slide quote for default template only
+		ModifiedSlideQuote = `"${ModifiedSlideQuote}"`;
+		const wordCount = slide.quote.split(' ').length;
+		if (wordCount > 15) {
+			currLayout = 'Col_1_img_0_reading_notes';
+		} else {
+			currLayout = 'Col_1_img_1_reading_notes';
+		}
+	}
+
+	// useEffect(() => {
+	// 	console.log('slide.quote', slide.quote);
+	// }, []);
 
 	// console.log('current layout: ', currLayout);
 	// const layoutKey: SocialPostLayoutKeys =
@@ -229,15 +276,14 @@ export const templateDispatch = (
 
 	// TODO: change the hardcode to real social post template name passed in
 	const themeElements =
-		// SocialPostThemeConfigData['classic'][post_type] ||
-		// Default_SocialPost_TemplateThemeConfig;
-		loadSocialPostCustomizableElements(slide.template_theme, post_type) ||
+		loadSocialPostCustomizableElements(validTemplate_theme, post_type) ||
 		Classic_SocialPost_TemplateThemeConfig[post_type];
+	// loadSocialPostCustomizableElements('default', post_type); // testing only
 
 	const socialPostLayoutElements =
 		loadSocialPostLayoutConfigElements(
-			slide.template_theme as SocialPostTemplateKeys,
-			// slide.layout as SocialPostLayoutKeys,
+			validTemplate_theme as SocialPostTemplateKeys,
+			// 'default', // testing only
 			currLayout as SocialPostLayoutKeys,
 		) || Classis_SocialPost_TemplateLayoutsConfig[currLayout];
 
@@ -347,6 +393,9 @@ export const templateDispatch = (
 							'user_name',
 							{
 								...(themeElements?.userNameCSS || {}),
+								textAlign: socialPostLayoutElements.userNameCSS
+									? socialPostLayoutElements.userNameCSS.textAlign
+									: 'left',
 							},
 						)
 					) : (
@@ -355,7 +404,12 @@ export const templateDispatch = (
 							className={`rounded-md outline-2 ${!exportToPdfMode} ${
 								index !== 0 ? 'hidden' : ''
 							}`}
-							style={themeElements?.userNameCSS || {}}
+							style={{
+								...(themeElements?.userNameCSS || {}),
+								textAlign: socialPostLayoutElements.userNameCSS
+									? socialPostLayoutElements.userNameCSS.textAlign
+									: 'left',
+							}}
 							contentEditable={false}
 							dangerouslySetInnerHTML={{ __html: currUserName }}
 						/>
@@ -365,28 +419,40 @@ export const templateDispatch = (
 					project?.post_type || 'casual_topic',
 					index,
 				)}
-				topic={generateContentElement(
-					slide.topic,
-					'topic',
-					themeElements?.topicCSS || {},
-				)}
+				topic={generateContentElement(slide.topic, 'topic', {
+					...(themeElements?.topicCSS || {}),
+					textAlign: socialPostLayoutElements.topicCSS
+						? socialPostLayoutElements.topicCSS.textAlign
+						: 'left',
+				})}
 				keywords={generateContentElement(
 					Array.isArray(slide.keywords)
 						? slide.keywords.join(' | ')
 						: slide.keywords,
 					'keywords',
-					themeElements?.keywordCoverCSS || {},
+					{
+						...(themeElements?.keywordCoverCSS || {}),
+						textAlign: socialPostLayoutElements.keywordsCSS
+							? socialPostLayoutElements.keywordsCSS.textAlign
+							: 'left',
+					},
 				)}
 				original_title={generateContentElement(
 					slide.original_title,
 					'original_title',
-					themeElements?.originalTitleCoverCSS || {},
+					{
+						...(themeElements?.originalTitleCoverCSS || {}),
+						textAlign: socialPostLayoutElements.originalTitleCSS
+							? socialPostLayoutElements.originalTitleCSS.textAlign
+							: 'left',
+					},
 				)}
-				title={generateContentElement(
-					slide.title,
-					'title',
-					themeElements?.readingtitleCSS || {},
-				)}
+				title={generateContentElement(slide.title, 'title', {
+					...(themeElements?.readingtitleCSS || {}),
+					textAlign: socialPostLayoutElements.readingTitleCSS
+						? socialPostLayoutElements.readingTitleCSS.textAlign
+						: 'left',
+				})}
 				subtopic={<></>}
 				quote={<></>}
 				source={<></>}
@@ -400,9 +466,11 @@ export const templateDispatch = (
 				last_page_content={[<></>]}
 				social_post_template_logo={generateSocialPostTemplateLogo({
 					logoWidth: 90,
-					logoHeight: 35,
-					logoBadge: drlambdaLogoBadgeWhiteBG,
+					logoHeight: 30,
+					logoBadge: drLambdaSquareLogoWhiteBGBlackText,
 					logoStyleConfig: socialPostLayoutElements?.logoCSS || {},
+					logoMode: logoMode || 'default',
+					customLogoUrl: customLogoUrl || '',
 				})}
 				page_turn_indicator={generateSocialPostTemplateIndicatorElement({
 					logoWidth: 65,
@@ -410,12 +478,12 @@ export const templateDispatch = (
 					indicatorNonCoverPage: isLastPage
 						? undefined
 						: templateThemeKeyAndIndicatorImgMapNonCoverPage[
-								slide.template_theme
+								validTemplate_theme
 							],
 					indicatorCoverPage:
-						templateThemeKeyAndIndicatorImgMapCoverPage[slide.template_theme],
+						templateThemeKeyAndIndicatorImgMapCoverPage[validTemplate_theme],
 					indicatorLastPage:
-						templateThemeKeyAndIndicatorImgMapLastPage[slide.template_theme],
+						templateThemeKeyAndIndicatorImgMapLastPage[validTemplate_theme],
 					logoStyleConfig: socialPostLayoutElements?.indicatorCSS || {},
 					isLastPage: isLastPage,
 				})}
@@ -426,12 +494,12 @@ export const templateDispatch = (
 					indicatorNonCoverPage: isLastPage
 						? undefined
 						: templateThemeKeyAndIndicatorImgMapNonCoverPage[
-								slide.template_theme
+								validTemplate_theme
 							],
 					indicatorCoverPage:
-						templateThemeKeyAndIndicatorImgMapCoverPage[slide.template_theme],
+						templateThemeKeyAndIndicatorImgMapCoverPage[validTemplate_theme],
 					indicatorLastPage:
-						templateThemeKeyAndIndicatorImgMapLastPage[slide.template_theme],
+						templateThemeKeyAndIndicatorImgMapLastPage[validTemplate_theme],
 					logoStyleConfig: socialPostLayoutElements?.indicatorCSS || {},
 					isLastPage: isLastPage,
 				})}
@@ -458,6 +526,9 @@ export const templateDispatch = (
 							'user_name',
 							{
 								...(themeElements?.userNameCSS || {}),
+								textAlign: socialPostLayoutElements.userNameCSS
+									? socialPostLayoutElements.userNameCSS.textAlign
+									: 'left',
 							},
 						)
 					) : (
@@ -466,7 +537,12 @@ export const templateDispatch = (
 							className={`rounded-md outline-2 ${!exportToPdfMode} ${
 								index !== 0 ? 'hidden' : ''
 							}`}
-							style={themeElements?.userNameCSS || {}}
+							style={{
+								...(themeElements?.userNameCSS || {}),
+								textAlign: socialPostLayoutElements.userNameCSS
+									? socialPostLayoutElements.userNameCSS.textAlign
+									: 'left',
+							}}
 							contentEditable={false}
 							dangerouslySetInnerHTML={{ __html: currUserName }}
 						/>
@@ -486,43 +562,62 @@ export const templateDispatch = (
 				border_end={slide.theme?.border_end || '#4F361F'}
 				cover_start={slide.theme?.cover_start || '#725947 0%'}
 				cover_end={slide.theme?.cover_end || 'rgba(0, 0, 0, 0.00) 100%'}
-				subtopic={generateContentElement(
-					slide.subtopic,
-					'subtopic',
-					themeElements?.subtopicCSS || {},
-				)}
+				subtopic={generateContentElement(slide.subtopic, 'subtopic', {
+					...(themeElements?.subtopicCSS || {}),
+					textAlign: socialPostLayoutElements.subtopicCSS
+						? socialPostLayoutElements.subtopicCSS.textAlign
+						: 'left',
+				})}
 				keywords={generateContentElement(
 					slide.keywords,
 					'keywords',
-					themeElements?.keywordCSS || {},
+					{
+						...(themeElements?.keywordCSS || {}),
+						textAlign: socialPostLayoutElements.keywordsCSS
+							? socialPostLayoutElements.keywordsCSS.textAlign
+							: 'left',
+					},
 					undefined,
 					false,
 				)}
 				section_title={generateContentElement(
 					slide.section_title,
 					'section_title',
-					themeElements?.sectionTitleCSS || {},
+					{
+						...(themeElements?.sectionTitleCSS || {}),
+						textAlign: socialPostLayoutElements.sectionTitleCSS
+							? socialPostLayoutElements.sectionTitleCSS.textAlign
+							: 'left',
+					},
 				)}
 				original_title={generateContentElement(
 					slide.original_title,
 					'original_title',
-					themeElements?.originalTitleCSS || {},
+					{
+						...(themeElements?.originalTitleCSS || {}),
+						textAlign: socialPostLayoutElements.originalTitleCSS
+							? socialPostLayoutElements.originalTitleCSS.textAlign
+							: 'left',
+					},
 				)}
-				brief={generateContentElement(
-					slide.brief,
-					'brief',
-					themeElements?.briefCSS || {},
-				)}
-				quote={generateContentElement(
-					slide.quote,
-					'quote',
-					themeElements?.quoteCSS || {},
-				)}
-				source={generateContentElement(
-					slide.source,
-					'source',
-					themeElements?.sourceCSS || {},
-				)}
+				brief={generateContentElement(slide.brief, 'brief', {
+					...(themeElements?.briefCSS || {}),
+					textAlign: socialPostLayoutElements.briefCSS
+						? socialPostLayoutElements.briefCSS.textAlign
+						: 'left',
+				})}
+				quote={generateContentElement(ModifiedSlideQuote, 'quote', {
+					...(themeElements?.quoteCSS || {}),
+					textAlign: socialPostLayoutElements.quoteCSS
+						? socialPostLayoutElements.quoteCSS.textAlign
+						: 'left',
+				})}
+				source={generateContentElement(slide.source, 'source', {
+					...(themeElements?.sourceCSS || {}),
+					textAlign: socialPostLayoutElements.sourceCSS
+						? socialPostLayoutElements.sourceCSS.textAlign
+						: 'left',
+				})}
 				content={slide.content.map((content: string, contentIndex: number) => {
 					// console.log('content, contentIndex: ', content, contentIndex);
 					return (
@@ -533,8 +628,18 @@ export const templateDispatch = (
 								content,
 								'content',
 								isLastPage && currLayout === 'last_page_layout'
-									? themeElements?.lastPageContentCSS || {}
-									: themeElements?.contentCSS || {},
+									? {
+											...(themeElements?.lastPageContentCSS || {}),
+											textAlign: socialPostLayoutElements.lastPageContentCSS
+												? socialPostLayoutElements.lastPageContentCSS.textAlign
+												: 'left',
+										}
+									: {
+											...(themeElements?.contentCSS || {}),
+											textAlign: socialPostLayoutElements.contentCSS
+												? socialPostLayoutElements.contentCSS.textAlign
+												: 'left',
+										},
 								contentIndex,
 							)}
 						</div>
@@ -542,17 +647,23 @@ export const templateDispatch = (
 				})}
 				title={<></>}
 				English_title={<></>}
-				topic={generateContentElement(
-					slide.topic,
-					'topic',
-					themeElements?.lastPageTitleCSS || {},
-				)}
+				topic={generateContentElement(slide.topic, 'topic', {
+					...(themeElements?.lastPageTitleCSS || {}),
+					textAlign: socialPostLayoutElements.lastPageTitleCSS
+						? socialPostLayoutElements.lastPageTitleCSS.textAlign
+						: 'left',
+				})}
 				layoutElements={socialPostLayoutElements}
 				themeElements={themeElements}
 				last_page_title={generateContentElement(
 					slide.last_page_title,
 					'last_page_title',
-					themeElements?.lastPageTitleCSS || {},
+					{
+						...(themeElements?.lastPageTitleCSS || {}),
+						textAlign: socialPostLayoutElements.lastPageTitleCSS
+							? socialPostLayoutElements.lastPageTitleCSS.textAlign
+							: 'left',
+					},
 				)}
 				last_page_content={lastPageContentArray.map(
 					(content: string, contentIndex: number) => {
@@ -575,7 +686,12 @@ export const templateDispatch = (
 								{generateContentElement(
 									content,
 									'last_page_content',
-									themeElements?.lastPageContentCSS || {},
+									{
+										...(themeElements?.lastPageContentCSS || {}),
+										textAlign: socialPostLayoutElements.lastPageContentCSS
+											? socialPostLayoutElements.lastPageContentCSS.textAlign
+											: 'left',
+									},
 									contentIndex,
 								)}
 							</div>
@@ -584,9 +700,11 @@ export const templateDispatch = (
 				)}
 				social_post_template_logo={generateSocialPostTemplateLogo({
 					logoWidth: 90,
-					logoHeight: 35,
-					logoBadge: drlambdaLogoBadgeWhiteBG,
+					logoHeight: 30,
+					logoBadge: drLambdaSquareLogoWhiteBGBlackText,
 					logoStyleConfig: socialPostLayoutElements?.logoCSS || {},
+					logoMode: logoMode || 'default',
+					customLogoUrl: customLogoUrl || '',
 				})}
 				page_turn_indicator={generateSocialPostTemplateIndicatorElement({
 					logoWidth: 65,
@@ -594,12 +712,12 @@ export const templateDispatch = (
 					indicatorNonCoverPage: isLastPage
 						? undefined
 						: templateThemeKeyAndIndicatorImgMapNonCoverPage[
-								slide.template_theme
+								validTemplate_theme
 							],
 					indicatorCoverPage:
-						templateThemeKeyAndIndicatorImgMapCoverPage[slide.template_theme],
+						templateThemeKeyAndIndicatorImgMapCoverPage[validTemplate_theme],
 					indicatorLastPage:
-						templateThemeKeyAndIndicatorImgMapLastPage[slide.template_theme],
+						templateThemeKeyAndIndicatorImgMapLastPage[validTemplate_theme],
 					logoStyleConfig: socialPostLayoutElements?.indicatorCSS || {},
 					isLastPage: isLastPage,
 				})}
@@ -610,12 +728,12 @@ export const templateDispatch = (
 					indicatorNonCoverPage: isLastPage
 						? undefined
 						: templateThemeKeyAndIndicatorImgMapNonCoverPage[
-								slide.template_theme
+								validTemplate_theme
 							],
 					indicatorCoverPage:
-						templateThemeKeyAndIndicatorImgMapCoverPage[slide.template_theme],
+						templateThemeKeyAndIndicatorImgMapCoverPage[validTemplate_theme],
 					indicatorLastPage:
-						templateThemeKeyAndIndicatorImgMapLastPage[slide.template_theme],
+						templateThemeKeyAndIndicatorImgMapLastPage[validTemplate_theme],
 					logoStyleConfig: socialPostLayoutElements?.indicatorCSS || {},
 					isLastPage: isLastPage,
 				})}

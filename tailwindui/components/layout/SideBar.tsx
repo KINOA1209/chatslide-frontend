@@ -17,6 +17,10 @@ import { usePathname } from 'next/navigation';
 import { Logo } from '../ui/logo';
 import { getBrand } from '@/utils/getHost';
 
+const navBarFontColorCSSProp: React.CSSProperties = {
+	color: 'var(--colors-text-text-secondary-700, #344054)',
+};
+
 export function publiclyAvailable(path: string): boolean {
 	return (
 		path.includes('/discover') ||
@@ -124,34 +128,53 @@ const SideBar = ({}: SideBarProps) => {
 	return (
 		<header
 			className={`hidden sm:flex sticky left-0 top-0 ${
-				isSidebarOpen ? 'w-[10rem]' : 'w-[3rem]'
-			} h-[100vh] flex flex-col items-center justify-between z-30 bg-gradient-to-b from-Dark to-[#121212] bg-opacity-90 transition duration-300 ease-in-out ${
-				!top ? 'bg-gray-800 backdrop-blur-sm shadow-lg' : ''
+				isSidebarOpen ? 'w-[260px]' : 'w-[3rem]'
+			} h-[100vh] flex flex-col justify-between z-30 transition duration-300 ease-in-out ${
+				!top ? 'backdrop-blur-sm shadow-lg' : ''
 			}`}
+			style={{
+				paddingLeft: 'var(--spacing-xl, 0.5rem)',
+				paddingRight: 'var(--spacing-xl, 0.5rem)',
+				borderRight: '1px solid var(--Colors-Border-border-secondary, #EAECF0)',
+			}}
 		>
 			{/* toggle sidebar button */}
 			<button
-				className={`rounded-full p-1.5 bg-Dark text-white absolute top-5 ${
-					isSidebarOpen ? 'left-[9rem]' : 'left-[2rem]'
+				className={`rounded-full p-1.5 absolute top-5 ${
+					isSidebarOpen ? 'left-[242px]' : 'left-[32px]'
 				} focus:outline-none`}
 				onClick={toggleSidebar}
+				style={{
+					color: 'var(--colors-text-text-secondary-700, #344054)',
+					backgroundColor: '#F2F4F7',
+				}}
 			>
 				{isSidebarOpen ? <FaChevronLeft /> : <FaChevronRight />}
 			</button>
 			{/* navigation to different sections */}
-			<div className='py-4 flex flex-col items-top justify-between'>
+			<div className='py-[2rem] flex flex-col items-top justify-between'>
 				{/* drlambda home */}
 
 				<div
-					className='block flex flex-row items-center gap-2 py-2 text-white px-2 rounded-lg hover:bg-gray-400 cursor-pointer'
+					className={`block flex flex-row items-center gap-2 py-2 ${isSidebarOpen ? 'px-[0.75rem]' : ''} rounded-lg hover:bg-[#F2F4F7] cursor-pointer`}
 					onClick={() => router.push('/landing')}
 					role='menuitem'
+					style={{
+						color: 'var(--colors-text-text-secondary-700, #344054)',
+						fontWeight: 'bold',
+					}}
 				>
-					<Logo color={false} size={'24px'} />
+					<Logo color={true} size={'24px'} />
 					{isSidebarOpen ? getBrand() : '\u200B'}
 				</div>
 
-				<hr className='border-t-1 border-grey-400 mx-2 my-2' />
+				<hr
+					style={{
+						borderTop:
+							'1px solid var(--Colors-Border-border-secondary, #EAECF0)',
+						margin: '0.75rem 0.5rem 0.75rem 0.5rem',
+					}}
+				/>
 				{/* menu items */}
 				{SideBarData.map((item, index) => (
 					<SideBarItem
@@ -174,8 +197,17 @@ const SideBar = ({}: SideBarProps) => {
 				</a> */}
 			</div>
 			{/* credits and user studies */}
-			<div className='flex flex-col items-left justify-between'>
-				<div className='block py-1 text-sm text-white'>
+			<div
+				className={`flex flex-col items-left justify-between ${isSidebarOpen ? 'bg-[#F9FAFB]' : ''}`}
+				style={{
+					marginLeft: 'var(--spacing-xl, 0.5rem)',
+					marginRight: 'var(--spacing-xl, 0.5rem)',
+					borderRadius: 'var(--radius-md, 0.5rem)',
+					// background: 'var(--Colors-Background-bg-secondary, #F9FAFB)',
+					padding: 'var(--spacing-2xl, 1.25rem) var(--spacing-xl, 1rem)',
+				}}
+			>
+				<div className='block text-sm'>
 					{/* {parseInt(credits) < 200 && (
             <a
               href='/account'
@@ -185,98 +217,138 @@ const SideBar = ({}: SideBarProps) => {
               {'Missing credits?'}
             </a>
           )} */}
+					<div
+						className={`flex flex-row ${isSidebarOpen ? '' : 'flex-col'} justify-between items-center`}
+					>
+						<a
+							href='/account'
+							className={
+								`block py-1 text-sm rounded-lg hover:bg-[#F2F4F7]  `
+								// (credits === 'Unlimited'
+								// 	? 'text-green-400'
+								// 	: parseInt(credits) <= 10
+								// 		? 'text-red-400'
+								// 		: 'text-white')
+							}
+							role='menuitem'
+							style={{
+								fontFamily: 'Inter SemiBold',
+								fontWeight: 'bold',
+								color: 'var(--colors-text-text-secondary-700, #344054)',
+								padding: 'var(--spacing-md, 0.5rem) var(--spacing-lg, 0.75rem)',
+							}}
+						>
+							{getCreditsDisplay(credits, isSidebarOpen)}
+						</a>
+						<div className={`w-fit`}>
+							<BlueLabel>{getTierDisplayName(tier, isSidebarOpen)}</BlueLabel>
+						</div>
+					</div>
 					{credits != 'Unlimited' &&
 						tier.includes('LIFETIME') &&
 						isSidebarOpen && (
 							<a
 								href='/account#unlimited-upgrade'
-								className={`block py-1 text-sm text-green-400 mx-auto text-center rounded-lg hover:bg-gray-400`}
+								className={`block py-1 text-sm text-green-400 mx-auto text-center rounded-lg hover:bg-[#F2F4F7] `}
 								role='menuitem'
 							>
 								{'Get unlimited'}
 							</a>
 						)}
-					<a
-						href='/account'
-						className={
-							`block py-1 text-sm text-center rounded-lg hover:bg-gray-400 ` +
-							(credits === 'Unlimited'
-								? 'text-green-400'
-								: parseInt(credits) <= 10
-									? 'text-red-400'
-									: 'text-white')
-						}
-						role='menuitem'
-					>
-						{getCreditsDisplay(credits, isSidebarOpen)}
-					</a>
 
 					{expirationDate && (
 						<a
 							href='/account'
-							className={`block py-1 text-sm text-red-400 mx-auto text-center rounded-lg hover:bg-gray-400`}
+							className={`block py-1 text-sm text-red-400 mx-auto text-center rounded-lg hover:bg-[#F2F4F7] `}
 							role='menuitem'
 						>
 							Expiring {isSidebarOpen && 'on ' + expirationDate}
 						</a>
 					)}
 
-					<div className={`w-fit mx-auto py-1`}>
-						<BlueLabel>{getTierDisplayName(tier, isSidebarOpen)}</BlueLabel>
-					</div>
-
 					{isSidebarOpen && (
 						<>
-							<hr className='border-t-1 border-grey-400 mx-2 my-2' />
-							<div className='text-white px-2'>
+							<div
+								// className=' px-2'
+								style={{
+									color: 'var(--colors-text-text-quaternary-500, #667085)',
+									padding:
+										'var(--spacing-md, 0.5rem) var(--spacing-lg, 0.75rem)',
+								}}
+							>
 								Join our user study and discord to earn free credits
 							</div>
 							<a
 								href='/meet'
 								target='_blank'
-								className='block flew flex-row items-center gap-1 py-1 text-sm text-white px-2 rounded-lg hover:bg-gray-400'
+								className='block flew flex-row items-center gap-1 text-sm  rounded-lg hover:bg-[#F2F4F7] '
 								role='menuitem'
 								id='user-study-1000-credits'
+								style={{
+									color: 'var(--colors-text-text-quaternary-500, #667085)',
+									padding:
+										'var(--spacing-md, 0.5rem) var(--spacing-lg, 0.75rem)',
+								}}
 							>
 								Get 1000 ⭐️credits
 							</a>
 							<a
 								href='https://forms.gle/kncWqBjU4n5xps1w8'
 								target='_blank'
-								className='block flew flex-row items-center gap-1 py-1 text-sm text-white px-2 rounded-lg hover:bg-gray-400'
+								className='block flew flex-row items-center gap-1 text-sm  rounded-lg hover:bg-[#F2F4F7] '
 								role='menuitem'
 								id='user-study-100-credits'
+								style={{
+									color: 'var(--colors-text-text-quaternary-500, #667085)',
+									padding:
+										'var(--spacing-md, 0.5rem) var(--spacing-lg, 0.75rem)',
+								}}
 							>
 								Get 100 ⭐️credits
 							</a>
 							<a
 								href='/discord'
 								target='_blank'
-								className='block flew flex-row items-center gap-1 py-1 text-sm text-white px-2 rounded-lg hover:bg-gray-400'
+								className='block flew flex-row items-center gap-1 text-sm  rounded-lg hover:bg-[#F2F4F7] '
 								role='menuitem'
 								id='discord-50-credits'
+								style={{
+									color: 'var(--colors-text-text-quaternary-500, #667085)',
+									padding:
+										'var(--spacing-md, 0.5rem) var(--spacing-lg, 0.75rem)',
+								}}
 							>
 								Get 50 ⭐️credits
 							</a>
 							<a
 								href='https://blog.drlambda.ai/how-to-make-money-with-your-high-quality-content-using-chatslide-ai/'
 								target='_blank'
-								className='block flew flex-row items-center gap-1 py-1 text-sm text-white px-2 rounded-lg hover:bg-gray-400'
+								className='block flew flex-row items-center gap-1 text-sm  rounded-lg hover:bg-[#F2F4F7] '
 								role='menuitem'
 								id='discord-50-credits'
+								style={{
+									color: 'var(--colors-text-text-quaternary-500, #667085)',
+									padding:
+										'var(--spacing-md, 0.5rem) var(--spacing-lg, 0.75rem)',
+								}}
 							>
 								💸 Monetize
 							</a>
 						</>
 					)}
 
-					<div className='mt-[5rem]'> {/* Spacer for intercom */} </div>
-
 					{/* <div className='relative'>
 						<FeedbackButton timeout={path.includes('/slides') ? 30 * 1000 : 0} />
 					</div> */}
 				</div>
 			</div>
+
+			<hr
+				style={{
+					borderTop: '1px solid var(--Colors-Border-border-secondary, #EAECF0)',
+					margin: '0.75rem 0.5rem 0.75rem 0.5rem',
+				}}
+			/>
 
 			<GoogleAnalytics />
 		</header>
