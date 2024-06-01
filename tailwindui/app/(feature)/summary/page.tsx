@@ -266,7 +266,7 @@ export default function Topic() {
 	);
 	const [searchOnlineScope, setSearchOnlineScope] = useState('');
 
-	const [llmModel, setLlmModel] = useState('GPT-3.5');
+	const [llmModel, setLlmModel] = useState(isPaidUser ? 'GPT-4o' : 'GPT-3.5');
 
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [summarizing, setSummarizing] = useState(false);

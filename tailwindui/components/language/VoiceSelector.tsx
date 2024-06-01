@@ -9,6 +9,7 @@ import AZURE_VOICE_OPTIONS, {
 	isOpenaiVoice,
 	AZURE_MULTILINGUAL_VOICE_OPTIONS,
 	isMultilingualVoice,
+  isELabsVoice,
 } from './voiceData';
 import LANGUAGES, { LANGUAGES_WITH_ACCENTS } from './languageData';
 import {
@@ -34,9 +35,8 @@ export const previewVoice = async (
 	try {
 		let audio_url = `/voice/${voice}.mp3`;
 		console.log('previewing voice:', voice);
-		const isClonedVoice = voice.startsWith('elabs_');
 		
-		if (isClonedVoice && clonedVoices && token) {
+		if (isELabsVoice(voice) && clonedVoices && token) {
 			const clonedVoiceProfile = clonedVoices.find(profile => `elabs_${profile.voice_id}` === voice);
 			if (clonedVoiceProfile && clonedVoiceProfile.preview_url) {
 				try {
@@ -129,7 +129,7 @@ const VoiceSelector: React.FC<{
 		return voiceName;
 	};
 
-	const isClonedVoice = (voice: string) => clonedVoices.some(profile => profile.name === voice);
+	const isClonedVoice = (voice: string) => voice.startsWith('elabs_');
 
 	return (
 		<>
@@ -241,10 +241,9 @@ const VoiceSelector: React.FC<{
 					may change in the future.
 				</Explanation>
 			)}
-			{isClonedVoice(selectedVoice) && (
+			{isELabsVoice(selectedVoice) && (
 				<Explanation>
-					🎧 This voice is a clone of your voice. It is Hi-Fi only. It will cost
-					100⭐️ per video.
+					🔄 This voice is a clone of your voice. It will cost 100⭐️ per video.
 				</Explanation>
 			)}
 			{selectedLanguage !== originalLanguageCode &&

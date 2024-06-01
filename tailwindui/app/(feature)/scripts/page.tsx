@@ -37,7 +37,7 @@ import { FiPlay } from 'react-icons/fi';
 import Modal from '@/components/ui/Modal';
 import RangeSlider from '@/components/ui/RangeSlider';
 import { WrappableRow } from '@/components/layout/WrappableRow';
-import { isOpenaiVoice } from '@/components/language/voiceData';
+import { isELabsVoice, isOpenaiVoice } from '@/components/language/voiceData';
 import Toggle from '@/components/button/Toggle';
 import { AIAssistantChatWindow } from '@/components/chatbot/AIAssistant';
 import {
@@ -75,10 +75,10 @@ export default function WorkflowStep5() {
 
 	useEffect(() => {
 		if (avatar) setCreditCost(400);
-		else if (voiceIsHD || isOpenaiVoice(voice)) {
+		else if (voiceIsHD || isOpenaiVoice(voice) || isELabsVoice(voice)) {
 			setCreditCost(100);
 		} else setCreditCost(20);
-	}, [avatar, voiceIsHD]);
+	}, [avatar, voiceIsHD, voice]);
 
 	const CreditCost = () => {
 		function getCreditCostPerPageAndReason() {
@@ -287,19 +287,24 @@ export default function WorkflowStep5() {
 					<Instruction>
 						Select the voice you want to use for your video.
 					</Instruction>
-          <Instruction>
-            Voice cloning is now available for ULTIMATE users. 
-            <a href='/studio' className='text-blue-600'>Clone it here </a> and use it in your videos.
-          </Instruction>
-						<ClonedVoicesProvider>
-							<VoiceSelector
-								selectedVoice={voice}
-								setSelectedVoice={setVoice}
-								style={style}
-								setStyle={setStyle}
-								isHD={voiceIsHD}
-							/>
-						</ClonedVoicesProvider>
+					<Instruction>
+						<span>
+							Voice cloning is now available for ULTIMATE users.{' '}
+							<a href='/studio' className='text-blue-600'>
+								Clone it here{' '}
+							</a>{' '}
+							and use it in your videos.
+						</span>
+					</Instruction>
+					<ClonedVoicesProvider>
+						<VoiceSelector
+							selectedVoice={voice}
+							setSelectedVoice={setVoice}
+							style={style}
+							setStyle={setStyle}
+							isHD={voiceIsHD}
+						/>
+					</ClonedVoicesProvider>
 				</Card>
 
 				<Card>

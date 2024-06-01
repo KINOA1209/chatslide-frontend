@@ -444,7 +444,7 @@ export default function DesignPage() {
 				nextIsPaidFeature={false}
 				nextText={isSubmitting ? 'Designing Slides' : 'Design Slides'}
 				handleClickingGeneration={handleGenerationStatusModal}
-				lastStep={project?.presentation_slides ? false : true}
+				showLoadingButton={project?.presentation_slides ? false : true}
 			/>
 
 			<PaywallModal

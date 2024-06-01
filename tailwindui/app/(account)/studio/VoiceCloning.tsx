@@ -25,6 +25,7 @@ import { WrappableRow } from '@/components/layout/WrappableRow';
 import { FaClone, FaTrash } from 'react-icons/fa';
 import PaywallModal from '@/components/paywallModal';
 import useHydrated from '@/hooks/use-hydrated';
+import { FiPlay } from 'react-icons/fi';
 
 const VoiceCloning = () => {
 	const [selectedLanguageCode, setSelectedLanguageCode] =
@@ -307,13 +308,14 @@ const VoiceCloning = () => {
 					📂 Existing Voice Profiles <BetaLabel />{' '}
 				</BigTitle>
 
+				<Instruction>
+					Here is a list of all your voice profiles. You can select one voice
+					profile when you are generating video.
+				</Instruction>
+
 				{voiceProfiles.length > 0 && (
-					<>
-						<Instruction>
-							{' '}
-							Select a voice profile to view details and listen to the training
-							file and preview.{' '}
-						</Instruction>
+					<WrappableRow type='grid' cols={2}>
+						<Instruction> Select a voice profile:</Instruction>
 						<WrappableRow type='flex'>
 							<DropDown
 								onChange={handleProfileChange}
@@ -333,11 +335,7 @@ const VoiceCloning = () => {
 								Delete
 							</InversedBigBlueButton>
 						</WrappableRow>
-
-            <Instruction>
-              You can select this voice profile when you are generating video. 
-            </Instruction>
-					</>
+					</WrappableRow>
 				)}
 				{selectedProfile ? (
 					<>
@@ -356,7 +354,7 @@ const VoiceCloning = () => {
 								type='audio/mp3'
 							/>
 						</audio> */}
-
+						<Instruction>Add some example text to test the voice:</Instruction>
 						<NewInputBox
 							placeholder='Enter text to preview voice'
 							value={customerInput}
@@ -366,17 +364,15 @@ const VoiceCloning = () => {
 						/>
 						<BigBlueButton onClick={handleGenerateVoice} disabled={loading}>
 							{loading ? (
-								<>
-									<i className='fas fa-spin'></i>
-								</>
+								<>Generating...</>
 							) : (
 								<>
-									<i className='fas fa-play'></i> Generate
+									<FiPlay /> Test
 								</>
 							)}
 						</BigBlueButton>
 						{customRecording && (
-							<audio controls>
+							<audio controls className='mx-auto h-[36px]'>
 								<source src={customRecording} type='audio/mp3' />
 							</audio>
 						)}

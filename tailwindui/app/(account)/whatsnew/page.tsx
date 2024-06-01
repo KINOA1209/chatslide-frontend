@@ -16,13 +16,6 @@ export default function Studio() {
 				<Card>
 					<BigTitle>Coming Next...</BigTitle>
 					<Instruction>
-						<div>
-							<b>🎤 Voice cloning: </b>
-							Developments are mostly done, waiting for regulatory approval.
-							Expected to be released around May 27.
-						</div>
-					</Instruction>
-					<Instruction>
 						🎰 Directly add scripts, voiceover, and avatar to PPTX
 					</Instruction>
 
@@ -35,12 +28,36 @@ export default function Studio() {
 				</Card>
 
 				<Card>
+					<BigTitle>May 30</BigTitle>
+					<Instruction>
+						<div>
+							<b>🧠 GPT-4o as Default: </b> For all paying users, GPT-4o is the
+							default LLM. Enjoy!
+						</div>
+					</Instruction>
+
+					<Instruction>
+						<div>
+							<b>🖼️ Download Slides Thumbnail: </b> You will also be able to
+							download the slides thumbnail in the slides export pop up.
+						</div>
+					</Instruction>
+
+					<Instruction>
+						<div>
+							<b>🌐 Read Webpages Better: </b> Now our system reads webpages better, more contents are supported.
+						</div>
+					</Instruction>
+				</Card>
+
+				<Card>
 					<BigTitle>May 27</BigTitle>
 					<Instruction>
 						<div>
 							<b>🎤 Voice Cloning (Beta): </b> Voice cloning is available for
-							ULTIMATE users to use. You can use this to clone your voice and then create video with the cloned voice. 
-              PRO users will have access to this in one week. 
+							ULTIMATE users to use. You can use this to clone your voice and
+							then create video with the cloned voice. PRO users will have
+							access to this in one week.
 						</div>
 					</Instruction>
 
@@ -70,11 +87,12 @@ export default function Studio() {
 						</div>
 					</Instruction>
 
-          <Instruction>
-            <div>
-              <b>🪟 Apply Layout to All Pages: </b> You can select a favorite layout for all of your non-cover slide pages. 
-            </div>
-          </Instruction>
+					<Instruction>
+						<div>
+							<b>🪟 Apply Layout to All Pages: </b> You can select a favorite
+							layout for all of your non-cover slide pages.
+						</div>
+					</Instruction>
 				</Card>
 
 				<Card>
