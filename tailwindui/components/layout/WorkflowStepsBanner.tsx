@@ -63,7 +63,7 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 	}, [isSubmitting]);
 
 	return (
-		<section className='sticky top-0 z-10 flex flex-col w-[100vw]'>
+		<section className='sticky top-0 z-10 flex flex-col'>
 			<div className='relative w-full h-[80px] flex flex-row items-center bg-[#5168F6] gap-x-2 lg:gap-x-4 px-2 lg:px-4 xl:px-6'>
 				{currentIndex === 0 ? (
 					<BackButton href='/scenario-choice' text='Scenario' />

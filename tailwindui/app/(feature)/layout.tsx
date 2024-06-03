@@ -23,12 +23,12 @@ export default function WorkflowLayout({
 					<SideBar />
 				</div>
 
-				<div className='flex flex-col w-full h-full sm:grow overflow-x-hidden '>
+				<div className='flex flex-col h-full sm:grow overflow-x-hidden '>
 					<div className='flex sm:hidden'>
 						{/* only show Header on small screen */}
 						<Header loginRequired={true} isLanding={false} isAuth={false} />
 					</div>
-					<main className='featurePageMainContent w-full flex grow flex-col overflow-y-scroll'>
+					<main className='featurePageMainContent flex grow flex-col overflow-y-scroll'>
 						{/* Content */}
 						{children}
 					</main>

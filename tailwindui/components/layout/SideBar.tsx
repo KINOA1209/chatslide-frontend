@@ -89,7 +89,7 @@ const SideBar = ({}: SideBarProps) => {
 		if (!isSidebarOpen && level === 'ULTIMATE') {
 			return 'ULT';
 		}
-		if (isSidebarOpen) return level + ' Tier';
+		if (isSidebarOpen) return level;
 		return level;
 	}
 
@@ -128,20 +128,20 @@ const SideBar = ({}: SideBarProps) => {
 	return (
 		<header
 			className={`hidden sm:flex sticky left-0 top-0 ${
-				isSidebarOpen ? 'w-[260px]' : 'w-[3rem]'
+				isSidebarOpen ? 'w-[220px]' : 'w-[3rem]'
 			} h-[100vh] flex flex-col justify-between z-30 transition duration-300 ease-in-out ${
 				!top ? 'backdrop-blur-sm shadow-lg' : ''
 			}`}
 			style={{
-				paddingLeft: 'var(--spacing-xl, 0.5rem)',
-				paddingRight: 'var(--spacing-xl, 0.5rem)',
+				paddingLeft: 'var(--spacing-xl, 0.1rem)',
+				paddingRight: 'var(--spacing-xl, 0.1rem)',
 				borderRight: '1px solid var(--Colors-Border-border-secondary, #EAECF0)',
 			}}
 		>
 			{/* toggle sidebar button */}
 			<button
 				className={`rounded-full p-1.5 absolute top-5 ${
-					isSidebarOpen ? 'left-[242px]' : 'left-[32px]'
+					isSidebarOpen ? 'left-[202px]' : 'left-[32px]'
 				} focus:outline-none`}
 				onClick={toggleSidebar}
 				style={{
@@ -204,7 +204,7 @@ const SideBar = ({}: SideBarProps) => {
 					marginRight: 'var(--spacing-xl, 0.5rem)',
 					borderRadius: 'var(--radius-md, 0.5rem)',
 					// background: 'var(--Colors-Background-bg-secondary, #F9FAFB)',
-					padding: 'var(--spacing-2xl, 1.25rem) var(--spacing-xl, 1rem)',
+					padding: 'var(--spacing-2xl, 0.5rem) var(--spacing-xl, 0.5max-h-6 text-center text-Blue text-xs font-bold leading-snug tracking-wide bg-Sky border border-1 border-Blue rounded cursor-auto px-1 py-0.5rem)',
 				}}
 			>
 				<div className='block text-sm'>
@@ -218,7 +218,7 @@ const SideBar = ({}: SideBarProps) => {
             </a>
           )} */}
 					<div
-						className={`flex flex-row ${isSidebarOpen ? '' : 'flex-col'} justify-between items-center`}
+						className={`flex flex-row ${isSidebarOpen ? '' : 'flex-col'} justify-between items-center mx-1`}
 					>
 						<a
 							href='/account'
