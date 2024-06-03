@@ -718,7 +718,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 							<div className='h-8 w-0.5 bg-gray-200'></div>
 						</>
 					)}
-					{!isViewing && socialPostsIndex != 0 && (
+					{!isViewing && (
 						<>
 							<AddSlideButton
 								addPage={handleAddPage}
@@ -728,10 +728,12 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 								duplicatePage={handleDuplicatePage}
 								currentSlideIndex={socialPostsIndex}
 							/>
-							<DeleteSlideButton
-								deletePage={handleDeletePage}
-								currentSlideIndex={socialPostsIndex}
-							/>
+							{socialPostsIndex != 0 && (
+								<DeleteSlideButton
+									deletePage={handleDeletePage}
+									currentSlideIndex={socialPostsIndex}
+								/>
+							)}
 
 							<button
 							// onClick={() => {
