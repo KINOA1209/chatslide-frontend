@@ -129,7 +129,7 @@ const VoiceCloning = () => {
 			toast.error('Please enter a name for the voice profile.');
 			return;
 		}
-		if (!tier.includes('ULTIMATE')) {
+		if (!tier.includes('ULTIMATE') && !tier.includes('PRO')) {
 			setShowPaywallModal(true);
 			return;
 		}
