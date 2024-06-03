@@ -75,7 +75,8 @@ export default function WorkflowStep5() {
 
 	useEffect(() => {
 		if (avatar) setCreditCost(400);
-		else if (voiceIsHD || isOpenaiVoice(voice) || isELabsVoice(voice)) {
+    else if (isELabsVoice(voice)) setCreditCost(400);
+		else if (voiceIsHD || isOpenaiVoice(voice)) {
 			setCreditCost(100);
 		} else setCreditCost(20);
 	}, [avatar, voiceIsHD, voice]);

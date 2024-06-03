@@ -243,7 +243,7 @@ const VoiceSelector: React.FC<{
 			)}
 			{isELabsVoice(selectedVoice) && (
 				<Explanation>
-					🔄 This voice is a clone of your voice. It will cost 100⭐️ per video.
+					🔄 This voice is a clone of your voice. It will cost 400⭐️ per video.
 				</Explanation>
 			)}
 			{selectedLanguage !== originalLanguageCode &&
