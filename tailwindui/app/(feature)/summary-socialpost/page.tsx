@@ -150,12 +150,14 @@ export default function Topic_SocialPost() {
 			try {
 				console.log('resources', selectedResources);
 				console.log('summarizing resources');
+				const team_id = sessionStorage.getItem('team') || '';
 				const response = await ResourceService.summarizeResource(
 					project_id,
 					selectedResources.map((r: Resource) => r.id),
 					topic,
 					audience,
 					language,
+					team_id,
 					token,
 					undefined, // search_online
 					undefined, // scenario_type for slides
