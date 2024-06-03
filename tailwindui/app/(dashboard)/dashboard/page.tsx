@@ -14,7 +14,7 @@ import { groupProjectsByFolder } from '@/components/dashboard/folder_helper';
 import FolderList from '@/components/dashboard/FolderList';
 import ProjectSection from '@/components/dashboard/ProjectSection';
 import DashboardHeader from '@/components/dashboard/DashboardHeader';
-import CreateFolderModal from '@/components/dashboard/CreateFolderModal';
+import CreateFolderModal from '@/components/dashboard/createFolderModal';
 import Project from '@/models/Project';
 import Folder from '@/models/Folder';
 import UserService from '@/services/UserService';
