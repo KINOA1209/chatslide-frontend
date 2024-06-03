@@ -36,7 +36,7 @@ export const SideBarData: SideBarItem[] = [
 		path: '/studio',
 	},
 	{	
-		title: 'Team',
+		title: 'Team (Beta)',
 		icon: <IoPeopleOutline />,
 		path: '/dashboard?mode=team',
 	},
