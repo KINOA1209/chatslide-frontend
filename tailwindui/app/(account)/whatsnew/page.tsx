@@ -28,6 +28,45 @@ export default function Studio() {
 				</Card>
 
 				<Card>
+					<BigTitle>June 4</BigTitle>
+
+					<Instruction>
+						<div>
+							<b>👔 Teams (Beta): </b> For ULTIMATE users, now you can purchase new seats for your team. One seat is $49 for two weeks starting from now.
+						</div>
+					</Instruction>
+
+					<Instruction>
+						<div>
+							<b>😀 Icon Library: </b> You can search for icons in the image
+							selection, in addition to images, gifs, and illustrations.
+						</div>
+					</Instruction>
+
+					<Instruction>
+						<div>
+							<b>🏷️ Rename Your Project: </b> You can rename a created or cloned
+							project for better management.
+						</div>
+					</Instruction>
+
+					<Instruction>
+						<div>
+							<b>📱 Social Post Templates: </b> We have new templates for Social
+							Posts now, try it out!
+						</div>
+					</Instruction>
+
+					<Instruction>
+						<div>
+							<b>🎙️ Voice Cloning for PRO users: </b> Voice cloning is
+							accessible to all PRO and ULTIMATE users. We are still improving
+							the quality for non-English ones.
+						</div>
+					</Instruction>
+				</Card>
+
+				<Card>
 					<BigTitle>May 30</BigTitle>
 					<Instruction>
 						<div>
@@ -45,7 +84,8 @@ export default function Studio() {
 
 					<Instruction>
 						<div>
-							<b>🌐 Read Webpages Better: </b> Now our system reads webpages better, more contents are supported.
+							<b>🌐 Read Webpages Better: </b> Now our system reads webpages
+							better, more contents are supported.
 						</div>
 					</Instruction>
 				</Card>
