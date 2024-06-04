@@ -26,7 +26,7 @@ const Team = () => {
 		try {
 			const response = await TeamService.createTeam(teamName, token);
 			console.log(`Team created: ${response.team_id}`);
-			window.location.href = '/team';
+			window.location.href = '/dashboard?mode=team';
 		} catch (error: any) {
 			console.error(error.message);
 		}
@@ -36,7 +36,7 @@ const Team = () => {
 		try {
 			const response = await TeamService.joinTeam(inviteCode, token);
 			console.log(`Joined team: ${response}`);
-			window.location.href = '/team';
+			window.location.href = '/dashboard?mode=team';
 		} catch (error: any) {
 			console.error(error.message);
 		}
