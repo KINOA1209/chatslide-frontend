@@ -293,7 +293,7 @@ export default function WorkflowStep5() {
 							Voice cloning is now available for ULTIMATE users. Click button below to clone and use your voice.
 						</span>
 					</Instruction>
-					<InversedBigBlueButton onClick={() => window.location.href = '/studio'} labelText="ULT">
+					<InversedBigBlueButton onClick={() => window.location.href = '/studio'}>
 						Clone your voice
 					</InversedBigBlueButton>
 					<ClonedVoicesProvider>
