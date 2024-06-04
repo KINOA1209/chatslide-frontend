@@ -32,7 +32,7 @@ export default function Studio() {
 
 					<Instruction>
 						<div>
-							<b>👔 Teams (Beta): </b> For ULTIMATE users, now you can purchase new seats for your team. One seat is $49 for two weeks starting from now.
+							<b>👔 Teams (Beta): </b> For ULTIMATE users, now you can purchase new seats for your team. One seat is $99 for two weeks starting from now.
 						</div>
 					</Instruction>
 
