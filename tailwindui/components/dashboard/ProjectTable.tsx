@@ -29,6 +29,7 @@ import { FaEye } from 'react-icons/fa';
 import { MoveToFolderButton } from '@/components/dashboard/MoveToFolderButton';
 import Folder from '@/models/Folder';
 import { Menu } from '@/components/button/Menu';
+import { RenameProjectButton } from './renameProjectButton';
 // import ExportToPdfButton from '@/components/slides/ExportButton';
 const ExportToPdfButton = dynamic(
 	() => import('@/components/slides/ExportButton'), // Path to your ExportToPdfButton component
@@ -119,6 +120,7 @@ const ProjectItem: React.FC<{
 	//const isPriority = project.post_type !== 'presentation';
 	const router = useRouter();
 	// const exportSlidesRef = useRef<HTMLDivElement>(null);
+	const [showRenameProjectModal, setShowRenameProjectModal] = useState(false)
 
 	return (
 		<React.Fragment key={project.id}>
@@ -285,6 +287,32 @@ const ProjectItem: React.FC<{
 								Open
 							</Link>
 						</button>
+
+						{project.id && setCurrentProjects && folders && setFolders && (
+							<button
+								className='block px-[10px] py-[9px] text-sm text-[#182230] rounded-md  hover:bg-zinc-100 w-full text-left'
+								onClick={() => {
+									setShowRenameProjectModal(true)
+								}}
+								style={{
+									display: 'flex',
+									flexDirection: 'row',
+									alignItems: 'center',
+									justifyContent: 'flex-start',
+									gap: 'var(--spacing-lg, 12px)',
+								}}
+							>
+								<RenameProjectButton
+									project={project}
+									setCurrentProjects={setCurrentProjects}
+									folders={folders}
+									setFolders={setFolders}
+									showRenameProjectModal={showRenameProjectModal}
+									setShowRenameProjectModal={setShowRenameProjectModal}
+								/>
+								Rename Project
+							</button>
+						)}
 
 						{!isDiscover && setCurrentProjects && (
 							<button
