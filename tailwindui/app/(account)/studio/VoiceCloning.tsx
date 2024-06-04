@@ -10,6 +10,7 @@ import { NewInputBox } from '@/components/ui/InputBox';
 import {
 	BigTitle,
 	ErrorMessage,
+	Explanation,
 	Instruction,
 	WarningMessage,
 } from '@/components/ui/Text';
@@ -224,6 +225,12 @@ const VoiceCloning = () => {
 				<BigTitle>
 					🎙️ Create New Voice Profile <BetaLabel />{' '}
 				</BigTitle>
+        <Explanation>
+          Note: voice cloning works best for 🇺🇸 American English. 
+          It works for 🇬🇧 British English and 🇪🇺 European languages as well, but the quality may vary.
+          For 🌏 non-western languages e.g. Arabic, Chinese, etc, the quality may not be as good.
+          We are improving the performance of voice cloning over time. 
+        </Explanation>
 				{!tier.includes('ULTIMATE') && (
 					<WarningMessage>
 						⚠️ This feature is in Beta version. It is only available for
