@@ -3,6 +3,7 @@ declare global {
 		Intercom: any;
 		rewardful: any;
 		Rewardful: any;
+    clarity: any;
 	}
 }
 
