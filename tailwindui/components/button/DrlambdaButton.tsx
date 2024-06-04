@@ -11,12 +11,8 @@ import React, {
 } from 'react';
 import PaywallModal from '../paywallModal';
 import { useRouter } from 'next/navigation';
-import { GrayLabel, PlusLabel } from '../ui/GrayLabel';
+import { BlueLabel, GrayLabel, PlusLabel } from '../ui/GrayLabel';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-import UserService from '@/services/UserService';
-import { toast } from 'react-toastify';
-import { ToastContainer } from 'react-toastify';
-import { useUser } from '@/hooks/use-user';
 import DesignSystemButton from '../ui/design_systems/ButtonsOrdinary';
 
 type DrlambdaButtonProps = {
@@ -328,14 +324,15 @@ export const DropDown: React.FC<DrlambdaDropDownProps> = ({
 	);
 };
 
-export const InversedBigBlueButton: React.FC<DrlambdaButtonProps> = ({
+export const InversedBigBlueButton: React.FC<DrlambdaButtonProps & { labelText?: string }> = ({
 	children,
 	onClick,
 	isSubmitting = false,
-  disabled = false,
+	disabled = false,
 	isPaidUser,
 	isPaidFeature = false,
 	width = '12rem',
+	labelText,
 }) => {
 	return (
 		<DesignSystemButton
@@ -344,9 +341,16 @@ export const InversedBigBlueButton: React.FC<DrlambdaButtonProps> = ({
 			hierarchy='secondary'
 			isSubmitting={isSubmitting}
 			width={width}
-      buttonStatus={!disabled ? 'enabled' : 'disabled'}
+			buttonStatus={!disabled ? 'enabled' : 'disabled'}
 		>
-			{children}
+			<span style={{ display: 'flex', alignItems: 'center' }}>
+				{children}
+				{labelText &&(
+					<span style={{ marginLeft: '8px' }}>
+						<BlueLabel>{labelText}</BlueLabel>
+					</span>
+				)}
+			</span>
 		</DesignSystemButton>
 	);
 };
