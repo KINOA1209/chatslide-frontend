@@ -50,6 +50,7 @@ const VoiceCloning = () => {
 	const [customRecording, setCustomRecording] = useState<string>('');
 	const [customerInput, setCustomerInput] = useState<string>('');
 	const [loading, setLoading] = useState(false);
+  const [generating, setGenerating] = useState(false);
 	const [cloning, setCloning] = useState(false);
 	const [showPaywallModal, setShowPaywallModal] = useState(false);
 
@@ -160,7 +161,7 @@ const VoiceCloning = () => {
 	};
 
 	const handleGenerateVoice = async () => {
-		setLoading(true);
+		setGenerating(true);
 		const requestData = {
 			voice_id: selectedProfile?.voice_id || '',
 			text: customerInput,
@@ -176,7 +177,7 @@ const VoiceCloning = () => {
 		} catch (error: any) {
 			console.error('Error generating voice:', error.message);
 		} finally {
-			setLoading(false);
+			setGenerating(false);
 		}
 	};
 
@@ -225,12 +226,13 @@ const VoiceCloning = () => {
 				<BigTitle>
 					🎙️ Create New Voice Profile <BetaLabel />{' '}
 				</BigTitle>
-        <Explanation>
-          Note: voice cloning works best for 🇺🇸 American English. 
-          It works for 🇬🇧 British English and 🇪🇺 European languages as well, but the quality may vary.
-          For 🌏 non-western languages e.g. Arabic, Chinese, etc, the quality may not be as good.
-          We are improving the performance of voice cloning over time. 
-        </Explanation>
+				<Explanation>
+					Note: voice cloning works best for 🇺🇸 American English. It works for
+					🇬🇧 British English and 🇪🇺 European languages as well, but the quality
+					may vary. For 🌏 non-western languages e.g. Arabic, Chinese, etc, the
+					quality may not be as good. We are improving the performance of voice
+					cloning over time.
+				</Explanation>
 				{!tier.includes('ULTIMATE') && (
 					<WarningMessage>
 						⚠️ This feature is in Beta version. It is only available for
@@ -369,8 +371,8 @@ const VoiceCloning = () => {
 							onChange={setCustomerInput}
 							textarea
 						/>
-						<BigBlueButton onClick={handleGenerateVoice} disabled={loading}>
-							{loading ? (
+						<BigBlueButton onClick={handleGenerateVoice} disabled={generating}>
+							{generating ? (
 								<>Generating...</>
 							) : (
 								<>
