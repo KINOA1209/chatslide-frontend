@@ -116,9 +116,9 @@ export const useUser = () => {
 
 				mixpanel.identify(uid);
 
-        window.clarity('set', 'usernameInDB', usernameInDB);
-        window.clarity('set', 'userEmail', emailInDb);
-        window.clarity('set', 'tier', subscription_tier);
+        // window.clarity('set', 'usernameInDB', usernameInDB);
+        // window.clarity('set', 'userEmail', emailInDb);
+        // window.clarity('set', 'tier', subscription_tier);
 
 				setCredits(credits);
 				setTier(subscription_tier);
