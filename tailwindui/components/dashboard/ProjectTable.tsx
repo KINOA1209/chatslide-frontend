@@ -310,7 +310,7 @@ const ProjectItem: React.FC<{
 									showRenameProjectModal={showRenameProjectModal}
 									setShowRenameProjectModal={setShowRenameProjectModal}
 								/>
-								Rename Project
+								Rename
 							</button>
 						)}
 

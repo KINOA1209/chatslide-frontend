@@ -76,7 +76,7 @@ export const RenameProjectButton: React.FC<{
             <Modal
                 showModal={showRenameProjectModal}
                 setShowModal={setShowRenameProjectModal}
-                title='Rename Project Name'
+                title='Rename Project'
                 inputValue={ProjectRenameInput}
                 setInputValue={setProjectRenameInput}
                 hasInputArea={true}
