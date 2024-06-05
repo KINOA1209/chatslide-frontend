@@ -65,7 +65,7 @@ const BrandingSelector: React.FC<{
 	const { isPaidUser } = useUser();
 	const [showPaywall, setShowPaywall] = useState(false);
 	const [logoMode, setLogoMode] = useState<'no' | 'default' | 'custom'>(
-		isPaidUser ? 'no' : 'default',
+		isPaidUser ? selectedLogo?.length>0 ? 'custom' : 'no' : 'default',
 	);
 
 	useEffect(() => {
@@ -75,12 +75,21 @@ const BrandingSelector: React.FC<{
 			setSelectedLogo([]);
 			setShowLogo(false);
 		} else if (logoMode === 'custom') {
-			setShowLogo(true);
+      if(selectedLogo?.length > 0)
+			  setShowLogo(true);
 		} else if (logoMode === 'default') {
 			setSelectedLogo([]);
 			setShowLogo(true);
 		}
 	}, [logoMode]);
+
+  	useEffect(() => {
+			console.log('logoMode', logoMode);
+
+			if (selectedLogo?.length > 0) {
+        setShowLogo(true);
+      }
+		}, [selectedLogo]);
 
 	return (
 		<div>

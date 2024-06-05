@@ -191,13 +191,13 @@ const FileTableHeader = ({
 						{sortOrder === 'desc' ? (
 							<MdArrowDownward
 								style={{
-									color: 'var(--colors-text-text-quaternary-500, #667085);',
+									color: 'var(--colors-text-text-quaternary-500, #667085)',
 								}}
 							/>
 						) : (
 							<MdArrowUpward
 								style={{
-									color: 'var(--colors-text-text-quaternary-500, #667085);',
+									color: 'var(--colors-text-text-quaternary-500, #667085)',
 								}}
 							/>
 						)}
@@ -226,13 +226,13 @@ const FileTableHeader = ({
 						{sortOrder === 'desc' ? (
 							<MdArrowDownward
 								style={{
-									color: 'var(--colors-text-text-quaternary-500, #667085);',
+									color: 'var(--colors-text-text-quaternary-500, #667085)',
 								}}
 							/>
 						) : (
 							<MdArrowUpward
 								style={{
-									color: 'var(--colors-text-text-quaternary-500, #667085);',
+									color: 'var(--colors-text-text-quaternary-500, #667085)',
 								}}
 							/>
 						)}
