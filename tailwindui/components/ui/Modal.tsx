@@ -159,7 +159,7 @@ const Modal: React.FC<ModalProps> = ({
 								className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800 bg-gray-100'
 								onChange={(e) => setInputValue(e.target.value)}
 								value={inputValue}
-                maxLength={maxInputLength}
+								maxLength={maxInputLength}
 							/>
 						</InputBox>
 					)}
@@ -169,12 +169,14 @@ const Modal: React.FC<ModalProps> = ({
 					{onConfirm && (
 						<div className='gap-x-2 flex flex-row justify-around'>
 							{canClose && (
-								<InversedBigBlueButton
-									id='modal-cancel'
-									onClick={handleCloseModal}
-								>
-									Cancel
-								</InversedBigBlueButton>
+								<div className='mx-auto'>
+									<InversedBigBlueButton
+										id='modal-cancel'
+										onClick={handleCloseModal}
+									>
+										Cancel
+									</InversedBigBlueButton>
+								</div>
 							)}
 							<BigBlueButton
 								id='modal-confirm'
