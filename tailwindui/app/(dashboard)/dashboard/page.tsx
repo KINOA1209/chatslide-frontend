@@ -65,12 +65,10 @@ export default function Dashboard() {
 
   const fetchProjects = async () => {
     try {
-      console.log(currentTeam);
+      const currentTeam = localStorage.getItem('currentTeam') || '';
       const response = isTeamMode && !NoTeam
         ? await TeamService.getTeamProjects(currentTeam, token)
         : await ProjectService.getProjects(token, false, false, true);
-
-      console.log('isTeamMode', isTeamMode, 'project', response);
       if (Array.isArray(response)) {
         setProjects(response);
       } else {
@@ -108,8 +106,7 @@ export default function Dashboard() {
       });
       setFolders(updatedFolders);
       if (isTeamMode) {
-        console.log('team', currentTeam);
-        TeamService.moveProjectToFolder(currentTeam, draggingProjectId, folder.folderName, token);
+        TeamService.moveProjectToFolder(currentTeam, draggingProjectId, folder.folderId, token);
       } else {
         ProjectService.moveToFolder(token, draggingProjectId, folder.folderName);
       }
@@ -135,6 +132,7 @@ export default function Dashboard() {
         router.push('/team');
       } else {
         setCurrentTeam(response.all_teams[0]);
+        localStorage.setItem('currentTeam', response.all_teams[0]);
       }
     }
     fetchProjects();
