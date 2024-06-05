@@ -146,17 +146,19 @@ const LayoutChanger: React.FC<LayoutProps> = ({
 					})}
 
 					{/* apply to all checkbox */}
-					<div className='col-span-3'>
-						<label className='flex items-center space-x-2'>
-							<input
-								type='checkbox'
-								className='form-checkbox text-blue-500'
-								checked={applyToAll}
-								onChange={() => setApplyToAll(!applyToAll)}
-							/>
-							<span>Apply to all non-cover slides</span>
-						</label>
-					</div>
+					{currentSlideIndex !== 0 && (
+						<div className='col-span-3'>
+							<label className='flex items-center space-x-2'>
+								<input
+									type='checkbox'
+									className='form-checkbox text-blue-500'
+									checked={applyToAll}
+									onChange={() => setApplyToAll(!applyToAll)}
+								/>
+								<span>Apply to all non-cover pages</span>
+							</label>
+						</div>
+					)}
 				</div>
 			</Modal>
 		</>

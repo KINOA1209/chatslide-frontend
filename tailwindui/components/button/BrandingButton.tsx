@@ -14,6 +14,7 @@ import PaywallModal from '../paywallModal';
 import { Instruction } from '../ui/Text';
 import { PlusLabel } from '../ui/GrayLabel';
 import { LogoPosition } from '@/models/Slide';
+import Toggle from './Toggle';
 
 export const BrandingButton: React.FC<{}> = () => {
 	const { project, updateProject } = useProject();
@@ -32,6 +33,9 @@ export const BrandingButton: React.FC<{}> = () => {
 	const [showModal, setShowModal] = useState(false);
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
 
+	const { slideIndex } = useSlides();
+	const [applyToAll, setApplyToAll] = useState(true);
+
 	useEffect(() => {
 		document.addEventListener('change_logo', (e) => {
 			setShowModal(true);
@@ -45,7 +49,7 @@ export const BrandingButton: React.FC<{}> = () => {
 	}, []);
 
 	const handleConfirm = () => {
-		updateTemplateLogoPosition(selectedTemplateLogoPosition);
+		updateTemplateLogoPosition(selectedTemplateLogoPosition, applyToAll);
 		setShowModal(false);
 	};
 
@@ -61,14 +65,22 @@ export const BrandingButton: React.FC<{}> = () => {
 				description='Select customized logo and background for your slides.'
 				onConfirm={handleConfirm}
 			>
+				<Toggle
+					isLeft={applyToAll}
+					setIsLeft={setApplyToAll}
+					leftText='All Pages'
+					rightText='This Pages'
+				/>
+
 				<BrandingSelector
 					showLogo={isShowingLogo}
 					setShowLogo={(e) => {
 						if (e) {
-							showLogo();
+							showLogo(applyToAll);
 						} else {
-							hideLogo();
-							updateProject('selected_logo', []);
+							hideLogo(applyToAll);
+							if(applyToAll)
+                updateProject('selected_logo', []);
 						}
 					}}
 					selectedLogo={project?.selected_logo || []}
@@ -77,20 +89,25 @@ export const BrandingButton: React.FC<{}> = () => {
 							'updating branding to ',
 							selectedLogo[0]?.thumbnail_url,
 						);
-						updateProject('selected_logo', selectedLogo);
+						if(applyToAll)
+              updateProject('selected_logo', selectedLogo);
 						if (selectedLogo.length > 0) {
-							updateLogoUrl(selectedLogo[0]?.thumbnail_url || '');
+							updateLogoUrl(selectedLogo[0]?.thumbnail_url || '', applyToAll);
 						} else {
-							updateLogoUrl('');
+							updateLogoUrl('', applyToAll);
 						}
 					}}
 					selectedBackground={project?.selected_background || []}
 					setSelectedBackground={(selectedBackground: Resource[]) => {
-						updateProject('selected_background', selectedBackground);
+						if(applyToAll)
+              updateProject('selected_background', selectedBackground);
 						if (selectedBackground.length > 0) {
-							updateBackgroundUrl(selectedBackground[0]?.thumbnail_url || '');
+							updateBackgroundUrl(
+								selectedBackground[0]?.thumbnail_url || '',
+								applyToAll,
+							);
 						} else {
-							updateBackgroundUrl('');
+							updateBackgroundUrl('', applyToAll);
 						}
 					}}
 					// logoPosition={project?.logo_position || 'BottomLeft'}
@@ -113,21 +130,23 @@ export const BrandingButton: React.FC<{}> = () => {
 					</div>
 				</Instruction>
 
-				<Instruction>
-					<div
-						className='text-blue-600 cursor-pointer'
-						onClick={() => {
-							if (!isPaidUser) {
-								setShowPaymentModal(true);
-								return;
-							}
-							removeUserName();
-						}}
-					>
-						Remove 'Created by DrLambda'.
-					</div>
-					{!isPaidUser && <PlusLabel />}
-				</Instruction>
+				{slideIndex === 0 && (
+					<Instruction>
+						<div
+							className='text-blue-600 cursor-pointer'
+							onClick={() => {
+								if (!isPaidUser) {
+									setShowPaymentModal(true);
+									return;
+								}
+								removeUserName();
+							}}
+						>
+							Remove 'Created by DrLambda'.
+						</div>
+						{!isPaidUser && <PlusLabel />}
+					</Instruction>
+				)}
 			</Modal>
 			<PaywallModal
 				showModal={showPaymentModal}

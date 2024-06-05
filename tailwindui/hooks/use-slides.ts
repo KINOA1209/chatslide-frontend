@@ -367,12 +367,26 @@ export const useSlides = () => {
 	// 	syncSlides(newSlides, true);
 	// };
 
-	const showLogo = () => {
-		const newSlides = slides.map((slide, index) => {
-			return { ...slide, logo_url: '', logo: 'Default' };
-		});
-		setIsShowingLogo(true);
-		updateProject('logo', 'Default');
+	const showLogo = (applyToAll: boolean) => {
+    let newSlides = [];
+    if (applyToAll) {
+      newSlides = slides.map((slide, index) => {
+        return { ...slide, logo_url: '' };
+      });
+    } else {
+      newSlides = slides.map((slide, index) => {
+        if (index === slideIndex) {
+          return { ...slide, logo_url: '' };
+        }
+        return slide;
+      });
+    }
+
+    if(applyToAll) {
+      setIsShowingLogo(true);
+      updateProject('logo', 'Default');
+    }
+    
 		setSlides(newSlides);
 		updateSlideHistory(newSlides);
 		debouncedSyncSlides(newSlides, true);
@@ -388,31 +402,66 @@ export const useSlides = () => {
 		debouncedSyncSlides(newSlides, true);
 	};
 
-	const updateLogoUrl = (logo_url: string) => {
-		const newSlides = slides.map((slide, index) => {
-			return { ...slide, logo_url: logo_url };
-		});
+	const updateLogoUrl = (logo_url: string, applyToAll: boolean = true) => {
+		let newSlides = [];
+		if (applyToAll) {
+			newSlides = slides.map((slide, index) => {
+				return { ...slide, logo_url: logo_url };
+			});
+		} else {
+			newSlides = slides.map((slide, index) => {
+				if (index === slideIndex) {
+					return { ...slide, logo_url: logo_url };
+				}
+				return slide;
+			});
+		}
 		setIsShowingLogo(true);
 		setSlides(newSlides);
 		updateSlideHistory(newSlides);
 		debouncedSyncSlides(newSlides, true);
 	};
 
-	const hideLogo = () => {
-		const newSlides = slides.map((slide, index) => {
-			return { ...slide, logo_url: '', logo: '' };
-		});
-		setIsShowingLogo(false);
-		updateProject('logo', '');
+	const hideLogo = (applyToAll: boolean) => {
+		let newSlides = [];
+		if (applyToAll) {
+			newSlides = slides.map((slide, index) => {
+				return { ...slide, logo_url: '' };
+			});
+		} else {
+			newSlides = slides.map((slide, index) => {
+				if (index === slideIndex) {
+					return { ...slide, logo_url: '' };
+				}
+				return slide;
+			});
+		}
+		if (applyToAll) {
+			setIsShowingLogo(false);
+			updateProject('logo', '');
+		}
 		setSlides(newSlides);
 		updateSlideHistory(newSlides);
 		debouncedSyncSlides(newSlides, true);
 	};
 
-	const updateTemplateLogoPosition = (position: LogoPosition) => {
-		const newSlides = slides.map((slide, index) => {
-			return { ...slide, logo_position: position };
-		});
+	const updateTemplateLogoPosition = (
+		position: LogoPosition,
+		applyToAll: boolean,
+	) => {
+		let newSlides = [];
+		if (applyToAll) {
+			newSlides = slides.map((slide, index) => {
+				return { ...slide, logo_position: position };
+			});
+		} else {
+			newSlides = slides.map((slide, index) => {
+				if (index === slideIndex) {
+					return { ...slide, logo_position: position };
+				}
+				return slide;
+			});
+		}
 		// setIsTemplateLogoLeftSide(isLeft);
 		// updateProject('is_logo_left', isLeft);
 		updateProject('logo_position', position);
@@ -421,10 +470,20 @@ export const useSlides = () => {
 		debouncedSyncSlides(newSlides, true);
 	};
 
-	const updateBackgroundUrl = (background_url: string) => {
-		const newSlides = slides.map((slide, index) => {
-			return { ...slide, background_url: background_url };
-		});
+	const updateBackgroundUrl = (background_url: string, applyToAll: boolean) => {
+		let newSlides = [];
+		if (applyToAll) {
+			newSlides = slides.map((slide, index) => {
+				return { ...slide, background_url: background_url };
+			});
+		} else {
+			newSlides = slides.map((slide, index) => {
+				if (index === slideIndex) {
+					return { ...slide, background_url: background_url };
+				}
+				return slide;
+			});
+		}
 		setSlides(newSlides);
 		updateSlideHistory(newSlides);
 		debouncedSyncSlides(newSlides, true);
