@@ -35,11 +35,11 @@ export const SideBarData: SideBarItem[] = [
 		icon: <IoMicOutline />,
 		path: '/studio',
 	},
-	{	
-		title: 'Team (Beta)',
-		icon: <IoPeopleOutline />,
-		path: '/dashboard?mode=team',
-	},
+	// {	
+	// 	title: 'Team (Beta)',
+	// 	icon: <IoPeopleOutline />,
+	// 	path: '/dashboard?mode=team',
+	// },
 	{
 		title: 'Discover',
 		icon: <GoDiscussionOutdated />,
