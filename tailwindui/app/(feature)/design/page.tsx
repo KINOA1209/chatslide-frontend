@@ -242,14 +242,8 @@ export default function DesignPage() {
 		updateProject('logo', isPaidUser ? '' : 'Default');
 	}
 
-	const [showLogo, setShowLogo] = useState<boolean>(
-		project?.logo === ''
-			? false
-			: project?.logo === 'Default'
-				? true
-				: isPaidUser
-					? false
-					: true,
+	const [logoMode, setLogoMode] = useState<string>(
+		isPaidUser ? (selectedLogo?.length > 0 ? 'Custom' : 'No') : 'Default',
 	);
 
 	const [selectedLogoPosition, setSelectedLogoPosition] =
@@ -297,7 +291,7 @@ export default function DesignPage() {
 						contentFontColor: hasSelectedCustomizedTemplateContentFontColor
 							? selectedTemplateContentFontColor
 							: '',
-						logo: showLogo ? 'Default' : '',
+						logo: logoMode,
 						logo_url: selectedLogo?.[0]?.thumbnail_url || '',
 						background_url: selectedBackground?.[0]?.thumbnail_url || '',
 						media_type: ['image', 'image', 'image'],
@@ -307,7 +301,7 @@ export default function DesignPage() {
 				});
 
 				bulkUpdateProject({
-					logo: showLogo ? 'Default' : '',
+					logo: logoMode,
 					selected_background: selectedBackground,
 					selected_logo: selectedLogo,
 					template: template,
@@ -363,7 +357,7 @@ export default function DesignPage() {
 			selectedTemplateTitleFontColor,
 			selectedLogo,
 			selectedBackground,
-			showLogo,
+			logoMode,
 			selectedLogoPosition,
 			imageAmount,
 			imageLicense,
@@ -415,7 +409,7 @@ export default function DesignPage() {
 
 			setSelectedLogo(selectedLogo);
 			setSelectedBackground(selectedBackground);
-			setShowLogo(showLogo);
+			// setShowLogo(showLogo);
 			setSelectedLogoPosition(selectedLogoPosition);
 			setImageAmount(imageAmount);
 			setImageLicense(imageLicense);
@@ -531,8 +525,8 @@ export default function DesignPage() {
 							the slides page, or talk with AI Chatbot
 						</Explanation>
 						<BrandingSelector
-							showLogo={showLogo}
-							setShowLogo={setShowLogo}
+							logoMode={logoMode}
+							setLogoMode={setLogoMode}
 							selectedLogo={selectedLogo}
 							setSelectedLogo={setSelectedLogo}
 							selectedBackground={selectedBackground}
@@ -562,9 +556,11 @@ export default function DesignPage() {
 								size='md'
 								hierarchy='secondary'
 								width='12rem'
-                buttonStatus={
-                  localStorage.getItem('defaultProfile') ? 'enabled' : 'disabled'
-                }
+								buttonStatus={
+									localStorage.getItem('defaultProfile')
+										? 'enabled'
+										: 'disabled'
+								}
 							>
 								Load from Profile
 							</DesignSystemButton>

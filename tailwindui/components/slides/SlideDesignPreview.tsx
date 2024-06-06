@@ -157,8 +157,7 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 			index === 0,
 			slide.layout,
 			slide.layout,
-			true,
-			true,
+			true, // isCurrentSlide
 		);
 	return (
 		<ScrollBar>

@@ -289,7 +289,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		version,
 		saveStatus,
 		SaveStatus,
-		isShowingLogo,
 		debouncedSyncSlides,
 	} = useSlides();
 
@@ -726,7 +725,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			slide.layout, // layoutOptionNonCover
 			slide.layout, // layoutOptionCover
 			false, // isCurrentSlide
-			isShowingLogo,
 		);
 
 	//console.log(slides)
@@ -751,7 +749,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			slide.layout, // layoutOptionNonCover
 			slide.layout, // layoutOptionCover
 			index === slideIndex, // isCurrentSlide
-			isShowingLogo, // isShowingLogo
 		);
 
 	if (toPdf)

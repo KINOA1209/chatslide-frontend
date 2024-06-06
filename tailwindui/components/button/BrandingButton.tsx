@@ -15,25 +15,29 @@ import { Instruction } from '../ui/Text';
 import { PlusLabel } from '../ui/GrayLabel';
 import { LogoPosition } from '@/models/Slide';
 import Toggle from './Toggle';
+import Project from '@/models/Project';
 
 export const BrandingButton: React.FC<{}> = () => {
-	const { project, updateProject } = useProject();
+	const { project, updateProject, bulkUpdateProject } = useProject();
 	const {
 		slides,
-		isShowingLogo,
-		updateLogoUrl,
-		updateBackgroundUrl,
-		hideLogo,
-		showLogo,
+		slideIndex,
+		updateBranding,
 		removeUserName,
-		updateTemplateLogoPosition,
 	} = useSlides();
+
+	const [logoMode, setLogoMode] = useState(slides[slideIndex]?.logo || 'Default');
+	const [selectedLogo, setSelectedLogo] = useState<Resource[]>(
+		project?.selected_logo || [],
+	);
+	const [selectedBackground, setSelectedBackground] = useState<Resource[]>(
+		project?.selected_background || [],
+	);
+
 	const { isPaidUser } = useUser();
 
 	const [showModal, setShowModal] = useState(false);
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
-
-	const { slideIndex } = useSlides();
 	const [applyToAll, setApplyToAll] = useState(true);
 
 	useEffect(() => {
@@ -49,12 +53,29 @@ export const BrandingButton: React.FC<{}> = () => {
 	}, []);
 
 	const handleConfirm = () => {
-		updateTemplateLogoPosition(selectedTemplateLogoPosition, applyToAll);
+		console.log('updating branding to ', logoMode, ', url: ', selectedLogo[0]?.thumbnail_url);
+		if (applyToAll) {
+			bulkUpdateProject({
+				logo: logoMode,
+				selected_logo: selectedLogo,
+				selected_background: selectedBackground,
+			} as Project);
+		}
+
+		// update logo
+		updateBranding(
+			logoMode,
+			selectedLogo,
+			selectedTemplateLogoPosition,
+			selectedBackground,
+			applyToAll,
+		);
+
 		setShowModal(false);
 	};
 
 	const [selectedTemplateLogoPosition, setSelectedTemplateLogoPosition] =
-		useState(slides[0]?.logo_position || 'BottomLeft');
+		useState(slides[slideIndex]?.logo_position || 'BottomLeft');
 
 	return (
 		<>
@@ -73,47 +94,12 @@ export const BrandingButton: React.FC<{}> = () => {
 				/>
 
 				<BrandingSelector
-					showLogo={isShowingLogo}
-					setShowLogo={(e) => {
-						if (e) {
-							showLogo(applyToAll);
-						} else {
-							hideLogo(applyToAll);
-							if(applyToAll)
-                updateProject('selected_logo', []);
-						}
-					}}
-					selectedLogo={project?.selected_logo || []}
-					setSelectedLogo={(selectedLogo: Resource[]) => {
-						console.log(
-							'updating branding to ',
-							selectedLogo[0]?.thumbnail_url,
-						);
-						if(applyToAll)
-              updateProject('selected_logo', selectedLogo);
-						if (selectedLogo.length > 0) {
-							updateLogoUrl(selectedLogo[0]?.thumbnail_url || '', applyToAll);
-						} else {
-							updateLogoUrl('', applyToAll);
-						}
-					}}
-					selectedBackground={project?.selected_background || []}
-					setSelectedBackground={(selectedBackground: Resource[]) => {
-						if(applyToAll)
-              updateProject('selected_background', selectedBackground);
-						if (selectedBackground.length > 0) {
-							updateBackgroundUrl(
-								selectedBackground[0]?.thumbnail_url || '',
-								applyToAll,
-							);
-						} else {
-							updateBackgroundUrl('', applyToAll);
-						}
-					}}
-					// logoPosition={project?.logo_position || 'BottomLeft'}
-					// setLogoPosition={(selectedLogoPosition: LogoPosition) => {
-					// 	updateProject('logo_position', selectedLogoPosition);
-					// }}
+					logoMode={logoMode}
+					setLogoMode={setLogoMode}
+					selectedLogo={selectedLogo}
+					setSelectedLogo={setSelectedLogo}
+					selectedBackground={selectedBackground}
+					setSelectedBackground={setSelectedBackground}
 					logoPosition={selectedTemplateLogoPosition}
 					setLogoPosition={setSelectedTemplateLogoPosition}
 				/>

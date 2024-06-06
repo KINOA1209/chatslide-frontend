@@ -27,10 +27,6 @@ import { useEffect, useMemo, useState } from 'react';
 // import { New_Education_009_template } from './new_templates/New_Education_009_template';
 import { LayoutKeys } from './slideLayout';
 import { layoutOptions } from './slideLayout';
-import {
-	loadCustomizableElements,
-	loadLayoutConfigElements,
-} from './SlidesHTML';
 import Image from 'next/image';
 import { Media, SlideKeys } from '@/models/Slide';
 import Chart from '@/models/Chart';
@@ -61,7 +57,6 @@ export const generateTemplate = (templateName: string) => {
 		ischarts,
 		handleSlideEdit,
 		currentSlideIndex,
-		isShowingLogo,
 		image_positions,
 		palette,
 		themeElements,
@@ -146,7 +141,7 @@ export const generateTemplate = (templateName: string) => {
 						ischarts={ischarts}
 						handleSlideEdit={handleSlideEdit}
 						currentSlideIndex={currentSlideIndex}
-						isShowingLogo={isShowingLogo}
+						
 						image_positions={image_positions}
 						embed_code={embed_code}
 						media_types={media_types}
@@ -205,7 +200,6 @@ export const generateTemplate = (templateName: string) => {
 						ischarts={ischarts}
 						handleSlideEdit={handleSlideEdit}
 						currentSlideIndex={currentSlideIndex}
-						isShowingLogo={isShowingLogo}
 						image_positions={image_positions}
 						embed_code={embed_code}
 						media_types={media_types}
@@ -289,7 +283,6 @@ export interface MainSlideProps {
 	ischarts: boolean[];
 	handleSlideEdit: Function;
 	currentSlideIndex: number;
-	isShowingLogo?: boolean;
 	image_positions: ImagePosition[];
 	palette?: PaletteKeys;
 	template?: TemplateKeys;

@@ -73,7 +73,6 @@ export const templateDispatch = (
 	isCurrentSlide: boolean = false,
 	// templateLogo: string,
 	// brandingColor?: string,
-	isShowingLogo: boolean = true,
 ): JSX.Element => {
 	// useEffect(() => {
 	// 	console.log('current slide palette', index, slide.palette);
@@ -462,18 +461,14 @@ export const templateDispatch = (
 			layoutOptionCover={finalLayoutKey}
 			// brandingColor={brandingColor}
 			templateLogo={
-				isShowingLogo ? (
-					<ChosenTemplateLogo
-						isCoverPage={isCoverPage}
-						custom_logo={custom_logo}
-						template_name={slide.template}
-						isLightBackground={isLightBackground}
-						// isLogoLeftSide={slide.is_logo_left}
-						logoPosition={slide.logo_position}
-					/>
-				) : (
-					<></>
-				)
+				<ChosenTemplateLogo
+					isCoverPage={isCoverPage}
+					custom_logo={custom_logo}
+					template_name={slide.template}
+					isLightBackground={isLightBackground}
+					// isLogoLeftSide={slide.is_logo_left}
+					logoPosition={slide.logo_position}
+				/>
 			}
 			uploadedLogoUrl={slide.logo_url}
 			uploadedBackgroundImageUrl={slide.background_url}
@@ -481,7 +476,6 @@ export const templateDispatch = (
 			ischarts={slide.is_chart}
 			handleSlideEdit={handleSlideEdit}
 			currentSlideIndex={index}
-			isShowingLogo={isShowingLogo}
 			image_positions={slide.image_positions || [{}, {}, {}]}
 			palette={slide.palette}
 			template={slide.template}

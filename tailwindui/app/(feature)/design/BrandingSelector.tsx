@@ -11,15 +11,15 @@ import { getBrand } from '@/utils/getHost';
 
 const brandingOptions = [
 	{
-		value: 'default',
+		value: 'Default',
 		text: getBrand() + ' Logo',
 	},
 	{
-		value: 'no',
+		value: 'No',
 		text: 'No Logo',
 	},
 	{
-		value: 'custom',
+		value: 'Custom',
 		text: 'Custom Logo',
 	},
 ];
@@ -44,8 +44,10 @@ const LogoPositionOptions = [
 ];
 
 const BrandingSelector: React.FC<{
-	showLogo: boolean;
-	setShowLogo: (showLogo: boolean) => void;
+	// showLogo: boolean;
+	// setShowLogo: (showLogo: boolean) => void;
+	logoMode: string;
+	setLogoMode: (logoMode: string) => void;
 	selectedLogo: Resource[];
 	setSelectedLogo: (selectedLogo: Resource[]) => void;
 	selectedBackground: Resource[];
@@ -53,8 +55,8 @@ const BrandingSelector: React.FC<{
 	logoPosition: LogoPosition;
 	setLogoPosition: (position: LogoPosition) => void;
 }> = ({
-	showLogo,
-	setShowLogo,
+	logoMode,
+	setLogoMode,
 	selectedLogo,
 	setSelectedLogo,
 	selectedBackground,
@@ -64,32 +66,17 @@ const BrandingSelector: React.FC<{
 }) => {
 	const { isPaidUser } = useUser();
 	const [showPaywall, setShowPaywall] = useState(false);
-	const [logoMode, setLogoMode] = useState<'no' | 'default' | 'custom'>(
-		isPaidUser ? selectedLogo?.length>0 ? 'custom' : 'no' : 'default',
-	);
 
 	useEffect(() => {
 		console.log('logoMode', logoMode);
 
-		if (logoMode === 'no') {
+		if (logoMode === 'No') {
 			setSelectedLogo([]);
-			setShowLogo(false);
-		} else if (logoMode === 'custom') {
-      if(selectedLogo?.length > 0)
-			  setShowLogo(true);
-		} else if (logoMode === 'default') {
+		} else if (logoMode === 'Custom') {
+		} else if (logoMode === 'Default') {
 			setSelectedLogo([]);
-			setShowLogo(true);
 		}
 	}, [logoMode]);
-
-  	useEffect(() => {
-			console.log('logoMode', logoMode);
-
-			if (selectedLogo?.length > 0) {
-        setShowLogo(true);
-      }
-		}, [selectedLogo]);
 
 	return (
 		<div>
@@ -107,18 +94,18 @@ const BrandingSelector: React.FC<{
 					options={brandingOptions}
 					selectedValue={logoMode}
 					setSelectedValue={(mode) => {
-						if (mode !== 'default' && !isPaidUser) {
+						if (mode !== 'Default' && !isPaidUser) {
 							setShowPaywall(true);
 							return;
 						}
-						setLogoMode(mode as 'no' | 'default' | 'custom');
+						setLogoMode(mode as 'No' | 'Default' | 'Custom');
 					}}
 					name='branding'
 				/>
 			</div>
 
 			{/* customized logo */}
-			{logoMode == 'custom' && (
+			{logoMode == 'Custom' && (
 				<ImageSelector
 					type='logo'
 					selectedImage={selectedLogo}
@@ -128,7 +115,7 @@ const BrandingSelector: React.FC<{
 			)}
 
 			{/* select position to put logo */}
-			{showLogo && (
+			{logoMode != 'No' && (
 				<div>
 					<PaywallModal
 						showModal={showPaywall}

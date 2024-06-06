@@ -6,6 +6,7 @@ import { FiLayout } from 'react-icons/fi';
 import Modal from '../ui/Modal';
 import Slide from '@/models/Slide';
 import { useSlides } from '@/hooks/use-slides';
+import Toggle from '../button/Toggle';
 type LayoutProps = {
 	currentSlideIndex: number;
 	slides: Slide[]; //{ layout: string }[];
@@ -101,6 +102,15 @@ const LayoutChanger: React.FC<LayoutProps> = ({
 				}}
 				title='Change Page Layout'
 			>
+				{/* apply to all checkbox */}
+				{currentSlideIndex !== 0 && (
+					<Toggle
+						isLeft={applyToAll}
+						setIsLeft={setApplyToAll}
+						leftText='All Non-Cover Pages'
+						rightText='This Page'
+					/>
+				)}
 				<div className='max-w-[40rem] w-full h-full grid grid-cols-3 gap-4 p-2'>
 					{layoutsToDisplay.map((currLayout, index) => {
 						// Check if slides[currentSlideIndex] is defined
@@ -144,21 +154,6 @@ const LayoutChanger: React.FC<LayoutProps> = ({
 							return <></>;
 						}
 					})}
-
-					{/* apply to all checkbox */}
-					{currentSlideIndex !== 0 && (
-						<div className='col-span-3'>
-							<label className='flex items-center space-x-2'>
-								<input
-									type='checkbox'
-									className='form-checkbox text-blue-500'
-									checked={applyToAll}
-									onChange={() => setApplyToAll(!applyToAll)}
-								/>
-								<span>Apply to all non-cover pages</span>
-							</label>
-						</div>
-					)}
 				</div>
 			</Modal>
 		</>

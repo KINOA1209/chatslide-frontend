@@ -40,7 +40,9 @@ const DrLambdaLogo: React.FC<TemplateLogoType> = ({
 	// console.log('custom_logo:', custom_logo);
 	// console.log('isCoverPage:', isCoverPage);
 	if (isCoverPage) {
-		if (custom_logo === 'Default') {
+    if (custom_logo == 'No') {
+      return <></>;
+    } else if (custom_logo === 'Default') {
 			return (
 				<div
 					onClick={openBrandingModal}
@@ -76,7 +78,9 @@ const DrLambdaLogo: React.FC<TemplateLogoType> = ({
 			);
 		}
 	} else {
-		if (custom_logo === 'Default') {
+    if (custom_logo === 'No') {
+      return <></>;
+    } else if (custom_logo === 'Default') {
 			return (
 				<div
 					onClick={openBrandingModal}
@@ -158,7 +162,7 @@ export const generateTemplateLogo = ({
 	// console.log('custom_logo:', custom_logo);
 	// console.log('logo:', coverLogo);
 
-	if (!custom_logo) {
+	if (!custom_logo || custom_logo === 'No') {
 		return <></>;
 	}
 

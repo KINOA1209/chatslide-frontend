@@ -10,8 +10,10 @@ import debounce from 'lodash.debounce';
 import SlidesService from '@/services/SlidesService';
 import dynamic from 'next/dynamic';
 import { LayoutKeys } from '@/components/slides/slideLayout';
+import Resource from '@/models/Resource';
 // import { colorPreviews } from '@/app/(feature)/design/TemplateSelector';
 // Dynamically import the component with SSR disabled
+
 const colorPreviews: any = dynamic(
 	() => import('@/app/(feature)/design/TemplateSelector'),
 	{
@@ -33,16 +35,6 @@ const useSlidesHistoryIndex = createBearStore<number>()(
 );
 const useVersion = createBearStore<number>()('version', 0, true);
 const usePresenting = createBearStore<boolean>()('isPresenting', false, false);
-const useIsShowingLogo = createBearStore<boolean>()(
-	'isShowingLogo',
-	true,
-	false,
-);
-// const useIsTemplateLogoLeftSide = createBearStore<boolean>()(
-// 	'isTemplateLogoLeftSide',
-// 	true,
-// 	true,
-// );
 
 const useInitialLoadedTemplateBgColor = createBearStore<string | undefined>()(
 	'initialLoadedTemplateBgColor',
@@ -194,9 +186,6 @@ export const useSlides = () => {
 	const { token } = useUser();
 	const { project } = useProject();
 	const { isPresenting, setIsPresenting } = usePresenting();
-	const { isShowingLogo, setIsShowingLogo } = useIsShowingLogo();
-	// const { isTemplateLogoLeftSide, setIsTemplateLogoLeftSide } =
-	// 	useIsTemplateLogoLeftSide();
 	const { updateProject, bulkUpdateProject } = useProject();
 	const { saveStatus, setSaveStatus } = useSaveStatus();
 	const { clearChatHistory } = useChatHistory();
@@ -357,37 +346,53 @@ export const useSlides = () => {
 		slidesStatus = SlidesStatus.Inited;
 	};
 
-	// const changeIsShowingLogo = (newIsShowingLogo: boolean) => {
-	// 	setIsShowingLogo(newIsShowingLogo);
-	// 	const newSlides = slides.map((slide, index) => {
-	// 		return { ...slide, show_logo: !isShowingLogo };
-	// 	});
-	// 	setSlides(newSlides);
-	// 	updateSlideHistory(newSlides);
-	// 	syncSlides(newSlides, true);
-	// };
+  const updateBranding = (
+		logo: string,
+		selectedLogo: Resource[],
+		logoPosition: LogoPosition,
+    selectedBackground: Resource[],
+		applyToAll: boolean,
+	) => {
+		console.log('-- setLogo: ', { logo, selectedLogo, logoPosition, selectedBackground, applyToAll });
 
-	const showLogo = (applyToAll: boolean) => {
-    let newSlides = [];
-    if (applyToAll) {
-      newSlides = slides.map((slide, index) => {
-        return { ...slide, logo_url: '' };
-      });
-    } else {
-      newSlides = slides.map((slide, index) => {
-        if (index === slideIndex) {
-          return { ...slide, logo_url: '' };
-        }
-        return slide;
-      });
-    }
+		let newSlides = [];
+		const logoUrl = selectedLogo[0]?.thumbnail_url || '';
+		if (applyToAll) {
+			newSlides = slides.map((slide, index) => {
+				return {
+					...slide,
+					logo: logo,
+					logo_url: logoUrl,
+					logo_position: logoPosition,
+          background_url: selectedBackground[0]?.thumbnail_url || '',
+				};
+			});
+		} else {
+			newSlides = slides.map((slide, index) => {
+				if (index === slideIndex) {
+					return {
+						...slide,
+						logo: logo,
+						logo_url: logoUrl,
+						logo_position: logoPosition,
+            background_url: selectedBackground[0]?.thumbnail_url || '',
+					};
+				}
+				return slide;
+			});
+		}
 
-    if(applyToAll) {
-      setIsShowingLogo(true);
-      updateProject('logo', 'Default');
-    }
-    
+		console.log('New Slides: ', newSlides);
+
+		if (applyToAll) {
+			bulkUpdateProject({
+				logo: logo,
+				selected_logo: selectedLogo,
+			} as Project);
+		}
+
 		setSlides(newSlides);
+		updateVersion();
 		updateSlideHistory(newSlides);
 		debouncedSyncSlides(newSlides, true);
 	};
@@ -398,93 +403,6 @@ export const useSlides = () => {
 		});
 		setSlides(newSlides);
 		updateVersion();
-		updateSlideHistory(newSlides);
-		debouncedSyncSlides(newSlides, true);
-	};
-
-	const updateLogoUrl = (logo_url: string, applyToAll: boolean = true) => {
-		let newSlides = [];
-		if (applyToAll) {
-			newSlides = slides.map((slide, index) => {
-				return { ...slide, logo_url: logo_url };
-			});
-		} else {
-			newSlides = slides.map((slide, index) => {
-				if (index === slideIndex) {
-					return { ...slide, logo_url: logo_url };
-				}
-				return slide;
-			});
-		}
-		setIsShowingLogo(true);
-		setSlides(newSlides);
-		updateSlideHistory(newSlides);
-		debouncedSyncSlides(newSlides, true);
-	};
-
-	const hideLogo = (applyToAll: boolean) => {
-		let newSlides = [];
-		if (applyToAll) {
-			newSlides = slides.map((slide, index) => {
-				return { ...slide, logo_url: '' };
-			});
-		} else {
-			newSlides = slides.map((slide, index) => {
-				if (index === slideIndex) {
-					return { ...slide, logo_url: '' };
-				}
-				return slide;
-			});
-		}
-		if (applyToAll) {
-			setIsShowingLogo(false);
-			updateProject('logo', '');
-		}
-		setSlides(newSlides);
-		updateSlideHistory(newSlides);
-		debouncedSyncSlides(newSlides, true);
-	};
-
-	const updateTemplateLogoPosition = (
-		position: LogoPosition,
-		applyToAll: boolean,
-	) => {
-		let newSlides = [];
-		if (applyToAll) {
-			newSlides = slides.map((slide, index) => {
-				return { ...slide, logo_position: position };
-			});
-		} else {
-			newSlides = slides.map((slide, index) => {
-				if (index === slideIndex) {
-					return { ...slide, logo_position: position };
-				}
-				return slide;
-			});
-		}
-		// setIsTemplateLogoLeftSide(isLeft);
-		// updateProject('is_logo_left', isLeft);
-		updateProject('logo_position', position);
-		setSlides(newSlides);
-		updateSlideHistory(newSlides);
-		debouncedSyncSlides(newSlides, true);
-	};
-
-	const updateBackgroundUrl = (background_url: string, applyToAll: boolean) => {
-		let newSlides = [];
-		if (applyToAll) {
-			newSlides = slides.map((slide, index) => {
-				return { ...slide, background_url: background_url };
-			});
-		} else {
-			newSlides = slides.map((slide, index) => {
-				if (index === slideIndex) {
-					return { ...slide, background_url: background_url };
-				}
-				return slide;
-			});
-		}
-		setSlides(newSlides);
 		updateSlideHistory(newSlides);
 		debouncedSyncSlides(newSlides, true);
 	};
@@ -797,7 +715,6 @@ export const useSlides = () => {
 		}
 
 		setSlides(slides);
-		setIsShowingLogo(slides?.some((slide) => slide.logo || slide.logo_url));
 		// setIsTemplateLogoLeftSide(slides[0].is_logo_left);
 		setSlideIndex(0);
 		setSlidesHistory([slides]);
@@ -906,7 +823,6 @@ export const useSlides = () => {
 		duplicatePage,
 		deleteSlidePage,
 		updateSlidePage,
-		// updateBranding,
 		changeTemplate,
 		changePalette,
 		changeTemplateAndPaletteAndBgColorAndFontFamilyAndColor,
@@ -925,14 +841,8 @@ export const useSlides = () => {
 		SaveStatus,
 		syncSlides,
 		setTranscripts,
-		isShowingLogo,
-		// setIsShowingLogo,
-		// changeIsShowingLogo,
-		showLogo,
 		removeUserName,
-		hideLogo,
-		updateLogoUrl,
-		updateBackgroundUrl,
+		updateBranding,
 		updateLayoutAllNonCoverPages,
 		isPresenting,
 		setIsPresenting,
@@ -987,9 +897,5 @@ export const useSlides = () => {
 		setCustomizedTemplateTitleFontColor,
 		hasSelectedCustomizedTemplateTitleFontColor,
 		setHasSelectedCustomizedTemplateTitleFontColor,
-		// isTemplateLogoLeftSide,
-		// setIsTemplateLogoLeftSide,
-		// updateTemplateLogoPositionToLeft,
-		updateTemplateLogoPosition,
 	};
 };

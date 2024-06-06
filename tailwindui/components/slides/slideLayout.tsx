@@ -292,7 +292,6 @@ export const Cover_img_0_layout = ({
 	themeElements,
 	layoutElements,
 	templateLogo,
-	isShowingLogo,
 }: MainSlideProps) => {
 	// useEffect(() => {
 	// 	console.log('LayoutElements canvaCSS:', layoutElements.canvaCSS);
@@ -356,7 +355,6 @@ export const Cover_img_0_layout = ({
 				className={`SlideLogo`}
 				style={{
 					...layoutElements.logoCSS,
-					display: `${isShowingLogo ? 'contents' : 'none'}`,
 					zIndex: 30,
 					pointerEvents: 'none',
 				}}
@@ -386,7 +384,6 @@ export const Cover_img_1_layout = ({
 	ischarts,
 	handleSlideEdit,
 	currentSlideIndex,
-	isShowingLogo,
 	image_positions,
 	embed_code,
 	media_types,
@@ -517,7 +514,6 @@ export const Cover_img_1_layout = ({
 				className={`SlideLogo`}
 				style={{
 					...layoutElements.logoCSS,
-					display: `${isShowingLogo ? 'contents' : 'none'}`,
 					zIndex: 30,
 					pointerEvents: 'none',
 				}}
@@ -543,7 +539,6 @@ export const Col_1_img_0_layout = ({
 	themeElements,
 	layoutElements,
 	templateLogo,
-	isShowingLogo,
 }: MainSlideProps) => {
 	const [maxContentHeight, setMaxContentHeight] = useState<number | null>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -650,7 +645,6 @@ export const Col_1_img_0_layout = ({
 			<div
 				style={{
 					...layoutElements.logoCSS,
-					display: `${isShowingLogo ? 'contents' : 'none'}`,
 					zIndex: 30,
 					pointerEvents: 'none',
 				}}
@@ -700,7 +694,6 @@ export const Col_2_img_0_layout = ({
 	themeElements,
 	layoutElements,
 	templateLogo,
-	isShowingLogo,
 	handleSlideEdit,
 }: MainSlideProps) => {
 	// Ensure content is always an array
@@ -937,7 +930,6 @@ export const Col_2_img_0_layout = ({
 				className={`SlideLogo`}
 				style={{
 					...layoutElements.logoCSS,
-					display: `${isShowingLogo ? 'contents' : 'none'}`,
 					zIndex: 30,
 					pointerEvents: 'none',
 				}}
@@ -976,7 +968,6 @@ export const Col_3_img_0_layout = ({
 	themeElements,
 	layoutElements,
 	templateLogo,
-	isShowingLogo,
 	handleSlideEdit,
 }: MainSlideProps) => {
 	//const filteredContent: JSX.Element[] = filterEmptyLines(content);
@@ -1326,7 +1317,6 @@ export const Col_3_img_0_layout = ({
 			<div
 				style={{
 					...layoutElements.logoCSS,
-					display: `${isShowingLogo ? 'contents' : 'none'}`,
 					zIndex: 30,
 					pointerEvents: 'none',
 				}}
@@ -1369,7 +1359,6 @@ export const Col_2_img_1_layout = ({
 	ischarts,
 	handleSlideEdit,
 	currentSlideIndex,
-	isShowingLogo,
 	image_positions,
 	embed_code,
 	media_types,
@@ -1549,7 +1538,6 @@ export const Col_2_img_1_layout = ({
 			<div
 				style={{
 					...layoutElements.logoCSS,
-					display: `${isShowingLogo ? 'contents' : 'none'}`,
 					zIndex: 30,
 					pointerEvents: 'none',
 				}}
@@ -1593,7 +1581,6 @@ export const Col_1_img_1_layout = ({
 	ischarts,
 	handleSlideEdit,
 	currentSlideIndex,
-	isShowingLogo,
 	image_positions,
 	embed_code,
 	media_types,
@@ -1794,7 +1781,6 @@ export const Col_1_img_1_layout = ({
 				className={`SlideLogo`}
 				style={{
 					...layoutElements.logoCSS,
-					display: `${isShowingLogo ? 'contents' : 'none'}`,
 					zIndex: 30,
 					pointerEvents: 'none',
 				}}
@@ -1838,7 +1824,6 @@ export const Col_2_img_2_layout = ({
 	ischarts,
 	handleSlideEdit,
 	currentSlideIndex,
-	isShowingLogo,
 	image_positions,
 	embed_code,
 	media_types,
@@ -2190,7 +2175,6 @@ export const Col_2_img_2_layout = ({
 			<div
 				style={{
 					...layoutElements.logoCSS,
-					display: `${isShowingLogo ? 'contents' : 'none'}`,
 					zIndex: 30,
 					pointerEvents: 'none',
 				}}
@@ -2233,7 +2217,6 @@ export const Col_3_img_3_layout = ({
 	ischarts,
 	handleSlideEdit,
 	currentSlideIndex,
-	isShowingLogo,
 	image_positions,
 	embed_code,
 	media_types,
@@ -2659,7 +2642,6 @@ export const Col_3_img_3_layout = ({
 			<div
 				style={{
 					...layoutElements.logoCSS,
-					display: `${isShowingLogo ? 'contents' : 'none'}`,
 					zIndex: 30,
 					pointerEvents: 'none',
 				}}
@@ -2703,7 +2685,6 @@ export const Full_img_only_layout = ({
 	ischarts,
 	handleSlideEdit,
 	currentSlideIndex,
-	isShowingLogo,
 	image_positions,
 	embed_code,
 	media_types,
@@ -2796,7 +2777,6 @@ export const Full_img_only_layout = ({
 			<div
 				style={{
 					...layoutElements.logoCSS,
-					display: `${isShowingLogo ? 'contents' : 'none'}`,
 					zIndex: 30,
 					pointerEvents: 'none',
 				}}
