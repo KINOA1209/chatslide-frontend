@@ -90,7 +90,7 @@ export const BrandingButton: React.FC<{}> = () => {
 					isLeft={applyToAll}
 					setIsLeft={setApplyToAll}
 					leftText='All Pages'
-					rightText='This Pages'
+					rightText='This Page'
 				/>
 
 				<BrandingSelector
