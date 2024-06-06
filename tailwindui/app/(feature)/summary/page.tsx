@@ -372,6 +372,7 @@ export default function Topic() {
 
 		const project_id = project?.id || '';
 		const knowledge_summary = project?.knowledge_summary || '';
+		const team_id = sessionStorage.getItem('team') || '';
 		setIsSubmitting(true);
 
 		const formData = {
@@ -391,6 +392,7 @@ export default function Topic() {
 			structure_mode: structureMode,
 			outline_structure: structureMode === 'custom' ? outlineStructure : '',
 			resource_to_follow_structure_from: resourceToFollowStructureFrom?.id,
+			team_id: team_id,
 		};
 
 		console.log('outline structure', outlineStructure);
@@ -413,7 +415,6 @@ export default function Topic() {
 			try {
 				console.log('resources', selectedResources);
 				console.log('summarizing resources');
-				const team_id = sessionStorage.getItem('team') || '';
 				const response = await ResourceService.summarizeResource(
 					project_id,
 					selectedResources.map((r: Resource) => r.id),

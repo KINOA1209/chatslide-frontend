@@ -7,8 +7,8 @@ interface FolderListProps {
   folders: Folder[];
   activeFolder: string;
   handleFolderDoubleClick: (folderName: string) => void;
-  handleDeleteFolder: (folderName: string) => void;
-  handleRenameFolder: (folderName: string) => void;
+  handleDeleteFolder: (folder_id: string) => void;
+  handleRenameFolder: (folder_id: string) => void;
   moveProjectToFolder: (folder: Folder) => void;
 }
 
@@ -40,7 +40,7 @@ const FolderList: React.FC<FolderListProps> = ({
             ) : (
               nonDefaultFolders.map((folder, index) => (
                 <FolderItem
-                  key={index}
+                  key={folder.folderName}
                   folder={folder}
                   handleFolderDoubleClick={handleFolderDoubleClick}
                   handleDeleteFolder={handleDeleteFolder}

@@ -3,7 +3,6 @@ import { useRouter } from 'next/navigation';
 import DesignSystemButton from '@/components/ui/design_systems/ButtonsOrdinary';
 import Project from '@/models/Project';
 import Folder from '@/models/Folder';
-import TeamService from '@/services/TeamService';
 import TeamModal from './TeamModal';
 import { useUser } from '@/hooks/use-user';
 
@@ -49,7 +48,7 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
             e.preventDefault();
             moveProjectToFolder({
               folderName: 'drlambda-default',
-              projects: [],
+              projects: []
             });
           }}
         >
@@ -61,7 +60,7 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
         </div>
 
         <div className='flex flex-row gap-2'>
-          {activeFolder === 'drlambda-default' && projects.length > 0 && (
+          {activeFolder === 'drlambda-default' && projects.length > 0 && !isTeamMode && (
             <DesignSystemButton
               isPaidFeature={false}
               size='lg'
@@ -82,7 +81,7 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
                 buttonStatus='enabled'
                 onClick={() => setShowTeamManagement(true)}
               >
-                <span className='whitespace-nowrap'>Invite Members</span>
+                <span className='whitespace-nowrap'> Members </span>
               </DesignSystemButton>
               {inviteCode && (
                 <div className='text-[16px] font-medium leading-[24px] tracking-wide'>

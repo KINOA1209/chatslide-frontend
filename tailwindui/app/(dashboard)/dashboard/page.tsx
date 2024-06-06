@@ -65,12 +65,13 @@ export default function Dashboard() {
 
   const fetchProjects = async () => {
     try {
-      console.log(currentTeam);
+      const currentTeam = localStorage.getItem('currentTeam') || '';
+      console.log('current team', currentTeam);
       const response = isTeamMode && !NoTeam
         ? await TeamService.getTeamProjects(currentTeam, token)
         : await ProjectService.getProjects(token, false, false, true);
-
-      console.log('isTeamMode', isTeamMode, 'project', response);
+      
+      console.log('response', response);
       if (Array.isArray(response)) {
         setProjects(response);
       } else {
@@ -108,8 +109,7 @@ export default function Dashboard() {
       });
       setFolders(updatedFolders);
       if (isTeamMode) {
-        console.log('team', currentTeam);
-        TeamService.moveProjectToFolder(currentTeam, draggingProjectId, folder.folderName, token);
+        TeamService.moveProjectToFolder(currentTeam, draggingProjectId, token);
       } else {
         ProjectService.moveToFolder(token, draggingProjectId, folder.folderName);
       }
@@ -129,12 +129,12 @@ export default function Dashboard() {
     }
     if (isTeamMode) {
       const response = await TeamService.getUserTeams(token);
-      console.log(response);
       if (response.all_teams.length === 0) {
         setNoTeam(true);
         router.push('/team');
       } else {
         setCurrentTeam(response.all_teams[0]);
+        localStorage.setItem('currentTeam', response.all_teams[0]);
       }
     }
     fetchProjects();
@@ -265,7 +265,7 @@ export default function Dashboard() {
           isTeamMode={isTeamMode} 
           teamId={currentTeam}
         />
-        {hasFolder && (
+        {hasFolder && !isTeamMode && (
           <FolderList
             folders={folders}
             activeFolder={activeFolder}

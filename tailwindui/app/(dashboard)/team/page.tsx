@@ -7,20 +7,14 @@ import JoinTeamModal from '@/components/dashboard/joinTeamModal';
 import { FaPlus } from 'react-icons/fa';
 import TeamService from '@/services/TeamService';
 import { useUser } from '@/hooks/use-user';
-import UserService from '@/services/UserService';
-import { userInEU } from '@/utils/userLocation';
+import PaywallModal from '@/components/paywallModal';
+import { toast } from 'react-toastify';
 
 const Team = () => {
 	const [showCreateTeamModal, setShowCreateTeamModal] = useState(false);
 	const [showJoinTeamModal, setShowJoinTeamModal] = useState(false);
-	const { token, email } = useUser();
-	const [currency, setCurrency] = useState('$');
-
-	useEffect(() => {
-		userInEU().then((res) => {
-			setCurrency(res ? '€' : '$');
-		});
-	}, []);
+	const { token, tier } = useUser();
+	const [showPaywallModal, setShowPaywallModal] = useState(false);
 
 	const handleCreateTeam = async (teamName: string) => {
 		try {
@@ -29,6 +23,7 @@ const Team = () => {
 			window.location.href = '/dashboard?mode=team';
 		} catch (error: any) {
 			console.error(error.message);
+      toast.error(`Error: ${error.message}`);
 		}
 	};
 
@@ -39,17 +34,7 @@ const Team = () => {
 			window.location.href = '/dashboard?mode=team';
 		} catch (error: any) {
 			console.error(error.message);
-		}
-	};
-
-	const handlePurchaseSeat = async (plan: string, token: string) => {
-		try {
-			const url = await UserService.checkout(plan, email, currency, token);
-
-			// Redirect to the checkout page
-			window.open(url, '_blank');
-		} catch (error) {
-			console.error('An error occurred:', error);
+      toast.error(`Error: ${error.message}`);
 		}
 	};
 
@@ -71,7 +56,7 @@ const Team = () => {
 						previewOnly: false,
 						icon: <FaPlus />,
 					}}
-					navigate={() => setShowCreateTeamModal(true)}
+					navigate={() => (tier.includes('FREE'))? setShowPaywallModal(true) : setShowCreateTeamModal(true)}
 				/>
 				<ScenarioButton
 					scenario={{
@@ -83,17 +68,6 @@ const Team = () => {
 						icon: <FaPlus />,
 					}}
 					navigate={() => setShowJoinTeamModal(true)}
-				/>
-				<ScenarioButton
-					scenario={{
-						id: 'purchase-team-seat',
-						title: 'Purchase a Team Seat',
-						featured: true,
-						imageSrc: '/images/scenario/financial_advising.webp',
-						previewOnly: false,
-						icon: <FaPlus />,
-					}}
-					navigate={() => handlePurchaseSeat('TEAM_ONE_SEAT', token)}
 				/>
 			</div>
 
@@ -112,6 +86,12 @@ const Team = () => {
 					onConfirm={handleJoinTeam}
 				/>
 			)}
+
+      <PaywallModal
+        showModal={showPaywallModal}
+        setShowModal={setShowPaywallModal}
+        message='Upgrade to get an early access to Beta features. 🚀'
+			/>
 		</div>
 	);
 };
