@@ -306,5 +306,24 @@ export default class TeamService {
         throw new Error('Error when removing member: ' + errorResp.message);
       }
     }
+
+    static async getMaxMembers(teamId: string, token: string) {
+      const response = await fetch('/api/team/get_max_members', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ team_id: teamId }),
+      });
+  
+      if (response.ok) {
+        const resp = await response.json();
+        return resp.max_members;
+      } else {
+        const errorResp = await response.json();
+        throw new Error('Error when getting max members: ' + errorResp.message);
+      }
+    }
   }
   
