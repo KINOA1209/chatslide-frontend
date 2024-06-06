@@ -23,7 +23,7 @@ import { useUser } from '@/hooks/use-user';
 import VoiceProfile from '@/models/VoiceProfile';
 import { toast } from 'react-toastify';
 import { WrappableRow } from '@/components/layout/WrappableRow';
-import { FaClone, FaTrash } from 'react-icons/fa';
+import { FaClone, FaTrash, FaMicrophone, FaStop } from 'react-icons/fa';
 import PaywallModal from '@/components/paywallModal';
 import useHydrated from '@/hooks/use-hydrated';
 import { FiPlay } from 'react-icons/fi';
@@ -264,9 +264,17 @@ const VoiceCloning = () => {
 					textarea
 				/>
 				<BigBlueButton onClick={handleRecordAudio}>
-					<i className={isRecording ? 'fas fa-stop' : 'fas fa-microphone'}></i>
-					{isRecording ? ` Stop Recording (${timeLeft}s)` : ' Record'}
+					{isRecording ? (
+						<>
+							<FaStop /> Stop Recording ({timeLeft}s)
+						</>
+					) : (
+						<>
+							<FaMicrophone /> Record
+						</>
+					)}
 				</BigBlueButton>
+
 
 				{recordedAudio && (
 					<WrappableRow type='grid' cols={2}>
