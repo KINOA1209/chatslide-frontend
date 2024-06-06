@@ -5,7 +5,6 @@ import Project from '@/models/Project';
 import Folder from '@/models/Folder';
 import TeamModal from './TeamModal';
 import { useUser } from '@/hooks/use-user';
-import { FaUser } from 'react-icons/fa';
 
 interface DashboardHeaderProps {
   activeFolder: string;

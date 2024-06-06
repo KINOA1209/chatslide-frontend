@@ -415,7 +415,6 @@ export default function Topic() {
 			try {
 				console.log('resources', selectedResources);
 				console.log('summarizing resources');
-				console.log('team_id', team_id);
 				const response = await ResourceService.summarizeResource(
 					project_id,
 					selectedResources.map((r: Resource) => r.id),
