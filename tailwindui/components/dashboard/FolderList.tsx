@@ -30,7 +30,7 @@ const FolderList: React.FC<FolderListProps> = ({
           <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4'>
             {activeFolder !== 'drlambda-default' ? (
               <FolderItem
-                folder={{ folderId: 'default-id', folderName: 'drlambda-default', projects: [] }}
+                folder={{ folderName: 'drlambda-default', projects: [] }}
                 handleFolderDoubleClick={handleFolderDoubleClick}
                 handleDeleteFolder={handleDeleteFolder}
                 handleRenameFolder={handleRenameFolder}
@@ -40,7 +40,7 @@ const FolderList: React.FC<FolderListProps> = ({
             ) : (
               nonDefaultFolders.map((folder, index) => (
                 <FolderItem
-                  key={folder.folderId}
+                  key={folder.folderName}
                   folder={folder}
                   handleFolderDoubleClick={handleFolderDoubleClick}
                   handleDeleteFolder={handleDeleteFolder}

@@ -42,7 +42,7 @@ const TeamModal: React.FC<TeamModalProps> = ({ showModal, setShowModal, teamId }
   useEffect(() => {
     if (showModal && teamId) {
       fetchTeamMembers();
-      fetchMaxMembers();
+      fetchTeamDetails();
     }
   }, [showModal, teamId]);
 
@@ -55,19 +55,19 @@ const TeamModal: React.FC<TeamModalProps> = ({ showModal, setShowModal, teamId }
         ...data.members.map((member: any) => ({ id: member.id, name: member.username, email: member.email, role: 'Member' })),
       ];
       setMembers(membersList);
-      console.log(data);
       setIsOwner(data.owner.username === username || data.owner.username === email);
     } catch (err) {
       console.error(err);
     }
   };
 
-  const fetchMaxMembers = async () => {
+  const fetchTeamDetails = async () => {
     try {
-      const max = await TeamService.getMaxMembers(teamId, token);
-      setMaxMembers(max);
+      const data = await TeamService.getTeamDetails(teamId, token);
+      setMaxMembers(data.max_members);
+      setInviteCode(data.invitation_code);
     } catch (err) {
-      console.error('Error fetching max members:', err);
+      console.error('Error fetching team details:', err);
     }
   };
 
@@ -173,7 +173,6 @@ const TeamModal: React.FC<TeamModalProps> = ({ showModal, setShowModal, teamId }
                       value={member.role}
                     >
                       <option value="Member">Member</option>
-                      {/* <option value="Admin">Admin</option> */}
                       <option value="Remove" className="text-red-500">Remove</option>
                     </DropDown>
                   )}

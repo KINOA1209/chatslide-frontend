@@ -109,7 +109,7 @@ export default function Dashboard() {
       });
       setFolders(updatedFolders);
       if (isTeamMode) {
-        TeamService.moveProjectToFolder(currentTeam, draggingProjectId, folder.folderId, token);
+        TeamService.moveProjectToFolder(currentTeam, draggingProjectId, token);
       } else {
         ProjectService.moveToFolder(token, draggingProjectId, folder.folderName);
       }

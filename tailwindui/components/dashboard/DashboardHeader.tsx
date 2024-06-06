@@ -49,8 +49,7 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
             e.preventDefault();
             moveProjectToFolder({
               folderName: 'drlambda-default',
-              projects: [],
-              folderId: 'default-id',
+              projects: []
             });
           }}
         >

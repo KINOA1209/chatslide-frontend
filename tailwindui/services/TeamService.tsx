@@ -211,14 +211,14 @@ export default class TeamService {
       }
     }
   
-    static async moveProjectToFolder(teamId: string, itemId: string, targetFolderId: string, token: string) {
+    static async moveProjectToFolder(teamId: string, itemId: string,token: string) {
       const response = await fetch('/api/team_folder/manage', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ team_id: teamId, action: 'move', folder_type: 'project', item_id: itemId, target_folder_id: targetFolderId }),
+        body: JSON.stringify({ team_id: teamId, action: 'move', folder_type: 'project', item_id: itemId}),
       });
   
       if (response.ok) {
@@ -307,8 +307,8 @@ export default class TeamService {
       }
     }
 
-    static async getMaxMembers(teamId: string, token: string) {
-      const response = await fetch('/api/team/get_max_members', {
+    static async getTeamDetails(teamId: string, token: string) {
+      const response = await fetch('/api/team/get_team_details', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -316,13 +316,14 @@ export default class TeamService {
         },
         body: JSON.stringify({ team_id: teamId }),
       });
-  
+    
       if (response.ok) {
         const resp = await response.json();
-        return resp.max_members;
+        return resp.data;
       } else {
         const errorResp = await response.json();
-        throw new Error('Error when getting max members: ' + errorResp.message);
+        throw new Error('Error when getting team details: ' + errorResp.message);
       }
     }
+    
   }

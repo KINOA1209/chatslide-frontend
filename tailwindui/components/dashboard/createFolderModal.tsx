@@ -62,7 +62,7 @@ const CreateFolderModal: React.FC<{
             setFolders(prevFolders => {
                 const newFolders = [
                     ...prevFolders,
-                    { folderName: folderName, projects: [] }
+                    { folderName: folderName, projects: []}
                 ];
                 return newFolders.sort((a, b) => a.folderName.localeCompare(b.folderName));
             });
