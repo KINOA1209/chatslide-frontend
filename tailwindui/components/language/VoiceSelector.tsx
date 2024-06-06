@@ -1,5 +1,3 @@
-'use client';
-
 import React, { useEffect, useState } from 'react';
 import AZURE_VOICE_OPTIONS, {
 	OAI_VOICE_OPTIONS,
@@ -9,7 +7,7 @@ import AZURE_VOICE_OPTIONS, {
 	isOpenaiVoice,
 	AZURE_MULTILINGUAL_VOICE_OPTIONS,
 	isMultilingualVoice,
-  isELabsVoice,
+	isELabsVoice,
 } from './voiceData';
 import LANGUAGES, { LANGUAGES_WITH_ACCENTS } from './languageData';
 import {
@@ -18,7 +16,7 @@ import {
 	Instruction,
 	WarningMessage,
 } from '../ui/Text';
-import { DropDown } from '../button/DrlambdaButton';
+import { DropDown, InversedBigBlueButton } from '../button/DrlambdaButton';
 import { useProject } from '@/hooks/use-project';
 import { WrappableRow } from '../layout/WrappableRow';
 import { useUser } from '@/hooks/use-user';
@@ -179,13 +177,21 @@ const VoiceSelector: React.FC<{
 									setSelectedVoice(e.target.value);
 								}}
 							>
-								{/*  Add user's voice ids here */}
-								{voiceOptions.map((voice) => (
-									<option key={voice} value={voice}>
-										{formatVoiceName(voice)}
-									</option>
-								))}
-								{selectedLanguage !== 'en-GB' &&
+								{/* Grouping voice options */}
+								<optgroup label="Cloned Voices">
+									{voiceOptions.filter(isClonedVoice).map((voice) => (
+										<option key={voice} value={voice}>
+											{formatVoiceName(voice)}
+										</option>
+									))}
+								</optgroup>
+								<optgroup label="Default Voices">
+									{voiceOptions.filter((voice) => !isClonedVoice(voice)).map((voice) => (
+										<option key={voice} value={voice}>
+											{formatVoiceName(voice)}
+										</option>
+									))}
+									{selectedLanguage !== 'en-GB' &&
 									AZURE_MULTILINGUAL_VOICE_OPTIONS[selectedGender].map(
 										(voice) => (
 											<option key={voice} value={voice}>
@@ -199,6 +205,7 @@ const VoiceSelector: React.FC<{
 											{formatVoiceName(voice)}
 										</option>
 									))}
+								</optgroup>
 							</DropDown>
 						</div>
 						<div>
