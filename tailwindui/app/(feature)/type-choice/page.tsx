@@ -16,7 +16,7 @@ const ScenarioChoicePage = () => {
 	const router = useRouter(); // Initialize the router
 	const { username } = useUser();
 
-	const teamMode = localStorage.getItem('currentTeam');
+	const teamMode = sessionStorage.getItem('currentTeam');
 
 	// Function to navigate to the "scenario-choice" page
 	const navigate = (type: string) => {

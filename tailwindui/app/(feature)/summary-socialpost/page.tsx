@@ -150,7 +150,7 @@ export default function Topic_SocialPost() {
 			try {
 				console.log('resources', selectedResources);
 				console.log('summarizing resources');
-				const team_id = sessionStorage.getItem('team') || '';
+				const team_id = sessionStorage.getItem('currentTeam') || '';
 				const response = await ResourceService.summarizeResource(
 					project_id,
 					selectedResources.map((r: Resource) => r.id),
