@@ -57,7 +57,7 @@ const TeamModal: React.FC<TeamModalProps> = ({
 				{
 					id: data.owner.id,
 					name: data.owner.username,
-					email: data.owner.username,
+					email: data.owner.email,
 					role: 'Owner',
 				},
 				...data.admins.map((admin: any) => ({
