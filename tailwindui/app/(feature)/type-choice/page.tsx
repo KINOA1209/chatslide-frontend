@@ -25,7 +25,7 @@ const ScenarioChoicePage = () => {
 			router.push('/charts');
 			return;
 		}
-		sessionStorage.setItem('workflowType', type);
+		SessionStorage.setItem('workflowType', type);
 		router.push('/scenario-choice');
 	};
 
