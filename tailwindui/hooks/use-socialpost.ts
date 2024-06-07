@@ -101,6 +101,8 @@ export const useSocialPosts = () => {
 		console.log('-- add empty page: ', { index });
 		let newSlide = new SocialPostSlide();
 		newSlide.template = socialPosts[index].template;
+		newSlide.template_theme = socialPosts[index].template_theme;
+		newSlide.layout = socialPosts[index].layout;
 		const newSlides = [...socialPosts];
 		newSlides.splice(index + 1, 0, newSlide);
 		setSocialPosts(newSlides);

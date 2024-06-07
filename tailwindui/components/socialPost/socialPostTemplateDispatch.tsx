@@ -388,7 +388,7 @@ export const templateDispatch = (
 				user_name={
 					isPaidUser ? (
 						generateContentElement(
-							currUserName,
+							slide.user_name || currUserName,
 							// currUserName,
 							'user_name',
 							{
@@ -522,7 +522,7 @@ export const templateDispatch = (
 					isPaidUser ? (
 						generateContentElement(
 							// slide.user_name,
-							currUserName,
+							slide.user_name || currUserName,
 							'user_name',
 							{
 								...(themeElements?.userNameCSS || {}),

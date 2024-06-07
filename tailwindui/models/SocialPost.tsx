@@ -5,7 +5,10 @@ import {
 	SocialPostLayoutKeys,
 	SocialPostTemplateKeys,
 } from '@/components/socialPost/socialPostLayouts';
+import { useUser } from '@/hooks/use-user';
 
+// const { isPaidUser, token, username } = useUser();
+// const currUserName = username || 'Created using DrLambda';
 export interface SlideElement {
 	type: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'ul' | 'li' | 'br' | 'div';
 	className:

@@ -367,7 +367,7 @@ export const Classis_SocialPost_TemplateLayoutsConfig: {
 			gap: '10px',
 			height: '210px',
 			width: '100%',
-			marginTop: '74px',
+			marginTop: '90px',
 		},
 		sectionTitleCSS: {
 			position: 'relative',
