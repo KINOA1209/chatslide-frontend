@@ -372,7 +372,7 @@ export default function Topic() {
 
 		const project_id = project?.id || '';
 		const knowledge_summary = project?.knowledge_summary || '';
-		const team_id = sessionStorage.getItem('team') || '';
+		const team_id =  sessionStorage.getItem('currentTeam') || '';
 		setIsSubmitting(true);
 
 		const formData = {

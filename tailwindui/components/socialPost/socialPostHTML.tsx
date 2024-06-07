@@ -413,7 +413,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 				| SocialPostTemplateKeys
 				| SocialPostLayoutKeys,
 
-			className: string,
+			className: SlideKeys | SlideKeys[],
 		) => {
 			if (className === 'subtopic') {
 				currentSlide.subtopic = content as string;
@@ -435,6 +435,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 				currentSlide.user_name = content as string;
 			} else if (className === 'images') {
 				currentSlide.images = content as string[];
+				currentSlide.illustration = content as string[];
 			} else if (className == 'section_title') {
 				currentSlide.section_title = content as string;
 			} else if (className == 'brief') {
@@ -471,7 +472,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 				currentSlide.chart = content as Chart[];
 			} else if (className === 'is_chart') {
 				currentSlide.is_chart = content as boolean[];
-			} else if (className === 'images_position') {
+			} else if (className === 'image_positions') {
 				currentSlide.image_positions = content as ImagePosition[];
 			} else if (className === 'template_theme') {
 				currentSlide.template_theme = content as SocialPostTemplateKeys;

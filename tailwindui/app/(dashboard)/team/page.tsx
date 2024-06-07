@@ -8,7 +8,9 @@ import { FaPlus } from 'react-icons/fa';
 import TeamService from '@/services/TeamService';
 import { useUser } from '@/hooks/use-user';
 import PaywallModal from '@/components/paywallModal';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const Team = () => {
 	const [showCreateTeamModal, setShowCreateTeamModal] = useState(false);
@@ -19,24 +21,21 @@ const Team = () => {
 	const handleCreateTeam = async (teamName: string) => {
 		try {
 			const response = await TeamService.createTeam(teamName, token);
-			console.log(`Team created: ${response.team_id}`);
 			window.location.href = '/dashboard?mode=team';
 		} catch (error: any) {
-			console.error(error.message);
-      toast.error(`Error: ${error.message}`);
+			toast.error(`Error: ${error.message}`);
 		}
 	};
 
 	const handleJoinTeam = async (inviteCode: string) => {
 		try {
 			const response = await TeamService.joinTeam(inviteCode, token);
-			console.log(`Joined team: ${response}`);
 			window.location.href = '/dashboard?mode=team';
 		} catch (error: any) {
-			console.error(error.message);
-      toast.error(`Error: ${error.message}`);
+			toast.error(`Error: ${error.message}`);
 		}
 	};
+
 
 	return (
 		<div className='container mx-auto p-4'>
@@ -56,7 +55,7 @@ const Team = () => {
 						previewOnly: false,
 						icon: <FaPlus />,
 					}}
-					navigate={() => (tier.includes('FREE'))? setShowPaywallModal(true) : setShowCreateTeamModal(true)}
+					navigate={() => (tier.includes('FREE')) ? setShowPaywallModal(true) : setShowCreateTeamModal(true)}
 				/>
 				<ScenarioButton
 					scenario={{
@@ -87,11 +86,12 @@ const Team = () => {
 				/>
 			)}
 
-      <PaywallModal
-        showModal={showPaywallModal}
-        setShowModal={setShowPaywallModal}
-        message='Upgrade to get an early access to Beta features. 🚀'
+			<PaywallModal
+				showModal={showPaywallModal}
+				setShowModal={setShowPaywallModal}
+				message='Upgrade to get an early access to Beta features. 🚀'
 			/>
+			<ToastContainer />
 		</div>
 	);
 };

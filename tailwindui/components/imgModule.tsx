@@ -1341,18 +1341,17 @@ export const ImgModule = ({
 	const showIconsFunctionText = (layout: CombinedLayoutKeys) => {
 		// console.log(
 		// 	'passed in layout test',
-		// 	layout === 'Col_2_img_2_layout' ||
-		// 		layout === 'Col_3_img_3_layout' ||
-		// 		layout === 'Col_2_img_1_left_casual_topic' ||
-		// 		layout === 'Col_2_img_1_right_casual_topic' ||
-		// 		layout === 'Col_1_img_1_reading_notes',
+		// 	layout,
+		// 	layout === 'First_page_img_1_reading_notes',
 		// );
 		if (
 			layout === 'Col_2_img_2_layout' ||
 			layout === 'Col_3_img_3_layout' ||
 			layout === 'Col_2_img_1_left_casual_topic' ||
 			layout === 'Col_2_img_1_right_casual_topic' ||
-			layout === 'Col_1_img_1_reading_notes'
+			layout === 'Col_1_img_1_reading_notes' ||
+			layout === 'First_page_img_1_reading_notes' ||
+			layout === 'First_page_img_1_casual_topic'
 		) {
 			return false;
 		} else {
@@ -1360,10 +1359,12 @@ export const ImgModule = ({
 		}
 	};
 
-	const layoutEntry = isSlide
+	let layoutEntry = isSlide
 		? slides[slideIndex]?.layout
 		: // : socialPosts[socialPostsIndex]?.template;
 			socialPosts[socialPostsIndex]?.layout;
+	// Ensure layoutEntry is always a string
+	layoutEntry = Array.isArray(layoutEntry) ? layoutEntry[0] : layoutEntry;
 
 	// console.log('selected img url', selectedImg);
 
@@ -1707,10 +1708,14 @@ export const ImgModule = ({
 							</Rnd>
 							{canEdit && showImgButton && (
 								<div
-									className={`absolute top-2 ${
-										isImgEditMode ? 'left-2' : 'left-4'
+									className={`absolute ${
+										layoutEntry === 'Col_1_img_1_reading_notes'
+											? ' top-1/2 left-1/2 -translate-x-1/2  -translate-y-1/2'
+											: isImgEditMode
+												? 'top-2 left-2'
+												: 'top-2 left-4'
 									}`}
-									style={{ zIndex: 53 }}
+									style={{ zIndex: 100 }}
 								>
 									<ToolBar>
 										{!isImgEditMode && (

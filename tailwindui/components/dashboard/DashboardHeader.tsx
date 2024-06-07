@@ -35,7 +35,7 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
   const { token } = useUser();
 
   return (
-    <div className='flex flex-row items-end w-full z-10 pt-[2rem] px-[2rem]'>
+    <div className='flex flex-row items-end w-full z-40 pt-[2rem] px-[2rem]'>
       <div className='w-full flex flex-wrap items-center justify-between'>
         <div
           className='text-[24px] font-bold leading-[32px] tracking-wide cursor-pointer'

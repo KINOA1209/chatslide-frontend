@@ -140,7 +140,7 @@ const SideBar = ({}: SideBarProps) => {
 		>
 			{/* toggle sidebar button */}
 			<button
-				className={`rounded-full p-1.5 absolute top-5 ${
+				className={`rounded-full p-1.5 absolute top-3 ${
 					isSidebarOpen ? 'left-[202px]' : 'left-[32px]'
 				} focus:outline-none`}
 				onClick={toggleSidebar}
@@ -156,7 +156,7 @@ const SideBar = ({}: SideBarProps) => {
 				{/* drlambda home */}
 
 				<div
-					className={`block flex flex-row items-center gap-2 py-2 ${isSidebarOpen ? 'px-[0.75rem]' : ''} rounded-lg hover:bg-[#F2F4F7] cursor-pointer`}
+					className={`block flex flex-row items-center py-2 mx-auto ${isSidebarOpen ? 'px-[0.75rem]' : ''} rounded-lg hover:bg-[#F2F4F7] cursor-pointer`}
 					onClick={() => router.push('/landing')}
 					role='menuitem'
 					style={{
@@ -198,7 +198,7 @@ const SideBar = ({}: SideBarProps) => {
 			</div>
 			{/* credits and user studies */}
 			<div
-				className={`flex flex-col items-left justify-between ${isSidebarOpen ? 'bg-[#F9FAFB]' : ''}`}
+				className={`flex flex-col items-left justify-between mb-[5rem] ${isSidebarOpen ? 'bg-[#F9FAFB]' : ''}`}
 				style={{
 					marginLeft: 'var(--spacing-xl, 0.5rem)',
 					marginRight: 'var(--spacing-xl, 0.5rem)',
@@ -342,13 +342,6 @@ const SideBar = ({}: SideBarProps) => {
 					</div> */}
 				</div>
 			</div>
-
-			<hr
-				style={{
-					borderTop: '1px solid var(--Colors-Border-border-secondary, #EAECF0)',
-					margin: '0.75rem 0.5rem 0.75rem 0.5rem',
-				}}
-			/>
 
 			<GoogleAnalytics />
 		</header>

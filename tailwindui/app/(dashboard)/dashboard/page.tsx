@@ -65,7 +65,7 @@ export default function Dashboard() {
 
   const fetchProjects = async () => {
     try {
-      const currentTeam = localStorage.getItem('currentTeam') || '';
+      const currentTeam = sessionStorage.getItem('currentTeam') || '';
       console.log('current team', currentTeam);
       const response = isTeamMode && !NoTeam
         ? await TeamService.getTeamProjects(currentTeam, token)
@@ -134,8 +134,10 @@ export default function Dashboard() {
         router.push('/team');
       } else {
         setCurrentTeam(response.all_teams[0]);
-        localStorage.setItem('currentTeam', response.all_teams[0]);
+        sessionStorage.setItem('currentTeam', response.all_teams[0]);
       }
+    } else {
+      sessionStorage.removeItem('currentTeam');
     }
     fetchProjects();
     const surveyFinished = await UserService.checkSurveyFinished(token);
@@ -179,9 +181,7 @@ export default function Dashboard() {
   };
 
   const handleStartNewProject = () => {
-    sessionStorage.clear();
-    console.log('team', currentTeam);
-    sessionStorage.setItem('team', currentTeam);
+    console.log('currentTeam', sessionStorage.getItem('currentTeam'));
     router.push('/type-choice');
   };
 

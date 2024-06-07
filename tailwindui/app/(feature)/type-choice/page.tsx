@@ -1,7 +1,7 @@
 'use client';
 
 import React, { FC, useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import '@/app/css/workflow-scenario-choice.css';
 import workflowTypeOptions from './options';
 import { BackButton } from '@/components/button/DrlambdaButton';
@@ -11,10 +11,13 @@ import { useUser } from '@/hooks/use-user';
 import useHydrated from '@/hooks/use-hydrated';
 import { ScenarioOption } from '../scenario-choice/slidesScenarios';
 import ScenarioButton from './ScenarioButton';
+import SessionStorage from '@/utils/SessionStorage';
 
 const ScenarioChoicePage = () => {
 	const router = useRouter(); // Initialize the router
 	const { username } = useUser();
+
+	const teamMode = SessionStorage.getItem('currentTeam');
 
 	// Function to navigate to the "scenario-choice" page
 	const navigate = (type: string) => {
@@ -32,7 +35,11 @@ const ScenarioChoicePage = () => {
 	return (
 		<div className='flex flex-col flex-grow justify-center items-center relative'>
 			<div className='absolute hidden sm:block top-5 left-5'>
-				<BackButton href='/dashboard' dark={true} text='Dashboard' />
+				{!teamMode ? (
+					<BackButton href='/dashboard' dark={true} text='Dashboard' />
+				) : (
+					<BackButton href='/dashboard?mode=team' dark={true} text='Team Dashboard' />
+				)}
 				<div className='block md:hidden h-[3rem]' /> {/* Spacer */}
 			</div>
 			<Column width='100vw'>
