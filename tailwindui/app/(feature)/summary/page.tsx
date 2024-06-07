@@ -44,6 +44,7 @@ import GenModeToggle from '@/components/summary/GenModeToggle';
 import { WrappableRow } from '@/components/layout/WrappableRow';
 import { InputBox, NewInputBox } from '@/components/ui/InputBox';
 import RadioButton from '@/components/ui/RadioButton';
+import SessionStorage from '@/utils/SessionStorage';
 
 const MAX_TOPIC_LENGTH = 3000;
 const MIN_TOPIC_LENGTH = 3;
@@ -372,7 +373,7 @@ export default function Topic() {
 
 		const project_id = project?.id || '';
 		const knowledge_summary = project?.knowledge_summary || '';
-		const team_id =  sessionStorage.getItem('currentTeam') || '';
+		const team_id =  SessionStorage.getItem('currentTeam') || '';
 		setIsSubmitting(true);
 
 		const formData = {

@@ -65,7 +65,7 @@ export default function Dashboard() {
 
   const fetchProjects = async () => {
     try {
-      const currentTeam = sessionStorage.getItem('currentTeam') || '';
+      const currentTeam = SessionStorage.getItem('currentTeam') || '';
       console.log('current team', currentTeam);
       const response = isTeamMode && !NoTeam
         ? await TeamService.getTeamProjects(currentTeam, token)
@@ -181,7 +181,7 @@ export default function Dashboard() {
   };
 
   const handleStartNewProject = () => {
-    console.log('currentTeam', sessionStorage.getItem('currentTeam'));
+    console.log('currentTeam', SessionStorage.getItem('currentTeam'));
     router.push('/type-choice');
   };
 
