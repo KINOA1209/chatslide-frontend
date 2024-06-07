@@ -179,10 +179,15 @@ export default function Dashboard() {
   };
 
   const handleStartNewProject = () => {
-    sessionStorage.clear();
-    console.log('team', currentTeam);
-    sessionStorage.setItem('team', currentTeam);
-    router.push('/type-choice');
+    if(mode !== 'team'){
+      localStorage.removeItem('currentTeam');
+    } else {
+       console.log('currentTeam', localStorage.getItem('currentTeam'));
+    }
+    if(currentTeam)
+      router.push('/type-choice?mode=team');
+    else
+      router.push('/type-choice');
   };
 
   const handleCreateFolderClick = () => {
