@@ -56,6 +56,7 @@ type Project = {
 	social_platform?: string;
 	social_posts?: string;
 	parsed_socialPosts?: SocialPostSlide[];
+	team_id?: string;
 };
 
 export default Project;
