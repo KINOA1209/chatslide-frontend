@@ -206,7 +206,7 @@ const TeamModal: React.FC<TeamModalProps> = ({
 								</div>
 								<div className='mt-2'>
 									<p>
-										Currently you have {maxMembers} seats, and you have{' '}
+										Currently you have {maxMembers} seat(s), and you have{' '}
 										{members?.length} member(s). Purchase new seat to increase
 										the limit.
 									</p>
