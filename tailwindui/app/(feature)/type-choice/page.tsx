@@ -11,12 +11,13 @@ import { useUser } from '@/hooks/use-user';
 import useHydrated from '@/hooks/use-hydrated';
 import { ScenarioOption } from '../scenario-choice/slidesScenarios';
 import ScenarioButton from './ScenarioButton';
+import SessionStorage from '@/utils/SessionStorage';
 
 const ScenarioChoicePage = () => {
 	const router = useRouter(); // Initialize the router
 	const { username } = useUser();
 
-	const teamMode = sessionStorage.getItem('currentTeam');
+	const teamMode = SessionStorage.getItem('currentTeam');
 
 	// Function to navigate to the "scenario-choice" page
 	const navigate = (type: string) => {
