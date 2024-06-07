@@ -24,6 +24,7 @@ import ImagePosition from '@/models/ImagePosition';
 import { lightColorPalette, darkColorPalette } from './palette';
 import { useSlides } from '@/hooks/use-slides';
 import '@/components/socialPost/quillEditor.scss';
+import { useProject } from '@/hooks/use-project';
 
 const QuillEditable = dynamic(
 	() => import('@/components/slides/quillEditorSlide'),
@@ -96,6 +97,8 @@ export const templateDispatch = (
 		hasSelectedCustomizedTemplateContentFontColor,
 	} = useSlides();
 	const { isPaidUser, token } = useUser();
+	const { project } = useProject();
+	const language = project?.language || 'English'
 
 	// for col1img1 layout, maxHeight would be 160px, for col2img2 140px; for col2img1 it's 280px, for col3img3 it's 130px; for col1img0 280px; for col2img0 280px; for col3img0 280px
 	const maxContentTextAreaHeight = (layout: LayoutKeys) => {
@@ -267,6 +270,13 @@ export const templateDispatch = (
 		templateKey as TemplateKeys,
 		slide.layout as keyof typeof layoutOptions,
 	);
+	const dynamicStyle: CSSProperties = {
+		...(language === 'Arabic' || language === 'Hebrew' ? {
+		  direction: 'rtl' as 'rtl',
+		  textAlign: 'right'
+		} : {}),
+	};
+
 	const generateContentElement = (
 		content: string | string[],
 		contentTag: SlideKeys,
@@ -274,13 +284,16 @@ export const templateDispatch = (
 		isVerticalContent: boolean,
 		contentIndex?: number,
 	) => {
+		const isRTL = language === 'Arabic' || language === 'Hebrew';
+
 		if (!canEdit || !isCurrentSlide) {
 			return (
 				<div
-					className='ql-editor non-editable-ql-editor'
+					className={`ql-editor non-editable-ql-editor ${isRTL ? 'rtl' : ''}`}
 					style={{
 						...style,
 						outline: 'none',
+						...dynamicStyle
 					}}
 				>
 					{Array.isArray(content) ? (

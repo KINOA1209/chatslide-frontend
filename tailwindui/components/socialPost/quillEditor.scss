@@ -48,6 +48,19 @@
 	margin-top: -0.15em;
 }
 
+.ql-editor.non-editable-ql-editor.rtl li {
+	padding-left: 0px !important; 
+	padding-right: 32px !important;
+}
+
+.ql-editor.non-editable-ql-editor.rtl ul li::before {
+    content: '• ';
+    position: absolute;
+    margin-right: -0.55em;
+    font-size: 22px;
+    margin-top: -0.15em;
+}
+
 .ql-editor.non-editable-ql-editor-socialpost ul li::before {
 	content: '• '; /* Unicode bullet symbol */
 	position: absolute;
