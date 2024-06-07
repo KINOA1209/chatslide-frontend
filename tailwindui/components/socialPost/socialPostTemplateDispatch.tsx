@@ -204,7 +204,26 @@ export const templateDispatch = (
 		if (wordCount > 15) {
 			currLayout = 'Col_1_img_0_reading_notes';
 		} else {
-			currLayout = 'Col_1_img_1_reading_notes';
+			currLayout = currLayout;
+		}
+	}
+
+	// solve the problem of casual topic classic template col2img1 layout too much text seems clutter problem, choose another layout to display
+	if (
+		!isLastPage &&
+		index !== 0 &&
+		validTemplate_theme === 'classic' &&
+		post_type === 'casual_topic'
+	) {
+		const bulletsCount = slide.content.length;
+		const maxWordCount = slide.content.reduce(
+			(acc, bullet) => acc + bullet.split(' ').length,
+			0,
+		);
+		if (maxWordCount > 40) {
+			currLayout = 'Col_1_img_0_casual_topic';
+		} else {
+			currLayout = currLayout; // unchanged
 		}
 	}
 
@@ -388,7 +407,7 @@ export const templateDispatch = (
 				user_name={
 					isPaidUser ? (
 						generateContentElement(
-							currUserName,
+							slide.user_name || currUserName,
 							// currUserName,
 							'user_name',
 							{
@@ -522,7 +541,7 @@ export const templateDispatch = (
 					isPaidUser ? (
 						generateContentElement(
 							// slide.user_name,
-							currUserName,
+							slide.user_name || currUserName,
 							'user_name',
 							{
 								...(themeElements?.userNameCSS || {}),
