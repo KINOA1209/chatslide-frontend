@@ -204,7 +204,7 @@ export const templateDispatch = (
 		if (wordCount > 15) {
 			currLayout = 'Col_1_img_0_reading_notes';
 		} else {
-			currLayout = 'Col_1_img_1_reading_notes';
+			currLayout = currLayout;
 		}
 	}
 

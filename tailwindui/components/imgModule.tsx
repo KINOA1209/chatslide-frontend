@@ -1661,10 +1661,14 @@ export const ImgModule = ({
 							</Rnd>
 							{canEdit && showImgButton && (
 								<div
-									className={`absolute top-2 ${
-										isImgEditMode ? 'left-2' : 'left-4'
+									className={`absolute ${
+										layoutEntry === 'Col_1_img_1_reading_notes'
+											? ' top-1/2 left-1/2 -translate-x-1/2  -translate-y-1/2'
+											: isImgEditMode
+												? 'top-2 left-2'
+												: 'top-2 left-4'
 									}`}
-									style={{ zIndex: 53 }}
+									style={{ zIndex: 100 }}
 								>
 									<ToolBar>
 										{!isImgEditMode && (
