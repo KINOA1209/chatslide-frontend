@@ -100,7 +100,7 @@ const Modal: React.FC<ModalProps> = ({
 
 	return (
 		<Transition
-			className='h-[100vh] w-[100vw] z-40 bg-slate-200/80 fixed top-0 left-0 flex flex-col items-center justify-center'
+			className='h-[100vh] w-[100vw] z-40 bg-[#121212B2]/70 fixed top-0 left-0 flex flex-col items-center justify-center'
 			show={showModal}
 			onClick={() => {
 				if (clickOutsideToClose) {
@@ -117,7 +117,7 @@ const Modal: React.FC<ModalProps> = ({
 		>
 			{/* ${position} bg-white rounded-lg shadow max-w-full sm:max-w-[80%] lg:max-w-[60%] xl:max-w-[50%] max-h-[90%] overflow-y-hidden mx-2 p-2 sm:p-4 */}
 			<Transition
-				className={`${position} bg-white rounded-lg shadow max-w-full dpr:max-w-full max-h-full md:max-w-[90%] lg:max-w-[80%] xl:max-w-[70%] overflow-y-scroll mx-2 p-2 sm:p-4`}
+				className={`modal-dialog-box ${position} bg-white rounded-lg shadow max-w-full dpr:max-w-full max-h-full md:max-w-[90%] lg:max-w-[80%] xl:max-w-[70%] overflow-y-scroll mx-2 p-2 sm:p-4`}
 				show={showModal}
 				enter='transition ease duration-500 transform delay-300'
 				enterFrom='opacity-0 translate-y-12'
@@ -133,21 +133,38 @@ const Modal: React.FC<ModalProps> = ({
 			>
 				<div className='relative flex flex-col gap-y-4'>
 					{/* Close button */}
-					{canClose && (
-						<button
-							id='close-modal'
-							className='absolute top-0 right-0 text-xl focus:outline-none'
-							onClick={handleCloseModal}
-						>
-							<FaTimes className='text-gray-600 hover:text-gray-800' />
-						</button>
-					)}
-
-					{title && (
-						<div className='w-full felx flex-col items-center justify-center '>
-							<Title>{title}</Title>
-						</div>
-					)}
+					<div
+						className='modal-title-and-close-button relative flex flex-row'
+						style={{ alignItems: 'center', justifyContent: 'space-between' }}
+					>
+						{title && (
+							<div className='w-full felx flex-col items-center justify-center '>
+								<Title center={false}>{title}</Title>
+							</div>
+						)}
+						{canClose && (
+							<div
+								style={{
+									display: 'flex',
+									alignItems: 'center',
+									padding: '6px',
+									borderRadius: '32px',
+									width: '36px',
+									height: '36px',
+									border: '1px solid var(--Grey-02, #EBEFF2)',
+								}}
+							>
+								<button
+									id='close-modal'
+									// className='absolute top-0 right-0 text-[24px] focus:outline-none'
+									className='text-[24px] focus:outline-none'
+									onClick={handleCloseModal}
+								>
+									<FaTimes className='text-gray-600 hover:text-gray-800' />
+								</button>
+							</div>
+						)}
+					</div>
 
 					{description && <Explanation>{description}</Explanation>}
 

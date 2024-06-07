@@ -60,6 +60,14 @@ import { LayoutKeys } from './slides/slideLayout';
 import { Media } from '@/models/Slide';
 import YoutubeEmbed from './utils/YoutubeEmbed';
 import { SocialPostLayoutKeys } from './socialPost/socialPostLayouts';
+import { IoMdSearch } from 'react-icons/io';
+import { BsStars } from 'react-icons/bs';
+import { PiFiles } from 'react-icons/pi';
+import { MdOutlineAddChart } from 'react-icons/md';
+import { SlSocialYoutube } from 'react-icons/sl';
+import { CiSearch } from 'react-icons/ci';
+// import material tailwind component
+import { Select, Option } from '@/components/ui/MaterialTailwindComponents';
 
 interface ImgModuleProp {
 	imgsrc: string;
@@ -121,7 +129,7 @@ const imageLicenseOptions: RadioButtonOption[] = [
 	{
 		value: 'icon',
 		text: 'Icon',
-	}
+	},
 ];
 
 const getImageLicenseExplanation = (license: string) => {
@@ -674,19 +682,18 @@ export const ImgModule = ({
 				}}
 				className='w-full flex flex-col gap-y-2'
 			>
+				{/* search box input area */}
 				<div>
-					<RadioButton
-						options={imageLicenseOptions}
-						selectedValue={imageLicense}
-						setSelectedValue={setImageLicense}
-						name='imageLicense'
-						cols={3}
-					/>
-
-					<Explanation>{getImageLicenseExplanation(imageLicense)}</Explanation>
-				</div>
-				<div>
+					<span>Search</span>
 					<InputBox>
+						{searching ? (
+							<SpinIcon />
+						) : (
+							<button type='submit'>
+								{/* <FaSearch className='h-[20px] w-[20px] text-gray-400' /> */}
+								<CiSearch className='h-[20px] w-[20px] text-gray-400'></CiSearch>
+							</button>
+						)}
 						<input
 							id='search_keyword'
 							type='text'
@@ -702,20 +709,41 @@ export const ImgModule = ({
 							}}
 							value={keyword}
 						/>
-						{searching ? (
-							<SpinIcon />
-						) : (
-							<button type='submit'>
-								<FaSearch className='h-[24px] w-[24px] text-gray-400' />
-							</button>
-						)}
 					</InputBox>
 
 					<WordSelector text={getSearchText()} setQuery={setKeyword} />
 				</div>
+				{/* Image type selection */}
+				<div className='w-full'>
+					<span>Image Type</span>
+					{/* <RadioButton
+						options={imageLicenseOptions}
+						selectedValue={imageLicense}
+						setSelectedValue={setImageLicense}
+						name='imageLicense'
+						cols={3}
+					/>
+
+					<Explanation>{getImageLicenseExplanation(imageLicense)}</Explanation> */}
+					<Select
+						// label='Select Image License'
+						value={imageLicense}
+						onChange={(val) => setImageLicense(val || 'all')} // Ensure val is a string
+					>
+						{imageLicenseOptions.map((option) => (
+							<Option key={option.value} value={option.value}>
+								<span className='font-bold'>{option.text}</span>{' '}
+								<span className='font-normal'>
+									{getImageLicenseExplanation(option.value)}
+								</span>
+							</Option>
+						))}
+					</Select>
+				</div>
 			</form>
-			<div className='w-full h-full overflow-y-auto p-1'>
-				<div className='w-full h-fit grid grid-cols-3 md:grid-cols-5 gap-1 md:gap-2'>
+			{/* Search result images display area */}
+			<div className='search-result-images w-full h-[350px] overflow-y-scroll p-1'>
+				<div className='w-full h-fit grid grid-cols-2 gap-1 md:gap-2'>
 					{searchResult.map((url, index) => {
 						if (url === selectedImg) {
 							return (
@@ -726,7 +754,9 @@ export const ImgModule = ({
 								>
 									<Image
 										src={url} // URL of the image
-										unoptimized={!url?.includes('freepik') && !url.includes('icons8')}
+										unoptimized={
+											!url?.includes('freepik') && !url.includes('icons8')
+										}
 										alt='searched image'
 										layout='responsive'
 										objectFit='contain' // This will keep the aspect ratio and make sure the image fits within the container
@@ -745,7 +775,11 @@ export const ImgModule = ({
 								>
 									<Image
 										src={url} // URL of the image
-										unoptimized={url?.includes('freepik') || url?.includes('icons8') ? false : true}
+										unoptimized={
+											url?.includes('freepik') || url?.includes('icons8')
+												? false
+												: true
+										}
 										alt='selected image'
 										layout='responsive'
 										objectFit='contain' // This will keep the aspect ratio and make sure the image fits within the container
@@ -1338,92 +1372,107 @@ export const ImgModule = ({
 			{/* select image modal */}
 			{createPortal(
 				<Modal showModal={showModal} setShowModal={setShowModal} title='Media'>
-					<div className='flex grow h-[400px] w-full sm:w-[600px] flex-col overflow-auto'>
-						<div className='w-full flex flex-col' ref={typeRef}>
-							<div className='w-full grid grid-cols-5'>
-								<button
-									className='cursor-pointer whitespace-nowrap py-2 flex flex-row justify-center items-center'
-									onClick={(e) => {
-										setSelectedQueryMode(ImgQueryMode.SEARCH);
-										setSearchResult([]);
-										// setKeyword('');
-									}}
-									onMouseOver={(e) => {
-										handleMouseOver(e, ImgQueryMode.SEARCH);
-									}}
-									onMouseOut={(e) => {
-										handleMouseOut(e, ImgQueryMode.SEARCH);
-									}}
-								>
-									Search
-								</button>
-								<button
-									className='cursor-pointer whitespace-nowrap py-2 flex flex-row justify-center items-center'
-									onClick={(e) => {
-										setSelectedQueryMode(ImgQueryMode.RESOURCE);
-										setSearchResult([]);
-										// setKeyword('');
-									}}
-									onMouseOver={(e) => {
-										handleMouseOver(e, ImgQueryMode.RESOURCE);
-									}}
-									onMouseOut={(e) => {
-										handleMouseOut(e, ImgQueryMode.RESOURCE);
-									}}
-								>
-									My Uploads
-								</button>
-								<button
-									className='cursor-pointer whitespace-nowrap py-2 flex flex-row justify-center items-center'
-									onClick={(e) => {
-										setSelectedQueryMode(ImgQueryMode.GENERATION);
-										setSearchResult([]);
-										// setKeyword('');
-									}}
-									onMouseOver={(e) => {
-										handleMouseOver(e, ImgQueryMode.GENERATION);
-									}}
-									onMouseOut={(e) => {
-										handleMouseOut(e, ImgQueryMode.GENERATION);
-									}}
-								>
-									Generate
-								</button>
-								<button
-									className='cursor-pointer whitespace-nowrap py-2 flex flex-row justify-center items-center'
-									onClick={(e) => {
-										setSelectedQueryMode(ImgQueryMode.CHART_SELECTION);
-										setSearchResult([]);
-										// setKeyword('');
-									}}
-									onMouseOver={(e) => {
-										handleMouseOver(e, ImgQueryMode.CHART_SELECTION);
-									}}
-									onMouseOut={(e) => {
-										handleMouseOut(e, ImgQueryMode.CHART_SELECTION);
-									}}
-								>
-									Chart
-								</button>
-								<button
-									className='cursor-pointer whitespace-nowrap py-2 flex flex-row justify-center items-center'
-									onClick={(e) => {
-										setSelectedQueryMode(ImgQueryMode.EMBED_CODE);
-										setSearchResult([]);
-										// setKeyword('');
-									}}
-									onMouseOver={(e) => {
-										handleMouseOver(e, ImgQueryMode.EMBED_CODE);
-									}}
-									onMouseOut={(e) => {
-										handleMouseOut(e, ImgQueryMode.EMBED_CODE);
-									}}
-								>
-									YouTube
-								</button>
-							</div>
+					{/* <div className='flex grow h-[400px] w-full sm:w-[600px] flex-col overflow-auto'> */}
+					<div className='grow h-[400px] w-full sm:w-[600px] grid grid-cols-4 overflow-auto'>
+						{/* the different choices tab */}
+						<div
+							className='tab-choices w-full flex flex-col col-span-1'
+							ref={typeRef}
+						>
+							{/* <div className='w-full grid grid-cols-5'> */}
+							{/* <div className='w-full flex flex-col'> */}
+							<span>Image</span>
+							<button
+								className='cursor-pointer whitespace-nowrap py-2 flex flex-row justify-center items-center'
+								onClick={(e) => {
+									setSelectedQueryMode(ImgQueryMode.SEARCH);
+									setSearchResult([]);
+									// setKeyword('');
+								}}
+								onMouseOver={(e) => {
+									handleMouseOver(e, ImgQueryMode.SEARCH);
+								}}
+								onMouseOut={(e) => {
+									handleMouseOut(e, ImgQueryMode.SEARCH);
+								}}
+							>
+								<IoMdSearch />
+								<span>Search</span>
+							</button>
+							<button
+								className='cursor-pointer whitespace-nowrap py-2 flex flex-row justify-center items-center'
+								onClick={(e) => {
+									setSelectedQueryMode(ImgQueryMode.GENERATION);
+									setSearchResult([]);
+									// setKeyword('');
+								}}
+								onMouseOver={(e) => {
+									handleMouseOver(e, ImgQueryMode.GENERATION);
+								}}
+								onMouseOut={(e) => {
+									handleMouseOut(e, ImgQueryMode.GENERATION);
+								}}
+							>
+								<BsStars />
+								<span>AI Generate</span>
+							</button>
+							<button
+								className='cursor-pointer whitespace-nowrap py-2 flex flex-row justify-center items-center'
+								onClick={(e) => {
+									setSelectedQueryMode(ImgQueryMode.RESOURCE);
+									setSearchResult([]);
+									// setKeyword('');
+								}}
+								onMouseOver={(e) => {
+									handleMouseOver(e, ImgQueryMode.RESOURCE);
+								}}
+								onMouseOut={(e) => {
+									handleMouseOut(e, ImgQueryMode.RESOURCE);
+								}}
+							>
+								<PiFiles />
+								<span>My Uploads</span>
+							</button>
+
+							<span>Graph</span>
+							<button
+								className='cursor-pointer whitespace-nowrap py-2 flex flex-row justify-center items-center'
+								onClick={(e) => {
+									setSelectedQueryMode(ImgQueryMode.CHART_SELECTION);
+									setSearchResult([]);
+									// setKeyword('');
+								}}
+								onMouseOver={(e) => {
+									handleMouseOver(e, ImgQueryMode.CHART_SELECTION);
+								}}
+								onMouseOut={(e) => {
+									handleMouseOut(e, ImgQueryMode.CHART_SELECTION);
+								}}
+							>
+								<MdOutlineAddChart />
+								<span>Chart</span>
+							</button>
+							<span>Embed</span>
+							<button
+								className='cursor-pointer whitespace-nowrap py-2 flex flex-row justify-center items-center'
+								onClick={(e) => {
+									setSelectedQueryMode(ImgQueryMode.EMBED_CODE);
+									setSearchResult([]);
+									// setKeyword('');
+								}}
+								onMouseOver={(e) => {
+									handleMouseOver(e, ImgQueryMode.EMBED_CODE);
+								}}
+								onMouseOut={(e) => {
+									handleMouseOut(e, ImgQueryMode.EMBED_CODE);
+								}}
+							>
+								<SlSocialYoutube />
+								<span>Youtube</span>
+							</button>
+							{/* </div> */}
 							{/* sliding animation */}
-							<div className='w-full bg-slate-200 mb-2'>
+							{/* <div className='w-full bg-slate-200 mb-2'>
 								<div
 									className={`w-1/5 h-[2px] bg-black
 										${hoverQueryMode == ImgQueryMode.SEARCH && 'ml-0'} 
@@ -1433,11 +1482,11 @@ export const ImgModule = ({
 										${hoverQueryMode == ImgQueryMode.EMBED_CODE && 'ml-[80%]'} 
                                 		transition-all ease-in-out`}
 								></div>
-							</div>
+							</div> */}
 						</div>
 
-						{/* tab divs */}
-						<div className='overflow-grow'>
+						{/* tab divs contents */}
+						<div className='tab-divs-contents col-span-3'>
 							{selectedQueryMode == ImgQueryMode.RESOURCE &&
 								resourceSelectionDiv}
 							{selectedQueryMode == ImgQueryMode.SEARCH && imgSearchDiv}
@@ -1615,7 +1664,11 @@ export const ImgModule = ({
 								}}
 							>
 								<Image
-									unoptimized={imgsrc?.includes('freepik') || imgsrc?.includes('icons8') ? false : true}
+									unoptimized={
+										imgsrc?.includes('freepik') || imgsrc?.includes('icons8')
+											? false
+											: true
+									}
 									style={{
 										//dont use contain, it will make resize feature always resize based on aspect ratio
 										objectFit: 'fill',
