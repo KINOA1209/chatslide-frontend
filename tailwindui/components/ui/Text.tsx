@@ -19,7 +19,7 @@ const Title: React.FC<{ center?: boolean; children: React.ReactNode }> = ({
 
 const SmallTitle: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 	return (
-		<div className='block text-grey-700 text-sm font-bold mb-2'>
+		<div className='block text-grey-700 text-md font-bold mb-2'>
 			{children}
 		</div>
 	);
