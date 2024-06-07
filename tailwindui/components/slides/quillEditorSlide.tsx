@@ -17,6 +17,7 @@ import ReactDOMServer from 'react-dom/server';
 import { useChatHistory } from '@/hooks/use-chat-history';
 import { Delta } from 'quill/core';
 import List, { ListContainer } from 'quill/formats/list';
+import { useProject } from '@/hooks/use-project';
 
 type QuillEditableProps = {
 	content: string | string[];
@@ -193,6 +194,7 @@ const toolbarOptions = [
 		{ background: [] },
 	],
 	[{ align: '' }, { align: 'center' }, { align: 'right' }, 'link', 'clean'],
+	[{ direction: 'rtl' }],
 ];
 
 const regenerateIconSVG = `
@@ -239,6 +241,8 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 	const editorRef = useRef<HTMLDivElement>(null);
 	const quillInstanceRef = useRef<Quill | null>(null);
 	const isTextChangeRef = useRef(false);
+	const { project } = useProject();
+	const language = project?.language || 'English'
 	const [hoveredSentence, setHoveredSentence] = useState({
 		text: '',
 		start: 0,
@@ -352,6 +356,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 						style?.fontStyle === 'italic' ? 'italic' : 'normal',
 					);
 					this.format('align', style?.textAlign || 'left');
+					this.format('direction', language === 'Arabic' || language === 'Hebrew' ? 'rtl' : 'ltr',)
 				}
 
 				static tagName = 'P';
@@ -372,6 +377,9 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 							break;
 						case 'align':
 							this.domNode.style.textAlign = value;
+							break;
+						case 'direction':
+							this.domNode.style.direction = value;
 							break;
 						default:
 							super.format(name, value);
@@ -450,8 +458,12 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 						: undefined,
 				font: style?.fontFamily,
 				align: style?.textAlign || 'left',
+				direction: language === 'Arabic' || language === 'Hebrew' ? 'rtl' : 'ltr'
 			};
 
+			if (language === 'Arabic' || language === 'Hebrew') {
+				quillFormats.align = 'right'
+			}
 			const toolbar = quillInstanceRef.current.getModule('toolbar') as any;
 			// clean logic redesign
 			// remove all the formatting except bullet point related style first
