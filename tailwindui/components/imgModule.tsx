@@ -1373,11 +1373,15 @@ export const ImgModule = ({
 			{createPortal(
 				<Modal showModal={showModal} setShowModal={setShowModal} title='Media'>
 					{/* <div className='flex grow h-[400px] w-full sm:w-[600px] flex-col overflow-auto'> */}
-					<div className='grow h-[400px] w-full sm:w-[600px] grid grid-cols-4 overflow-auto'>
+					<div
+						className='grow h-[400px] w-full sm:w-[600px] grid grid-cols-4 overflow-auto'
+						style={{ borderTop: '1px solid #E7E9EB' }}
+					>
 						{/* the different choices tab */}
 						<div
 							className='tab-choices w-full flex flex-col col-span-1'
 							ref={typeRef}
+							style={{ borderRight: '1px solid #E7E9EB' }}
 						>
 							{/* <div className='w-full grid grid-cols-5'> */}
 							{/* <div className='w-full flex flex-col'> */}
