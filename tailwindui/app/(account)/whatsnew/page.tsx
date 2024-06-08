@@ -47,7 +47,8 @@ export default function Studio() {
 
 					<Instruction>
 						<div>
-							<b>➡️ Right to Left Layouts </b> If you start a project in Arabic or Hebrew, the text will align from right to left.
+							<b>➡️ Right to Left Layouts </b> If you start a project in Arabic
+							or Hebrew, the text will align from right to left.
 						</div>
 					</Instruction>
 
@@ -55,6 +56,12 @@ export default function Studio() {
 						<div>
 							<b>🐞 Bug Fixes: </b> We have fixed a number of bugs, including
 							issues with downloading images, exporting files, and more.
+						</div>
+					</Instruction>
+
+					<Instruction>
+						<div>
+							<b>💲 Price Adjustments: </b> The lifetime price for ULTIMATE will increase on June 11th. 
 						</div>
 					</Instruction>
 				</Card>
