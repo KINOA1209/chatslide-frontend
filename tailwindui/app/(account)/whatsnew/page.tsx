@@ -19,12 +19,45 @@ export default function Studio() {
 						🎰 Directly add scripts, voiceover, and avatar to PPTX
 					</Instruction>
 
-					<Instruction>📓 Teams features</Instruction>
-
 					<FeedbackButton
 						instructionText='What features would you like to see next?'
 						displayText='Ask for more features!'
 					/>
+				</Card>
+
+				<Card>
+					<BigTitle>June 8</BigTitle>
+
+					<Instruction>
+						<div>
+							<b>👔 Teams (Beta): </b> You can purchase new seats for your team.
+							One seat costs $99 (lifetime). All invited team members will have
+							the same access as your tier, and you can share the projects with
+							them.
+						</div>
+					</Instruction>
+
+					<Instruction>
+						<div>
+							<b>📄 Apply Branding to One Page: </b> You can now select to apply
+							branding choices (logo, logo position, background) to only one
+							specific page
+						</div>
+					</Instruction>
+
+					<Instruction>
+						<div>
+							<b>➡️ Right to Left Layouts </b> Now the bullet points can support
+							right to left, best for Arabic and Hebrew languages.
+						</div>
+					</Instruction>
+
+					<Instruction>
+						<div>
+							<b>🐞 Bug Fixes: </b> We have fixed a number of bugs, including
+							issues with downloading images, exporting files, and more.
+						</div>
+					</Instruction>
 				</Card>
 
 				<Card>
