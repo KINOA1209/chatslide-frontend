@@ -32,7 +32,7 @@ export default function Studio() {
 						<div>
 							<b>👔 Teams (Beta): </b> You can purchase new seats for your team.
 							One seat costs $99 (lifetime). All invited team members will have
-							the same access as your tier, and you can share the projects with
+							the same access to PRO tier, and you can share the projects with
 							them.
 						</div>
 					</Instruction>
