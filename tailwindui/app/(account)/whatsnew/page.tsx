@@ -41,14 +41,13 @@ export default function Studio() {
 						<div>
 							<b>📄 Apply Branding to One Page: </b> You can now select to apply
 							branding choices (logo, logo position, background) to only one
-							specific page
+							specific page.
 						</div>
 					</Instruction>
 
 					<Instruction>
 						<div>
-							<b>➡️ Right to Left Layouts </b> Now the bullet points can support
-							right to left, best for Arabic and Hebrew languages.
+							<b>➡️ Right to Left Layouts </b> If you start a project in Arabic or Hebrew, the text will align from right to left.
 						</div>
 					</Instruction>
 
