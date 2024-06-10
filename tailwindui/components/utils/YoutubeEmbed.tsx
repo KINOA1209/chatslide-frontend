@@ -1,6 +1,7 @@
 import React from 'react';
 import { toast } from 'react-toastify';
 import { LayoutKeys } from '../slides/slideLayout';
+import { Explanation } from '../ui/Text';
 
 interface YoutubeEmbedProps {
 	link: string;
@@ -67,7 +68,7 @@ const YoutubeEmbed: React.FC<YoutubeEmbedProps> = ({
 		// 	theme: 'light',
 		// 	containerId: 'slides',
 		// });
-		return <div>Invalid YouTube link</div>;
+		return <Explanation>Invalid YouTube link</Explanation>;
 	}
 
 	const iframeStyle: React.CSSProperties = {

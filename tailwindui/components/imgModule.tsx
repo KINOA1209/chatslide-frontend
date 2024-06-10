@@ -1004,7 +1004,7 @@ export const ImgModule = ({
 			<ToastContainer />
 
 			<Explanation>
-				This is beta feature. Only Youtube video link is supported for now.
+				Only Youtube video link is supported for now.
 			</Explanation>
 
 			<NewInputBox
