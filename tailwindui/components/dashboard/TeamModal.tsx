@@ -9,6 +9,8 @@ import UserService from '@/services/UserService';
 import { useUser } from '@/hooks/use-user';
 import { toast } from 'react-toastify';
 import { userInEU } from '@/utils/userLocation';
+import { Team } from '@/models/Team';
+import { useTeam } from '@/hooks/use-team';
 
 interface TeamMember {
 	id: string;
@@ -28,7 +30,6 @@ const TeamModal: React.FC<TeamModalProps> = ({
 	setShowModal,
 	teamId,
 }) => {
-	const [teamName, setTeamName] = useState<string>('');
 	const [members, setMembers] = useState<TeamMember[]>([]);
 	const [newMemberEmail, setNewMemberEmail] = useState<string>('');
 	const [inviteCode, setInviteCode] = useState<string>('');
@@ -36,6 +37,8 @@ const TeamModal: React.FC<TeamModalProps> = ({
 	const [isOwner, setIsOwner] = useState<boolean>(false);
 	const { token, email, username } = useUser();
 	const [currency, setCurrency] = useState('$');
+
+  const { team, initTeam } = useTeam();
 
 	useEffect(() => {
 		userInEU().then((res) => {
@@ -85,6 +88,7 @@ const TeamModal: React.FC<TeamModalProps> = ({
 	const fetchTeamDetails = async () => {
 		try {
 			const data = await TeamService.getTeamDetails(teamId, token);
+      initTeam(data as Team);
 			setMaxMembers(data.max_members);
 			setInviteCode(data.invitation_code);
 		} catch (err) {

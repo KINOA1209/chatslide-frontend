@@ -10,7 +10,9 @@ import { useUser } from '@/hooks/use-user';
 import PaywallModal from '@/components/paywallModal';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { BackButton } from '@/components/button/DrlambdaButton';
+import { Column } from '@/components/layout/Column';
+import { Title } from '@/components/ui/Text';
 
 const Team = () => {
 	const [showCreateTeamModal, setShowCreateTeamModal] = useState(false);
@@ -36,55 +38,59 @@ const Team = () => {
 		}
 	};
 
-
 	return (
-		<div className='container mx-auto p-4'>
-			<div className='text-center mb-8'>
-				<h1 className='text-3xl font-semibold'>Welcome to Team Management</h1>
-				<p className='text-gray-600'>
-					Would you like to create a team or join an existing one?
-				</p>
-			</div>
-			<div className='flex flex-col sm:flex-row justify-around items-center'>
-				<ScenarioButton
-					scenario={{
-						id: 'create-team',
-						title: 'Create a Team',
-						featured: true,
-						imageSrc: '/images/scenario/news_report.jpg',
-						previewOnly: false,
-						icon: <FaPlus />,
-					}}
-					navigate={() => (tier.includes('FREE')) ? setShowPaywallModal(true) : setShowCreateTeamModal(true)}
-				/>
-				<ScenarioButton
-					scenario={{
-						id: 'join-team',
-						title: 'Join a Team',
-						featured: true,
-						imageSrc: '/images/scenario/policy_training.jpg',
-						previewOnly: false,
-						icon: <FaPlus />,
-					}}
-					navigate={() => setShowJoinTeamModal(true)}
-				/>
-			</div>
+		<div className='flex flex-col flex-grow justify-center items-center relative'>
+			<Column width='100vw'>
+				{/* title */}
+				<Title>Welcome to team management</Title>
+				{/* <div className='w-[80vh] h-8 text-center text-gray-600 text-base font-normal leading-normal tracking-tight'>
+          {scenarios.description}
+        </div> */}
+				{/* three types of scenarios */}
+				<div
+					className='flex flex-wrap flex-row gap-x-8 gap-y-6 md:gap-6 w-full mx-auto justify-center mt-[2rem]'
+					id='choice_container'
+				>
+					<ScenarioButton
+						scenario={{
+							id: 'create-team',
+							title: 'Create a Team',
+							featured: true,
+							imageSrc: '/images/scenario/news_report.jpg',
+							previewOnly: false,
+							icon: <FaPlus />,
+						}}
+						navigate={() =>
+							tier.includes('FREE')
+								? setShowPaywallModal(true)
+								: setShowCreateTeamModal(true)
+						}
+					/>
+					<ScenarioButton
+						scenario={{
+							id: 'join-team',
+							title: 'Join a Team',
+							featured: true,
+							imageSrc: '/images/scenario/policy_training.jpg',
+							previewOnly: false,
+							icon: <FaPlus />,
+						}}
+						navigate={() => setShowJoinTeamModal(true)}
+					/>
+				</div>
+			</Column>
 
-			{showCreateTeamModal && (
-				<CreateTeamModal
-					showModal={showCreateTeamModal}
-					setShowModal={setShowCreateTeamModal}
-					onConfirm={handleCreateTeam}
-				/>
-			)}
+			<CreateTeamModal
+				showModal={showCreateTeamModal}
+				setShowModal={setShowCreateTeamModal}
+				onConfirm={handleCreateTeam}
+			/>
 
-			{showJoinTeamModal && (
-				<JoinTeamModal
-					showModal={showJoinTeamModal}
-					setShowModal={setShowJoinTeamModal}
-					onConfirm={handleJoinTeam}
-				/>
-			)}
+			<JoinTeamModal
+				showModal={showJoinTeamModal}
+				setShowModal={setShowJoinTeamModal}
+				onConfirm={handleJoinTeam}
+			/>
 
 			<PaywallModal
 				showModal={showPaywallModal}

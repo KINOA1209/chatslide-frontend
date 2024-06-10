@@ -27,6 +27,7 @@ import TextareaAutosize from 'react-textarea-autosize';
 import ResourceService from '@/services/ResourceService';
 import { formatName } from '../summary/util';
 import LANGUAGES from '@/components/language/languageData';
+import SessionStorage from '@/utils/SessionStorage';
 
 const MAX_TOPIC_LENGTH = 128;
 const MIN_TOPIC_LENGTH = 3;
@@ -150,7 +151,7 @@ export default function Topic_SocialPost() {
 			try {
 				console.log('resources', selectedResources);
 				console.log('summarizing resources');
-				const team_id = sessionStorage.getItem('currentTeam') || '';
+				const team_id = SessionStorage.getItem('currentTeam') || '';
 				const response = await ResourceService.summarizeResource(
 					project_id,
 					selectedResources.map((r: Resource) => r.id),

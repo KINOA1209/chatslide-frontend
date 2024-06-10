@@ -7,7 +7,8 @@ import Project from '@/models/Project';
 import Modal from '../ui/Modal';
 import ButtonWithExplanation from '../button/ButtonWithExplanation';
 import { useUser } from '@/hooks/use-user';
-
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const RenameProjectButton: React.FC<{
     project: Project;
@@ -62,9 +63,11 @@ export const RenameProjectButton: React.FC<{
                 );
             } else {
                 const errorData = await response.json();
+                toast.error('Error updating project name: ' + errorData.message);
                 console.error('Error updating project name:', errorData.message);
             }
-        } catch (error) {
+        } catch (error: any) {
+            toast.error('Network error: ' + error.message);
             console.error('Network error:', error);
         }
         setShowRenameProjectModal(false);

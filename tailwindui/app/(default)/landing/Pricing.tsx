@@ -117,11 +117,11 @@ const PricingComparison: React.FC<{
 		// special for lifetime ultimate
 		if (interval === 'lifetime') {
 			if (tier === 'ULTIMATE') {
-				amount = user?.ltd_upgrade_price || 354;
+				amount = user?.ltd_upgrade_price || 472;
 				return (
 					<span className='text-green-600'>
 						{currency + amount.toFixed(2)}
-						<span className='text-xs'>-70%</span>
+						<span className='text-xs'>-60%</span>
 					</span>
 				);
 			} else {

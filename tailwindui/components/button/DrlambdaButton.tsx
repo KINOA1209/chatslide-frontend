@@ -227,7 +227,8 @@ export const BigBlueButton: React.FC<DrlambdaButtonProps> = ({
 						}
 						size='sm'
 						hierarchy='primary'
-						isSubmitting={isSubmitting || disabled}
+						isSubmitting={isSubmitting}
+            buttonStatus={disabled ? 'disabled' : 'enabled'}
 						customButtonStyles={customizeStyle}
 						width={width}
 					>
