@@ -44,7 +44,7 @@ const PAID_TIERS = [
 	'PRO_MONTHLY',
 	'PRO_YEARLY',
 	'PRO_LIFETIME',
-  'ULTIMATE_ONETIME',
+	'ULTIMATE_ONETIME',
 	'ULTIMATE_MONTHLY',
 	'ULTIMATE_YEARLY',
 	'ULTIMATE_LIFETIME',
@@ -116,9 +116,13 @@ export const useUser = () => {
 
 				mixpanel.identify(uid);
 
-        // window.clarity('set', 'usernameInDB', usernameInDB);
-        // window.clarity('set', 'userEmail', emailInDb);
-        // window.clarity('set', 'tier', subscription_tier);
+				if (window.clarity) {
+					window.clarity('set', 'usernameInDB', usernameInDB);
+					window.clarity('set', 'userEmail', emailInDb);
+					window.clarity('set', 'tier', subscription_tier);
+				} else {
+          console.warn('clarity not loaded, are you in local?');
+        }
 
 				setCredits(credits);
 				setTier(subscription_tier);
