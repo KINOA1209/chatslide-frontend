@@ -400,7 +400,7 @@ export default function WorkflowStep5() {
 						change in the future.
 					</Explanation>
 					{/* TODO: is ClonedVoice */}
-					{isOpenaiVoice(voice) ? (
+					{isOpenaiVoice(voice) || isELabsVoice(voice) ? (
 						<WarningMessage>
 							The voice you selected does not support avatars yet.
 						</WarningMessage>
