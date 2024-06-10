@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import DesignSystemButton from '@/components/ui/design_systems/ButtonsOrdinary';
 import Project from '@/models/Project';
 import Folder from '@/models/Folder';
 import TeamModal from './TeamModal';
-import { useUser } from '@/hooks/use-user';
 
 interface DashboardHeaderProps {
   activeFolder: string;
@@ -28,11 +26,7 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
   teamId
 }) => {
 
-  const router = useRouter();
-  const [inviteCode, setInviteCode] = useState('');
   const [showTeamManagement, setShowTeamManagement] = useState(false);
-  const [error, setError] = useState('');
-  const { token } = useUser();
 
   return (
     <div className='flex flex-row items-end w-full z-40 pt-[2rem] px-[2rem]'>
@@ -83,16 +77,6 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
               >
                 <span className='whitespace-nowrap'> Members </span>
               </DesignSystemButton>
-              {inviteCode && (
-                <div className='text-[16px] font-medium leading-[24px] tracking-wide'>
-                  Invite Code: {inviteCode}
-                </div>
-              )}
-              {error && (
-                <div className='text-[16px] font-medium leading-[24px] tracking-wide text-red-500'>
-                  Error: {error}
-                </div>
-              )}
             </>
           )}
 
