@@ -1594,7 +1594,7 @@ export const ImgModule = ({
 								</span>
 							</button>
 
-							{!isSlide && (
+							{isSlide && (
 								<>
 									<span
 										style={{
@@ -1646,7 +1646,7 @@ export const ImgModule = ({
 								</>
 							)}
 
-							{!isSlide && (
+							{isSlide && (
 								<>
 									<span
 										style={{
