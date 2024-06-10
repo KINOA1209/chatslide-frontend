@@ -4,7 +4,7 @@ import { getChartData } from './chartPreviewFakeData';
 
 const chartSelectionConfigs: Record<string, ChartConfig> = {
 	pie: {
-		displayName: 'Pie Chart',
+		displayName: 'Pie',
 		imgSrc: (
 			<DynamicChart
 				chartType='pie'
@@ -16,7 +16,7 @@ const chartSelectionConfigs: Record<string, ChartConfig> = {
 		dataStructure: 'ValueDataPoint',
 	},
 	line: {
-		displayName: 'Single Line Chart',
+		displayName: 'Single Line',
 		imgSrc: (
 			<DynamicChart
 				chartType='line'
@@ -28,7 +28,7 @@ const chartSelectionConfigs: Record<string, ChartConfig> = {
 		dataStructure: 'ValueDataPoint',
 	},
 	bar: {
-		displayName: 'Bar Chart',
+		displayName: 'Bar',
 		imgSrc: (
 			<DynamicChart
 				chartType='bar'
