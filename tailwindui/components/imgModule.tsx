@@ -18,6 +18,7 @@ import {
 import Chart from '@/models/Chart';
 import { Rnd } from 'react-rnd';
 import { ResourceIcon } from './ui/ResourceItem';
+import { FiUploadCloud } from 'react-icons/fi';
 
 import ImagePosition from '@/models/ImagePosition';
 import {
@@ -135,15 +136,17 @@ const imageLicenseOptions: RadioButtonOption[] = [
 const getImageLicenseExplanation = (license: string) => {
 	switch (license) {
 		case 'all':
-			return 'Images from all websites, some may require licenses';
+			return ' (Images from all websites, some may require licenses)';
 		case 'illustration':
-			return 'Cartoon style illustration images from Freepik';
+			return ' (Cartoon style illustration images from Freepik)';
 		case 'stock':
-			return 'High quality stock photos from Unsplash';
+			return ' (High quality stock photos from Unsplash)';
 		case 'creative':
-			return 'Images from all websites, free to use';
+			return ' (Images from all websites, free to use)';
 		case 'giphy':
-			return 'Funny animations from Giphy.	Gif may not be animated if you export to PDF / PPTX, or create video.';
+			return ' (Funny animations from Giphy.	Gif may not be animated if you export to PDF / PPTX, or create video)';
+		case 'icon':
+			return ' (Icons from Icons8)';
 		default:
 			return '';
 	}
@@ -593,84 +596,125 @@ export const ImgModule = ({
 
 	const resourceSelectionDiv = (
 		<div className='w-full h-full'>
-			<div className='w-full h-full flex flex-col'>
-				<div className='w-full h-full overflow-y-auto p-1'>
-					{/* My resources tab*/}
-					<div className='w-full h-fit grid grid-cols-3 md:grid-cols-5 gap-1 md:gap-2'>
-						<div
-							onClick={handleClick}
-							className='upload-image w-full h-fit rounded-md overflow-hidden aspect-square flex flex-col items-center justify-center bg-[#E7E9EB] hover:bg-[#CAD0D3] cursor-pointer'
+			<div
+				className='w-full h-full flex flex-col'
+				style={{ padding: '10px', gap: '16px' }}
+			>
+				{/* <div className='w-full h-full overflow-y-auto p-1'> */}
+				{/* upload prompting area */}
+				<div
+					onClick={handleClick}
+					className='upload-image hover:bg-[#CAD0D3] cursor-pointer'
+					style={{
+						display: 'flex',
+						padding: 'var(--spacing-xl, 16px) var(--spacing-3xl, 24px)',
+						flexDirection: 'column',
+						alignItems: 'center',
+						gap: 'var(--spacing-xs, 4px)',
+						alignSelf: 'stretch',
+						borderRadius: 'var(--radius-xl, 12px)',
+						border: '1px solid var(--Colors-Border-border-secondary, #EAECF0)',
+						background: 'var(--Colors-Background-bg-primary, #FFF)',
+					}}
+				>
+					<input
+						type='file'
+						id='file-upload'
+						ref={inputFileRef}
+						onChange={handleFileChange}
+						style={{ display: 'none' }}
+					/>
+					{/* icon position */}
+					<div
+						className='upload-icon-box'
+						style={{
+							borderRadius: 'var(--radius-md, 8px)',
+							border:
+								'1px solid var(--Component-colors-Components-Icons-Featured-icons-Modern-featured-icon-modern-border, #EAECF0)',
+							boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.05)',
+							display: 'flex',
+							width: '40px',
+							padding: '10px',
+							justifyContent: 'center',
+							alignItems: 'center',
+						}}
+					>
+						<FiUploadCloud style={{ color: '#344054' }} />
+					</div>
+
+					{/* upload prompt text */}
+					<div
+						className='upload-prompt-text-area'
+						style={{
+							display: 'flex',
+							flexDirection: 'column',
+							alignItems: 'center',
+							gap: '4px',
+						}}
+					>
+						<span
+							style={{
+								color:
+									'var(--Component-colors-Components-Buttons-Tertiary-color-button-tertiary-color-fg, #3538CD)',
+								fontFamily: 'Inter Medium',
+								fontSize: '14px',
+								fontStyle: 'normal',
+								fontWeight: '600',
+								lineHeight: '20px',
+							}}
 						>
-							<input
-								type='file'
-								id='file-upload'
-								ref={inputFileRef}
-								onChange={handleFileChange}
-								style={{ display: 'none' }}
-							/>
-							{/* upload area icon and text */}
-							<svg
-								className='w-12 h-12'
-								viewBox='0 0 48 48'
-								fill='none'
-								xmlns='http://www.w3.org/2000/svg'
-							>
-								<g clipPath='url(#clip0_250_2609)'>
-									<path
-										d='M22.2859 25.7139V46.2853M22.2859 25.7139L15.4287 32.571M22.2859 25.7139L29.143 32.571'
-										stroke='#A6B1BB'
-										strokeWidth={3}
-										strokeLinecap='round'
-										strokeLinejoin='round'
-									/>
-									<path
-										d='M41.1429 27.7712C42.4164 27.0364 43.5176 26.0371 44.3722 24.8407C45.2269 23.6443 45.815 22.2786 46.0971 20.8356C46.3793 19.3926 46.3487 17.9059 46.0076 16.4758C45.6665 15.0456 45.0227 13.7052 44.1197 12.5449C43.2167 11.3846 42.0754 10.4313 40.7728 9.74943C39.4702 9.06754 38.0366 8.67284 36.5685 8.59194C35.1004 8.51104 33.6321 8.74582 32.2624 9.28045C30.8928 9.81507 29.6537 10.6371 28.6287 11.6912C27.7298 8.50205 25.7068 5.74616 22.9335 3.93297C20.1603 2.11979 16.8244 1.37192 13.5425 1.82763C10.2606 2.28333 7.25461 3.91179 5.08029 6.41196C2.90597 8.91213 1.71032 12.1149 1.71437 15.4283C1.7168 18.5453 2.78096 21.5685 4.73151 23.9998'
-										stroke='#A6B1BB'
-										strokeWidth={3}
-										strokeLinecap='round'
-										strokeLinejoin='round'
-									/>
-								</g>
-								<defs>
-									<clipPath id='clip0_250_2609'>
-										<rect width={48} height={48} fill='white' />
-									</clipPath>
-								</defs>
-							</svg>
-							<div className='text-[#A6B1BB]'>Upload</div>
-						</div>
-						{/* resources images arrays */}
-						{resources.map((resource, index) => {
-							if (resource.thumbnail_url === selectedImg) {
-								return (
-									<div
-										onClick={handleImageClick}
-										key={index}
-										className={`cursor-pointer w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square outline-[#5168F6] outline outline-2`}
-									>
-										<ResourceIcon resource={resource} contain={true} />
-									</div>
-								);
-							} else {
-								return (
-									<div
-										onClick={handleImageClick}
-										key={index}
-										className={`cursor-pointer w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square hover:outline-[#5168F6] hover:outline outline-2`}
-									>
-										<ResourceIcon resource={resource} contain={true} />
-									</div>
-								);
-							}
-						})}
+							Click to upload
+						</span>
+						<span
+							style={{
+								color: 'var(--colors-text-text-tertiary-600, #475467)',
+								fontSize: '12px',
+								fontStyle: 'normal',
+								fontWeight: '400',
+								lineHeight: '18px',
+							}}
+						>
+							SVG, PNG, JPG or GIF (max. 800x400px)
+						</span>
 					</div>
 				</div>
+
+				<div className='w-full h-fit grid grid-cols-2 gap-1 md:gap-2'>
+					{/* resources images arrays */}
+					{resources.map((resource, index) => {
+						if (resource.thumbnail_url === selectedImg) {
+							return (
+								<div
+									onClick={handleImageClick}
+									key={index}
+									className={`cursor-pointer w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square outline-[#5168F6] outline outline-2`}
+								>
+									<ResourceIcon resource={resource} contain={true} />
+								</div>
+							);
+						} else {
+							return (
+								<div
+									onClick={handleImageClick}
+									key={index}
+									className={`cursor-pointer w-full h-fit hover:border-3 border-white rounded-md overflow-hidden aspect-square hover:outline-[#5168F6] hover:outline outline-2`}
+								>
+									<ResourceIcon resource={resource} contain={true} />
+								</div>
+							);
+						}
+					})}
+				</div>
+				{/* </div> */}
 			</div>
 		</div>
 	);
 
 	const imgSearchDiv = (
-		<div className='w-full h-full flex flex-col'>
+		<div
+			className='w-full h-full flex flex-col gap-[16px]'
+			style={{ padding: '10px' }}
+		>
 			<form
 				onSubmit={async (e) => {
 					e.preventDefault();
@@ -680,11 +724,22 @@ export const ImgModule = ({
 						await handleImageSearchSubmit(e);
 					}
 				}}
-				className='w-full flex flex-col gap-y-2'
+				className='w-full flex flex-col gap-[16px]'
 			>
 				{/* search box input area */}
 				<div>
-					<span>Search</span>
+					<span
+						style={{
+							color: 'var(--colors-text-text-secondary-700, #344054)',
+							fontSize: '14px',
+							fontStyle: 'normal',
+							fontWeight: '500',
+							lineHeight: '20px',
+							marginBottom: '8px',
+						}}
+					>
+						Search
+					</span>
 					<InputBox>
 						{searching ? (
 							<SpinIcon />
@@ -715,7 +770,18 @@ export const ImgModule = ({
 				</div>
 				{/* Image type selection */}
 				<div className='w-full'>
-					<span>Image Type</span>
+					<span
+						style={{
+							color: 'var(--colors-text-text-secondary-700, #344054)',
+							fontSize: '14px',
+							fontStyle: 'normal',
+							fontWeight: '500',
+							lineHeight: '20px',
+							marginBottom: '8px',
+						}}
+					>
+						Image Type
+					</span>
 					{/* <RadioButton
 						options={imageLicenseOptions}
 						selectedValue={imageLicense}
@@ -800,14 +866,39 @@ export const ImgModule = ({
 	);
 
 	const imgGenerationDiv = (
-		<div className='w-full h-full flex flex-col'>
+		<div
+			className='w-full h-full flex flex-col'
+			style={{ padding: '10px', gap: '8px' }}
+		>
+			{/* input area */}
 			<form onSubmit={handleImageGenerationSubmit} className='w-full'>
-				<Explanation>
+				<span
+					style={{
+						color: 'var(--colors-text-text-secondary-700, #344054)',
+						fontSize: '14px',
+						fontStyle: 'normal',
+						fontWeight: '500',
+						lineHeight: '20px',
+						marginBottom: '8px',
+					}}
+				>
+					Generate by keywords
+				</span>
+
+				{/* <Explanation>
 					Highlight the keywords you want to use for search:
-				</Explanation>
-				<WordSelector text={getSearchText()} setQuery={setKeyword} />
-				<Explanation>Or directly enter the keywords below:</Explanation>
+				</Explanation> */}
+
+				{/* <Explanation>Or directly enter the keywords below:</Explanation> */}
 				<InputBox>
+					{searching ? (
+						<SpinIcon />
+					) : (
+						<button type='submit'>
+							{/* <FaSearch className='h-[24px] w-[24px] text-gray-400' /> */}
+							<CiSearch className='h-[20px] w-[20px] text-gray-400'></CiSearch>
+						</button>
+					)}
 					<input
 						id='search_keyword'
 						type='text'
@@ -823,17 +914,12 @@ export const ImgModule = ({
 						}}
 						value={keyword}
 					/>
-					{searching ? (
-						<SpinIcon />
-					) : (
-						<button type='submit'>
-							<FaSearch className='h-[24px] w-[24px] text-gray-400' />
-						</button>
-					)}
 				</InputBox>
+				<WordSelector text={getSearchText()} setQuery={setKeyword} />
 			</form>
+			{/* search result display area */}
 			<div className='w-full h-full overflow-y-auto p-1'>
-				<div className='w-full h-fit grid grid-cols-3 md:grid-cols-5 gap-1 md:gap-2'>
+				<div className='w-full h-fit grid grid-cols-2 gap-1 md:gap-2'>
 					{searchResult.map((url, index) => {
 						if (url === selectedImg) {
 							return (
@@ -1028,22 +1114,29 @@ export const ImgModule = ({
 	// }, [currentStoredEmbedCode]);
 
 	const EmbedCodeDiv = (
-		<div className='flex flex-col gap-y-2'>
+		<div className='flex flex-col gap-y-2 p-[10px]'>
 			<ToastContainer />
 
-			<Explanation>
-				Only Youtube video link is supported for now.
-			</Explanation>
+			<Explanation>Only Youtube video link is supported for now.</Explanation>
 
+			{/* <div
+				className='link-input-and-add-button'
+				style={{
+					display: 'flex',
+					flexDirection: 'row',
+					justifyContent: 'space-between',
+					alignItems: 'center',
+				}}
+			> */}
 			<NewInputBox
 				placeholder='Paste YouTube video link here'
 				value={inputValue}
 				onChange={setInputValue}
 				maxLength={undefined}
-				rows={5}
+				rows={1}
 				textarea
 			/>
-
+			{/* add link button */}
 			<div className='w-full mx-auto flex justify-center items-center'>
 				<BigBlueButton
 					// isSubmitting={uploading || searching}
@@ -1051,12 +1144,13 @@ export const ImgModule = ({
 					disabled={isConfirmDisabled}
 					customizeStyle={{
 						cursor: isConfirmDisabled ? 'not-allowed' : 'pointer',
-						marginBottom: '6px',
+						// marginBottom: '6px',
 					}}
 				>
 					Preview
 				</BigBlueButton>
 			</div>
+			{/* </div> */}
 
 			<div className='w-full mx-auto flex flex-col justify-center items-center'>
 				{/* <h1>Embedding Example</h1> */}
@@ -1079,7 +1173,7 @@ export const ImgModule = ({
 						}}
 						customizeStyle={{ marginTop: '6px' }}
 					>
-						Confirm
+						Add
 					</BigBlueButton>
 				)}
 			</div>
@@ -1382,13 +1476,29 @@ export const ImgModule = ({
 						<div
 							className='tab-choices w-full flex flex-col col-span-1'
 							ref={typeRef}
-							style={{ borderRight: '1px solid #E7E9EB' }}
+							style={{
+								borderRight: '1px solid #E7E9EB',
+								justifyContent: 'flex-start',
+								alignItems: 'flex-start',
+								padding: '10px',
+							}}
 						>
 							{/* <div className='w-full grid grid-cols-5'> */}
 							{/* <div className='w-full flex flex-col'> */}
-							<span>Image</span>
+							<span
+								style={{
+									color: '#919DAA',
+									fontSize: '12px',
+									fontStyle: 'normal',
+									fontWeight: '700',
+									lineHeight: '20px',
+									marginBottom: '8px',
+								}}
+							>
+								Image
+							</span>
 							<button
-								className='cursor-pointer whitespace-nowrap py-2 flex flex-row justify-center items-center'
+								className='cursor-pointer whitespace-nowrap flex flex-row justify-start w-full items-center gap-[4px] hover:bg-[#F4F4F4] '
 								onClick={(e) => {
 									setSelectedQueryMode(ImgQueryMode.SEARCH);
 									setSearchResult([]);
@@ -1400,12 +1510,27 @@ export const ImgModule = ({
 								onMouseOut={(e) => {
 									handleMouseOut(e, ImgQueryMode.SEARCH);
 								}}
+								style={{
+									borderRadius: 'var(--radius-sm, 6px)',
+									padding: 'var(--spacing-md, 8px) var(--spacing-lg, 12px)',
+									// gap: '16px',
+								}}
 							>
-								<IoMdSearch />
-								<span>Search</span>
+								<IoMdSearch style={{ width: '24px', height: '24px' }} />
+								<span
+									style={{
+										color: 'var(--colors-text-text-secondary-700, #344054)',
+										fontSize: '14px',
+										fontStyle: 'normal',
+										fontWeight: '700',
+										lineHeight: '22px',
+									}}
+								>
+									Search
+								</span>
 							</button>
 							<button
-								className='cursor-pointer whitespace-nowrap py-2 flex flex-row justify-center items-center'
+								className='cursor-pointer whitespace-nowrap flex flex-row justify-start w-full items-center gap-[4px] hover:bg-[#F4F4F4] '
 								onClick={(e) => {
 									setSelectedQueryMode(ImgQueryMode.GENERATION);
 									setSearchResult([]);
@@ -1417,12 +1542,27 @@ export const ImgModule = ({
 								onMouseOut={(e) => {
 									handleMouseOut(e, ImgQueryMode.GENERATION);
 								}}
+								style={{
+									borderRadius: 'var(--radius-sm, 6px)',
+									padding: 'var(--spacing-md, 8px) var(--spacing-lg, 12px)',
+									// gap: '16px',
+								}}
 							>
-								<BsStars />
-								<span>AI Generate</span>
+								<BsStars style={{ width: '24px', height: '24px' }} />
+								<span
+									style={{
+										color: 'var(--colors-text-text-secondary-700, #344054)',
+										fontSize: '14px',
+										fontStyle: 'normal',
+										fontWeight: '700',
+										lineHeight: '22px',
+									}}
+								>
+									AI Generate
+								</span>
 							</button>
 							<button
-								className='cursor-pointer whitespace-nowrap py-2 flex flex-row justify-center items-center'
+								className='cursor-pointer whitespace-nowrap flex flex-row justify-start w-full items-center gap-[4px] hover:bg-[#F4F4F4] '
 								onClick={(e) => {
 									setSelectedQueryMode(ImgQueryMode.RESOURCE);
 									setSearchResult([]);
@@ -1434,47 +1574,129 @@ export const ImgModule = ({
 								onMouseOut={(e) => {
 									handleMouseOut(e, ImgQueryMode.RESOURCE);
 								}}
+								style={{
+									borderRadius: 'var(--radius-sm, 6px)',
+									padding: 'var(--spacing-md, 8px) var(--spacing-lg, 12px)',
+									// gap: '16px',
+								}}
 							>
-								<PiFiles />
-								<span>My Uploads</span>
+								<PiFiles style={{ width: '24px', height: '24px' }} />
+								<span
+									style={{
+										color: 'var(--colors-text-text-secondary-700, #344054)',
+										fontSize: '14px',
+										fontStyle: 'normal',
+										fontWeight: '700',
+										lineHeight: '22px',
+									}}
+								>
+									My Uploads
+								</span>
 							</button>
 
-							<span>Graph</span>
-							<button
-								className='cursor-pointer whitespace-nowrap py-2 flex flex-row justify-center items-center'
-								onClick={(e) => {
-									setSelectedQueryMode(ImgQueryMode.CHART_SELECTION);
-									setSearchResult([]);
-									// setKeyword('');
-								}}
-								onMouseOver={(e) => {
-									handleMouseOver(e, ImgQueryMode.CHART_SELECTION);
-								}}
-								onMouseOut={(e) => {
-									handleMouseOut(e, ImgQueryMode.CHART_SELECTION);
-								}}
-							>
-								<MdOutlineAddChart />
-								<span>Chart</span>
-							</button>
-							<span>Embed</span>
-							<button
-								className='cursor-pointer whitespace-nowrap py-2 flex flex-row justify-center items-center'
-								onClick={(e) => {
-									setSelectedQueryMode(ImgQueryMode.EMBED_CODE);
-									setSearchResult([]);
-									// setKeyword('');
-								}}
-								onMouseOver={(e) => {
-									handleMouseOver(e, ImgQueryMode.EMBED_CODE);
-								}}
-								onMouseOut={(e) => {
-									handleMouseOut(e, ImgQueryMode.EMBED_CODE);
-								}}
-							>
-								<SlSocialYoutube />
-								<span>Youtube</span>
-							</button>
+							{!isSlide && (
+								<>
+									<span
+										style={{
+											color: '#919DAA',
+											fontSize: '12px',
+											fontStyle: 'normal',
+											fontWeight: '700',
+											lineHeight: '20px',
+											marginBottom: '8px',
+										}}
+									>
+										Graph
+									</span>
+									<button
+										className='cursor-pointer whitespace-nowrap flex flex-row justify-start w-full items-center gap-[4px] hover:bg-[#F4F4F4] '
+										onClick={(e) => {
+											setSelectedQueryMode(ImgQueryMode.CHART_SELECTION);
+											setSearchResult([]);
+											// setKeyword('');
+										}}
+										onMouseOver={(e) => {
+											handleMouseOver(e, ImgQueryMode.CHART_SELECTION);
+										}}
+										onMouseOut={(e) => {
+											handleMouseOut(e, ImgQueryMode.CHART_SELECTION);
+										}}
+										style={{
+											borderRadius: 'var(--radius-sm, 6px)',
+											padding: 'var(--spacing-md, 8px) var(--spacing-lg, 12px)',
+											// gap: '16px',
+										}}
+									>
+										<MdOutlineAddChart
+											style={{ width: '24px', height: '24px' }}
+										/>
+
+										<span
+											style={{
+												color: 'var(--colors-text-text-secondary-700, #344054)',
+												fontSize: '14px',
+												fontStyle: 'normal',
+												fontWeight: '700',
+												lineHeight: '22px',
+											}}
+										>
+											Chart
+										</span>
+									</button>
+								</>
+							)}
+
+							{!isSlide && (
+								<>
+									<span
+										style={{
+											color: '#919DAA',
+											fontSize: '12px',
+											fontStyle: 'normal',
+											fontWeight: '700',
+											lineHeight: '20px',
+											marginBottom: '8px',
+										}}
+									>
+										Embed
+									</span>
+									<button
+										className='cursor-pointer whitespace-nowrap flex flex-row justify-start w-full items-center gap-[4px] hover:bg-[#F4F4F4] '
+										onClick={(e) => {
+											setSelectedQueryMode(ImgQueryMode.EMBED_CODE);
+											setSearchResult([]);
+											// setKeyword('');
+										}}
+										onMouseOver={(e) => {
+											handleMouseOver(e, ImgQueryMode.EMBED_CODE);
+										}}
+										onMouseOut={(e) => {
+											handleMouseOut(e, ImgQueryMode.EMBED_CODE);
+										}}
+										style={{
+											borderRadius: 'var(--radius-sm, 6px)',
+											padding: 'var(--spacing-md, 8px) var(--spacing-lg, 12px)',
+											// gap: '16px',
+										}}
+									>
+										<SlSocialYoutube
+											style={{ width: '24px', height: '24px' }}
+										/>
+										<span
+											style={{
+												color: 'var(--colors-text-text-secondary-700, #344054)',
+												fontSize: '14px',
+												fontStyle: 'normal',
+												fontWeight: '700',
+												lineHeight: '22px',
+											}}
+										>
+											Youtube
+										</span>
+									</button>
+								</>
+							)}
+
 							{/* </div> */}
 							{/* sliding animation */}
 							{/* <div className='w-full bg-slate-200 mb-2'>
