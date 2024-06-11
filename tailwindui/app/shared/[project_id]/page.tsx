@@ -6,6 +6,7 @@ import Card from '@/components/ui/Card';
 import { Explanation, Instruction, Title } from '@/components/ui/Text';
 import { JoinUsBanner } from '@/components/layout/JoinUsBanner';
 import { getBrand, getOrigin } from '@/utils/getHost';
+import DescriptionCard from './DescriptionCard';
 
 type Props = {
 	params: { project_id: string };
@@ -82,7 +83,9 @@ export default async function Page({ params }: Props) {
 			<main className='w-full flex grow flex-col overflow-y-scroll'>
 				<SharePage project_id={project_id} />
 
-				{project.description && (
+				<DescriptionCard project_id={project_id} />
+
+				{/* {project.description && (
 					<div className='hidden sm:flex m-4'>
 						<Card>
 							<div className='flex flex-row items-end gap-x-4'>
@@ -92,7 +95,7 @@ export default async function Page({ params }: Props) {
 							<Explanation>{project.description}</Explanation>
 						</Card>
 					</div>
-				)}
+				)} */}
 			</main>
 			{/* <WorkflowFooter /> */}
 		</div>
