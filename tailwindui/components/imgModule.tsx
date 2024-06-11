@@ -802,9 +802,9 @@ export const ImgModule = ({
 						{imageLicenseOptions.map((option) => (
 							<Option key={option.value} value={option.value}>
 								<span className='font-bold'>{option.text}</span>{' '}
-								<span className='font-normal'>
+								{/* <span className='font-normal'>
 									{getImageLicenseExplanation(option.value)}
-								</span>
+								</span> */}
 							</Option>
 						))}
 					</Select>
