@@ -79,6 +79,7 @@ const ScriptEditor: React.FC<TranscriptEditorProps> = ({
 						setScript(e.target.value);
 						debouncedUpdateTranscriptList(e.target.value);
 					}}
+          maxLength={4096}
 				>
 					{script}
 				</TextareaAutosize>
