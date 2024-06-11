@@ -68,7 +68,9 @@ import { MdOutlineAddChart } from 'react-icons/md';
 import { SlSocialYoutube } from 'react-icons/sl';
 import { CiSearch } from 'react-icons/ci';
 // import material tailwind component
-import { Select, Option } from '@/components/ui/MaterialTailwindComponents';
+// import { Select, Option } from '@/components/ui/MaterialTailwindComponents';
+
+import { Select, Option } from '@material-tailwind/react';
 
 interface ImgModuleProp {
 	imgsrc: string;
