@@ -70,7 +70,7 @@ import { CiSearch } from 'react-icons/ci';
 // import material tailwind component
 // import { Select, Option } from '@/components/ui/MaterialTailwindComponents';
 
-// import { Select, Option } from '@material-tailwind/react';
+import { Select, Option } from '@material-tailwind/react';
 
 interface ImgModuleProp {
 	imgsrc: string;
@@ -793,7 +793,7 @@ export const ImgModule = ({
 					/>
 
 					<Explanation>{getImageLicenseExplanation(imageLicense)}</Explanation>
-					{/* <Select
+					<Select
 						// label='Select Image License'
 						value={imageLicense}
 						onChange={(val) => setImageLicense(val || 'all')} // Ensure val is a string
@@ -802,11 +802,11 @@ export const ImgModule = ({
 							<Option key={option.value} value={option.value}>
 								<span className='font-bold'>{option.text}</span>{' '}
 								<span className='font-normal'>
-									{getImageLicenseExplanation(option.value)}
+									{/* {getImageLicenseExplanation(option.value)} */}
 								</span>
 							</Option>
 						))}
-					</Select> */}
+					</Select>
 				</div>
 			</form>
 			{/* Search result images display area */}
