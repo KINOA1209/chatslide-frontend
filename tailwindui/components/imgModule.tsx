@@ -793,21 +793,21 @@ export const ImgModule = ({
 					/>
 
 					<Explanation>{getImageLicenseExplanation(imageLicense)}</Explanation>
-					<Select
+					{/* <Select
 						// label='Select Image License'
 						value={imageLicense}
-						// onChange={(val) => setImageLicense(val || 'all')} // Ensure val is a string
-						onChange={(val) => console.log('change option')} // Ensure val is a string
+						onChange={(val) => setImageLicense(val || 'all')} // Ensure val is a string
+						// onChange={(val) => console.log('change option')} // Ensure val is a string
 					>
 						{imageLicenseOptions.map((option) => (
 							<Option key={option.value} value={option.value}>
 								<span className='font-bold'>{option.text}</span>{' '}
-								{/* <span className='font-normal'>
+								<span className='font-normal'>
 									{getImageLicenseExplanation(option.value)}
-								</span> */}
+								</span>
 							</Option>
 						))}
-					</Select>
+					</Select> */}
 				</div>
 			</form>
 			{/* Search result images display area */}
