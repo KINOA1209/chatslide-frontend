@@ -1573,6 +1573,8 @@ export const ImgModule = ({
 									borderRadius: 'var(--radius-sm, 6px)',
 									padding: 'var(--spacing-md, 8px) var(--spacing-lg, 12px)',
 									// gap: '16px',
+									backgroundColor:
+										selectedQueryMode === ImgQueryMode.SEARCH ? '#F4F4F4' : '',
 								}}
 							>
 								<IoMdSearch style={{ width: '24px', height: '24px' }} />
@@ -1605,6 +1607,10 @@ export const ImgModule = ({
 									borderRadius: 'var(--radius-sm, 6px)',
 									padding: 'var(--spacing-md, 8px) var(--spacing-lg, 12px)',
 									// gap: '16px',
+									backgroundColor:
+										selectedQueryMode === ImgQueryMode.GENERATION
+											? '#F4F4F4'
+											: '',
 								}}
 							>
 								<BsStars style={{ width: '24px', height: '24px' }} />
@@ -1637,6 +1643,10 @@ export const ImgModule = ({
 									borderRadius: 'var(--radius-sm, 6px)',
 									padding: 'var(--spacing-md, 8px) var(--spacing-lg, 12px)',
 									// gap: '16px',
+									backgroundColor:
+										selectedQueryMode === ImgQueryMode.RESOURCE
+											? '#F4F4F4'
+											: '',
 								}}
 							>
 								<PiFiles style={{ width: '24px', height: '24px' }} />
@@ -1684,6 +1694,10 @@ export const ImgModule = ({
 											borderRadius: 'var(--radius-sm, 6px)',
 											padding: 'var(--spacing-md, 8px) var(--spacing-lg, 12px)',
 											// gap: '16px',
+											backgroundColor:
+												selectedQueryMode === ImgQueryMode.CHART_SELECTION
+													? '#F4F4F4'
+													: '',
 										}}
 									>
 										<MdOutlineAddChart
@@ -1736,6 +1750,10 @@ export const ImgModule = ({
 											borderRadius: 'var(--radius-sm, 6px)',
 											padding: 'var(--spacing-md, 8px) var(--spacing-lg, 12px)',
 											// gap: '16px',
+											backgroundColor:
+												selectedQueryMode === ImgQueryMode.EMBED_CODE
+													? '#F4F4F4'
+													: '',
 										}}
 									>
 										<SlSocialYoutube
