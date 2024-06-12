@@ -32,6 +32,7 @@ import {
 import layoutConfigData from '../slides/templates_customizable_elements/layout_elements';
 import drlambdaLogoBadgeWhiteBG from '@/public/images/template/drlambdaLogoBadgeWhiteBG.png';
 import drLambdaSquareLogoWhiteBGBlackText from '@/public/images/logo/drLambdaSquareLogo.png';
+import chatSlideSquareLogoPurpleBGWhiteText from '@/public/images/logo/chatSlideSquareLogo.png';
 import { useUser } from '@/hooks/use-user';
 import AuthService from '@/services/AuthService';
 const QuillEditable = dynamic(
@@ -42,6 +43,7 @@ import classicTemplateThemeCoverPageIndicator from '@/public/images/socialpost/c
 import classicTemplateThemeLastPageIndicator from '@/public/images/socialpost/classicTemplateThemeLastPageIndicator.png';
 import classicTemplateThemeNonCoverPageIndicator from '@/public/images/socialpost/classicTemplateThemeNonCoverPageIndicator.png';
 import { StaticImageData } from 'next/image';
+import { isChatslide } from '@/utils/getHost';
 
 export const templateThemeKeyAndIndicatorImgMapCoverPage: Record<
 	SocialPostTemplateKeys,
@@ -486,7 +488,9 @@ export const templateDispatch = (
 				social_post_template_logo={generateSocialPostTemplateLogo({
 					logoWidth: 90,
 					logoHeight: 30,
-					logoBadge: drLambdaSquareLogoWhiteBGBlackText,
+					logoBadge: isChatslide()
+						? chatSlideSquareLogoPurpleBGWhiteText
+						: drLambdaSquareLogoWhiteBGBlackText,
 					logoStyleConfig: socialPostLayoutElements?.logoCSS || {},
 					logoMode: logoMode || 'default',
 					customLogoUrl: customLogoUrl || '',
@@ -720,7 +724,9 @@ export const templateDispatch = (
 				social_post_template_logo={generateSocialPostTemplateLogo({
 					logoWidth: 90,
 					logoHeight: 30,
-					logoBadge: drLambdaSquareLogoWhiteBGBlackText,
+					logoBadge: isChatslide()
+						? chatSlideSquareLogoPurpleBGWhiteText
+						: drLambdaSquareLogoWhiteBGBlackText,
 					logoStyleConfig: socialPostLayoutElements?.logoCSS || {},
 					logoMode: logoMode || 'default',
 					customLogoUrl: customLogoUrl || '',
