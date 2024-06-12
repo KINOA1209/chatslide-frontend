@@ -32,6 +32,7 @@ import { Menu } from '@/components/button/Menu';
 import { RenameProjectButton } from './renameProjectButton';
 // import ExportToPdfButton from '@/components/slides/ExportButton';
 import { MoveToTeamButton } from '@/components/dashboard/MoveToTeamButton';
+import TeamService from '@/services/TeamService';
 
 const ExportToPdfButton = dynamic(
 	() => import('@/components/slides/ExportButton'), // Path to your ExportToPdfButton component
@@ -123,9 +124,20 @@ const ProjectItem: React.FC<{
 		const [showMoveToFolderModal, setShowMoveToFolderModal] = useState(false);
 		const [showMoveToTeamModal, setShowMoveToTeamModal] = useState(false);
 		const [showRenameProjectModal, setShowRenameProjectModal] = useState(false)
+		const [userTeam, setUserTeam] = useState<string>();
 		//const isPriority = project.post_type !== 'presentation';
 		const router = useRouter();
 		// const exportSlidesRef = useRef<HTMLDivElement>(null);
+
+		useEffect(() => {
+			getUserTeam();
+		}, []);
+
+		const getUserTeam = async () => {
+			const response = await TeamService.getUserTeams(token);
+			const userTeam = response.all_teams[0];
+			setUserTeam(userTeam);
+		}
 
 
 		return (
@@ -345,7 +357,7 @@ const ProjectItem: React.FC<{
 								</button>
 							)}
 
-							{!isDiscover && setCurrentProjects && project.team_id === "" && (
+							{!isDiscover && setCurrentProjects && project.team_id === "" && userTeam &&(
 								<button
 									className='block px-[10px] py-[9px] text-sm text-[#182230] rounded-md  hover:bg-zinc-100 w-full text-left'
 									onClick={() => {
