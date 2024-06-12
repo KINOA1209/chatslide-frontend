@@ -70,7 +70,35 @@ import { CiSearch } from 'react-icons/ci';
 // import material tailwind component
 // import { Select, Option } from '@/components/ui/MaterialTailwindComponents';
 
-import { Select, Option } from '@material-tailwind/react';
+// import { Select, Option } from '@material-tailwind/react';
+
+import Select, { StylesConfig, SingleValue } from 'react-select';
+
+interface OptionType {
+	value: string;
+	label: React.ReactNode;
+}
+// Custom styles for react-select component
+const customStyles: StylesConfig<OptionType, false> = {
+	control: (provided) => ({
+		...provided,
+		borderRadius: 'var(--radius-md, 8px)',
+		border: '1px solid var(--Colors-Border-border-primary, #D0D5DD)',
+		backgroundColor: 'var(--Colors-Background-bg-primary, #FFF)',
+		boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.05)',
+	}),
+	menu: (provided) => ({ ...provided, zIndex: 9999 }),
+	option: (provided, state) => ({
+		...provided,
+		backgroundColor: state.isSelected ? '#d1d5db' : '#ffffff',
+		borderRadius: 'var(--spacing-sm, 6px)',
+		color: state.isSelected ? '#4b5563' : '#000000',
+		':hover': {
+			backgroundColor: 'var(--Colors-Background-bg-active, #F9FAFB)',
+		},
+	}),
+	indicatorSeparator: () => ({ display: 'none' }),
+};
 
 interface ImgModuleProp {
 	imgsrc: string;
@@ -207,6 +235,22 @@ export const ImgModule = ({
 
 	const [uploading, setUploading] = useState(false);
 	const [imageLicense, setImageLicense] = useState('all');
+
+	const optionsWithExplanation = imageLicenseOptions.map((option) => ({
+		...option,
+		label: (
+			<div>
+				<span className='font-bold'>{option.text}</span>{' '}
+				<span className='font-normal'>
+					{getImageLicenseExplanation(option.value)}
+				</span>
+			</div>
+		),
+	}));
+
+	const handleChange = (selectedOption: SingleValue<OptionType>) => {
+		setImageLicense((selectedOption as OptionType)?.value || 'all');
+	};
 
 	function getSearchText() {
 		const slide = slides[slideIndex];
@@ -730,7 +774,7 @@ export const ImgModule = ({
 			>
 				{/* search box input area */}
 				<div>
-					<span
+					{/* <span
 						style={{
 							color: 'var(--colors-text-text-secondary-700, #344054)',
 							fontSize: '14px',
@@ -741,7 +785,7 @@ export const ImgModule = ({
 						}}
 					>
 						Search
-					</span>
+					</span> */}
 					<InputBox>
 						{searching ? (
 							<SpinIcon />
@@ -755,7 +799,7 @@ export const ImgModule = ({
 							id='search_keyword'
 							type='text'
 							className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800 bg-gray-100'
-							placeholder='Search from internet'
+							placeholder='Enter the keywords'
 							required
 							ref={searchRef}
 							onClick={(e) => {
@@ -784,7 +828,7 @@ export const ImgModule = ({
 					>
 						Image Type
 					</span>
-					<RadioButton
+					{/* <RadioButton
 						options={imageLicenseOptions}
 						selectedValue={imageLicense}
 						setSelectedValue={setImageLicense}
@@ -792,7 +836,7 @@ export const ImgModule = ({
 						cols={3}
 					/>
 
-					<Explanation>{getImageLicenseExplanation(imageLicense)}</Explanation>
+					<Explanation>{getImageLicenseExplanation(imageLicense)}</Explanation> */}
 					{/* <Select
 						// label='Select Image License'
 						value={imageLicense}
@@ -808,6 +852,18 @@ export const ImgModule = ({
 							</Option>
 						))}
 					</Select> */}
+					<Select
+						value={optionsWithExplanation.find(
+							(option) => option.value === imageLicense,
+						)}
+						// menuPortalTarget={document.body}
+						menuPosition='fixed'
+						isClearable={false}
+						isSearchable={false}
+						onChange={handleChange}
+						options={optionsWithExplanation}
+						styles={customStyles}
+					/>
 				</div>
 			</form>
 			{/* Search result images display area */}
@@ -906,7 +962,7 @@ export const ImgModule = ({
 						id='search_keyword'
 						type='text'
 						className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800 bg-gray-100'
-						placeholder='Generate from AI (10⭐️)'
+						placeholder='Enter the keywords (10⭐️)'
 						required
 						ref={searchRef}
 						onClick={(e) => {
@@ -1529,7 +1585,7 @@ export const ImgModule = ({
 										lineHeight: '22px',
 									}}
 								>
-									Search
+									Web Search
 								</span>
 							</button>
 							<button
