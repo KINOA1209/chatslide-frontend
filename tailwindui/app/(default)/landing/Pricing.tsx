@@ -4,6 +4,7 @@ import MultiwayToggle from '@/components/button/MultiwayToggle';
 import { Explanation } from '@/components/ui/Text';
 import { useUser } from '@/hooks/use-user';
 import UserService from '@/services/UserService';
+import { isChatslide } from '@/utils/getHost';
 import { userInEU } from '@/utils/userLocation';
 import { useRouter } from 'next/navigation';
 import { FC, useEffect, useState } from 'react';
@@ -20,7 +21,7 @@ const PricingComparison: React.FC<{
 	const { token, email, tier: userTier, user } = useUser();
 	const [currency, setCurrency] = useState<string>('$');
 	const router = useRouter();
-	const [interval, setInterval] = useState<Interval>('yearly');
+	const [interval, setInterval] = useState<Interval>(isChatslide() ? 'yearly' : 'lifetime');
 	const smallSuffix = small ? '-small' : '';
 	// console.log('smallSuffix', smallSuffix);
 
@@ -242,29 +243,43 @@ const PricingComparison: React.FC<{
 		}
 	};
 
+  const options = isChatslide()
+		? [
+				{ key: 'onetime', text: '30-Day' },
+				{ key: 'monthly', text: 'Monthly' },
+				{
+					key: 'yearly',
+					element: (
+						<span>
+							Yearly <span className='text-xs'>-40%</span>
+						</span>
+					),
+				},
+				{
+					key: 'lifetime',
+					element: (
+						<span className='text-green-600'>
+							Lifetime <span className='text-xs'>-60%</span>
+						</span>
+					),
+				},
+			]
+		: [
+				{ key: 'onetime', text: '30-Day' },
+				{
+					key: 'lifetime',
+					element: (
+						<span className='text-green-600'>
+							Lifetime <span className='text-xs'>-60%</span>
+						</span>
+					),
+				},
+			];
+
 	return (
 		<div className='flex flex-col items-center overflow-y-scroll overflow-x-scroll notranslate'>
 			<MultiwayToggle
-				options={[
-					{ key: 'onetime', text: '30-Day' },
-					{ key: 'monthly', text: 'Monthly' },
-					{
-						key: 'yearly',
-						element: (
-							<span>
-								Yearly <span className='text-xs'>-40%</span>
-							</span>
-						),
-					},
-					{
-						key: 'lifetime',
-						element: (
-							<span className='text-green-600'>
-								Lifetime <span className='text-xs'>-70%</span>
-							</span>
-						),
-					},
-				]}
+				options={options}
 				selectedKey={interval}
 				setSelectedKey={setInterval as (key: string) => void}
 			/>
@@ -765,9 +780,7 @@ const PricingComparison: React.FC<{
 						<div className='brix---pricing-v8-title-table'>
 							<div className='brix---text-300-medium'>📈 Smart chart</div>
 						</div>
-						<div className='brix---text-300-medium'>
-							Preview
-						</div>
+						<div className='brix---text-300-medium'>Preview</div>
 					</div>
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className='brix---pricing-v8-title-table'>
