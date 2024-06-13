@@ -67,41 +67,43 @@ const ScriptEditor: React.FC<TranscriptEditorProps> = ({
 	if (!useHydrated()) return <></>;
 
 	return (
-		<div
-			ref={editorRef}
-			style={{ width: `${maxWidth}px` }}
-			className={`w-full min-h-[4rem] border border-2 border-gray-200 rounded-lg flex flex-col overflow-y-auto my-1`} // shift left to align with slide
-		>
-			{isPaidUser || currentSlideIndex < 5 ? (
-				<>
-        {script?.length >= 4096 && (
-          <ErrorMessage>
-            Script length exceeds 4096 characters. Please remove some characters.
-          </ErrorMessage>
-        )}
-					<TextareaAutosize
-						className={`grow px-4 py-2 w-full h-full border-none text-gray-700 text-xs lg:text-sm 2xl:text-base font-normal focus:ring-0 ${tight && 'leading-tight'}`}
-						value={script}
-						onChange={(e: any) => {
-							setScript(e.target.value);
-							debouncedUpdateTranscriptList(e.target.value);
-						}}
-						maxLength={4096}
-					>
-						{script}
-					</TextareaAutosize>
-				</>
-			) : (
-				<div className='flex flex-col items-center justify-center h-full text-gray-500 text-sm'>
-					<BigBlueButton
-						onClick={() => {
-							window.location.href = '/pricing';
-						}}
-					>
-						Upgrade to edit script
-					</BigBlueButton>
-				</div>
+		<div className='flex flex-row'>
+			{script?.length >= 4096 && (
+				<ErrorMessage>
+					Script length is {script?.length}, which exceeds 4096 characters. Please remove some characters.
+				</ErrorMessage>
 			)}
+			<div
+				ref={editorRef}
+				style={{ width: `${maxWidth}px` }}
+				className={`w-full min-h-[4rem] border border-2 border-gray-200 rounded-lg flex flex-col overflow-y-auto my-1`} // shift left to align with slide
+			>
+				{isPaidUser || currentSlideIndex < 5 ? (
+					<>
+						<TextareaAutosize
+							className={`grow px-4 py-2 w-full h-full border-none text-gray-700 text-xs lg:text-sm 2xl:text-base font-normal focus:ring-0 ${tight && 'leading-tight'}`}
+							value={script}
+							onChange={(e: any) => {
+								setScript(e.target.value);
+								debouncedUpdateTranscriptList(e.target.value);
+							}}
+							maxLength={4096}
+						>
+							{script}
+						</TextareaAutosize>
+					</>
+				) : (
+					<div className='flex flex-col items-center justify-center h-full text-gray-500 text-sm'>
+						<BigBlueButton
+							onClick={() => {
+								window.location.href = '/pricing';
+							}}
+						>
+							Upgrade to edit script
+						</BigBlueButton>
+					</div>
+				)}
+			</div>
 		</div>
 	);
 };
