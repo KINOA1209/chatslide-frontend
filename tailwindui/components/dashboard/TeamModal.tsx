@@ -88,7 +88,7 @@ const TeamModal: React.FC<TeamModalProps> = ({
 	const fetchTeamDetails = async () => {
 		try {
 			const data = await TeamService.getTeamDetails(teamId, token);
-      initTeam(data as Team);
+      		initTeam(data as Team);
 			setMaxMembers(data.max_members);
 			setInviteCode(data.invitation_code);
 		} catch (err) {
