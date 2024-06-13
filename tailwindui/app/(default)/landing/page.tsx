@@ -482,7 +482,7 @@ function Landing() {
 									</h3>
 								) : (
 									<h3 className='heading'>
-										👤 CLone your
+										👤 Clone your
 										<span className='text-span'> avatar </span> to speak for you
 										<br />
 									</h3>
@@ -629,7 +629,7 @@ function Landing() {
 								<h3 className='heading'>
 									<h3 className='heading'>
 										📊
-										<span className='text-span'> Infographics </span> make easy
+										<span className='text-span'> Infographics </span> made easy
 										with AI
 										<br />
 									</h3>
