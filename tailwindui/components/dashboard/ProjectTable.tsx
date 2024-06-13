@@ -332,7 +332,7 @@ const ProjectItem: React.FC<{
 								</button>
 							)}
 
-							{project.id && setCurrentProjects && folders && setFolders && (
+							{project.id && setCurrentProjects && folders && setFolders && project.content_type==='presentation' && (
 								<button
 									className='block px-[10px] py-[9px] text-sm text-[#182230] rounded-md  hover:bg-zinc-100 w-full text-left'
 									onClick={() => {
