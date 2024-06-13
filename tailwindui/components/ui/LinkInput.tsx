@@ -90,7 +90,7 @@ const LinkInput = ({
 			setSelectedResources((prevList) => [videoDetails, ...prevList]);
 		} catch (error: any) {
 			console.error('Error fetching YouTube video details: ', error);
-			setLinkError('Error fetching YouTube video details');
+			setLinkError('Error reading YouTube video details, please make sure the YouTube video has subtitle.');
 		}
 		setIsAddingLink(false);
 	}
