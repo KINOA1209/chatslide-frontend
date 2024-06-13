@@ -3,11 +3,13 @@ export const Testimonial: React.FC<{
 	title?: string;
 	text: string;
 	profile_url: string;
+  rtl?: boolean;
 }> = ({
   name,
   title,
   text,
-  profile_url
+  profile_url,
+  rtl,
 }) => {
 	return (
 		<div className='uui-testimonial13_content'>
@@ -93,7 +95,7 @@ export const Testimonial: React.FC<{
 					</svg>
 				</div>
 			</div>
-			<div className='uui-heading-xxsmall text-weight-medium'>
+			<div className='uui-heading-xxsmall text-weight-medium' style={{direction: rtl ? 'rtl' : 'ltr'}}>
 				{text}
 			</div>
 			<div className='uui-testimonial13_client'>

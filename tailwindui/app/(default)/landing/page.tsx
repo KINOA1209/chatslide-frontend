@@ -3,9 +3,11 @@ import AuthButtons from './AuthButtons';
 import { Pricing } from './Pricing';
 import Tutorial from './Tutorial';
 import { Testimonial } from './Testimonial';
-import { DrLambdaTestimonialsData } from './TestimonialData';
+import { ChatSlideTestimonialsData, DrLambdaTestimonialsData } from './TestimonialData';
 
 function Landing() {
+  const testimonialData = isChatslide() ? ChatSlideTestimonialsData : DrLambdaTestimonialsData;
+
 	return (
 		<>
 			<meta charSet='utf-8' />
@@ -521,13 +523,14 @@ function Landing() {
 								</div>
 							</div>
 							<div className='uui-testimonial13_component'>
-								{DrLambdaTestimonialsData.map((testimonial, index) => (
+								{testimonialData.map((testimonial, index) => (
 									<Testimonial
 										key={index}
 										name={testimonial.name}
 										title={testimonial.title}
 										text={testimonial.text}
 										profile_url={testimonial.profile_url}
+										rtl={testimonial.rtl}
 									/>
 								))}
 							</div>

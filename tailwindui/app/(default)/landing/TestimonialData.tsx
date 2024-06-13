@@ -86,16 +86,66 @@ const DrLambdaTestimonialsData = [
 		title: 'Teacher',
 		text: ' DrLambda surpasses similar software and shows potential to rival industry leaders. I wholeheartedly recommend it to educators, especially for course creation.',
 		profile_url: 'images/latif.webp',
+    rtl: false,
 	},
 ];
 
 const ChatSlideTestimonialsData = [
 	{
+		name: 'Barika B.',
+		title: 'Founder of B3 Media Solutions',
+		text: 'I have to admit, I tried out @chatslide_ai today and now I totally rethinking how I should do my content for my business and personal accounts. If you liked @MeetGamma  you most definitely have to check out ChatSlide AI',
+		profile_url: 'images/barika.jpeg',
+	},
+	{
+		name: 'Miguel',
+		title: 'Experto en monetización y crecimiento en 𝕏',
+		text: '🇪🇸 Tu herramienta definitiva para crear contenido atractivo de diapositivas, publicaciones y videos con fácil integración',
+		profile_url: 'images/miguel.jpeg',
+	},
+	{
+		name: 'kamran Hassan',
+		title: 'AI enthusiast',
+		text: 'Simply input files,webpages, social links, let Chatslide. ai transform your  tailored slide to videos with avatars.',
+		profile_url: 'images/kamran.jpeg',
+	},
+	{
+		name: 'Hamza Khalid',
+		title: 'AI Soloprenuer',
+		text: "Customize slides with ChatSlide AI's templates and branding tools. Adapt to diverse content types and use cases seamlessly.",
+		profile_url: 'images/kamran.jpeg',
+	},
+	{
 		name: 'Yaser Alosefer',
 		title: 'Entrepreneur, Investor',
-		text: '🇸🇦 "عروض بثواني😎 لاتكتب اي عروض بعد اليوم، كل ما هو عليك	فقط كتابة ماتريد للـAI وهو يكتب العرض كامل لك مع الصور	والمعلومات من بحثك وملفاتك ويلخصها وكل شي، يعني كأنه كاتب "',
+		text: '🇸🇦 عروض بثواني😎 لاتكتب اي عروض بعد اليوم، كل ما هو عليك	فقط كتابة ماتريد للـAI وهو يكتب العرض كامل لك مع الصور	والمعلومات من بحثك وملفاتك ويلخصها وكل شي، يعني كأنه كاتب ',
 		profile_url: 'images/yaser.jpeg',
-		ltr: true,
+		rtl: true,
+	},
+	{
+		name: 'Hasan Rajpoot',
+		title: 'Sharing insights on AI',
+		text: 'Powered by ChatGPT & GPT-4, Chatslide ai is your personalized AI content generation assistant whenever and wherever you generate slides or videos.',
+		profile_url: 'images/hasan.jpeg',
+	},
+	{
+		name: 'EyeingAI',
+		title: 'Sharing insights on AI',
+		text: 'Utilize ChatSlide AI customizable templates to adapt your slides to various content types, catering to different use cases.',
+		profile_url: 'images/eyeingai.jpeg',
+	},
+	{
+		name: 'Tianwei Yue',
+		title: 'MathGPTPro CEO/Founder',
+		text: '@chatslide_ai has been doing really well in user survey!',
+		profile_url: 'images/tianwei.jpeg',
+		rtl: true,
+	},
+	{
+		name: 'Hussain Asghar',
+		title: 'Sharing latest Ai tools',
+		text: 'Your ultimate tool for creating engaging slide, post and video content with easy integration',
+		profile_url: 'images/hussain.jpg',
 	},
 ];
 
