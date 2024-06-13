@@ -3,10 +3,15 @@ import AuthButtons from './AuthButtons';
 import { Pricing } from './Pricing';
 import Tutorial from './Tutorial';
 import { Testimonial } from './Testimonial';
-import { ChatSlideTestimonialsData, DrLambdaTestimonialsData } from './TestimonialData';
+import {
+	ChatSlideTestimonialsData,
+	DrLambdaTestimonialsData,
+} from './TestimonialData';
 
 function Landing() {
-  const testimonialData = isChatslide() ? ChatSlideTestimonialsData : DrLambdaTestimonialsData;
+	const testimonialData = isChatslide()
+		? ChatSlideTestimonialsData
+		: DrLambdaTestimonialsData;
 
 	return (
 		<>
@@ -186,15 +191,21 @@ function Landing() {
 							>
 								Home
 							</a>
-							<a href='#usecase' className='nav-link w-nav-link'>
-								Use Cases
-							</a>
+							{isChatslide() ? (
+								<a href='#usecase' className='nav-link w-nav-link'>
+									Use Cases
+								</a>
+							) : (
+								<a href='#feature' className='nav-link w-nav-link'>
+									Features
+								</a>
+							)}
 							<a
 								href='#testimonials'
 								aria-current='page'
 								className='nav-link w-nav-link w--current'
 							>
-								Testimonials
+								{isChatslide() ? 'Wall of Love' : 'Testimonials'}
 							</a>
 							<a href='/pricing' className='nav-link w-nav-link'>
 								Pricing
@@ -227,30 +238,55 @@ function Landing() {
 							className='image-3'
 						/>
 						<div className='margin-bottom-24'>
-							<h3 className='heading'>
-								Build your <span className='text-span'>Slides</span> and{' '}
-								<span className='text-span'>Video</span> in one click
-							</h3>
+							{isChatslide() ? (
+								<h3 className='heading'>
+									Build your <span className='text-span'>Slides</span> and{' '}
+									<span className='text-span'>Video</span> in one click
+								</h3>
+							) : (
+								<h3 className='heading'>
+									Digital workspace for{' '}
+									<span className='text-span'>documents</span> to
+									<span className='text-span'> anything</span>
+								</h3>
+							)}
 						</div>
 						<p className='paragraph-regular'>
-							📁 Drag, 🖲️ click, and 💬 chat! <br />
-							Add voiceover and convert to video when you need. <br />
-							🚀 Get an instant productivity boost for your knowledge sharing
-							workflow!
+							{isChatslide() ? (
+								<>
+									📁 Drag, 🖲️ click, and 💬 chat! <br />
+									Add voiceover and convert to video when you need. <br />
+									🚀 Get an instant productivity boost for your knowledge
+									sharing workflow!
+								</>
+							) : (
+								<>
+									Start with your 🖼️ image, 📄 PDF, or any 🔗 weblink, convert
+									that to engaging content like slides, video, or social media
+									posts. <br />
+									🚀 Get an instant productivity boost for your knowledge
+									sharing workflow!
+									<br />
+								</>
+							)}
 						</p>
 						<a
 							href='/signup'
 							className='button-primary w-button landing-sign-up'
 							id='landing-sign-up-1'
 						>
-							Try for free
+							{ isChatslide() ? 'Try for Free' : 'Start Now' }
 						</a>
 						<a href='#usecase' className='secondary-button w-button'>
 							See a demo
 						</a>
 					</div>
 					<img
-						src='images/demo.png'
+						src={
+							isChatslide()
+								? 'images/chatslide_hero.png'
+								: 'images/drlambda_hero.png'
+						}
 						loading='lazy'
 						sizes='(max-width: 479px) 90vw, (max-width: 767px) 59vw, (max-width: 1439px) 60vw, 771.015625px'
 						alt=''
@@ -258,7 +294,12 @@ function Landing() {
 					/>
 				</div>
 			</div>
-			<div className='section-content'>
+			<div
+				className={
+					isChatslide() ? 'section-content' : 'section-content-drlambda'
+				}
+				id='feature'
+			>
 				<div className='container-regular'>
 					<img
 						src='images/image-6.png'
@@ -270,13 +311,25 @@ function Landing() {
 					/>
 					<div data-w-id='9164251f-98e6-3275-7807-8f4e29fd6650' className=''>
 						<div className='margin-bottom-24'>
-							<h3 className='heading'>
-								📚 Extract information from{' '}
-								<span className='text-span'>any document</span>
-								<br />
-							</h3>
+							{isChatslide() ? (
+								<h3 className='heading'>
+									📚 Extract information from{' '}
+									<span className='text-span'>any document</span>
+									<br />
+								</h3>
+							) : (
+								<h3 className='heading'>
+									✅ Build your personal knowledge with
+									<span className='text-span'> any sources</span>
+									<br />
+								</h3>
+							)}
 							<img
-								src='images/Group-1707478903.png'
+								src={
+									isChatslide()
+										? 'iamges/chatslide_docs.png'
+										: 'images/Group-1707478903.png'
+								}
 								loading='lazy'
 								alt=''
 								className='image-left'
@@ -287,7 +340,7 @@ function Landing() {
 							className='button w-button landing-sign-up'
 							id='landing-sign-up-2'
 						>
-							Try for free
+							{ isChatslide() ? 'Try for Free' : 'Start Now' }
 						</a>
 					</div>
 				</div>
@@ -299,11 +352,19 @@ function Landing() {
 						className='div-block'
 					>
 						<div className='margin-bottom-24'>
-							<h3 className='heading'>
-								🧠 Turn your knowledge into slides and video with
-								<span className='text-span'> one click</span>
-								<br />
-							</h3>
+							{isChatslide() ? (
+								<h3 className='heading'>
+									🧠 Turn your knowledge into slides and video with
+									<span className='text-span'> one click</span>
+									<br />
+								</h3>
+							) : (
+								<h3 className='heading'>
+									💡 Create slides, videos, social posts with
+									<span className='text-span'> just the instructions</span>
+									<br />
+								</h3>
+							)}
 							<img
 								src='images/Group-1707478903.png'
 								loading='lazy'
@@ -316,34 +377,48 @@ function Landing() {
 							className='button w-button landing-sign-up'
 							id='landing-sign-up-3'
 						>
-							Try for free
+							{ isChatslide() ? 'Try for Free' : 'Start Now' }
 						</a>
 					</div>
 					<img
-						src='images/Frame-1707479080.png'
+						src={ isChatslide() ? 'images/Frame-1707479080.png' : 'images/slide.gif'}
 						loading='lazy'
 						sizes='(max-width: 479px) 90vw, (max-width: 1439px) 45vw, 570px'
-						srcSet='images/Frame-1707479080-p-500.png 500w, images/Frame-1707479080.png 655w'
+						// srcSet='images/Frame-1707479080-p-500.png 500w, images/Frame-1707479080.png 655w'
 						alt=''
 						className='image'
 					/>
 				</div>
 			</div>
-			<div className='section-content'>
+			<div
+				className={
+					isChatslide() ? 'section-content' : 'section-content-drlambda'
+				}
+			>
 				<div className='container-regular'>
 					<div className='div-block-3'>
-						<div
-							style={{ paddingTop: '56.17021276595745%' }}
-							className='video w-video w-embed'
-						>
-							<iframe
-								width='100%'
-								height='100%'
-								src='https://www.youtube.com/embed/qxHT5GYe_aQ?autoplay=1&mute=1&loop=1&rel=0'
-								title='ChatSlide - One-click presentation AI tool through multiple sources'
-								allow='autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen'
+						{isChatslide() ? (
+							<div
+								style={{ paddingTop: '56.17021276595745%' }}
+								className='video w-video w-embed'
+							>
+								<iframe
+									width='100%'
+									height='100%'
+									src='https://www.youtube.com/embed/qxHT5GYe_aQ?autoplay=1&mute=1&loop=1&rel=0'
+									title='ChatSlide - One-click presentation AI tool through multiple sources'
+									allow='autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen'
+								/>
+							</div>
+						) : (
+							<img
+								src='images/chatbot.png'
+								loading='lazy'
+								sizes='(max-width: 479px) 90vw, (max-width: 1439px) 45vw, 570px'
+								alt=''
+								className='image'
 							/>
-						</div>
+						)}
 					</div>
 					<div
 						data-w-id='5ae35090-a2e4-c5af-2f6b-a7214510c554'
@@ -376,7 +451,7 @@ function Landing() {
 							className='button w-button landing-sign-up'
 							id='landing-sign-up-4'
 						>
-							Try for free
+							{ isChatslide() ? 'Try for Free' : 'Start Now' }
 						</a>
 					</div>
 				</div>
@@ -398,10 +473,20 @@ function Landing() {
 					>
 						<div className='margin-bottom-24'>
 							<h3 className='heading'>
-								🦹‍♂️ Employ the{' '}
-								<span className='text-span'> digital avatar </span> who speaks
-								for you
-								<br />
+								{isChatslide() ? (
+									<h3 className='heading'>
+										🦹‍♂️ Employ the{' '}
+										<span className='text-span'> digital avatar </span> who
+										speaks for you
+										<br />
+									</h3>
+								) : (
+									<h3 className='heading'>
+										👤 CLone your
+										<span className='text-span'> avatar </span> to speak for you
+										<br />
+									</h3>
+								)}
 							</h3>
 							<img
 								src='images/Group-1707478903.png'
@@ -415,106 +500,169 @@ function Landing() {
 							className='button w-button landing-sign-up'
 							id='landing-sign-up-5'
 						>
-							Try for free
+							{ isChatslide() ? 'Try for Free' : 'Start Now' }
 						</a>
 					</div>
 					<div className='div-block-3'>
-						<div
-							style={{ paddingTop: '56.17021276595745%' }}
-							className='video w-video w-embed'
-						>
-							<iframe
-								width='100%'
-								height='100%'
-								src='https://www.youtube.com/embed/cs1dtV3gRpA?si=cGBczLWZpBZANnyv&autoplay=1&mute=1&loop=1&rel=0'
-								title='How to safely photography the solar eclipse (ChatSlide Avatar Demo)'
-								allow='autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen'
+						{isChatslide() ? (
+							<div
+								style={{ paddingTop: '56.17021276595745%' }}
+								className='video w-video w-embed'
+							>
+								<iframe
+									width='100%'
+									height='100%'
+									src='https://www.youtube.com/embed/cs1dtV3gRpA?si=cGBczLWZpBZANnyv&autoplay=1&mute=1&loop=1&rel=0'
+									title='How to safely photography the solar eclipse (ChatSlide Avatar Demo)'
+									allow='autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen'
+								/>
+							</div>
+						) : (
+							<img
+								src='images/avatar.png'
+								loading='lazy'
+								sizes='(max-width: 479px) 90vw, (max-width: 1439px) 45vw, 570px'
+								alt=''
+								className='image'
 							/>
-						</div>
+						)}
 					</div>
 				</div>
 			</div>
-			<section className='combine-section_feature6'>
-				<div className='combine-padding-global-4'>
-					<div className='combine-padding-section-medium-3'>
-						<div className='combine-container-small-3'>
-							<div className='combine-text-align-center-3'>
-								<h2 id='usecase' className='combine-heading-style-h2-3'>
-									Created for all <span>use cases</span>
-								</h2>
-								<div className='combine-space-medium-3' />
-								<div className='uui-text-size-large' />
+			{isChatslide() ? (
+				<section className='combine-section_feature6'>
+					<div className='combine-padding-global-4'>
+						<div className='combine-padding-section-medium-3'>
+							<div className='combine-container-small-3'>
+								<div className='combine-text-align-center-3'>
+									<h2 id='usecase' className='combine-heading-style-h2-3'>
+										Created for all <span>use cases</span>
+									</h2>
+									<div className='combine-space-medium-3' />
+									<div className='uui-text-size-large' />
+								</div>
 							</div>
-						</div>
-						<div className='combine-space-large-3' />
-						<div className='combine-container-large-3'>
-							<div className='combine-feature6_component'>
-								<a href='#' className='combine-feature6_item w-inline-block'>
-									<div className='combine-feature6_image-wrapper'>
-										<img
-											src='images/social-post.gif'
-											loading='lazy'
-											alt=''
-											className='combine-feature6_image'
-										/>
-									</div>
-									<h3 className='combine-heading-style-h5'>Slides</h3>
-									<div className='combine-text-size-regular-3'>
-										Say good-bye to 7 windows open and copy pasting,{' '}
-										{getBrand()} is your one stop choice for slides creation
-										workflow.
-									</div>
-									<div className='combine-button-icon' />
-								</a>
-								<a href='#' className='combine-feature6_item w-inline-block'>
-									<div className='combine-feature6_image-wrapper'>
-										<img
-											src='images/slide.gif'
-											loading='lazy'
-											alt=''
-											className='combine-feature6_image'
-										/>
-									</div>
-									<h3 className='combine-heading-style-h5'>Social Post</h3>
-									<div className='combine-text-size-regular-3'>
-										Streamline your content creation process via social post
-										generator for Instagram, X, etc.
-									</div>
-									<div className='combine-button-icon' />
-								</a>
-								<a href='#' className='combine-feature6_item w-inline-block'>
-									<div className='combine-feature6_image-wrapper'>
-										<img
-											src='images/video.gif'
-											loading='lazy'
-											alt=''
-											className='combine-feature6_image'
-										/>
-									</div>
-									<h3 className='combine-heading-style-h5'>Video</h3>
-									<div className='combine-text-size-regular-3'>
-										Upgrade your slides into video, with customized voiceover
-										and scripts for your audience. Best for teaching or sharing
-										knowledge.
-									</div>
-									<div className='combine-button-icon' />
-								</a>
+							<div className='combine-space-large-3' />
+							<div className='combine-container-large-3'>
+								<div className='combine-feature6_component'>
+									<a href='#' className='combine-feature6_item w-inline-block'>
+										<div className='combine-feature6_image-wrapper'>
+											<img
+												src='images/social-post.gif'
+												loading='lazy'
+												alt=''
+												className='combine-feature6_image'
+											/>
+										</div>
+										<h3 className='combine-heading-style-h5'>Slides</h3>
+										<div className='combine-text-size-regular-3'>
+											Say good-bye to 7 windows open and copy pasting,{' '}
+											{getBrand()} is your one stop choice for slides creation
+											workflow.
+										</div>
+										<div className='combine-button-icon' />
+									</a>
+									<a href='#' className='combine-feature6_item w-inline-block'>
+										<div className='combine-feature6_image-wrapper'>
+											<img
+												src='images/slide.gif'
+												loading='lazy'
+												alt=''
+												className='combine-feature6_image'
+											/>
+										</div>
+										<h3 className='combine-heading-style-h5'>Social Post</h3>
+										<div className='combine-text-size-regular-3'>
+											Streamline your content creation process via social post
+											generator for Instagram, X, etc.
+										</div>
+										<div className='combine-button-icon' />
+									</a>
+									<a href='#' className='combine-feature6_item w-inline-block'>
+										<div className='combine-feature6_image-wrapper'>
+											<img
+												src='images/video.gif'
+												loading='lazy'
+												alt=''
+												className='combine-feature6_image'
+											/>
+										</div>
+										<h3 className='combine-heading-style-h5'>Video</h3>
+										<div className='combine-text-size-regular-3'>
+											Upgrade your slides into video, with customized voiceover
+											and scripts for your audience. Best for teaching or
+											sharing knowledge.
+										</div>
+										<div className='combine-button-icon' />
+									</a>
+								</div>
 							</div>
 						</div>
 					</div>
+				</section>
+			) : (
+				<div className='section-content-drlambda'>
+					<div className='container-regular'>
+						<div className='div-block-3'>
+							<img
+								src='images/charts.png'
+								loading='lazy'
+								sizes='(max-width: 479px) 90vw, (max-width: 1439px) 45vw, 570px'
+								alt=''
+								className='image'
+							/>
+						</div>
+						<div
+							data-w-id='5ae35090-a2e4-c5af-2f6b-a7214510c554'
+							style={{
+								WebkitTransform:
+									'translate3d(0, 44px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
+								msTransform:
+									'translate3d(0, 44px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
+								transform:
+									'translate3d(0, 44px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)',
+								opacity: 100,
+							}}
+							className='div-block'
+						>
+							<div className='margin-bottom-24'>
+								<h3 className='heading'>
+									<h3 className='heading'>
+										📊
+										<span className='text-span'> Infographics </span> make easy
+										with AI
+										<br />
+									</h3>
+								</h3>
+								<img
+									src='images/Group-1707478903.png'
+									loading='lazy'
+									alt=''
+									className='image-left'
+								/>
+							</div>
+							<a
+								href='/signup'
+								className='button w-button landing-sign-up'
+								id='landing-sign-up-5'
+							>
+								{ isChatslide() ? 'Try for Free' : 'Start Now' }
+							</a>
+						</div>
+					</div>
 				</div>
-			</section>
+			)}
 			<section className='combine-section_pricing5'>
 				<div className='combine-padding-global-2' />
 			</section>
-			<section className='uui-section_testimonial13'>
+			<section className={'uui-section_testimonial13'} id='testimonials'>
 				<div className='uui-page-padding'>
 					<div className='uui-container-large'>
 						<div className='uui-padding-vertical-xhuge'>
 							<div className='uui-text-align-center'>
 								<div className='uui-max-width-large align-center'>
-									<h2 id='testimonials' className='uui-heading-medium'>
-										Wall of Love
+									<h2 className='uui-heading-medium'>
+										{isChatslide() ? 'Wall of Love' : 'Testimonials'}
 									</h2>
 									<div className='uui-space-xsmall' />
 									<div className='uui-text-size-large'>
@@ -538,7 +686,7 @@ function Landing() {
 					</div>
 				</div>
 			</section>
-			<Tutorial />
+			{isChatslide() && <Tutorial />}
 			{/* <Pricing /> */}
 			<section className='uui-section_pricing11-2 hide-tablet' />
 			<footer className='brix---footer-wrapper'>

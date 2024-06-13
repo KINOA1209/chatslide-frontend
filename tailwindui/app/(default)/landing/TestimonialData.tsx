@@ -139,7 +139,6 @@ const ChatSlideTestimonialsData = [
 		title: 'MathGPTPro CEO/Founder',
 		text: '@chatslide_ai has been doing really well in user survey!',
 		profile_url: 'images/tianwei.jpeg',
-		rtl: true,
 	},
 	{
 		name: 'Hussain Asghar',

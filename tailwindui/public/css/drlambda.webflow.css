@@ -3639,6 +3639,14 @@ blockquote {
 	position: relative;
 }
 
+.section-content-drlambda {
+  float: none;
+  object-fit: fill;
+  background-image: linear-gradient(#eeeeee, #eeeeee);
+  padding: 64px 5% 100px;
+  position: relative;
+}
+
 .secondary-button {
 	border: 1px solid var(--branding-color);
 	color: var(--branding-color);
