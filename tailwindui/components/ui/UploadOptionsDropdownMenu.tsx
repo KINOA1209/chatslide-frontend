@@ -180,8 +180,11 @@ const UploadOptionsDropdownMenu: React.FC<UploadOptionsDropdownMenuProps> = ({
 												lineHeight: '20px',
 											}}
 										>
-											Supported file formats: PDF, TXT, DOCX, PPTX, KEY, PNG,
-											JPEG, PAGES, MP3, M4A, WAV (max file size: 10MB)
+											Supported file formats:{' '}
+											{DOCUMENT_EXTENSIONS.map((ext) => ext.toUpperCase()).join(
+												', ',
+											)}{' '}
+											(max file size: 10MB)
 										</span>
 									</div>
 								)}

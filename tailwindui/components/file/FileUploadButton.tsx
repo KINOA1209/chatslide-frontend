@@ -24,6 +24,8 @@ export const DOCUMENT_EXTENSIONS = [
 	'mp3',
 	'wav',
 	'm4a',
+  'png',
+  'jpg'
 ];
 export const ALL_EXTENSIONS = [...MEDIA_EXTENSIONS, ...DOCUMENT_EXTENSIONS];
 
