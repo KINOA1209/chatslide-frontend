@@ -70,7 +70,7 @@ const LinkInput = ({
 		}
 		setLinkError('');
 		setIsAddingLink(true);
-		if (urlIsYoutube) {
+		if (handleLinkChange(link)) {
 			addYoutubeLink(link);
 		} else {
 			addWebpageLink(link);
@@ -136,6 +136,7 @@ const LinkInput = ({
 			if (essentialLink && essentialLink.length > 0) {
 				setLinkUrl('https://www.' + essentialLink[0]);
 				setUrlIsYoutube(true);
+        return true;
 				// addLink(link);
 			}
 		} else if (regex2.test(link)) {
@@ -145,6 +146,7 @@ const LinkInput = ({
 				if (vID && vID.length > 0) {
 					setLinkUrl('https://www.youtube.com/watch?v=' + vID[0]);
 					setUrlIsYoutube(true);
+          return true;
 					// addLink(link);
 				}
 			}
@@ -155,12 +157,14 @@ const LinkInput = ({
 				if (vID && vID.length > 0) {
 					setLinkUrl('https://www.youtube.com/watch?v=' + vID[0]);
 					setUrlIsYoutube(true);
+          return true;
 					// addLink(link);
 				}
 			}
 		} else {
 			// url is not youtube, assuming it is a web link
 			setUrlIsYoutube(false);
+      return false;
 			// addLink(link);
 		}
 	};
