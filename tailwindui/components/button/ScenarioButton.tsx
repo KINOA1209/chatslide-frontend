@@ -4,6 +4,7 @@ import { useUser } from '@/hooks/use-user';
 import { ScenarioOption } from '@/app/(feature)/scenario-choice/slidesScenarios';
 import Image from 'next/image';
 import { Explanation } from '../ui/Text';
+import DesignSystemButton from '../ui/design_systems/ButtonsOrdinary';
 
 export const ScenarioButton: FC<{
 	scenario: ScenarioOption;
@@ -61,5 +62,27 @@ export const ScenarioButton: FC<{
 				)}
 			</div>
 		</>
+	);
+};
+
+
+export const MinorScenarioButton: FC<{
+	scenario: ScenarioOption;
+	navigate: (type: string) => void;
+}> = ({ scenario, navigate }) => {
+	return (
+		<div className='transition-transform transform-gpu hover:scale-110'>
+			<DesignSystemButton
+				onClick={() => navigate(scenario.id)}
+				size='lg'
+				hierarchy='secondary'
+				buttonStatus={ scenario.disabled ? 'disabled' : 'enabled'}
+			>
+				<div className='w-[12rem] flex flex-row gap-2 items-center'>
+					{scenario.icon}
+					{scenario.title}
+				</div>
+			</DesignSystemButton>
+		</div>
 	);
 };

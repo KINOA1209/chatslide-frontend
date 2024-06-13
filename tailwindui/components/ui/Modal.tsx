@@ -155,7 +155,7 @@ const Modal: React.FC<ModalProps> = ({
 									borderRadius: '32px',
 									width: '36px',
 									height: '36px',
-									border: '1px solid var(--Grey-02, #EBEFF2)',
+									// border: '1px solid var(--Grey-02, #EBEFF2)',
 								}}
 							>
 								<button

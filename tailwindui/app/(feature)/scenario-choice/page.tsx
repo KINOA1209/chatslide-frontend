@@ -3,7 +3,6 @@
 import React, { useEffect, useState, useRef, FC } from 'react';
 import { useRouter } from 'next/navigation';
 import '@/app/css/workflow-scenario-choice.css';
-import Image from 'next/image';
 import slideScenarios, { ScenarioOption } from './slidesScenarios';
 import socialpostScenarios from './socialpostScenarios';
 import SessionStorage from '@/utils/SessionStorage';
@@ -13,9 +12,7 @@ import { useProject } from '@/hooks/use-project';
 import Project from '@/models/Project';
 import { Column } from '@/components/layout/Column';
 import { Instruction, Title } from '@/components/ui/Text';
-import DesignSystemBadges from '@/components/ui/design_systems/Badges';
-import DesignSystemButton from '@/components/ui/design_systems/ButtonsOrdinary';
-import ScenarioButton from '../type-choice/ScenarioButton';
+import { MinorScenarioButton, ScenarioButton } from '@/components/button/ScenarioButton';
 
 const ScenarioChoicePage = () => {
 	const router = useRouter();
@@ -43,26 +40,6 @@ const ScenarioChoicePage = () => {
 		}
 	};
 
-	const SlidesScenarioButton: FC<{ scenario: ScenarioOption }> = ({
-		scenario,
-	}) => {
-		return (
-			<div className='transition-transform transform-gpu hover:scale-110'>
-				<DesignSystemButton
-					onClick={() => navigateToSummary(scenario.id)}
-					size='lg'
-					hierarchy='secondary'
-					buttonStatus='enabled'
-				>
-					<div className='w-[12rem] flex flex-row gap-2 items-center'>
-						{scenario.icon}
-						{scenario.title}
-					</div>
-				</DesignSystemButton>
-			</div>
-		);
-	};
-
 	// avoid hydration error during development caused by persistence
 	if (!useHydrated()) return <></>;
 
@@ -82,7 +59,9 @@ const ScenarioChoicePage = () => {
 				>
 					{scenarios.options.map((scenario) =>
 						workflowType === 'presentation' ? (
-							<SlidesScenarioButton scenario={scenario} />
+							<MinorScenarioButton 
+              scenario={scenario} 
+              navigate={navigateToSummary}/>
 						) : (
 							<ScenarioButton
 								scenario={scenario}
