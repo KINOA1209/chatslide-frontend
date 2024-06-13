@@ -17,6 +17,7 @@ interface TeamMember {
 	name: string;
 	email: string;
 	role: string;
+	member_type?: string;
 }
 
 interface TeamModalProps {
@@ -34,6 +35,8 @@ const TeamModal: React.FC<TeamModalProps> = ({
 	const [newMemberEmail, setNewMemberEmail] = useState<string>('');
 	const [inviteCode, setInviteCode] = useState<string>('');
 	const [maxMembers, setMaxMembers] = useState<number>(0);
+	const [freeMembers, setFreeMembers] = useState<number>(0);
+	const [inviteCodeFree, setInviteCodeFree] = useState<string>('');
 	const [isOwner, setIsOwner] = useState<boolean>(false);
 	const { token, email, username } = useUser();
 	const [currency, setCurrency] = useState('$');
@@ -73,6 +76,7 @@ const TeamModal: React.FC<TeamModalProps> = ({
 					id: member.id,
 					name: member.username,
 					email: member.email,
+					member_type: member.member_type,
 					role: 'Member',
 				})),
 			];
@@ -90,7 +94,9 @@ const TeamModal: React.FC<TeamModalProps> = ({
 			const data = await TeamService.getTeamDetails(teamId, token);
       		initTeam(data as Team);
 			setMaxMembers(data.max_members);
+			setFreeMembers(data.free_members);
 			setInviteCode(data.invitation_code);
+			setInviteCodeFree(data.invitation_code_free);
 		} catch (err) {
 			console.error('Error fetching team details:', err);
 		}
@@ -152,53 +158,79 @@ const TeamModal: React.FC<TeamModalProps> = ({
 	};
 
 	return (
-		<div className='team-management'>
-			<Modal
-				showModal={showModal}
-				setShowModal={setShowModal}
-				title={isOwner ? 'Manage Team' : 'Team List'}
-				description='Manage your team members and their roles.'
-				width='600px'
-				hasInputArea={false}
-			>
-				<div>
-					{isOwner && (
-						<>
-							<div className='mb-4'>
-								<SmallTitle>Invite Code</SmallTitle>
-								{maxMembers <= members.length ? (
-									<ErrorMessage>
-										You have reached the maximum number of members allowed for
-										your team. Please purchase a seat.
-									</ErrorMessage>
-								) : inviteCode ? (
-									<div className='flex flex-col'>
-										<div className='mt-4 flex items-center'>
-											<span className='text-gray-800'>Invite Code:</span>
-											<span className='ml-2 font-bold text-blue-600'>
-												{inviteCode}
-											</span>
-											<button
-												onClick={() => copyToClipboard(inviteCode)}
-												className='ml-2 text-blue-600 hover:text-blue-800'
-											>
-												<FaClone />
-											</button>
-										</div>
-										<Instruction>
-											Share this code with your team members, ask them to
-											register an account, and enter this code to join your
-											team.
-										</Instruction>
-									</div>
-								) : (
-									<div className='mt-2'>
-										<BigBlueButton onClick={generateInviteCode}>
-											Generate Code
-										</BigBlueButton>
-									</div>
-								)}
-							</div>
+        <div className='team-management'>
+            <Modal
+                showModal={showModal}
+                setShowModal={setShowModal}
+                title={isOwner ? 'Manage Team' : 'Team List'}
+                description='Manage your team members and their roles.'
+                width='600px'
+                hasInputArea={false}
+            >
+                <div>
+                    {isOwner && (
+                        <>
+                            <div className='mb-4'>
+                                <SmallTitle>Invite Codes</SmallTitle>
+                                <div className='flex flex-col'>
+                                    <div className='mt-4 flex items-center'>
+                                        <div className='mr-4'>
+                                            <span className='text-gray-800'>Invite Code:</span>
+                                            {maxMembers <= members.length ? (
+                                                <ErrorMessage>
+                                                    You have reached the maximum number of members allowed for
+                                                    your team. Please purchase a seat.
+                                                </ErrorMessage>
+                                            ) : inviteCode ? (
+                                                <>
+                                                    <span className='ml-2 font-bold text-blue-600'>
+                                                        {inviteCode}
+                                                    </span>
+                                                    <button
+                                                        onClick={() => copyToClipboard(inviteCode)}
+                                                        className='ml-2 text-blue-600 hover:text-blue-800'
+                                                    >
+                                                        <FaClone />
+                                                    </button>
+                                                </>
+                                            ) : (
+                                                <BigBlueButton onClick={generateInviteCode}>
+                                                    Generate Code
+                                                </BigBlueButton>
+                                            )}
+                                        </div>
+
+                                        <div className='ml-4'>
+                                            <span className='text-gray-800'>Free Invite Code:</span>
+                                            {freeMembers <= members.filter(member => member.member_type === 'free').length ? (
+                                                <ErrorMessage>
+                                                    You have reached the maximum number of free members allowed for
+                                                    your team.
+                                                </ErrorMessage>
+                                            ) : inviteCodeFree ? (
+                                                <>
+                                                    <span className='ml-2 font-bold text-blue-600'>
+                                                        {inviteCodeFree}
+                                                    </span>
+                                                    <button
+                                                        onClick={() => copyToClipboard(inviteCodeFree)}
+                                                        className='ml-2 text-blue-600 hover:text-blue-800'
+                                                    >
+                                                        <FaClone />
+                                                    </button>
+                                                </>
+                                            ) : (
+                                                <BigBlueButton onClick={generateInviteCode}>
+                                                    Generate Free Member Code
+                                                </BigBlueButton>
+                                            )}
+                                        </div>
+                                    </div>
+                                    <Instruction>
+                                        Share these codes with your team members, ask them to register an account, and enter the appropriate code to join your team.
+                                    </Instruction>
+                                </div>
+                            </div>
 							<div className='mb-4'>
 								<SmallTitle>Purchase New Seat</SmallTitle>
 								<div className='mt-2'>
