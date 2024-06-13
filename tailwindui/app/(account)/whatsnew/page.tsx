@@ -5,6 +5,7 @@ import { Column } from '@/components/layout/Column';
 import { BigTitle, Explanation, Instruction } from '@/components/ui/Text';
 import { PlusLabel, ProLabel } from '@/components/ui/GrayLabel';
 import FeedbackButton from '@/components/ui/feedback';
+import { getBrand, isChatslide } from '@/utils/getHost';
 
 export default function Studio() {
 	// avoid hydration error during development caused by persistence
@@ -23,6 +24,51 @@ export default function Studio() {
 						instructionText='What features would you like to see next?'
 						displayText='Ask for more features!'
 					/>
+				</Card>
+
+				<Card>
+					<BigTitle>June 13</BigTitle>
+
+					<Instruction>
+						<div>
+							<b>🖼️ Upload Image as Resource: </b> Now you can upload images as
+							a supporting resource. We will use AI to read the resource.
+						</div>
+					</Instruction>
+
+					<Instruction>
+						<div>
+							<b>🎨 Image Popup Updates: </b> The user interface of image popup is updated for better clarity and experience. 
+						</div>
+					</Instruction>
+
+					{!isChatslide() && (
+						<Instruction>
+							<div>
+								<b>⭐️ Image Generation: </b> We have a different portal for
+								image generation now, you can save the generated image as your
+								resource, and use it in the slides or social posts.
+							</div>
+						</Instruction>
+					)}
+
+					<Instruction>
+						<div>
+							<b>👀 {getBrand()}'s Makeover: </b> The landing page of DrLambda
+							gets a makeover, to reduce the confusion between DrLambda and
+							ChatSlide. <br />
+							Users of DrLambda will have access to slides, charts, images,
+							videos features. ChatSlide will be a vertical product focused on
+							Slides.
+						</div>
+					</Instruction>
+
+					<Instruction>
+						<div>
+							<b>💲 Price Adjustments: </b> The lifetime price for ULTIMATE was
+							adjusted.
+						</div>
+					</Instruction>
 				</Card>
 
 				<Card>
@@ -59,11 +105,12 @@ export default function Studio() {
 						</div>
 					</Instruction>
 
-					<Instruction>
+					{/* <Instruction>
 						<div>
-							<b>💲 Price Adjustments: </b> The lifetime price for ULTIMATE will increase on June 11th. 
+							<b>💲 Price Adjustments: </b> The lifetime price for ULTIMATE will
+							increase on June 11th.
 						</div>
-					</Instruction>
+					</Instruction> */}
 				</Card>
 
 				<Card>
