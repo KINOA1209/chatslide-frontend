@@ -63,6 +63,7 @@ const TemplateSelector: React.FC<{
 	setCustomizedTemplateContentFontColorCallback: (font: string) => void;
 	setCustomizedTemplateSubtitleFontColorCallback: (font: string) => void;
 	setCustomizedTemplateTitleFontColorCallback: (font: string) => void;
+	showTemplatePreview?: boolean;
 }> = ({
 	template,
 	setTemplate,
@@ -77,6 +78,7 @@ const TemplateSelector: React.FC<{
 	setCustomizedTemplateContentFontColorCallback,
 	setCustomizedTemplateSubtitleFontColorCallback,
 	setCustomizedTemplateTitleFontColorCallback,
+	showTemplatePreview = true,
 }) => {
 	const {
 		initialLoadedTemplateBgColor,
@@ -580,13 +582,17 @@ const TemplateSelector: React.FC<{
 					)}
 				</div>
 			</div>
-			<div className='w-full mt-4 flex flex-col'>
-				<Instruction>Preview</Instruction>
-				<SlideDesignPreview
-					selectedTemplate={template}
-					selectedPalette={palette}
-				/>
-			</div>
+			{showTemplatePreview ? (
+				<div className='w-full mt-4 flex flex-col'>
+					<Instruction>Preview</Instruction>
+					<SlideDesignPreview
+						selectedTemplate={template}
+						selectedPalette={palette}
+					/>
+				</div>
+			) : (
+				<></>
+			)}
 		</div>
 	);
 };

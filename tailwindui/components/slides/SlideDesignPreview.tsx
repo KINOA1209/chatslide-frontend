@@ -15,11 +15,19 @@ import { useSlides } from '@/hooks/use-slides';
 type SlideDesignPreviewProps = {
 	selectedTemplate: string;
 	selectedPalette: string;
+	axial?: 'x' | 'y';
+	useGridLayout?: boolean;
+	gridCols?: number;
+	slideContainerScale?: number;
 };
 
 const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 	selectedTemplate,
 	selectedPalette,
+	axial = 'x',
+	useGridLayout = false,
+	gridCols = 2,
+	slideContainerScale = 0.2,
 }) => {
 	const { slides, version } = useSlides();
 	const [previewSlides, setPreviewSlides] = useState<Slide[]>([]);
@@ -160,17 +168,17 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 			true, // isCurrentSlide
 		);
 	return (
-		<ScrollBar>
+		<ScrollBar axial={axial} useGridLayout={useGridLayout} gridCols={gridCols}>
 			{previewSlides.map((slide, index) => (
 				<div
-					className='flex flex-col items-center gap-1 p-2'
+					className='DesignpreviewContainer flex flex-col items-center gap-1 p-2'
 					key={`DesignpreviewContainer` + index.toString()}
 				>
 					{/* {index + 1} */}
 					<SlideContainer
 						slide={slide}
 						index={index}
-						scale={0.2}
+						scale={slideContainerScale}
 						isViewing={true}
 						templateDispatch={unEditableTemplateDispatch}
 						key={version}

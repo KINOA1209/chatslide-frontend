@@ -5,7 +5,16 @@ export const ScrollBar: React.FC<{
 	axial?: 'x' | 'y';
 	currentElementRef?: React.MutableRefObject<HTMLElement | null>;
 	index?: number; // trigger rerender
-}> = ({ children, axial = 'x', currentElementRef, index }) => {
+	useGridLayout?: boolean;
+	gridCols?: number;
+}> = ({
+	children,
+	axial = 'x',
+	currentElementRef,
+	index,
+	useGridLayout = false,
+	gridCols = 2,
+}) => {
 	// Determine overflow and flex direction based on the axial prop
 	const overflowClass =
 		axial === 'x'
@@ -54,7 +63,7 @@ export const ScrollBar: React.FC<{
 	return (
 		<div
 			ref={containerRef}
-			className={`w-full flex ${flexDirClass} ${overflowClass} scrollbar scrollbar-thin gap-2 items-start`}
+			className={`w-full ${useGridLayout ? 'grid' : 'flex'} grid-cols-${gridCols} ${flexDirClass} ${overflowClass} scrollbar scrollbar-thin gap-2 items-start`}
 		>
 			{children}
 		</div>
