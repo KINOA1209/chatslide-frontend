@@ -32,6 +32,7 @@ import { Menu } from '@/components/button/Menu';
 import { RenameProjectButton } from './renameProjectButton';
 // import ExportToPdfButton from '@/components/slides/ExportButton';
 import { MoveToTeamButton } from '@/components/dashboard/MoveToTeamButton';
+import { ChangeProjectDescriptionButton } from './changeProjectDescriptionButton';
 import TeamService from '@/services/TeamService';
 
 const ExportToPdfButton = dynamic(
@@ -128,6 +129,7 @@ const ProjectItem: React.FC<{
 		//const isPriority = project.post_type !== 'presentation';
 		const router = useRouter();
 		// const exportSlidesRef = useRef<HTMLDivElement>(null);
+		const [showChangeProjectDescriptionModal, setShowChangeProjectDescriptionModal] = useState(false)
 
 		useEffect(() => {
 			getUserTeam();
@@ -327,6 +329,32 @@ const ProjectItem: React.FC<{
 										setShowRenameProjectModal={setShowRenameProjectModal}
 									/>
 									Rename
+								</button>
+							)}
+
+							{project.id && setCurrentProjects && folders && setFolders && (
+								<button
+									className='block px-[10px] py-[9px] text-sm text-[#182230] rounded-md  hover:bg-zinc-100 w-full text-left'
+									onClick={() => {
+										setShowChangeProjectDescriptionModal(true)
+									}}
+									style={{
+										display: 'flex',
+										flexDirection: 'row',
+										alignItems: 'center',
+										justifyContent: 'flex-start',
+										gap: 'var(--spacing-lg, 12px)',
+									}}
+								>
+									<ChangeProjectDescriptionButton
+										project={project}
+										setCurrentProjects={setCurrentProjects}
+										folders={folders}
+										setFolders={setFolders}
+										showChangeProjectDescriptionModal={showChangeProjectDescriptionModal}
+										setShowChangeProjectDescriptionModal={setShowChangeProjectDescriptionModal}
+									/>
+									Change Description
 								</button>
 							)}
 
