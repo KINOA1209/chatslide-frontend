@@ -277,95 +277,6 @@ const filterEmptyLines = (
 	return nonEmptyElements;
 };
 
-export const Cover_img_0_layout = ({
-	user_name,
-	title,
-	topic,
-	subtopic,
-	content,
-	imgs,
-	update_callback,
-	canEdit,
-	isCoverPage,
-	layoutOptionNonCover,
-	layoutOptionCover,
-	brandingColor,
-	themeElements,
-	layoutElements,
-	templateLogo,
-}: MainSlideProps) => {
-	// useEffect(() => {
-	// 	console.log('LayoutElements canvaCSS:', layoutElements.canvaCSS);
-	// }, []);
-
-	return (
-		<div
-			className={`SlideCanvas`}
-			style={{
-				display: 'flex',
-				width: '100%',
-				height: '100%',
-				...layoutElements.canvaCSS,
-				position: 'relative',
-			}}
-		>
-			<div
-				className={`SlideUserNameAndHeadColumn`}
-				style={{
-					...layoutElements.columnCSS,
-					backgroundColor: themeElements.userNamaAndHeadColumnBackgroundColor
-						? themeElements.userNamaAndHeadColumnBackgroundColor
-						: '',
-				}}
-			>
-				<div
-					// className={`${themeElements.userNameFont} ${themeElements.userNameFontColor}`}
-					className={`SlideUserName`}
-					style={{ ...layoutElements.userNameCSS, zIndex: 60 }}
-				>
-					{user_name}
-				</div>
-				<div
-					className={`SlideUserNameTextDivider pl-[2rem] basis-0 opacity-50 border
-		        border-black border-opacity-40 mt-4`}
-					style={layoutElements.userNameTextDividerCSS}
-				></div>
-				<div
-					className={`SlideHead`}
-					style={{ ...layoutElements.titleCSS, zIndex: 50 }}
-				>
-					{title}
-				</div>
-			</div>
-			<div
-				className={`SlideVisualElement`}
-				style={{ ...layoutElements.visualElementsCSS, position: 'absolute' }}
-			>
-				{themeElements.backgroundUrlCoverImg0 && (
-					<Image
-						style={{ objectFit: 'cover', height: '100%' }}
-						width={960}
-						height={540}
-						src={themeElements.backgroundUrlCoverImg0}
-						alt='Background Image'
-						unoptimized={true}
-					/>
-				)}
-			</div>
-			<div
-				className={`SlideLogo`}
-				style={{
-					...layoutElements.logoCSS,
-					zIndex: 30,
-					pointerEvents: 'none',
-				}}
-			>
-				{templateLogo}
-			</div>
-		</div>
-	);
-};
-
 enum ElementType {
 	TextEdit,
 	ImageView,
@@ -470,6 +381,95 @@ export const DragElement = ({ content, type, scale }: DragElementProps) => {
 				</div>
 			</div>
 		</Draggable>
+	);
+};
+
+export const Cover_img_0_layout = ({
+	user_name,
+	title,
+	topic,
+	subtopic,
+	content,
+	imgs,
+	update_callback,
+	canEdit,
+	isCoverPage,
+	layoutOptionNonCover,
+	layoutOptionCover,
+	brandingColor,
+	themeElements,
+	layoutElements,
+	templateLogo,
+}: MainSlideProps) => {
+	// useEffect(() => {
+	// 	console.log('LayoutElements canvaCSS:', layoutElements.canvaCSS);
+	// }, []);
+
+	return (
+		<div
+			className={`SlideCanvas`}
+			style={{
+				display: 'flex',
+				width: '100%',
+				height: '100%',
+				...layoutElements.canvaCSS,
+				position: 'relative',
+			}}
+		>
+			<div
+				className={`SlideUserNameAndHeadColumn`}
+				style={{
+					...layoutElements.columnCSS,
+					backgroundColor: themeElements.userNamaAndHeadColumnBackgroundColor
+						? themeElements.userNamaAndHeadColumnBackgroundColor
+						: '',
+				}}
+			>
+				<div
+					// className={`${themeElements.userNameFont} ${themeElements.userNameFontColor}`}
+					className={`SlideUserName`}
+					style={{ ...layoutElements.userNameCSS, zIndex: 60 }}
+				>
+					{user_name}
+				</div>
+				<div
+					className={`SlideUserNameTextDivider pl-[2rem] basis-0 opacity-50 border
+		        border-black border-opacity-40 mt-4`}
+					style={layoutElements.userNameTextDividerCSS}
+				></div>
+				<div
+					className={`SlideHead`}
+					style={{ ...layoutElements.titleCSS, zIndex: 50 }}
+				>
+					{title}
+				</div>
+			</div>
+			<div
+				className={`SlideVisualElement`}
+				style={{ ...layoutElements.visualElementsCSS, position: 'absolute' }}
+			>
+				{themeElements.backgroundUrlCoverImg0 && (
+					<Image
+						style={{ objectFit: 'cover', height: '100%' }}
+						width={960}
+						height={540}
+						src={themeElements.backgroundUrlCoverImg0}
+						alt='Background Image'
+						unoptimized={true}
+					/>
+				)}
+			</div>
+			<div
+				className={`SlideLogo`}
+				style={{
+					...layoutElements.logoCSS,
+					zIndex: 30,
+					pointerEvents: 'none',
+				}}
+			>
+				{templateLogo}
+			</div>
+		</div>
 	);
 };
 
