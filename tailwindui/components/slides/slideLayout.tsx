@@ -286,9 +286,15 @@ interface DragElementProps {
 	content: JSX.Element;
 	type: ElementType;
 	scale: number;
+	zindex: number;
 }
 
-export const DragElement = ({ content, type, scale }: DragElementProps) => {
+export const DragElement = ({
+	content,
+	type,
+	scale,
+	zindex,
+}: DragElementProps) => {
 	const isDragDisable = useRef(true);
 	const [isOverHandler, setIsOverHandler] = useState<boolean>(false);
 
@@ -322,9 +328,9 @@ export const DragElement = ({ content, type, scale }: DragElementProps) => {
 	const elementCSS: React.CSSProperties = useMemo(
 		() => ({
 			borderStyle: 'solid',
-			borderColor: 'rgba(0, 0, 0, 0.25)',
+			borderColor: `${isVisible ? 'rgba(0, 0, 0, 0.25)' : 'rgba(0, 0, 0, 0)'}`,
 			borderRadius: '5px',
-			borderWidth: `${isVisible ? '2px' : '0px'}`,
+			borderWidth: '2px',
 		}),
 		[isVisible],
 	);
@@ -376,7 +382,10 @@ export const DragElement = ({ content, type, scale }: DragElementProps) => {
 						</svg>
 					</div>
 				</div>
-				<div className={`ElementContent w-full h-full`} style={elementCSS}>
+				<div
+					className={`ElementContent w-full h-full`}
+					style={{ ...elementCSS, zIndex: zindex }}
+				>
 					{content}
 				</div>
 			</div>
@@ -569,24 +578,19 @@ export const Cover_img_1_layout = ({
 				>
 					{user_name}
 				</div>
-				<div
-					className={`SlideUserNameHead`}
-					style={{ ...layoutElements.titleCSS, zIndex: 50 }}
-				>
+				<div className={`SlideUserNameHead`} style={{...layoutElements.titleCSS, zIndex: 60}}>
 					<DragElement
 						content={title}
 						type={ElementType.TextEdit}
 						scale={scale}
+						zindex={60}
 					/>
 				</div>
 			</div>
 
 			<div
 				className={`SlideImageContainer`}
-				style={{
-					...layoutElements.imageContainerCSS,
-					zIndex: imgHigherZIndex ? 100 : 20,
-				}}
+				style={layoutElements.imageContainerCSS}
 			>
 				<DragElement
 					content={
@@ -612,6 +616,7 @@ export const Cover_img_1_layout = ({
 					}
 					type={ElementType.ImageView}
 					scale={scale}
+					zindex={imgHigherZIndex ? 100 : 20}
 				/>
 			</div>
 
