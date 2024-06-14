@@ -60,13 +60,6 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 			width: '50%',
 			paddingLeft: '80px',
 		},
-		handlerCSS: {
-			background: '#F1F1F1',
-			width: '50px',
-			height: '50px',
-			position: 'absolute',
-			left: '-50px',
-		},
 		titleCSS: {
 			padding: '130px 0px 0px 80px',
 			maxHeight: '80%',

@@ -406,11 +406,9 @@ export const DragElement = ({ content, type, scale }: DragElementProps) => {
 						zIndex: 120,
 					}}
 					onMouseDown={(e) => {
-						console.log('Mouse DOWN');
 						isDragDisable.current = false;
 					}}
 					onMouseUp={(e) => {
-						console.log('Mouse UP');
 						isDragDisable.current = true;
 					}}
 				></div>

@@ -107,6 +107,9 @@ const Modal: React.FC<ModalProps> = ({
 					setShowModal(false);
 				}
 			}}
+			onMouseDown={(e) => {
+				e.stopPropagation();
+			}}
 			enter='transition ease duration-300 transform'
 			enterFrom='opacity-0 translate-y-12'
 			enterTo='opacity-100 translate-y-0'

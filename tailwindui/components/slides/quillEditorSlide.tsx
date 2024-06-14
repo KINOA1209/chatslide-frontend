@@ -539,8 +539,6 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 			});
 
 			editorRef.current.addEventListener('click', (event) => {
-				console.log("EDITABLE CLICKED");
-				event.stopPropagation();
 				const target = event.target as HTMLElement;
 				// Check if the target is not null and is an anchor tag
 				if (target && target.tagName === 'A') {
@@ -561,6 +559,10 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 						}
 					}
 				}
+			});
+
+			editorRef.current.addEventListener('mousedown', (event) => {
+				event.stopPropagation();
 			});
 
 			const QuillDelta = Quill.import('delta');

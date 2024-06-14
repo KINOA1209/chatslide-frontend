@@ -1756,6 +1756,9 @@ export const ImgModule = ({
 					onDrop={handleImageDrop}
 					onDragOver={(e) => e.preventDefault()}
 					onClick={openModal}
+					onMouseDown={(e) => {
+						e.stopPropagation();
+					}}
 					className={`w-full h-full transition ease-in-out duration-150 relative ${
 						canEdit ? 'hover:bg-[#CAD0D3] cursor-pointer' : ''
 					} flex flex-col items-center justify-center`} //${canEdit && !isImgEditMode ? 'cursor-pointer' : ''}
