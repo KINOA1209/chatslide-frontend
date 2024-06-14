@@ -1,8 +1,8 @@
 /** @type {import('tailwindcss').Config} */
-const withMT = require("@material-tailwind/react/utils/withMT")
+// const withMT = require("@material-tailwind/react/utils/withMT")
 // const materialTailwindTheme = require("@material-tailwind/react/theme");
 // const materialTailwindPlugins = require("@material-tailwind/react/plugins");
-module.exports = withMT({
+module.exports = {
 	content: [
 		'./app/**/*.{js,ts,jsx,tsx}',
 		'./pages/**/*.{js,ts,jsx,tsx}',
@@ -173,4 +173,4 @@ module.exports = withMT({
 		},
 	},
 	plugins: [require('@tailwindcss/forms')],
-});
+};

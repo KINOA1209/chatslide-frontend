@@ -92,7 +92,7 @@ export default function DesignPage() {
 
 	useEffect(() => {
 		const handleResize = () => {
-			console.log('screenWidth: ' + screenWidth);
+			// console.log('screenWidth: ' + screenWidth);
 			setScreenWidth(window.innerWidth);
 			// setShowTemplatePreview(window.innerWidth < 1280);
 		};
