@@ -708,11 +708,13 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	const uneditableTemplateDispatch = (
 		slide: Slide,
 		index: number,
+		scale: number,
 		exportToPdfMode: boolean = false,
 	) =>
 		templateDispatch(
 			slide,
 			index,
+			scale,
 			false, // canEdit
 			exportToPdfMode, //exportToPdfMode
 			false, //editMathMode
@@ -731,12 +733,14 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	const editableTemplateDispatch = (
 		slide: Slide,
 		index: number,
+		scale: number,
 		canEdit: boolean,
 		exportToPdfMode: boolean = false,
 	) =>
 		templateDispatch(
 			slide,
 			index,
+			scale,
 			canEdit, // canEdit
 			exportToPdfMode, //exportToPdfMode
 			isEditMode, //editMathMode

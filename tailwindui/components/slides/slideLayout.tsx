@@ -28,6 +28,7 @@ import ImagePosition from '@/models/ImagePosition';
 import { useSlides } from '@/hooks/use-slides';
 import ResizeSlider from './drag_resize/resize_slider';
 import '@/components/slides/drag_resize/dragAndResizeCSS.css';
+import Draggable from 'react-draggable';
 import dynamic from 'next/dynamic';
 import Slide, { Media, SlideKeys } from '@/models/Slide';
 const QuillEditable = dynamic(
@@ -364,12 +365,68 @@ export const Cover_img_0_layout = ({
 		</div>
 	);
 };
+
+enum ElementType {
+	TextEdit,
+	ImageView,
+}
+
+const handlerCSS: React.CSSProperties = {
+	background: '#F1F1F1',
+	width: '50px',
+	height: '50px',
+	position: 'absolute',
+	left: '-50px',
+};
+
+interface DragElementProps {
+	content: JSX.Element;
+	type: ElementType;
+	scale: number;
+}
+
+export const DragElement = ({ content, type, scale }: DragElementProps) => {
+	const isDragDisable = useRef(true);
+
+	const handleDragStart = (e: any) => {
+		if (isDragDisable.current) {
+			e.preventDefault();
+			e.stopPropagation();
+		}
+	};
+	return (
+		<Draggable onStart={handleDragStart}>
+			<div
+				className={`DraggableElement ${type === ElementType.ImageView ? 'w-full h-full' : ''}`}
+			>
+				<div
+					className={'ElementHandler'}
+					style={{
+						...handlerCSS,
+						zIndex: 120,
+					}}
+					onMouseDown={(e) => {
+						console.log('Mouse DOWN');
+						isDragDisable.current = false;
+					}}
+					onMouseUp={(e) => {
+						console.log('Mouse UP');
+						isDragDisable.current = true;
+					}}
+				></div>
+				{content}
+			</div>
+		</Draggable>
+	);
+};
+
 export const Cover_img_1_layout = ({
 	user_name,
 	title,
 	topic,
 	subtopic,
 	content,
+	scale,
 	imgs,
 	update_callback,
 	canEdit,
@@ -463,7 +520,11 @@ export const Cover_img_1_layout = ({
 					className={`SlideUserNameHead`}
 					style={{ ...layoutElements.titleCSS, zIndex: 50 }}
 				>
-					{title}
+					<DragElement
+						content={title}
+						type={ElementType.TextEdit}
+						scale={scale}
+					/>
 				</div>
 			</div>
 
@@ -474,24 +535,30 @@ export const Cover_img_1_layout = ({
 					zIndex: imgHigherZIndex ? 100 : 20,
 				}}
 			>
-				<ImgModule
-					imgsrc={imgs?.[0]}
-					updateSingleCallback={updateImgAtIndex(0)}
-					chartArr={charts}
-					ischartArr={ischarts}
-					handleSlideEdit={handleSlideEdit}
-					currentSlideIndex={currentSlideIndex}
-					currentContentIndex={0}
-					canEdit={canEdit}
-					image_positions={image_positions}
-					layoutElements={layoutElements}
-					customImageStyle={layoutElements.imageCSS}
-					// additional_images={imgs.slice(3)}
-					setImgHigherZIndex={setImgHigherZIndex}
-					embed_code={embed_code}
-					embed_code_single={embed_code?.[0]}
-					media_types={media_types}
-					media_type={media_types?.[0]}
+				<DragElement
+					content={
+						<ImgModule
+							imgsrc={imgs?.[0]}
+							updateSingleCallback={updateImgAtIndex(0)}
+							chartArr={charts}
+							ischartArr={ischarts}
+							handleSlideEdit={handleSlideEdit}
+							currentSlideIndex={currentSlideIndex}
+							currentContentIndex={0}
+							canEdit={canEdit}
+							image_positions={image_positions}
+							layoutElements={layoutElements}
+							customImageStyle={layoutElements.imageCSS}
+							// additional_images={imgs.slice(3)}
+							setImgHigherZIndex={setImgHigherZIndex}
+							embed_code={embed_code}
+							embed_code_single={embed_code?.[0]}
+							media_types={media_types}
+							media_type={media_types?.[0]}
+						/>
+					}
+					type={ElementType.ImageView}
+					scale={scale}
 				/>
 			</div>
 

@@ -49,6 +49,7 @@ export const onDragStart =
 	(imgIdx: number) =>
 	(e: any, position: { x: number; y: number }) => {
 		e.preventDefault();
+		e.stopPropagation();
 		const newStartPos = [...startPos];
 		newStartPos[imgIdx] = { x: position.x, y: position.y };
 		//setIsDraggingOrResizing(false);
@@ -76,6 +77,7 @@ export const onDragStop =
 	) =>
 	(imgIdx: number) =>
 	(e: any, position: { x: number; y: number }) => {
+		e.stopPropagation();
 		const adjustedX = position.x;
 		const adjustedY = position.y;
 		const curr_startPos = startPos[imgIdx];
