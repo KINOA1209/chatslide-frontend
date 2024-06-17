@@ -666,7 +666,7 @@ export default function DesignPage() {
 							</Instruction>
 							<WrappableRow type='flex' justify='around'>
 								<DesignSystemButton
-									onClick={saveToDefaultProfile}
+									onClick={handleSaveToDefaultProfile(token)}
 									size='md'
 									hierarchy='secondary'
 									width='12rem'
@@ -674,7 +674,7 @@ export default function DesignPage() {
 									Save to Profile
 								</DesignSystemButton>
 								<DesignSystemButton
-									onClick={loadFromProfile}
+									onClick={handleLoadFromProfile(token)}
 									size='md'
 									hierarchy='secondary'
 									width='12rem'
