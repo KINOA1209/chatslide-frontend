@@ -48,7 +48,7 @@ const DrLambdaTestimonialsData = [
 	},
 	{
 		name: 'Mega Kris',
-		text: '🇷🇺 Презентация из любых файлов: {getBrand()} соберет PDF, сайты и видеоролики в готовые слайды"',
+		text: '🇷🇺 Презентация из любых файлов: DrLambda соберет PDF, сайты и видеоролики в готовые слайды"',
 		profile_url: 'images/QFfM1EWi_400x400.jpeg',
 	},
 	{
@@ -60,7 +60,7 @@ const DrLambdaTestimonialsData = [
 	{
 		name: 'YYYJ',
 		title: 'Serial entrepreneur | Growth hacker',
-		text: 'In terms of design and build, {getBrand()} has a robust and sleek design. So far it performs well as what I expect of PDF to slide transformation.',
+		text: 'In terms of design and build, DrLambda has a robust and sleek design. So far it performs well as what I expect of PDF to slide transformation.',
 		profile_url: 'images/Screen-Shot-2024-03-18-at-5.34.11-PM.png',
 	},
 	{
