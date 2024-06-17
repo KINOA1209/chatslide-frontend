@@ -48,6 +48,23 @@ import { BigBlueButton } from '@/components/button/DrlambdaButton';
 import { WrappableRow } from '@/components/layout/WrappableRow';
 import DesignSystemBadges from '@/components/ui/design_systems/Badges';
 import DesignSystemButton from '@/components/ui/design_systems/ButtonsOrdinary';
+// import SlideDesignPreview from '@/components/slides/SlideDesignPreview';
+const SlideDesignPreview = dynamic(
+	() => import('@/components/slides/SlideDesignPreview'),
+	{ ssr: false },
+);
+// import FileUploadDropdownButton from '@/components/file/FileUploadDropdownButton';
+// import { getBrand, getLogoUrl } from '@/utils/getHost';
+// import ResourceService from '@/services/ResourceService';
+// import ImageSelector from './ImageSelector';
+// import PPTXTemplateSelector from './PPTXTemplateSelector';
+import { Suspense } from 'react';
+const PPTXTemplateSelector: any = dynamic(
+	() => import('@/app/(feature)/design/PPTXTemplateSelector'),
+	{
+		ssr: false,
+	},
+);
 const colorPreviews: any = dynamic(
 	() => import('@/app/(feature)/design/TemplateSelector'),
 	{
@@ -79,12 +96,41 @@ const getTemplateFromAudicence = (audience: string): TemplateKeys => {
 };
 
 export default function DesignPage() {
+	// const uploadSectionRef = useRef<HTMLDivElement>(null);
+	// const [showUploadOptionsMenu, setShowUploadOptionsMenu] = useState(false);
+	const [selectedPPTXTemplate, setSelectedPPTXtemplate] = useState<Resource[]>(
+		[],
+	);
+
 	const [showGenerationStatusModal, setShowGenerationStatusModal] =
 		useState(false);
 
 	const handleGenerationStatusModal = () => {
 		setShowGenerationStatusModal(!showGenerationStatusModal);
 	};
+
+	// Ensure this code runs only on the client side
+	const [screenWidth, setScreenWidth] = useState(
+		typeof window !== 'undefined' ? window.innerWidth : 1280,
+	);
+
+	// const [showTemplatePreview, setShowTemplatePreview] = useState(screenWidth < 1280);
+
+	useEffect(() => {
+		if (typeof window !== 'undefined') {
+			const handleResize = () => {
+				// console.log('screenWidth: ' + screenWidth);
+				setScreenWidth(window.innerWidth);
+				// setShowTemplatePreview(window.innerWidth < 1280);
+			};
+
+			window.addEventListener('resize', handleResize);
+
+			return () => {
+				window.removeEventListener('resize', handleResize);
+			};
+		}
+	}, []);
 	const {
 		slides,
 		initSlides,
@@ -190,6 +236,36 @@ export default function DesignPage() {
 		project?.selected_background || [],
 	);
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
+	const [slideBackgroundImgUrl, setSlideBackgroundImgUrl] = useState('');
+
+	useEffect(() => {
+		console.log('current project details:', project);
+	}, [project]);
+	useEffect(() => {
+		console.log('Current slide background img url:', slideBackgroundImgUrl);
+		// setSelectedBackground(
+		// 	selectedBackground.map((resource) => ({
+		// 		...resource,
+		// 		thumbnail_url: slideBackgroundImgUrl,
+		// 	})),
+		// );
+
+		console.log(
+			'changed the selected background',
+			selectedBackground?.[0]?.thumbnail_url,
+		);
+	}, [slideBackgroundImgUrl, setSlideBackgroundImgUrl]); // Add slideBackgroundImgUrl to the dependency array
+
+	useEffect(() => {
+		console.log('selected background url', selectedBackground);
+		updateProject('selected_background', selectedBackground);
+		setSelectedBackground(selectedBackground);
+	}, [selectedBackground, setSelectedBackground]);
+
+	useEffect(() => {
+		updateProject('selected_logo', selectedLogo);
+		setSelectedLogo(selectedLogo);
+	}, [selectedBackground, setSelectedLogo]);
 
 	const params = useSearchParams();
 	const router = useRouter();
@@ -421,7 +497,7 @@ export default function DesignPage() {
 	};
 
 	return (
-		<section className='relative'>
+		<section className='design-page-content-section relative'>
 			<ToastContainer />
 			{showGenerationStatusModal && (
 				<GenerationStatusProgressModal
@@ -447,127 +523,183 @@ export default function DesignPage() {
 				setShowModal={setShowPaymentModal}
 			/>
 
-			<Column>
-				<Panel>
-					<Card>
-						<BigTitle>✍️ Design</BigTitle>
-						<Explanation>
-							Customize the design for your slide, you can also skip this step
-							and use the default
-						</Explanation>
-						<TemplateSelector
-							template={template}
-							setTemplate={setTemplate}
-							setPalette={setColorPalette}
-							paletteOptions={
-								availablePalettes[
-									template as keyof typeof availablePalettes
-								] || ['Original']
-							}
-							palette={colorPalette}
-							showCustomColorPicker={true}
-							setCustomizedTemplateBgColorCallback={setSelectedTemplateBgColor}
-							setCustomizedTemplateContentFontFamilyCallback={
-								setSelectedTemplateContentFontFamily
-							}
-							setCustomizedTemplateSubtitleFontFamilyCallback={
-								setSelectedTemplateSubtitleFontFamily
-							}
-							setCustomizedTemplateTitleFontFamilyCallback={
-								setSelectedTemplateTitleFontFamily
-							}
-							setCustomizedTemplateContentFontColorCallback={
-								setSelectedTemplateContentFontColor
-							}
-							setCustomizedTemplateSubtitleFontColorCallback={
-								setSelectedTemplateSubtitleFontColor
-							}
-							setCustomizedTemplateTitleFontColorCallback={
-								setSelectedTemplateTitleFontColor
-							}
-						/>
-
-						<div>
-							<Instruction>
-								How many images do you want to generate?
-							</Instruction>
-							<RadioButton
-								options={imageAmountOptions}
-								selectedValue={imageAmount}
-								setSelectedValue={setImageAmount}
-								name='imageAmount'
-							/>
-						</div>
-						<div>
-							<Instruction>
-								For images on your slides, what image license do you want to
-								use?
-							</Instruction>
+			<div
+				className='template-customization-and-preview'
+				style={{
+					display: screenWidth < 1280 ? 'block' : 'flex',
+					padding: '10px',
+					gap: '10px',
+				}}
+			>
+				{/* <div
+					className='template-customization-area'
+					
+				> */}
+				{/* template-customization-area */}
+				<Column customStyle={{ flex: '1 0 33%' }}>
+					<Panel>
+						<Card>
+							<BigTitle>✍️ Template</BigTitle>
 							<Explanation>
-								An image license is a set of rules that tell you how you can use
-								a picture. <br />
-								You are free to use images with a creative license or stock
-								pictures for commercial use. <br />
+								Customize the design for your slide, you can also skip this step
+								and use the default
 							</Explanation>
-							<RadioButton
-								options={imageLicenseOptions}
-								selectedValue={imageLicense}
-								setSelectedValue={setImageLicense}
-								name='imageLicense'
+
+							{/* upload your own template */}
+							<PPTXTemplateSelector
+								type='Template'
+								selectedTemplate={selectedPPTXTemplate}
+								setSelectedTemplate={setSelectedPPTXtemplate}
+								showQuestion={true}
+								setExtractedTemplateImgUrl={setSlideBackgroundImgUrl}
+								extractedTemplateImgUrl={slideBackgroundImgUrl}
+								setSelectedBackground={setSelectedBackground}
+								selectedBackground={selectedBackground}
 							/>
-						</div>
-					</Card>
 
-					<Card>
-						<BigTitle>🏷️ Branding</BigTitle>
-						<Explanation>
-							Select the branding for your slides, you can also change this on
-							the slides page, or talk with AI Chatbot
-						</Explanation>
-						<BrandingSelector
-							logoMode={logoMode}
-							setLogoMode={setLogoMode}
-							selectedLogo={selectedLogo}
-							setSelectedLogo={setSelectedLogo}
-							selectedBackground={selectedBackground}
-							setSelectedBackground={setSelectedBackground}
-							logoPosition={selectedLogoPosition}
-							setLogoPosition={setSelectedLogoPosition}
-						/>
-					</Card>
-
-					<Card>
-						<BigTitle>⚙️ Settings (beta)</BigTitle>
-						<Instruction>
-							You can save all the settings on this page to your profile, and
-							apply it in the future for a deck with the same design.
-						</Instruction>
-						<WrappableRow type='flex' justify='around'>
-							<DesignSystemButton
-								onClick={saveToDefaultProfile}
-								size='md'
-								hierarchy='secondary'
-								width='12rem'
-							>
-								Save to Profile
-							</DesignSystemButton>
-							<DesignSystemButton
-								onClick={loadFromProfile}
-								size='md'
-								hierarchy='secondary'
-								width='12rem'
-								buttonStatus={
-									localStorage.getItem('defaultProfile')
-										? 'enabled'
-										: 'disabled'
+							<TemplateSelector
+								template={template}
+								setTemplate={setTemplate}
+								setPalette={setColorPalette}
+								paletteOptions={
+									availablePalettes[
+										template as keyof typeof availablePalettes
+									] || ['Original']
 								}
-							>
-								Load from Profile
-							</DesignSystemButton>
-						</WrappableRow>
-					</Card>
-				</Panel>
-			</Column>
+								palette={colorPalette}
+								showCustomColorPicker={true}
+								setCustomizedTemplateBgColorCallback={
+									setSelectedTemplateBgColor
+								}
+								setCustomizedTemplateContentFontFamilyCallback={
+									setSelectedTemplateContentFontFamily
+								}
+								setCustomizedTemplateSubtitleFontFamilyCallback={
+									setSelectedTemplateSubtitleFontFamily
+								}
+								setCustomizedTemplateTitleFontFamilyCallback={
+									setSelectedTemplateTitleFontFamily
+								}
+								setCustomizedTemplateContentFontColorCallback={
+									setSelectedTemplateContentFontColor
+								}
+								setCustomizedTemplateSubtitleFontColorCallback={
+									setSelectedTemplateSubtitleFontColor
+								}
+								setCustomizedTemplateTitleFontColorCallback={
+									setSelectedTemplateTitleFontColor
+								}
+								showTemplatePreview={screenWidth < 1280 ? true : false}
+								selectedSlideBackgroundImgResource={selectedBackground}
+								selectedSlideLogoUrlResource={selectedLogo}
+							/>
+
+							<div>
+								<Instruction>
+									How many images do you want to generate?
+								</Instruction>
+								<RadioButton
+									options={imageAmountOptions}
+									selectedValue={imageAmount}
+									setSelectedValue={setImageAmount}
+									name='imageAmount'
+								/>
+							</div>
+							<div>
+								<Instruction>
+									For images on your slides, what image license do you want to
+									use?
+								</Instruction>
+								<Explanation>
+									An image license is a set of rules that tell you how you can
+									use a picture. <br />
+									You are free to use images with a creative license or stock
+									pictures for commercial use. <br />
+								</Explanation>
+								<RadioButton
+									options={imageLicenseOptions}
+									selectedValue={imageLicense}
+									setSelectedValue={setImageLicense}
+									name='imageLicense'
+								/>
+							</div>
+						</Card>
+
+						<Card>
+							<BigTitle>🏷️ Branding</BigTitle>
+							<Explanation>
+								Select the branding for your slides, you can also change this on
+								the slides page, or talk with AI Chatbot
+							</Explanation>
+							<BrandingSelector
+								logoMode={logoMode}
+								setLogoMode={setLogoMode}
+								selectedLogo={selectedLogo}
+								setSelectedLogo={setSelectedLogo}
+								selectedBackground={selectedBackground}
+								setSelectedBackground={setSelectedBackground}
+								logoPosition={selectedLogoPosition}
+								setLogoPosition={setSelectedLogoPosition}
+							/>
+						</Card>
+
+						<Card>
+							<BigTitle>⚙️ Settings (beta)</BigTitle>
+							<Instruction>
+								You can save all the settings on this page to your profile, and
+								apply it in the future for a deck with the same design.
+							</Instruction>
+							<WrappableRow type='flex' justify='around'>
+								<DesignSystemButton
+									onClick={saveToDefaultProfile}
+									size='md'
+									hierarchy='secondary'
+									width='12rem'
+								>
+									Save to Profile
+								</DesignSystemButton>
+								<DesignSystemButton
+									onClick={loadFromProfile}
+									size='md'
+									hierarchy='secondary'
+									width='12rem'
+									buttonStatus={
+										localStorage.getItem('defaultProfile')
+											? 'enabled'
+											: 'disabled'
+									}
+								>
+									Load from Profile
+								</DesignSystemButton>
+							</WrappableRow>
+						</Card>
+					</Panel>
+				</Column>
+				{/* </div> */}
+
+				{/* <div className='' style={{}}> */}
+				{/* big-template-review */}
+				<Column
+					customStyle={{
+						display: screenWidth < 1280 ? 'none' : 'flex',
+						marginTop: '24px',
+						// flex: '2 0 66%',
+					}}
+				>
+					<BigTitle>Template Preview</BigTitle>
+					<SlideDesignPreview
+						selectedTemplate={template}
+						selectedPalette={colorPalette}
+						axial='y'
+						useGridLayout={true}
+						gridCols={2}
+						slideContainerScale={0.3}
+						selectedSlideBackgroundImgResource={selectedBackground}
+						selectedSlideLogoResource={selectedLogo}
+					/>
+				</Column>
+				{/* </div> */}
+			</div>
 		</section>
 	);
 }

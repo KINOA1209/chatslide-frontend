@@ -1,3 +1,4 @@
+'use client';
 import React, { useRef, useEffect, useState } from 'react';
 import Slide from '@/models/Slide';
 import { templateDispatch } from './templateDispatch';
@@ -12,14 +13,27 @@ import { Explanation } from '../ui/Text';
 import { ScrollBar } from '../ui/ScrollBar';
 import { useProject } from '@/hooks/use-project';
 import { useSlides } from '@/hooks/use-slides';
+import Resource from '@/models/Resource';
 type SlideDesignPreviewProps = {
 	selectedTemplate: string;
 	selectedPalette: string;
+	axial?: 'x' | 'y';
+	useGridLayout?: boolean;
+	gridCols?: number;
+	slideContainerScale?: number;
+	selectedSlideBackgroundImgResource?: Resource[];
+	selectedSlideLogoResource?: Resource[];
 };
 
 const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 	selectedTemplate,
 	selectedPalette,
+	axial = 'x',
+	useGridLayout = false,
+	gridCols = 2,
+	slideContainerScale = 0.2,
+	selectedSlideBackgroundImgResource,
+	selectedSlideLogoResource,
 }) => {
 	const { slides, version } = useSlides();
 	const [previewSlides, setPreviewSlides] = useState<Slide[]>([]);
@@ -64,8 +78,10 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 			newSlide.image_positions = slides[0]?.image_positions;
 			// add background url and logo_url for preview
 			newSlide.background_url =
-				project?.selected_background?.[0]?.thumbnail_url || '';
-			newSlide.logo_url = project?.selected_logo?.[0]?.thumbnail_url || '';
+				selectedSlideBackgroundImgResource?.[0]?.thumbnail_url || '';
+			// project?.selected_background?.[0]?.thumbnail_url || '';
+			// newSlide.logo_url = project?.selected_logo?.[0]?.thumbnail_url || '';
+			newSlide.logo_url = selectedSlideLogoResource?.[0]?.thumbnail_url || '';
 			newSlide.logo = project?.logo || '';
 			newSlide.logo_position = project?.logo_position || 'BottomLeft';
 
@@ -121,7 +137,12 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 		});
 
 		setPreviewSlides(newSlides);
-	}, [selectedTemplate, selectedPalette]);
+	}, [
+		selectedTemplate,
+		selectedPalette,
+		selectedSlideLogoResource,
+		selectedSlideBackgroundImgResource,
+	]);
 
 	const layoutNameArray = [
 		'Cover page without image',
@@ -160,17 +181,17 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 			true, // isCurrentSlide
 		);
 	return (
-		<ScrollBar>
+		<ScrollBar axial={axial} useGridLayout={useGridLayout} gridCols={gridCols}>
 			{previewSlides.map((slide, index) => (
 				<div
-					className='flex flex-col items-center gap-1 p-2'
+					className='DesignpreviewContainer flex flex-col items-center gap-1 p-2'
 					key={`DesignpreviewContainer` + index.toString()}
 				>
 					{/* {index + 1} */}
 					<SlideContainer
 						slide={slide}
 						index={index}
-						scale={0.2}
+						scale={slideContainerScale}
 						isViewing={true}
 						templateDispatch={unEditableTemplateDispatch}
 						key={version}

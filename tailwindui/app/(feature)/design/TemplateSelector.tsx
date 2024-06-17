@@ -16,6 +16,7 @@ import { useSlides } from '@/hooks/use-slides';
 import { WrappableRow } from '@/components/layout/WrappableRow';
 import FontFamilyPicker from './FontFamilyPicker';
 import { loadCustomizableElements } from '@/components/slides/SlidesHTML';
+import Resource from '@/models/Resource';
 
 const SlideDesignPreview = dynamic(
 	() => import('@/components/slides/SlideDesignPreview'),
@@ -63,6 +64,9 @@ const TemplateSelector: React.FC<{
 	setCustomizedTemplateContentFontColorCallback: (font: string) => void;
 	setCustomizedTemplateSubtitleFontColorCallback: (font: string) => void;
 	setCustomizedTemplateTitleFontColorCallback: (font: string) => void;
+	showTemplatePreview?: boolean;
+	selectedSlideBackgroundImgResource: Resource[];
+	selectedSlideLogoUrlResource: Resource[];
 }> = ({
 	template,
 	setTemplate,
@@ -77,6 +81,9 @@ const TemplateSelector: React.FC<{
 	setCustomizedTemplateContentFontColorCallback,
 	setCustomizedTemplateSubtitleFontColorCallback,
 	setCustomizedTemplateTitleFontColorCallback,
+	showTemplatePreview = true,
+	selectedSlideBackgroundImgResource,
+	selectedSlideLogoUrlResource,
 }) => {
 	const {
 		initialLoadedTemplateBgColor,
@@ -580,13 +587,26 @@ const TemplateSelector: React.FC<{
 					)}
 				</div>
 			</div>
-			<div className='w-full mt-4 flex flex-col'>
-				<Instruction>Preview</Instruction>
-				<SlideDesignPreview
-					selectedTemplate={template}
-					selectedPalette={palette}
-				/>
-			</div>
+			{showTemplatePreview ? (
+				<div className='w-full mt-4 flex flex-col'>
+					<Instruction>Preview</Instruction>
+					{/* <SlideDesignPreview
+						selectedTemplate={template}
+						selectedPalette={palette}
+					/> */}
+					<SlideDesignPreview
+						selectedTemplate={template}
+						selectedPalette={palette}
+						axial='x'
+						selectedSlideBackgroundImgResource={
+							selectedSlideBackgroundImgResource
+						}
+						selectedSlideLogoResource={selectedSlideLogoUrlResource}
+					/>
+				</div>
+			) : (
+				<></>
+			)}
 		</div>
 	);
 };

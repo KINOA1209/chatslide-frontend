@@ -922,7 +922,7 @@ const MyFiles: React.FC<filesInterface> = ({
 					</div>
 
 					{/* carbon connect cloud storage */}
-					{pageInvoked !== 'theme' && (
+					{
 						<div className='max-w-sm w-fit text-center pt-4 mx-4'>
 							<CloudConnectComponent
 								isPaidUser={isPaidUser}
@@ -933,191 +933,193 @@ const MyFiles: React.FC<filesInterface> = ({
 								isUploadDropdownItem={false}
 							></CloudConnectComponent>
 						</div>
-					)}
+					}
 				</div>
 			)}
 
 			{/* Filter buttons */}
-			<div className='grid grid-cols-3 md:flex md:flex-row gap-4 px-[1rem] pt-[1rem]'>
-				<DesignSystemButton
-				  width='12rem'
-					isPaidFeature={false}
-					size='sm'
-					hierarchy='tertiary'
-					buttonStatus='enabled'
-					iconLeft={<MdFolderOpen />}
-					customButtonStyles={
-						currentResourceType === 'all'
-							? customFilterButtonGroupStyles.selected.button
-							: customFilterButtonGroupStyles.unselected.button
+			{pageInvoked != 'theme' && (
+				<div className='grid grid-cols-3 md:flex md:flex-row gap-4 px-[1rem] pt-[1rem]'>
+					<DesignSystemButton
+						width='12rem'
+						isPaidFeature={false}
+						size='sm'
+						hierarchy='tertiary'
+						buttonStatus='enabled'
+						iconLeft={<MdFolderOpen />}
+						customButtonStyles={
+							currentResourceType === 'all'
+								? customFilterButtonGroupStyles.selected.button
+								: customFilterButtonGroupStyles.unselected.button
+						}
+						customIconStyles={
+							currentResourceType === 'all'
+								? customFilterButtonGroupStyles.selected.icon
+								: customFilterButtonGroupStyles.unselected.icon
+						}
+						customTextStyles={
+							currentResourceType === 'all'
+								? customFilterButtonGroupStyles.selected.text
+								: customFilterButtonGroupStyles.unselected.text
+						}
+						onClick={() => filterResources('all')}
+						// text='Create New'
+						// onClick={handleStartNewProject}
+					>
+						<span>All</span>
+					</DesignSystemButton>
+					{
+						<DesignSystemButton
+							width='12rem'
+							isPaidFeature={false}
+							size='sm'
+							hierarchy='tertiary'
+							buttonStatus='enabled'
+							iconLeft={<FiFileText />}
+							customButtonStyles={
+								currentResourceType === 'files'
+									? customFilterButtonGroupStyles.selected.button
+									: customFilterButtonGroupStyles.unselected.button
+							}
+							customIconStyles={
+								currentResourceType === 'files'
+									? customFilterButtonGroupStyles.selected.icon
+									: customFilterButtonGroupStyles.unselected.icon
+							}
+							customTextStyles={
+								currentResourceType === 'files'
+									? customFilterButtonGroupStyles.selected.text
+									: customFilterButtonGroupStyles.unselected.text
+							}
+							onClick={() => filterResources('files')}
+							// text='Create New'
+							// onClick={handleStartNewProject}
+						>
+							<span>Files</span>
+						</DesignSystemButton>
 					}
-					customIconStyles={
-						currentResourceType === 'all'
-							? customFilterButtonGroupStyles.selected.icon
-							: customFilterButtonGroupStyles.unselected.icon
-					}
-					customTextStyles={
-						currentResourceType === 'all'
-							? customFilterButtonGroupStyles.selected.text
-							: customFilterButtonGroupStyles.unselected.text
-					}
-					onClick={() => filterResources('all')}
-					// text='Create New'
-					// onClick={handleStartNewProject}
-				>
-					<span>All</span>
-				</DesignSystemButton>
-				{pageInvoked != 'theme' && (
-					<DesignSystemButton
-					  width='12rem'
-						isPaidFeature={false}
-						size='sm'
-						hierarchy='tertiary'
-						buttonStatus='enabled'
-						iconLeft={<FiFileText />}
-						customButtonStyles={
-							currentResourceType === 'files'
-								? customFilterButtonGroupStyles.selected.button
-								: customFilterButtonGroupStyles.unselected.button
-						}
-						customIconStyles={
-							currentResourceType === 'files'
-								? customFilterButtonGroupStyles.selected.icon
-								: customFilterButtonGroupStyles.unselected.icon
-						}
-						customTextStyles={
-							currentResourceType === 'files'
-								? customFilterButtonGroupStyles.selected.text
-								: customFilterButtonGroupStyles.unselected.text
-						}
-						onClick={() => filterResources('files')}
-						// text='Create New'
-						// onClick={handleStartNewProject}
-					>
-						<span>Files</span>
-					</DesignSystemButton>
-				)}
-				{pageInvoked != 'summary' && (
-					<DesignSystemButton
-					  width='12rem'
-						isPaidFeature={false}
-						size='sm'
-						hierarchy='tertiary'
-						buttonStatus='enabled'
-						iconLeft={<PiImageSquare />}
-						customButtonStyles={
-							currentResourceType === 'images'
-								? customFilterButtonGroupStyles.selected.button
-								: customFilterButtonGroupStyles.unselected.button
-						}
-						customIconStyles={
-							currentResourceType === 'images'
-								? customFilterButtonGroupStyles.selected.icon
-								: customFilterButtonGroupStyles.unselected.icon
-						}
-						customTextStyles={
-							currentResourceType === 'images'
-								? customFilterButtonGroupStyles.selected.text
-								: customFilterButtonGroupStyles.unselected.text
-						}
-						onClick={() => filterResources('images')}
-						// text='Create New'
-						// onClick={handleStartNewProject}
-					>
-						<span>Images</span>
-					</DesignSystemButton>
-				)}
-				{pageInvoked != 'theme' && (
-					<DesignSystemButton
-					  width='12rem'
-						isPaidFeature={false}
-						size='sm'
-						hierarchy='tertiary'
-						buttonStatus='enabled'
-						iconLeft={<IoMdLink />}
-						customButtonStyles={
-							currentResourceType === 'links'
-								? customFilterButtonGroupStyles.selected.button
-								: customFilterButtonGroupStyles.unselected.button
-						}
-						customIconStyles={
-							currentResourceType === 'links'
-								? customFilterButtonGroupStyles.selected.icon
-								: customFilterButtonGroupStyles.unselected.icon
-						}
-						customTextStyles={
-							currentResourceType === 'links'
-								? customFilterButtonGroupStyles.selected.text
-								: customFilterButtonGroupStyles.unselected.text
-						}
-						onClick={() => filterResources('links')}
-						// text='Create New'
-						// onClick={handleStartNewProject}
-					>
-						<span>Links</span>
-					</DesignSystemButton>
-				)}
-				{pageInvoked != 'theme' && (
-					<DesignSystemButton
-					  width='12rem'
-						isPaidFeature={false}
-						size='sm'
-						hierarchy='tertiary'
-						buttonStatus='enabled'
-						iconLeft={<FiVideo />}
-						customButtonStyles={
-							currentResourceType === 'videos'
-								? customFilterButtonGroupStyles.selected.button
-								: customFilterButtonGroupStyles.unselected.button
-						}
-						customIconStyles={
-							currentResourceType === 'videos'
-								? customFilterButtonGroupStyles.selected.icon
-								: customFilterButtonGroupStyles.unselected.icon
-						}
-						customTextStyles={
-							currentResourceType === 'videos'
-								? customFilterButtonGroupStyles.selected.text
-								: customFilterButtonGroupStyles.unselected.text
-						}
-						onClick={() => filterResources('videos')}
-						// text='Create New'
-						// onClick={handleStartNewProject}
-					>
-						<span>YouTube</span>
-					</DesignSystemButton>
-				)}
-				{pageInvoked != 'summary' && (
-					<DesignSystemButton
-					  width='12rem'
-						isPaidFeature={false}
-						size='sm'
-						hierarchy='tertiary'
-						buttonStatus='enabled'
-						iconLeft={<PiTagLight />}
-						customButtonStyles={
-							currentResourceType === 'branding'
-								? customFilterButtonGroupStyles.selected.button
-								: customFilterButtonGroupStyles.unselected.button
-						}
-						customIconStyles={
-							currentResourceType === 'branding'
-								? customFilterButtonGroupStyles.selected.icon
-								: customFilterButtonGroupStyles.unselected.icon
-						}
-						customTextStyles={
-							currentResourceType === 'branding'
-								? customFilterButtonGroupStyles.selected.text
-								: customFilterButtonGroupStyles.unselected.text
-						}
-						onClick={() => filterResources('branding')}
-						// text='Create New'
-						// onClick={handleStartNewProject}
-					>
-						<span>Branding</span>
-					</DesignSystemButton>
-				)}
-			</div>
+					{pageInvoked != 'summary' && (
+						<DesignSystemButton
+							width='12rem'
+							isPaidFeature={false}
+							size='sm'
+							hierarchy='tertiary'
+							buttonStatus='enabled'
+							iconLeft={<PiImageSquare />}
+							customButtonStyles={
+								currentResourceType === 'images'
+									? customFilterButtonGroupStyles.selected.button
+									: customFilterButtonGroupStyles.unselected.button
+							}
+							customIconStyles={
+								currentResourceType === 'images'
+									? customFilterButtonGroupStyles.selected.icon
+									: customFilterButtonGroupStyles.unselected.icon
+							}
+							customTextStyles={
+								currentResourceType === 'images'
+									? customFilterButtonGroupStyles.selected.text
+									: customFilterButtonGroupStyles.unselected.text
+							}
+							onClick={() => filterResources('images')}
+							// text='Create New'
+							// onClick={handleStartNewProject}
+						>
+							<span>Images</span>
+						</DesignSystemButton>
+					)}
+					{pageInvoked != 'theme' && (
+						<DesignSystemButton
+							width='12rem'
+							isPaidFeature={false}
+							size='sm'
+							hierarchy='tertiary'
+							buttonStatus='enabled'
+							iconLeft={<IoMdLink />}
+							customButtonStyles={
+								currentResourceType === 'links'
+									? customFilterButtonGroupStyles.selected.button
+									: customFilterButtonGroupStyles.unselected.button
+							}
+							customIconStyles={
+								currentResourceType === 'links'
+									? customFilterButtonGroupStyles.selected.icon
+									: customFilterButtonGroupStyles.unselected.icon
+							}
+							customTextStyles={
+								currentResourceType === 'links'
+									? customFilterButtonGroupStyles.selected.text
+									: customFilterButtonGroupStyles.unselected.text
+							}
+							onClick={() => filterResources('links')}
+							// text='Create New'
+							// onClick={handleStartNewProject}
+						>
+							<span>Links</span>
+						</DesignSystemButton>
+					)}
+					{pageInvoked != 'theme' && (
+						<DesignSystemButton
+							width='12rem'
+							isPaidFeature={false}
+							size='sm'
+							hierarchy='tertiary'
+							buttonStatus='enabled'
+							iconLeft={<FiVideo />}
+							customButtonStyles={
+								currentResourceType === 'videos'
+									? customFilterButtonGroupStyles.selected.button
+									: customFilterButtonGroupStyles.unselected.button
+							}
+							customIconStyles={
+								currentResourceType === 'videos'
+									? customFilterButtonGroupStyles.selected.icon
+									: customFilterButtonGroupStyles.unselected.icon
+							}
+							customTextStyles={
+								currentResourceType === 'videos'
+									? customFilterButtonGroupStyles.selected.text
+									: customFilterButtonGroupStyles.unselected.text
+							}
+							onClick={() => filterResources('videos')}
+							// text='Create New'
+							// onClick={handleStartNewProject}
+						>
+							<span>YouTube</span>
+						</DesignSystemButton>
+					)}
+					{pageInvoked != 'summary' && (
+						<DesignSystemButton
+							width='12rem'
+							isPaidFeature={false}
+							size='sm'
+							hierarchy='tertiary'
+							buttonStatus='enabled'
+							iconLeft={<PiTagLight />}
+							customButtonStyles={
+								currentResourceType === 'branding'
+									? customFilterButtonGroupStyles.selected.button
+									: customFilterButtonGroupStyles.unselected.button
+							}
+							customIconStyles={
+								currentResourceType === 'branding'
+									? customFilterButtonGroupStyles.selected.icon
+									: customFilterButtonGroupStyles.unselected.icon
+							}
+							customTextStyles={
+								currentResourceType === 'branding'
+									? customFilterButtonGroupStyles.selected.text
+									: customFilterButtonGroupStyles.unselected.text
+							}
+							onClick={() => filterResources('branding')}
+							// text='Create New'
+							// onClick={handleStartNewProject}
+						>
+							<span>Branding</span>
+						</DesignSystemButton>
+					)}
+				</div>
+			)}
 
 			{/* rendered resources items area */}
 			{rendered ? (
