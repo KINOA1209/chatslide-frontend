@@ -32,7 +32,7 @@ import Draggable from 'react-draggable';
 import dynamic from 'next/dynamic';
 import Slide, { Media, SlideKeys } from '@/models/Slide';
 import { DragElement, ElementType } from '@/components/DragElement';
-import { IoMdRefresh } from "react-icons/io";
+import { IoMdRefresh } from 'react-icons/io';
 const QuillEditable = dynamic(
 	() => import('@/components/slides/quillEditorSlide'),
 	{ ssr: false },
@@ -439,14 +439,14 @@ export const Cover_img_1_layout = ({
 
 	const [isMoved, setIsMoved] = useState<boolean>(false);
 
-	const [txtPos, setTxtPos] = useState({x: 0, y: 0});
-	const [imgPos, setImgPos] = useState({x: 0, y: 0});
+	const [txtPos, setTxtPos] = useState({ x: 0, y: 0 });
+	const [imgPos, setImgPos] = useState({ x: 0, y: 0 });
 
 	const handleRealign = () => {
 		setIsMoved(false);
-		setTxtPos({x: 0, y: 0});
-		setImgPos({x: 0, y: 0});
-	}
+		setTxtPos({ x: 0, y: 0 });
+		setImgPos({ x: 0, y: 0 });
+	};
 
 	return (
 		<div
@@ -465,7 +465,7 @@ export const Cover_img_1_layout = ({
 					position: 'absolute',
 					padding: '20px',
 					zIndex: '120',
-					visibility: `${isMoved ? 'visible': 'hidden'}`,
+					visibility: `${isMoved ? 'visible' : 'hidden'}`,
 				}}
 			>
 				<button
@@ -505,13 +505,14 @@ export const Cover_img_1_layout = ({
 					style={{ ...layoutElements.titleCSS, zIndex: 60 }}
 				>
 					<DragElement
-						content={title}
 						position={txtPos}
 						setPosition={setTxtPos}
 						setMoved={setIsMoved}
 						type={ElementType.TextEdit}
 						zindex={60}
-					/>
+					>
+						{title}
+					</DragElement>
 				</div>
 			</div>
 
@@ -520,33 +521,32 @@ export const Cover_img_1_layout = ({
 				style={layoutElements.imageContainerCSS}
 			>
 				<DragElement
-					content={
-						<ImgModule
-							imgsrc={imgs?.[0]}
-							updateSingleCallback={updateImgAtIndex(0)}
-							chartArr={charts}
-							ischartArr={ischarts}
-							handleSlideEdit={handleSlideEdit}
-							currentSlideIndex={currentSlideIndex}
-							currentContentIndex={0}
-							canEdit={canEdit}
-							image_positions={image_positions}
-							layoutElements={layoutElements}
-							customImageStyle={layoutElements.imageCSS}
-							// additional_images={imgs.slice(3)}
-							setImgHigherZIndex={setImgHigherZIndex}
-							embed_code={embed_code}
-							embed_code_single={embed_code?.[0]}
-							media_types={media_types}
-							media_type={media_types?.[0]}
-						/>
-					}
 					position={imgPos}
 					setPosition={setImgPos}
 					setMoved={setIsMoved}
 					type={ElementType.ImageView}
 					zindex={imgHigherZIndex ? 100 : 20}
-				/>
+				>
+					<ImgModule
+						imgsrc={imgs?.[0]}
+						updateSingleCallback={updateImgAtIndex(0)}
+						chartArr={charts}
+						ischartArr={ischarts}
+						handleSlideEdit={handleSlideEdit}
+						currentSlideIndex={currentSlideIndex}
+						currentContentIndex={0}
+						canEdit={canEdit}
+						image_positions={image_positions}
+						layoutElements={layoutElements}
+						customImageStyle={layoutElements.imageCSS}
+						// additional_images={imgs.slice(3)}
+						setImgHigherZIndex={setImgHigherZIndex}
+						embed_code={embed_code}
+						embed_code_single={embed_code?.[0]}
+						media_types={media_types}
+						media_type={media_types?.[0]}
+					/>
+				</DragElement>
 			</div>
 
 			<div

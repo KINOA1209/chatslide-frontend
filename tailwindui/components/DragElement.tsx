@@ -8,7 +8,7 @@ export enum ElementType {
 }
 
 interface DragElementProps {
-	content: JSX.Element;
+	children: JSX.Element;
     position: any;
     setPosition: React.Dispatch<React.SetStateAction<{
 		x: number;
@@ -20,7 +20,7 @@ interface DragElementProps {
 }
 
 export const DragElement = ({
-	content,
+	children: content,
     position,
     setPosition,
 	setMoved,
