@@ -29,6 +29,7 @@ interface UploadOptionsDropdownMenuProps {
 	carbonTokenFetcher: () => Promise<any>;
 	handleSuccess: (data: any) => Promise<void>; // Adjust the type according to the actual data type
 	isUploadDropdownItem: boolean;
+	showAddLinkSection?: boolean;
 }
 
 const UploadOptionsDropdownMenu: React.FC<UploadOptionsDropdownMenuProps> = ({
@@ -44,6 +45,7 @@ const UploadOptionsDropdownMenu: React.FC<UploadOptionsDropdownMenuProps> = ({
 	carbonTokenFetcher,
 	handleSuccess,
 	isUploadDropdownItem,
+	showAddLinkSection = true,
 }) => {
 	const [showFileSupportExplain, setShowFileSupportExplain] = useState(false);
 	const [showAddLinkInput, setShowAddLinkInput] = useState(false);
@@ -226,24 +228,28 @@ const UploadOptionsDropdownMenu: React.FC<UploadOptionsDropdownMenuProps> = ({
 						</>
 					}
 					{/* add link */}
-					<button
-						className='block px-[10px] py-[9px] text-sm text-[#182230] rounded-md  hover:bg-zinc-100 w-full text-left'
-						onClick={() => {
-							setShowAddLinkInput((prev) => !prev);
-						}}
-						style={{
-							display: 'flex',
-							flexDirection: 'row',
-							alignItems: 'center',
-							justifyContent: 'flex-start',
-							gap: 'var(--spacing-lg, 12px)',
-							borderBottom:
-								'1px solid var(--Colors-Border-border-secondary, #EAECF0)',
-						}}
-					>
-						<MdOutlineAddLink></MdOutlineAddLink>
-						<span>Links</span>
-					</button>
+					{showAddLinkSection ? (
+						<button
+							className='block px-[10px] py-[9px] text-sm text-[#182230] rounded-md  hover:bg-zinc-100 w-full text-left'
+							onClick={() => {
+								setShowAddLinkInput((prev) => !prev);
+							}}
+							style={{
+								display: 'flex',
+								flexDirection: 'row',
+								alignItems: 'center',
+								justifyContent: 'flex-start',
+								gap: 'var(--spacing-lg, 12px)',
+								borderBottom:
+									'1px solid var(--Colors-Border-border-secondary, #EAECF0)',
+							}}
+						>
+							<MdOutlineAddLink></MdOutlineAddLink>
+							<span>Links</span>
+						</button>
+					) : (
+						<></>
+					)}
 				</div>
 			}
 			{/* link adding input */}

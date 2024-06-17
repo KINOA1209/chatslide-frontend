@@ -1,3 +1,4 @@
+'use client';
 import React, { useRef, useEffect, useState } from 'react';
 import Slide from '@/models/Slide';
 import { templateDispatch } from './templateDispatch';
@@ -12,6 +13,7 @@ import { Explanation } from '../ui/Text';
 import { ScrollBar } from '../ui/ScrollBar';
 import { useProject } from '@/hooks/use-project';
 import { useSlides } from '@/hooks/use-slides';
+import Resource from '@/models/Resource';
 type SlideDesignPreviewProps = {
 	selectedTemplate: string;
 	selectedPalette: string;
@@ -19,6 +21,8 @@ type SlideDesignPreviewProps = {
 	useGridLayout?: boolean;
 	gridCols?: number;
 	slideContainerScale?: number;
+	selectedSlideBackgroundImgResource?: Resource[];
+	selectedSlideLogoResource?: Resource[];
 };
 
 const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
@@ -28,6 +32,8 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 	useGridLayout = false,
 	gridCols = 2,
 	slideContainerScale = 0.2,
+	selectedSlideBackgroundImgResource,
+	selectedSlideLogoResource,
 }) => {
 	const { slides, version } = useSlides();
 	const [previewSlides, setPreviewSlides] = useState<Slide[]>([]);
@@ -72,8 +78,10 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 			newSlide.image_positions = slides[0]?.image_positions;
 			// add background url and logo_url for preview
 			newSlide.background_url =
-				project?.selected_background?.[0]?.thumbnail_url || '';
-			newSlide.logo_url = project?.selected_logo?.[0]?.thumbnail_url || '';
+				selectedSlideBackgroundImgResource?.[0]?.thumbnail_url || '';
+			// project?.selected_background?.[0]?.thumbnail_url || '';
+			// newSlide.logo_url = project?.selected_logo?.[0]?.thumbnail_url || '';
+			newSlide.logo_url = selectedSlideLogoResource?.[0]?.thumbnail_url || '';
 			newSlide.logo = project?.logo || '';
 			newSlide.logo_position = project?.logo_position || 'BottomLeft';
 
@@ -129,7 +137,12 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 		});
 
 		setPreviewSlides(newSlides);
-	}, [selectedTemplate, selectedPalette]);
+	}, [
+		selectedTemplate,
+		selectedPalette,
+		selectedSlideLogoResource,
+		selectedSlideBackgroundImgResource,
+	]);
 
 	const layoutNameArray = [
 		'Cover page without image',

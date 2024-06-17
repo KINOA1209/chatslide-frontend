@@ -25,7 +25,7 @@ const ImageSelector: React.FC<Props> = ({
 	const [showFileModal, setShowFileModal] = useState(false);
 	const { isPaidUser } = useUser();
 	const [showPaywall, setShowPaywall] = useState(false);
-	const [selectedValue, setSelectedValue] = useState(showQuestion ? 'no' : 'yes');
+	const [selectedValue, setSelectedValue] = useState('yes');
 
 	const removeImageAtIndex = (indexToRemove: number) => {
 		const newSelectedImage = selectedImage.filter(
@@ -95,14 +95,14 @@ const ImageSelector: React.FC<Props> = ({
 				</div>
 			)}
 
-			{selectedValue === 'yes' && (
+			{
 				<div className='mt-[10px]'>
 					<SelectedResourcesList
 						selectedResources={selectedImage}
 						removeResourceAtIndex={removeImageAtIndex}
 					/>
 				</div>
-			)}
+			}
 
 			<FileUploadModal
 				selectedResources={selectedImage}

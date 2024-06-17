@@ -6,7 +6,14 @@ import { FaChevronDown } from 'react-icons/fa';
 import { FaChevronUp } from 'react-icons/fa';
 import UploadOptionsDropdownMenu from '@/components/ui/UploadOptionsDropdownMenu';
 import Resource from '@/models/Resource';
-
+// import FileUploadDropdownButton from '@/components/file/FileUploadDropdownButton';
+import dynamic from 'next/dynamic';
+const FileUploadDropdownButton: any = dynamic(
+	() => import('@/components/file/FileUploadDropdownButton'),
+	{
+		ssr: false,
+	},
+);
 interface MyResourcePageHeaderProps {
 	showUploadOptionsMenu: boolean;
 	setShowUploadOptionsMenu: (value: boolean) => void;
@@ -90,7 +97,7 @@ const MyResourcePageHeader: React.FC<MyResourcePageHeaderProps> = ({
 				</div>
 
 				{/*upload section*/}
-				<div
+				{/* <div
 					className='upload_section'
 					style={{
 						display: 'flex',
@@ -113,7 +120,7 @@ const MyResourcePageHeader: React.FC<MyResourcePageHeaderProps> = ({
 							borderRadius:
 								'var(--radius-md, 8px) var(--radius-xxs, 2px) var(--radius-xxs, 2px) var(--radius-md, 8px)',
 						}}
-            isSubmitting={isSubmitting}
+						isSubmitting={isSubmitting}
 						// text='Create New'
 						// onClick={handleStartNewProject}
 					>
@@ -154,7 +161,24 @@ const MyResourcePageHeader: React.FC<MyResourcePageHeaderProps> = ({
 							isUploadDropdownItem={isUploadDropdownItem}
 						></UploadOptionsDropdownMenu>
 					)}
-				</div>
+				</div> */}
+				<FileUploadDropdownButton
+					uploadSectionRef={uploadSectionRef}
+					setShowUploadOptionsMenu={setShowUploadOptionsMenu}
+					showUploadOptionsMenu={showUploadOptionsMenu}
+					isSubmitting={isSubmitting}
+					setSelectedResources={setSelectedResources}
+					selectedResources={selectedResources}
+					onFileSelected={onFileSelected}
+					pageInvoked={pageInvoked}
+					isPaidUser={isPaidUser}
+					getBrand={getBrand}
+					getLogoUrl={getLogoUrl}
+					carbonTokenFetcher={carbonTokenFetcher}
+					handleSuccess={handleSuccess}
+					isUploadDropdownItem={isUploadDropdownItem}
+					showAddLinkSection={true}
+				></FileUploadDropdownButton>
 			</div>
 		</div>
 	);

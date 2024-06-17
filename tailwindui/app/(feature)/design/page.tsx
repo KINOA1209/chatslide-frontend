@@ -48,7 +48,23 @@ import { BigBlueButton } from '@/components/button/DrlambdaButton';
 import { WrappableRow } from '@/components/layout/WrappableRow';
 import DesignSystemBadges from '@/components/ui/design_systems/Badges';
 import DesignSystemButton from '@/components/ui/design_systems/ButtonsOrdinary';
-import SlideDesignPreview from '@/components/slides/SlideDesignPreview';
+// import SlideDesignPreview from '@/components/slides/SlideDesignPreview';
+const SlideDesignPreview = dynamic(
+	() => import('@/components/slides/SlideDesignPreview'),
+	{ ssr: false },
+);
+// import FileUploadDropdownButton from '@/components/file/FileUploadDropdownButton';
+// import { getBrand, getLogoUrl } from '@/utils/getHost';
+// import ResourceService from '@/services/ResourceService';
+// import ImageSelector from './ImageSelector';
+// import PPTXTemplateSelector from './PPTXTemplateSelector';
+import { Suspense } from 'react';
+const PPTXTemplateSelector: any = dynamic(
+	() => import('@/app/(feature)/design/PPTXTemplateSelector'),
+	{
+		ssr: false,
+	},
+);
 const colorPreviews: any = dynamic(
 	() => import('@/app/(feature)/design/TemplateSelector'),
 	{
@@ -80,6 +96,12 @@ const getTemplateFromAudicence = (audience: string): TemplateKeys => {
 };
 
 export default function DesignPage() {
+	// const uploadSectionRef = useRef<HTMLDivElement>(null);
+	// const [showUploadOptionsMenu, setShowUploadOptionsMenu] = useState(false);
+	const [selectedPPTXTemplate, setSelectedPPTXtemplate] = useState<Resource[]>(
+		[],
+	);
+
 	const [showGenerationStatusModal, setShowGenerationStatusModal] =
 		useState(false);
 
@@ -87,21 +109,27 @@ export default function DesignPage() {
 		setShowGenerationStatusModal(!showGenerationStatusModal);
 	};
 
-	const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+	// Ensure this code runs only on the client side
+	const [screenWidth, setScreenWidth] = useState(
+		typeof window !== 'undefined' ? window.innerWidth : 1280,
+	);
+
 	// const [showTemplatePreview, setShowTemplatePreview] = useState(screenWidth < 1280);
 
 	useEffect(() => {
-		const handleResize = () => {
-			// console.log('screenWidth: ' + screenWidth);
-			setScreenWidth(window.innerWidth);
-			// setShowTemplatePreview(window.innerWidth < 1280);
-		};
+		if (typeof window !== 'undefined') {
+			const handleResize = () => {
+				// console.log('screenWidth: ' + screenWidth);
+				setScreenWidth(window.innerWidth);
+				// setShowTemplatePreview(window.innerWidth < 1280);
+			};
 
-		window.addEventListener('resize', handleResize);
+			window.addEventListener('resize', handleResize);
 
-		return () => {
-			window.removeEventListener('resize', handleResize);
-		};
+			return () => {
+				window.removeEventListener('resize', handleResize);
+			};
+		}
 	}, []);
 	const {
 		slides,
@@ -208,6 +236,36 @@ export default function DesignPage() {
 		project?.selected_background || [],
 	);
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
+	const [slideBackgroundImgUrl, setSlideBackgroundImgUrl] = useState('');
+
+	useEffect(() => {
+		console.log('current project details:', project);
+	}, [project]);
+	useEffect(() => {
+		console.log('Current slide background img url:', slideBackgroundImgUrl);
+		// setSelectedBackground(
+		// 	selectedBackground.map((resource) => ({
+		// 		...resource,
+		// 		thumbnail_url: slideBackgroundImgUrl,
+		// 	})),
+		// );
+
+		console.log(
+			'changed the selected background',
+			selectedBackground?.[0]?.thumbnail_url,
+		);
+	}, [slideBackgroundImgUrl, setSlideBackgroundImgUrl]); // Add slideBackgroundImgUrl to the dependency array
+
+	useEffect(() => {
+		console.log('selected background url', selectedBackground);
+		updateProject('selected_background', selectedBackground);
+		setSelectedBackground(selectedBackground);
+	}, [selectedBackground, setSelectedBackground]);
+
+	useEffect(() => {
+		updateProject('selected_logo', selectedLogo);
+		setSelectedLogo(selectedLogo);
+	}, [selectedBackground, setSelectedLogo]);
 
 	const params = useSearchParams();
 	const router = useRouter();
@@ -473,6 +531,11 @@ export default function DesignPage() {
 					gap: '10px',
 				}}
 			>
+				{/* <div
+					className='template-customization-area'
+					
+				> */}
+				{/* template-customization-area */}
 				<Column customStyle={{ flex: '1 0 33%' }}>
 					<Panel>
 						<Card>
@@ -481,6 +544,19 @@ export default function DesignPage() {
 								Customize the design for your slide, you can also skip this step
 								and use the default
 							</Explanation>
+
+							{/* upload your own template */}
+							<PPTXTemplateSelector
+								type='Template'
+								selectedTemplate={selectedPPTXTemplate}
+								setSelectedTemplate={setSelectedPPTXtemplate}
+								showQuestion={true}
+								setExtractedTemplateImgUrl={setSlideBackgroundImgUrl}
+								extractedTemplateImgUrl={slideBackgroundImgUrl}
+								setSelectedBackground={setSelectedBackground}
+								selectedBackground={selectedBackground}
+							/>
+
 							<TemplateSelector
 								template={template}
 								setTemplate={setTemplate}
@@ -514,6 +590,8 @@ export default function DesignPage() {
 									setSelectedTemplateTitleFontColor
 								}
 								showTemplatePreview={screenWidth < 1280 ? true : false}
+								selectedSlideBackgroundImgResource={selectedBackground}
+								selectedSlideLogoUrlResource={selectedLogo}
 							/>
 
 							<div>
@@ -597,26 +675,30 @@ export default function DesignPage() {
 						</Card>
 					</Panel>
 				</Column>
+				{/* </div> */}
 
-				<div
-					className='big-template-review'
-					style={{
+				{/* <div className='' style={{}}> */}
+				{/* big-template-review */}
+				<Column
+					customStyle={{
 						display: screenWidth < 1280 ? 'none' : 'flex',
 						marginTop: '24px',
+						// flex: '2 0 66%',
 					}}
 				>
-					<Column customStyle={{ flex: '2 0 66%' }}>
-						<BigTitle>Template Preview</BigTitle>
-						<SlideDesignPreview
-							selectedTemplate={template}
-							selectedPalette={colorPalette}
-							axial='y'
-							useGridLayout={true}
-							gridCols={2}
-							slideContainerScale={0.3}
-						/>
-					</Column>
-				</div>
+					<BigTitle>Template Preview</BigTitle>
+					<SlideDesignPreview
+						selectedTemplate={template}
+						selectedPalette={colorPalette}
+						axial='y'
+						useGridLayout={true}
+						gridCols={2}
+						slideContainerScale={0.3}
+						selectedSlideBackgroundImgResource={selectedBackground}
+						selectedSlideLogoResource={selectedLogo}
+					/>
+				</Column>
+				{/* </div> */}
 			</div>
 		</section>
 	);

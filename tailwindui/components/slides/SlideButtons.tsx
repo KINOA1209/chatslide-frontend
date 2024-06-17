@@ -16,6 +16,7 @@ import Slide from '@/models/Slide';
 import brandingIcon from 'public/icons/button/show_logo.svg';
 import Image from 'next/image';
 import { SocialPostSlide } from '@/models/SocialPost';
+import Resource from '@/models/Resource';
 
 type SaveButtonProps = {
 	saveSlides: () => void;
@@ -193,6 +194,7 @@ export const ChangeTemplateOptions: React.FC<{}> = ({}) => {
 		updateCustomizedSubtitleFontFamilyForTemplate,
 		updateCustomizedContentFontFamilyForTemplate,
 	} = useSlides();
+	const { outlines, project, updateProject, bulkUpdateProject } = useProject();
 	const { changeTemplateAndPaletteAndBgColorAndFontFamilyAndColor } =
 		useSlides();
 	const [selectedTemplate, setSelectedTemplate] = useState<TemplateKeys>(
@@ -231,6 +233,13 @@ export const ChangeTemplateOptions: React.FC<{}> = ({}) => {
 		selectedTemplateContentFontFamily,
 		setSelectedTemplateContentFontFamily,
 	] = useState(slides[0]?.contentFontFamily || 'Arial');
+
+	const [selectedLogo, setSelectedLogo] = useState<Resource[]>(
+		project?.selected_logo || [],
+	);
+	const [selectedBackground, setSelectedBackground] = useState<Resource[]>(
+		project?.selected_background || [],
+	);
 
 	const handleConfirm = () => {
 		// console.log('selectedTemplate all configs:', selectedTemplate, selectedPaletteOption, selectedTemplateBgColor, selectedTemplateTitleFontFamily, selectedTemplateSubtitleFontFamily, selectedTemplateContentFontFamily);
@@ -315,6 +324,8 @@ export const ChangeTemplateOptions: React.FC<{}> = ({}) => {
 						setCustomizedTemplateTitleFontColorCallback={
 							setSelectedTemplateTitleFontColor
 						}
+						selectedSlideBackgroundImgResource={selectedBackground}
+						selectedSlideLogoUrlResource={selectedLogo}
 					/>
 				</div>
 			</Modal>

@@ -141,7 +141,6 @@ export const generateTemplate = (templateName: string) => {
 						ischarts={ischarts}
 						handleSlideEdit={handleSlideEdit}
 						currentSlideIndex={currentSlideIndex}
-						
 						image_positions={image_positions}
 						embed_code={embed_code}
 						media_types={media_types}
@@ -386,6 +385,7 @@ export const availableTemplates = {
 };
 
 export const templateDisplayNames = {
+	// extracted_from_pptx: 'Use my own template (extract from pptx file)',
 	Simplistic_008: '🌅 Simplistic',
 	New_Education_009: '📚 Education',
 	Event_Report_010: '📈 Report',
@@ -415,6 +415,7 @@ export const templateDisplayNames = {
 type AvailableTemplateKeys = keyof typeof availableTemplates;
 // Define a type for additional template keys
 type AdditionalTemplateKeys = 'Default_template';
+// type AdditionalTemplateKeys = 'Default_template' | 'extracted_from_pptx';
 
 // Combine both types using a union
 export type TemplateKeys = AvailableTemplateKeys | AdditionalTemplateKeys;

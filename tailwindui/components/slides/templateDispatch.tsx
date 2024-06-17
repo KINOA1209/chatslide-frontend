@@ -98,7 +98,8 @@ export const templateDispatch = (
 	} = useSlides();
 	const { isPaidUser, token } = useUser();
 	const { project } = useProject();
-	const language = project?.language || 'English'
+	const language = project?.language || 'English';
+	const LogoMode = project?.logo;
 
 	// for col1img1 layout, maxHeight would be 160px, for col2img2 140px; for col2img1 it's 280px, for col3img3 it's 130px; for col1img0 280px; for col2img0 280px; for col3img0 280px
 	const maxContentTextAreaHeight = (layout: LayoutKeys) => {
@@ -271,10 +272,12 @@ export const templateDispatch = (
 		slide.layout as keyof typeof layoutOptions,
 	);
 	const dynamicStyle: CSSProperties = {
-		...(language === 'Arabic' || language === 'Hebrew' ? {
-		  direction: 'rtl' as 'rtl',
-		  textAlign: 'right'
-		} : {}),
+		...(language === 'Arabic' || language === 'Hebrew'
+			? {
+					direction: 'rtl' as 'rtl',
+					textAlign: 'right',
+				}
+			: {}),
 	};
 
 	const generateContentElement = (
@@ -293,7 +296,7 @@ export const templateDispatch = (
 					style={{
 						...style,
 						outline: 'none',
-						...dynamicStyle
+						...dynamicStyle,
 					}}
 				>
 					{Array.isArray(content) ? (
@@ -474,14 +477,18 @@ export const templateDispatch = (
 			layoutOptionCover={finalLayoutKey}
 			// brandingColor={brandingColor}
 			templateLogo={
-				<ChosenTemplateLogo
-					isCoverPage={isCoverPage}
-					custom_logo={custom_logo}
-					template_name={slide.template}
-					isLightBackground={isLightBackground}
-					// isLogoLeftSide={slide.is_logo_left}
-					logoPosition={slide.logo_position}
-				/>
+				LogoMode === 'No' ? (
+					<></>
+				) : (
+					<ChosenTemplateLogo
+						isCoverPage={isCoverPage}
+						custom_logo={custom_logo}
+						template_name={slide.template}
+						isLightBackground={isLightBackground}
+						// isLogoLeftSide={slide.is_logo_left}
+						logoPosition={slide.logo_position}
+					/>
+				)
 			}
 			uploadedLogoUrl={slide.logo_url}
 			uploadedBackgroundImageUrl={slide.background_url}
