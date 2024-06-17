@@ -156,7 +156,7 @@ const SideBar = ({}: SideBarProps) => {
 				{/* drlambda home */}
 
 				<div
-					className={`block flex flex-row items-center py-2 mx-auto ${isSidebarOpen ? 'px-[0.75rem]' : ''} rounded-lg hover:bg-[#F2F4F7] cursor-pointer`}
+					className={`block flex flex-row items-center py-2 gap-x-2 mx-auto ${isSidebarOpen ? 'px-[0.75rem]' : ''} rounded-lg hover:bg-[#F2F4F7] cursor-pointer`}
 					onClick={() => router.push('/landing')}
 					role='menuitem'
 					style={{
@@ -165,7 +165,7 @@ const SideBar = ({}: SideBarProps) => {
 					}}
 				>
 					<Logo color={true} size={'24px'} />
-					{isSidebarOpen ? getBrand() : '\u200B'}
+					{isSidebarOpen && getBrand()}
 				</div>
 
 				<hr

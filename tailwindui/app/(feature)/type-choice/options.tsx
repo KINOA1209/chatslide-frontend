@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaShareAlt, FaFilm, FaChartBar } from 'react-icons/fa';
+import { FaShareAlt, FaFilm, FaChartBar, FaImage } from 'react-icons/fa';
 import { ScenarioOption } from '../scenario-choice/slidesScenarios';
 
 
@@ -22,7 +22,18 @@ const options: ScenarioOption[] = [
 		title: 'Charts (Beta+)',
 		imageSrc: '/images/scenario/charts.png',
 		icon: <FaChartBar />,
-		previewOnly: true,
+		previewOnly: false,
+	},
+];
+
+const minorOptions: ScenarioOption[] = [
+	{
+		id: 'image',
+		title: 'Image (Coming)',
+		imageSrc: '/images/scenario/charts.png',
+		icon: <FaImage />,
+		// previewOnly: true,
+    disabled: true
 	},
 ];
 
@@ -30,6 +41,7 @@ const workflowTypeOptions = {
   message: 'What type of content do you want to create?',
   description: 'We will guide you through the process.',
   options,
+  minorOptions,
 };
 
 export default workflowTypeOptions;

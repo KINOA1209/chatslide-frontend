@@ -173,6 +173,16 @@ export default function WorkflowStep5() {
 
 	async function handleSubmitVideo() {
 
+    // if the script of any page exceeds 4096 characters, show error and return 
+    if (slides.some(
+      (slide) => (slide.transcript?.length || 0 )>= 4096
+    )) {
+      toast.error('Script length of one page exceeds 4096 characters. Please remove some characters.');
+      setIsSubmitting(false);
+      return;
+    }
+      
+
 		if (canSubmitVideo()) {
 			setLastSubmissionTime();
 		} else {

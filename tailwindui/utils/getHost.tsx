@@ -35,7 +35,7 @@ function getLogoUrl(color = true) {
 }
 
 function isChatslide() {
-	return !getHost().includes('drlambda.ai'); // can be local
+	return getHost().includes('chatslide.ai'); 
 }
 
 function isLocal() {

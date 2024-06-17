@@ -120,6 +120,7 @@ export const useUser = () => {
 					window.clarity('set', 'usernameInDB', usernameInDB);
 					window.clarity('set', 'userEmail', emailInDb);
 					window.clarity('set', 'tier', subscription_tier);
+					window.clarity('set', 'uid', uid);
 				} else {
           console.warn('clarity not loaded, are you in local?');
         }

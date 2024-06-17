@@ -257,6 +257,12 @@ export default function Topic() {
 		'from_topic' | 'from_files'
 	>('from_topic');
 
+  useEffect(() => {
+    if (generationMode === 'from_files') {
+      setSearchOnlineScope('');
+    }
+  }, [generationMode]);
+
 	const [topic, setTopic] = useState(project?.topic || '');
 	const [audience, setAudience] = useState(
 		project?.audience || getAudienceFromScenario(scenarioType),

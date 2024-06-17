@@ -23,6 +23,7 @@ export type ScenarioOption = {
 	featured?: boolean;
 	previewOnly?: boolean;
 	icon: React.JSX.Element;
+  disabled?: boolean;
 };
 
 const options: ScenarioOption[] = [

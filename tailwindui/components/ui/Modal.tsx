@@ -3,7 +3,7 @@ import { FaTimes } from 'react-icons/fa';
 import { BigBlueButton, InversedBigBlueButton } from '../button/DrlambdaButton';
 import { Transition } from '@headlessui/react';
 import { Title, Explanation } from '@/components/ui/Text';
-import { InputBox } from './InputBox';
+import { InputBox, NewInputBox } from './InputBox';
 
 interface ModalProps {
 	children?: React.ReactNode;
@@ -21,6 +21,8 @@ interface ModalProps {
 	inputValue?: string;
 	setInputValue?: (value: string) => void;
 	maxInputLength?: number;
+	hasTextArea?: boolean;
+	rows?: number;
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -38,6 +40,8 @@ const Modal: React.FC<ModalProps> = ({
 	inputValue,
 	setInputValue,
 	maxInputLength,
+	hasTextArea = false,
+	rows,
 }) => {
 	const modalRef = React.useRef<HTMLDivElement>(null);
 	const modalContentRef = React.useRef<HTMLDivElement>(null);
@@ -151,7 +155,7 @@ const Modal: React.FC<ModalProps> = ({
 									borderRadius: '32px',
 									width: '36px',
 									height: '36px',
-									border: '1px solid var(--Grey-02, #EBEFF2)',
+									// border: '1px solid var(--Grey-02, #EBEFF2)',
 								}}
 							>
 								<button
@@ -179,6 +183,16 @@ const Modal: React.FC<ModalProps> = ({
 								maxLength={maxInputLength}
 							/>
 						</InputBox>
+					)}
+
+					{hasTextArea && setInputValue && inputValue && rows && (
+						<NewInputBox
+							value={inputValue}
+							onChange={setInputValue}
+							maxLength={maxInputLength}
+							textarea={hasTextArea}
+							rows={rows}
+						/>
 					)}
 					{/* Modal body */}
 					{children}
