@@ -42,6 +42,7 @@ import { Blank } from '@/components/ui/Loading';
 import Project from '@/models/Project';
 import { addIdToRedir } from '@/utils/redirWithId';
 import SlidesService from '@/services/SlidesService';
+import DesignSettingsService from '@/services/DesignSettingService';
 import Slide, { LogoPosition } from '@/models/Slide';
 import ProjectService from '@/services/ProjectService';
 import { BigBlueButton } from '@/components/button/DrlambdaButton';
@@ -420,82 +421,96 @@ export default function DesignPage() {
 
 	if (!useHydrated()) return <></>;
 
-	const saveToDefaultProfile = () => {
+	const saveToDefaultProfile = async (token: string) => {
 		const defaultProfile = {
 			template,
-			colorPalette,
-			selectedTemplateBgColor,
-			selectedTemplateTitleFontFamily,
-			selectedTemplateSubtitleFontFamily,
-			selectedTemplateContentFontFamily,
-			selectedTemplateContentFontColor,
-			selectedTemplateSubtitleFontColor,
-			selectedTemplateTitleFontColor,
-			selectedLogo,
-			selectedBackground,
-			logoMode,
-			selectedLogoPosition,
-			imageAmount,
-			imageLicense,
+			color_palette: colorPalette,
+			selected_template_bg_color: selectedTemplateBgColor,
+			selected_template_title_font_family: selectedTemplateTitleFontFamily,
+			selected_template_subtitle_font_family: selectedTemplateSubtitleFontFamily,
+			selected_template_content_font_family: selectedTemplateContentFontFamily,
+			selected_template_content_font_color: selectedTemplateContentFontColor,
+			selected_template_subtitle_font_color: selectedTemplateSubtitleFontColor,
+			selected_template_title_font_color: selectedTemplateTitleFontColor,
+			selected_logo: selectedLogo,
+			selected_background: selectedBackground,
+			logo_mode: logoMode,
+			selected_logo_position: selectedLogoPosition,
+			image_amount: imageAmount,
+			image_license: imageLicense,
 		};
-		localStorage.setItem('defaultProfile', JSON.stringify(defaultProfile));
-		toast.success('Profile saved successfully');
+	
+		try {
+			await DesignSettingsService.createDesignSettings(defaultProfile, token);
+			toast.success('Profile saved successfully');
+		} catch (error) {
+			console.error('Error saving profile:', error);
+			toast.error('Error saving profile');
+		}
 	};
-
-	const loadFromProfile = () => {
-		const profile = localStorage.getItem('defaultProfile');
-		if (profile) {
-			const {
-				template,
-				colorPalette,
-				selectedTemplateBgColor,
-				selectedTemplateTitleFontFamily,
-				selectedTemplateSubtitleFontFamily,
-				selectedTemplateContentFontFamily,
-				selectedTemplateContentFontColor,
-				selectedTemplateSubtitleFontColor,
-				selectedTemplateTitleFontColor,
-				selectedLogo,
-				selectedBackground,
-				showLogo,
-				selectedLogoPosition,
-				imageAmount,
-				imageLicense,
-			} = JSON.parse(profile);
-
-			setTemplate(template);
-			setColorPalette(colorPalette);
-			setSelectedTemplateBgColor(selectedTemplateBgColor);
-
-			setSelectedTemplateTitleFontFamily(selectedTemplateTitleFontFamily);
-			setSelectedTemplateSubtitleFontFamily(selectedTemplateSubtitleFontFamily);
-			setSelectedTemplateContentFontFamily(selectedTemplateContentFontFamily);
-			setSelectedTemplateContentFontColor(selectedTemplateContentFontColor);
-			setSelectedTemplateSubtitleFontColor(selectedTemplateSubtitleFontColor);
-			setSelectedTemplateTitleFontColor(selectedTemplateTitleFontColor);
-
-			setCustomizedTemplateContentFontFamily(selectedTemplateContentFontFamily);
-			setCustomizedTemplateTitleFontFamily(selectedTemplateTitleFontFamily);
-			setCustomizedTemplateSubtitleFontFamily(
-				selectedTemplateSubtitleFontFamily,
-			);
-			setCustomizedTemplateContentFontColor(selectedTemplateContentFontColor);
-			setCustomizedTemplateSubtitleFontColor(selectedTemplateSubtitleFontColor);
-			setCustomizedTemplateTitleFontColor(selectedTemplateTitleFontColor);
-
-			setSelectedLogo(selectedLogo);
-			setSelectedBackground(selectedBackground);
-			// setShowLogo(showLogo);
-			setSelectedLogoPosition(selectedLogoPosition);
-			setImageAmount(imageAmount);
-			setImageLicense(imageLicense);
-
-			toast.success('Profile loaded successfully');
-		} else {
-			toast.error('No profile found');
+	
+	const loadFromProfile = async (token: string) => {
+		try {
+			const profile = await DesignSettingsService.getDesignSettings(token);
+			if (profile) {
+				const {
+					template,
+					color_palette,
+					selected_template_bg_color,
+					selected_template_title_font_family,
+					selected_template_subtitle_font_family,
+					selected_template_content_font_family,
+					selected_template_content_font_color,
+					selected_template_subtitle_font_color,
+					selected_template_title_font_color,
+					selected_logo,
+					selected_background,
+					selected_logo_position,
+					image_amount,
+					image_license,
+				} = profile;
+	
+				setTemplate(template);
+				setColorPalette(color_palette);
+				setSelectedTemplateBgColor(selected_template_bg_color);
+				setSelectedTemplateTitleFontFamily(selected_template_title_font_family);
+				setSelectedTemplateSubtitleFontFamily(selected_template_subtitle_font_family);
+				setSelectedTemplateContentFontFamily(selected_template_content_font_family);
+				setSelectedTemplateContentFontColor(selected_template_content_font_color);
+				setSelectedTemplateSubtitleFontColor(selected_template_subtitle_font_color);
+				setSelectedTemplateTitleFontColor(selected_template_title_font_color);
+	
+				setCustomizedTemplateContentFontFamily(selected_template_content_font_family);
+				setCustomizedTemplateTitleFontFamily(selected_template_title_font_family);
+				setCustomizedTemplateSubtitleFontFamily(selected_template_subtitle_font_family);
+				setCustomizedTemplateContentFontColor(selected_template_content_font_color);
+				setCustomizedTemplateSubtitleFontColor(selected_template_subtitle_font_color);
+				setCustomizedTemplateTitleFontColor(selected_template_title_font_color);
+	
+				setSelectedLogo(selected_logo);
+				setSelectedBackground(selected_background);
+				setSelectedLogoPosition(selected_logo_position);
+				setImageAmount(image_amount);
+				setImageLicense(image_license);
+	
+				toast.success('Profile loaded successfully');
+			} else {
+				toast.error('No profile found');
+			}
+		} catch (error) {
+			console.error('Error loading profile:', error);
+			toast.error('Error loading profile');
 		}
 	};
 
+	const handleLoadFromProfile = (token: string) => () => {
+		loadFromProfile(token);
+	};
+	
+	const handleSaveToDefaultProfile = (token: string) => () => {
+		saveToDefaultProfile(token);
+	};
+	
 	return (
 		<section className='design-page-content-section relative'>
 			<ToastContainer />
