@@ -16,7 +16,6 @@ interface DragElementProps {
 	}>>;
 	setMoved: React.Dispatch<React.SetStateAction<boolean>>;
 	type: ElementType;
-	scale: number;
 	zindex: number;
 }
 
@@ -26,7 +25,6 @@ export const DragElement = ({
     setPosition,
 	setMoved,
 	type,
-	scale,
 	zindex,
 }: DragElementProps) => {
 	const isDragDisable = useRef(true);

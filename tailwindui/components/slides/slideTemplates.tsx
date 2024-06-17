@@ -42,7 +42,6 @@ export const generateTemplate = (templateName: string) => {
 		title,
 		topic,
 		subtopic,
-		scale,
 		content,
 		imgs,
 		update_callback,
@@ -128,7 +127,6 @@ export const generateTemplate = (templateName: string) => {
 						title={title}
 						topic={topic}
 						subtopic={subtopic}
-						scale={scale}
 						imgs={imgs}
 						update_callback={update_callback}
 						canEdit={canEdit}
@@ -188,7 +186,6 @@ export const generateTemplate = (templateName: string) => {
 						title={title}
 						topic={topic}
 						subtopic={subtopic}
-						scale={scale}
 						imgs={imgs}
 						update_callback={update_callback}
 						canEdit={canEdit}
@@ -264,7 +261,6 @@ export interface MainSlideProps {
 	title: JSX.Element;
 	topic: JSX.Element;
 	subtopic: JSX.Element;
-	scale: number;
 	content: JSX.Element | JSX.Element[];
 	imgs: string[];
 	//   imgs: JSX.Element

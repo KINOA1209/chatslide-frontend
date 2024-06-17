@@ -13,7 +13,6 @@ type SlideContainerProps = {
 	templateDispatch?: (
 		slide: Slide,
 		index: number,
-		scale: number,
 		canEdit: boolean,
 		exportToPdfMode: boolean,
 	) => JSX.Element; // Adjust the types accordingly
@@ -118,7 +117,6 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
 					templateDispatch(
 						slide,
 						index,
-						scale,
 						!isViewing && !isPresenting,
 						exportToPdfMode,
 					)}

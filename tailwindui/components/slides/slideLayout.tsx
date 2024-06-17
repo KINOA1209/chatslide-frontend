@@ -374,7 +374,6 @@ export const Cover_img_1_layout = ({
 	topic,
 	subtopic,
 	content,
-	scale,
 	imgs,
 	update_callback,
 	canEdit,
@@ -511,7 +510,6 @@ export const Cover_img_1_layout = ({
 						setPosition={setTxtPos}
 						setMoved={setIsMoved}
 						type={ElementType.TextEdit}
-						scale={scale}
 						zindex={60}
 					/>
 				</div>
@@ -547,7 +545,6 @@ export const Cover_img_1_layout = ({
 					setPosition={setImgPos}
 					setMoved={setIsMoved}
 					type={ElementType.ImageView}
-					scale={scale}
 					zindex={imgHigherZIndex ? 100 : 20}
 				/>
 			</div>

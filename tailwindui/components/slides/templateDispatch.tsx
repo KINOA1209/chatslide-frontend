@@ -46,7 +46,6 @@ const processContent = (item: string) => {
 export const templateDispatch = (
 	slide: Slide,
 	index: number,
-	scale: number,
 	canEdit: boolean = true,
 	exportToPdfMode: boolean = false,
 	editMathMode: boolean = false,
@@ -371,7 +370,6 @@ export const templateDispatch = (
 		<Template
 			canEdit={canEdit}
 			key={keyPrefix + index.toString()}
-			scale={scale}
 			user_name={
 				isPaidUser ? (
 					generateContentElement(
@@ -507,13 +505,11 @@ export const templateDispatch = (
 export const uneditableTemplateDispatch = (
 	slide: Slide,
 	index: number,
-	scale: number,
 	exportToPdfMode: boolean = false,
 ) =>
 	templateDispatch(
 		slide,
 		index,
-		scale,
 		false, // canEdit
 		exportToPdfMode, //exportToPdfMode
 		false, //editMathMode
