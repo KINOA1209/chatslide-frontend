@@ -113,7 +113,7 @@ const ChatSlideTestimonialsData = [
 		name: 'Hamza Khalid',
 		title: 'AI Soloprenuer',
 		text: "Customize slides with ChatSlide AI's templates and branding tools. Adapt to diverse content types and use cases seamlessly.",
-		profile_url: 'images/kamran.jpeg',
+		profile_url: 'images/hamza.png',
 	},
 	{
 		name: 'Yaser Alosefer',
