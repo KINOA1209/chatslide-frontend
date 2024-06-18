@@ -145,10 +145,10 @@ export const DragElement = ({
 					style={{ position: 'relative' }}
 					lockAspectRatio={false}
 					disableDragging={true}
-					resizeHandleStyles={{
+					resizeHandleStyles={ isVisible ? {
 						bottom: heightResizeCSS,
 						right: widthResizeCSS,
-					}}
+					} : {} }
 					enableResizing={{
 						top: false,
 						bottom: true,
