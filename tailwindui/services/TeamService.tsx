@@ -231,6 +231,10 @@ export default class TeamService {
   }
 
   static async getUserTeams(token: string) {
+    if (!token) {
+      throw new Error('Token is missing')
+    }
+
     const response = await fetch('/api/team/get_user_teams', {
       method: 'GET',
       headers: {
