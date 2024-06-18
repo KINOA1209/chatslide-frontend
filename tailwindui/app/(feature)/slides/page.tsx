@@ -13,6 +13,7 @@ import { useProject } from '@/hooks/use-project';
 import { GenerationStatusProgressModal } from '@/components/ui/GenerationStatusProgressModal';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Blank } from '@/components/ui/Loading';
+import { addIdToRedir } from '@/utils/redirWithId';
 export default function WorkflowStep3() {
 	const { isPaidUser } = useUser();
 	const { project } = useProject();
@@ -35,6 +36,7 @@ export default function WorkflowStep3() {
 
 	const handleGenerationStatusModal = () => {
 		// console.log('user Research Modal toggled');
+		if (project?.has_scripts == true) return
 		setShowGenerationStatusModal(!showGenerationStatusModal);
 	};
 	// set current page to local storage
@@ -57,8 +59,8 @@ export default function WorkflowStep3() {
 				setIsSubmitting={setIsSubmitting}
 				isPaidUser={isPaidUser}
 				nextIsPaidFeature={false}
-				nextText={!isSubmitting ? 'Write Scripts' : 'Writing Scripts'}
-				handleClickingGeneration={handleGenerationStatusModal}
+				nextText={!isSubmitting ? (project?.has_scripts ? 'Review Scripts' : 'Write Scripts') : (project?.has_scripts ? 'Reviewing Scripts' : 'Writing Scripts')}
+				handleClickingGeneration={project?.has_scripts ? () => router.push(addIdToRedir('/scripts')) : handleGenerationStatusModal}
 			/>
 
 			<ToastContainer enableMultiContainer containerId={'slides'} />
