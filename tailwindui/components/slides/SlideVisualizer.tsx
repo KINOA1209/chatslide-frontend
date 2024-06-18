@@ -61,6 +61,11 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 			return;
 		}
 
+		if (project?.has_scripts == true) {
+			router.push(addIdToRedir('/scripts'));
+			return
+		}
+
 		let counter = 0 as number;
 		while (saveStatus != SaveStatus.UpToDate) {
 			console.log('Waiting for saveStatus to be UpToDate');
