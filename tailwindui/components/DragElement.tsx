@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
 import { TbDragDrop2, TbRefresh } from 'react-icons/tb';
+import { Rnd } from 'react-rnd';
 
 export enum ElementType {
 	TextEdit,
@@ -57,9 +58,31 @@ export const DragElement = ({
 			borderRadius: '5px',
 			borderWidth: '2px',
 			borderTopLeftRadius: '0px',
+			width: '100%',
+			height: '100%',
 		}),
 		[isVisible],
 	);
+
+	const widthResizeCSS: React.CSSProperties = {
+		width: '3px',
+		height: '25px',
+		borderRadius: '3px',
+		backgroundColor: 'black',
+		position: 'absolute',
+		top: '50%',
+		transform: 'translateY(-50%)',
+	};
+
+	const heightResizeCSS: React.CSSProperties = {
+		width: '25px',
+		height: '3px',
+		borderRadius: '3px',
+		backgroundColor: 'black',
+		position: 'absolute',
+		left: '50%',
+		transform: 'translateX(-50%)',
+	};
 
 	const dropHandler = () => {
 		setIsDragDisable(true);
@@ -116,12 +139,34 @@ export const DragElement = ({
 						<TbRefresh size={16} color={'white'} />
 					</div>
 				</div>
-				<div
-					className={`ElementContent w-full h-full`}
-					style={{ ...elementCSS, zIndex: zindex }}
+				<Rnd
+					className='ResizableElement w-full h-full'
+					size={{ width: 'max-content', height: 'max-content' }}
+					style={{ position: 'relative' }}
+					lockAspectRatio={false}
+					disableDragging={true}
+					resizeHandleStyles={{
+						bottom: heightResizeCSS,
+						right: widthResizeCSS,
+					}}
+					enableResizing={{
+						top: false,
+						bottom: true,
+						left: false,
+						right: true,
+						topLeft: false,
+						topRight: false,
+						bottomLeft: false,
+						bottomRight: false,
+					}}
 				>
-					{content}
-				</div>
+					<div
+						className={`ElementContent w-full h-full`}
+						style={{ ...elementCSS, zIndex: zindex }}
+					>
+						{content}
+					</div>
+				</Rnd>
 			</div>
 		</Draggable>
 	);

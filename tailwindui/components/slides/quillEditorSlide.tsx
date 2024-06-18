@@ -280,6 +280,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 		const quill = quillInstanceRef.current;
 		if (quill) {
 			quill.root.style.minWidth = '100%';
+			quill.root.style.minHeight = '100%';
 			quill.clipboard.addMatcher(Node.ELEMENT_NODE, (node, delta) => {
 				return delta.compose(
 					new Delta().retain(delta.length(), {
@@ -765,7 +766,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 	//console.log(hoveredSentence)
 
 	return (
-		<div>
+		<div className='w-full h-full'>
 			<div ref={editorRef}></div>
 		</div>
 	);
