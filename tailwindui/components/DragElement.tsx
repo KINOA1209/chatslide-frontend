@@ -12,12 +12,14 @@ interface DragElementProps {
 	children: JSX.Element;
 	type: ElementType;
 	zindex: number;
+	canEdit: boolean;
 }
 
 export const DragElement = ({
 	children: content,
 	type,
 	zindex,
+	canEdit,
 }: DragElementProps) => {
 	const [isDragDisable, setIsDragDisable] = useState<boolean>(true);
 	const [isOverHandler, setIsOverHandler] = useState<boolean>(false);
@@ -97,77 +99,87 @@ export const DragElement = ({
 	}, []);
 
 	return (
-		<Draggable
-			onStart={handleDragStart}
-			position={position}
-			onDrag={handleOnDrag}
-		>
-			<div
-				className={`DraggableElement ${type === ElementType.ImageView ? 'w-full h-full' : ''}`}
-				onMouseEnter={() => {
-					setIsOverHandler(true);
-				}}
-				onMouseLeave={() => {
-					setIsOverHandler(false);
-				}}
-			>
-				<div
-					className={'ElementHandler'}
-					style={{ ...handlerCSS, cursor: 'move' }}
-					onMouseDown={(e) => {
-						setIsDragDisable(false);
-					}}
-					onMouseUp={(e) => {
-						setIsDragDisable(true);
-					}}
-				>
-					<div>
-						<TbDragDrop2 size={16} color={'white'} />
-					</div>
-				</div>
-				<div
-					className={'ResetHandler'}
-					style={{ ...handlerCSS, top: '23px' }}
-					onMouseDown={(e) => {
-						e.stopPropagation();
-					}}
-					onClick={() => {
-						setPosition({ x: 0, y: 0 });
-					}}
-				>
-					<div>
-						<TbRefresh size={16} color={'white'} />
-					</div>
-				</div>
-				<Rnd
-					className='ResizableElement w-full h-full'
-					size={{ width: 'max-content', height: 'max-content' }}
-					style={{ position: 'relative' }}
-					lockAspectRatio={false}
-					disableDragging={true}
-					resizeHandleStyles={ isVisible ? {
-						bottom: heightResizeCSS,
-						right: widthResizeCSS,
-					} : {} }
-					enableResizing={{
-						top: false,
-						bottom: true,
-						left: false,
-						right: true,
-						topLeft: false,
-						topRight: false,
-						bottomLeft: false,
-						bottomRight: false,
-					}}
+		<>
+			{canEdit ? (
+				<Draggable
+					onStart={handleDragStart}
+					position={position}
+					onDrag={handleOnDrag}
 				>
 					<div
-						className={`ElementContent w-full h-full`}
-						style={{ ...elementCSS, zIndex: zindex }}
+						className={`DraggableElement ${type === ElementType.ImageView ? 'w-full h-full' : ''}`}
+						onMouseEnter={() => {
+							setIsOverHandler(true);
+						}}
+						onMouseLeave={() => {
+							setIsOverHandler(false);
+						}}
 					>
-						{content}
+						<div
+							className={'ElementHandler'}
+							style={{ ...handlerCSS, cursor: 'move' }}
+							onMouseDown={(e) => {
+								setIsDragDisable(false);
+							}}
+							onMouseUp={(e) => {
+								setIsDragDisable(true);
+							}}
+						>
+							<div>
+								<TbDragDrop2 size={16} color={'white'} />
+							</div>
+						</div>
+						<div
+							className={'ResetHandler'}
+							style={{ ...handlerCSS, top: '23px' }}
+							onMouseDown={(e) => {
+								e.stopPropagation();
+							}}
+							onClick={() => {
+								setPosition({ x: 0, y: 0 });
+							}}
+						>
+							<div>
+								<TbRefresh size={16} color={'white'} />
+							</div>
+						</div>
+						<Rnd
+							className='ResizableElement w-full h-full'
+							size={{ width: 'max-content', height: 'max-content' }}
+							style={{ position: 'relative' }}
+							lockAspectRatio={false}
+							disableDragging={true}
+							resizeHandleStyles={
+								isVisible
+									? {
+											bottom: heightResizeCSS,
+											right: widthResizeCSS,
+										}
+									: {}
+							}
+							enableResizing={{
+								top: false,
+								bottom: true,
+								left: false,
+								right: true,
+								topLeft: false,
+								topRight: false,
+								bottomLeft: false,
+								bottomRight: false,
+							}}
+						>
+							<div
+								className={`ElementContent w-full h-full`}
+								style={{ ...elementCSS, zIndex: zindex }}
+							>
+								{content}
+							</div>
+						</Rnd>
 					</div>
-				</Rnd>
-			</div>
-		</Draggable>
+				</Draggable>
+			) : (
+				<>{content}</>
+			)}
+		</>
 	);
 };

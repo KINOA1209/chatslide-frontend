@@ -470,6 +470,7 @@ export const Cover_img_1_layout = ({
 					<DragElement
 						type={ElementType.TextEdit}
 						zindex={60}
+						canEdit={canEdit}
 					>
 						{title}
 					</DragElement>
@@ -483,6 +484,7 @@ export const Cover_img_1_layout = ({
 				<DragElement
 					type={ElementType.ImageView}
 					zindex={imgHigherZIndex ? 100 : 20}
+					canEdit={canEdit}
 				>
 					<ImgModule
 						imgsrc={imgs?.[0]}
