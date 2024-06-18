@@ -437,17 +437,6 @@ export const Cover_img_1_layout = ({
 
 	const [imgHigherZIndex, setImgHigherZIndex] = useState(false);
 
-	const [isMoved, setIsMoved] = useState<boolean>(false);
-
-	const [txtPos, setTxtPos] = useState({ x: 0, y: 0 });
-	const [imgPos, setImgPos] = useState({ x: 0, y: 0 });
-
-	const handleRealign = () => {
-		setIsMoved(false);
-		setTxtPos({ x: 0, y: 0 });
-		setImgPos({ x: 0, y: 0 });
-	};
-
 	return (
 		<div
 			className={`SlideCanvas`}
@@ -459,32 +448,6 @@ export const Cover_img_1_layout = ({
 				position: 'relative',
 			}}
 		>
-			<div
-				className='RealignButton'
-				style={{
-					position: 'absolute',
-					padding: '20px',
-					zIndex: '120',
-					visibility: `${isMoved ? 'visible' : 'hidden'}`,
-				}}
-			>
-				<button
-					style={{
-						background: 'rgba(241, 241, 241, 1)',
-						display: 'flex',
-						alignItems: 'center',
-						justifyContent: 'center',
-						padding: '10px',
-						border: '2px',
-						borderColor: 'rgba(0, 0, 0, 0.25)',
-						borderRadius: '5px',
-					}}
-					onClick={handleRealign}
-				>
-					<IoMdRefresh />
-					<span>Realign</span>
-				</button>
-			</div>
 			<div
 				className={`SlideUserNameAndHeadColumn`}
 				style={{
@@ -505,9 +468,6 @@ export const Cover_img_1_layout = ({
 					style={{ ...layoutElements.titleCSS, zIndex: 60 }}
 				>
 					<DragElement
-						position={txtPos}
-						setPosition={setTxtPos}
-						setMoved={setIsMoved}
 						type={ElementType.TextEdit}
 						zindex={60}
 					>
@@ -521,9 +481,6 @@ export const Cover_img_1_layout = ({
 				style={layoutElements.imageContainerCSS}
 			>
 				<DragElement
-					position={imgPos}
-					setPosition={setImgPos}
-					setMoved={setIsMoved}
 					type={ElementType.ImageView}
 					zindex={imgHigherZIndex ? 100 : 20}
 				>
