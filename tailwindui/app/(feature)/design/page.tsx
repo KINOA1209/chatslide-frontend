@@ -289,12 +289,14 @@ export default function DesignPage() {
 		{
 			img: MoreImagesImg,
 			value: 'more_images',
-			text: 'More images (70% decks contain images)',
+			text: 'More images',
+			explanation: '70% decks contain images',
 		},
 		{
 			img: FewerImagesImg,
 			value: 'fewer_images',
-			text: 'Fewer images (30% decks contain images)',
+			text: 'Fewer images',
+			explanation: '30% decks contain images',
 		},
 	];
 
@@ -302,15 +304,18 @@ export default function DesignPage() {
 	const imageLicenseOptions: RadioButtonOption[] = [
 		{
 			value: 'stock',
-			text: 'Stock (generic, high quality)',
+			text: 'Stock',
+      explanation: 'Generic, high quality'
 		},
 		{
 			value: 'creative',
-			text: 'Creative (wide range)',
+			text: 'Creative',
+      explanation: 'Wide range'
 		},
 		{
 			value: 'all',
-			text: 'All (wider range, personal use)',
+			text: 'All',
+      explanation: 'Wider range, personal use'
 		},
 	];
 
@@ -528,7 +533,7 @@ export default function DesignPage() {
 				style={{
 					display: screenWidth < 1280 ? 'block' : 'flex',
 					padding: '10px',
-					gap: '10px',
+					gap: '24px',
 				}}
 			>
 				{/* <div
@@ -536,7 +541,7 @@ export default function DesignPage() {
 					
 				> */}
 				{/* template-customization-area */}
-				<Column customStyle={{ flex: '1 0 33%' }}>
+				<Column customStyle={{ flex: '1 0 50%' }}>
 					<Panel>
 						<Card>
 							<BigTitle>✍️ Template</BigTitle>
@@ -544,18 +549,6 @@ export default function DesignPage() {
 								Customize the design for your slide, you can also skip this step
 								and use the default
 							</Explanation>
-
-							{/* upload your own template */}
-							<PPTXTemplateSelector
-								type='Template'
-								selectedTemplate={selectedPPTXTemplate}
-								setSelectedTemplate={setSelectedPPTXtemplate}
-								showQuestion={true}
-								setExtractedTemplateImgUrl={setSlideBackgroundImgUrl}
-								extractedTemplateImgUrl={slideBackgroundImgUrl}
-								setSelectedBackground={setSelectedBackground}
-								selectedBackground={selectedBackground}
-							/>
 
 							<TemplateSelector
 								template={template}
@@ -603,6 +596,7 @@ export default function DesignPage() {
 									selectedValue={imageAmount}
 									setSelectedValue={setImageAmount}
 									name='imageAmount'
+									cols={2}
 								/>
 							</div>
 							<div>
@@ -621,6 +615,7 @@ export default function DesignPage() {
 									selectedValue={imageLicense}
 									setSelectedValue={setImageLicense}
 									name='imageLicense'
+									cols={3}
 								/>
 							</div>
 						</Card>
@@ -631,16 +626,29 @@ export default function DesignPage() {
 								Select the branding for your slides, you can also change this on
 								the slides page, or talk with AI Chatbot
 							</Explanation>
-							<BrandingSelector
-								logoMode={logoMode}
-								setLogoMode={setLogoMode}
-								selectedLogo={selectedLogo}
-								setSelectedLogo={setSelectedLogo}
-								selectedBackground={selectedBackground}
-								setSelectedBackground={setSelectedBackground}
-								logoPosition={selectedLogoPosition}
-								setLogoPosition={setSelectedLogoPosition}
-							/>
+							<div className='flex flex-col gap-y-2'>
+								<BrandingSelector
+									logoMode={logoMode}
+									setLogoMode={setLogoMode}
+									selectedLogo={selectedLogo}
+									setSelectedLogo={setSelectedLogo}
+									selectedBackground={selectedBackground}
+									setSelectedBackground={setSelectedBackground}
+									logoPosition={selectedLogoPosition}
+									setLogoPosition={setSelectedLogoPosition}
+								/>
+								{/* upload your own template */}
+								<PPTXTemplateSelector
+									type='PPTX Template'
+									selectedTemplate={selectedPPTXTemplate}
+									setSelectedTemplate={setSelectedPPTXtemplate}
+									showQuestion={true}
+									setExtractedTemplateImgUrl={setSlideBackgroundImgUrl}
+									extractedTemplateImgUrl={slideBackgroundImgUrl}
+									setSelectedBackground={setSelectedBackground}
+									selectedBackground={selectedBackground}
+								/>
+							</div>
 						</Card>
 
 						<Card>

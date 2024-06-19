@@ -59,9 +59,7 @@ const PPTXTemplateSelector: React.FC<Props> = ({
 	const [showFileModal, setShowFileModal] = useState(false);
 	const { isPaidUser, token } = useUser();
 	const [showPaywall, setShowPaywall] = useState(false);
-	const [selectedValue, setSelectedValue] = useState<string>(
-		isPaidUser ? 'yes' : 'no',
-	);
+	const [selectedValue, setSelectedValue] = useState<string>('no');
 	// const [extractedTemplateImgUrl, setExtractedTemplateImgUrl] = useState('');
 	const [loading, setLoading] = useState(false); // Add a loading state
 
@@ -138,9 +136,6 @@ const PPTXTemplateSelector: React.FC<Props> = ({
 						<div>
 							Do you want to upload your own {type} as slides background?
 						</div>
-						<Explanation>
-							Supported file formats: PPTX (max file size: 10MB)
-						</Explanation>
 						{!isPaidUser && <PlusLabel />}
 					</Instruction>
 
@@ -160,6 +155,7 @@ const PPTXTemplateSelector: React.FC<Props> = ({
 								setSelectedValue('no');
 							}
 						}}
+            cols={3}
 					/>
 				</div>
 			)}

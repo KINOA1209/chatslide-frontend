@@ -79,13 +79,14 @@ const BrandingSelector: React.FC<{
 	}, [logoMode]);
 
 	return (
-		<div>
+		<div className='flex flex-col gap-y-2'>
+			{showPaywall && <PaywallModal
+				showModal={showPaywall}
+				setShowModal={setShowPaywall}
+				message='Unlock this feature to customize logo on your slides.'
+			/>}
+
 			<div>
-				<PaywallModal
-					showModal={showPaywall}
-					setShowModal={setShowPaywall}
-					message='Unlock this feature to customize logo on your slides.'
-				/>
 				<Instruction>
 					What logo do you want to put on your slides?{' '}
 					{!isPaidUser && <PlusLabel />}
@@ -101,6 +102,7 @@ const BrandingSelector: React.FC<{
 						setLogoMode(mode as 'No' | 'Default' | 'Custom');
 					}}
 					name='branding'
+					cols={3}
 				/>
 			</div>
 
@@ -132,6 +134,7 @@ const BrandingSelector: React.FC<{
 							// updateTemplateLogoPosition(e as LogoPosition); // do not update slides on design page
 						}}
 						name='logoPosition'
+						cols={3}
 					/>
 				</div>
 			)}

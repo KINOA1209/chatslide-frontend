@@ -1,11 +1,13 @@
 import React from 'react';
 import Image from 'next/image';
+import { Explanation } from './Text';
 
 export interface RadioButtonOption {
 	img?: any;
 	value: string;
 	icon?: JSX.Element;
 	text: string;
+  explanation?: string
 }
 
 interface RadioButtonProps {
@@ -25,7 +27,7 @@ const RadioButton: React.FC<RadioButtonProps> = ({
 }) => {
 	return (
 		<div className={`grid grid-cols-1 md:grid-cols-${cols} gap-x-3`}>
-			{options.map(({ img, value, text, icon }) => (
+			{options.map(({ img, value, text, icon, explanation }) => (
 				<div
 					key={value}
 					className={`rounded-lg`}
@@ -47,7 +49,10 @@ const RadioButton: React.FC<RadioButtonProps> = ({
 							/>
 							<span className='flex flex-row justify-center items-center gap-1'>
 								{icon}
-								{text}
+								<div className='flex flex-col'>
+									{text}
+									<Explanation>{explanation}</Explanation>
+								</div>
 							</span>
 						</div>
 					</label>

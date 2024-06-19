@@ -25,7 +25,7 @@ const ImageSelector: React.FC<Props> = ({
 	const [showFileModal, setShowFileModal] = useState(false);
 	const { isPaidUser } = useUser();
 	const [showPaywall, setShowPaywall] = useState(false);
-	const [selectedValue, setSelectedValue] = useState('yes');
+	const [selectedValue, setSelectedValue] = useState('no');
 
 	const removeImageAtIndex = (indexToRemove: number) => {
 		const newSelectedImage = selectedImage.filter(
@@ -74,11 +74,12 @@ const ImageSelector: React.FC<Props> = ({
 								setSelectedValue('no');
 							}
 						}}
+            cols={3}
 					/>
 				</div>
 			)}
 
-			{selectedValue === 'yes' && (
+			{(selectedValue === 'yes' || !showQuestion) && (
 				<div
 					className={`transition-opacity duration-300 ease-in-out gap-1 flex flex-rol justify-start mt-2`}
 				>
@@ -96,7 +97,7 @@ const ImageSelector: React.FC<Props> = ({
 			)}
 
 			{
-				<div className='mt-[10px]'>
+				selectedImage && selectedImage.length > 0 && <div className='mt-[10px]'>
 					<SelectedResourcesList
 						selectedResources={selectedImage}
 						removeResourceAtIndex={removeImageAtIndex}
