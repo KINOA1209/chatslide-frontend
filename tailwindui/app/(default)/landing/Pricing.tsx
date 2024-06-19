@@ -167,7 +167,7 @@ const PricingComparison: React.FC<{
 			case 'lifetime':
 				return (
 					<span className='text-gray-600'>
-						<s>{currency + (getOriginalPrice(tier) * 30).toFixed(2)}</s>
+						<s>{currency + (getOriginalPrice(tier) * 20).toFixed(2)}</s>
 					</span>
 				);
 		}
