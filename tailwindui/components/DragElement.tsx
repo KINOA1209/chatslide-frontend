@@ -9,7 +9,7 @@ export enum ElementType {
 }
 
 interface DragElementProps {
-	children: JSX.Element;
+	children: JSX.Element | JSX.Element[];
 	type: ElementType;
 	zindex: number;
 	canEdit: boolean;
