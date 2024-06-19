@@ -2,7 +2,7 @@ import Modal from './Modal';
 import React, { FC, useEffect, useState } from 'react';
 import FillOutFormImg from '@/public/images/user_onboarding/FillOutForms.png';
 import BookASessionImg from '@/public/images/user_onboarding/BookASession.png';
-import { getBrand } from '@/utils/getHost';
+import { getBrand, isChatslide } from '@/utils/getHost';
 import { Explanation, Instruction, Title } from './Text';
 import { useUser } from '@/hooks/use-user';
 
@@ -68,11 +68,13 @@ const ctas = [
 		}) => isPaidUser && credits !== 'Unlimited',
 	},
 	{
-		href: 'https://forms.gle/kncWqBjU4n5xps1w8',
+		href: isChatslide()
+			? 'https://qualtricsxm6ltvkn8sw.qualtrics.com/jfe/form/SV_6nF7L74Sv68ynzw'
+			: 'https://forms.gle/kncWqBjU4n5xps1w8',
 		imgSrc: FillOutFormImg.src,
 		alt: 'Fill out a form',
 		instruction: 'Fill out form',
-		emoji: '+100⭐',
+		emoji: isChatslide() ? '+200⭐️' : '+100⭐',
 		explanation: '5-10 mins',
 	},
 	{

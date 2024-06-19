@@ -15,7 +15,7 @@ import Modal from '../ui/Modal';
 import FeedbackButton from '../ui/feedback';
 import { usePathname } from 'next/navigation';
 import { Logo } from '../ui/logo';
-import { getBrand } from '@/utils/getHost';
+import { getBrand, isChatslide } from '@/utils/getHost';
 
 const navBarFontColorCSSProp: React.CSSProperties = {
 	color: 'var(--colors-text-text-secondary-700, #344054)',
@@ -204,7 +204,8 @@ const SideBar = ({}: SideBarProps) => {
 					marginRight: 'var(--spacing-xl, 0.5rem)',
 					borderRadius: 'var(--radius-md, 0.5rem)',
 					// background: 'var(--Colors-Background-bg-secondary, #F9FAFB)',
-					padding: 'var(--spacing-2xl, 0.5rem) var(--spacing-xl, 0.5max-h-6 text-center text-Blue text-xs font-bold leading-snug tracking-wide bg-Sky border border-1 border-Blue rounded cursor-auto px-1 py-0.5rem)',
+					padding:
+						'var(--spacing-2xl, 0.5rem) var(--spacing-xl, 0.5max-h-6 text-center text-Blue text-xs font-bold leading-snug tracking-wide bg-Sky border border-1 border-Blue rounded cursor-auto px-1 py-0.5rem)',
 				}}
 			>
 				<div className='block text-sm'>
@@ -292,20 +293,37 @@ const SideBar = ({}: SideBarProps) => {
 							>
 								Get 1000 ⭐️credits
 							</a>
-							<a
-								href='https://forms.gle/kncWqBjU4n5xps1w8'
-								target='_blank'
-								className='block flew flex-row items-center gap-1 text-sm  rounded-lg hover:bg-[#F2F4F7] '
-								role='menuitem'
-								id='user-study-100-credits'
-								style={{
-									color: 'var(--colors-text-text-quaternary-500, #667085)',
-									padding:
-										'var(--spacing-md, 0.5rem) var(--spacing-lg, 0.75rem)',
-								}}
-							>
-								Get 100 ⭐️credits
-							</a>
+							{isChatslide() ? (
+								<a
+									href='https://qualtricsxm6ltvkn8sw.qualtrics.com/jfe/form/SV_6nF7L74Sv68ynzw'
+									target='_blank'
+									className='block flew flex-row items-center gap-1 text-sm  rounded-lg hover:bg-[#F2F4F7] '
+									role='menuitem'
+									id='user-study-100-credits'
+									style={{
+										color: 'var(--colors-text-text-quaternary-500, #667085)',
+										padding:
+											'var(--spacing-md, 0.5rem) var(--spacing-lg, 0.75rem)',
+									}}
+								>
+									Get 200 ⭐️credits
+								</a>
+							) : (
+								<a
+									href='https://forms.gle/kncWqBjU4n5xps1w8'
+									target='_blank'
+									className='block flew flex-row items-center gap-1 text-sm  rounded-lg hover:bg-[#F2F4F7] '
+									role='menuitem'
+									id='user-study-100-credits'
+									style={{
+										color: 'var(--colors-text-text-quaternary-500, #667085)',
+										padding:
+											'var(--spacing-md, 0.5rem) var(--spacing-lg, 0.75rem)',
+									}}
+								>
+									Get 100 ⭐️credits
+								</a>
+							)}
 							<a
 								href='/discord'
 								target='_blank'
