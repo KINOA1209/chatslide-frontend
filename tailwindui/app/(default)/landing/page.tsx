@@ -275,7 +275,7 @@ function Landing() {
 							className='button-primary w-button landing-sign-up'
 							id='landing-sign-up-1'
 						>
-							{ isChatslide() ? 'Try for Free' : 'Start Now' }
+							{isChatslide() ? 'Try for Free' : 'Start Now'}
 						</a>
 						<a href='#usecase' className='secondary-button w-button'>
 							See a demo
@@ -340,7 +340,7 @@ function Landing() {
 							className='button w-button landing-sign-up'
 							id='landing-sign-up-2'
 						>
-							{ isChatslide() ? 'Try for Free' : 'Start Now' }
+							{isChatslide() ? 'Try for Free' : 'Start Now'}
 						</a>
 					</div>
 				</div>
@@ -377,11 +377,13 @@ function Landing() {
 							className='button w-button landing-sign-up'
 							id='landing-sign-up-3'
 						>
-							{ isChatslide() ? 'Try for Free' : 'Start Now' }
+							{isChatslide() ? 'Try for Free' : 'Start Now'}
 						</a>
 					</div>
 					<img
-						src={ isChatslide() ? 'images/Frame-1707479080.png' : 'images/slide.gif'}
+						src={
+							isChatslide() ? 'images/Frame-1707479080.png' : 'images/slide.gif'
+						}
 						loading='lazy'
 						sizes='(max-width: 479px) 90vw, (max-width: 1439px) 45vw, 570px'
 						// srcSet='images/Frame-1707479080-p-500.png 500w, images/Frame-1707479080.png 655w'
@@ -451,7 +453,7 @@ function Landing() {
 							className='button w-button landing-sign-up'
 							id='landing-sign-up-4'
 						>
-							{ isChatslide() ? 'Try for Free' : 'Start Now' }
+							{isChatslide() ? 'Try for Free' : 'Start Now'}
 						</a>
 					</div>
 				</div>
@@ -500,7 +502,7 @@ function Landing() {
 							className='button w-button landing-sign-up'
 							id='landing-sign-up-5'
 						>
-							{ isChatslide() ? 'Try for Free' : 'Start Now' }
+							{isChatslide() ? 'Try for Free' : 'Start Now'}
 						</a>
 					</div>
 					<div className='div-block-3'>
@@ -530,12 +532,12 @@ function Landing() {
 				</div>
 			</div>
 			{isChatslide() ? (
-				<section className='combine-section_feature6'>
+				<section className='combine-section_feature6' id='usecase'>
 					<div className='combine-padding-global-4'>
 						<div className='combine-padding-section-medium-3'>
 							<div className='combine-container-small-3'>
 								<div className='combine-text-align-center-3'>
-									<h2 id='usecase' className='combine-heading-style-h2-3'>
+									<h2 className='combine-heading-style-h2-3'>
 										Created for all <span>use cases</span>
 									</h2>
 									<div className='combine-space-medium-3' />
@@ -646,7 +648,7 @@ function Landing() {
 								className='button w-button landing-sign-up'
 								id='landing-sign-up-5'
 							>
-								{ isChatslide() ? 'Try for Free' : 'Start Now' }
+								{isChatslide() ? 'Try for Free' : 'Start Now'}
 							</a>
 						</div>
 					</div>
