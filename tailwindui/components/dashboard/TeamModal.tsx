@@ -130,8 +130,9 @@ const TeamModal: React.FC<TeamModalProps> = ({
 		try {
 			const inviteCode = await TeamService.generateInviteCode(
 				teamId,
-				isFree,
-				token,
+				false,
+        isFree,
+        token,
 			);
 			if (isFree) {
 				setInviteCodeFree(inviteCode);
@@ -163,8 +164,12 @@ const TeamModal: React.FC<TeamModalProps> = ({
 		}
 	};
 
-	const paidMembersCount = members.filter(member => member.member_type !== 'free').length;
-	const freeMembersCount = members.filter(member => member.member_type === 'free').length;
+	const paidMembersCount = members.filter(
+		(member) => member.member_type !== 'free',
+	).length;
+	const freeMembersCount = members.filter(
+		(member) => member.member_type === 'free',
+	).length;
 
 	return (
 		<div className='team-management'>
@@ -181,79 +186,84 @@ const TeamModal: React.FC<TeamModalProps> = ({
 						<>
 							<div className='mb-4'>
 								<SmallTitle>Invite Codes</SmallTitle>
-								<div className='flex flex-col'>
-									<div className='mt-4 flex items-center'>
-										<div className='mr-4'>
-											<span className='text-gray-800'>Invite Code:</span>
-											{maxMembers <= paidMembersCount ? (
-												<ErrorMessage>
-													You have reached the maximum number of members allowed for
-													your team. Please purchase a seat.
-												</ErrorMessage>
-											) : inviteCode ? (
-												<>
-													<span className='ml-2 font-bold text-blue-600'>
-														{inviteCode}
-													</span>
-													<button
-														onClick={() => copyToClipboard(inviteCode)}
-														className='ml-2 text-blue-600 hover:text-blue-800'
-													>
-														<FaClone />
-													</button>
-												</>
-											) : (
-												<BigBlueButton onClick={() => generateInviteCode(false)}>
-													Generate Code
-												</BigBlueButton>
-											)}
-										</div>
+								<Instruction>
+									Share these codes with your team members, ask them to register
+									an account, and enter the appropriate code to join your team.
+									They will upgrade to the appropriate tier upon joining the
+									team.
+								</Instruction>
 
-										<div className='ml-4'>
-											<span className='text-gray-800'>Free Invite Code:</span>
-											{freeMembers <= freeMembersCount ? (
-												<ErrorMessage>
-													You have reached the maximum number of free members allowed for
-													your team.
-												</ErrorMessage>
-											) : inviteCodeFree ? (
-												<>
-													<span className='ml-2 font-bold text-blue-600'>
-														{inviteCodeFree}
-													</span>
-													<button
-														onClick={() => copyToClipboard(inviteCodeFree)}
-														className='ml-2 text-blue-600 hover:text-blue-800'
-													>
-														<FaClone />
-													</button>
-												</>
-											) : (
-												<BigBlueButton onClick={() => generateInviteCode(true)}>
-													Generate Free Member Code
-												</BigBlueButton>
-											)}
-										</div>
+								<div className='flex flex-col gap-y-2'>
+									<div>
+										<span className='text-gray-800'>Free Tier:</span>
+										{freeMembers <= freeMembersCount ? (
+											<ErrorMessage>
+												You have reached the maximum number of free members
+												allowed for your team.
+											</ErrorMessage>
+										) : inviteCodeFree ? (
+											<>
+												<span className='ml-2 font-bold text-blue-600'>
+													{inviteCodeFree}
+												</span>
+												<button
+													onClick={() => copyToClipboard(inviteCodeFree)}
+													className='ml-2 text-blue-600 hover:text-blue-800'
+												>
+													<FaClone />
+												</button>
+											</>
+										) : (
+											<BigBlueButton onClick={() => generateInviteCode(true)}>
+												Generate Code
+											</BigBlueButton>
+										)}
 									</div>
-									<Instruction>
-										Share these codes with your team members, ask them to register an account, and enter the appropriate code to join your team.
-									</Instruction>
+
+									<div>
+										<span className='text-gray-800'>Pro Tier:</span>
+										{maxMembers <= paidMembersCount ? (
+											<ErrorMessage>
+												You have reached the maximum number of members allowed
+												for your team. Please purchase a seat.
+											</ErrorMessage>
+										) : inviteCode ? (
+											<>
+												<span className='ml-2 font-bold text-blue-600'>
+													{inviteCode}
+												</span>
+												<button
+													onClick={() => copyToClipboard(inviteCode)}
+													className='ml-2 text-blue-600 hover:text-blue-800'
+												>
+													<FaClone />
+												</button>
+											</>
+										) : (
+											<BigBlueButton onClick={() => generateInviteCode(false)}>
+												Generate Code
+											</BigBlueButton>
+										)}
+									</div>
 								</div>
 							</div>
 							<div className='mb-4'>
-								<SmallTitle>Purchase New Seat</SmallTitle>
+								<SmallTitle>Purchase New Seat at Pro Tier</SmallTitle>
 								<div className='mt-2'>
 									<BigBlueButton
 										onClick={() => handlePurchaseSeat('TEAM_ONE_SEAT', token)}
 									>
-										Purchase One Seat
+										Purchase One Lifetime Seat (60% off)
 									</BigBlueButton>
 								</div>
 								<div className='mt-2'>
 									<p>
 										Currently you have {maxMembers} seat(s), and you have{' '}
-										{paidMembersCount} paid member(s). Purchase new seat to increase
-										the limit.
+										{paidMembersCount} paid member(s). Purchase new seat to
+										increase the limit.
+									</p>
+									<p className='text-green-600'>
+										New user will join as PRO Lifetime tier. The tier is originally priced at $278. You can add a team member with PRO tier at $99, this is 65% off. 
 									</p>
 								</div>
 							</div>

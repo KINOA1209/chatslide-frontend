@@ -97,14 +97,14 @@ export default class TeamService {
     }
   }
 
-  static async generateInviteCode(teamId: string, disable: boolean, token: string) {
+  static async generateInviteCode(teamId: string, disable: boolean, isFree: boolean, token: string) {
     const response = await fetch('/api/team/invite', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ team_id: teamId, disable }),
+      body: JSON.stringify({ team_id: teamId, disable, is_free: isFree }),
     });
 
     if (response.ok) {

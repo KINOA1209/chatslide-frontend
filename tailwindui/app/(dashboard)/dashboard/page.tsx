@@ -143,14 +143,14 @@ export default function Dashboard() {
     const surveyFinished = await UserService.checkSurveyFinished(token);
     if (!surveyFinished) {
       setShowSurvey(true);
-    } else if (rendered && projects.length === 0) {
-      router.push('/type-choice');
-    }
+    } else if (rendered && projects.length === 0 && !isTeamMode) {
+			router.push('/type-choice');
+		}
   };
 
   const handleCloseSurvey = () => {
     setShowSurvey(false);
-    if (rendered && projects.length === 0) {
+    if (rendered && projects.length === 0 && !isTeamMode) {
       router.push('/type-choice');
     }
   };
