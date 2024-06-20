@@ -24,14 +24,16 @@ export const DOCUMENT_EXTENSIONS = [
 	'mp3',
 	'wav',
 	'm4a',
-  'png',
-  'jpg'
+	'png',
+	'jpg',
 ];
+export const PPTX_EXTENSION = ['pptx'];
+export const THEMEPAGE_EXTENSIONs = [...MEDIA_EXTENSIONS, ...PPTX_EXTENSION];
 export const ALL_EXTENSIONS = [...MEDIA_EXTENSIONS, ...DOCUMENT_EXTENSIONS];
 
 const determineSupportedFormats = (pageInvoked: string) => {
 	if (pageInvoked === 'theme') {
-		return MEDIA_EXTENSIONS;
+		return THEMEPAGE_EXTENSIONs;
 	} else if (pageInvoked === 'summary') {
 		return DOCUMENT_EXTENSIONS;
 	}
