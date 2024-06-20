@@ -20,7 +20,7 @@ import { Rnd } from 'react-rnd';
 import { ResourceIcon } from './ui/ResourceItem';
 import { FiUploadCloud } from 'react-icons/fi';
 
-import ImagePosition from '@/types/Position';
+import Position from '@/types/Position';
 import {
 	initializeImageData,
 	onDragStart,
@@ -85,7 +85,7 @@ interface ImgModuleProp {
 	// isImgEditMode: boolean;
 	// setShowImgButton: React.Dispatch<React.SetStateAction<boolean>>;
 	// zoomLevel: number;
-	image_positions: ImagePosition[];
+	image_positions: Position[];
 	layoutElements?: LayoutElements;
 	customImageStyle?: React.CSSProperties;
 	setImgHigherZIndex?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -1221,7 +1221,7 @@ export const ImgModule = ({
 	const [hasInteracted, setHasInteracted] = useState(false);
 	const [imagesDimensions, setImagesDimensions] = useState<
 		(
-			| ImagePosition
+			| Position
 			| { x?: number; y?: number; height?: number; width?: number }
 		)[]
 	>([]);

@@ -1,14 +1,14 @@
-import ImagePosition from '@/types/Position';
+import Position from '@/types/Position';
 
 export const initializeImageData = (
 	image_positions: Array<ImagePosition | {}>,
 	refs: React.RefObject<HTMLElement>[],
-): ImagePosition[] => {
+): Position[] => {
 	const positions = image_positions || [{}, {}, {}];
 	return positions.map((pos, index) => {
 		if (pos && Object.keys(pos).length !== 0) {
 			// If position data is available, use it directly
-			return pos as ImagePosition;
+			return pos as Position;
 		} else {
 			return {};
 		}
@@ -20,7 +20,7 @@ export const onMouseLeave =
 	(
 		slideIdx: number,
 		imagesDimensions: (
-			| ImagePosition
+			| Position
 			| { x?: number; y?: number; height?: number; width?: number }
 		)[],
 		hasInteracted: boolean,
@@ -61,13 +61,13 @@ export const onDragStart =
 export const onDragStop =
 	(
 		imagesDimensions: (
-			| ImagePosition
+			| Position
 			| { x?: number; y?: number; height?: number; width?: number }
 		)[],
 		setImagesDimensions: React.Dispatch<
 			React.SetStateAction<
 				(
-					| ImagePosition
+					| Position
 					| { x?: number; y?: number; height?: number; width?: number }
 				)[]
 			>
@@ -113,13 +113,13 @@ export const onResizeStart =
 export const onResizeStop =
 	(
 		imagesDimensions: (
-			| ImagePosition
+			| Position
 			| { x?: number; y?: number; height?: number; width?: number }
 		)[],
 		setImagesDimensions: React.Dispatch<
 			React.SetStateAction<
 				(
-					| ImagePosition
+					| Position
 					| { x?: number; y?: number; height?: number; width?: number }
 				)[]
 			>

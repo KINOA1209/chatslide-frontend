@@ -30,7 +30,7 @@ import { layoutOptions } from './slideLayout';
 import Image from 'next/image';
 import { Media, SlideKeys } from '@/models/Slide';
 import Chart from '@/models/Chart';
-import ImagePosition from '@/types/Position';
+import Position from '@/types/Position';
 
 import { ThemeElements } from './templates_customizable_elements/theme_elements';
 import { LayoutElements } from './templates_customizable_elements/layout_elements';
@@ -267,7 +267,7 @@ export interface MainSlideProps {
 	update_callback: (
 		imgs: string[],
 		ischart: boolean[],
-		image_positions: ImagePosition[],
+		image_positions: Position[],
 		embed_code: string[],
 		media_types: Media[],
 	) => void;
@@ -283,7 +283,7 @@ export interface MainSlideProps {
 	ischarts: boolean[];
 	handleSlideEdit: Function;
 	currentSlideIndex: number;
-	image_positions: ImagePosition[];
+	image_positions: Position[];
 	palette?: PaletteKeys;
 	template?: TemplateKeys;
 	themeElements: ThemeElements;

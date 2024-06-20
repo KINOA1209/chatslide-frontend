@@ -24,7 +24,7 @@ import { useLocalImgs } from './slideTemplates';
 import { ThemeElements } from './templates_customizable_elements/theme_elements';
 // import { LayoutElements } from './templates_customizable_elements/layout_elements';
 import { LayoutElements } from '@/components/slides/templates_customizable_elements/layout_elements';
-import ImagePosition from '@/types/Position';
+import Position from '@/types/Position';
 import { useSlides } from '@/hooks/use-slides';
 import ResizeSlider from './drag_resize/resize_slider';
 import '@/components/slides/drag_resize/dragAndResizeCSS.css';
@@ -403,7 +403,7 @@ export const Cover_img_1_layout = ({
 		(
 			imgSrc: string,
 			ischart: boolean,
-			image_position: ImagePosition,
+			image_position: Position,
 			embed_code_single: string,
 			media_type: Media,
 		) => {
@@ -1473,7 +1473,7 @@ export const Col_2_img_1_layout = ({
 		(
 			imgSrc: string,
 			ischart: boolean,
-			image_position: ImagePosition,
+			image_position: Position,
 			embed_code_single: string,
 			media_type: Media,
 		) => {
@@ -1721,7 +1721,7 @@ export const Col_1_img_1_layout = ({
 		(
 			imgSrc: string,
 			ischart: boolean,
-			image_position: ImagePosition,
+			image_position: Position,
 			embed_code_single: string,
 			media_type: Media,
 		) => {
@@ -1990,7 +1990,7 @@ export const Col_2_img_2_layout = ({
 		(
 			imgSrc: string,
 			ischart: boolean,
-			image_position: ImagePosition,
+			image_position: Position,
 			embed_code_single: string,
 			media_type: Media,
 		) => {
@@ -2423,7 +2423,7 @@ export const Col_3_img_3_layout = ({
 		(
 			imgSrc: string,
 			ischart: boolean,
-			image_position: ImagePosition,
+			image_position: Position,
 			embed_code_single: string,
 			media_type: Media,
 		) => {
@@ -2945,7 +2945,7 @@ export const Full_img_only_layout = ({
 		(
 			imgSrc: string,
 			ischart: boolean,
-			image_position: ImagePosition,
+			image_position: Position,
 			embed_code_single: string,
 			media_type: Media,
 		) => {

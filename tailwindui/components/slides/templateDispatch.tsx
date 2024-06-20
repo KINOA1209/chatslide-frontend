@@ -20,7 +20,7 @@ import { TemplatesLogos } from './templates_customizable_elements/Templates_logo
 import { isHTML } from '@/components/slides/quillEditorSlide';
 import { TemplateKeys } from '@/components/slides/slideTemplates';
 import Chart, { Group } from '@/models/Chart';
-import ImagePosition from '@/types/Position';
+import Position from '@/types/Position';
 import { lightColorPalette, darkColorPalette } from './palette';
 import { useSlides } from '@/hooks/use-slides';
 import '@/components/socialPost/quillEditor.scss';
@@ -62,7 +62,7 @@ export const templateDispatch = (
 	) => (
 		urls: string[],
 		ischart: boolean[],
-		image_positions: ImagePosition[],
+		image_positions: Position[],
 		embed_code: string[],
 		media_types: Media[],
 	) => void = () => () => {}, // Replace with your default function if you have one

@@ -1,6 +1,6 @@
 import { ThemeObject } from '@/components/socialPost/socialPostThemeChanger';
 import Chart, { Group } from '@/models/Chart';
-import ImagePosition from '../types/ImagePosition';
+import Position from '@/types/Position';
 import {
 	SocialPostLayoutKeys,
 	SocialPostTemplateKeys,
@@ -81,7 +81,7 @@ export class SocialPostSlide {
 	source: string;
 	theme: ThemeObject;
 	template_theme: SocialPostTemplateKeys;
-	image_positions: ImagePosition[];
+	image_positions: Position[];
 	chart: Chart[];
 	is_chart: boolean[];
 	layout: SocialPostLayoutKeys; // new

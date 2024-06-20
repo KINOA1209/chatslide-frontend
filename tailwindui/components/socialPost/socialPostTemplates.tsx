@@ -11,7 +11,7 @@ import { h5Style } from './Styles';
 import 'quill/dist/quill.bubble.css';
 import '@/components/socialPost/quillEditor.scss';
 import Chart from '@/models/Chart';
-import ImagePosition from '@/types/Position';
+import Position from '@/types/Position';
 import { useSocialPosts } from '@/hooks/use-socialpost';
 import '@/components/socialPost/socialPostCustomFonts.css';
 import { getBrand } from '@/utils/getHost';
@@ -48,7 +48,7 @@ interface MainSlidePropsSocialPost {
 	update_callback: (
 		imgs: string[],
 		ischart: boolean[],
-		image_positions: ImagePosition[],
+		image_positions: Position[],
 	) => void;
 	canEdit: boolean;
 	//autoSave: Function;
@@ -59,7 +59,7 @@ interface MainSlidePropsSocialPost {
 	topic: JSX.Element;
 	charts: Chart[];
 	ischarts: boolean[];
-	image_positions: ImagePosition[];
+	image_positions: Position[];
 	handleSlideEdit: Function;
 	layoutElements: SocialPostLayoutElements;
 	themeElements: SocialPostThemeElements;
@@ -214,7 +214,7 @@ export const First_page_img_1_casual_topic = ({
 	// });
 	const updateImgAtIndex =
 		(index: number) =>
-		(imgSrc: string, ischart: boolean, image_position: ImagePosition) => {
+		(imgSrc: string, ischart: boolean, image_position: Position) => {
 			const newImgs = [...imgs];
 			if (index >= newImgs.length) newImgs.push(imgSrc);
 			else newImgs[index] = imgSrc;
@@ -534,7 +534,7 @@ export const Col_2_img_1_left_casual_topic = ({
 }: MainSlidePropsSocialPost) => {
 	const updateImgAtIndex =
 		(index: number) =>
-		(imgSrc: string, ischart: boolean, image_position: ImagePosition) => {
+		(imgSrc: string, ischart: boolean, image_position: Position) => {
 			const newImgs = [...imgs];
 			if (index >= newImgs.length) newImgs.push(imgSrc);
 			else newImgs[index] = imgSrc;
@@ -674,7 +674,7 @@ export const Col_2_img_1_Right_casual_topic = ({
 }: MainSlidePropsSocialPost) => {
 	const updateImgAtIndex =
 		(index: number) =>
-		(imgSrc: string, ischart: boolean, image_position: ImagePosition) => {
+		(imgSrc: string, ischart: boolean, image_position: Position) => {
 			const newImgs = [...imgs];
 			if (index >= newImgs.length) newImgs.push(imgSrc);
 			else newImgs[index] = imgSrc;
@@ -821,7 +821,7 @@ export const First_page_img_1_serious_subject = ({
 }: MainSlidePropsSocialPost) => {
 	const updateImgAtIndex =
 		(index: number) =>
-		(imgSrc: string, ischart: boolean, image_position: ImagePosition) => {
+		(imgSrc: string, ischart: boolean, image_position: Position) => {
 			const newImgs = [...imgs];
 			if (index >= newImgs.length) newImgs.push(imgSrc);
 			else newImgs[index] = imgSrc;
@@ -1025,7 +1025,7 @@ export const First_page_img_1_reading_notes = ({
 }: MainSlidePropsSocialPost) => {
 	const updateImgAtIndex =
 		(index: number) =>
-		(imgSrc: string, ischart: boolean, image_position: ImagePosition) => {
+		(imgSrc: string, ischart: boolean, image_position: Position) => {
 			const newImgs = [...illustration];
 			if (index >= newImgs.length) newImgs.push(imgSrc);
 			else newImgs[index] = imgSrc;
@@ -1224,7 +1224,7 @@ export const Col_1_img_0_reading_notes = ({
 }: MainSlidePropsSocialPost) => {
 	const updateImgAtIndex =
 		(index: number) =>
-		(imgSrc: string, ischart: boolean, image_position: ImagePosition) => {
+		(imgSrc: string, ischart: boolean, image_position: Position) => {
 			const newImgs = [...illustration];
 			if (index >= newImgs.length) newImgs.push(imgSrc);
 			else newImgs[index] = imgSrc;
@@ -1383,7 +1383,7 @@ export const Col_1_img_1_reading_notes = ({
 }: MainSlidePropsSocialPost) => {
 	const updateImgAtIndex =
 		(index: number) =>
-		(imgSrc: string, ischart: boolean, image_position: ImagePosition) => {
+		(imgSrc: string, ischart: boolean, image_position: Position) => {
 			const newImgs = [...illustration];
 			if (index >= newImgs.length) newImgs.push(imgSrc);
 			else newImgs[index] = imgSrc;
