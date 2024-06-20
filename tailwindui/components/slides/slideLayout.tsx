@@ -295,6 +295,7 @@ export const Cover_img_0_layout = ({
 	themeElements,
 	layoutElements,
 	templateLogo,
+	title_position,
 }: MainSlideProps) => {
 	// useEffect(() => {
 	// 	console.log('LayoutElements canvaCSS:', layoutElements.canvaCSS);
@@ -340,6 +341,8 @@ export const Cover_img_0_layout = ({
 						type={ElementType.TextEdit}
 						zindex={60}
 						canEdit={canEdit}
+						positions={[title_position]}
+						contentIndex={0}
 					>
 						{title}
 					</DragElement>
@@ -377,6 +380,7 @@ export const Cover_img_0_layout = ({
 export const Cover_img_1_layout = ({
 	user_name,
 	title,
+	title_position,
 	topic,
 	subtopic,
 	content,
@@ -395,6 +399,7 @@ export const Cover_img_1_layout = ({
 	handleSlideEdit,
 	currentSlideIndex,
 	image_positions,
+	image_container_positions,
 	embed_code,
 	media_types,
 }: MainSlideProps) => {
@@ -477,6 +482,8 @@ export const Cover_img_1_layout = ({
 						type={ElementType.TextEdit}
 						zindex={60}
 						canEdit={canEdit}
+						positions={[title_position]}
+						contentIndex={0}
 					>
 						{title}
 					</DragElement>
@@ -491,6 +498,8 @@ export const Cover_img_1_layout = ({
 					type={ElementType.ImageView}
 					zindex={imgHigherZIndex ? 100 : 20}
 					canEdit={canEdit}
+					positions={image_container_positions}
+					contentIndex={0}
 				>
 					<ImgModule
 						imgsrc={imgs?.[0]}
@@ -546,8 +555,11 @@ export const Col_1_img_0_layout = ({
 	user_name,
 	title,
 	topic,
+	topic_position,
 	subtopic,
+	subtopic_position,
 	content,
+	content_positions,
 	imgs,
 	update_callback,
 	canEdit,
@@ -634,6 +646,8 @@ export const Col_1_img_0_layout = ({
 							type={ElementType.TextEdit}
 							zindex={60}
 							canEdit={canEdit}
+							positions={[topic_position]}
+							contentIndex={0}
 						>
 							{topic}
 						</DragElement>
@@ -647,6 +661,8 @@ export const Col_1_img_0_layout = ({
 							type={ElementType.TextEdit}
 							zindex={60}
 							canEdit={canEdit}
+							positions={[subtopic_position]}
+							contentIndex={0}
 						>
 							{subtopic}
 						</DragElement>
@@ -672,6 +688,8 @@ export const Col_1_img_0_layout = ({
 							type={ElementType.TextEdit}
 							zindex={60}
 							canEdit={canEdit}
+							positions={content_positions}
+							contentIndex={0}
 						>
 							{content}
 						</DragElement>
@@ -720,8 +738,11 @@ export const Col_2_img_0_layout = ({
 	user_name,
 	title,
 	topic,
+	topic_position,
 	subtopic,
+	subtopic_position,
 	content,
+	content_positions,
 	imgs,
 	update_callback,
 	canEdit,
@@ -804,6 +825,8 @@ export const Col_2_img_0_layout = ({
 							type={ElementType.TextEdit}
 							zindex={60}
 							canEdit={canEdit}
+							positions={[topic_position]}
+							contentIndex={0}
 						>
 							{topic}
 						</DragElement>
@@ -813,6 +836,8 @@ export const Col_2_img_0_layout = ({
 							type={ElementType.TextEdit}
 							zindex={60}
 							canEdit={canEdit}
+							positions={[subtopic_position]}
+							contentIndex={0}
 						>
 							{subtopic}
 						</DragElement>
@@ -898,6 +923,8 @@ export const Col_2_img_0_layout = ({
 											type={ElementType.TextEdit}
 											zindex={60}
 											canEdit={canEdit}
+											positions={content_positions}
+											contentIndex={0}
 										>
 											{item}
 										</DragElement>
@@ -980,6 +1007,8 @@ export const Col_2_img_0_layout = ({
 											type={ElementType.TextEdit}
 											zindex={60}
 											canEdit={canEdit}
+											positions={content_positions}
+											contentIndex={1}
 										>
 											{item}
 										</DragElement>
@@ -1022,8 +1051,11 @@ export const Col_3_img_0_layout = ({
 	user_name,
 	title,
 	topic,
+	topic_position,
 	subtopic,
+	subtopic_position,
 	content,
+	content_positions,
 	imgs,
 	update_callback,
 	canEdit,
@@ -1119,6 +1151,8 @@ export const Col_3_img_0_layout = ({
 							type={ElementType.TextEdit}
 							zindex={60}
 							canEdit={canEdit}
+							positions={[topic_position]}
+							contentIndex={0}
 						>
 							{topic}
 						</DragElement>
@@ -1128,6 +1162,8 @@ export const Col_3_img_0_layout = ({
 							type={ElementType.TextEdit}
 							zindex={60}
 							canEdit={canEdit}
+							positions={[subtopic_position]}
+							contentIndex={0}
 						>
 							{subtopic}
 						</DragElement>
@@ -1215,6 +1251,8 @@ export const Col_3_img_0_layout = ({
 											type={ElementType.TextEdit}
 											zindex={60}
 											canEdit={canEdit}
+											positions={content_positions}
+											contentIndex={0}
 										>
 											{item}
 										</DragElement>
@@ -1327,6 +1365,8 @@ export const Col_3_img_0_layout = ({
 											type={ElementType.TextEdit}
 											zindex={60}
 											canEdit={canEdit}
+											positions={content_positions}
+											contentIndex={1}
 										>
 											{item}
 										</DragElement>
@@ -1408,6 +1448,8 @@ export const Col_3_img_0_layout = ({
 											type={ElementType.TextEdit}
 											zindex={60}
 											canEdit={canEdit}
+											positions={content_positions}
+											contentIndex={2}
 										>
 											{item}
 										</DragElement>
@@ -1449,8 +1491,11 @@ export const Col_2_img_1_layout = ({
 	user_name,
 	title,
 	topic,
+	topic_position,
 	subtopic,
+	subtopic_position,
 	content,
+	content_positions,
 	imgs,
 	update_callback,
 	canEdit,
@@ -1465,6 +1510,7 @@ export const Col_2_img_1_layout = ({
 	handleSlideEdit,
 	currentSlideIndex,
 	image_positions,
+	image_container_positions,
 	embed_code,
 	media_types,
 }: MainSlideProps) => {
@@ -1583,6 +1629,8 @@ export const Col_2_img_1_layout = ({
 							type={ElementType.TextEdit}
 							zindex={60}
 							canEdit={canEdit}
+							positions={[topic_position]}
+							contentIndex={0}
 						>
 							{topic}
 						</DragElement>
@@ -1596,6 +1644,8 @@ export const Col_2_img_1_layout = ({
 							type={ElementType.TextEdit}
 							zindex={60}
 							canEdit={canEdit}
+							positions={[subtopic_position]}
+							contentIndex={0}
 						>
 							{subtopic}
 						</DragElement>
@@ -1625,6 +1675,8 @@ export const Col_2_img_1_layout = ({
 								type={ElementType.TextEdit}
 								zindex={60}
 								canEdit={canEdit}
+								positions={content_positions}
+								contentIndex={0}
 							>
 								{content}
 							</DragElement>
@@ -1644,6 +1696,8 @@ export const Col_2_img_1_layout = ({
 					type={ElementType.ImageView}
 					zindex={imgHigherZIndex ? 100 : 20}
 					canEdit={canEdit}
+					positions={content_positions}
+					contentIndex={0}
 				>
 					<ImgModule
 						imgsrc={imgs?.[0]}
@@ -1697,8 +1751,11 @@ export const Col_1_img_1_layout = ({
 	user_name,
 	title,
 	topic,
+	topic_position,
 	subtopic,
+	subtopic_position,
 	content,
+	content_positions,
 	imgs,
 	update_callback,
 	canEdit,
@@ -1713,6 +1770,7 @@ export const Col_1_img_1_layout = ({
 	handleSlideEdit,
 	currentSlideIndex,
 	image_positions,
+	image_container_positions,
 	embed_code,
 	media_types,
 }: MainSlideProps) => {
@@ -1831,6 +1889,8 @@ export const Col_1_img_1_layout = ({
 							type={ElementType.TextEdit}
 							zindex={60}
 							canEdit={canEdit}
+							positions={[topic_position]}
+							contentIndex={0}
 						>
 							{topic}
 						</DragElement>
@@ -1840,6 +1900,8 @@ export const Col_1_img_1_layout = ({
 							type={ElementType.TextEdit}
 							zindex={60}
 							canEdit={canEdit}
+							positions={[subtopic_position]}
+							contentIndex={0}
 						>
 							{subtopic}
 						</DragElement>
@@ -1860,6 +1922,8 @@ export const Col_1_img_1_layout = ({
 						type={ElementType.ImageView}
 						zindex={imgHigherZIndex ? 100 : 20}
 						canEdit={canEdit}
+						positions={image_container_positions}
+						contentIndex={0}
 					>
 						<ImgModule
 							imgsrc={imgs?.[0]}
@@ -1917,6 +1981,8 @@ export const Col_1_img_1_layout = ({
 							type={ElementType.TextEdit}
 							zindex={60}
 							canEdit={canEdit}
+							positions={content_positions}
+							contentIndex={0}
 						>
 							{content}
 						</DragElement>
@@ -1966,8 +2032,11 @@ export const Col_2_img_2_layout = ({
 	user_name,
 	title,
 	topic,
+	topic_position,
 	subtopic,
+	subtopic_position,
 	content,
+	content_positions,
 	imgs,
 	update_callback,
 	canEdit,
@@ -1982,6 +2051,7 @@ export const Col_2_img_2_layout = ({
 	handleSlideEdit,
 	currentSlideIndex,
 	image_positions,
+	image_container_positions,
 	embed_code,
 	media_types,
 }: MainSlideProps) => {
@@ -2138,6 +2208,8 @@ export const Col_2_img_2_layout = ({
 							type={ElementType.TextEdit}
 							zindex={60}
 							canEdit={canEdit}
+							positions={[topic_position]}
+							contentIndex={0}
 						>
 							{topic}
 						</DragElement>
@@ -2147,6 +2219,8 @@ export const Col_2_img_2_layout = ({
 							type={ElementType.TextEdit}
 							zindex={60}
 							canEdit={canEdit}
+							positions={[subtopic_position]}
+							contentIndex={0}
 						>
 							{subtopic}
 						</DragElement>
@@ -2179,6 +2253,8 @@ export const Col_2_img_2_layout = ({
 							type={ElementType.ImageView}
 							zindex={imgHigherZIndex ? 100 : 20}
 							canEdit={canEdit}
+							positions={image_container_positions}
+							contentIndex={0}
 						>
 							<ImgModule
 								imgsrc={imgs?.[0]}
@@ -2218,6 +2294,8 @@ export const Col_2_img_2_layout = ({
 							type={ElementType.ImageView}
 							zindex={imgHigherZIndex ? 100 : 20}
 							canEdit={canEdit}
+							positions={image_container_positions}
+							contentIndex={1}
 						>
 							<ImgModule
 								imgsrc={imgs?.[1]}
@@ -2302,6 +2380,8 @@ export const Col_2_img_2_layout = ({
 											type={ElementType.TextEdit}
 											zindex={60}
 											canEdit={canEdit}
+											positions={content_positions}
+											contentIndex={0}
 										>
 											{item}
 										</DragElement>
@@ -2359,6 +2439,8 @@ export const Col_2_img_2_layout = ({
 											type={ElementType.TextEdit}
 											zindex={60}
 											canEdit={canEdit}
+											positions={content_positions}
+											contentIndex={1}
 										>
 											{item}
 										</DragElement>
@@ -2399,8 +2481,11 @@ export const Col_3_img_3_layout = ({
 	user_name,
 	title,
 	topic,
+	topic_position,
 	subtopic,
+	subtopic_position,
 	content,
+	content_positions,
 	imgs,
 	update_callback,
 	canEdit,
@@ -2415,6 +2500,7 @@ export const Col_3_img_3_layout = ({
 	handleSlideEdit,
 	currentSlideIndex,
 	image_positions,
+	image_container_positions,
 	embed_code,
 	media_types,
 }: MainSlideProps) => {
@@ -2534,6 +2620,8 @@ export const Col_3_img_3_layout = ({
 							type={ElementType.TextEdit}
 							zindex={60}
 							canEdit={canEdit}
+							positions={[topic_position]}
+							contentIndex={0}
 						>
 							{topic}
 						</DragElement>
@@ -2543,6 +2631,8 @@ export const Col_3_img_3_layout = ({
 							type={ElementType.TextEdit}
 							zindex={60}
 							canEdit={canEdit}
+							positions={[subtopic_position]}
+							contentIndex={0}
 						>
 							{subtopic}
 						</DragElement>
@@ -2564,6 +2654,8 @@ export const Col_3_img_3_layout = ({
 							type={ElementType.ImageView}
 							zindex={imgHigherZIndex ? 100 : 20}
 							canEdit={canEdit}
+							positions={image_container_positions}
+							contentIndex={0}
 						>
 							<ImgModule
 								imgsrc={imgs?.[0]}
@@ -2594,6 +2686,8 @@ export const Col_3_img_3_layout = ({
 							type={ElementType.ImageView}
 							zindex={imgHigherZIndex ? 100 : 20}
 							canEdit={canEdit}
+							positions={image_container_positions}
+							contentIndex={1}
 						>
 							<ImgModule
 								imgsrc={imgs?.[1]}
@@ -2624,6 +2718,8 @@ export const Col_3_img_3_layout = ({
 							type={ElementType.ImageView}
 							zindex={imgHigherZIndex ? 100 : 20}
 							canEdit={canEdit}
+							positions={image_container_positions}
+							contentIndex={2}
 						>
 							<ImgModule
 								imgsrc={imgs?.[2]}
@@ -2765,6 +2861,8 @@ export const Col_3_img_3_layout = ({
 											type={ElementType.TextEdit}
 											zindex={60}
 											canEdit={canEdit}
+											positions={content_positions}
+											contentIndex={0}
 										>
 											{item}
 										</DragElement>
@@ -2822,6 +2920,8 @@ export const Col_3_img_3_layout = ({
 											type={ElementType.TextEdit}
 											zindex={60}
 											canEdit={canEdit}
+											positions={content_positions}
+											contentIndex={1}
 										>
 											{item}
 										</DragElement>
@@ -2880,6 +2980,8 @@ export const Col_3_img_3_layout = ({
 											type={ElementType.TextEdit}
 											zindex={60}
 											canEdit={canEdit}
+											positions={content_positions}
+											contentIndex={2}
 										>
 											{item}
 										</DragElement>
@@ -2937,6 +3039,7 @@ export const Full_img_only_layout = ({
 	handleSlideEdit,
 	currentSlideIndex,
 	image_positions,
+	image_container_positions,
 	embed_code,
 	media_types,
 }: MainSlideProps) => {
@@ -3008,6 +3111,8 @@ export const Full_img_only_layout = ({
 						type={ElementType.ImageView}
 						zindex={imgHigherZIndex ? 100 : 20}
 						canEdit={canEdit}
+						positions={image_container_positions}
+						contentIndex={0}
 					>
 						<ImgModule
 							imgsrc={imgs?.[0]}

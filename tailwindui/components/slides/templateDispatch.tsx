@@ -410,18 +410,21 @@ export const templateDispatch = (
 				},
 				false,
 			)}
+			title_position={slide.head_position || {}}
 			topic={generateContentElement(
 				slide.title,
 				'title',
 				themeElements.titleFontCSS,
 				false,
 			)}
+			topic_position={slide.title_position || {}}
 			subtopic={generateContentElement(
 				slide.subtopic,
 				'subtopic',
 				themeElements.subtopicFontCSS,
 				false,
 			)}
+			subtopic_position={slide.subtopic_position || {}}
 			content={
 				slide.layout === 'Col_1_img_0_layout' ||
 				slide.layout === 'Col_2_img_1_layout' ||
@@ -467,6 +470,7 @@ export const templateDispatch = (
 							</div>
 						))
 			}
+			content_positions={slide.content_positions || {}}
 			imgs={slide.images as string[]}
 			update_callback={updateImgUrlArray(index)}
 			isCoverPage={isCoverPage}
@@ -490,6 +494,7 @@ export const templateDispatch = (
 			handleSlideEdit={handleSlideEdit}
 			currentSlideIndex={index}
 			image_positions={slide.image_positions || [{}, {}, {}]}
+			image_container_positions={slide.image_container_positions || [{}, {}, {}]}
 			palette={slide.palette}
 			template={slide.template}
 			themeElements={themeElements}

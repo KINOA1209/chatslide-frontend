@@ -1,3 +1,4 @@
+import Position from '@/types/Position';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
 import { TbDragDrop2, TbRefresh } from 'react-icons/tb';
@@ -13,6 +14,8 @@ interface DragElementProps {
 	type: ElementType;
 	zindex: number;
 	canEdit: boolean;
+	positions: Position[];
+	contentIndex: number;
 }
 
 export const DragElement = ({
@@ -20,10 +23,27 @@ export const DragElement = ({
 	type,
 	zindex,
 	canEdit,
+	positions,
+	contentIndex,
 }: DragElementProps) => {
 	const [isDragDisable, setIsDragDisable] = useState<boolean>(true);
 	const [isOverHandler, setIsOverHandler] = useState<boolean>(false);
-	const [position, setPosition] = useState({ x: 0, y: 0 });
+	const [position, setPosition] = useState({
+		x: positions[contentIndex].x ? Number(positions[contentIndex].x) : 0,
+		y: positions[contentIndex].y ? Number(positions[contentIndex].y) : 0,
+	});
+	const [size, setSize] = useState({
+		width: positions[contentIndex].width
+			? positions[contentIndex].width === -1
+				? 'max-content'
+				: Number(positions[contentIndex].width)
+			: 'max-content',
+		height: positions[contentIndex].height
+			? positions[contentIndex].height === -1
+				? 'max-content'
+				: Number(positions[contentIndex].height)
+			: 'max-content',
+	});
 
 	const handleDragStart = (e: any) => {
 		if (isDragDisable) {
@@ -94,6 +114,17 @@ export const DragElement = ({
 		setPosition({ x: data.x, y: data.y });
 	};
 
+	const handleOnResize = (
+		e: any,
+		direction: any,
+		ref: any,
+		delta: any,
+		pos: any,
+	) => {
+		console.log(e, direction, ref, delta, pos);
+		setSize({width: ref.style.width, height: ref.style.height});
+	};
+
 	useEffect(() => {
 		document.addEventListener('mouseup', dropHandler);
 	}, []);
@@ -145,10 +176,11 @@ export const DragElement = ({
 						</div>
 						<Rnd
 							className='ResizableElement w-full h-full'
-							size={{ width: 'max-content', height: 'max-content' }}
+							size={size}
 							style={{ position: 'relative' }}
 							lockAspectRatio={false}
 							disableDragging={true}
+							onResize={handleOnResize}
 							resizeHandleStyles={
 								isVisible
 									? {

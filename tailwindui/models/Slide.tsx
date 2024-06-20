@@ -60,15 +60,20 @@ export type LogoPosition =
 
 export default class Slide {
 	head: string;
+	head_position: Position;
 	title: string;
+	title_position: Position;
 	subtopic: string;
+	subtopic_position: Position;
 	userName: string;
 	template: TemplateKeys;
 	content: string[];
+	content_positions: Position[];
 	is_chart: boolean[]; // deprecated, if is_chart[i] is false, then use image[i] for visualization, else use chart[i]
 	media_types: Media[]; // use this instead of is_chart
 	images: string[]; // urls of images
 	image_positions: Position[];
+	image_container_positions: Position[];
 	chart: Chart[]; // data of charts
 	layout: LayoutKeys;
 	embed_code?: string[];
@@ -98,14 +103,22 @@ export default class Slide {
 		};
 
 		this.head = '';
+		this.head_position = { x: 0, y: 0, width: -1, height: -1 };
 		this.title = 'New Slide';
+		this.title_position = { x: 0, y: 0, width: -1, height: -1 };
 		this.subtopic = 'New Slide';
+		this.subtopic_position = { x: 0, y: 0, width: -1, height: -1 };
 		this.userName = '';
 		this.template = 'Default';
 		this.content = [
 			'You can edit this text',
 			'You can also ask AI Assistant to generate content for you',
 			'AI Assistant is at bottom right corner of the screen',
+		];
+		this.content_positions = [
+			{ x: 0, y: 0, width: -1, height: -1 },
+			{ x: 0, y: 0, width: -1, height: -1 },
+			{ x: 0, y: 0, width: -1, height: -1 },
 		];
 		this.is_chart = [false, false, false];
 		this.images = ['', '', ''];
@@ -117,6 +130,11 @@ export default class Slide {
 			axis: { x: '', y: '' },
 		}));
 		this.image_positions = [{}, {}, {}];
+		this.image_container_positions = [
+			{ x: 0, y: 0, width: -1, height: -1 },
+			{ x: 0, y: 0, width: -1, height: -1 },
+			{ x: 0, y: 0, width: -1, height: -1 },
+		];
 		this.layout = 'Col_2_img_1_layout';
 		this.logo = 'Default';
 		this.additional_images = [];
