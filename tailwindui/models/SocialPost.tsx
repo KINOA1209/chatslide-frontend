@@ -1,6 +1,6 @@
 import { ThemeObject } from '@/components/socialPost/socialPostThemeChanger';
 import Chart, { Group } from '@/models/Chart';
-import ImagePosition from './ImagePosition';
+import ImagePosition from '../types/ImagePosition';
 import {
 	SocialPostLayoutKeys,
 	SocialPostTemplateKeys,

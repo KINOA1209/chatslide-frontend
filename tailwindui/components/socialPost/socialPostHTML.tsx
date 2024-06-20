@@ -30,7 +30,7 @@ import { useProject } from '@/hooks/use-project';
 import { useUser } from '@/hooks/use-user';
 import { SocialPostSlide, SlideKeys } from '@/models/SocialPost';
 import { useSocialPosts } from '@/hooks/use-socialpost';
-import ImagePosition from '@/models/ImagePosition';
+import ImagePosition from '@/types/Position';
 import Chart from '@/models/Chart';
 import { ToolBar } from '../ui/ToolBar';
 import ShareButton from '@/components/button/ShareButton';

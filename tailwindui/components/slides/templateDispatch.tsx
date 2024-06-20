@@ -20,7 +20,7 @@ import { TemplatesLogos } from './templates_customizable_elements/Templates_logo
 import { isHTML } from '@/components/slides/quillEditorSlide';
 import { TemplateKeys } from '@/components/slides/slideTemplates';
 import Chart, { Group } from '@/models/Chart';
-import ImagePosition from '@/models/ImagePosition';
+import ImagePosition from '@/types/Position';
 import { lightColorPalette, darkColorPalette } from './palette';
 import { useSlides } from '@/hooks/use-slides';
 import '@/components/socialPost/quillEditor.scss';

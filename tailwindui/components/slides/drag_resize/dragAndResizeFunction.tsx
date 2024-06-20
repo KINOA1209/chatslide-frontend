@@ -1,4 +1,4 @@
-import ImagePosition from '@/models/ImagePosition';
+import ImagePosition from '@/types/Position';
 
 export const initializeImageData = (
 	image_positions: Array<ImagePosition | {}>,

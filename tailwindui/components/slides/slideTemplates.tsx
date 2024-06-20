@@ -30,7 +30,7 @@ import { layoutOptions } from './slideLayout';
 import Image from 'next/image';
 import { Media, SlideKeys } from '@/models/Slide';
 import Chart from '@/models/Chart';
-import ImagePosition from '@/models/ImagePosition';
+import ImagePosition from '@/types/Position';
 
 import { ThemeElements } from './templates_customizable_elements/theme_elements';
 import { LayoutElements } from './templates_customizable_elements/layout_elements';

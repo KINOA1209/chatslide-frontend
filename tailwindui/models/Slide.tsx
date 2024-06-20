@@ -1,7 +1,7 @@
 import { LayoutKeys } from '@/components/slides/slideLayout';
 import { PaletteKeys, TemplateKeys } from '@/components/slides/slideTemplates';
 import Chart, { Group } from '@/models/Chart';
-import ImagePosition from './ImagePosition';
+import ImagePosition from '@/types/Position';
 
 export interface SlideElement {
 	type: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'ul' | 'li' | 'br' | 'div';

@@ -20,7 +20,7 @@ import { Rnd } from 'react-rnd';
 import { ResourceIcon } from './ui/ResourceItem';
 import { FiUploadCloud } from 'react-icons/fi';
 
-import ImagePosition from '@/models/ImagePosition';
+import ImagePosition from '@/types/Position';
 import {
 	initializeImageData,
 	onDragStart,

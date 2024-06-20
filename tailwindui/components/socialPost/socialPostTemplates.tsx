@@ -11,7 +11,7 @@ import { h5Style } from './Styles';
 import 'quill/dist/quill.bubble.css';
 import '@/components/socialPost/quillEditor.scss';
 import Chart from '@/models/Chart';
-import ImagePosition from '@/models/ImagePosition';
+import ImagePosition from '@/types/Position';
 import { useSocialPosts } from '@/hooks/use-socialpost';
 import '@/components/socialPost/socialPostCustomFonts.css';
 import { getBrand } from '@/utils/getHost';

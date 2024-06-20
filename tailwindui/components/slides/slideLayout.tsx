@@ -24,7 +24,7 @@ import { useLocalImgs } from './slideTemplates';
 import { ThemeElements } from './templates_customizable_elements/theme_elements';
 // import { LayoutElements } from './templates_customizable_elements/layout_elements';
 import { LayoutElements } from '@/components/slides/templates_customizable_elements/layout_elements';
-import ImagePosition from '@/models/ImagePosition';
+import ImagePosition from '@/types/Position';
 import { useSlides } from '@/hooks/use-slides';
 import ResizeSlider from './drag_resize/resize_slider';
 import '@/components/slides/drag_resize/dragAndResizeCSS.css';

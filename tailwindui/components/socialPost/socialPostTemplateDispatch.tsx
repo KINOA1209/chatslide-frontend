@@ -13,7 +13,7 @@ import 'quill/dist/quill.bubble.css';
 import '@/components/socialPost/quillEditor.scss';
 import { SocialPostSlide, SlideKeys } from '@/models/SocialPost';
 import Chart, { Group } from '@/models/Chart';
-import ImagePosition from '@/models/ImagePosition';
+import ImagePosition from '@/types/Position';
 import { useProject } from '@/hooks/use-project';
 import SocialPostThemeConfigData, {
 	SocialPostThemeConfig,

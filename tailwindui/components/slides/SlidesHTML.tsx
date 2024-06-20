@@ -47,7 +47,7 @@ import ActionsToolBar from '../ui/ActionsToolBar';
 import { SlidesStatus, useSlides } from '@/hooks/use-slides';
 import useTourStore from '@/components/user_onboarding/TourStore';
 import Chart from '@/models/Chart';
-import ImagePosition from '@/models/ImagePosition';
+import ImagePosition from '@/types/Position';
 import { Panel } from '../layout/Panel';
 import { useProject } from '@/hooks/use-project';
 import ScriptWindow from '../script/ScriptWindow';
