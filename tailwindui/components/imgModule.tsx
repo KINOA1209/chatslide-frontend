@@ -1464,6 +1464,8 @@ export const ImgModule = ({
 	layoutEntry = Array.isArray(layoutEntry) ? layoutEntry[0] : layoutEntry;
 
 	// console.log('selected img url', selectedImg);
+	const [isClicked, setIsClicked] = useState<boolean>(false);
+	const [isMovement, setIsMovement] = useState<boolean>(false);
 
 	return (
 		<>
@@ -1755,9 +1757,19 @@ export const ImgModule = ({
 				<div
 					onDrop={handleImageDrop}
 					onDragOver={(e) => e.preventDefault()}
-					onClick={openModal}
+					// onClick={openModal}
 					onMouseDown={(e) => {
-						e.stopPropagation();
+						setIsClicked(true);
+					}}
+					onMouseMove={() => {
+						setIsMovement(isClicked);
+					}}
+					onMouseUp={() => {
+						if (!isMovement) {
+							openModal();
+						}
+						setIsClicked(false);
+						setIsMovement(false);
 					}}
 					className={`w-full h-full transition ease-in-out duration-150 relative ${
 						canEdit ? 'hover:bg-[#CAD0D3] cursor-pointer' : ''
@@ -1844,7 +1856,7 @@ export const ImgModule = ({
 							ref={imageRefs[currentContentIndex]}
 							onMouseEnter={() => setShowImgButton(true)}
 							onMouseLeave={() => setShowImgButton(false)}
-							onClick={openModal}
+							// onClick={openModal}
 						>
 							{!isSlide && isSocialPostTemp1Cover && (
 								<div
@@ -1967,6 +1979,12 @@ export const ImgModule = ({
 
 										<button
 											onClick={toggleImgEditMode}
+											onMouseDown={(e) => {
+												e.stopPropagation();
+											}}
+											onMouseUp={(e) => {
+												e.stopPropagation();
+											}}
 											className='flex flex-row items-center justify-center gap-1'
 										>
 											{!isImgEditMode ? (
@@ -2009,6 +2027,12 @@ export const ImgModule = ({
 														e.stopPropagation();
 														e.preventDefault();
 													}}
+													onMouseDown={(e) => {
+														e.stopPropagation();
+													}}
+													onMouseUp={(e) => {
+														e.stopPropagation();
+													}}
 												>
 													<LuTrash2
 														style={{
@@ -2030,6 +2054,12 @@ export const ImgModule = ({
 														onClick={(e) => {
 															updateSingleCallback('shuffle', false, {});
 															e.preventDefault();
+															e.stopPropagation();
+														}}
+														onMouseDown={(e) => {
+															e.stopPropagation();
+														}}
+														onMouseUp={(e) => {
 															e.stopPropagation();
 														}}
 													>
