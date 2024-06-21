@@ -584,11 +584,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			} else if (className === 'image_positions') {
 				currentSlide.image_positions = content as Position[];
 			} else if (className === 'title_position') {
-				currentSlide.head_position = content as Position;
+				currentSlide.head_position = (content as Position[])[0];
 			} else if (className === 'topic_position') {
-				currentSlide.title_position = content as Position;
+				currentSlide.title_position = (content as Position[])[0];
 			} else if (className === 'subtopic_position') {
-				currentSlide.subtopic_position = content as Position;
+				currentSlide.subtopic_position = (content as Position[])[0];
 			} else if (className === 'content_position') {
 				currentSlide.content_positions = content as Position[];
 			} else if (className === 'image_container_position') {
