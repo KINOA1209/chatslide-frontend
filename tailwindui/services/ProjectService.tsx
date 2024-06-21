@@ -296,6 +296,12 @@ class ProjectService {
 			// 	? slideData.show_logo
 			// 	: true;
 
+			slide.head_position = slideData.head_position || {};
+			slide.title_position = slideData.title_position || {};
+			slide.subtopic_position = slideData.subtopic_position || {};
+			slide.content_positions = slideData.content_positions || [{}, {}, {}];
+			slide.image_container_positions = slideData.image_container_positions || [{}, {}, {}];
+
 			// console.log('slide.images', slide.images);
 			if (index === 0) {
 				slide.layout = slideData.layout || ('Cover_img_1_layout' as LayoutKeys);
