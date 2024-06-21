@@ -43,12 +43,12 @@ export const DragElement = ({
 		width: positions[contentIndex].width
 			? positions[contentIndex].width === -1
 				? 'max-content'
-				: Number(positions[contentIndex].width)
+				: Number(positions[contentIndex].width) + 'px'
 			: 'max-content',
 		height: positions[contentIndex].height
 			? positions[contentIndex].height === -1
 				? 'max-content'
-				: Number(positions[contentIndex].height)
+				: Number(positions[contentIndex].height) + 'px'
 			: 'max-content',
 	});
 
@@ -139,19 +139,20 @@ export const DragElement = ({
 		pos: any,
 	) => {
 		setIsResize(true);
-		setSize({width: ref.style.width, height: ref.style.height});
+		setSize({ width: ref.style.width, height: ref.style.height });
 	};
 
 	const handleOnResizeStop = () => {
 		setIsResize(false);
-		const width =
-			typeof size.width === 'number' ? size.width : -1;
-		const height =
-			typeof size.height === 'number' ? size.height : -1;
 
 		const updatedPosition: Position[] = positions.map((pos, index) =>
 			index === contentIndex
-				? { x: pos.x, y: pos.y, width: width, height: height }
+				? {
+						x: pos.x,
+						y: pos.y,
+						width: parseInt(size.width),
+						height: parseInt(size.height),
+					}
 				: pos,
 		);
 		handleSlideEdit(updatedPosition, currentSlideIndex, positionType);
