@@ -34,6 +34,7 @@ export const DragElement = ({
 }: DragElementProps) => {
 	const [isDragDisable, setIsDragDisable] = useState<boolean>(true);
 	const [isOverHandler, setIsOverHandler] = useState<boolean>(false);
+	const [isResize, setIsResize] = useState<boolean>(false);
 	const [position, setPosition] = useState({
 		x: positions[contentIndex].x ? Number(positions[contentIndex].x) : 0,
 		y: positions[contentIndex].y ? Number(positions[contentIndex].y) : 0,
@@ -59,14 +60,18 @@ export const DragElement = ({
 	};
 
 	const handleDragStop = () => {
-		positions[contentIndex].x = position.x;
-		positions[contentIndex].y = position.y;
-		handleSlideEdit(positions, currentSlideIndex, positionType);
-	}
+		const updatedPosition: Position[] = positions.map((pos, index) =>
+			index === contentIndex
+				? { x: position.x, y: position.y, width: pos.width, height: pos.height }
+				: pos,
+		);
+		handleSlideEdit(updatedPosition, currentSlideIndex, positionType);
+		setIsDragDisable(true);
+	};
 
 	const isVisible = useMemo(
-		() => isOverHandler || !isDragDisable,
-		[isOverHandler, isDragDisable],
+		() => isOverHandler || !isDragDisable || isResize,
+		[isOverHandler, isDragDisable, isResize],
 	);
 
 	const handlerCSS: React.CSSProperties = useMemo(
@@ -133,18 +138,28 @@ export const DragElement = ({
 		delta: any,
 		pos: any,
 	) => {
-		console.log(e, direction, ref, delta, pos);
+		setIsResize(true);
 		setSize({width: ref.style.width, height: ref.style.height});
 	};
 
 	const handleOnResizeStop = () => {
-		positions[contentIndex].width = typeof size.width === 'number' ? size.width : -1;
-		positions[contentIndex].height = typeof size.height === 'number' ? size.height : -1;
-		handleSlideEdit(positions, currentSlideIndex, positionType);
-	}
+		setIsResize(false);
+		const width =
+			typeof size.width === 'number' ? size.width : -1;
+		const height =
+			typeof size.height === 'number' ? size.height : -1;
+
+		const updatedPosition: Position[] = positions.map((pos, index) =>
+			index === contentIndex
+				? { x: pos.x, y: pos.y, width: width, height: height }
+				: pos,
+		);
+		handleSlideEdit(updatedPosition, currentSlideIndex, positionType);
+	};
 
 	useEffect(() => {
 		document.addEventListener('mouseup', dropHandler);
+		return () => document.removeEventListener('mouseup', dropHandler);
 	}, []);
 
 	return (
