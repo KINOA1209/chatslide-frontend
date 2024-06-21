@@ -1,7 +1,7 @@
 import Position from '@/types/Position';
 
 export const initializeImageData = (
-	image_positions: Array<ImagePosition | {}>,
+	image_positions: Array<Position | {}>,
 	refs: React.RefObject<HTMLElement>[],
 ): Position[] => {
 	const positions = image_positions || [{}, {}, {}];

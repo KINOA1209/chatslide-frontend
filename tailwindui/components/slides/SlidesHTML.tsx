@@ -512,6 +512,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					| JSX.Element[]
 					| Chart[]
 					| boolean[]
+					| Position
 					| Position[]
 					| Media[]
 			  >,
@@ -533,6 +534,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				| JSX.Element[]
 				| Chart[]
 				| boolean[]
+				| Position
 				| Position[]
 				| Media[],
 			className: string,
@@ -581,6 +583,16 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				currentSlide.is_chart = content as boolean[];
 			} else if (className === 'image_positions') {
 				currentSlide.image_positions = content as Position[];
+			} else if (className === 'title_position') {
+				currentSlide.head_position = content as Position;
+			} else if (className === 'topic_position') {
+				currentSlide.title_position = content as Position;
+			} else if (className === 'subtopic_position') {
+				currentSlide.subtopic_position = content as Position;
+			} else if (className === 'content_position') {
+				currentSlide.content_positions = content as Position[];
+			} else if (className === 'image_container_position') {
+				currentSlide.image_container_positions = content as Position[];
 			} else {
 				console.error(`Unknown tag: ${tag}`);
 			}
@@ -593,6 +605,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					| JSX.Element[]
 					| Chart[]
 					| boolean[]
+					| Position
 					| Position[];
 				if (Array.isArray(content)) {
 					if (idx < content.length) {
@@ -611,7 +624,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			});
 		} else {
 			applyUpdate(
-				content as string | string[] | Chart[] | boolean[] | Position[],
+				content as string | string[] | Chart[] | boolean[] | Position | Position[],
 				className,
 			);
 		}

@@ -296,6 +296,8 @@ export const Cover_img_0_layout = ({
 	layoutElements,
 	templateLogo,
 	title_position,
+	handleSlideEdit,
+	currentSlideIndex,
 }: MainSlideProps) => {
 	// useEffect(() => {
 	// 	console.log('LayoutElements canvaCSS:', layoutElements.canvaCSS);
@@ -343,6 +345,9 @@ export const Cover_img_0_layout = ({
 						canEdit={canEdit}
 						positions={[title_position]}
 						contentIndex={0}
+						handleSlideEdit={handleSlideEdit}
+						currentSlideIndex={currentSlideIndex}
+						positionType={'title_position'}
 					>
 						{title}
 					</DragElement>
@@ -484,6 +489,9 @@ export const Cover_img_1_layout = ({
 						canEdit={canEdit}
 						positions={[title_position]}
 						contentIndex={0}
+						handleSlideEdit={handleSlideEdit}
+						currentSlideIndex={currentSlideIndex}
+						positionType={'title_position'}
 					>
 						{title}
 					</DragElement>
@@ -500,6 +508,9 @@ export const Cover_img_1_layout = ({
 					canEdit={canEdit}
 					positions={image_container_positions}
 					contentIndex={0}
+					handleSlideEdit={handleSlideEdit}
+					currentSlideIndex={currentSlideIndex}
+					positionType={'image_container_position'}
 				>
 					<ImgModule
 						imgsrc={imgs?.[0]}
@@ -570,6 +581,8 @@ export const Col_1_img_0_layout = ({
 	themeElements,
 	layoutElements,
 	templateLogo,
+	handleSlideEdit,
+	currentSlideIndex,
 }: MainSlideProps) => {
 	const [maxContentHeight, setMaxContentHeight] = useState<number | null>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -648,6 +661,9 @@ export const Col_1_img_0_layout = ({
 							canEdit={canEdit}
 							positions={[topic_position]}
 							contentIndex={0}
+							handleSlideEdit={handleSlideEdit}
+							currentSlideIndex={currentSlideIndex}
+							positionType={'topic_position'}
 						>
 							{topic}
 						</DragElement>
@@ -663,6 +679,9 @@ export const Col_1_img_0_layout = ({
 							canEdit={canEdit}
 							positions={[subtopic_position]}
 							contentIndex={0}
+							handleSlideEdit={handleSlideEdit}
+							currentSlideIndex={currentSlideIndex}
+							positionType={'subtopic_position'}
 						>
 							{subtopic}
 						</DragElement>
@@ -690,6 +709,9 @@ export const Col_1_img_0_layout = ({
 							canEdit={canEdit}
 							positions={content_positions}
 							contentIndex={0}
+							handleSlideEdit={handleSlideEdit}
+							currentSlideIndex={currentSlideIndex}
+							positionType={'content_position'}
 						>
 							{content}
 						</DragElement>
@@ -753,6 +775,7 @@ export const Col_2_img_0_layout = ({
 	layoutElements,
 	templateLogo,
 	handleSlideEdit,
+	currentSlideIndex,
 }: MainSlideProps) => {
 	// Ensure content is always an array
 	const items = Array.isArray(content) ? content : [content];
@@ -827,6 +850,9 @@ export const Col_2_img_0_layout = ({
 							canEdit={canEdit}
 							positions={[topic_position]}
 							contentIndex={0}
+							handleSlideEdit={handleSlideEdit}
+							currentSlideIndex={currentSlideIndex}
+							positionType={'topic_position'}
 						>
 							{topic}
 						</DragElement>
@@ -838,6 +864,9 @@ export const Col_2_img_0_layout = ({
 							canEdit={canEdit}
 							positions={[subtopic_position]}
 							contentIndex={0}
+							handleSlideEdit={handleSlideEdit}
+							currentSlideIndex={currentSlideIndex}
+							positionType={'subtopic_position'}
 						>
 							{subtopic}
 						</DragElement>
@@ -925,6 +954,9 @@ export const Col_2_img_0_layout = ({
 											canEdit={canEdit}
 											positions={content_positions}
 											contentIndex={0}
+											handleSlideEdit={handleSlideEdit}
+											currentSlideIndex={currentSlideIndex}
+											positionType={'content_position'}
 										>
 											{item}
 										</DragElement>
@@ -1009,6 +1041,9 @@ export const Col_2_img_0_layout = ({
 											canEdit={canEdit}
 											positions={content_positions}
 											contentIndex={1}
+											handleSlideEdit={handleSlideEdit}
+											currentSlideIndex={currentSlideIndex}
+											positionType={'content_position'}
 										>
 											{item}
 										</DragElement>
@@ -1066,6 +1101,7 @@ export const Col_3_img_0_layout = ({
 	layoutElements,
 	templateLogo,
 	handleSlideEdit,
+	currentSlideIndex,
 }: MainSlideProps) => {
 	//const filteredContent: JSX.Element[] = filterEmptyLines(content);
 
@@ -1153,6 +1189,9 @@ export const Col_3_img_0_layout = ({
 							canEdit={canEdit}
 							positions={[topic_position]}
 							contentIndex={0}
+							handleSlideEdit={handleSlideEdit}
+							currentSlideIndex={currentSlideIndex}
+							positionType={'topic_position'}
 						>
 							{topic}
 						</DragElement>
@@ -1164,6 +1203,9 @@ export const Col_3_img_0_layout = ({
 							canEdit={canEdit}
 							positions={[subtopic_position]}
 							contentIndex={0}
+							handleSlideEdit={handleSlideEdit}
+							currentSlideIndex={currentSlideIndex}
+							positionType={'subtopic_position'}
 						>
 							{subtopic}
 						</DragElement>
@@ -1253,6 +1295,9 @@ export const Col_3_img_0_layout = ({
 											canEdit={canEdit}
 											positions={content_positions}
 											contentIndex={0}
+											handleSlideEdit={handleSlideEdit}
+											currentSlideIndex={currentSlideIndex}
+											positionType={'content_position'}
 										>
 											{item}
 										</DragElement>
@@ -1367,6 +1412,9 @@ export const Col_3_img_0_layout = ({
 											canEdit={canEdit}
 											positions={content_positions}
 											contentIndex={1}
+											handleSlideEdit={handleSlideEdit}
+											currentSlideIndex={currentSlideIndex}
+											positionType={'content_position'}
 										>
 											{item}
 										</DragElement>
@@ -1450,6 +1498,9 @@ export const Col_3_img_0_layout = ({
 											canEdit={canEdit}
 											positions={content_positions}
 											contentIndex={2}
+											handleSlideEdit={handleSlideEdit}
+											currentSlideIndex={currentSlideIndex}
+											positionType={'content_position'}
 										>
 											{item}
 										</DragElement>
@@ -1631,6 +1682,9 @@ export const Col_2_img_1_layout = ({
 							canEdit={canEdit}
 							positions={[topic_position]}
 							contentIndex={0}
+							handleSlideEdit={handleSlideEdit}
+							currentSlideIndex={currentSlideIndex}
+							positionType={'topic_position'}
 						>
 							{topic}
 						</DragElement>
@@ -1646,6 +1700,9 @@ export const Col_2_img_1_layout = ({
 							canEdit={canEdit}
 							positions={[subtopic_position]}
 							contentIndex={0}
+							handleSlideEdit={handleSlideEdit}
+							currentSlideIndex={currentSlideIndex}
+							positionType={'subtopic_position'}
 						>
 							{subtopic}
 						</DragElement>
@@ -1677,6 +1734,9 @@ export const Col_2_img_1_layout = ({
 								canEdit={canEdit}
 								positions={content_positions}
 								contentIndex={0}
+								handleSlideEdit={handleSlideEdit}
+								currentSlideIndex={currentSlideIndex}
+								positionType={'content_position'}
 							>
 								{content}
 							</DragElement>
@@ -1698,6 +1758,9 @@ export const Col_2_img_1_layout = ({
 					canEdit={canEdit}
 					positions={content_positions}
 					contentIndex={0}
+					handleSlideEdit={handleSlideEdit}
+					currentSlideIndex={currentSlideIndex}
+					positionType={'image_container_position'}
 				>
 					<ImgModule
 						imgsrc={imgs?.[0]}
@@ -1891,6 +1954,9 @@ export const Col_1_img_1_layout = ({
 							canEdit={canEdit}
 							positions={[topic_position]}
 							contentIndex={0}
+							handleSlideEdit={handleSlideEdit}
+							currentSlideIndex={currentSlideIndex}
+							positionType={'topic_position'}
 						>
 							{topic}
 						</DragElement>
@@ -1902,6 +1968,9 @@ export const Col_1_img_1_layout = ({
 							canEdit={canEdit}
 							positions={[subtopic_position]}
 							contentIndex={0}
+							handleSlideEdit={handleSlideEdit}
+							currentSlideIndex={currentSlideIndex}
+							positionType={'subtopic_position'}
 						>
 							{subtopic}
 						</DragElement>
@@ -1924,6 +1993,9 @@ export const Col_1_img_1_layout = ({
 						canEdit={canEdit}
 						positions={image_container_positions}
 						contentIndex={0}
+						handleSlideEdit={handleSlideEdit}
+						currentSlideIndex={currentSlideIndex}
+						positionType={'image_container_position'}
 					>
 						<ImgModule
 							imgsrc={imgs?.[0]}
@@ -1983,6 +2055,9 @@ export const Col_1_img_1_layout = ({
 							canEdit={canEdit}
 							positions={content_positions}
 							contentIndex={0}
+							handleSlideEdit={handleSlideEdit}
+							currentSlideIndex={currentSlideIndex}
+							positionType={'content_position'}
 						>
 							{content}
 						</DragElement>
@@ -2210,6 +2285,9 @@ export const Col_2_img_2_layout = ({
 							canEdit={canEdit}
 							positions={[topic_position]}
 							contentIndex={0}
+							handleSlideEdit={handleSlideEdit}
+							currentSlideIndex={currentSlideIndex}
+							positionType={'topic_position'}
 						>
 							{topic}
 						</DragElement>
@@ -2221,6 +2299,9 @@ export const Col_2_img_2_layout = ({
 							canEdit={canEdit}
 							positions={[subtopic_position]}
 							contentIndex={0}
+							handleSlideEdit={handleSlideEdit}
+							currentSlideIndex={currentSlideIndex}
+							positionType={'subtopic_position'}
 						>
 							{subtopic}
 						</DragElement>
@@ -2255,6 +2336,9 @@ export const Col_2_img_2_layout = ({
 							canEdit={canEdit}
 							positions={image_container_positions}
 							contentIndex={0}
+							handleSlideEdit={handleSlideEdit}
+							currentSlideIndex={currentSlideIndex}
+							positionType={'image_container_position'}
 						>
 							<ImgModule
 								imgsrc={imgs?.[0]}
@@ -2296,6 +2380,9 @@ export const Col_2_img_2_layout = ({
 							canEdit={canEdit}
 							positions={image_container_positions}
 							contentIndex={1}
+							handleSlideEdit={handleSlideEdit}
+							currentSlideIndex={currentSlideIndex}
+							positionType={'image_container_position'}
 						>
 							<ImgModule
 								imgsrc={imgs?.[1]}
@@ -2382,6 +2469,9 @@ export const Col_2_img_2_layout = ({
 											canEdit={canEdit}
 											positions={content_positions}
 											contentIndex={0}
+											handleSlideEdit={handleSlideEdit}
+											currentSlideIndex={currentSlideIndex}
+											positionType={'content_position'}
 										>
 											{item}
 										</DragElement>
@@ -2441,6 +2531,9 @@ export const Col_2_img_2_layout = ({
 											canEdit={canEdit}
 											positions={content_positions}
 											contentIndex={1}
+											handleSlideEdit={handleSlideEdit}
+											currentSlideIndex={currentSlideIndex}
+											positionType={'content_position'}
 										>
 											{item}
 										</DragElement>
@@ -2622,6 +2715,9 @@ export const Col_3_img_3_layout = ({
 							canEdit={canEdit}
 							positions={[topic_position]}
 							contentIndex={0}
+							handleSlideEdit={handleSlideEdit}
+							currentSlideIndex={currentSlideIndex}
+							positionType={'topic_position'}
 						>
 							{topic}
 						</DragElement>
@@ -2633,6 +2729,9 @@ export const Col_3_img_3_layout = ({
 							canEdit={canEdit}
 							positions={[subtopic_position]}
 							contentIndex={0}
+							handleSlideEdit={handleSlideEdit}
+							currentSlideIndex={currentSlideIndex}
+							positionType={'subtopic_position'}
 						>
 							{subtopic}
 						</DragElement>
@@ -2656,6 +2755,9 @@ export const Col_3_img_3_layout = ({
 							canEdit={canEdit}
 							positions={image_container_positions}
 							contentIndex={0}
+							handleSlideEdit={handleSlideEdit}
+							currentSlideIndex={currentSlideIndex}
+							positionType={'image_container_position'}
 						>
 							<ImgModule
 								imgsrc={imgs?.[0]}
@@ -2688,6 +2790,9 @@ export const Col_3_img_3_layout = ({
 							canEdit={canEdit}
 							positions={image_container_positions}
 							contentIndex={1}
+							handleSlideEdit={handleSlideEdit}
+							currentSlideIndex={currentSlideIndex}
+							positionType={'image_container_position'}
 						>
 							<ImgModule
 								imgsrc={imgs?.[1]}
@@ -2720,6 +2825,9 @@ export const Col_3_img_3_layout = ({
 							canEdit={canEdit}
 							positions={image_container_positions}
 							contentIndex={2}
+							handleSlideEdit={handleSlideEdit}
+							currentSlideIndex={currentSlideIndex}
+							positionType={'image_container_position'}
 						>
 							<ImgModule
 								imgsrc={imgs?.[2]}
@@ -2863,6 +2971,9 @@ export const Col_3_img_3_layout = ({
 											canEdit={canEdit}
 											positions={content_positions}
 											contentIndex={0}
+											handleSlideEdit={handleSlideEdit}
+											currentSlideIndex={currentSlideIndex}
+											positionType={'content_position'}
 										>
 											{item}
 										</DragElement>
@@ -2922,6 +3033,9 @@ export const Col_3_img_3_layout = ({
 											canEdit={canEdit}
 											positions={content_positions}
 											contentIndex={1}
+											handleSlideEdit={handleSlideEdit}
+											currentSlideIndex={currentSlideIndex}
+											positionType={'content_position'}
 										>
 											{item}
 										</DragElement>
@@ -2982,6 +3096,9 @@ export const Col_3_img_3_layout = ({
 											canEdit={canEdit}
 											positions={content_positions}
 											contentIndex={2}
+											handleSlideEdit={handleSlideEdit}
+											currentSlideIndex={currentSlideIndex}
+											positionType={'content_position'}
 										>
 											{item}
 										</DragElement>
@@ -3113,6 +3230,9 @@ export const Full_img_only_layout = ({
 						canEdit={canEdit}
 						positions={image_container_positions}
 						contentIndex={0}
+						handleSlideEdit={handleSlideEdit}
+						currentSlideIndex={currentSlideIndex}
+						positionType={'image_container_position'}
 					>
 						<ImgModule
 							imgsrc={imgs?.[0]}

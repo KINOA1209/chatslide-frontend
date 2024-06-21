@@ -16,6 +16,9 @@ interface DragElementProps {
 	canEdit: boolean;
 	positions: Position[];
 	contentIndex: number;
+	handleSlideEdit: Function;
+	currentSlideIndex: number;
+	positionType: string;
 }
 
 export const DragElement = ({
@@ -25,6 +28,9 @@ export const DragElement = ({
 	canEdit,
 	positions,
 	contentIndex,
+	handleSlideEdit,
+	currentSlideIndex,
+	positionType,
 }: DragElementProps) => {
 	const [isDragDisable, setIsDragDisable] = useState<boolean>(true);
 	const [isOverHandler, setIsOverHandler] = useState<boolean>(false);
@@ -51,6 +57,12 @@ export const DragElement = ({
 			e.stopPropagation();
 		}
 	};
+
+	const handleDragStop = () => {
+		positions[contentIndex].x = position.x;
+		positions[contentIndex].y = position.y;
+		handleSlideEdit(positions, currentSlideIndex, positionType);
+	}
 
 	const isVisible = useMemo(
 		() => isOverHandler || !isDragDisable,
@@ -125,6 +137,12 @@ export const DragElement = ({
 		setSize({width: ref.style.width, height: ref.style.height});
 	};
 
+	const handleOnResizeStop = () => {
+		positions[contentIndex].width = typeof size.width === 'number' ? size.width : -1;
+		positions[contentIndex].height = typeof size.height === 'number' ? size.height : -1;
+		handleSlideEdit(positions, currentSlideIndex, positionType);
+	}
+
 	useEffect(() => {
 		document.addEventListener('mouseup', dropHandler);
 	}, []);
@@ -136,6 +154,7 @@ export const DragElement = ({
 					onStart={handleDragStart}
 					position={position}
 					onDrag={handleOnDrag}
+					onStop={handleDragStop}
 				>
 					<div
 						className={`DraggableElement ${type === ElementType.ImageView ? 'w-full h-full' : ''}`}
@@ -181,6 +200,7 @@ export const DragElement = ({
 							lockAspectRatio={false}
 							disableDragging={true}
 							onResize={handleOnResize}
+							onResizeStop={handleOnResizeStop}
 							resizeHandleStyles={
 								isVisible
 									? {
