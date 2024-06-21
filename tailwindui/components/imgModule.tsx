@@ -1403,33 +1403,30 @@ export const ImgModule = ({
 
 	//resize indicator
 	const circle_indicator: CSSProperties = {
-		width: '15px',
-		height: '15px',
-		backgroundColor: 'white',
-		border: '1px solid magenta',
+		width: '10px',
+		height: '10px',
+		backgroundColor: '#E5F4F7',
+		border: '1px solid gray',
 		borderRadius: '50%',
 		zIndex: 53,
 		position: 'absolute',
 	};
 
 	const rectangular_indicator: CSSProperties = {
-		borderRadius: '35%',
-		backgroundColor: 'white',
-		border: '1px solid magenta',
+		width: '10px',
+		height: '10px',
+		backgroundColor: '#E5F4F7',
+		border: '1px solid gray',
 		zIndex: 53,
 		position: 'absolute',
 	};
 
 	const rectangular_horizontal: CSSProperties = {
-		width: '25px',
-		height: '10px',
 		left: '50%',
 		transform: 'translateX(-50%)',
 	};
 
 	const rectangular_vertical: CSSProperties = {
-		width: '10px',
-		height: '25px',
 		top: '50%',
 		transform: 'translateY(-50%)',
 	};
@@ -1895,17 +1892,18 @@ export const ImgModule = ({
 								onResizeStart={handleResizeStart}
 								onResizeStop={handleResizeStop(currentContentIndex)}
 								resizeHandleStyles={{
-									topLeft: { ...circle_indicator, left: '-7px' },
-									topRight: { ...circle_indicator, right: '-7px' },
-									bottomLeft: { ...circle_indicator, left: '-7px' },
-									bottomRight: { ...circle_indicator, right: '-7px' },
-									top: { ...rectangular_indicator, ...rectangular_horizontal },
+									topLeft: circle_indicator,
+									topRight: circle_indicator,
+									bottomLeft: circle_indicator,
+									bottomRight: circle_indicator,
+									top: { ...rectangular_indicator, ...rectangular_horizontal, top: '-5px' },
 									bottom: {
 										...rectangular_indicator,
 										...rectangular_horizontal,
+										bottom: '-5px'
 									},
-									left: { ...rectangular_indicator, ...rectangular_vertical },
-									right: { ...rectangular_indicator, ...rectangular_vertical },
+									left: { ...rectangular_indicator, ...rectangular_vertical, left: '-5px' },
+									right: { ...rectangular_indicator, ...rectangular_vertical, right: '-5px' },
 								}}
 							>
 								<Image

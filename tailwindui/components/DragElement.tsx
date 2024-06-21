@@ -90,6 +90,19 @@ export const DragElement = ({
 		[isVisible],
 	);
 
+	const resizeHandlerCSS: React.CSSProperties = useMemo(
+		() => ({
+			width: '10px',
+			height: '10px',
+			backgroundColor: '#E5F4F7',
+			border: '1px solid gray',
+			zIndex: 20,
+			position: 'absolute',
+			visibility: `${isVisible ? 'visible' : 'hidden'}`,
+		}),
+		[isVisible],
+	);
+
 	const elementCSS: React.CSSProperties = useMemo(
 		() => ({
 			borderStyle: 'solid',
@@ -102,26 +115,6 @@ export const DragElement = ({
 		}),
 		[isVisible],
 	);
-
-	const widthResizeCSS: React.CSSProperties = {
-		width: '3px',
-		height: '25px',
-		borderRadius: '3px',
-		backgroundColor: 'black',
-		position: 'absolute',
-		top: '50%',
-		transform: 'translateY(-50%)',
-	};
-
-	const heightResizeCSS: React.CSSProperties = {
-		width: '25px',
-		height: '3px',
-		borderRadius: '3px',
-		backgroundColor: 'black',
-		position: 'absolute',
-		left: '50%',
-		transform: 'translateX(-50%)',
-	};
 
 	const dropHandler = () => {
 		setIsDragDisable(true);
@@ -220,20 +213,25 @@ export const DragElement = ({
 							resizeHandleStyles={
 								isVisible
 									? {
-											bottom: heightResizeCSS,
-											right: widthResizeCSS,
+											topRight: { ...resizeHandlerCSS, borderRadius: '50%' },
+											bottomLeft: { ...resizeHandlerCSS, borderRadius: '50%' },
+											bottomRight: { ...resizeHandlerCSS, borderRadius: '50%' },
+											left: { ...resizeHandlerCSS, top: '50%', transform: 'translateY(-50%)', left: '-10px' },
+											right: { ...resizeHandlerCSS, top: '50%', transform: 'translateY(-50%)', right: '-10px' },
+											top: { ...resizeHandlerCSS, left: '50%', transform: 'translateX(-50%)', top: '-10px' },
+											bottom: { ...resizeHandlerCSS, left: '50%', transform: 'translateX(-50%)', bottom: '-10px' },
 										}
 									: {}
 							}
 							enableResizing={{
-								top: false,
+								top: true,
 								bottom: true,
-								left: false,
+								left: true,
 								right: true,
 								topLeft: false,
-								topRight: false,
-								bottomLeft: false,
-								bottomRight: false,
+								topRight: true,
+								bottomLeft: true,
+								bottomRight: true,
 							}}
 						>
 							<div
