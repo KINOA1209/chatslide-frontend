@@ -44,12 +44,12 @@ const DescriptionCard: React.FC<DescriptionCardProps> = ({
                 <div className='flex flex-row items-center gap-x-4'>
                     <Title>{project.topic}</Title>
                     <Instruction>Created using {getBrand()}</Instruction>
-                    <ChangeProjectDescriptionButton
+                    {/* <ChangeProjectDescriptionButton
                         project={project}
                         showChangeProjectDescriptionModal={showChangeProjectDescriptionModal}
                         setShowChangeProjectDescriptionModal={setShowChangeProjectDescriptionModal}
                         setDescription={setDescription}
-                    />
+                    /> */}
                 </div>
                 <Explanation>{description}</Explanation>
             </Card>
