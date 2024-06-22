@@ -81,21 +81,9 @@ export default async function Page({ params }: Props) {
 			</div>
 			<JoinUsBanner />
 			<main className='w-full flex grow flex-col overflow-y-scroll'>
-				<SharePage project_id={project_id} />
+				<SharePage project={project} />
 
-				<DescriptionCard project_id={project_id} />
-
-				{/* {project.description && (
-					<div className='hidden sm:flex m-4'>
-						<Card>
-							<div className='flex flex-row items-end gap-x-4'>
-								<Title>{project.topic}</Title>
-								<Instruction>Created using {getBrand()}</Instruction>
-							</div>
-							<Explanation>{project.description}</Explanation>
-						</Card>
-					</div>
-				)} */}
+				<DescriptionCard project={project} />
 			</main>
 			{/* <WorkflowFooter /> */}
 		</div>

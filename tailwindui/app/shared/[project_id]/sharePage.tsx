@@ -12,6 +12,7 @@ import useHydrated from '@/hooks/use-hydrated';
 import { useSearchParams } from 'next/navigation';
 import { useSocialPosts } from '@/hooks/use-socialpost';
 import EmbeddedSlide from './EmbeddedSlide';
+import Project from '@/models/Project';
 
 const SlidesHTML = dynamic(() => import('@/components/slides/SlidesHTML'), {
 	ssr: false,
@@ -25,12 +26,12 @@ const SocialPostHTML = dynamic(
 );
 
 interface SharePageProps {
-	project_id: string;
+  project: Project;  // one of project or project_id should be supplied
 	embed?: boolean;
 }
 
-const SharePage: React.FC<SharePageProps> = ({ project_id, embed = false }) => {
-	const { project, initProject } = useProject();
+const SharePage: React.FC<SharePageProps> = ({ project, embed = false }) => {
+	const { initProject } = useProject();
 	const [loading, setLoading] = useState(true);
 	const [loadingFailed, setLoadingFailed] = useState(false);
 	const { initSlides } = useSlides();
@@ -105,17 +106,6 @@ const SharePage: React.FC<SharePageProps> = ({ project_id, embed = false }) => {
 		console.log('initSlideIndex', initSlideIndex);
 
 		const init = async () => {
-			let project;
-			try {
-				project = await ProjectService.getSharedProjectDetails(project_id);
-				// console.log('SharedProjectDetails', project);
-			} catch (error) {
-				console.error(`Error fetching project ${project_id} details:`, error);
-				setLoading(false);
-				setLoadingFailed(true);
-				return;
-			}
-
 			initProject(project);
 			console.log('project', project);
 
@@ -136,7 +126,7 @@ const SharePage: React.FC<SharePageProps> = ({ project_id, embed = false }) => {
 					setLoading(false);
 				}
 			} else {
-				console.error(`Project with ID ${project_id} not found.`);
+      console.error(`Project not found.`);
 				setLoading(false);
 				setLoadingFailed(true);
 			}
