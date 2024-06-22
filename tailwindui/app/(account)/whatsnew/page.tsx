@@ -27,6 +27,34 @@ export default function Studio() {
 				</Card>
 
 				<Card>
+					<BigTitle>June 19</BigTitle>
+
+					<Instruction>
+						<div>
+							<b>🪑 Free Team Seats: </b> Now we offer team seats on Free tier
+							for PRO and ULTIMATE users. PRO users can get 1 extra seat.
+							ULTIMATE users can get 5 extra seats. These new seats will still
+							be on Free tier, but will have access to the projects shared in
+							the team.
+						</div>
+					</Instruction>
+
+					<Instruction>
+						<div>
+							<b>📂 Upload PPTX Template: </b> You can upload a PPTX file as a
+							template for your slides. We currently can only read the
+							background.
+						</div>
+					</Instruction>
+
+					<Instruction>
+						<div>
+							<b>🎨 New Design Page: </b> The user interface of design page is updated.
+						</div>
+					</Instruction>
+				</Card>
+
+				<Card>
 					<BigTitle>June 13</BigTitle>
 
 					<Instruction>
@@ -38,7 +66,8 @@ export default function Studio() {
 
 					<Instruction>
 						<div>
-							<b>🎨 Image Popup Updates: </b> The user interface of image popup is updated for better clarity and experience. 
+							<b>🎨 Image Popup Updates: </b> The user interface of image popup
+							is updated for better clarity and experience.
 						</div>
 					</Instruction>
 

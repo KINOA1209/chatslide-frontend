@@ -67,7 +67,7 @@ const ScriptEditor: React.FC<TranscriptEditorProps> = ({
 	if (!useHydrated()) return <></>;
 
 	return (
-		<div className='flex flex-row'>
+		<div className='flex flex-col'>
 			{script?.length >= 4096 && (
 				<ErrorMessage>
 					Script length is {script?.length}, which exceeds 4096 characters. Please remove some characters.
