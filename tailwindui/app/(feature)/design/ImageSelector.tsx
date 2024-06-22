@@ -14,6 +14,7 @@ interface Props {
 	selectedImage: Resource[];
 	setSelectedImage: (selectedImage: Resource[]) => void;
 	showQuestion?: boolean;
+	buttonCols?: number;
 }
 
 const ImageSelector: React.FC<Props> = ({
@@ -21,6 +22,7 @@ const ImageSelector: React.FC<Props> = ({
 	selectedImage,
 	setSelectedImage,
 	showQuestion = true,
+	buttonCols = 3,
 }) => {
 	const [showFileModal, setShowFileModal] = useState(false);
 	const { isPaidUser } = useUser();
@@ -47,7 +49,7 @@ const ImageSelector: React.FC<Props> = ({
 			/>
 			{showQuestion && (
 				<div className='gap-1 flex flex-col justify-start'>
-					<Instruction>
+					<Instruction boldenFont={true}>
 						<div>Do you want to use your own {type} for slides?</div>{' '}
 						{!isPaidUser && <PlusLabel />}
 					</Instruction>
@@ -74,7 +76,7 @@ const ImageSelector: React.FC<Props> = ({
 								setSelectedValue('no');
 							}
 						}}
-            cols={3}
+						cols={buttonCols}
 					/>
 				</div>
 			)}
@@ -96,14 +98,14 @@ const ImageSelector: React.FC<Props> = ({
 				</div>
 			)}
 
-			{
-				selectedImage && selectedImage.length > 0 && <div className='mt-[10px]'>
+			{selectedImage && selectedImage.length > 0 && (
+				<div className='mt-[10px]'>
 					<SelectedResourcesList
 						selectedResources={selectedImage}
 						removeResourceAtIndex={removeImageAtIndex}
 					/>
 				</div>
-			}
+			)}
 
 			<FileUploadModal
 				selectedResources={selectedImage}

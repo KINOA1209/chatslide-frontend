@@ -551,7 +551,7 @@ const TemplateSelector: React.FC<{
 												: initialLoadedSubtitleFontColor || '#000000'
 										}
 										resetColorPicker={resetFontFamilyAndFontColorPicker}
-										disableResetButton={true}
+										disableResetButton={false}
 									></ColorPicker>
 								</div>
 
@@ -579,7 +579,7 @@ const TemplateSelector: React.FC<{
 												: initialLoadedContentFontColor || '#000000'
 										}
 										resetColorPicker={resetFontFamilyAndFontColorPicker}
-										disableResetButton={false}
+										disableResetButton={true}
 									></ColorPicker>
 								</div>
 							</WrappableRow>
