@@ -203,7 +203,7 @@ const AdvancedOptions: React.FC<{
 								}}
 								value={pageCountEst}
 								minValue={5}
-								choices={[0, 5, 10, 15, 20, 25, 30, 35, 40]}
+								choices={[0, 5, 10, 15, 20, 25, 30, 35, 40, 50, 60]}
 							/>
 						</div>
 						<Explanation>
