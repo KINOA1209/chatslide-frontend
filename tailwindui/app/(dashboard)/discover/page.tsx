@@ -9,6 +9,7 @@ import { JoinUsBanner } from '@/components/layout/JoinUsBanner';
 import DesignSystemButton from '@/components/ui/design_systems/ButtonsOrdinary';
 import { getBrand } from '@/utils/getHost';
 import Project from '@/models/Project';
+import ProjectTableSSR from '@/components/dashboard/ProjectTableSSR';
 
 export const metadata = {
 	title: `Discover | ${getBrand()}`,
@@ -23,6 +24,7 @@ export default async function Discover() {
 
 	return (
 		<section className='grow flex flex-col'>
+			<JoinUsBanner />
 			<ToastContainer />
 			<div className='flex flex-row items-end w-full z-10 pt-[2rem] px-[2rem]'>
 				{/* flex container controlling max width */}
@@ -54,12 +56,12 @@ export default async function Discover() {
 					</div>
 				</div>
 			</div>
-			<JoinUsBanner />
 
 			{/* projects details area */}
 			<div className='pb-[1rem] w-full px-8 pt-8 flex flex-col grow overflow-auto'>
 				{projects && projects.length > 0 ? (
-					<ProjectTable currentProjects={projects} isDiscover={true} />
+					// <ProjectTable currentProjects={projects} isDiscover={true} />
+					<ProjectTableSSR currentProjects={projects} isDiscover={true} />
 				) : (
 					<div className='flex items-center mt-[1rem] md:mt-[6rem] justify-center text-gray-600 text-[14px] md:text-[20px] font-normal leading-normal tracking-wide'>
 						There are no community projects yet.
