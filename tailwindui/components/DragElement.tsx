@@ -70,7 +70,7 @@ export const DragElement = ({
 	};
 
 	const isVisible = useMemo(
-		() => isOverHandler || !isDragDisable || isResize,
+		() => (isOverHandler || !isDragDisable || isResize) && canEdit,
 		[isOverHandler, isDragDisable, isResize],
 	);
 
@@ -158,94 +158,118 @@ export const DragElement = ({
 
 	return (
 		<>
-			{canEdit ? (
-				<Draggable
-					onStart={handleDragStart}
-					position={position}
-					onDrag={handleOnDrag}
-					onStop={handleDragStop}
+			<Draggable
+				onStart={handleDragStart}
+				position={position}
+				onDrag={handleOnDrag}
+				onStop={handleDragStop}
+				disabled={!canEdit}
+			>
+				<div
+					className={`DraggableElement ${type === ElementType.ImageView ? 'w-full h-full' : ''}`}
+					onMouseEnter={() => {
+						setIsOverHandler(true);
+					}}
+					onMouseLeave={() => {
+						setIsOverHandler(false);
+					}}
 				>
 					<div
-						className={`DraggableElement ${type === ElementType.ImageView ? 'w-full h-full' : ''}`}
-						onMouseEnter={() => {
-							setIsOverHandler(true);
+						className={'ElementHandler'}
+						style={{ ...handlerCSS, cursor: 'move' }}
+						onMouseDown={(e) => {
+							setIsDragDisable(false);
 						}}
-						onMouseLeave={() => {
-							setIsOverHandler(false);
+						onMouseUp={(e) => {
+							setIsDragDisable(true);
+						}}
+					>
+						<div>
+							<TbDragDrop2 size={16} color={'white'} />
+						</div>
+					</div>
+					<div
+						className={'ResetHandler'}
+						style={{ ...handlerCSS, top: '23px' }}
+						onMouseDown={(e) => {
+							e.stopPropagation();
+						}}
+						onClick={() => {
+							setPosition({ x: 0, y: 0 });
+							setSize({ width: 'max-content', height: 'max-content' });
+							const updatedPosition: Position[] = positions.map((pos, index) =>
+								index === contentIndex
+									? { x: 0, y: 0, width: -1, height: -1 }
+									: pos,
+							);
+							handleSlideEdit(updatedPosition, currentSlideIndex, positionType);
+						}}
+					>
+						<div>
+							<TbRefresh size={16} color={'white'} />
+						</div>
+					</div>
+					<Rnd
+						className='ResizableElement w-full h-full'
+						size={size}
+						style={{ position: 'relative' }}
+						lockAspectRatio={false}
+						disableDragging={true}
+						onResize={handleOnResize}
+						onResizeStop={handleOnResizeStop}
+						resizeHandleStyles={
+							isVisible
+								? {
+										topRight: { ...resizeHandlerCSS, borderRadius: '50%' },
+										bottomLeft: { ...resizeHandlerCSS, borderRadius: '50%' },
+										bottomRight: { ...resizeHandlerCSS, borderRadius: '50%' },
+										left: {
+											...resizeHandlerCSS,
+											top: '50%',
+											transform: 'translateY(-50%)',
+											left: '-10px',
+										},
+										right: {
+											...resizeHandlerCSS,
+											top: '50%',
+											transform: 'translateY(-50%)',
+											right: '-10px',
+										},
+										top: {
+											...resizeHandlerCSS,
+											left: '50%',
+											transform: 'translateX(-50%)',
+											top: '-10px',
+										},
+										bottom: {
+											...resizeHandlerCSS,
+											left: '50%',
+											transform: 'translateX(-50%)',
+											bottom: '-10px',
+										},
+									}
+								: {}
+						}
+						enableResizing={{
+							top: true,
+							bottom: true,
+							left: true,
+							right: true,
+							topLeft: false,
+							topRight: true,
+							bottomLeft: true,
+							bottomRight: true,
 						}}
 					>
 						<div
-							className={'ElementHandler'}
-							style={{ ...handlerCSS, cursor: 'move' }}
-							onMouseDown={(e) => {
-								setIsDragDisable(false);
-							}}
-							onMouseUp={(e) => {
-								setIsDragDisable(true);
-							}}
+							className={`ElementContent w-full h-full`}
+							style={{ ...elementCSS, zIndex: zindex }}
 						>
-							<div>
-								<TbDragDrop2 size={16} color={'white'} />
-							</div>
+							{content}
 						</div>
-						<div
-							className={'ResetHandler'}
-							style={{ ...handlerCSS, top: '23px' }}
-							onMouseDown={(e) => {
-								e.stopPropagation();
-							}}
-							onClick={() => {
-								setPosition({ x: 0, y: 0 });
-							}}
-						>
-							<div>
-								<TbRefresh size={16} color={'white'} />
-							</div>
-						</div>
-						<Rnd
-							className='ResizableElement w-full h-full'
-							size={size}
-							style={{ position: 'relative' }}
-							lockAspectRatio={false}
-							disableDragging={true}
-							onResize={handleOnResize}
-							onResizeStop={handleOnResizeStop}
-							resizeHandleStyles={
-								isVisible
-									? {
-											topRight: { ...resizeHandlerCSS, borderRadius: '50%' },
-											bottomLeft: { ...resizeHandlerCSS, borderRadius: '50%' },
-											bottomRight: { ...resizeHandlerCSS, borderRadius: '50%' },
-											left: { ...resizeHandlerCSS, top: '50%', transform: 'translateY(-50%)', left: '-10px' },
-											right: { ...resizeHandlerCSS, top: '50%', transform: 'translateY(-50%)', right: '-10px' },
-											top: { ...resizeHandlerCSS, left: '50%', transform: 'translateX(-50%)', top: '-10px' },
-											bottom: { ...resizeHandlerCSS, left: '50%', transform: 'translateX(-50%)', bottom: '-10px' },
-										}
-									: {}
-							}
-							enableResizing={{
-								top: true,
-								bottom: true,
-								left: true,
-								right: true,
-								topLeft: false,
-								topRight: true,
-								bottomLeft: true,
-								bottomRight: true,
-							}}
-						>
-							<div
-								className={`ElementContent w-full h-full`}
-								style={{ ...elementCSS, zIndex: zindex }}
-							>
-								{content}
-							</div>
-						</Rnd>
-					</div>
-				</Draggable>
-			) : (
-				<>{content}</>
-			)}
+					</Rnd>
+				</div>
+			</Draggable>
 		</>
 	);
 };
