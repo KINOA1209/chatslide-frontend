@@ -120,7 +120,7 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
 	}, []);
 
 	return (
-		<div ref={colorPickerRef}>
+		<div ref={colorPickerRef} className='flex flex-col gap-4'>
 			<div className='flex flex-row gap-x-2 w-[17rem] items-center justify-start'>
 				<button
 					style={buttonStyle}
@@ -131,17 +131,19 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({
 					<div style={colorPreviewStyle}></div>
 					<span>{color}</span>
 				</button>
-				{disableResetButton ? (
-					<></>
-				) : (
-					<SmallBlueButton
-						customizeStyle={{ width: '6rem' }}
-						onClick={resetColorPicker}
-					>
-						Reset All
-					</SmallBlueButton>
-				)}
 			</div>
+			{disableResetButton ? (
+				<></>
+			) : (
+				// <div style={{ display: 'block' }}>
+				<SmallBlueButton
+					customizeStyle={{ width: '6rem' }}
+					onClick={resetColorPicker}
+				>
+					Reset All
+				</SmallBlueButton>
+				// </div>
+			)}
 
 			{displayColorPicker && (
 				<div className='w-[15rem]'>

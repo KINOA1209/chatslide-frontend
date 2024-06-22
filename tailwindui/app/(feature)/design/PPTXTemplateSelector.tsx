@@ -28,6 +28,7 @@ interface Props {
 	setExtractedTemplateImgUrl: (imgUrl: string) => void;
 	selectedBackground: Resource[];
 	setSelectedBackground: React.Dispatch<React.SetStateAction<Resource[]>>;
+	buttonCols?: number;
 }
 
 interface UploadResponse {
@@ -55,6 +56,7 @@ const PPTXTemplateSelector: React.FC<Props> = ({
 	setExtractedTemplateImgUrl,
 	selectedBackground,
 	setSelectedBackground,
+	buttonCols = 3,
 }) => {
 	const [showFileModal, setShowFileModal] = useState(false);
 	const { isPaidUser, token } = useUser();
@@ -132,7 +134,7 @@ const PPTXTemplateSelector: React.FC<Props> = ({
 			/>
 			{showQuestion && (
 				<div className='gap-1 flex flex-col justify-start'>
-					<Instruction>
+					<Instruction boldenFont={true}>
 						<div>
 							Do you want to upload your own {type} as slides background?
 						</div>
@@ -155,7 +157,7 @@ const PPTXTemplateSelector: React.FC<Props> = ({
 								setSelectedValue('no');
 							}
 						}}
-            cols={3}
+						cols={buttonCols}
 					/>
 				</div>
 			)}

@@ -287,13 +287,13 @@ export default function DesignPage() {
 	const [imageAmount, setImageAmount] = useState('more_images');
 	const imageAmountOptions: RadioButtonOption[] = [
 		{
-			img: MoreImagesImg,
+			// img: MoreImagesImg,
 			value: 'more_images',
 			text: 'More images',
 			explanation: '70% decks contain images',
 		},
 		{
-			img: FewerImagesImg,
+			// img: FewerImagesImg,
 			value: 'fewer_images',
 			text: 'Fewer images',
 			explanation: '30% decks contain images',
@@ -305,17 +305,17 @@ export default function DesignPage() {
 		{
 			value: 'stock',
 			text: 'Stock',
-      explanation: 'Generic, high quality'
+			explanation: 'Generic, high quality',
 		},
 		{
 			value: 'creative',
 			text: 'Creative',
-      explanation: 'Wide range'
+			explanation: 'Wide range',
 		},
 		{
 			value: 'all',
 			text: 'All',
-      explanation: 'Wider range, personal use'
+			explanation: 'Wider range, personal use',
 		},
 	];
 
@@ -533,7 +533,7 @@ export default function DesignPage() {
 				style={{
 					display: screenWidth < 1280 ? 'block' : 'flex',
 					padding: '10px',
-					gap: '24px',
+					gap: '10px',
 				}}
 			>
 				{/* <div
@@ -541,10 +541,10 @@ export default function DesignPage() {
 					
 				> */}
 				{/* template-customization-area */}
-				<Column customStyle={{ flex: '1 0 50%' }}>
+				<Column customStyle={{ flex: '1 0 33%' }}>
 					<Panel>
 						<Card>
-							<BigTitle>✍️ Template</BigTitle>
+							<BigTitle>Template</BigTitle>
 							<Explanation>
 								Customize the design for your slide, you can also skip this step
 								and use the default
@@ -586,9 +586,12 @@ export default function DesignPage() {
 								selectedSlideBackgroundImgResource={selectedBackground}
 								selectedSlideLogoUrlResource={selectedLogo}
 							/>
+						</Card>
 
+						<Card>
+							<BigTitle>Image</BigTitle>
 							<div>
-								<Instruction>
+								<Instruction boldenFont={true}>
 									How many images do you want to generate?
 								</Instruction>
 								<RadioButton
@@ -596,32 +599,31 @@ export default function DesignPage() {
 									selectedValue={imageAmount}
 									setSelectedValue={setImageAmount}
 									name='imageAmount'
-									cols={2}
+									cols={1}
 								/>
 							</div>
 							<div>
-								<Instruction>
-									For images on your slides, what image license do you want to
-									use?
+								<Instruction boldenFont={true}>
+									What image license do you want to use?
 								</Instruction>
-								<Explanation>
+								{/* <Explanation>
 									An image license is a set of rules that tell you how you can
 									use a picture. <br />
 									You are free to use images with a creative license or stock
 									pictures for commercial use. <br />
-								</Explanation>
+								</Explanation> */}
 								<RadioButton
 									options={imageLicenseOptions}
 									selectedValue={imageLicense}
 									setSelectedValue={setImageLicense}
 									name='imageLicense'
-									cols={3}
+									cols={1}
 								/>
 							</div>
 						</Card>
 
 						<Card>
-							<BigTitle>🏷️ Branding</BigTitle>
+							<BigTitle>Branding</BigTitle>
 							<Explanation>
 								Select the branding for your slides, you can also change this on
 								the slides page, or talk with AI Chatbot
@@ -636,6 +638,7 @@ export default function DesignPage() {
 									setSelectedBackground={setSelectedBackground}
 									logoPosition={selectedLogoPosition}
 									setLogoPosition={setSelectedLogoPosition}
+									buttonCols={1}
 								/>
 								{/* upload your own template */}
 								<PPTXTemplateSelector
@@ -647,12 +650,13 @@ export default function DesignPage() {
 									extractedTemplateImgUrl={slideBackgroundImgUrl}
 									setSelectedBackground={setSelectedBackground}
 									selectedBackground={selectedBackground}
+									buttonCols={1}
 								/>
 							</div>
 						</Card>
 
 						<Card>
-							<BigTitle>⚙️ Settings (beta)</BigTitle>
+							<BigTitle>Settings (beta)</BigTitle>
 							<Instruction>
 								You can save all the settings on this page to your profile, and
 								apply it in the future for a deck with the same design.
@@ -701,7 +705,7 @@ export default function DesignPage() {
 						axial='y'
 						useGridLayout={true}
 						gridCols={2}
-						slideContainerScale={0.3}
+						slideContainerScale={screenWidth > 1440 ? 0.4 : 0.3}
 						selectedSlideBackgroundImgResource={selectedBackground}
 						selectedSlideLogoResource={selectedLogo}
 					/>

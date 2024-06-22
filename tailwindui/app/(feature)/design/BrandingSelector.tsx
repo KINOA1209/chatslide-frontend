@@ -54,6 +54,7 @@ const BrandingSelector: React.FC<{
 	setSelectedBackground: (selectedBackground: Resource[]) => void;
 	logoPosition: LogoPosition;
 	setLogoPosition: (position: LogoPosition) => void;
+	buttonCols?: number;
 }> = ({
 	logoMode,
 	setLogoMode,
@@ -63,6 +64,7 @@ const BrandingSelector: React.FC<{
 	setSelectedBackground,
 	logoPosition,
 	setLogoPosition,
+	buttonCols = 3,
 }) => {
 	const { isPaidUser } = useUser();
 	const [showPaywall, setShowPaywall] = useState(false);
@@ -80,14 +82,16 @@ const BrandingSelector: React.FC<{
 
 	return (
 		<div className='flex flex-col gap-y-2'>
-			{showPaywall && <PaywallModal
-				showModal={showPaywall}
-				setShowModal={setShowPaywall}
-				message='Unlock this feature to customize logo on your slides.'
-			/>}
+			{showPaywall && (
+				<PaywallModal
+					showModal={showPaywall}
+					setShowModal={setShowPaywall}
+					message='Unlock this feature to customize logo on your slides.'
+				/>
+			)}
 
 			<div>
-				<Instruction>
+				<Instruction boldenFont={true}>
 					What logo do you want to put on your slides?{' '}
 					{!isPaidUser && <PlusLabel />}
 				</Instruction>
@@ -102,7 +106,7 @@ const BrandingSelector: React.FC<{
 						setLogoMode(mode as 'No' | 'Default' | 'Custom');
 					}}
 					name='branding'
-					cols={3}
+					cols={buttonCols}
 				/>
 			</div>
 
@@ -124,7 +128,9 @@ const BrandingSelector: React.FC<{
 						setShowModal={setShowPaywall}
 						message='Unlock this feature to adjust your logo position'
 					/>
-					<Instruction>Where do you want to put the logo? </Instruction>
+					<Instruction boldenFont={true}>
+						Where do you want to put the logo?{' '}
+					</Instruction>
 					<RadioButton
 						options={LogoPositionOptions}
 						selectedValue={logoPosition}
@@ -134,7 +140,7 @@ const BrandingSelector: React.FC<{
 							// updateTemplateLogoPosition(e as LogoPosition); // do not update slides on design page
 						}}
 						name='logoPosition'
-						cols={3}
+						cols={buttonCols}
 					/>
 				</div>
 			)}
@@ -144,6 +150,7 @@ const BrandingSelector: React.FC<{
 				type='background'
 				selectedImage={selectedBackground}
 				setSelectedImage={setSelectedBackground}
+				buttonCols={buttonCols}
 			/>
 		</div>
 	);

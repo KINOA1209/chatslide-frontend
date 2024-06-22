@@ -19,11 +19,9 @@ const Title: React.FC<{ center?: boolean; children: React.ReactNode }> = ({
 
 const SmallTitle: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 	return (
-		<div className='block text-grey-700 text-md font-bold mb-2'>
-			{children}
-		</div>
+		<div className='block text-grey-700 text-md font-bold mb-2'>{children}</div>
 	);
-}
+};
 
 const BigTitle: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 	return (
@@ -36,16 +34,23 @@ const BigTitle: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 const Instruction: React.FC<{
 	center?: boolean;
 	children: React.ReactNode;
-}> = ({ center = false, children }) => {
+	boldenFont?: boolean;
+}> = ({ center = false, children, boldenFont = false }) => {
 	if (center)
 		return (
-			<div className='text-neutral-800 text-md py-1 text-center'>
+			<div
+				className='text-neutral-800 text-[14px] py-1 text-center'
+				style={{ fontWeight: boldenFont ? 700 : 400 }}
+			>
 				{children}
 			</div>
 		);
 	else
 		return (
-			<div className='text-neutral-800 text-md py-1 flex flex-row gap-x-2 items-center justify-start'>
+			<div
+				className='text-neutral-800 text-[14px] py-1 flex flex-row gap-x-2 items-center justify-start'
+				style={{ fontWeight: boldenFont ? 700 : 400 }}
+			>
 				{children}
 			</div>
 		);
@@ -68,9 +73,9 @@ const WarningMessage: React.FC<{ children: React.ReactNode }> = ({
 };
 
 const SuccessMessage: React.FC<{ children: React.ReactNode }> = ({
-  children,
+	children,
 }) => {
-  return <div className='text-green-500 text-sm'>{children}</div>;
+	return <div className='text-green-500 text-sm'>{children}</div>;
 };
 
 const ExplanationPopup: React.FC<{ children: React.ReactNode }> = ({
@@ -105,7 +110,7 @@ export {
 	Instruction,
 	Explanation,
 	ErrorMessage,
-  SuccessMessage,
+	SuccessMessage,
 	WarningMessage,
 	ExplanationPopup,
 };
