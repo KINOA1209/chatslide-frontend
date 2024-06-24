@@ -27,6 +27,29 @@ export default function Studio() {
 				</Card>
 
 				<Card>
+					<BigTitle>June 24</BigTitle>
+
+					<Instruction>
+						<div>
+							<b>🔄 Move Elements on Slides: </b> We have recreated the editing experience, now you will be able to move the elements on the slide pages around, and resize the text and image boxes. You will also be able to realign them with ease. 
+						</div>
+					</Instruction>
+
+					<Instruction>
+						<div>
+							<b>📄 Generate Slides with More Pages: </b> Now you will be able to create slides with more pages, up to 60 pages. More pages will cost more credits. 
+						</div>
+					</Instruction>
+
+					<Instruction>
+						<div>
+							<b>🎨 New Design Page: </b> The user interface of design page is
+							updated.
+						</div>
+					</Instruction>
+				</Card>
+
+				<Card>
 					<BigTitle>June 19</BigTitle>
 
 					<Instruction>
@@ -44,12 +67,6 @@ export default function Studio() {
 							<b>📂 Upload PPTX Template: </b> You can upload a PPTX file as a
 							template for your slides. We currently can only read the
 							background.
-						</div>
-					</Instruction>
-
-					<Instruction>
-						<div>
-							<b>🎨 New Design Page: </b> The user interface of design page is updated.
 						</div>
 					</Instruction>
 				</Card>
