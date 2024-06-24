@@ -47,7 +47,7 @@ import ActionsToolBar from '../ui/ActionsToolBar';
 import { SlidesStatus, useSlides } from '@/hooks/use-slides';
 import useTourStore from '@/components/user_onboarding/TourStore';
 import Chart from '@/models/Chart';
-import ImagePosition from '@/models/ImagePosition';
+import Position from '@/types/Position';
 import { Panel } from '../layout/Panel';
 import { useProject } from '@/hooks/use-project';
 import ScriptWindow from '../script/ScriptWindow';
@@ -512,7 +512,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					| JSX.Element[]
 					| Chart[]
 					| boolean[]
-					| ImagePosition[]
+					| Position
+					| Position[]
 					| Media[]
 			  >,
 		slideIndex: number,
@@ -533,7 +534,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				| JSX.Element[]
 				| Chart[]
 				| boolean[]
-				| ImagePosition[]
+				| Position
+				| Position[]
 				| Media[],
 			className: string,
 		) => {
@@ -561,7 +563,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			} else if (className === 'media_types') {
 				currentSlide.media_types = [...(content as Media[])]; // deep copy
 			} else if (className === 'image_positions') {
-				currentSlide.image_positions = content as ImagePosition[]; // deep copy
+				currentSlide.image_positions = content as Position[]; // deep copy
 				// newSlide.image_positions = slides[0]?.image_positions;
 			} else if (className === 'content') {
 				if (Array.isArray(content)) {
@@ -580,7 +582,17 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			} else if (className === 'is_chart') {
 				currentSlide.is_chart = content as boolean[];
 			} else if (className === 'image_positions') {
-				currentSlide.image_positions = content as ImagePosition[];
+				currentSlide.image_positions = content as Position[];
+			} else if (className === 'title_position') {
+				currentSlide.head_position = (content as Position[])[0];
+			} else if (className === 'topic_position') {
+				currentSlide.title_position = (content as Position[])[0];
+			} else if (className === 'subtopic_position') {
+				currentSlide.subtopic_position = (content as Position[])[0];
+			} else if (className === 'content_position') {
+				currentSlide.content_positions = content as Position[];
+			} else if (className === 'image_container_position') {
+				currentSlide.image_container_positions = content as Position[];
 			} else {
 				console.error(`Unknown tag: ${tag}`);
 			}
@@ -593,7 +605,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					| JSX.Element[]
 					| Chart[]
 					| boolean[]
-					| ImagePosition[];
+					| Position
+					| Position[];
 				if (Array.isArray(content)) {
 					if (idx < content.length) {
 						updateContent = content[idx];
@@ -611,7 +624,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			});
 		} else {
 			applyUpdate(
-				content as string | string[] | Chart[] | boolean[] | ImagePosition[],
+				content as string | string[] | Chart[] | boolean[] | Position | Position[],
 				className,
 			);
 		}
@@ -668,7 +681,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		const updateImgUrl = (
 			urls: string[],
 			ischart: boolean[],
-			image_positions: ImagePosition[],
+			image_positions: Position[],
 			embed_code: string[],
 			media_types: Media[],
 		) => {

@@ -13,7 +13,7 @@ import 'quill/dist/quill.bubble.css';
 import '@/components/socialPost/quillEditor.scss';
 import { SocialPostSlide, SlideKeys } from '@/models/SocialPost';
 import Chart, { Group } from '@/models/Chart';
-import ImagePosition from '@/models/ImagePosition';
+import Position from '@/types/Position';
 import { useProject } from '@/hooks/use-project';
 import SocialPostThemeConfigData, {
 	SocialPostThemeConfig,
@@ -129,14 +129,14 @@ export const templateDispatch = (
 	) => (
 		urls: string[],
 		ischart: boolean[],
-		image_positions: ImagePosition[],
+		image_positions: Position[],
 	) => void = () => () => {}, // Replace with your default function if you have one
 	updateIllustrationUrlArray: (
 		slideIndex: number,
 	) => (
 		urls: string[],
 		ischart: boolean[],
-		image_positions: ImagePosition[],
+		image_positions: Position[],
 	) => void = () => () => {},
 	toggleEditMathMode: () => void = () => {}, // Replace with your default function if you have one
 	isLastPage: boolean = false,

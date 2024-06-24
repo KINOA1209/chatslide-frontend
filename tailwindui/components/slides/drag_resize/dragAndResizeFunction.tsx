@@ -1,14 +1,14 @@
-import ImagePosition from '@/models/ImagePosition';
+import Position from '@/types/Position';
 
 export const initializeImageData = (
-	image_positions: Array<ImagePosition | {}>,
+	image_positions: Array<Position | {}>,
 	refs: React.RefObject<HTMLElement>[],
-): ImagePosition[] => {
+): Position[] => {
 	const positions = image_positions || [{}, {}, {}];
 	return positions.map((pos, index) => {
 		if (pos && Object.keys(pos).length !== 0) {
 			// If position data is available, use it directly
-			return pos as ImagePosition;
+			return pos as Position;
 		} else {
 			return {};
 		}
@@ -20,7 +20,7 @@ export const onMouseLeave =
 	(
 		slideIdx: number,
 		imagesDimensions: (
-			| ImagePosition
+			| Position
 			| { x?: number; y?: number; height?: number; width?: number }
 		)[],
 		hasInteracted: boolean,
@@ -49,6 +49,7 @@ export const onDragStart =
 	(imgIdx: number) =>
 	(e: any, position: { x: number; y: number }) => {
 		e.preventDefault();
+		e.stopPropagation();
 		const newStartPos = [...startPos];
 		newStartPos[imgIdx] = { x: position.x, y: position.y };
 		//setIsDraggingOrResizing(false);
@@ -60,13 +61,13 @@ export const onDragStart =
 export const onDragStop =
 	(
 		imagesDimensions: (
-			| ImagePosition
+			| Position
 			| { x?: number; y?: number; height?: number; width?: number }
 		)[],
 		setImagesDimensions: React.Dispatch<
 			React.SetStateAction<
 				(
-					| ImagePosition
+					| Position
 					| { x?: number; y?: number; height?: number; width?: number }
 				)[]
 			>
@@ -76,6 +77,7 @@ export const onDragStop =
 	) =>
 	(imgIdx: number) =>
 	(e: any, position: { x: number; y: number }) => {
+		e.stopPropagation();
 		const adjustedX = position.x;
 		const adjustedY = position.y;
 		const curr_startPos = startPos[imgIdx];
@@ -111,13 +113,13 @@ export const onResizeStart =
 export const onResizeStop =
 	(
 		imagesDimensions: (
-			| ImagePosition
+			| Position
 			| { x?: number; y?: number; height?: number; width?: number }
 		)[],
 		setImagesDimensions: React.Dispatch<
 			React.SetStateAction<
 				(
-					| ImagePosition
+					| Position
 					| { x?: number; y?: number; height?: number; width?: number }
 				)[]
 			>

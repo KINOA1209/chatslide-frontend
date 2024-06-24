@@ -30,7 +30,7 @@ import { useProject } from '@/hooks/use-project';
 import { useUser } from '@/hooks/use-user';
 import { SocialPostSlide, SlideKeys } from '@/models/SocialPost';
 import { useSocialPosts } from '@/hooks/use-socialpost';
-import ImagePosition from '@/models/ImagePosition';
+import Position from '@/types/Position';
 import Chart from '@/models/Chart';
 import { ToolBar } from '../ui/ToolBar';
 import ShareButton from '@/components/button/ShareButton';
@@ -385,7 +385,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 			| string
 			| string[]
 			| ThemeObject
-			| Array<string | string[] | Chart[] | boolean[] | ImagePosition[]>
+			| Array<string | string[] | Chart[] | boolean[] | Position[]>
 			| ThemeObject
 			| SocialPostTemplateKeys
 			| SocialPostLayoutKeys,
@@ -408,7 +408,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 				| string[]
 				| Chart[]
 				| boolean[]
-				| ImagePosition[]
+				| Position[]
 				| ThemeObject
 				| SocialPostTemplateKeys
 				| SocialPostLayoutKeys,
@@ -473,7 +473,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 			} else if (className === 'is_chart') {
 				currentSlide.is_chart = content as boolean[];
 			} else if (className === 'image_positions') {
-				currentSlide.image_positions = content as ImagePosition[];
+				currentSlide.image_positions = content as Position[];
 			} else if (className === 'template_theme') {
 				currentSlide.template_theme = content as SocialPostTemplateKeys;
 			} else if (className === 'layout') {
@@ -499,7 +499,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 					| string[]
 					| Chart[]
 					| boolean[]
-					| ImagePosition[]
+					| Position[]
 					| ThemeObject;
 				if (Array.isArray(content)) {
 					if (idx < content.length) {
@@ -518,7 +518,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 			});
 		} else {
 			applyUpdate(
-				content as string | string[] | Chart[] | boolean[] | ImagePosition[],
+				content as string | string[] | Chart[] | boolean[] | Position[],
 				className,
 			);
 		}
@@ -551,7 +551,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 		const updateImgUrl = (
 			urls: string[],
 			ischart: boolean[],
-			image_positions: ImagePosition[],
+			image_positions: Position[],
 		) => {
 			urls = urls.map((url) => (url === null ? '' : url));
 			const shuffleIndex = urls.indexOf('shuffle');
@@ -587,7 +587,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 		const updateIllustrationUrl = (
 			urls: string[],
 			ischart: boolean[],
-			image_positions: ImagePosition[],
+			image_positions: Position[],
 		) => {
 			urls = urls.map((url) => (url === null ? '' : url));
 			const shuffleIndex = urls.indexOf('shuffle');

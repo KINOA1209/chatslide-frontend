@@ -20,7 +20,7 @@ import { Rnd } from 'react-rnd';
 import { ResourceIcon } from './ui/ResourceItem';
 import { FiUploadCloud } from 'react-icons/fi';
 
-import ImagePosition from '@/models/ImagePosition';
+import Position from '@/types/Position';
 import {
 	initializeImageData,
 	onDragStart,
@@ -113,7 +113,7 @@ interface ImgModuleProp {
 	// isImgEditMode: boolean;
 	// setShowImgButton: React.Dispatch<React.SetStateAction<boolean>>;
 	// zoomLevel: number;
-	image_positions: ImagePosition[];
+	image_positions: Position[];
 	layoutElements?: LayoutElements;
 	customImageStyle?: React.CSSProperties;
 	setImgHigherZIndex?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -1277,7 +1277,7 @@ export const ImgModule = ({
 	const [hasInteracted, setHasInteracted] = useState(false);
 	const [imagesDimensions, setImagesDimensions] = useState<
 		(
-			| ImagePosition
+			| Position
 			| { x?: number; y?: number; height?: number; width?: number }
 		)[]
 	>([]);
@@ -1459,33 +1459,30 @@ export const ImgModule = ({
 
 	//resize indicator
 	const circle_indicator: CSSProperties = {
-		width: '15px',
-		height: '15px',
-		backgroundColor: 'white',
-		border: '1px solid magenta',
+		width: '10px',
+		height: '10px',
+		backgroundColor: '#E5F4F7',
+		border: '1px solid gray',
 		borderRadius: '50%',
 		zIndex: 53,
 		position: 'absolute',
 	};
 
 	const rectangular_indicator: CSSProperties = {
-		borderRadius: '35%',
-		backgroundColor: 'white',
-		border: '1px solid magenta',
+		width: '10px',
+		height: '10px',
+		backgroundColor: '#E5F4F7',
+		border: '1px solid gray',
 		zIndex: 53,
 		position: 'absolute',
 	};
 
 	const rectangular_horizontal: CSSProperties = {
-		width: '25px',
-		height: '10px',
 		left: '50%',
 		transform: 'translateX(-50%)',
 	};
 
 	const rectangular_vertical: CSSProperties = {
-		width: '10px',
-		height: '25px',
 		top: '50%',
 		transform: 'translateY(-50%)',
 	};
@@ -1520,6 +1517,8 @@ export const ImgModule = ({
 	layoutEntry = Array.isArray(layoutEntry) ? layoutEntry[0] : layoutEntry;
 
 	// console.log('selected img url', selectedImg);
+	const [isClicked, setIsClicked] = useState<boolean>(false);
+	const [isMovement, setIsMovement] = useState<boolean>(false);
 
 	return (
 		<>
@@ -1829,7 +1828,20 @@ export const ImgModule = ({
 				<div
 					onDrop={handleImageDrop}
 					onDragOver={(e) => e.preventDefault()}
-					onClick={openModal}
+					// onClick={openModal}
+					onMouseDown={(e) => {
+						setIsClicked(true);
+					}}
+					onMouseMove={() => {
+						setIsMovement(isClicked);
+					}}
+					onMouseUp={() => {
+						if (!isMovement) {
+							openModal();
+						}
+						setIsClicked(false);
+						setIsMovement(false);
+					}}
 					className={`w-full h-full transition ease-in-out duration-150 relative ${
 						canEdit ? 'hover:bg-[#CAD0D3] cursor-pointer' : ''
 					} flex flex-col items-center justify-center`} //${canEdit && !isImgEditMode ? 'cursor-pointer' : ''}
@@ -1915,7 +1927,7 @@ export const ImgModule = ({
 							ref={imageRefs[currentContentIndex]}
 							onMouseEnter={() => setShowImgButton(true)}
 							onMouseLeave={() => setShowImgButton(false)}
-							onClick={openModal}
+							// onClick={openModal}
 						>
 							{!isSlide && isSocialPostTemp1Cover && (
 								<div
@@ -1954,17 +1966,18 @@ export const ImgModule = ({
 								onResizeStart={handleResizeStart}
 								onResizeStop={handleResizeStop(currentContentIndex)}
 								resizeHandleStyles={{
-									topLeft: { ...circle_indicator, left: '-7px' },
-									topRight: { ...circle_indicator, right: '-7px' },
-									bottomLeft: { ...circle_indicator, left: '-7px' },
-									bottomRight: { ...circle_indicator, right: '-7px' },
-									top: { ...rectangular_indicator, ...rectangular_horizontal },
+									topLeft: circle_indicator,
+									topRight: circle_indicator,
+									bottomLeft: circle_indicator,
+									bottomRight: circle_indicator,
+									top: { ...rectangular_indicator, ...rectangular_horizontal, top: '-5px' },
 									bottom: {
 										...rectangular_indicator,
 										...rectangular_horizontal,
+										bottom: '-5px'
 									},
-									left: { ...rectangular_indicator, ...rectangular_vertical },
-									right: { ...rectangular_indicator, ...rectangular_vertical },
+									left: { ...rectangular_indicator, ...rectangular_vertical, left: '-5px' },
+									right: { ...rectangular_indicator, ...rectangular_vertical, right: '-5px' },
 								}}
 							>
 								<Image
@@ -2038,6 +2051,12 @@ export const ImgModule = ({
 
 										<button
 											onClick={toggleImgEditMode}
+											onMouseDown={(e) => {
+												e.stopPropagation();
+											}}
+											onMouseUp={(e) => {
+												e.stopPropagation();
+											}}
 											className='flex flex-row items-center justify-center gap-1'
 										>
 											{!isImgEditMode ? (
@@ -2080,6 +2099,12 @@ export const ImgModule = ({
 														e.stopPropagation();
 														e.preventDefault();
 													}}
+													onMouseDown={(e) => {
+														e.stopPropagation();
+													}}
+													onMouseUp={(e) => {
+														e.stopPropagation();
+													}}
 												>
 													<LuTrash2
 														style={{
@@ -2101,6 +2126,12 @@ export const ImgModule = ({
 														onClick={(e) => {
 															updateSingleCallback('shuffle', false, {});
 															e.preventDefault();
+															e.stopPropagation();
+														}}
+														onMouseDown={(e) => {
+															e.stopPropagation();
+														}}
+														onMouseUp={(e) => {
 															e.stopPropagation();
 														}}
 													>

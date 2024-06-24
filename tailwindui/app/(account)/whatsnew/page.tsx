@@ -113,7 +113,7 @@ export default function Studio() {
 					</Instruction>
 
 					<Instruction>
-						<div>
+					    	<div>
 							<b>📄 Apply Branding to One Page: </b> You can now select to apply
 							branding choices (logo, logo position, background) to only one
 							specific page.

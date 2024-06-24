@@ -30,7 +30,7 @@ import { layoutOptions } from './slideLayout';
 import Image from 'next/image';
 import { Media, SlideKeys } from '@/models/Slide';
 import Chart from '@/models/Chart';
-import ImagePosition from '@/models/ImagePosition';
+import Position from '@/types/Position';
 
 import { ThemeElements } from './templates_customizable_elements/theme_elements';
 import { LayoutElements } from './templates_customizable_elements/layout_elements';
@@ -40,9 +40,13 @@ export const generateTemplate = (templateName: string) => {
 	return ({
 		user_name,
 		title,
+		title_position,
 		topic,
+		topic_position,
 		subtopic,
+		subtopic_position,
 		content,
+		content_positions,
 		imgs,
 		update_callback,
 		canEdit,
@@ -58,6 +62,7 @@ export const generateTemplate = (templateName: string) => {
 		handleSlideEdit,
 		currentSlideIndex,
 		image_positions,
+		image_container_positions,
 		palette,
 		themeElements,
 		layoutElements,
@@ -123,10 +128,14 @@ export const generateTemplate = (templateName: string) => {
 					)}
 					<ChosenLayoutNonCover
 						content={content}
+						content_positions={content_positions}
 						user_name={user_name}
 						title={title}
+						title_position={title_position}
 						topic={topic}
+						topic_position={topic_position}
 						subtopic={subtopic}
+						subtopic_position={subtopic_position}
 						imgs={imgs}
 						update_callback={update_callback}
 						canEdit={canEdit}
@@ -142,6 +151,7 @@ export const generateTemplate = (templateName: string) => {
 						handleSlideEdit={handleSlideEdit}
 						currentSlideIndex={currentSlideIndex}
 						image_positions={image_positions}
+						image_container_positions={image_container_positions}
 						embed_code={embed_code}
 						media_types={media_types}
 					></ChosenLayoutNonCover>
@@ -181,10 +191,14 @@ export const generateTemplate = (templateName: string) => {
 					)}
 					<ChosenLayoutCover
 						content={content}
+						content_positions={content_positions}
 						user_name={user_name}
 						title={title}
+						title_position={title_position}
 						topic={topic}
+						topic_position={topic_position}
 						subtopic={subtopic}
+						subtopic_position={subtopic_position}
 						imgs={imgs}
 						update_callback={update_callback}
 						canEdit={canEdit}
@@ -200,6 +214,7 @@ export const generateTemplate = (templateName: string) => {
 						handleSlideEdit={handleSlideEdit}
 						currentSlideIndex={currentSlideIndex}
 						image_positions={image_positions}
+						image_container_positions={image_container_positions}
 						embed_code={embed_code}
 						media_types={media_types}
 					></ChosenLayoutCover>
@@ -258,15 +273,19 @@ const Business_Review_012_template = generateTemplate(
 export interface MainSlideProps {
 	user_name: JSX.Element;
 	title: JSX.Element;
+	title_position: Position;
 	topic: JSX.Element;
+	topic_position: Position;
 	subtopic: JSX.Element;
+	subtopic_position: Position;
 	content: JSX.Element | JSX.Element[];
+	content_positions: Position[];
 	imgs: string[];
 	//   imgs: JSX.Element
 	update_callback: (
 		imgs: string[],
 		ischart: boolean[],
-		image_positions: ImagePosition[],
+		image_positions: Position[],
 		embed_code: string[],
 		media_types: Media[],
 	) => void;
@@ -282,7 +301,8 @@ export interface MainSlideProps {
 	ischarts: boolean[];
 	handleSlideEdit: Function;
 	currentSlideIndex: number;
-	image_positions: ImagePosition[];
+	image_positions: Position[];
+	image_container_positions: Position[];
 	palette?: PaletteKeys;
 	template?: TemplateKeys;
 	themeElements: ThemeElements;

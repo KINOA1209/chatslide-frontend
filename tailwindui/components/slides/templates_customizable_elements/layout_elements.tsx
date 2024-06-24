@@ -49,6 +49,7 @@ export type LayoutElements = {
 	rndContainerCSS?: React.CSSProperties;
 	rndCSS?: React.CSSProperties;
 	titleAndContentColumnCSS?: React.CSSProperties;
+	handlerCSS?: React.CSSProperties;
 };
 
 export type TemplateLayoutsConfig = {

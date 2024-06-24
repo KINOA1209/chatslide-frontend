@@ -205,6 +205,10 @@ export default function WorkflowStep5() {
 		}
 
 		const generateVideo = async () => {
+      if (isELabsVoice(voice) || isOpenaiVoice(voice)) {
+        setAvatar('');
+      }
+
 			try {
 				console.log('project_id:', project_id);
 				updateProject('video_url', '');
