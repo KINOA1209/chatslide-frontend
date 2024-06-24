@@ -3,6 +3,8 @@ import DesignSystemButton from '@/components/ui/design_systems/ButtonsOrdinary';
 import Project from '@/models/Project';
 import Folder from '@/models/Folder';
 import TeamModal from './TeamModal';
+import { useUser } from '@/hooks/use-user';
+import useHydrated from '@/hooks/use-hydrated';
 
 interface DashboardHeaderProps {
   activeFolder: string;
@@ -25,81 +27,86 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
   isTeamMode,
   teamId
 }) => {
+	const [showTeamManagement, setShowTeamManagement] = useState(false);
+	const { username } = useUser();
 
-  const [showTeamManagement, setShowTeamManagement] = useState(false);
+	// avoid hydration error during development caused by persistence
+	if (!useHydrated()) return <></>;
 
-  return (
-    <div className='flex flex-row items-end w-full z-40 pt-[2rem] px-[2rem]'>
-      <div className='w-full flex flex-wrap items-center justify-between'>
-        <div
-          className='text-[24px] font-bold leading-[32px] tracking-wide cursor-pointer'
-          style={{
-            color: 'var(--colors-text-text-secondary-700, #344054)',
-          }}
-          onClick={handleBackToDefaultFolder}
-          onDragOver={(e) => e.preventDefault()}
-          onDrop={(e) => {
-            e.preventDefault();
-            moveProjectToFolder({
-              folderName: 'drlambda-default',
-              projects: []
-            });
-          }}
-        >
-          {isTeamMode 
-            ? 'Team Projects'
-            : activeFolder === 'drlambda-default'
-              ? 'My Projects'
-              : `My Projects > ${activeFolder}`}
-        </div>
+	return (
+		<div className='flex flex-row items-end w-full z-40 pt-[2rem] px-[2rem]'>
+			<div className='w-full flex flex-wrap items-center justify-between'>
+				<div
+					className='text-[24px] font-bold leading-[32px] tracking-wide cursor-pointer'
+					style={{
+						color: 'var(--colors-text-text-secondary-700, #344054)',
+					}}
+					onClick={handleBackToDefaultFolder}
+					onDragOver={(e) => e.preventDefault()}
+					onDrop={(e) => {
+						e.preventDefault();
+						moveProjectToFolder({
+							folderName: 'drlambda-default',
+							projects: [],
+						});
+					}}
+				>
+					{isTeamMode
+						? 'Team Projects'
+						: activeFolder === 'drlambda-default'
+							? username + `'s Projects`
+							: username + `'s Projects > ${activeFolder}`}
+				</div>
 
-        <div className='flex flex-row gap-2'>
-          {activeFolder === 'drlambda-default' && projects.length > 0 && !isTeamMode && (
-            <DesignSystemButton
-              isPaidFeature={false}
-              size='lg'
-              hierarchy='secondary'
-              buttonStatus='enabled'
-              onClick={handleCreateFolderClick}
-            >
-              <span className='whitespace-nowrap'>Create Folder</span>
-            </DesignSystemButton>
-          )}
+				<div className='flex flex-row gap-2'>
+					{activeFolder === 'drlambda-default' &&
+						projects.length > 0 &&
+						!isTeamMode && (
+							<DesignSystemButton
+								isPaidFeature={false}
+								size='lg'
+								hierarchy='secondary'
+								buttonStatus='enabled'
+								onClick={handleCreateFolderClick}
+							>
+								<span className='whitespace-nowrap'>Create Folder</span>
+							</DesignSystemButton>
+						)}
 
-          {isTeamMode && (
-            <>
-              <DesignSystemButton
-                isPaidFeature={false}
-                size='lg'
-                hierarchy='secondary'
-                buttonStatus='enabled'
-                onClick={() => setShowTeamManagement(true)}
-              >
-                <span className='whitespace-nowrap'> Members </span>
-              </DesignSystemButton>
-            </>
-          )}
+					{isTeamMode && (
+						<>
+							<DesignSystemButton
+								isPaidFeature={false}
+								size='lg'
+								hierarchy='secondary'
+								buttonStatus='enabled'
+								onClick={() => setShowTeamManagement(true)}
+							>
+								<span className='whitespace-nowrap'> Members </span>
+							</DesignSystemButton>
+						</>
+					)}
 
-          <DesignSystemButton
-            isPaidFeature={false}
-            size='lg'
-            hierarchy='primary'
-            buttonStatus='enabled'
-            onClick={handleStartNewProject}
-          >
-            <span className='whitespace-nowrap'>Start New Project</span>
-          </DesignSystemButton>
-        </div>
-      </div>
-      {showTeamManagement && (
-        <TeamModal
-          showModal={showTeamManagement}
-          setShowModal={setShowTeamManagement}
-          teamId={teamId}
-        />
-      )}
-    </div>
-  );
+					<DesignSystemButton
+						isPaidFeature={false}
+						size='lg'
+						hierarchy='primary'
+						buttonStatus='enabled'
+						onClick={handleStartNewProject}
+					>
+						<span className='whitespace-nowrap'>Start New Project</span>
+					</DesignSystemButton>
+				</div>
+			</div>
+			{showTeamManagement && (
+				<TeamModal
+					showModal={showTeamManagement}
+					setShowModal={setShowTeamManagement}
+					teamId={teamId}
+				/>
+			)}
+		</div>
+	);
 };
 
 export default DashboardHeader;
