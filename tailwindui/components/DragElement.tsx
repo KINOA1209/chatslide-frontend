@@ -35,22 +35,46 @@ export const DragElement = ({
 	const [isDragDisable, setIsDragDisable] = useState<boolean>(true);
 	const [isOverHandler, setIsOverHandler] = useState<boolean>(false);
 	const [isResize, setIsResize] = useState<boolean>(false);
-	const [position, setPosition] = useState({
-		x: positions[contentIndex].x ? Number(positions[contentIndex].x) : 0,
-		y: positions[contentIndex].y ? Number(positions[contentIndex].y) : 0,
-	});
-	const [size, setSize] = useState({
-		width: positions[contentIndex].width
-			? positions[contentIndex].width === -1
-				? 'max-content'
-				: Number(positions[contentIndex].width) + 'px'
-			: 'max-content',
-		height: positions[contentIndex].height
-			? positions[contentIndex].height === -1
-				? 'max-content'
-				: Number(positions[contentIndex].height) + 'px'
-			: 'max-content',
-	});
+	const [position, setPosition] = useState<{ x: number; y: number }>(
+		positions === undefined
+			? { x: 0, y: 0 }
+			: {
+					x:
+						positions[contentIndex] === undefined
+							? 0
+							: positions[contentIndex].x
+								? Number(positions[contentIndex].x)
+								: 0,
+					y:
+						positions[contentIndex] === undefined
+							? 0
+							: positions[contentIndex].y
+								? Number(positions[contentIndex].y)
+								: 0,
+				},
+	);
+	const [size, setSize] = useState<{ width: string; height: string }>(
+		positions === undefined
+			? { width: 'max-content', height: 'max-content' }
+			: {
+					width:
+						positions[contentIndex] === undefined
+							? 'max-content'
+							: positions[contentIndex].width
+								? positions[contentIndex].width === -1
+									? 'max-content'
+									: Number(positions[contentIndex].width) + 'px'
+								: 'max-content',
+					height:
+						positions[contentIndex] === undefined
+							? 'max-content'
+							: positions[contentIndex].height
+								? positions[contentIndex].height === -1
+									? 'max-content'
+									: Number(positions[contentIndex].height) + 'px'
+								: 'max-content',
+				},
+	);
 
 	const handleDragStart = (e: any) => {
 		if (isDragDisable) {
