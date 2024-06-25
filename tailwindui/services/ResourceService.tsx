@@ -117,6 +117,8 @@ class ResourceService {
 
 			if (response.ok) {
 				return await response.json();
+			} else if (response.status === 400) {
+				throw new Error('Bad request: The request parameters are invalid.');
 			} else {
 				throw new Error(
 					`Failed to summarize resources for slides: ${response.status}`,

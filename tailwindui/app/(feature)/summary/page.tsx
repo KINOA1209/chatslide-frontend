@@ -445,10 +445,22 @@ export default function Topic() {
 				} as Project);
 
 				console.log('knowledge_summary', response.data.knowledge_summary);
+        setSummarizing(false);
 			} catch (error) {
-				console.error('Error summarizing resources', error);
+        if (error instanceof Error && error.message.includes('Bad request')) {
+          toast.error("The resource you provided does not provide sufficient information.")
+				} else {
+					console.error('Error summarizing resources', error);
+				}
+
+        setSummarizing(false);
+        
+        if (!topic) {
+          // if there is no topic (file mode), and cannot summarize, end early 
+          return;
+        }
 			}
-			setSummarizing(false);
+			
 		} else {
 			console.log('no need to summarize resources');
 			setSummarizing(false);
