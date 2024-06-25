@@ -40,25 +40,6 @@ export default class TeamService {
     }
   }
 
-  static async getTeamMembers(teamId: string, token: string) {
-    const response = await fetch('/api/team/get_members', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ team_id: teamId }),
-    });
-
-    if (response.ok) {
-      const resp = await response.json();
-      return resp.data;
-    } else {
-      const errorResp = await response.json();
-      throw new Error('Error when getting team members: ' + errorResp.message);
-    }
-  }
-
   static async setAdmin(teamId: string, memberId: string, token: string) {
     const response = await fetch('/api/team/add_admin', {
       method: 'POST',

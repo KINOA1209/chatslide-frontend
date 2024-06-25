@@ -32,16 +32,16 @@ const TeamModal: React.FC<TeamModalProps> = ({
 	teamId,
 }) => {
 	const [members, setMembers] = useState<TeamMember[]>([]);
-	const [newMemberEmail, setNewMemberEmail] = useState<string>('');
-	const [inviteCode, setInviteCode] = useState<string>('');
-	const [maxMembers, setMaxMembers] = useState<number>(0);
-	const [freeMembers, setFreeMembers] = useState<number>(0);
-	const [inviteCodeFree, setInviteCodeFree] = useState<string>('');
+	// const [newMemberEmail, setNewMemberEmail] = useState<string>('');
+	// const [inviteCode, setInviteCode] = useState<string>('');
+	// const [maxMembers, setMaxMembers] = useState<number>(0);
+	// const [freeMembers, setFreeMembers] = useState<number>(0);
+	// const [inviteCodeFree, setInviteCodeFree] = useState<string>('');
 	const [isOwner, setIsOwner] = useState<boolean>(false);
 	const { token, email, username } = useUser();
 	const [currency, setCurrency] = useState('$');
 
-	const { team, initTeam } = useTeam();
+	const { team, updateInvitationCode } = useTeam();
 
 	useEffect(() => {
 		userInEU().then((res) => {
@@ -49,60 +49,69 @@ const TeamModal: React.FC<TeamModalProps> = ({
 		});
 	}, []);
 
-	useEffect(() => {
-		if (showModal && teamId) {
-			fetchTeamMembers();
-			fetchTeamDetails();
-		}
-	}, [showModal, teamId]);
+  useEffect(() => {
+    if (!team)
+      return;
+    console.log('tea')
+    setIsOwner(
+			team.owner.username === username || team.owner.username === email,
+		);
+  }, [team])
 
-	const fetchTeamMembers = async () => {
-		try {
-			const data = await TeamService.getTeamMembers(teamId, token);
-			console.log('team members:', data);
-			const membersList: TeamMember[] = [
-				{
-					id: data.owner.id,
-					name: data.owner.username,
-					email: data.owner.email,
-					role: 'Owner',
-				},
-				...data.admins.map((admin: any) => ({
-					id: admin.id,
-					name: admin.username,
-					email: admin.email,
-					role: 'Admin',
-				})),
-				...data.members.map((member: any) => ({
-					id: member.id,
-					name: member.username,
-					email: member.email,
-					member_type: member.member_type,
-					role: 'Member',
-				})),
-			];
-			console.log('membersList:', membersList);
-			setMembers(membersList);
-			setIsOwner(
-				data.owner.username === username || data.owner.username === email,
-			);
-		} catch (err) {
-			console.error(err);
-		}
-	};
+	// useEffect(() => {
+	// 	if (showModal && teamId) {
+	// 		fetchTeamMembers();
+	// 		fetchTeamDetails();
+	// 	}
+	// }, [showModal, teamId]);
 
-	const fetchTeamDetails = async () => {
-		try {
-			const data = await TeamService.getTeamDetails(teamId, token);
-			initTeam(data as Team);
-			setMaxMembers(data.max_members);
-			setFreeMembers(data.free_members);
-			setInviteCode(data.invitation_code);
-			setInviteCodeFree(data.invitation_code_free);
-		} catch (err) {
-			console.error('Error fetching team details:', err);
-		}
-	};
+	// const fetchTeamMembers = async () => {
+	// 	try {
+	// 		const data = await TeamService.getTeamMembers(teamId, token);
+	// 		console.log('team members:', data);
+	// 		const membersList: TeamMember[] = [
+	// 			{
+	// 				id: data.owner.id,
+	// 				name: data.owner.username,
+	// 				email: data.owner.email,
+	// 				role: 'Owner',
+	// 			},
+	// 			...data.admins.map((admin: any) => ({
+	// 				id: admin.id,
+	// 				name: admin.username,
+	// 				email: admin.email,
+	// 				role: 'Admin',
+	// 			})),
+	// 			...data.members.map((member: any) => ({
+	// 				id: member.id,
+	// 				name: member.username,
+	// 				email: member.email,
+	// 				member_type: member.member_type,
+	// 				role: 'Member',
+	// 			})),
+	// 		];
+	// 		console.log('membersList:', membersList);
+	// 		setMembers(membersList);
+	// 		setIsOwner(
+	// 			data.owner.username === username || data.owner.username === email,
+	// 		);
+	// 	} catch (err) {
+	// 		console.error(err);
+	// 	}
+	// };
+
+	// const fetchTeamDetails = async () => {
+	// 	try {
+	// 		const data = await TeamService.getTeamDetails(teamId, token);
+	// 		initTeam(data as Team);
+	// 		setMaxMembers(data.max_members);
+	// 		setFreeMembers(data.free_members);
+	// 		setInviteCode(data.invitation_code);
+	// 		setInviteCodeFree(data.invitation_code_free);
+	// 	} catch (err) {
+	// 		console.error('Error fetching team details:', err);
+	// 	}
+	// };
 
 	const handleRoleChange = (index: number, role: string) => {
 		if (role === 'Remove') {
@@ -134,11 +143,7 @@ const TeamModal: React.FC<TeamModalProps> = ({
         isFree,
         token,
 			);
-			if (isFree) {
-				setInviteCodeFree(inviteCode);
-			} else {
-				setInviteCode(inviteCode);
-			}
+      updateInvitationCode(isFree, inviteCode);
 		} catch (err) {
 			console.error(err);
 		}
@@ -182,7 +187,7 @@ const TeamModal: React.FC<TeamModalProps> = ({
 				hasInputArea={false}
 			>
 				<div>
-					{isOwner && (
+					{team && isOwner && (
 						<>
 							<div className='mb-4'>
 								<SmallTitle>Invite Codes</SmallTitle>
@@ -196,18 +201,20 @@ const TeamModal: React.FC<TeamModalProps> = ({
 								<div className='flex flex-col gap-y-2'>
 									<div>
 										<span className='text-gray-800'>Free Tier:</span>
-										{freeMembers <= freeMembersCount ? (
+										{team?.free_members <= freeMembersCount ? (
 											<ErrorMessage>
 												You have reached the maximum number of free members
 												allowed for your team.
 											</ErrorMessage>
-										) : inviteCodeFree ? (
+										) : team.invitation_code_free ? (
 											<>
 												<span className='ml-2 font-bold text-blue-600'>
-													{inviteCodeFree}
+													{team.invitation_code_free}
 												</span>
 												<button
-													onClick={() => copyToClipboard(inviteCodeFree)}
+													onClick={() =>
+														copyToClipboard(team.invitation_code_free)
+													}
 													className='ml-2 text-blue-600 hover:text-blue-800'
 												>
 													<FaClone />
@@ -222,18 +229,18 @@ const TeamModal: React.FC<TeamModalProps> = ({
 
 									<div>
 										<span className='text-gray-800'>Pro Tier:</span>
-										{maxMembers <= paidMembersCount ? (
+										{team.max_members <= paidMembersCount ? (
 											<ErrorMessage>
 												You have reached the maximum number of members allowed
 												for your team. Please purchase a seat.
 											</ErrorMessage>
-										) : inviteCode ? (
+										) : team.invitation_code ? (
 											<>
 												<span className='ml-2 font-bold text-blue-600'>
-													{inviteCode}
+													{team.invitation_code}
 												</span>
 												<button
-													onClick={() => copyToClipboard(inviteCode)}
+													onClick={() => copyToClipboard(team.invitation_code)}
 													className='ml-2 text-blue-600 hover:text-blue-800'
 												>
 													<FaClone />
@@ -258,12 +265,14 @@ const TeamModal: React.FC<TeamModalProps> = ({
 								</div>
 								<div className='mt-2'>
 									<p>
-										Currently you have {maxMembers} seat(s), and you have{' '}
+										Currently you have {team.max_members} seat(s), and you have{' '}
 										{paidMembersCount} paid member(s). Purchase new seat to
 										increase the limit.
 									</p>
 									<p className='text-green-600'>
-										New user will join as PRO Lifetime tier. The tier is originally priced at $278. You can add a team member with PRO tier at $99, this is 65% off. 
+										New user will join as PRO Lifetime tier. The tier is
+										originally priced at $278. You can add a team member with
+										PRO tier at $99, this is 65% off.
 									</p>
 								</div>
 							</div>

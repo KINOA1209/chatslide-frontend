@@ -7,8 +7,11 @@ export type TeamMember = {
 export type Team = {
 	id: string;
 	name: string;
-  owner: TeamMember;
-  admins: TeamMember[];
-  members: TeamMember[];
-  max_members: number;
-}
+	owner: TeamMember;
+	admins: TeamMember[];
+	members: TeamMember[];
+	max_members: number;
+	free_members: number;
+	invitation_code: string;
+	invitation_code_free: string;
+};

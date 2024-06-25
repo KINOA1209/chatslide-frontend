@@ -18,6 +18,7 @@ import CreateFolderModal from '@/components/dashboard/createFolderModal';
 import Project from '@/models/Project';
 import Folder from '@/models/Folder';
 import UserService from '@/services/UserService';
+import { useTeam } from '@/hooks/use-team';
 
 export default function Dashboard() {
 
@@ -44,6 +45,7 @@ export default function Dashboard() {
   const searchParams = useSearchParams();
   const mode = searchParams.get('mode');
   const isTeamMode = mode === 'team';
+  const { teamId, team} = useTeam();
 
 
   useEffect(() => {
@@ -128,13 +130,11 @@ export default function Dashboard() {
       }
     }
     if (isTeamMode) {
-      const response = await TeamService.getUserTeams(token);
-      if (response.all_teams.length === 0) {
+      if (!teamId) {
         setNoTeam(true);
         router.push('/team');
       } else {
-        setCurrentTeam(response.all_teams[0]);
-        sessionStorage.setItem('currentTeam', response.all_teams[0]);
+        sessionStorage.setItem('currentTeam', teamId);
       }
     } else {
       sessionStorage.removeItem('currentTeam');

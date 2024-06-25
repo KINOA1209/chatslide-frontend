@@ -34,6 +34,7 @@ import { RenameProjectButton } from './renameProjectButton';
 import { MoveToTeamButton } from '@/components/dashboard/MoveToTeamButton';
 import { ChangeProjectDescriptionButton } from './changeProjectDescriptionButton';
 import TeamService from '@/services/TeamService';
+import { useTeam } from '@/hooks/use-team';
 
 const ExportToPdfButton = dynamic(
 	() => import('@/components/slides/ExportButton'), // Path to your ExportToPdfButton component
@@ -125,29 +126,19 @@ const ProjectItem: React.FC<{
 		const [showMoveToFolderModal, setShowMoveToFolderModal] = useState(false);
 		const [showMoveToTeamModal, setShowMoveToTeamModal] = useState(false);
 		const [showRenameProjectModal, setShowRenameProjectModal] = useState(false)
-		const [userTeam, setUserTeam] = useState<string>();
+    const { teamId } = useTeam();
 		//const isPriority = project.post_type !== 'presentation';
 		const router = useRouter();
 		// const exportSlidesRef = useRef<HTMLDivElement>(null);
 		const [showChangeProjectDescriptionModal, setShowChangeProjectDescriptionModal] = useState(false)
 
-		useEffect(() => {
-			getUserTeam();
-		}, []);
-
-		const getUserTeam = async () => {
-			const response = await TeamService.getUserTeams(token);
-			const userTeam = response.all_teams[0];
-			setUserTeam(userTeam);
-		}
-
-
 		return (
 			<React.Fragment key={project.id}>
 				{/* thumbnail */}
 				<div
-					className={`h-full hidden lg:flex col-span-1 p-1 items-center justify-center ${!isCloning ? 'cursor-pointer' : 'cursor-not-allowed'
-						} leading-normal`}
+					className={`h-full hidden lg:flex col-span-1 p-1 items-center justify-center ${
+						!isCloning ? 'cursor-pointer' : 'cursor-not-allowed'
+					} leading-normal`}
 					draggable={onDrag ? true : false}
 					onDragStart={() => onDrag && onDrag(project.id)}
 				>
@@ -174,18 +165,19 @@ const ProjectItem: React.FC<{
 								width={72}
 								height={40}
 								style={{ width: '72px', height: '40px' }}
-							//priority={isPriority}
-							// onError={(e) => {
-							// 	e.currentTarget.src = DEFAULT_THUMBNAIL;
-							// }}
+								//priority={isPriority}
+								// onError={(e) => {
+								// 	e.currentTarget.src = DEFAULT_THUMBNAIL;
+								// }}
 							/>
 						</div>
 					</Link>
 				</div>
 				{/* title */}
 				<div
-					className={`col-span-3 lg:col-span-2 p-2 flex items-center ${!isCloning ? 'cursor-pointer' : 'cursor-not-allowed'
-						} leading-[20px]`}
+					className={`col-span-3 lg:col-span-2 p-2 flex items-center ${
+						!isCloning ? 'cursor-pointer' : 'cursor-not-allowed'
+					} leading-[20px]`}
 					style={{ padding: `var(--spacing-xl, 8px) var(--spacing-3xl, 8px)` }}
 					draggable={onDrag ? true : false}
 					onDragStart={() => onDrag && onDrag(project.id)}
@@ -310,7 +302,7 @@ const ProjectItem: React.FC<{
 								<button
 									className='block px-[10px] py-[9px] text-sm text-[#182230] rounded-md  hover:bg-zinc-100 w-full text-left'
 									onClick={() => {
-										setShowRenameProjectModal(true)
+										setShowRenameProjectModal(true);
 									}}
 									style={{
 										display: 'flex',
@@ -332,31 +324,39 @@ const ProjectItem: React.FC<{
 								</button>
 							)}
 
-							{project.id && setCurrentProjects && folders && setFolders && project.content_type==='presentation' && (
-								<button
-									className='block px-[10px] py-[9px] text-sm text-[#182230] rounded-md  hover:bg-zinc-100 w-full text-left'
-									onClick={() => {
-										setShowChangeProjectDescriptionModal(true)
-									}}
-									style={{
-										display: 'flex',
-										flexDirection: 'row',
-										alignItems: 'center',
-										justifyContent: 'flex-start',
-										gap: 'var(--spacing-lg, 12px)',
-									}}
-								>
-									<ChangeProjectDescriptionButton
-										project={project}
-										setCurrentProjects={setCurrentProjects}
-										folders={folders}
-										setFolders={setFolders}
-										showChangeProjectDescriptionModal={showChangeProjectDescriptionModal}
-										setShowChangeProjectDescriptionModal={setShowChangeProjectDescriptionModal}
-									/>
-									Change Description
-								</button>
-							)}
+							{project.id &&
+								setCurrentProjects &&
+								folders &&
+								setFolders &&
+								project.content_type === 'presentation' && (
+									<button
+										className='block px-[10px] py-[9px] text-sm text-[#182230] rounded-md  hover:bg-zinc-100 w-full text-left'
+										onClick={() => {
+											setShowChangeProjectDescriptionModal(true);
+										}}
+										style={{
+											display: 'flex',
+											flexDirection: 'row',
+											alignItems: 'center',
+											justifyContent: 'flex-start',
+											gap: 'var(--spacing-lg, 12px)',
+										}}
+									>
+										<ChangeProjectDescriptionButton
+											project={project}
+											setCurrentProjects={setCurrentProjects}
+											folders={folders}
+											setFolders={setFolders}
+											showChangeProjectDescriptionModal={
+												showChangeProjectDescriptionModal
+											}
+											setShowChangeProjectDescriptionModal={
+												setShowChangeProjectDescriptionModal
+											}
+										/>
+										Change Description
+									</button>
+								)}
 
 							{!isDiscover && setCurrentProjects && (
 								<button
@@ -385,31 +385,34 @@ const ProjectItem: React.FC<{
 								</button>
 							)}
 
-							{!isDiscover && setCurrentProjects && project.team_id === "" && userTeam &&(
-								<button
-									className='block px-[10px] py-[9px] text-sm text-[#182230] rounded-md  hover:bg-zinc-100 w-full text-left'
-									onClick={() => {
-										setShowMoveToTeamModal(true);
-									}}
-									style={{
-										display: 'flex',
-										flexDirection: 'row',
-										alignItems: 'center',
-										justifyContent: 'flex-start',
-										gap: 'var(--spacing-lg, 12px)'
-									}}
-								>
-									<MoveToTeamButton
-										project={project}
-										setCurrentProjects={setCurrentProjects}
-										teamId={project.team_id}
-										showMoveToTeamModal={showMoveToTeamModal}
-										setShowMoveToTeamModal={setShowMoveToTeamModal}
-										setRefreshMenu={setRefreshMenu}
-									/>
-									Move to team
-								</button>
-							)}
+							{!isDiscover &&
+								setCurrentProjects &&
+								project.team_id === '' &&
+								teamId && (
+									<button
+										className='block px-[10px] py-[9px] text-sm text-[#182230] rounded-md  hover:bg-zinc-100 w-full text-left'
+										onClick={() => {
+											setShowMoveToTeamModal(true);
+										}}
+										style={{
+											display: 'flex',
+											flexDirection: 'row',
+											alignItems: 'center',
+											justifyContent: 'flex-start',
+											gap: 'var(--spacing-lg, 12px)',
+										}}
+									>
+										<MoveToTeamButton
+											project={project}
+											setCurrentProjects={setCurrentProjects}
+											teamId={project.team_id}
+											showMoveToTeamModal={showMoveToTeamModal}
+											setShowMoveToTeamModal={setShowMoveToTeamModal}
+											setRefreshMenu={setRefreshMenu}
+										/>
+										Move to teamTeam List
+									</button>
+								)}
 
 							{!isDiscover &&
 								folders &&

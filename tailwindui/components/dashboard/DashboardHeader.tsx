@@ -5,6 +5,7 @@ import Folder from '@/models/Folder';
 import TeamModal from './TeamModal';
 import { useUser } from '@/hooks/use-user';
 import useHydrated from '@/hooks/use-hydrated';
+import { useTeam } from '@/hooks/use-team';
 
 interface DashboardHeaderProps {
   activeFolder: string;
@@ -29,6 +30,7 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
 }) => {
 	const [showTeamManagement, setShowTeamManagement] = useState(false);
 	const { username } = useUser();
+  const { team } = useTeam();
 
 	// avoid hydration error during development caused by persistence
 	if (!useHydrated()) return <></>;
@@ -52,7 +54,7 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
 					}}
 				>
 					{isTeamMode
-						? 'Team Projects'
+						? (team?.name + `'s` || 'Team') + ' Projects' 
 						: activeFolder === 'drlambda-default'
 							? username + `'s Projects`
 							: username + `'s Projects > ${activeFolder}`}
