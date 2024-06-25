@@ -30,10 +30,16 @@ export const useTeam = () => {
 	async function initTeam() {
 		if (teamStatus === TeamStatus.Inited || teamStatus === TeamStatus.Initing)
 			return;
+    if (teamId && team) {
+      teamStatus = TeamStatus.Inited;
+      return;
+    }
+      
 		teamStatus = TeamStatus.Initing;
 
 		console.log('-- initTeam');
 		try {
+      console.log('-- getting user teams')
 			const data = (await TeamService.getUserTeams(token)).all_teams;
       if (data.length === 0) {
         console.log('No teams found');
@@ -42,6 +48,7 @@ export const useTeam = () => {
       }
 			setTeamId(data[0]);
 			if (teamId) {
+        console.log('-- getting team details', teamId);
 				const teamData = await TeamService.getTeamDetails(teamId, token);
 				setTeam(teamData);
 			}
