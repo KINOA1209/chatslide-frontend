@@ -500,7 +500,7 @@ export const Cover_img_1_layout = ({
 
 			<div
 				className={`SlideImageContainer`}
-				style={layoutElements.imageContainerCSS}
+				style={{...layoutElements.imageContainerCSS, zIndex: 60}}
 			>
 				<DragElement
 					type={ElementType.ImageView}
@@ -689,11 +689,11 @@ export const Col_1_img_0_layout = ({
 				</div>
 				<div
 					className='SlideTitlesAndCOntentDivider opacity-50 border border-neutral-900 border-opacity-40'
-					style={layoutElements.titlesAndContentDividerCSS}
+					style={{...layoutElements.titlesAndContentDividerCSS, zIndex: 50}}
 				></div>
 				<div
 					className='SlideColumn'
-					style={{ ...layoutElements.columnCSS, zIndex: 40 }}
+					style={{ ...layoutElements.columnCSS, zIndex: 50 }}
 				>
 					<div
 						className='SlideContent'
@@ -877,7 +877,7 @@ export const Col_2_img_0_layout = ({
 					className={`w-full flex SlideContentContainer`}
 					style={{
 						...layoutElements.contentContainerCSS,
-						zIndex: 40,
+						zIndex: 50,
 						gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
 						// backgroundColor: themeElements.slideContentContainerBackgroundColor
 						// 	? themeElements.slideContentContainerBackgroundColor
@@ -1216,7 +1216,7 @@ export const Col_3_img_0_layout = ({
 					className={`w-full flex SlideContentContainer`}
 					style={{
 						...layoutElements.contentContainerCSS,
-						zIndex: 40,
+						zIndex: 50,
 						gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
 						// backgroundColor: themeElements.slideContentContainerBackgroundColor
 						// 	? themeElements.slideContentContainerBackgroundColor
@@ -1654,6 +1654,7 @@ export const Col_2_img_1_layout = ({
 				className={`SlideTopicSubtopicContentContainer`}
 				style={{
 					...layoutElements.columnCSS,
+					zIndex: 50,
 					// backgroundColor: themeElements.slideColumnBackgroundColor
 					// 	? themeElements.slideColumnBackgroundColor
 					// 	: '',
@@ -1714,7 +1715,7 @@ export const Col_2_img_1_layout = ({
 					className='w-full flex SlideContentContainer'
 					style={{
 						...layoutElements.contentContainerCSS,
-						zIndex: 40,
+						zIndex: 50,
 						backgroundColor: themeElements.slideContentContainerBackgroundColor
 							? themeElements.slideContentContainerBackgroundColor
 							: '',
@@ -1749,7 +1750,7 @@ export const Col_2_img_1_layout = ({
 				className={`SlideImageContainer`}
 				style={{
 					...layoutElements.imageContainerCSS,
-					zIndex: imgHigherZIndex ? 100 : 20,
+					zIndex: 50,
 				}}
 			>
 				<DragElement
@@ -1929,6 +1930,7 @@ export const Col_1_img_1_layout = ({
 				className='SlideColumn'
 				style={{
 					...layoutElements.columnCSS,
+					zIndex: 50,
 					// backgroundColor: themeElements.slideColumnBackgroundColor
 					// 	? themeElements.slideColumnBackgroundColor
 					// 	: '',
@@ -1940,7 +1942,7 @@ export const Col_1_img_1_layout = ({
 					className='SlideTopicAndSubtopic'
 					style={{
 						...layoutElements.titleAndSubtopicBoxCSS,
-						zIndex: '50',
+						zIndex: 50,
 						backgroundColor: themeElements.titleAndSubtopicBoxBackgroundColor
 							? themeElements.titleAndSubtopicBoxBackgroundColor
 							: '',
@@ -1983,7 +1985,7 @@ export const Col_1_img_1_layout = ({
 					className='SlideImgaeContainer'
 					style={{
 						...layoutElements.imageContainerCSS,
-						zIndex: imgHigherZIndex ? 100 : 20,
+						zIndex: 50,
 					}}
 					ref={imgContainerRef}
 				>
@@ -2030,7 +2032,7 @@ export const Col_1_img_1_layout = ({
 						...layoutElements.contentContainerCSS,
 						maxHeight:
 							maxContentHeight !== null ? `${maxContentHeight}px` : 'none',
-						zIndex: 40,
+						zIndex: 50,
 						backgroundColor: themeElements.slideContentContainerBackgroundColor
 							? themeElements.slideContentContainerBackgroundColor
 							: '',
@@ -2313,7 +2315,7 @@ export const Col_2_img_2_layout = ({
 					className='SlideImageContainer'
 					style={{
 						...layoutElements.imageContainerCSS,
-						zIndex: imgHigherZIndex ? 100 : 20,
+						zIndex: 50,
 					}}
 					ref={imgContainerRef}
 				>
@@ -2412,7 +2414,7 @@ export const Col_2_img_2_layout = ({
 					className={`w-full flex SlideContentContainer`}
 					style={{
 						...layoutElements.contentContainerCSS,
-						zIndex: 40,
+						zIndex: 50,
 						gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
 						backgroundColor: themeElements.slideContentContainerBackgroundColor
 							? themeElements.slideContentContainerBackgroundColor
@@ -2742,7 +2744,7 @@ export const Col_3_img_3_layout = ({
 					// className='w-full grid grid-cols-3 gap-[2rem] '
 					style={{
 						...layoutElements.imageContainerCSS,
-						zIndex: imgHigherZIndex ? 100 : 20,
+						zIndex: 50,
 					}}
 				>
 					<div
@@ -2888,7 +2890,7 @@ export const Col_3_img_3_layout = ({
 					className={`w-full flex SlideContentContainer`}
 					style={{
 						...layoutElements.contentContainerCSS,
-						zIndex: 40,
+						zIndex: 50,
 						gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
 						backgroundColor: themeElements.slideContentContainerBackgroundColor
 							? themeElements.slideContentContainerBackgroundColor
