@@ -81,7 +81,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 	const { project } = useProject();
 	const chatWindowRef = useRef<HTMLDivElement>(null);
 	const [model, setModel] = useState(
-		type === 'chart' ? 'GPT-4o' : isPaidUser ? 'GPT-4o' : 'GPT-3.5',
+		type === 'chart' ? 'GPT-4o' : 'GPT-3.5',
 	);
 
 	const handleEnter = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
