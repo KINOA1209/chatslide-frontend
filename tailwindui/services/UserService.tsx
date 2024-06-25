@@ -51,6 +51,10 @@ class UserService {
 	}
 
 	static async checkSurveyFinished(token: string): Promise<boolean> {
+    if(localStorage.getItem('survey_status') === 'completed') {
+      return true;
+    }
+
 		try {
 			const response = await fetch('/api/user/check_survey_status', {
 				method: 'GET',
@@ -67,6 +71,7 @@ class UserService {
 					return false; // show survey
 				} else {
 					console.log('The user had completed the survey before');
+          localStorage.setItem('survey_status', 'completed');
 					return true; // skip showing survey
 				}
 			} else {
