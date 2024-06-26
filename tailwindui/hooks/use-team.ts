@@ -30,10 +30,10 @@ export const useTeam = () => {
 	async function initTeam() {
 		if (teamStatus === TeamStatus.Inited || teamStatus === TeamStatus.Initing)
 			return;
-    if (teamId && team) {
-      teamStatus = TeamStatus.Inited;
-      return;
-    }
+    // if (teamId && team) {
+    //   teamStatus = TeamStatus.Inited;
+    //   return;
+    // }
       
 		teamStatus = TeamStatus.Initing;
 
