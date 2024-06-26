@@ -448,7 +448,9 @@ export default function Topic() {
         setSummarizing(false);
 			} catch (error) {
         if (error instanceof Error && error.message.includes('Bad request')) {
-          toast.error("The resource you provided does not provide sufficient information.")
+          toast.error(
+						'The resource provided lacks the necessary details. Please ensure that your file is in the correct format and includes all required information.',
+					);
 				} else {
 					console.error('Error summarizing resources', error);
 				}
