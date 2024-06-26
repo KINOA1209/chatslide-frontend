@@ -1,7 +1,8 @@
 import Position from '@/types/Position';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
-import { TbDragDrop2, TbRefresh } from 'react-icons/tb';
+import { MdDragIndicator } from 'react-icons/md';
+import { TbRefresh } from 'react-icons/tb';
 import { Rnd } from 'react-rnd';
 
 export enum ElementType {
@@ -209,7 +210,7 @@ export const DragElement = ({
 						}}
 					>
 						<div>
-							<TbDragDrop2 size={16} color={'white'} />
+							<MdDragIndicator size={16} color={'white'} />
 						</div>
 					</div>
 					<div
