@@ -500,7 +500,7 @@ export const Cover_img_1_layout = ({
 
 			<div
 				className={`SlideImageContainer`}
-				style={{...layoutElements.imageContainerCSS, zIndex: 60}}
+				style={{ ...layoutElements.imageContainerCSS }}
 			>
 				<DragElement
 					type={ElementType.ImageView}
@@ -689,7 +689,7 @@ export const Col_1_img_0_layout = ({
 				</div>
 				<div
 					className='SlideTitlesAndCOntentDivider opacity-50 border border-neutral-900 border-opacity-40'
-					style={{...layoutElements.titlesAndContentDividerCSS, zIndex: 50}}
+					style={{ ...layoutElements.titlesAndContentDividerCSS, zIndex: 50 }}
 				></div>
 				<div
 					className='SlideColumn'
@@ -1750,7 +1750,7 @@ export const Col_2_img_1_layout = ({
 				className={`SlideImageContainer`}
 				style={{
 					...layoutElements.imageContainerCSS,
-					zIndex: 50,
+					// zIndex: 50,
 				}}
 			>
 				<DragElement
@@ -1985,7 +1985,7 @@ export const Col_1_img_1_layout = ({
 					className='SlideImgaeContainer'
 					style={{
 						...layoutElements.imageContainerCSS,
-						zIndex: 50,
+						// zIndex: 50,
 					}}
 					ref={imgContainerRef}
 				>
@@ -2315,7 +2315,7 @@ export const Col_2_img_2_layout = ({
 					className='SlideImageContainer'
 					style={{
 						...layoutElements.imageContainerCSS,
-						zIndex: 50,
+						// zIndex: 50,
 					}}
 					ref={imgContainerRef}
 				>
