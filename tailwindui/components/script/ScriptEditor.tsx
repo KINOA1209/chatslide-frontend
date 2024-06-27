@@ -70,7 +70,14 @@ const ScriptEditor: React.FC<TranscriptEditorProps> = ({
 		<div className='flex flex-col'>
 			{script?.length >= 4096 && (
 				<ErrorMessage>
-					Script length is {script?.length}, which exceeds 4096 characters. Please remove some characters.
+					Script length is {script?.length}, which exceeds 4096 characters.
+					Please remove some characters.
+				</ErrorMessage>
+			)}
+			{script?.length === 0 && (
+				<ErrorMessage>
+					Script length is 0.
+					Please add some text.
 				</ErrorMessage>
 			)}
 			<div

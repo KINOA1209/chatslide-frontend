@@ -177,7 +177,15 @@ export default function WorkflowStep5() {
     if (slides.some(
       (slide) => (slide.transcript?.length || 0 )>= 4096
     )) {
-      toast.error('Script length of one page exceeds 4096 characters. Please remove some characters.');
+      toast.error('At least one page has more than 4096 characters. Please remove some characters.');
+      setIsSubmitting(false);
+      return;
+    }
+
+    if (slides.some((slide) => (slide.transcript?.length || 1) === 0)) {
+      toast.error(
+        'At least one page has empty script. Please double check.',
+      );
       setIsSubmitting(false);
       return;
     }
