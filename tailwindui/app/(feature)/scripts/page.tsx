@@ -45,7 +45,10 @@ import {
 	SlideLeftNavigator,
 	SlidePagesIndicator,
 } from '@/components/slides/SlidePageIndicator';
-import { ClonedVoicesProvider, useClonedVoices } from '@/components/language/ClonedVoicesContext';
+import {
+	ClonedVoicesProvider,
+	useClonedVoices,
+} from '@/components/language/ClonedVoicesContext';
 
 const ScriptSection = dynamic(
 	() => import('@/components/script/ScriptSection'),
@@ -75,7 +78,7 @@ export default function WorkflowStep5() {
 
 	useEffect(() => {
 		if (avatar) setCreditCost(400);
-    else if (isELabsVoice(voice)) setCreditCost(400);
+		else if (isELabsVoice(voice)) setCreditCost(400);
 		else if (voiceIsHD || isOpenaiVoice(voice)) {
 			setCreditCost(100);
 		} else setCreditCost(20);
@@ -172,24 +175,31 @@ export default function WorkflowStep5() {
 	}
 
 	async function handleSubmitVideo() {
+		const longScriptIndices = slides
+			.map((slide, index) => ((slide.transcript?.length || 0) >= 4096 ? index : -1))
+			.filter((index) => index !== -1);
 
-    // if the script of any page exceeds 4096 characters, show error and return 
-    if (slides.some(
-      (slide) => (slide.transcript?.length || 0 )>= 4096
-    )) {
-      toast.error('At least one page has more than 4096 characters. Please remove some characters.');
-      setIsSubmitting(false);
-      return;
-    }
+		// If there are slides with transcripts exceeding 4096 characters, display a detailed error message
+		if (longScriptIndices.length > 0) {
+			toast.error(
+				`The following pages have more than 4096 characters: ${longScriptIndices.join(', ')}. Please remove some characters.`,
+			);
+			setIsSubmitting(false);
+			return;
+		}
 
-    if (slides.some((slide) => (slide.transcript?.length === 0))) {
-      toast.error(
-        'At least one page has empty script. Please double check.',
-      );
-      setIsSubmitting(false);
-      return;
-    }
-      
+		const emptyScriptIndices = slides
+			.map((slide, index) => (slide.transcript?.length === 0 ? index : -1))
+			.filter((index) => index !== -1);
+
+		// If there are slides with empty scripts, display a detailed error message
+		if (emptyScriptIndices.length > 0) {
+			toast.error(
+				`The following pages have empty scripts: ${emptyScriptIndices.join(', ')}. Please double check.`,
+			);
+			setIsSubmitting(false);
+			return;
+		}
 
 		if (canSubmitVideo()) {
 			setLastSubmissionTime();
@@ -213,9 +223,9 @@ export default function WorkflowStep5() {
 		}
 
 		const generateVideo = async () => {
-      if (isELabsVoice(voice) || isOpenaiVoice(voice)) {
-        setAvatar('');
-      }
+			if (isELabsVoice(voice) || isOpenaiVoice(voice)) {
+				setAvatar('');
+			}
 
 			try {
 				console.log('project_id:', project_id);
@@ -312,10 +322,13 @@ export default function WorkflowStep5() {
 					</Instruction>
 					<Instruction>
 						<span>
-							Voice cloning is now available for ULTIMATE users. Click button below to clone and use your voice.
+							Voice cloning is now available for ULTIMATE users. Click button
+							below to clone and use your voice.
 						</span>
 					</Instruction>
-					<InversedBigBlueButton onClick={() => window.location.href = '/studio'}>
+					<InversedBigBlueButton
+						onClick={() => (window.location.href = '/studio')}
+					>
 						Clone your voice
 					</InversedBigBlueButton>
 					<ClonedVoicesProvider>
