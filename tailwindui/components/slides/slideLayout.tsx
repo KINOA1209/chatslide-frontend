@@ -281,6 +281,7 @@ const filterEmptyLines = (
 export const Cover_img_0_layout = ({
 	user_name,
 	title,
+	title_position,
 	topic,
 	subtopic,
 	content,
@@ -288,6 +289,8 @@ export const Cover_img_0_layout = ({
 	update_callback,
 	canEdit,
 	isCoverPage,
+	handleSlideEdit,
+	currentSlideIndex,
 	layoutOptionNonCover,
 	layoutOptionCover,
 	brandingColor,
@@ -335,7 +338,19 @@ export const Cover_img_0_layout = ({
 					className={`SlideHead`}
 					style={{ ...layoutElements.titleCSS, zIndex: 50 }}
 				>
-					{title}
+					<div>
+						<DragElement
+							type={ElementType.TextEdit}
+							canEdit={canEdit}
+							positions={[title_position]}
+							contentIndex={0}
+							handleSlideEdit={handleSlideEdit}
+							currentSlideIndex={currentSlideIndex}
+							positionType='title_position'
+						>
+							{title}
+						</DragElement>
+					</div>
 				</div>
 			</div>
 			<div
@@ -390,6 +405,8 @@ export const Cover_img_1_layout = ({
 	image_positions,
 	embed_code,
 	media_types,
+	title_position,
+	image_container_positions,
 }: MainSlideProps) => {
 	const updateImgAtIndex =
 		(index: number) =>
@@ -466,8 +483,18 @@ export const Cover_img_1_layout = ({
 					className={`SlideUserNameHead`}
 					style={{ ...layoutElements.titleCSS, zIndex: 50 }}
 				>
-					<div className='w-full h-full' style={{ position: 'relative' }}>
-						{title}
+					<div>
+						<DragElement
+							type={ElementType.TextEdit}
+							canEdit={canEdit}
+							positions={[title_position]}
+							contentIndex={0}
+							handleSlideEdit={handleSlideEdit}
+							currentSlideIndex={currentSlideIndex}
+							positionType='title_position'
+						>
+							{title}
+						</DragElement>
 					</div>
 				</div>
 			</div>
@@ -479,35 +506,37 @@ export const Cover_img_1_layout = ({
 					zIndex: imgHigherZIndex ? 100 : 20,
 				}}
 			>
-				{/* <DragElement
-					type={ElementType.ImageView}
-					canEdit={canEdit}
-					positions={[{}, {}, {}]}
-					contentIndex={0}
-					handleSlideEdit={handleSlideEdit}
-					currentSlideIndex={currentSlideIndex}
-					positionType='image-container-position'
-				> */}
-				<ImgModule
-					imgsrc={imgs?.[0]}
-					updateSingleCallback={updateImgAtIndex(0)}
-					chartArr={charts}
-					ischartArr={ischarts}
-					handleSlideEdit={handleSlideEdit}
-					currentSlideIndex={currentSlideIndex}
-					currentContentIndex={0}
-					canEdit={canEdit}
-					image_positions={image_positions}
-					layoutElements={layoutElements}
-					customImageStyle={layoutElements.imageCSS}
-					// additional_images={imgs.slice(3)}
-					setImgHigherZIndex={setImgHigherZIndex}
-					embed_code={embed_code}
-					embed_code_single={embed_code?.[0]}
-					media_types={media_types}
-					media_type={media_types?.[0]}
-				/>
-				{/* </DragElement> */}
+				<div className='w-full h-full' style={{ position: 'relative' }}>
+					<DragElement
+						type={ElementType.ImageView}
+						canEdit={canEdit}
+						positions={image_container_positions}
+						contentIndex={0}
+						handleSlideEdit={handleSlideEdit}
+						currentSlideIndex={currentSlideIndex}
+						positionType='image_container_position'
+					>
+						<ImgModule
+							imgsrc={imgs?.[0]}
+							updateSingleCallback={updateImgAtIndex(0)}
+							chartArr={charts}
+							ischartArr={ischarts}
+							handleSlideEdit={handleSlideEdit}
+							currentSlideIndex={currentSlideIndex}
+							currentContentIndex={0}
+							canEdit={canEdit}
+							image_positions={image_positions}
+							layoutElements={layoutElements}
+							customImageStyle={layoutElements.imageCSS}
+							// additional_images={imgs.slice(3)}
+							setImgHigherZIndex={setImgHigherZIndex}
+							embed_code={embed_code}
+							embed_code_single={embed_code?.[0]}
+							media_types={media_types}
+							media_type={media_types?.[0]}
+						/>
+					</DragElement>
+				</div>
 			</div>
 
 			<div
@@ -548,12 +577,17 @@ export const Col_1_img_0_layout = ({
 	update_callback,
 	canEdit,
 	isCoverPage,
+	handleSlideEdit,
+	currentSlideIndex,
 	layoutOptionNonCover,
 	layoutOptionCover,
 	brandingColor,
 	themeElements,
 	layoutElements,
 	templateLogo,
+	topic_position,
+	subtopic_position,
+	content_positions,
 }: MainSlideProps) => {
 	const [maxContentHeight, setMaxContentHeight] = useState<number | null>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -626,14 +660,34 @@ export const Col_1_img_0_layout = ({
 						className={`topicBox`}
 						style={layoutElements.topicCSS}
 					>
-						{topic}
+						<DragElement
+							type={ElementType.TextEdit}
+							canEdit={canEdit}
+							positions={[topic_position]}
+							contentIndex={0}
+							handleSlideEdit={handleSlideEdit}
+							currentSlideIndex={currentSlideIndex}
+							positionType='topic_position'
+						>
+							{topic}
+						</DragElement>
 					</div>
 					<div
 						className={`subtopicBox`}
 						ref={subtopicRef}
 						style={layoutElements.subtopicCSS}
 					>
-						{subtopic}
+						<DragElement
+							type={ElementType.TextEdit}
+							canEdit={canEdit}
+							positions={[subtopic_position]}
+							contentIndex={0}
+							handleSlideEdit={handleSlideEdit}
+							currentSlideIndex={currentSlideIndex}
+							positionType='subtopic_position'
+						>
+							{subtopic}
+						</DragElement>
 					</div>
 				</div>
 				<div
@@ -652,7 +706,19 @@ export const Col_1_img_0_layout = ({
 								maxContentHeight !== null ? `${maxContentHeight}px` : 'none',
 						}}
 					>
-						{content}
+						<div>
+							<DragElement
+								type={ElementType.TextEdit}
+								canEdit={canEdit}
+								positions={content_positions}
+								contentIndex={0}
+								handleSlideEdit={handleSlideEdit}
+								currentSlideIndex={currentSlideIndex}
+								positionType='content_position'
+							>
+								{content}
+							</DragElement>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -710,6 +776,10 @@ export const Col_2_img_0_layout = ({
 	layoutElements,
 	templateLogo,
 	handleSlideEdit,
+	currentSlideIndex,
+	topic_position,
+	subtopic_position,
+	content_positions,
 }: MainSlideProps) => {
 	// Ensure content is always an array
 	const items = Array.isArray(content) ? content : [content];
@@ -778,10 +848,30 @@ export const Col_2_img_0_layout = ({
 					}}
 				>
 					<div className={`SlideTopic`} style={layoutElements.topicCSS}>
-						{topic}
+						<DragElement
+							type={ElementType.TextEdit}
+							canEdit={canEdit}
+							positions={[topic_position]}
+							contentIndex={0}
+							handleSlideEdit={handleSlideEdit}
+							currentSlideIndex={currentSlideIndex}
+							positionType='topic_position'
+						>
+							{topic}
+						</DragElement>
 					</div>
 					<div className={`SlideSubtopic`} style={layoutElements.subtopicCSS}>
-						{subtopic}
+						<DragElement
+							type={ElementType.TextEdit}
+							canEdit={canEdit}
+							positions={[subtopic_position]}
+							contentIndex={0}
+							handleSlideEdit={handleSlideEdit}
+							currentSlideIndex={currentSlideIndex}
+							positionType='subtopic_position'
+						>
+							{subtopic}
+						</DragElement>
 					</div>
 				</div>
 
@@ -859,7 +949,19 @@ export const Col_2_img_0_layout = ({
 										flex: index === updatedContentCol1.length - 1 ? 1 : 0,
 									}}
 								>
-									<li style={{ width: '100%' }}>{item}</li>
+									<li style={{ width: '100%' }}>
+										<DragElement
+											type={ElementType.TextEdit}
+											canEdit={canEdit}
+											positions={content_positions}
+											contentIndex={0}
+											handleSlideEdit={handleSlideEdit}
+											currentSlideIndex={currentSlideIndex}
+											positionType='content_position'
+										>
+											{item}
+										</DragElement>
+									</li>
 								</ul>
 							</React.Fragment>
 						))}
@@ -923,6 +1025,7 @@ export const Col_2_img_0_layout = ({
 							</>
 						)}
 						{/* {updatedContent.slice(1, 2).map((item, index) => ( */}
+
 						{updatedContentCol2.map((item, index) => (
 							<React.Fragment key={`contentText_${index + 1}`}>
 								<ul
@@ -933,7 +1036,19 @@ export const Col_2_img_0_layout = ({
 										flex: index === updatedContentCol2.length - 1 ? 1 : 0,
 									}}
 								>
-									<li style={{ width: '100%' }}>{item}</li>
+									<li style={{ width: '100%' }}>
+										<DragElement
+											type={ElementType.TextEdit}
+											canEdit={canEdit}
+											positions={content_positions}
+											contentIndex={1}
+											handleSlideEdit={handleSlideEdit}
+											currentSlideIndex={currentSlideIndex}
+											positionType='content_position'
+										>
+											{item}
+										</DragElement>
+									</li>
 								</ul>
 							</React.Fragment>
 						))}
@@ -984,6 +1099,10 @@ export const Col_3_img_0_layout = ({
 	layoutElements,
 	templateLogo,
 	handleSlideEdit,
+	currentSlideIndex,
+	topic_position,
+	subtopic_position,
+	content_positions,
 }: MainSlideProps) => {
 	//const filteredContent: JSX.Element[] = filterEmptyLines(content);
 
@@ -1064,8 +1183,32 @@ export const Col_3_img_0_layout = ({
 							: '',
 					}}
 				>
-					<div style={layoutElements.topicCSS}>{topic}</div>
-					<div style={layoutElements.subtopicCSS}>{subtopic}</div>
+					<div style={layoutElements.topicCSS}>
+						<DragElement
+							type={ElementType.TextEdit}
+							canEdit={canEdit}
+							positions={[topic_position]}
+							contentIndex={0}
+							handleSlideEdit={handleSlideEdit}
+							currentSlideIndex={currentSlideIndex}
+							positionType='topic_position'
+						>
+							{topic}
+						</DragElement>
+					</div>
+					<div style={layoutElements.subtopicCSS}>
+						<DragElement
+							type={ElementType.TextEdit}
+							canEdit={canEdit}
+							positions={[subtopic_position]}
+							contentIndex={0}
+							handleSlideEdit={handleSlideEdit}
+							currentSlideIndex={currentSlideIndex}
+							positionType='subtopic_position'
+						>
+							{subtopic}
+						</DragElement>
+					</div>
 				</div>
 
 				<div
@@ -1144,7 +1287,19 @@ export const Col_3_img_0_layout = ({
 										flex: index === updatedContentCol1.length - 1 ? 1 : 0,
 									}}
 								>
-									<li style={{ width: '100%' }}>{item}</li>
+									<li style={{ width: '100%' }}>
+										<DragElement
+											type={ElementType.TextEdit}
+											canEdit={canEdit}
+											positions={content_positions}
+											contentIndex={0}
+											handleSlideEdit={handleSlideEdit}
+											currentSlideIndex={currentSlideIndex}
+											positionType='content_position'
+										>
+											{item}
+										</DragElement>
+									</li>
 								</ul>
 							</React.Fragment>
 						))}
@@ -1248,7 +1403,19 @@ export const Col_3_img_0_layout = ({
 										flex: index === updatedContentCol2.length - 1 ? 1 : 0,
 									}}
 								>
-									<li style={{ width: '100%' }}>{item}</li>
+									<li style={{ width: '100%' }}>
+										<DragElement
+											type={ElementType.TextEdit}
+											canEdit={canEdit}
+											positions={content_positions}
+											contentIndex={1}
+											handleSlideEdit={handleSlideEdit}
+											currentSlideIndex={currentSlideIndex}
+											positionType='content_position'
+										>
+											{item}
+										</DragElement>
+									</li>
 								</ul>
 							</React.Fragment>
 						))}
@@ -1321,7 +1488,19 @@ export const Col_3_img_0_layout = ({
 										flex: index === updatedContentCol3.length - 1 ? 1 : 0,
 									}}
 								>
-									<li style={{ width: '100%' }}>{item}</li>
+									<li style={{ width: '100%' }}>
+										<DragElement
+											type={ElementType.TextEdit}
+											canEdit={canEdit}
+											positions={content_positions}
+											contentIndex={2}
+											handleSlideEdit={handleSlideEdit}
+											currentSlideIndex={currentSlideIndex}
+											positionType='content_position'
+										>
+											{item}
+										</DragElement>
+									</li>
 								</ul>
 							</React.Fragment>
 						))}
@@ -1377,6 +1556,10 @@ export const Col_2_img_1_layout = ({
 	image_positions,
 	embed_code,
 	media_types,
+	topic_position,
+	subtopic_position,
+	content_positions,
+	image_container_positions,
 }: MainSlideProps) => {
 	const updateImgAtIndex =
 		(index: number) =>
@@ -1489,14 +1672,34 @@ export const Col_2_img_1_layout = ({
 						ref={topicRef}
 						style={layoutElements.topicCSS}
 					>
-						{topic}
+						<DragElement
+							type={ElementType.TextEdit}
+							canEdit={canEdit}
+							positions={[topic_position]}
+							contentIndex={0}
+							handleSlideEdit={handleSlideEdit}
+							currentSlideIndex={currentSlideIndex}
+							positionType='topic_position'
+						>
+							{topic}
+						</DragElement>
 					</div>
 					<div
 						className={`SlideSubTopic`}
 						ref={subtopicRef}
 						style={layoutElements.subtopicCSS}
 					>
-						{subtopic}
+						<DragElement
+							type={ElementType.TextEdit}
+							canEdit={canEdit}
+							positions={[subtopic_position]}
+							contentIndex={0}
+							handleSlideEdit={handleSlideEdit}
+							currentSlideIndex={currentSlideIndex}
+							positionType='subtopic_position'
+						>
+							{subtopic}
+						</DragElement>
 					</div>
 				</div>
 
@@ -1518,7 +1721,19 @@ export const Col_2_img_1_layout = ({
 								maxContentHeight !== null ? `${maxContentHeight}px` : 'none',
 						}}
 					>
-						<div style={layoutElements.contentCSS}>{content}</div>
+						<div style={layoutElements.contentCSS}>
+							<DragElement
+								type={ElementType.TextEdit}
+								canEdit={canEdit}
+								positions={content_positions}
+								contentIndex={0}
+								handleSlideEdit={handleSlideEdit}
+								currentSlideIndex={currentSlideIndex}
+								positionType='content_position'
+							>
+								{content}
+							</DragElement>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -1530,24 +1745,36 @@ export const Col_2_img_1_layout = ({
 					zIndex: imgHigherZIndex ? 100 : 20,
 				}}
 			>
-				<ImgModule
-					imgsrc={imgs?.[0]}
-					updateSingleCallback={updateImgAtIndex(0)}
-					chartArr={charts}
-					ischartArr={ischarts}
-					handleSlideEdit={handleSlideEdit}
-					currentSlideIndex={currentSlideIndex}
-					currentContentIndex={0}
-					canEdit={canEdit}
-					image_positions={image_positions}
-					layoutElements={layoutElements}
-					customImageStyle={layoutElements.imageCSS}
-					setImgHigherZIndex={setImgHigherZIndex}
-					embed_code={embed_code}
-					embed_code_single={embed_code?.[0]}
-					media_types={media_types}
-					media_type={media_types?.[0]}
-				/>
+				<div className='w-full h-full' style={{ position: 'relative' }}>
+					<DragElement
+						type={ElementType.ImageView}
+						canEdit={canEdit}
+						positions={image_container_positions}
+						contentIndex={0}
+						handleSlideEdit={handleSlideEdit}
+						currentSlideIndex={currentSlideIndex}
+						positionType='image_container_position'
+					>
+						<ImgModule
+							imgsrc={imgs?.[0]}
+							updateSingleCallback={updateImgAtIndex(0)}
+							chartArr={charts}
+							ischartArr={ischarts}
+							handleSlideEdit={handleSlideEdit}
+							currentSlideIndex={currentSlideIndex}
+							currentContentIndex={0}
+							canEdit={canEdit}
+							image_positions={image_positions}
+							layoutElements={layoutElements}
+							customImageStyle={layoutElements.imageCSS}
+							setImgHigherZIndex={setImgHigherZIndex}
+							embed_code={embed_code}
+							embed_code_single={embed_code?.[0]}
+							media_types={media_types}
+							media_type={media_types?.[0]}
+						/>
+					</DragElement>
+				</div>
 			</div>
 			{/* logo section */}
 			<div
@@ -1599,6 +1826,10 @@ export const Col_1_img_1_layout = ({
 	image_positions,
 	embed_code,
 	media_types,
+	topic_position,
+	subtopic_position,
+	content_positions,
+	image_container_positions,
 }: MainSlideProps) => {
 	const updateImgAtIndex =
 		(index: number) =>
@@ -1711,10 +1942,30 @@ export const Col_1_img_1_layout = ({
 					ref={topicAndSubtopicRef}
 				>
 					<div className={`SlideTopic`} style={layoutElements.topicCSS}>
-						{topic}
+						<DragElement
+							type={ElementType.TextEdit}
+							canEdit={canEdit}
+							positions={[topic_position]}
+							contentIndex={0}
+							handleSlideEdit={handleSlideEdit}
+							currentSlideIndex={currentSlideIndex}
+							positionType='topic_position'
+						>
+							{topic}
+						</DragElement>
 					</div>
 					<div className={`SlideSubtopic`} style={layoutElements.subtopicCSS}>
-						{subtopic}
+						<DragElement
+							type={ElementType.TextEdit}
+							canEdit={canEdit}
+							positions={[subtopic_position]}
+							contentIndex={0}
+							handleSlideEdit={handleSlideEdit}
+							currentSlideIndex={currentSlideIndex}
+							positionType='subtopic_position'
+						>
+							{subtopic}
+						</DragElement>
 					</div>
 				</div>
 
@@ -1728,24 +1979,35 @@ export const Col_1_img_1_layout = ({
 					}}
 					ref={imgContainerRef}
 				>
-					<ImgModule
-						imgsrc={imgs?.[0]}
-						updateSingleCallback={updateImgAtIndex(0)}
-						chartArr={charts}
-						ischartArr={ischarts}
+					<div className='w-full h-full' style={{ position: 'relative' }}></div>
+					<DragElement
+						type={ElementType.ImageView}
+						canEdit={canEdit}
+						positions={image_container_positions}
+						contentIndex={0}
 						handleSlideEdit={handleSlideEdit}
 						currentSlideIndex={currentSlideIndex}
-						currentContentIndex={0}
-						canEdit={canEdit}
-						image_positions={image_positions}
-						layoutElements={layoutElements}
-						customImageStyle={layoutElements.imageCSS}
-						setImgHigherZIndex={setImgHigherZIndex}
-						embed_code={embed_code}
-						embed_code_single={embed_code?.[0]}
-						media_types={media_types}
-						media_type={media_types?.[0]}
-					/>
+						positionType='image_container_position'
+					>
+						<ImgModule
+							imgsrc={imgs?.[0]}
+							updateSingleCallback={updateImgAtIndex(0)}
+							chartArr={charts}
+							ischartArr={ischarts}
+							handleSlideEdit={handleSlideEdit}
+							currentSlideIndex={currentSlideIndex}
+							currentContentIndex={0}
+							canEdit={canEdit}
+							image_positions={image_positions}
+							layoutElements={layoutElements}
+							customImageStyle={layoutElements.imageCSS}
+							setImgHigherZIndex={setImgHigherZIndex}
+							embed_code={embed_code}
+							embed_code_single={embed_code?.[0]}
+							media_types={media_types}
+							media_type={media_types?.[0]}
+						/>
+					</DragElement>
 				</div>
 				{/* row3 for contents */}
 				{/* <div
@@ -1778,7 +2040,19 @@ export const Col_1_img_1_layout = ({
 									</ul>
 								</div>
 							))} */}
-					<div style={layoutElements.contentCSS}>{content}</div>
+					<div style={layoutElements.contentCSS}>
+						<DragElement
+							type={ElementType.TextEdit}
+							canEdit={canEdit}
+							positions={content_positions}
+							contentIndex={0}
+							handleSlideEdit={handleSlideEdit}
+							currentSlideIndex={currentSlideIndex}
+							positionType='content_position'
+						>
+							{content}
+						</DragElement>
+					</div>
 				</div>
 				{/* <div
 					className='w-full flex'
@@ -1842,6 +2116,10 @@ export const Col_2_img_2_layout = ({
 	image_positions,
 	embed_code,
 	media_types,
+	topic_position,
+	subtopic_position,
+	content_positions,
+	image_container_positions,
 }: MainSlideProps) => {
 	const updateImgAtIndex =
 		(index: number) =>
@@ -1992,10 +2270,30 @@ export const Col_2_img_2_layout = ({
 					ref={topicAndSubtopicRef}
 				>
 					<div className={`SlideTopic`} style={layoutElements.topicCSS}>
-						{topic}
+						<DragElement
+							type={ElementType.TextEdit}
+							canEdit={canEdit}
+							positions={[topic_position]}
+							contentIndex={0}
+							handleSlideEdit={handleSlideEdit}
+							currentSlideIndex={currentSlideIndex}
+							positionType='topic_position'
+						>
+							{topic}
+						</DragElement>
 					</div>
 					<div className={`SlideSubtopic`} style={layoutElements.subtopicCSS}>
-						{subtopic}
+						<DragElement
+							type={ElementType.TextEdit}
+							canEdit={canEdit}
+							positions={[subtopic_position]}
+							contentIndex={0}
+							handleSlideEdit={handleSlideEdit}
+							currentSlideIndex={currentSlideIndex}
+							positionType='subtopic_position'
+						>
+							{subtopic}
+						</DragElement>
 					</div>
 				</div>
 
@@ -2021,25 +2319,37 @@ export const Col_2_img_2_layout = ({
 								pointerEvents: 'none', // Allow click events to pass through
 							}}
 						></div> */}
-						<ImgModule
-							imgsrc={imgs?.[0]}
-							updateSingleCallback={updateImgAtIndex(0)}
-							chartArr={charts}
-							ischartArr={ischarts}
-							handleSlideEdit={handleSlideEdit}
-							currentSlideIndex={currentSlideIndex}
-							currentContentIndex={0}
-							canEdit={canEdit}
-							image_positions={image_positions}
-							layoutElements={layoutElements}
-							customImageStyle={layoutElements.imageCSS}
-							setImgHigherZIndex={setImgHigherZIndex}
-							columnIndex={0}
-							embed_code={embed_code}
-							embed_code_single={embed_code?.[0]}
-							media_types={media_types}
-							media_type={media_types?.[0]}
-						/>
+						<div className='w-full h-full' style={{ position: 'relative' }}>
+							<DragElement
+								type={ElementType.ImageView}
+								canEdit={canEdit}
+								positions={image_container_positions}
+								contentIndex={0}
+								handleSlideEdit={handleSlideEdit}
+								currentSlideIndex={currentSlideIndex}
+								positionType='image_container_position'
+							>
+								<ImgModule
+									imgsrc={imgs?.[0]}
+									updateSingleCallback={updateImgAtIndex(0)}
+									chartArr={charts}
+									ischartArr={ischarts}
+									handleSlideEdit={handleSlideEdit}
+									currentSlideIndex={currentSlideIndex}
+									currentContentIndex={0}
+									canEdit={canEdit}
+									image_positions={image_positions}
+									layoutElements={layoutElements}
+									customImageStyle={layoutElements.imageCSS}
+									setImgHigherZIndex={setImgHigherZIndex}
+									columnIndex={0}
+									embed_code={embed_code}
+									embed_code_single={embed_code?.[0]}
+									media_types={media_types}
+									media_type={media_types?.[0]}
+								/>
+							</DragElement>
+						</div>
 					</div>
 					<div
 						// className='h-[11rem] grow rounded-md overflow-hidden  relative'
@@ -2054,25 +2364,37 @@ export const Col_2_img_2_layout = ({
 								pointerEvents: 'none', // Allow click events to pass through
 							}}
 						></div> */}
-						<ImgModule
-							imgsrc={imgs?.[1]}
-							updateSingleCallback={updateImgAtIndex(1)}
-							chartArr={charts}
-							ischartArr={ischarts}
-							handleSlideEdit={handleSlideEdit}
-							currentSlideIndex={currentSlideIndex}
-							currentContentIndex={1}
-							canEdit={canEdit}
-							image_positions={image_positions}
-							layoutElements={layoutElements}
-							customImageStyle={layoutElements.imageCSS}
-							setImgHigherZIndex={setImgHigherZIndex}
-							columnIndex={1}
-							embed_code={embed_code}
-							embed_code_single={embed_code?.[1]}
-							media_types={media_types}
-							media_type={media_types?.[1]}
-						/>
+						<div className='w-full h-full' style={{ position: 'relative' }}>
+							<DragElement
+								type={ElementType.ImageView}
+								canEdit={canEdit}
+								positions={image_container_positions}
+								contentIndex={1}
+								handleSlideEdit={handleSlideEdit}
+								currentSlideIndex={currentSlideIndex}
+								positionType='image_container_position'
+							>
+								<ImgModule
+									imgsrc={imgs?.[1]}
+									updateSingleCallback={updateImgAtIndex(1)}
+									chartArr={charts}
+									ischartArr={ischarts}
+									handleSlideEdit={handleSlideEdit}
+									currentSlideIndex={currentSlideIndex}
+									currentContentIndex={1}
+									canEdit={canEdit}
+									image_positions={image_positions}
+									layoutElements={layoutElements}
+									customImageStyle={layoutElements.imageCSS}
+									setImgHigherZIndex={setImgHigherZIndex}
+									columnIndex={1}
+									embed_code={embed_code}
+									embed_code_single={embed_code?.[1]}
+									media_types={media_types}
+									media_type={media_types?.[1]}
+								/>
+							</DragElement>
+						</div>
 					</div>
 				</div>
 				{/* two columns of text */}
@@ -2131,7 +2453,19 @@ export const Col_2_img_2_layout = ({
 										flex: index === updatedContentCol2.length - 1 ? 1 : 0,
 									}}
 								>
-									<li style={{ width: '100%' }}>{item}</li>
+									<li style={{ width: '100%' }}>
+										<DragElement
+											type={ElementType.TextEdit}
+											canEdit={canEdit}
+											positions={content_positions}
+											contentIndex={0}
+											handleSlideEdit={handleSlideEdit}
+											currentSlideIndex={currentSlideIndex}
+											positionType='content_position'
+										>
+											{item}
+										</DragElement>
+									</li>
 								</ul>
 							</React.Fragment>
 						))}
@@ -2180,7 +2514,19 @@ export const Col_2_img_2_layout = ({
 										flex: index === updatedContentCol2.length - 1 ? 1 : 0,
 									}}
 								>
-									<li style={{ width: '100%' }}>{item}</li>
+									<li style={{ width: '100%' }}>
+										<DragElement
+											type={ElementType.TextEdit}
+											canEdit={canEdit}
+											positions={content_positions}
+											contentIndex={1}
+											handleSlideEdit={handleSlideEdit}
+											currentSlideIndex={currentSlideIndex}
+											positionType='content_position'
+										>
+											{item}
+										</DragElement>
+									</li>
 								</ul>
 							</React.Fragment>
 						))}
@@ -2235,6 +2581,10 @@ export const Col_3_img_3_layout = ({
 	image_positions,
 	embed_code,
 	media_types,
+	topic_position,
+	subtopic_position,
+	content_positions,
+	image_container_positions,
 }: MainSlideProps) => {
 	const updateImgAtIndex =
 		(index: number) =>
@@ -2348,10 +2698,30 @@ export const Col_3_img_3_layout = ({
 					}}
 				>
 					<div className={``} style={layoutElements.topicCSS}>
-						{topic}
+						<DragElement
+							type={ElementType.TextEdit}
+							canEdit={canEdit}
+							positions={[topic_position]}
+							contentIndex={0}
+							handleSlideEdit={handleSlideEdit}
+							currentSlideIndex={currentSlideIndex}
+							positionType='topic_position'
+						>
+							{topic}
+						</DragElement>
 					</div>
 					<div className={``} style={layoutElements.subtopicCSS}>
-						{subtopic}
+						<DragElement
+							type={ElementType.TextEdit}
+							canEdit={canEdit}
+							positions={[subtopic_position]}
+							contentIndex={0}
+							handleSlideEdit={handleSlideEdit}
+							currentSlideIndex={currentSlideIndex}
+							positionType='subtopic_position'
+						>
+							{subtopic}
+						</DragElement>
 					</div>
 				</div>
 				{/* three columns of images */}
@@ -2366,73 +2736,109 @@ export const Col_3_img_3_layout = ({
 						// className='h-[11rem] grow rounded-md overflow-hidden'
 						style={layoutElements.imageCSS}
 					>
-						<ImgModule
-							imgsrc={imgs?.[0]}
-							updateSingleCallback={updateImgAtIndex(0)}
-							chartArr={charts}
-							ischartArr={ischarts}
-							handleSlideEdit={handleSlideEdit}
-							currentSlideIndex={currentSlideIndex}
-							currentContentIndex={0}
-							canEdit={canEdit}
-							image_positions={image_positions}
-							layoutElements={layoutElements}
-							customImageStyle={layoutElements.imageCSS}
-							setImgHigherZIndex={setImgHigherZIndex}
-							columnIndex={0}
-							embed_code={embed_code}
-							embed_code_single={embed_code?.[0]}
-							media_types={media_types}
-							media_type={media_types?.[0]}
-						/>
+						<div className='w-full h-full' style={{ position: 'relative' }}>
+							<DragElement
+								type={ElementType.ImageView}
+								canEdit={canEdit}
+								positions={image_container_positions}
+								contentIndex={0}
+								handleSlideEdit={handleSlideEdit}
+								currentSlideIndex={currentSlideIndex}
+								positionType='image_container_position'
+							>
+								<ImgModule
+									imgsrc={imgs?.[0]}
+									updateSingleCallback={updateImgAtIndex(0)}
+									chartArr={charts}
+									ischartArr={ischarts}
+									handleSlideEdit={handleSlideEdit}
+									currentSlideIndex={currentSlideIndex}
+									currentContentIndex={0}
+									canEdit={canEdit}
+									image_positions={image_positions}
+									layoutElements={layoutElements}
+									customImageStyle={layoutElements.imageCSS}
+									setImgHigherZIndex={setImgHigherZIndex}
+									columnIndex={0}
+									embed_code={embed_code}
+									embed_code_single={embed_code?.[0]}
+									media_types={media_types}
+									media_type={media_types?.[0]}
+								/>
+							</DragElement>
+						</div>
 					</div>
 					<div
 						// className='h-[11rem] grow rounded-md overflow-hidden'
 						style={layoutElements.imageCSS}
 					>
-						<ImgModule
-							imgsrc={imgs?.[1]}
-							updateSingleCallback={updateImgAtIndex(1)}
-							chartArr={charts}
-							ischartArr={ischarts}
-							handleSlideEdit={handleSlideEdit}
-							currentSlideIndex={currentSlideIndex}
-							currentContentIndex={1}
-							canEdit={canEdit}
-							image_positions={image_positions}
-							layoutElements={layoutElements}
-							customImageStyle={layoutElements.imageCSS}
-							setImgHigherZIndex={setImgHigherZIndex}
-							columnIndex={1}
-							embed_code={embed_code}
-							embed_code_single={embed_code?.[1]}
-							media_types={media_types}
-							media_type={media_types?.[1]}
-						/>
+						<div className='w-full h-full' style={{ position: 'relative' }}>
+							<DragElement
+								type={ElementType.ImageView}
+								canEdit={canEdit}
+								positions={image_container_positions}
+								contentIndex={1}
+								handleSlideEdit={handleSlideEdit}
+								currentSlideIndex={currentSlideIndex}
+								positionType='image_container_position'
+							>
+								<ImgModule
+									imgsrc={imgs?.[1]}
+									updateSingleCallback={updateImgAtIndex(1)}
+									chartArr={charts}
+									ischartArr={ischarts}
+									handleSlideEdit={handleSlideEdit}
+									currentSlideIndex={currentSlideIndex}
+									currentContentIndex={1}
+									canEdit={canEdit}
+									image_positions={image_positions}
+									layoutElements={layoutElements}
+									customImageStyle={layoutElements.imageCSS}
+									setImgHigherZIndex={setImgHigherZIndex}
+									columnIndex={1}
+									embed_code={embed_code}
+									embed_code_single={embed_code?.[1]}
+									media_types={media_types}
+									media_type={media_types?.[1]}
+								/>
+							</DragElement>
+						</div>
 					</div>
 					<div
 						// className='h-[11rem] grow rounded-md overflow-hidden'
 						style={layoutElements.imageCSS}
 					>
-						<ImgModule
-							imgsrc={imgs?.[2]}
-							updateSingleCallback={updateImgAtIndex(2)}
-							chartArr={charts}
-							ischartArr={ischarts}
-							handleSlideEdit={handleSlideEdit}
-							currentSlideIndex={currentSlideIndex}
-							currentContentIndex={2}
-							canEdit={canEdit}
-							image_positions={image_positions}
-							layoutElements={layoutElements}
-							customImageStyle={layoutElements.imageCSS}
-							setImgHigherZIndex={setImgHigherZIndex}
-							columnIndex={2}
-							embed_code={embed_code}
-							embed_code_single={embed_code?.[2]}
-							media_types={media_types}
-							media_type={media_types?.[2]}
-						/>
+						<div className='w-full h-full' style={{ position: 'relative' }}>
+							<DragElement
+								type={ElementType.ImageView}
+								canEdit={canEdit}
+								positions={image_container_positions}
+								contentIndex={2}
+								handleSlideEdit={handleSlideEdit}
+								currentSlideIndex={currentSlideIndex}
+								positionType='image_container_position'
+							>
+								<ImgModule
+									imgsrc={imgs?.[2]}
+									updateSingleCallback={updateImgAtIndex(2)}
+									chartArr={charts}
+									ischartArr={ischarts}
+									handleSlideEdit={handleSlideEdit}
+									currentSlideIndex={currentSlideIndex}
+									currentContentIndex={2}
+									canEdit={canEdit}
+									image_positions={image_positions}
+									layoutElements={layoutElements}
+									customImageStyle={layoutElements.imageCSS}
+									setImgHigherZIndex={setImgHigherZIndex}
+									columnIndex={2}
+									embed_code={embed_code}
+									embed_code_single={embed_code?.[2]}
+									media_types={media_types}
+									media_type={media_types?.[2]}
+								/>
+							</DragElement>
+						</div>
 					</div>
 				</div>
 				{/* three columns of text */}
@@ -2548,7 +2954,19 @@ export const Col_3_img_3_layout = ({
 										flex: index === updatedContentCol1.length - 1 ? 1 : 0,
 									}}
 								>
-									<li style={{ width: '100%' }}>{item}</li>
+									<li style={{ width: '100%' }}>
+										<DragElement
+											type={ElementType.TextEdit}
+											canEdit={canEdit}
+											positions={content_positions}
+											contentIndex={0}
+											handleSlideEdit={handleSlideEdit}
+											currentSlideIndex={currentSlideIndex}
+											positionType='content_position'
+										>
+											{item}
+										</DragElement>
+									</li>
 								</ul>
 							</React.Fragment>
 						))}
@@ -2597,7 +3015,19 @@ export const Col_3_img_3_layout = ({
 										flex: index === updatedContentCol2.length - 1 ? 1 : 0,
 									}}
 								>
-									<li style={{ width: '100%' }}>{item}</li>
+									<li style={{ width: '100%' }}>
+										<DragElement
+											type={ElementType.TextEdit}
+											canEdit={canEdit}
+											positions={content_positions}
+											contentIndex={1}
+											handleSlideEdit={handleSlideEdit}
+											currentSlideIndex={currentSlideIndex}
+											positionType='content_position'
+										>
+											{item}
+										</DragElement>
+									</li>
 								</ul>
 							</React.Fragment>
 						))}
@@ -2647,7 +3077,19 @@ export const Col_3_img_3_layout = ({
 										flex: index === updatedContentCol3.length - 1 ? 1 : 0,
 									}}
 								>
-									<li style={{ width: '100%' }}>{item}</li>
+									<li style={{ width: '100%' }}>
+										<DragElement
+											type={ElementType.TextEdit}
+											canEdit={canEdit}
+											positions={content_positions}
+											contentIndex={2}
+											handleSlideEdit={handleSlideEdit}
+											currentSlideIndex={currentSlideIndex}
+											positionType='content_position'
+										>
+											{item}
+										</DragElement>
+									</li>
 								</ul>
 							</React.Fragment>
 						))}
@@ -2703,6 +3145,7 @@ export const Full_img_only_layout = ({
 	image_positions,
 	embed_code,
 	media_types,
+	image_container_positions,
 }: MainSlideProps) => {
 	const updateImgAtIndex =
 		(index: number) =>
@@ -2768,25 +3211,37 @@ export const Full_img_only_layout = ({
 						...layoutElements.imageCSS,
 					}}
 				>
-					<ImgModule
-						imgsrc={imgs?.[0]}
-						updateSingleCallback={updateImgAtIndex(0)}
-						chartArr={charts}
-						ischartArr={ischarts}
-						handleSlideEdit={handleSlideEdit}
-						currentSlideIndex={currentSlideIndex}
-						currentContentIndex={0}
-						canEdit={canEdit}
-						image_positions={image_positions}
-						layoutElements={layoutElements}
-						customImageStyle={layoutElements.imageCSS}
-						setImgHigherZIndex={setImgHigherZIndex}
-						columnIndex={0}
-						embed_code={embed_code}
-						embed_code_single={embed_code?.[0]}
-						media_types={media_types}
-						media_type={media_types?.[0]}
-					/>
+					<div className='w-full h-full' style={{ position: 'relative' }}>
+						<DragElement
+							type={ElementType.ImageView}
+							canEdit={canEdit}
+							positions={image_container_positions}
+							contentIndex={0}
+							handleSlideEdit={handleSlideEdit}
+							currentSlideIndex={currentSlideIndex}
+							positionType='image_container_position'
+						>
+							<ImgModule
+								imgsrc={imgs?.[0]}
+								updateSingleCallback={updateImgAtIndex(0)}
+								chartArr={charts}
+								ischartArr={ischarts}
+								handleSlideEdit={handleSlideEdit}
+								currentSlideIndex={currentSlideIndex}
+								currentContentIndex={0}
+								canEdit={canEdit}
+								image_positions={image_positions}
+								layoutElements={layoutElements}
+								customImageStyle={layoutElements.imageCSS}
+								setImgHigherZIndex={setImgHigherZIndex}
+								columnIndex={0}
+								embed_code={embed_code}
+								embed_code_single={embed_code?.[0]}
+								media_types={media_types}
+								media_type={media_types?.[0]}
+							/>
+						</DragElement>
+					</div>
 				</div>
 			</div>
 			<div

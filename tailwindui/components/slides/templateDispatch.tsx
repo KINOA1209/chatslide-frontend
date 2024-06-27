@@ -452,7 +452,7 @@ export const templateDispatch = (
 								key={
 									keyPrefix + index.toString() + '_' + contentIndex.toString()
 								}
-								className={`${index === 0 ? 'hidden' : ''}`}
+								className={`w-full h-full ${index === 0 ? 'hidden' : ''}`}
 							>
 								{generateContentElement(
 									item,
