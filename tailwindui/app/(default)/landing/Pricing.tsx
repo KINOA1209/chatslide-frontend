@@ -154,7 +154,7 @@ const PricingComparison: React.FC<{
 	const getSecondLine = (tier: Tier): string | JSX.Element => {
 		switch (interval) {
 			case 'onetime':
-				return '30 day access';
+				return '15 day access';
 			case 'monthly':
 				return 'then ' + getPrice(tier);
 			case 'yearly':
@@ -245,7 +245,7 @@ const PricingComparison: React.FC<{
 
   const options = isChatslide()
 		? [
-				{ key: 'onetime', text: '30-Day' },
+				{ key: 'onetime', text: '15-Day' },
 				{ key: 'monthly', text: 'Monthly' },
 				{
 					key: 'yearly',
