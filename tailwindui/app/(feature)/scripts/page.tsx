@@ -182,7 +182,7 @@ export default function WorkflowStep5() {
       return;
     }
 
-    if (slides.some((slide) => (slide.transcript?.length || 1) === 0)) {
+    if (slides.some((slide) => (slide.transcript?.length === 0))) {
       toast.error(
         'At least one page has empty script. Please double check.',
       );
