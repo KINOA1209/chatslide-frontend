@@ -257,11 +257,11 @@ export default function Topic() {
 		'from_topic' | 'from_files'
 	>('from_topic');
 
-  useEffect(() => {
-    if (generationMode === 'from_files') {
-      setSearchOnlineScope('');
-    }
-  }, [generationMode]);
+	useEffect(() => {
+		if (generationMode === 'from_files') {
+			setSearchOnlineScope('');
+		}
+	}, [generationMode]);
 
 	const [topic, setTopic] = useState(project?.topic || '');
 	const [audience, setAudience] = useState(
@@ -345,7 +345,7 @@ export default function Topic() {
 	}
 
 	function getEstWriteOutlineTime() {
-		const base = (llmModel === 'GPT-3.5') ? 15 : 25;
+		const base = llmModel === 'GPT-3.5' ? 15 : 25;
 		return Math.min(30, base + selectedResources.length * 5);
 	}
 
@@ -379,7 +379,7 @@ export default function Topic() {
 
 		const project_id = project?.id || '';
 		const knowledge_summary = project?.knowledge_summary || '';
-		const team_id =  SessionStorage.getItem('currentTeam') || '';
+		const team_id = SessionStorage.getItem('currentTeam') || '';
 		setIsSubmitting(true);
 
 		const formData = {
@@ -388,7 +388,7 @@ export default function Topic() {
 			language: language,
 			project_id: project_id,
 			resources: selectedResources.map((resource: Resource) => resource.id),
-			model_name: (llmModel === 'GPT-3.5') ? 'gpt-3.5-turbo' : 'gpt-4o',
+			model_name: llmModel === 'GPT-3.5' ? 'gpt-3.5-turbo' : 'gpt-4o',
 			//schoolTemplate: schoolTemplate,
 			scenario_type: scenarioType,
 			generation_mode: generationMode,
@@ -445,22 +445,23 @@ export default function Topic() {
 				} as Project);
 
 				console.log('knowledge_summary', response.data.knowledge_summary);
-        setSummarizing(false);
+				setSummarizing(false);
 			} catch (error) {
-        if (error instanceof Error && error.message.includes('Bad request')) {
-          toast.error("The resource you provided does not provide sufficient information.")
+				if (error instanceof Error && error.message.includes('Bad request')) {
+					toast.error(
+						'The resource you provided does not provide sufficient information.',
+					);
 				} else {
 					console.error('Error summarizing resources', error);
 				}
 
-        setSummarizing(false);
-        
-        if (!topic) {
-          // if there is no topic (file mode), and cannot summarize, end early 
-          return;
-        }
+				setSummarizing(false);
+
+				if (!topic) {
+					// if there is no topic (file mode), and cannot summarize, end early
+					return;
+				}
 			}
-			
 		} else {
 			console.log('no need to summarize resources');
 			setSummarizing(false);
