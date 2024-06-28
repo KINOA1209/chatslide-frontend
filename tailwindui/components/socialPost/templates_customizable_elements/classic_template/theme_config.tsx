@@ -1,10 +1,14 @@
 import { PostTypeKeys } from '@/components/socialPost/templates_customizable_elements/theme_elements';
 import { SocialPostThemeElements } from '@/components/socialPost/templates_customizable_elements/theme_elements';
+import { SocialPostColorPaletteConfig } from '@/components/socialPost/templates_customizable_elements/color_palette_settings/SocialPostTemplatesColorPalettes';
 
 export const Classic_SocialPost_TemplateThemeConfig: {
 	[key in PostTypeKeys]?: SocialPostThemeElements;
 } = {
 	casual_topic: {
+		canvasBackground: {
+			background: '#F5F1E2',
+		},
 		useIllustraion: false,
 		topicCSS: {
 			fontSize: '30pt',
@@ -66,6 +70,9 @@ export const Classic_SocialPost_TemplateThemeConfig: {
 		},
 	},
 	serious_subject: {
+		canvasBackground: {
+			background: '#F5F1E2',
+		},
 		useIllustraion: false,
 		// originalTitleCoverCSS: {
 		// 	color: '#1B1C22',
@@ -178,6 +185,9 @@ export const Classic_SocialPost_TemplateThemeConfig: {
 		},
 	},
 	reading_notes: {
+		canvasBackground: {
+			background: '#F5F1E2',
+		},
 		useIllustraion: false,
 		readingtitleCSS: {
 			// color: '#121212',

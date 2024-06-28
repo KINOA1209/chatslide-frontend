@@ -8,9 +8,9 @@ import { MdOutlineShare } from 'react-icons/md';
 import '@/components/ui/design_systems/variables.css';
 import defaultDrLambdaThumbnail from '@/public/images/ogimage_drlambda.png';
 import defaultChatSlideThumbnail from '@/public/images/ogimage_chatslide.png';
-import causalTopicThumbnail from '@/public/images/socialpost/casual_topic.png';
-import readingNotesThumbnail from '@/public/images/socialpost/reading_notes.png';
-import seriousSubjectThumbnail from '@/public/images/socialpost/serious_subject.png';
+import causalTopicThumbnail from '@/public/images/socialpost/casual_topic_thumbnail_classic.png';
+import readingNotesThumbnail from '@/public/images/socialpost/reading_notes_thumbnail_classic.png';
+import seriousSubjectThumbnail from '@/public/images/socialpost/serious_subject_thumbnail_classic.png';
 import { isChatslide } from '@/utils/getHost';
 import { FaEye } from 'react-icons/fa';
 import Folder from '@/models/Folder';
@@ -71,162 +71,160 @@ const ProjectItem: React.FC<{
 	project: Project;
 	index: number;
 	isDiscover?: boolean;
-}> = ({
-	project,
-	index,
-	isDiscover = false,
-}) => {
-		const isCloning = index === -1;
+}> = ({ project, index, isDiscover = false }) => {
+	const isCloning = index === -1;
 
-		return (
-			<Fragment key={project.id}>
-				{/* thumbnail */}
-				<div
-					className={`h-full hidden lg:flex col-span-1 p-1 items-center justify-center ${!isCloning ? 'cursor-pointer' : 'cursor-not-allowed'
-						} leading-normal`}
-				>
-					{/* view count */}
-					{isDiscover && (
-						<div className='flex flex-col items-center justify-center w-full text-xs text-[#475467] mx-1 gap-y-1'>
-							<FaEye />
-							{project.view_count || 0}
-						</div>
-					)}
-					<Link href={`/${isDiscover ? 'shared' : 'project'}/${project.id}`}>
-						<div
-							className='flex items-center justify-center w-full'
-							style={{
-								objectFit: 'contain' as 'contain',
-							}}
-						>
-							<Image
-								className=''
-								unoptimized={true}
-								src={getThumbnailUrl(project)}
-								alt={project.name + 'project thumbnail'}
-								layout='responsive'
-								width={72}
-								height={40}
-								style={{ width: '72px', height: '40px' }}
+	return (
+		<Fragment key={project.id}>
+			{/* thumbnail */}
+			<div
+				className={`h-full hidden lg:flex col-span-1 p-1 items-center justify-center ${
+					!isCloning ? 'cursor-pointer' : 'cursor-not-allowed'
+				} leading-normal`}
+			>
+				{/* view count */}
+				{isDiscover && (
+					<div className='flex flex-col items-center justify-center w-full text-xs text-[#475467] mx-1 gap-y-1'>
+						<FaEye />
+						{project.view_count || 0}
+					</div>
+				)}
+				<Link href={`/${isDiscover ? 'shared' : 'project'}/${project.id}`}>
+					<div
+						className='flex items-center justify-center w-full'
+						style={{
+							objectFit: 'contain' as 'contain',
+						}}
+					>
+						<Image
+							className=''
+							unoptimized={true}
+							src={getThumbnailUrl(project)}
+							alt={project.name + 'project thumbnail'}
+							layout='responsive'
+							width={72}
+							height={40}
+							style={{ width: '72px', height: '40px' }}
 							//priority={isPriority}
 							// onError={(e) => {
 							// 	e.currentTarget.src = DEFAULT_THUMBNAIL;
 							// }}
-							/>
-						</div>
-					</Link>
-				</div>
-				{/* title */}
-				<div
-					className={`col-span-3 lg:col-span-2 p-2 flex items-center ${!isCloning ? 'cursor-pointer' : 'cursor-not-allowed'
-						} leading-[20px]`}
-					style={{ padding: `var(--spacing-xl, 8px) var(--spacing-3xl, 8px)` }}
-				>
-					<Link href={`/${isDiscover ? 'shared' : 'project'}/${project.id}`}>
-						<div
-							className='flex-wrap'
-							style={{
-								fontSize: '14px',
-								color: 'var(--colors-text-text-secondary-700, #344054)',
-							}}
-						>
-							{project.name} {isCloning && '(Cloning...⏳)'}
-						</div>
-					</Link>
-				</div>
-				{/* type */}
-				{
+						/>
+					</div>
+				</Link>
+			</div>
+			{/* title */}
+			<div
+				className={`col-span-3 lg:col-span-2 p-2 flex items-center ${
+					!isCloning ? 'cursor-pointer' : 'cursor-not-allowed'
+				} leading-[20px]`}
+				style={{ padding: `var(--spacing-xl, 8px) var(--spacing-3xl, 8px)` }}
+			>
+				<Link href={`/${isDiscover ? 'shared' : 'project'}/${project.id}`}>
 					<div
-						className='col-span-1 hidden lg:block items-center '
+						className='flex-wrap'
 						style={{
-							padding: `var(--spacing-xl, 8px) var(--spacing-3xl, 8px)`,
+							fontSize: '14px',
+							color: 'var(--colors-text-text-secondary-700, #344054)',
 						}}
 					>
-						<div className='flex flex-col gap-[4px]'>
-							{project.content_type === 'presentation' ? (
-								<DesignSystemBadges
-									size='sm'
-									text={'Slide'}
-									iconLeading={<PiSlideshow />}
-									bgColor='var(--Component-colors-Utility-Purple-utility-purple-50, #EFF4FF)'
-									borderColor='var(--Component-colors-Utility-Purple-utility-purple-200, #C7D7FE)'
-									borderRadius='6px'
-									textColor='var(--Component-colors-Utility-Brand-utility-brand-700, #3538CD)'
-									iconColor='var(--Component-colors-Utility-Brand-utility-brand-700, #3538CD)'
-								></DesignSystemBadges>
-							) : (
-								<DesignSystemBadges
-									size='sm'
-									text={'Social Post'}
-									iconLeading={<MdOutlineShare/>}
-									bgColor='var(--Component-colors-Utility-Purple-utility-purple-50, #F4F3FF)'
-									borderColor='var(--Component-colors-Utility-Purple-utility-purple-200, #D9D6FE)'
-									borderRadius='6px'
-									textColor='var(--Component-colors-Utility-Purple-utility-purple-700, #5925DC)'
-									iconColor='var(--Component-colors-Utility-Purple-utility-purple-700, #5925DC)'
-								></DesignSystemBadges>
-							)}{' '}
-							{project.video_url ? (
-								<DesignSystemBadges
-									size='sm'
-									text={'Video'}
-									iconLeading={<MdOndemandVideo/>}
-									bgColor='var(--Component-colors-Utility-Purple-utility-purple-50, #EFF4FF)'
-									borderColor='var(--Component-colors-Utility-Purple-utility-purple-200, #C7D7FE)'
-									borderRadius='6px'
-									textColor='var(--Component-colors-Utility-Brand-utility-brand-700, #3538CD)'
-									iconColor='var(--Component-colors-Utility-Brand-utility-brand-700, #3538CD)'
-								></DesignSystemBadges>
-							) : (
-								<></>
-							)}
-						</div>
+						{project.name} {isCloning && '(Cloning...⏳)'}
+					</div>
+				</Link>
+			</div>
+			{/* type */}
+			{
+				<div
+					className='col-span-1 hidden lg:block items-center '
+					style={{
+						padding: `var(--spacing-xl, 8px) var(--spacing-3xl, 8px)`,
+					}}
+				>
+					<div className='flex flex-col gap-[4px]'>
+						{project.content_type === 'presentation' ? (
+							<DesignSystemBadges
+								size='sm'
+								text={'Slide'}
+								iconLeading={<PiSlideshow />}
+								bgColor='var(--Component-colors-Utility-Purple-utility-purple-50, #EFF4FF)'
+								borderColor='var(--Component-colors-Utility-Purple-utility-purple-200, #C7D7FE)'
+								borderRadius='6px'
+								textColor='var(--Component-colors-Utility-Brand-utility-brand-700, #3538CD)'
+								iconColor='var(--Component-colors-Utility-Brand-utility-brand-700, #3538CD)'
+							></DesignSystemBadges>
+						) : (
+							<DesignSystemBadges
+								size='sm'
+								text={'Social Post'}
+								iconLeading={<MdOutlineShare />}
+								bgColor='var(--Component-colors-Utility-Purple-utility-purple-50, #F4F3FF)'
+								borderColor='var(--Component-colors-Utility-Purple-utility-purple-200, #D9D6FE)'
+								borderRadius='6px'
+								textColor='var(--Component-colors-Utility-Purple-utility-purple-700, #5925DC)'
+								iconColor='var(--Component-colors-Utility-Purple-utility-purple-700, #5925DC)'
+							></DesignSystemBadges>
+						)}{' '}
+						{project.video_url ? (
+							<DesignSystemBadges
+								size='sm'
+								text={'Video'}
+								iconLeading={<MdOndemandVideo />}
+								bgColor='var(--Component-colors-Utility-Purple-utility-purple-50, #EFF4FF)'
+								borderColor='var(--Component-colors-Utility-Purple-utility-purple-200, #C7D7FE)'
+								borderRadius='6px'
+								textColor='var(--Component-colors-Utility-Brand-utility-brand-700, #3538CD)'
+								iconColor='var(--Component-colors-Utility-Brand-utility-brand-700, #3538CD)'
+							></DesignSystemBadges>
+						) : (
+							<></>
+						)}
+					</div>
 
-						{/* {project.content_type} */}
+					{/* {project.content_type} */}
+				</div>
+			}
+			{/* laste edited time */}
+			{
+				<div className='flex flex-row justify-between'>
+					<div
+						className='col-span-1 block items-center '
+						style={{
+							padding: `var(--spacing-xl, 8px) var(--spacing-3xl, 8px)`,
+							fontSize: '14px',
+							color: 'var(--colors-text-text-tertiary-600, #475467)',
+							lineHeight: '20px',
+							fontStyle: 'normal',
+							fontWeight: 'normal',
+						}}
+					>
+						{/* <FileIcon fileType='pdf' /> */}
+						{project.updated_datetime && formatDate(project.updated_datetime)}
 					</div>
-				}
-				{/* laste edited time */}
-				{
-					<div className='flex flex-row justify-between'>
-						<div
-							className='col-span-1 block items-center '
-							style={{
-								padding: `var(--spacing-xl, 8px) var(--spacing-3xl, 8px)`,
-								fontSize: '14px',
-								color: 'var(--colors-text-text-tertiary-600, #475467)',
-								lineHeight: '20px',
-								fontStyle: 'normal',
-								fontWeight: 'normal',
-							}}
-						>
-							{/* <FileIcon fileType='pdf' /> */}
-							{project.updated_datetime && formatDate(project.updated_datetime)}
-						</div>
-						{/* buttons drop down */}
-						<Menu>
-							<button className='block px-[10px] py-[9px] text-sm text-[#182230] rounded-md hover:bg-zinc-100 w-full text-left'>
-								<Link
-									style={{
-										display: 'flex',
-										flexDirection: 'row',
-										alignItems: 'center',
-										justifyContent: 'flex-start',
-										gap: 'var(--spacing-lg, 12px)',
-									}}
-									href={`/${isDiscover ? 'shared' : 'project'}/${project.id}`}
-								>
-									<MdOutlineOpenInNew
-										style={{ width: '16px', height: '16px' }}
-									></MdOutlineOpenInNew>
-									Open
-								</Link>
-							</button>
-						</Menu>
-					</div>
-				}
-			</Fragment>
-		);
-	};
+					{/* buttons drop down */}
+					<Menu>
+						<button className='block px-[10px] py-[9px] text-sm text-[#182230] rounded-md hover:bg-zinc-100 w-full text-left'>
+							<Link
+								style={{
+									display: 'flex',
+									flexDirection: 'row',
+									alignItems: 'center',
+									justifyContent: 'flex-start',
+									gap: 'var(--spacing-lg, 12px)',
+								}}
+								href={`/${isDiscover ? 'shared' : 'project'}/${project.id}`}
+							>
+								<MdOutlineOpenInNew
+									style={{ width: '16px', height: '16px' }}
+								></MdOutlineOpenInNew>
+								Open
+							</Link>
+						</button>
+					</Menu>
+				</div>
+			}
+		</Fragment>
+	);
+};
 
 interface Props {
 	currentProjects: Project[];

@@ -11,7 +11,7 @@ export const Default_SocialPost_TemplateLayoutsConfig: {
 		canvasCSS: {
 			width: '100%',
 			height: '100%',
-			background: '#F1F1F1',
+			// background: '#F1F1F1',
 			border: 'none',
 		},
 		columnCSS: {
@@ -111,7 +111,7 @@ export const Default_SocialPost_TemplateLayoutsConfig: {
 		canvasCSS: {
 			width: '100%',
 			height: '100%',
-			background: '#F1F1F1',
+			// background: '#F1F1F1',
 			border: 'none',
 		},
 		columnCSS: {
@@ -211,7 +211,7 @@ export const Default_SocialPost_TemplateLayoutsConfig: {
 		canvasCSS: {
 			width: '100%',
 			height: '100%',
-			background: '#F1F1F1',
+			// background: '#F1F1F1',
 			border: 'none',
 		},
 		horizontalDividerCSS: {
@@ -279,7 +279,7 @@ export const Default_SocialPost_TemplateLayoutsConfig: {
 		canvasCSS: {
 			width: '100%',
 			height: '100%',
-			background: '#F1F1F1',
+			// background: '#F1F1F1',
 			// background: 'yellow',
 			border: 'none',
 		},
@@ -350,7 +350,7 @@ export const Default_SocialPost_TemplateLayoutsConfig: {
 		canvasCSS: {
 			width: '100%',
 			height: '100%',
-			background: '#F1F1F1',
+			// background: '#F1F1F1',
 			// background: 'yellow',
 			border: 'none',
 		},
@@ -406,7 +406,7 @@ export const Default_SocialPost_TemplateLayoutsConfig: {
 		canvasCSS: {
 			width: '100%',
 			height: '100%',
-			background: '#F1F1F1',
+			// background: '#F1F1F1',
 			border: 'none',
 		},
 		horizontalDividerCSS: {
@@ -475,7 +475,7 @@ export const Default_SocialPost_TemplateLayoutsConfig: {
 		canvasCSS: {
 			width: '100%',
 			height: '100%',
-			background: '#F1F1F1',
+			// background: '#F1F1F1',
 			// background: 'yellow',
 			border: 'none',
 		},
@@ -546,7 +546,7 @@ export const Default_SocialPost_TemplateLayoutsConfig: {
 		canvasCSS: {
 			width: '100%',
 			height: '100%',
-			background: '#F1F1F1',
+			// background: '#F1F1F1',
 			border: 'none',
 		},
 		horizontalDividerCSS: {
@@ -602,7 +602,7 @@ export const Default_SocialPost_TemplateLayoutsConfig: {
 		canvasCSS: {
 			width: '100%',
 			height: '100%',
-			background: '#F1F1F1',
+			// background: '#F1F1F1',
 			border: 'none',
 			display: 'flex',
 			flexDirection: 'column',
@@ -722,7 +722,7 @@ export const Default_SocialPost_TemplateLayoutsConfig: {
 		canvasCSS: {
 			width: '100%',
 			height: '100%',
-			background: '#F1F1F1',
+			// background: '#F1F1F1',
 			border: 'none',
 		},
 		columnCSS: {

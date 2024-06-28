@@ -44,6 +44,11 @@ import classicTemplateThemeLastPageIndicator from '@/public/images/socialpost/cl
 import classicTemplateThemeNonCoverPageIndicator from '@/public/images/socialpost/classicTemplateThemeNonCoverPageIndicator.png';
 import { StaticImageData } from 'next/image';
 import { isChatslide } from '@/utils/getHost';
+import {
+	SocialPostColorPaletteConfig,
+	SocialPostColorPaletteConfigType,
+	SocialPostColorPaletteKeys,
+} from '@/components/socialPost/templates_customizable_elements/color_palette_settings/SocialPostTemplatesColorPalettes';
 
 export const templateThemeKeyAndIndicatorImgMapCoverPage: Record<
 	SocialPostTemplateKeys,
@@ -167,6 +172,12 @@ export const templateDispatch = (
 	} else if (!canEdit) {
 		keyPrefix = 'preview';
 	}
+
+	const currColorPaletteKey: SocialPostColorPaletteKeys = 'default';
+	// load color palette
+	const chosenColorPaletteConfigs: SocialPostColorPaletteConfigType =
+		SocialPostColorPaletteConfig[currColorPaletteKey] || {};
+	console.log('chosen color palette configs:', chosenColorPaletteConfigs);
 
 	// make sure slide.template_theme is valid otherwise use default value
 	// Normalize slide.layout to ensure it's always a string
@@ -417,6 +428,9 @@ export const templateDispatch = (
 								textAlign: socialPostLayoutElements.userNameCSS
 									? socialPostLayoutElements.userNameCSS.textAlign
 									: 'left',
+								color:
+									chosenColorPaletteConfigs?.fontColorConfig?.color ||
+									themeElements?.userNameCSS?.color,
 							},
 						)
 					) : (
@@ -430,6 +444,9 @@ export const templateDispatch = (
 								textAlign: socialPostLayoutElements.userNameCSS
 									? socialPostLayoutElements.userNameCSS.textAlign
 									: 'left',
+								color:
+									chosenColorPaletteConfigs?.fontColorConfig?.color ||
+									themeElements?.userNameCSS?.color,
 							}}
 							contentEditable={false}
 							dangerouslySetInnerHTML={{ __html: currUserName }}
@@ -445,6 +462,9 @@ export const templateDispatch = (
 					textAlign: socialPostLayoutElements.topicCSS
 						? socialPostLayoutElements.topicCSS.textAlign
 						: 'left',
+					color:
+						chosenColorPaletteConfigs?.fontColorConfig?.color ||
+						themeElements?.topicCSS?.color,
 				})}
 				keywords={generateContentElement(
 					Array.isArray(slide.keywords)
@@ -456,6 +476,9 @@ export const templateDispatch = (
 						textAlign: socialPostLayoutElements.keywordsCSS
 							? socialPostLayoutElements.keywordsCSS.textAlign
 							: 'left',
+						color:
+							chosenColorPaletteConfigs?.fontColorConfig?.color ||
+							themeElements?.keywordCoverCSS?.color,
 					},
 				)}
 				original_title={generateContentElement(
@@ -466,6 +489,9 @@ export const templateDispatch = (
 						textAlign: socialPostLayoutElements.originalTitleCSS
 							? socialPostLayoutElements.originalTitleCSS.textAlign
 							: 'left',
+						color:
+							chosenColorPaletteConfigs?.fontColorConfig?.color ||
+							themeElements?.originalTitleCoverCSS?.color,
 					},
 				)}
 				title={generateContentElement(slide.title, 'title', {
@@ -473,6 +499,9 @@ export const templateDispatch = (
 					textAlign: socialPostLayoutElements.readingTitleCSS
 						? socialPostLayoutElements.readingTitleCSS.textAlign
 						: 'left',
+					color:
+						chosenColorPaletteConfigs?.fontColorConfig?.color ||
+						themeElements?.readingtitleCSS?.color,
 				})}
 				subtopic={<></>}
 				quote={<></>}
@@ -483,6 +512,7 @@ export const templateDispatch = (
 				section_title={<></>}
 				layoutElements={socialPostLayoutElements}
 				themeElements={themeElements}
+				colorPaletteElements={chosenColorPaletteConfigs}
 				last_page_title={<></>}
 				last_page_content={[<></>]}
 				social_post_template_logo={generateSocialPostTemplateLogo({
@@ -552,6 +582,9 @@ export const templateDispatch = (
 								textAlign: socialPostLayoutElements.userNameCSS
 									? socialPostLayoutElements.userNameCSS.textAlign
 									: 'left',
+								color:
+									chosenColorPaletteConfigs?.fontColorConfig?.color ||
+									themeElements?.userNameCSS?.color,
 							},
 						)
 					) : (
@@ -565,6 +598,9 @@ export const templateDispatch = (
 								textAlign: socialPostLayoutElements.userNameCSS
 									? socialPostLayoutElements.userNameCSS.textAlign
 									: 'left',
+								color:
+									chosenColorPaletteConfigs?.fontColorConfig?.color ||
+									themeElements?.userNameCSS?.color,
 							}}
 							contentEditable={false}
 							dangerouslySetInnerHTML={{ __html: currUserName }}
@@ -590,6 +626,9 @@ export const templateDispatch = (
 					textAlign: socialPostLayoutElements.subtopicCSS
 						? socialPostLayoutElements.subtopicCSS.textAlign
 						: 'left',
+					color:
+						chosenColorPaletteConfigs?.fontColorConfig?.color ||
+						themeElements?.subtopicCSS?.color,
 				})}
 				keywords={generateContentElement(
 					slide.keywords,
@@ -599,6 +638,9 @@ export const templateDispatch = (
 						textAlign: socialPostLayoutElements.keywordsCSS
 							? socialPostLayoutElements.keywordsCSS.textAlign
 							: 'left',
+						color:
+							chosenColorPaletteConfigs?.fontColorConfig?.color ||
+							themeElements?.keywordCSS?.color,
 					},
 					undefined,
 					false,
@@ -611,6 +653,9 @@ export const templateDispatch = (
 						textAlign: socialPostLayoutElements.sectionTitleCSS
 							? socialPostLayoutElements.sectionTitleCSS.textAlign
 							: 'left',
+						color:
+							chosenColorPaletteConfigs?.fontColorConfig?.color ||
+							themeElements?.sectionTitleCSS?.color,
 					},
 				)}
 				original_title={generateContentElement(
@@ -621,6 +666,9 @@ export const templateDispatch = (
 						textAlign: socialPostLayoutElements.originalTitleCSS
 							? socialPostLayoutElements.originalTitleCSS.textAlign
 							: 'left',
+						color:
+							chosenColorPaletteConfigs?.fontColorConfig?.color ||
+							themeElements?.originalTitleCSS?.color,
 					},
 				)}
 				brief={generateContentElement(slide.brief, 'brief', {
@@ -628,18 +676,27 @@ export const templateDispatch = (
 					textAlign: socialPostLayoutElements.briefCSS
 						? socialPostLayoutElements.briefCSS.textAlign
 						: 'left',
+					color:
+						chosenColorPaletteConfigs?.fontColorConfig?.color ||
+						themeElements?.briefCSS?.color,
 				})}
 				quote={generateContentElement(ModifiedSlideQuote, 'quote', {
 					...(themeElements?.quoteCSS || {}),
 					textAlign: socialPostLayoutElements.quoteCSS
 						? socialPostLayoutElements.quoteCSS.textAlign
 						: 'left',
+					color:
+						chosenColorPaletteConfigs?.fontColorConfig?.color ||
+						themeElements?.quoteCSS?.color,
 				})}
 				source={generateContentElement(slide.source, 'source', {
 					...(themeElements?.sourceCSS || {}),
 					textAlign: socialPostLayoutElements.sourceCSS
 						? socialPostLayoutElements.sourceCSS.textAlign
 						: 'left',
+					color:
+						chosenColorPaletteConfigs?.fontColorConfig?.color ||
+						themeElements?.sourceCSS?.color,
 				})}
 				content={slide.content.map((content: string, contentIndex: number) => {
 					// console.log('content, contentIndex: ', content, contentIndex);
@@ -656,12 +713,18 @@ export const templateDispatch = (
 											textAlign: socialPostLayoutElements.lastPageContentCSS
 												? socialPostLayoutElements.lastPageContentCSS.textAlign
 												: 'left',
+											color:
+												chosenColorPaletteConfigs?.fontColorConfig?.color ||
+												themeElements?.lastPageContentCSS?.color,
 										}
 									: {
 											...(themeElements?.contentCSS || {}),
 											textAlign: socialPostLayoutElements.contentCSS
 												? socialPostLayoutElements.contentCSS.textAlign
 												: 'left',
+											color:
+												chosenColorPaletteConfigs?.fontColorConfig?.color ||
+												themeElements?.contentCSS?.color,
 										},
 								contentIndex,
 							)}
@@ -675,9 +738,13 @@ export const templateDispatch = (
 					textAlign: socialPostLayoutElements.lastPageTitleCSS
 						? socialPostLayoutElements.lastPageTitleCSS.textAlign
 						: 'left',
+					color:
+						chosenColorPaletteConfigs?.fontColorConfig?.color ||
+						themeElements?.topicCSS?.color,
 				})}
 				layoutElements={socialPostLayoutElements}
 				themeElements={themeElements}
+				colorPaletteElements={chosenColorPaletteConfigs}
 				last_page_title={generateContentElement(
 					slide.last_page_title,
 					'last_page_title',
@@ -686,6 +753,9 @@ export const templateDispatch = (
 						textAlign: socialPostLayoutElements.lastPageTitleCSS
 							? socialPostLayoutElements.lastPageTitleCSS.textAlign
 							: 'left',
+						color:
+							chosenColorPaletteConfigs?.fontColorConfig?.color ||
+							themeElements?.lastPageTitleCSS?.color,
 					},
 				)}
 				last_page_content={lastPageContentArray.map(
@@ -714,6 +784,9 @@ export const templateDispatch = (
 										textAlign: socialPostLayoutElements.lastPageContentCSS
 											? socialPostLayoutElements.lastPageContentCSS.textAlign
 											: 'left',
+										color:
+											chosenColorPaletteConfigs?.fontColorConfig?.color ||
+											themeElements?.lastPageContentCSS?.color,
 									},
 									contentIndex,
 								)}

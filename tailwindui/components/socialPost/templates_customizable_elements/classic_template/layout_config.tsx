@@ -11,7 +11,7 @@ export const Classis_SocialPost_TemplateLayoutsConfig: {
 		canvasCSS: {
 			width: '100%',
 			height: '100%',
-			background: '#F5F1E2',
+			// background: '#F5F1E2',
 			border: 'none',
 		},
 		columnCSS: {
@@ -95,7 +95,7 @@ export const Classis_SocialPost_TemplateLayoutsConfig: {
 		canvasCSS: {
 			width: '100%',
 			height: '100%',
-			background: '#F5F1E2',
+			// background: '#F5F1E2',
 			border: 'none',
 		},
 		columnCSS: {
@@ -178,7 +178,7 @@ export const Classis_SocialPost_TemplateLayoutsConfig: {
 		canvasCSS: {
 			width: '100%',
 			height: '100%',
-			background: '#F5F1E2',
+			// background: '#F5F1E2',
 			border: 'none',
 		},
 		pageNumberIndexCSS: {
@@ -237,7 +237,7 @@ export const Classis_SocialPost_TemplateLayoutsConfig: {
 		canvasCSS: {
 			width: '100%',
 			height: '100%',
-			background: '#F5F1E2',
+			// background: '#F5F1E2',
 			border: 'none',
 		},
 		columnCSS: {
@@ -286,7 +286,7 @@ export const Classis_SocialPost_TemplateLayoutsConfig: {
 		canvasCSS: {
 			width: '100%',
 			height: '100%',
-			background: '#F5F1E2',
+			// background: '#F5F1E2',
 			border: 'none',
 		},
 		columnCSS: {
@@ -334,7 +334,7 @@ export const Classis_SocialPost_TemplateLayoutsConfig: {
 		canvasCSS: {
 			width: '100%',
 			height: '100%',
-			background: '#F5F1E2',
+			// background: '#F5F1E2',
 			border: 'none',
 		},
 		pageNumberIndexCSS: {
@@ -394,7 +394,7 @@ export const Classis_SocialPost_TemplateLayoutsConfig: {
 		canvasCSS: {
 			width: '100%',
 			height: '100%',
-			background: '#F5F1E2',
+			// background: '#F5F1E2',
 			border: 'none',
 		},
 		columnCSS: {
@@ -442,7 +442,7 @@ export const Classis_SocialPost_TemplateLayoutsConfig: {
 		canvasCSS: {
 			width: '100%',
 			height: '100%',
-			background: '#F5F1E2',
+			// background: '#F5F1E2',
 			border: 'none',
 		},
 
@@ -493,7 +493,7 @@ export const Classis_SocialPost_TemplateLayoutsConfig: {
 		canvasCSS: {
 			width: '100%',
 			height: '100%',
-			background: '#F5F1E2',
+			// background: '#F5F1E2',
 			border: 'none',
 		},
 
@@ -555,7 +555,7 @@ export const Classis_SocialPost_TemplateLayoutsConfig: {
 		canvasCSS: {
 			width: '100%',
 			height: '100%',
-			background: '#F5F1E2',
+			// background: '#F5F1E2',
 			border: 'none',
 		},
 		columnCSS: {

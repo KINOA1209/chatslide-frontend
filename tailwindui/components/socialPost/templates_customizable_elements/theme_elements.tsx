@@ -21,6 +21,7 @@ export type SocialPostThemeElements = {
 	lastPageTitleCSS?: React.CSSProperties;
 	lastPageContentCSS?: React.CSSProperties;
 	useIllustraion?: boolean;
+	canvasBackground?: React.CSSProperties;
 };
 
 export type PostTypeKeys = 'casual_topic' | 'serious_subject' | 'reading_notes';

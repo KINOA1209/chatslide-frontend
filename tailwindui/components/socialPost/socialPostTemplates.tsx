@@ -31,6 +31,7 @@ import {
 	templateThemeKeyAndIndicatorImgMapLastPage,
 	templateThemeKeyAndIndicatorImgMapNonCoverPage,
 } from './socialPostTemplateDispatch';
+import { SocialPostColorPaletteConfigType } from './templates_customizable_elements/color_palette_settings/SocialPostTemplatesColorPalettes';
 interface MainSlidePropsSocialPost {
 	subtopic: JSX.Element;
 	keywords: JSX.Element[] | JSX.Element;
@@ -63,6 +64,7 @@ interface MainSlidePropsSocialPost {
 	handleSlideEdit: Function;
 	layoutElements: SocialPostLayoutElements;
 	themeElements: SocialPostThemeElements;
+	colorPaletteElements: SocialPostColorPaletteConfigType;
 	last_page_title: JSX.Element;
 	last_page_content: JSX.Element[];
 	social_post_template_logo: JSX.Element;
@@ -202,6 +204,7 @@ export const First_page_img_1_casual_topic = ({
 	handleSlideEdit,
 	layoutElements,
 	themeElements,
+	colorPaletteElements,
 	social_post_template_logo,
 	user_name,
 	page_turn_indicator,
@@ -237,7 +240,14 @@ export const First_page_img_1_casual_topic = ({
 		<div
 			// className='relative gap-[32px] flex justify-center items-center'
 			className='SocialPostCanvas'
-			style={{ position: 'relative', ...layoutElements?.canvasCSS }}
+			style={{
+				position: 'relative',
+				...layoutElements?.canvasCSS,
+				...themeElements?.canvasBackground,
+				background:
+					colorPaletteElements?.canvasBackgroundConfig?.background ||
+					themeElements?.canvasBackground?.background,
+			}}
 		>
 			<div
 				className='SocialPostImageContainer'
@@ -350,6 +360,7 @@ export const Col_1_img_0_casual_topic = ({
 	canEdit,
 	layoutElements,
 	themeElements,
+	colorPaletteElements,
 	social_post_template_logo,
 	user_name,
 	page_index_number,
@@ -400,7 +411,14 @@ export const Col_1_img_0_casual_topic = ({
 		<div
 			// className='relative gap-[32px] flex justify-center items-center'
 			className='SocialPostCanvas'
-			style={{ position: 'relative', ...layoutElements?.canvasCSS }}
+			style={{
+				position: 'relative',
+				...layoutElements?.canvasCSS,
+				...themeElements?.canvasBackground,
+				background:
+					colorPaletteElements?.canvasBackgroundConfig?.background ||
+					themeElements?.canvasBackground?.background,
+			}}
 		>
 			<div
 				className='horizontalDivider'
@@ -526,6 +544,7 @@ export const Col_2_img_1_left_casual_topic = ({
 	handleSlideEdit,
 	layoutElements,
 	themeElements,
+	colorPaletteElements,
 	social_post_template_logo,
 	user_name,
 	page_index_number,
@@ -560,6 +579,10 @@ export const Col_2_img_1_left_casual_topic = ({
 			style={{
 				position: 'relative',
 				...layoutElements?.canvasCSS,
+				...themeElements?.canvasBackground,
+				background:
+					colorPaletteElements?.canvasBackgroundConfig?.background ||
+					themeElements?.canvasBackground?.background,
 			}}
 		>
 			<div
@@ -666,6 +689,7 @@ export const Col_2_img_1_Right_casual_topic = ({
 	handleSlideEdit,
 	layoutElements,
 	themeElements,
+	colorPaletteElements,
 	social_post_template_logo,
 	user_name,
 	page_index_number,
@@ -700,6 +724,10 @@ export const Col_2_img_1_Right_casual_topic = ({
 			style={{
 				position: 'relative',
 				...layoutElements?.canvasCSS,
+				...themeElements?.canvasBackground,
+				background:
+					colorPaletteElements?.canvasBackgroundConfig?.background ||
+					themeElements?.canvasBackground?.background,
 			}}
 		>
 			<div
@@ -815,6 +843,7 @@ export const First_page_img_1_serious_subject = ({
 	handleSlideEdit,
 	layoutElements,
 	themeElements,
+	colorPaletteElements,
 	user_name,
 	social_post_template_logo,
 	page_turn_indicator,
@@ -857,7 +886,14 @@ export const First_page_img_1_serious_subject = ({
 		<div
 			// className='relative gap-[32px] flex justify-center items-center'
 			className='SocialPostCanvas'
-			style={{ position: 'relative', ...layoutElements?.canvasCSS }}
+			style={{
+				position: 'relative',
+				...layoutElements?.canvasCSS,
+				...themeElements?.canvasBackground,
+				background:
+					colorPaletteElements?.canvasBackgroundConfig?.background ||
+					themeElements?.canvasBackground?.background,
+			}}
 		>
 			<div
 				className='SocialPostColumn'
@@ -938,6 +974,7 @@ export const img_0_serious_subject = ({
 	canEdit,
 	layoutElements,
 	themeElements,
+	colorPaletteElements,
 	page_index_number,
 	social_post_template_logo,
 }: MainSlidePropsSocialPost) => {
@@ -945,7 +982,14 @@ export const img_0_serious_subject = ({
 		<div
 			// className='relative gap-[32px] flex justify-center items-center'
 			className='SocialPostCanvas'
-			style={{ position: 'relative', ...layoutElements?.canvasCSS }}
+			style={{
+				position: 'relative',
+				...layoutElements?.canvasCSS,
+				...themeElements?.canvasBackground,
+				background:
+					colorPaletteElements?.canvasBackgroundConfig?.background ||
+					themeElements?.canvasBackground?.background,
+			}}
 		>
 			<div
 				className='horizontalDivider'
@@ -1021,6 +1065,7 @@ export const First_page_img_1_reading_notes = ({
 	handleSlideEdit,
 	layoutElements,
 	themeElements,
+	colorPaletteElements,
 	useIllustraion,
 }: MainSlidePropsSocialPost) => {
 	const updateImgAtIndex =
@@ -1051,7 +1096,14 @@ export const First_page_img_1_reading_notes = ({
 		<div
 			// className='relative gap-[32px] flex justify-center items-center'
 			className='SocialPostCanvas'
-			style={{ position: 'relative', ...layoutElements?.canvasCSS }}
+			style={{
+				position: 'relative',
+				...layoutElements?.canvasCSS,
+				...themeElements?.canvasBackground,
+				background:
+					colorPaletteElements?.canvasBackgroundConfig?.background ||
+					themeElements?.canvasBackground?.background,
+			}}
 		>
 			<div
 				className='SocialPostImageContainer'
@@ -1218,6 +1270,7 @@ export const Col_1_img_0_reading_notes = ({
 	handleSlideEdit,
 	layoutElements,
 	themeElements,
+	colorPaletteElements,
 	social_post_template_logo,
 	page_index_number,
 	page_turn_indicator,
@@ -1245,7 +1298,14 @@ export const Col_1_img_0_reading_notes = ({
 		<div
 			// className='relative gap-[32px] flex justify-center items-center'
 			className='SocialPostCanvas'
-			style={{ position: 'relative', ...layoutElements?.canvasCSS }}
+			style={{
+				position: 'relative',
+				...layoutElements?.canvasCSS,
+				...themeElements?.canvasBackground,
+				background:
+					colorPaletteElements?.canvasBackgroundConfig?.background ||
+					themeElements?.canvasBackground?.background,
+			}}
 		>
 			<div
 				className='horizontalDivider'
@@ -1376,6 +1436,7 @@ export const Col_1_img_1_reading_notes = ({
 	handleSlideEdit,
 	layoutElements,
 	themeElements,
+	colorPaletteElements,
 	page_index_number,
 	social_post_template_logo,
 	useIllustraion,
@@ -1405,7 +1466,14 @@ export const Col_1_img_1_reading_notes = ({
 		<div
 			// className='relative gap-[32px] flex justify-center items-center'
 			className='SocialPostCanvas'
-			style={{ position: 'relative', ...layoutElements?.canvasCSS }}
+			style={{
+				position: 'relative',
+				...layoutElements?.canvasCSS,
+				...themeElements?.canvasBackground,
+				background:
+					colorPaletteElements?.canvasBackgroundConfig?.background ||
+					themeElements?.canvasBackground?.background,
+			}}
 		>
 			<div
 				className='horizontalDivider'
@@ -1566,6 +1634,7 @@ export const last_page_layout = ({
 	handleSlideEdit,
 	layoutElements,
 	themeElements,
+	colorPaletteElements,
 	last_page_content,
 	last_page_title,
 	last_page_like_indicator,
@@ -1576,7 +1645,14 @@ export const last_page_layout = ({
 		<div
 			// className='relative gap-[32px] flex justify-center items-center'
 			className='SocialPostCanvas'
-			style={{ position: 'relative', ...layoutElements?.canvasCSS }}
+			style={{
+				position: 'relative',
+				...layoutElements?.canvasCSS,
+				...themeElements?.canvasBackground,
+				background:
+					colorPaletteElements?.canvasBackgroundConfig?.background ||
+					themeElements?.canvasBackground?.background,
+			}}
 		>
 			<div
 				className='SocialPostColumn'
