@@ -35,7 +35,7 @@ function getLogoUrl(color = true) {
 }
 
 function isChatslide() {
-	return getHost().includes('chatslide.ai'); 
+	return true; 
 }
 
 function isLocal() {

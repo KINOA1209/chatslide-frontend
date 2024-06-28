@@ -88,7 +88,7 @@ const PricingComparison: React.FC<{
 			case 'PLUS':
 				return 9.9;
 			case 'PRO':
-				return 19.9;
+				return 14.9;
 			case 'ULTIMATE':
 				return 59.9;
 		}
@@ -118,7 +118,7 @@ const PricingComparison: React.FC<{
 		// special for lifetime ultimate
 		if (interval === 'lifetime') {
 			if (tier === 'ULTIMATE') {
-				amount = user?.ltd_upgrade_price || 472;
+				amount = 479.2;
 				return (
 					<span className='text-green-600'>
 						{currency + amount.toFixed(2)}
