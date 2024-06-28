@@ -131,7 +131,7 @@ const SideBar = ({}: SideBarProps) => {
 				isSidebarOpen ? 'w-[220px]' : 'w-[3rem]'
 			} h-[100vh] flex flex-col justify-between z-30 transition duration-300 ease-in-out ${
 				!top ? 'backdrop-blur-sm shadow-lg' : ''
-			}`}
+			}  ${isChatslide() ? 'bg-white' : 'bg-[#F9FAFB]'}`}
 			style={{
 				paddingLeft: 'var(--spacing-xl, 0.1rem)',
 				paddingRight: 'var(--spacing-xl, 0.1rem)',
@@ -178,9 +178,8 @@ const SideBar = ({}: SideBarProps) => {
 				{/* menu items */}
 				{SideBarData.map((item, index) =>
 					// If the item is DrLambda-only and the condition is not DrLambda, skip rendering
-					item.chatslideOnly &&
-					!isChatslide() ? null : // If the item is ChatSlide-only and the condition is DrLambda, skip rendering
-					item.drlambdaOnly && isChatslide() ? null : (
+					item.chatslideOnly && !isChatslide() ? null : item.drlambdaOnly && // If the item is ChatSlide-only and the condition is DrLambda, skip rendering
+					  isChatslide() ? null : (
 						// Otherwise, render the SideBarItem
 						<SideBarItem
 							key={index}
@@ -275,30 +274,34 @@ const SideBar = ({}: SideBarProps) => {
 
 					{isSidebarOpen && (
 						<>
-							<div
-								// className=' px-2'
-								style={{
-									color: 'var(--colors-text-text-quaternary-500, #667085)',
-									padding:
-										'var(--spacing-md, 0.5rem) var(--spacing-lg, 0.75rem)',
-								}}
-							>
-								Join our user study and discord to earn free credits
-							</div>
-							<a
-								href='/meet'
-								target='_blank'
-								className='block flew flex-row items-center gap-1 text-sm  rounded-lg hover:bg-[#F2F4F7] '
-								role='menuitem'
-								id='user-study-1000-credits'
-								style={{
-									color: 'var(--colors-text-text-quaternary-500, #667085)',
-									padding:
-										'var(--spacing-md, 0.5rem) var(--spacing-lg, 0.75rem)',
-								}}
-							>
-								Get 1000 ⭐️credits
-							</a>
+							{isChatslide() && (
+								<div
+									// className=' px-2'
+									style={{
+										color: 'var(--colors-text-text-quaternary-500, #667085)',
+										padding:
+											'var(--spacing-md, 0.5rem) var(--spacing-lg, 0.75rem)',
+									}}
+								>
+									Join our user study and discord to earn free credits
+								</div>
+							)}
+							{isChatslide() && (
+								<a
+									href='/meet'
+									target='_blank'
+									className='block flew flex-row items-center gap-1 text-sm  rounded-lg hover:bg-[#F2F4F7] '
+									role='menuitem'
+									id='user-study-1000-credits'
+									style={{
+										color: 'var(--colors-text-text-quaternary-500, #667085)',
+										padding:
+											'var(--spacing-md, 0.5rem) var(--spacing-lg, 0.75rem)',
+									}}
+								>
+									Get 1000 ⭐️credits
+								</a>
+							)}
 							{isChatslide() ? (
 								<a
 									href='https://qualtricsxm6ltvkn8sw.qualtrics.com/jfe/form/SV_6nF7L74Sv68ynzw'
@@ -330,7 +333,7 @@ const SideBar = ({}: SideBarProps) => {
 									Get 100 ⭐️credits
 								</a>
 							)}
-							<a
+							{isChatslide() &&  <a
 								href='/discord'
 								target='_blank'
 								className='block flew flex-row items-center gap-1 text-sm  rounded-lg hover:bg-[#F2F4F7] '
@@ -343,7 +346,7 @@ const SideBar = ({}: SideBarProps) => {
 								}}
 							>
 								Get 50 ⭐️credits
-							</a>
+							</a>}
 							<a
 								href='https://blog.drlambda.ai/how-to-make-money-with-your-high-quality-content-using-chatslide-ai/'
 								target='_blank'
