@@ -56,8 +56,9 @@ const surveyObject: Record<string, SurveySectionConfig> = {
 		question: 'Where did you find us?',
 		itemsArr: [
 			'Google',
-			'AppSumo',
 			'Reddit',
+			'AppSumo',
+      'Blog',
 			'ProductHunt',
 			'Friend',
 			'Newsletter',
