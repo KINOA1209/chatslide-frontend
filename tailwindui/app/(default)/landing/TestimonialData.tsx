@@ -94,7 +94,7 @@ const ChatSlideTestimonialsData = [
 	{
 		name: 'Barika B.',
 		title: 'Founder of B3 Media Solutions',
-		text: 'I have to admit, I tried out @chatslide_ai today and now I totally rethinking how I should do my content for my business and personal accounts. If you liked @MeetGamma  you most definitely have to check out ChatSlide AI',
+		text: 'I have to admit, I tried out @chatslide_ai today and now I totally rethinking how I should do my content for my business and personal accounts. If you liked @MeetGamma  you most definitely have to check out ChatSlide AI.',
 		profile_url: 'images/barika.jpeg',
 	},
 	{
@@ -143,7 +143,7 @@ const ChatSlideTestimonialsData = [
 	{
 		name: 'Hussain Asghar',
 		title: 'Sharing latest Ai tools',
-		text: 'Your ultimate tool for creating engaging slide, post and video content with easy integration',
+		text: 'Your ultimate tool for creating engaging slide, post and video content with easy integration.',
 		profile_url: 'images/hussain.jpg',
 	},
 ];

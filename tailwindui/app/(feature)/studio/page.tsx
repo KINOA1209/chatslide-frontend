@@ -25,7 +25,7 @@ export default function Studio() {
 						you in your videos.
 					</Instruction>
 					<Explanation>
-						📆 Coming soon, expected in June, 2024. <br />
+						📆 Coming soon, expected in July, 2024. <br />
 						Learn more about our future plans on our{' '}
 						<a
 							href='https://blog.drlambda.ai/drlambda-product-roadmap/'

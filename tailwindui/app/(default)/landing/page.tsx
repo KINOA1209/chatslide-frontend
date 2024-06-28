@@ -668,7 +668,9 @@ function Landing() {
 									</h2>
 									<div className='uui-space-xsmall' />
 									<div className='uui-text-size-large'>
-										💙 Loved by 210,000+ happy users 💙
+										{isChatslide()
+											? '💙 Loved by 210,000+ happy users 💙'
+											: '⭐️ Five stars across the board ⭐️'}
 									</div>
 								</div>
 							</div>
