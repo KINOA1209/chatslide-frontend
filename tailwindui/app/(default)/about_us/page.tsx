@@ -64,11 +64,11 @@ export default function AboutUs() {
 							</div>
 						</div>
 
-						<div className='pb-8'>
+						{/* <div className='pb-8'>
 							<h2 className='h3 text-2xl'>🎓 Meet the Founding Team</h2>
-						</div>
+						</div> */}
 
-						<div className='flex flex-col md:flex-row items-center pb-8'>
+						{/* <div className='flex flex-col md:flex-row items-center pb-8'>
 							<img
 								src='/images/rex.jpeg'
 								alt='Rex Chen'
@@ -85,7 +85,7 @@ export default function AboutUs() {
 									experiences and tackling challenging technological issues.
 								</p>
 							</div>
-						</div>
+						</div> */}
 					</div>
 
 					{/* Page sections */}
