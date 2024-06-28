@@ -176,16 +176,22 @@ const SideBar = ({}: SideBarProps) => {
 					}}
 				/>
 				{/* menu items */}
-				{SideBarData.map((item, index) => (
-					<SideBarItem
-						key={index}
-						{...item}
-						onSignOut={onSignOut}
-						isSidebarOpen={isSidebarOpen}
-						setIsSidebarOpen={setIsSidebarOpen}
-						id={`sidebar-item-${item.title}`}
-					/>
-				))}
+				{SideBarData.map((item, index) =>
+					// If the item is DrLambda-only and the condition is not DrLambda, skip rendering
+					item.chatslideOnly &&
+					!isChatslide() ? null : // If the item is ChatSlide-only and the condition is DrLambda, skip rendering
+					item.drlambdaOnly && isChatslide() ? null : (
+						// Otherwise, render the SideBarItem
+						<SideBarItem
+							key={index}
+							{...item}
+							onSignOut={onSignOut}
+							isSidebarOpen={isSidebarOpen}
+							setIsSidebarOpen={setIsSidebarOpen}
+							id={`sidebar-item-${item.title}`}
+						/>
+					),
+				)}
 				{/* sign out */}
 
 				{/* <a
