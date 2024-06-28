@@ -3,6 +3,7 @@ import '@/components/slides/onboardingSurvey/onboardingSurvey.css';
 import SurveySection from './SurveySection';
 import surveyStaticDataObject from './SurveyObject';
 import { useUser } from '@/hooks/use-user';
+import { isChatslide } from '@/utils/getHost';
 
 type OnboardingSurveyProps = {
 	handleBack: () => void;
@@ -148,6 +149,7 @@ const OnboardingSurvey: React.FC<OnboardingSurveyProps> = ({ handleBack }) => {
 				selectedPurposes,
 				surveyStaticDataObject.purpose.itemsArr,
 			),
+      platform: isChatslide() ? 'chatslide' : 'drlambda',
 		};
 		//console.log(formData)
 		try {
