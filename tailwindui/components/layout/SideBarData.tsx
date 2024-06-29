@@ -33,13 +33,13 @@ export const SideBarData: SideBarItem[] = [
 		title: 'Uploads',
 		icon: <GoFile />,
 		path: '/uploads',
-    drlambdaOnly: true,
+		drlambdaOnly: true,
 	},
 	{
 		title: 'Resources',
 		icon: <BsFiles />,
 		path: '/uploads',
-    chatslideOnly: true,
+		chatslideOnly: true,
 	},
 	{
 		title: 'Studio',
@@ -89,11 +89,11 @@ export const SideBarData: SideBarItem[] = [
 		chatslideOnly: true,
 	},
 	{
-		title: 'Account',
+		title: 'Settings',
 		icon: <GoGear />,
 		subMenus: [
 			{
-				title: 'Profile',
+				title: 'Account',
 				path: '/account',
 			},
 			{
@@ -105,6 +105,26 @@ export const SideBarData: SideBarItem[] = [
 				path: '',
 			},
 		],
+		chatslideOnly: true,
+	},
+	{
+		title: 'Account',
+		icon: <GoGear />,
+		subMenus: [
+			{
+				title: 'Profile',
+				path: '/account',
+			},
+			{
+				title: 'Pricing',
+				path: '/pricing',
+			},
+			{
+				title: 'Sign Out',
+				path: '',
+			},
+		],
+		drlambdaOnly: true,
 	},
 	// {
 	// 	title: 'Sign Out',
