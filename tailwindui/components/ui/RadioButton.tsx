@@ -30,6 +30,14 @@ const CustomRadio = styled(Radio)({
 	},
 });
 
+const CustomFormControlLabel = styled(FormControlLabel)(({ theme }) => ({
+	'.MuiFormControlLabel-label': {
+		fontSize: '14px', // Adjust font size as needed
+		fontWeight: 'normal', // Adjust font weight as needed
+		fontFamily: 'Creato Display Medium',
+	},
+}));
+
 const RadioButton: React.FC<RadioButtonProps> = ({
 	name,
 	options,
@@ -83,7 +91,7 @@ const RadioButton: React.FC<RadioButtonProps> = ({
 				className={`grid grid-cols-1 md:grid-cols-${cols} gap-x-3`}
 			>
 				{options.map(({ img, value, text, icon, explanation }) => (
-					<FormControlLabel
+					<CustomFormControlLabel
 						key={value}
 						value={value}
 						control={<CustomRadio />}

@@ -54,11 +54,15 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 	const selectedResourcesRef = useRef<HTMLDivElement>(null);
 
 	const searchOnlineOptions: RadioButtonOption[] = [
-		{ value: '', text: 'None', icon: <IoIosRemoveCircleOutline /> },
-		{ value: 'bing', text: 'Internet', icon: <FiGlobe /> },
-		{ value: 'wikipedia', text: 'Wikipedia', icon: <FaWikipediaW /> },
-		{ value: 'news', text: 'News', icon: <FaNewspaper /> },
+		// { value: '', text: 'None', icon: <IoIosRemoveCircleOutline /> },
+		// { value: 'bing', text: 'Internet', icon: <FiGlobe /> },
+		// { value: 'wikipedia', text: 'Wikipedia', icon: <FaWikipediaW /> },
+		// { value: 'news', text: 'News', icon: <FaNewspaper /> },
 		// { value: 'reddit', text: 'Reddit' },
+		{ value: '', text: 'None' },
+		{ value: 'bing', text: 'Internet' },
+		{ value: 'wikipedia', text: 'Wikipedia' },
+		{ value: 'news', text: 'News' },
 	];
 
 	const onFileSelected = async (file: File | null) => {
@@ -183,22 +187,23 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 				) : (
 					<BigTitle>📚 Supporting Sources (Optional)</BigTitle>
 				)}
-				<Explanation>
+				{/* <Explanation>
 					{isRequired
 						? 'Add any sources that would support your topic. This could be online sources, files, or links.'
 						: 'To get started, use any sources that would support your topic. This could be online sources, files, or links.'}
-				</Explanation>
+				</Explanation> */}
 			</div>
 
 			{/* search online */}
 			{setSearchOnlineScope && (
 				<div>
 					<Instruction>
-						Which online sources do you want to include?
+						{/* Which online sources do you want to include? */}
+						Online sources from
 					</Instruction>
-					<Explanation>
+					{/* <Explanation>
 						This may also add content less relevant to your topic.
-					</Explanation>
+					</Explanation> */}
 					<RadioButton
 						name='search_online'
 						options={searchOnlineOptions}
@@ -211,7 +216,8 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 
 			{/* files */}
 			<div>
-				<Instruction>What additional files do you want to include?</Instruction>
+				{/* <Instruction>What additional files do you want to include?</Instruction> */}
+				<Instruction>Additional files</Instruction>
 				<div
 					className={`w-full h-[150px] flex flex-col items-center justify-center border rounded-md border-2 border-gray-200 cursor-pointer 
 						${isDragging ? 'bg-blue-100 border-blue-500' : ''}
@@ -247,9 +253,10 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 
 			{/* links */}
 			<div>
-				<Instruction>
+				{/* <Instruction>
 					What additional online links do you want to include?
-				</Instruction>
+				</Instruction> */}
+				<Instruction>Additional online links</Instruction>
 				<LinkInput
 					selectedResources={selectedResources}
 					setSelectedResources={setSelectedResources}

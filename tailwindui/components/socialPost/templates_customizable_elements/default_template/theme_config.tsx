@@ -5,6 +5,9 @@ export const Default_SocialPost_TemplateThemeConfig: {
 	[key in PostTypeKeys]?: SocialPostThemeElements;
 } = {
 	casual_topic: {
+		canvasBackground: {
+			background: '#F1F1F1',
+		},
 		useIllustraion: true,
 		topicCSS: {
 			fontSize: '30pt',
@@ -66,6 +69,9 @@ export const Default_SocialPost_TemplateThemeConfig: {
 		},
 	},
 	serious_subject: {
+		canvasBackground: {
+			background: '#F1F1F1',
+		},
 		useIllustraion: true,
 		// originalTitleCoverCSS: {
 		// 	color: '#1B1C22',
@@ -179,6 +185,9 @@ export const Default_SocialPost_TemplateThemeConfig: {
 		},
 	},
 	reading_notes: {
+		canvasBackground: {
+			background: '#F1F1F1',
+		},
 		useIllustraion: true,
 		readingtitleCSS: {
 			// color: '#121212',
