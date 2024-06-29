@@ -246,7 +246,14 @@ const PricingComparison: React.FC<{
   const options = isChatslide()
 		? [
 				{ key: 'onetime', text: '15-Day' },
-				{ key: 'monthly', text: 'Monthly' },
+				{
+					key: 'monthly',
+					element: (
+						<span>
+							Monthly <span className='text-xs'>-30%</span>
+						</span>
+					),
+				},
 				{
 					key: 'yearly',
 					element: (
