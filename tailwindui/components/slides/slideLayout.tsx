@@ -278,6 +278,19 @@ const filterEmptyLines = (
 	return nonEmptyElements;
 };
 
+const setInitPos = (
+	prevPos: Position | Position[],
+	initPos: Position | Position[],
+): Position | Position[] => {
+	if (prevPos === undefined) return initPos;
+	if (Array.isArray(prevPos)) {
+		if (prevPos.length === 0) return initPos;
+		if (prevPos.filter((pos) => Object.keys(pos).length !== 0).length > 0)
+			return prevPos;
+		return initPos;
+	} else return Object.keys(prevPos).length !== 0 ? prevPos : initPos;
+};
+
 export const Cover_img_0_layout = ({
 	user_name,
 	title,
@@ -298,9 +311,10 @@ export const Cover_img_0_layout = ({
 	layoutElements,
 	templateLogo,
 }: MainSlideProps) => {
-	// useEffect(() => {
-	// 	console.log('LayoutElements canvaCSS:', layoutElements.canvaCSS);
-	// }, []);
+	const initTitlePos = setInitPos(
+		title_position,
+		layoutElements.titlePos as Position,
+	) as Position;
 
 	return (
 		<div
@@ -314,45 +328,22 @@ export const Cover_img_0_layout = ({
 			}}
 		>
 			<div
-				className={`SlideUserNameAndHeadColumn`}
-				style={{
-					...layoutElements.columnCSS,
-					backgroundColor: themeElements.userNamaAndHeadColumnBackgroundColor
-						? themeElements.userNamaAndHeadColumnBackgroundColor
-						: '',
-				}}
+				className={`SlideUserName`}
+				style={{ ...layoutElements.userNameCSS, zIndex: 60 }}
 			>
-				<div
-					// className={`${themeElements.userNameFont} ${themeElements.userNameFontColor}`}
-					className={`SlideUserName`}
-					style={{ ...layoutElements.userNameCSS, zIndex: 60 }}
-				>
-					{user_name}
-				</div>
-				<div
-					className={`SlideUserNameTextDivider pl-[2rem] basis-0 opacity-50 border
-		        border-black border-opacity-40 mt-4`}
-					style={layoutElements.userNameTextDividerCSS}
-				></div>
-				<div
-					className={`SlideHead`}
-					style={{ ...layoutElements.titleCSS, zIndex: 50 }}
-				>
-					<div>
-						<DragElement
-							type={ElementType.TextEdit}
-							canEdit={canEdit}
-							positions={[title_position]}
-							contentIndex={0}
-							handleSlideEdit={handleSlideEdit}
-							currentSlideIndex={currentSlideIndex}
-							positionType='title_position'
-						>
-							{title}
-						</DragElement>
-					</div>
-				</div>
+				{user_name}
 			</div>
+			<DragElement
+				type={ElementType.TextEdit}
+				canEdit={canEdit}
+				positions={[initTitlePos]}
+				contentIndex={0}
+				handleSlideEdit={handleSlideEdit}
+				currentSlideIndex={currentSlideIndex}
+				positionType='title_position'
+			>
+				{title}
+			</DragElement>
 			<div
 				className={`SlideVisualElement`}
 				style={{ ...layoutElements.visualElementsCSS, position: 'absolute' }}
@@ -453,6 +444,15 @@ export const Cover_img_1_layout = ({
 
 	const [imgHigherZIndex, setImgHigherZIndex] = useState(false);
 
+	const initTitlePos = setInitPos(
+		title_position,
+		layoutElements.titlePos as Position,
+	) as Position;
+	const initImgContainerPos = setInitPos(
+		image_container_positions,
+		layoutElements.imgContainerPos as Position[],
+	) as Position[];
+
 	return (
 		<div
 			className={`SlideCanvas`}
@@ -465,79 +465,51 @@ export const Cover_img_1_layout = ({
 			}}
 		>
 			<div
-				className={`SlideUserNameAndHeadColumn`}
-				style={{
-					...layoutElements.columnCSS,
-					backgroundColor: themeElements.userNamaAndHeadColumnBackgroundColor
-						? themeElements.userNamaAndHeadColumnBackgroundColor
-						: '',
-				}}
+				className={`SlideUserName`}
+				style={{ ...layoutElements.userNameCSS, zIndex: 60 }}
 			>
-				<div
-					className={`SlideUserName`}
-					style={{ ...layoutElements.userNameCSS, zIndex: 60 }}
-				>
-					{user_name}
-				</div>
-				<div
-					className={`SlideUserNameHead`}
-					style={{ ...layoutElements.titleCSS, zIndex: 50 }}
-				>
-					<div>
-						<DragElement
-							type={ElementType.TextEdit}
-							canEdit={canEdit}
-							positions={[title_position]}
-							contentIndex={0}
-							handleSlideEdit={handleSlideEdit}
-							currentSlideIndex={currentSlideIndex}
-							positionType='title_position'
-						>
-							{title}
-						</DragElement>
-					</div>
-				</div>
+				{user_name}
 			</div>
-
-			<div
-				className={`SlideImageContainer`}
-				style={{
-					...layoutElements.imageContainerCSS,
-					zIndex: imgHigherZIndex ? 100 : 20,
-				}}
+			<DragElement
+				type={ElementType.TextEdit}
+				canEdit={canEdit}
+				positions={[initTitlePos]}
+				contentIndex={0}
+				handleSlideEdit={handleSlideEdit}
+				currentSlideIndex={currentSlideIndex}
+				positionType='title_position'
 			>
-				<div className='w-full h-full' style={{ position: 'relative' }}>
-					<DragElement
-						type={ElementType.ImageView}
-						canEdit={canEdit}
-						positions={image_container_positions}
-						contentIndex={0}
-						handleSlideEdit={handleSlideEdit}
-						currentSlideIndex={currentSlideIndex}
-						positionType='image_container_position'
-					>
-						<ImgModule
-							imgsrc={imgs?.[0]}
-							updateSingleCallback={updateImgAtIndex(0)}
-							chartArr={charts}
-							ischartArr={ischarts}
-							handleSlideEdit={handleSlideEdit}
-							currentSlideIndex={currentSlideIndex}
-							currentContentIndex={0}
-							canEdit={canEdit}
-							image_positions={image_positions}
-							layoutElements={layoutElements}
-							customImageStyle={layoutElements.imageCSS}
-							// additional_images={imgs.slice(3)}
-							setImgHigherZIndex={setImgHigherZIndex}
-							embed_code={embed_code}
-							embed_code_single={embed_code?.[0]}
-							media_types={media_types}
-							media_type={media_types?.[0]}
-						/>
-					</DragElement>
-				</div>
-			</div>
+				{title}
+			</DragElement>
+			<DragElement
+				type={ElementType.ImageView}
+				canEdit={canEdit}
+				positions={initImgContainerPos}
+				contentIndex={0}
+				handleSlideEdit={handleSlideEdit}
+				currentSlideIndex={currentSlideIndex}
+				positionType='image_container_position'
+			>
+				<ImgModule
+					imgsrc={imgs?.[0]}
+					updateSingleCallback={updateImgAtIndex(0)}
+					chartArr={charts}
+					ischartArr={ischarts}
+					handleSlideEdit={handleSlideEdit}
+					currentSlideIndex={currentSlideIndex}
+					currentContentIndex={0}
+					canEdit={canEdit}
+					image_positions={image_positions}
+					layoutElements={layoutElements}
+					customImageStyle={layoutElements.imageCSS}
+					// additional_images={imgs.slice(3)}
+					setImgHigherZIndex={setImgHigherZIndex}
+					embed_code={embed_code}
+					embed_code_single={embed_code?.[0]}
+					media_types={media_types}
+					media_type={media_types?.[0]}
+				/>
+			</DragElement>
 
 			<div
 				className={`SlideVisualElement`}
@@ -622,6 +594,19 @@ export const Col_1_img_0_layout = ({
 		};
 	}, []);
 
+	const initTopicPos = setInitPos(
+		topic_position,
+		layoutElements.topicPos as Position,
+	) as Position;
+	const initSubTopicPos = setInitPos(
+		subtopic_position,
+		layoutElements.subtopicPos as Position,
+	) as Position;
+	const initContentPos = setInitPos(
+		content_positions,
+		layoutElements.contentPos as Position[],
+	) as Position[];
+
 	return (
 		<div
 			ref={containerRef}
@@ -634,95 +619,39 @@ export const Col_1_img_0_layout = ({
 				// 	: '',
 			}}
 		>
-			<div
-				style={{
-					display: 'flex',
-					flexDirection: 'column', // Equivalent to flex-col
-					...layoutElements.titleAndContentColumnCSS,
-					backgroundColor: themeElements.slideColumnBackgroundColor
-						? themeElements.slideColumnBackgroundColor
-						: '',
-				}}
+			<DragElement
+				type={ElementType.TextEdit}
+				canEdit={canEdit}
+				positions={[initTopicPos]}
+				contentIndex={0}
+				handleSlideEdit={handleSlideEdit}
+				currentSlideIndex={currentSlideIndex}
+				positionType='topic_position'
 			>
-				{' '}
-				<div
-					className={`SlideTitleAndSubtopicBox`}
-					style={{
-						...layoutElements.titleAndSubtopicBoxCSS,
-						zIndex: 50,
-						backgroundColor: themeElements.titleAndSubtopicBoxBackgroundColor
-							? themeElements.titleAndSubtopicBoxBackgroundColor
-							: '',
-					}}
-				>
-					<div
-						ref={topicRef}
-						className={`topicBox`}
-						style={layoutElements.topicCSS}
-					>
-						<DragElement
-							type={ElementType.TextEdit}
-							canEdit={canEdit}
-							positions={[topic_position]}
-							contentIndex={0}
-							handleSlideEdit={handleSlideEdit}
-							currentSlideIndex={currentSlideIndex}
-							positionType='topic_position'
-						>
-							{topic}
-						</DragElement>
-					</div>
-					<div
-						className={`subtopicBox`}
-						ref={subtopicRef}
-						style={layoutElements.subtopicCSS}
-					>
-						<DragElement
-							type={ElementType.TextEdit}
-							canEdit={canEdit}
-							positions={[subtopic_position]}
-							contentIndex={0}
-							handleSlideEdit={handleSlideEdit}
-							currentSlideIndex={currentSlideIndex}
-							positionType='subtopic_position'
-						>
-							{subtopic}
-						</DragElement>
-					</div>
-				</div>
-				<div
-					className='SlideTitlesAndCOntentDivider opacity-50 border border-neutral-900 border-opacity-40'
-					style={layoutElements.titlesAndContentDividerCSS}
-				></div>
-				<div
-					className='SlideColumn'
-					style={{ ...layoutElements.columnCSS, zIndex: 40 }}
-				>
-					<div
-						className='SlideContent'
-						style={{
-							...layoutElements.contentCSS, // Spread the existing styles first
-							maxHeight:
-								maxContentHeight !== null ? `${maxContentHeight}px` : 'none',
-						}}
-					>
-						<div>
-							<DragElement
-								type={ElementType.TextEdit}
-								canEdit={canEdit}
-								positions={content_positions}
-								contentIndex={0}
-								handleSlideEdit={handleSlideEdit}
-								currentSlideIndex={currentSlideIndex}
-								positionType='content_position'
-							>
-								{content}
-							</DragElement>
-						</div>
-					</div>
-				</div>
-			</div>
-
+				{topic}
+			</DragElement>
+			<DragElement
+				type={ElementType.TextEdit}
+				canEdit={canEdit}
+				positions={[initSubTopicPos]}
+				contentIndex={0}
+				handleSlideEdit={handleSlideEdit}
+				currentSlideIndex={currentSlideIndex}
+				positionType='subtopic_position'
+			>
+				{subtopic}
+			</DragElement>
+			<DragElement
+				type={ElementType.TextEdit}
+				canEdit={canEdit}
+				positions={initContentPos}
+				contentIndex={0}
+				handleSlideEdit={handleSlideEdit}
+				currentSlideIndex={currentSlideIndex}
+				positionType='content_position'
+			>
+				{content}
+			</DragElement>
 			<div
 				style={{
 					...layoutElements.logoCSS,
@@ -746,16 +675,6 @@ export const Col_1_img_0_layout = ({
 						unoptimized={true}
 					/>
 				)}
-				{/* {themeElements.backgroundUrlDividerCol_1_img_0 && (
-					<Image
-						style={{ objectFit: 'cover', height: '100%' }}
-						width={960}
-						height={540}
-						src={themeElements.backgroundUrlDividerCol_1_img_0}
-						alt='Background Image'
-						unoptimized={true}
-					/>
-				)} */}
 			</div>
 		</div>
 	);
@@ -1639,19 +1558,6 @@ export const Col_2_img_1_layout = ({
 		};
 	}, []);
 
-	const setInitPos = (
-		prevPos: Position | Position[],
-		initPos: Position | Position[],
-	): Position | Position[] => {
-		if (prevPos === undefined) return initPos;
-		if (Array.isArray(prevPos)) {
-			if (prevPos.length === 0) return initPos;
-			if (prevPos.filter((pos) => Object.keys(pos).length !== 0).length > 0)
-				return prevPos;
-			return initPos;
-		} else return Object.keys(prevPos).length !== 0 ? prevPos : initPos;
-	};
-
 	const initTopicPos: Position = setInitPos(
 		topic_position,
 		layoutElements.topicPos as Position,
@@ -1876,160 +1782,90 @@ export const Col_1_img_1_layout = ({
 		};
 	}, []);
 
+	const initTopicPos = setInitPos(
+		topic_position,
+		layoutElements.topicPos as Position,
+	) as Position;
+	const initSubTopicPos = setInitPos(
+		subtopic_position,
+		layoutElements.subtopicPos as Position,
+	) as Position;
+	const initContentPos = setInitPos(
+		content_positions,
+		layoutElements.contentPos as Position[],
+	) as Position[];
+	const initImgContainerPos = setInitPos(
+		image_container_positions,
+		layoutElements.imgContainerPos as Position[],
+	) as Position[];
+
 	return (
 		<div
 			ref={containerRef}
 			className='SlideCanvas w-full h-full'
 			style={{ ...layoutElements.canvaCSS, position: 'relative' }}
 		>
-			{/* area for topic, subtopic and contents */}
-			<div
-				className='SlideColumn'
-				style={{
-					...layoutElements.columnCSS,
-					// backgroundColor: themeElements.slideColumnBackgroundColor
-					// 	? themeElements.slideColumnBackgroundColor
-					// 	: '',
-				}}
+			<DragElement
+				type={ElementType.TextEdit}
+				canEdit={canEdit}
+				positions={[initTopicPos]}
+				contentIndex={0}
+				handleSlideEdit={handleSlideEdit}
+				currentSlideIndex={currentSlideIndex}
+				positionType='topic_position'
 			>
-				{/* row1 for topic and subtopic */}
-
-				<div
-					className='SlideTopicAndSubtopic'
-					style={{
-						...layoutElements.titleAndSubtopicBoxCSS,
-						zIndex: '50',
-						backgroundColor: themeElements.titleAndSubtopicBoxBackgroundColor
-							? themeElements.titleAndSubtopicBoxBackgroundColor
-							: '',
-					}}
-					ref={topicAndSubtopicRef}
-				>
-					<div className={`SlideTopic`} style={layoutElements.topicCSS}>
-						<DragElement
-							type={ElementType.TextEdit}
-							canEdit={canEdit}
-							positions={[topic_position]}
-							contentIndex={0}
-							handleSlideEdit={handleSlideEdit}
-							currentSlideIndex={currentSlideIndex}
-							positionType='topic_position'
-						>
-							{topic}
-						</DragElement>
-					</div>
-					<div className={`SlideSubtopic`} style={layoutElements.subtopicCSS}>
-						<DragElement
-							type={ElementType.TextEdit}
-							canEdit={canEdit}
-							positions={[subtopic_position]}
-							contentIndex={0}
-							handleSlideEdit={handleSlideEdit}
-							currentSlideIndex={currentSlideIndex}
-							positionType='subtopic_position'
-						>
-							{subtopic}
-						</DragElement>
-					</div>
-				</div>
-
-				{/* row2 for image */}
-				{/* image section */}
-				<div
-					className='SlideImgaeContainer'
-					style={{
-						...layoutElements.imageContainerCSS,
-						zIndex: imgHigherZIndex ? 100 : 20,
-					}}
-					ref={imgContainerRef}
-				>
-					<div className='w-full h-full' style={{ position: 'relative' }}></div>
-					<DragElement
-						type={ElementType.ImageView}
-						canEdit={canEdit}
-						positions={image_container_positions}
-						contentIndex={0}
-						handleSlideEdit={handleSlideEdit}
-						currentSlideIndex={currentSlideIndex}
-						positionType='image_container_position'
-					>
-						<ImgModule
-							imgsrc={imgs?.[0]}
-							updateSingleCallback={updateImgAtIndex(0)}
-							chartArr={charts}
-							ischartArr={ischarts}
-							handleSlideEdit={handleSlideEdit}
-							currentSlideIndex={currentSlideIndex}
-							currentContentIndex={0}
-							canEdit={canEdit}
-							image_positions={image_positions}
-							layoutElements={layoutElements}
-							customImageStyle={layoutElements.imageCSS}
-							setImgHigherZIndex={setImgHigherZIndex}
-							embed_code={embed_code}
-							embed_code_single={embed_code?.[0]}
-							media_types={media_types}
-							media_type={media_types?.[0]}
-						/>
-					</DragElement>
-				</div>
-				{/* row3 for contents */}
-				{/* <div
-					style={{
-						zIndex: 30,
-					}}
-				> */}
-				<div
-					// className='py-[0.5rem] h-full w-full flex flex-col gap-[0.5rem]'
-					className={`SlideContentContainer`}
-					style={{
-						...layoutElements.contentContainerCSS,
-						maxHeight:
-							maxContentHeight !== null ? `${maxContentHeight}px` : 'none',
-						zIndex: 40,
-						backgroundColor: themeElements.slideContentContainerBackgroundColor
-							? themeElements.slideContentContainerBackgroundColor
-							: '',
-					}}
-				>
-					{/* {Array.isArray(content) &&
-							content.map((item, index) => (
-								<div key={index} style={layoutElements.contentCSS}>
-									<ul
-										key={index}
-										// className={`flex flex-row w-full h-full grow pl-4 `}
-										style={layoutElements.contentTextCSS}
-									>
-										<li>{item}</li>
-									</ul>
-								</div>
-							))} */}
-					<div style={layoutElements.contentCSS}>
-						<DragElement
-							type={ElementType.TextEdit}
-							canEdit={canEdit}
-							positions={content_positions}
-							contentIndex={0}
-							handleSlideEdit={handleSlideEdit}
-							currentSlideIndex={currentSlideIndex}
-							positionType='content_position'
-						>
-							{content}
-						</DragElement>
-					</div>
-				</div>
-				{/* <div
-					className='w-full flex'
-					style={{
-						maxHeight:
-							maxContentHeight !== null ? `${maxContentHeight}px` : 'none',
-					}}
-				>
-					<div className={`w-full`}>{content}</div>
-				</div> */}
-				{/* </div> */}
-			</div>
-
+				{topic}
+			</DragElement>
+			<DragElement
+				type={ElementType.TextEdit}
+				canEdit={canEdit}
+				positions={[initSubTopicPos]}
+				contentIndex={0}
+				handleSlideEdit={handleSlideEdit}
+				currentSlideIndex={currentSlideIndex}
+				positionType='subtopic_position'
+			>
+				{subtopic}
+			</DragElement>
+			<DragElement
+				type={ElementType.ImageView}
+				canEdit={canEdit}
+				positions={initImgContainerPos}
+				contentIndex={0}
+				handleSlideEdit={handleSlideEdit}
+				currentSlideIndex={currentSlideIndex}
+				positionType='image_container_position'
+			>
+				<ImgModule
+					imgsrc={imgs?.[0]}
+					updateSingleCallback={updateImgAtIndex(0)}
+					chartArr={charts}
+					ischartArr={ischarts}
+					handleSlideEdit={handleSlideEdit}
+					currentSlideIndex={currentSlideIndex}
+					currentContentIndex={0}
+					canEdit={canEdit}
+					image_positions={image_positions}
+					layoutElements={layoutElements}
+					customImageStyle={layoutElements.imageCSS}
+					setImgHigherZIndex={setImgHigherZIndex}
+					embed_code={embed_code}
+					embed_code_single={embed_code?.[0]}
+					media_types={media_types}
+					media_type={media_types?.[0]}
+				/>
+			</DragElement>
+			<DragElement
+				type={ElementType.TextEdit}
+				canEdit={canEdit}
+				positions={initContentPos}
+				contentIndex={0}
+				handleSlideEdit={handleSlideEdit}
+				currentSlideIndex={currentSlideIndex}
+				positionType='content_position'
+			>
+				{content}
+			</DragElement>
 			<div
 				className={`SlideLogo`}
 				style={{

@@ -45,6 +45,7 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 			height: '100%', // Equivalent to h-full
 			gap: '2rem',
 		},
+		titlePos: { x: 80, y: 130, width: 390, height: 70 },
 	},
 	Cover_img_1_layout: {
 		canvaCSS: {
@@ -114,6 +115,8 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 		rndCSS: {
 			zIndex: '51',
 		},
+		titlePos: { x: 80, y: 130, width: 390, height: 70 },
+		imgContainerPos: [{ x: 480, y: 30, width: 450, height: 480 }],
 	},
 	Col_1_img_0_layout: {
 		canvaCSS: {
@@ -155,6 +158,9 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 		titlesAndContentDividerCSS: {
 			display: 'none',
 		},
+		topicPos: { x: 50, y: 50, width: 860, height: 50 },
+		subtopicPos: { x: 50, y: 104, width: 860, height: 50 },
+		contentPos: [{ x: 50, y: 200, width: 860, height: 240 }],
 	},
 	Col_2_img_0_layout: {
 		titleAndSubtopicBoxCSS: {
@@ -324,10 +330,10 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 		rndCSS: {
 			zIndex: '51',
 		},
-		topicPos: { x: 50, y: 50, width: 430, height: 50},
-		subtopicPos: { x: 50, y: 104, width: 430, height: 100},
-		contentPos: [{ x: 50, y: 200, width: 430, height: 250}],
-		imgContainerPos: [{ x: 480, y: 30, width: 450, height: 480}],
+		topicPos: { x: 50, y: 50, width: 430, height: 50 },
+		subtopicPos: { x: 50, y: 104, width: 430, height: 100 },
+		contentPos: [{ x: 50, y: 200, width: 430, height: 250 }],
+		imgContainerPos: [{ x: 480, y: 30, width: 450, height: 480 }],
 	},
 	Col_1_img_1_layout: {
 		columnCSS: {
@@ -396,6 +402,10 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 		rndCSS: {
 			zIndex: '51',
 		},
+		topicPos: { x: 50, y: 50, width: 860, height: 50 },
+		subtopicPos: { x: 50, y: 104, width: 860, height: 50 },
+		contentPos: [{ x: 50, y: 170, width: 860, height: 140 }],
+		imgContainerPos: [{ x: 50, y: 320, width: 860, height: 210 }],
 	},
 	Col_2_img_2_layout: {
 		canvaCSS: {
