@@ -268,8 +268,8 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 		canvaCSS: {
 			width: '100%',
 			height: '100%',
-			display: 'flex',
-			flexDirection: 'row',
+			// display: 'flex',
+			// flexDirection: 'row',
 			justifyContent: 'flex-start',
 			alignItems: 'flex-start',
 		},
@@ -324,6 +324,10 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 		rndCSS: {
 			zIndex: '51',
 		},
+		topicPos: { x: 50, y: 50, width: 430, height: 50},
+		subtopicPos: { x: 50, y: 104, width: 430, height: 100},
+		contentPos: [{ x: 50, y: 200, width: 430, height: 250}],
+		imgContainerPos: [{ x: 480, y: 30, width: 450, height: 480}],
 	},
 	Col_1_img_1_layout: {
 		columnCSS: {

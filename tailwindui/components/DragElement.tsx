@@ -150,14 +150,6 @@ export const DragElement = ({
 		setElementSize({ width: ref.style.width, height: ref.style.height });
 		setElementPos({ x: pos.x, y: pos.y });
 
-		console.log(
-			'MYLOG: ',
-			ref.style.width,
-			ref.style.height,
-			parseInt(ref.style.width),
-			parseInt(ref.style.height),
-		);
-
 		const updatedPosition: Position[] = positions.map((position, index) =>
 			index === contentIndex
 				? {
@@ -174,7 +166,6 @@ export const DragElement = ({
 	return (
 		<Rnd
 			className={'ResizableElement w-full h-full'}
-			style={{ position: 'relative', transform: 'translate(0px, 0px)' }}
 			position={elementPos}
 			size={elementSize}
 			lockAspectRatio={false}
