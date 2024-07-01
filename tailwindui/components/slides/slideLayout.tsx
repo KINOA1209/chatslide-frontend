@@ -341,6 +341,7 @@ export const Cover_img_0_layout = ({
 				handleSlideEdit={handleSlideEdit}
 				currentSlideIndex={currentSlideIndex}
 				positionType='title_position'
+				defaultPos={[layoutElements.titlePos as Position]}
 			>
 				{title}
 			</DragElement>
@@ -478,6 +479,7 @@ export const Cover_img_1_layout = ({
 				handleSlideEdit={handleSlideEdit}
 				currentSlideIndex={currentSlideIndex}
 				positionType='title_position'
+				defaultPos={[layoutElements.titlePos as Position]}
 			>
 				{title}
 			</DragElement>
@@ -489,6 +491,7 @@ export const Cover_img_1_layout = ({
 				handleSlideEdit={handleSlideEdit}
 				currentSlideIndex={currentSlideIndex}
 				positionType='image_container_position'
+				defaultPos={layoutElements.imgContainerPos as Position[]}
 			>
 				<ImgModule
 					imgsrc={imgs?.[0]}
@@ -627,6 +630,7 @@ export const Col_1_img_0_layout = ({
 				handleSlideEdit={handleSlideEdit}
 				currentSlideIndex={currentSlideIndex}
 				positionType='topic_position'
+				defaultPos={[layoutElements.topicPos as Position]}
 			>
 				{topic}
 			</DragElement>
@@ -638,6 +642,7 @@ export const Col_1_img_0_layout = ({
 				handleSlideEdit={handleSlideEdit}
 				currentSlideIndex={currentSlideIndex}
 				positionType='subtopic_position'
+				defaultPos={[layoutElements.subtopicPos as Position]}
 			>
 				{subtopic}
 			</DragElement>
@@ -649,6 +654,7 @@ export const Col_1_img_0_layout = ({
 				handleSlideEdit={handleSlideEdit}
 				currentSlideIndex={currentSlideIndex}
 				positionType='content_position'
+				defaultPos={layoutElements.contentPos as Position[]}
 			>
 				{content}
 			</DragElement>
@@ -751,6 +757,7 @@ export const Col_2_img_0_layout = ({
 				handleSlideEdit={handleSlideEdit}
 				currentSlideIndex={currentSlideIndex}
 				positionType='topic_position'
+				defaultPos={[layoutElements.topicPos as Position]}
 			>
 				{topic}
 			</DragElement>
@@ -762,6 +769,7 @@ export const Col_2_img_0_layout = ({
 				handleSlideEdit={handleSlideEdit}
 				currentSlideIndex={currentSlideIndex}
 				positionType='subtopic_position'
+				defaultPos={[layoutElements.subtopicPos as Position]}
 			>
 				{subtopic}
 			</DragElement>
@@ -784,6 +792,7 @@ export const Col_2_img_0_layout = ({
 								handleSlideEdit={handleSlideEdit}
 								currentSlideIndex={currentSlideIndex}
 								positionType='content_position'
+								defaultPos={layoutElements.contentPos as Position[]}
 							>
 								{item}
 							</DragElement>
@@ -810,6 +819,7 @@ export const Col_2_img_0_layout = ({
 								handleSlideEdit={handleSlideEdit}
 								currentSlideIndex={currentSlideIndex}
 								positionType='content_position'
+								defaultPos={layoutElements.contentPos as Position[]}
 							>
 								{item}
 							</DragElement>
@@ -933,6 +943,7 @@ export const Col_3_img_0_layout = ({
 				handleSlideEdit={handleSlideEdit}
 				currentSlideIndex={currentSlideIndex}
 				positionType='topic_position'
+				defaultPos={[layoutElements.topicPos as Position]}
 			>
 				{topic}
 			</DragElement>
@@ -944,6 +955,7 @@ export const Col_3_img_0_layout = ({
 				handleSlideEdit={handleSlideEdit}
 				currentSlideIndex={currentSlideIndex}
 				positionType='subtopic_position'
+				defaultPos={[layoutElements.subtopicPos as Position]}
 			>
 				{subtopic}
 			</DragElement>
@@ -966,6 +978,7 @@ export const Col_3_img_0_layout = ({
 								handleSlideEdit={handleSlideEdit}
 								currentSlideIndex={currentSlideIndex}
 								positionType='content_position'
+								defaultPos={layoutElements.contentPos as Position[]}
 							>
 								{item}
 							</DragElement>
@@ -992,6 +1005,7 @@ export const Col_3_img_0_layout = ({
 								handleSlideEdit={handleSlideEdit}
 								currentSlideIndex={currentSlideIndex}
 								positionType='content_position'
+								defaultPos={layoutElements.contentPos as Position[]}
 							>
 								{item}
 							</DragElement>
@@ -1018,6 +1032,7 @@ export const Col_3_img_0_layout = ({
 								handleSlideEdit={handleSlideEdit}
 								currentSlideIndex={currentSlideIndex}
 								positionType='content_position'
+								defaultPos={layoutElements.contentPos as Position[]}
 							>
 								{item}
 							</DragElement>
@@ -1188,6 +1203,7 @@ export const Col_2_img_1_layout = ({
 				handleSlideEdit={handleSlideEdit}
 				currentSlideIndex={currentSlideIndex}
 				positionType='topic_position'
+				defaultPos={[layoutElements.topicPos as Position]}
 			>
 				{topic}
 			</DragElement>
@@ -1199,6 +1215,7 @@ export const Col_2_img_1_layout = ({
 				handleSlideEdit={handleSlideEdit}
 				currentSlideIndex={currentSlideIndex}
 				positionType='subtopic_position'
+				defaultPos={[layoutElements.subtopicPos as Position]}
 			>
 				{subtopic}
 			</DragElement>
@@ -1210,6 +1227,7 @@ export const Col_2_img_1_layout = ({
 				handleSlideEdit={handleSlideEdit}
 				currentSlideIndex={currentSlideIndex}
 				positionType='content_position'
+				defaultPos={layoutElements.contentPos as Position[]}
 			>
 				{content}
 			</DragElement>
@@ -1223,6 +1241,7 @@ export const Col_2_img_1_layout = ({
 				handleSlideEdit={handleSlideEdit}
 				currentSlideIndex={currentSlideIndex}
 				positionType='image_container_position'
+				defaultPos={layoutElements.imgContainerPos as Position[]}
 			>
 				<ImgModule
 					imgsrc={imgs?.[0]}
@@ -1411,6 +1430,7 @@ export const Col_1_img_1_layout = ({
 				handleSlideEdit={handleSlideEdit}
 				currentSlideIndex={currentSlideIndex}
 				positionType='topic_position'
+				defaultPos={[layoutElements.topicPos as Position]}
 			>
 				{topic}
 			</DragElement>
@@ -1422,6 +1442,7 @@ export const Col_1_img_1_layout = ({
 				handleSlideEdit={handleSlideEdit}
 				currentSlideIndex={currentSlideIndex}
 				positionType='subtopic_position'
+				defaultPos={[layoutElements.subtopicPos as Position]}
 			>
 				{subtopic}
 			</DragElement>
@@ -1433,6 +1454,7 @@ export const Col_1_img_1_layout = ({
 				handleSlideEdit={handleSlideEdit}
 				currentSlideIndex={currentSlideIndex}
 				positionType='image_container_position'
+				defaultPos={layoutElements.imgContainerPos as Position[]}
 			>
 				<ImgModule
 					imgsrc={imgs?.[0]}
@@ -1461,6 +1483,7 @@ export const Col_1_img_1_layout = ({
 				handleSlideEdit={handleSlideEdit}
 				currentSlideIndex={currentSlideIndex}
 				positionType='content_position'
+				defaultPos={layoutElements.contentPos as Position[]}
 			>
 				{content}
 			</DragElement>
@@ -1657,6 +1680,7 @@ export const Col_2_img_2_layout = ({
 				handleSlideEdit={handleSlideEdit}
 				currentSlideIndex={currentSlideIndex}
 				positionType='topic_position'
+				defaultPos={[layoutElements.topicPos as Position]}
 			>
 				{topic}
 			</DragElement>
@@ -1668,6 +1692,7 @@ export const Col_2_img_2_layout = ({
 				handleSlideEdit={handleSlideEdit}
 				currentSlideIndex={currentSlideIndex}
 				positionType='subtopic_position'
+				defaultPos={[layoutElements.subtopicPos as Position]}
 			>
 				{subtopic}
 			</DragElement>
@@ -1679,6 +1704,7 @@ export const Col_2_img_2_layout = ({
 				handleSlideEdit={handleSlideEdit}
 				currentSlideIndex={currentSlideIndex}
 				positionType='image_container_position'
+				defaultPos={layoutElements.imgContainerPos as Position[]}
 			>
 				<ImgModule
 					imgsrc={imgs?.[0]}
@@ -1708,6 +1734,7 @@ export const Col_2_img_2_layout = ({
 				handleSlideEdit={handleSlideEdit}
 				currentSlideIndex={currentSlideIndex}
 				positionType='image_container_position'
+				defaultPos={layoutElements.imgContainerPos as Position[]}
 			>
 				<ImgModule
 					imgsrc={imgs?.[1]}
@@ -1748,6 +1775,7 @@ export const Col_2_img_2_layout = ({
 								handleSlideEdit={handleSlideEdit}
 								currentSlideIndex={currentSlideIndex}
 								positionType='content_position'
+								defaultPos={layoutElements.contentPos as Position[]}
 							>
 								{item}
 							</DragElement>
@@ -1774,6 +1802,7 @@ export const Col_2_img_2_layout = ({
 								handleSlideEdit={handleSlideEdit}
 								currentSlideIndex={currentSlideIndex}
 								positionType='content_position'
+								defaultPos={layoutElements.contentPos as Position[]}
 							>
 								{item}
 							</DragElement>
@@ -1936,6 +1965,7 @@ export const Col_3_img_3_layout = ({
 				handleSlideEdit={handleSlideEdit}
 				currentSlideIndex={currentSlideIndex}
 				positionType='topic_position'
+				defaultPos={[layoutElements.topicPos as Position]}
 			>
 				{topic}
 			</DragElement>
@@ -1947,6 +1977,7 @@ export const Col_3_img_3_layout = ({
 				handleSlideEdit={handleSlideEdit}
 				currentSlideIndex={currentSlideIndex}
 				positionType='subtopic_position'
+				defaultPos={[layoutElements.topicPos as Position]}
 			>
 				{subtopic}
 			</DragElement>
@@ -1958,6 +1989,7 @@ export const Col_3_img_3_layout = ({
 				handleSlideEdit={handleSlideEdit}
 				currentSlideIndex={currentSlideIndex}
 				positionType='image_container_position'
+				defaultPos={layoutElements.imgContainerPos as Position[]}
 			>
 				<ImgModule
 					imgsrc={imgs?.[0]}
@@ -1987,6 +2019,7 @@ export const Col_3_img_3_layout = ({
 				handleSlideEdit={handleSlideEdit}
 				currentSlideIndex={currentSlideIndex}
 				positionType='image_container_position'
+				defaultPos={layoutElements.imgContainerPos as Position[]}
 			>
 				<ImgModule
 					imgsrc={imgs?.[1]}
@@ -2016,6 +2049,7 @@ export const Col_3_img_3_layout = ({
 				handleSlideEdit={handleSlideEdit}
 				currentSlideIndex={currentSlideIndex}
 				positionType='image_container_position'
+				defaultPos={layoutElements.imgContainerPos as Position[]}
 			>
 				<ImgModule
 					imgsrc={imgs?.[2]}
@@ -2056,6 +2090,7 @@ export const Col_3_img_3_layout = ({
 								handleSlideEdit={handleSlideEdit}
 								currentSlideIndex={currentSlideIndex}
 								positionType='content_position'
+								defaultPos={layoutElements.contentPos as Position[]}
 							>
 								{item}
 							</DragElement>
@@ -2082,6 +2117,7 @@ export const Col_3_img_3_layout = ({
 								handleSlideEdit={handleSlideEdit}
 								currentSlideIndex={currentSlideIndex}
 								positionType='content_position'
+								defaultPos={layoutElements.contentPos as Position[]}
 							>
 								{item}
 							</DragElement>
@@ -2108,6 +2144,7 @@ export const Col_3_img_3_layout = ({
 								handleSlideEdit={handleSlideEdit}
 								currentSlideIndex={currentSlideIndex}
 								positionType='content_position'
+								defaultPos={layoutElements.contentPos as Position[]}
 							>
 								{item}
 							</DragElement>
@@ -2215,30 +2252,22 @@ export const Full_img_only_layout = ({
 	// 	console.log('current layout is full img only');
 	// });
 
+	const initImgContainerPos = setInitPos(
+		image_container_positions,
+		layoutElements.imgContainerPos as Position[],
+	) as Position[];
+
 	return (
 		<div style={layoutElements.canvaCSS}>
-			{/* three columns of images */}
-			<div
-				// className='w-full grid grid-cols-3 gap-[2rem] '
-				style={{
-					...layoutElements.imageContainerCSS,
-					zIndex: imgHigherZIndex ? 100 : 20,
-				}}
-			>
-				<div
-					style={{
-						...layoutElements.imageCSS,
-					}}
-				>
-					<div className='w-full h-full' style={{ position: 'relative' }}>
-						<DragElement
+			<DragElement
 							type={ElementType.ImageView}
 							canEdit={canEdit}
-							positions={image_container_positions}
+							positions={initImgContainerPos}
 							contentIndex={0}
 							handleSlideEdit={handleSlideEdit}
 							currentSlideIndex={currentSlideIndex}
 							positionType='image_container_position'
+							defaultPos={layoutElements.imgContainerPos as Position[]}
 						>
 							<ImgModule
 								imgsrc={imgs?.[0]}
@@ -2260,9 +2289,6 @@ export const Full_img_only_layout = ({
 								media_type={media_types?.[0]}
 							/>
 						</DragElement>
-					</div>
-				</div>
-			</div>
 			<div
 				style={{
 					...layoutElements.logoCSS,

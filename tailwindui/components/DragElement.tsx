@@ -19,6 +19,7 @@ interface DragElementProps {
 	handleSlideEdit: Function;
 	currentSlideIndex: number;
 	positionType: string;
+	defaultPos: Position[];
 }
 
 export const DragElement = ({
@@ -30,6 +31,7 @@ export const DragElement = ({
 	handleSlideEdit,
 	currentSlideIndex,
 	positionType,
+	defaultPos,
 }: DragElementProps) => {
 	const [elementPos, setElementPos] = useState<{ x: number; y: number }>({
 		x: 0,
@@ -236,12 +238,12 @@ export const DragElement = ({
 				onMouseEnter={onEnterHandler}
 				onMouseLeave={onLeaveHandler}
 				onClick={() => {
-					setElementPos({ x: 0, y: 0 });
-					setElementSize({ width: 'max-content', height: 'max-content' });
+					setElementPos({ x: Number(defaultPos[contentIndex].x), y: Number(defaultPos[contentIndex].y) });
+					setElementSize({ width: Number(defaultPos[contentIndex].width), height: Number(defaultPos[contentIndex].height) });
 					const updatedPosition: Position[] = positions.map(
 						(position, index) =>
 							index === contentIndex
-								? { x: 0, y: 0, width: -1, height: -1 }
+								? defaultPos[contentIndex]
 								: position,
 					);
 					handleSlideEdit(updatedPosition, currentSlideIndex, positionType);

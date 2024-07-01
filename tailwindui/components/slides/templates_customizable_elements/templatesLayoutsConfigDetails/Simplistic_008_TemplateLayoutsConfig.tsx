@@ -574,7 +574,6 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 		canvaCSS: {
 			width: '100%',
 			height: '100%',
-			display: 'flex',
 		},
 
 		imageContainerCSS: {
@@ -595,5 +594,6 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 		rndCSS: {
 			zIndex: '51',
 		},
+		imgContainerPos: [{ x: 30, y: 30, width: 900, height: 480 }],
 	},
 };
