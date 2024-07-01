@@ -199,7 +199,7 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 				<div>
 					<Instruction>
 						{/* Which online sources do you want to include? */}
-						Online sources from
+						Which online sources do you want to include?
 					</Instruction>
 					{/* <Explanation>
 						This may also add content less relevant to your topic.
