@@ -1,7 +1,7 @@
 'use client';
 
 import { AIAssistantChatWindow } from '@/components/chatbot/AIAssistant';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Image from 'next/image';
 import Card from '@/components/ui/Card';
 import { ToolBar } from '@/components/ui/ToolBar';
@@ -10,11 +10,114 @@ import { GoDownload } from 'react-icons/go';
 import { Column } from '@/components/layout/Column';
 import { BigTitle, Instruction } from '@/components/ui/Text';
 import useHydrated from '@/hooks/use-hydrated';
+import RadioButton, { RadioButtonOption } from '@/components/ui/RadioButton';
+import {
+	Chart as ChartJS,
+	ChartType,
+	PieController,
+	BarController,
+	LineController,
+	CategoryScale,
+	LinearScale,
+	PointElement,
+	LineElement,
+	BarElement,
+	Title,
+	Tooltip,
+	Legend,
+	ArcElement,
+	ScatterController,
+	ChartEvent,
+} from 'chart.js';
+import { Chart } from 'react-chartjs-2';
+// Register Chart.js components
+ChartJS.register(
+	CategoryScale,
+	LinearScale,
+	PointElement,
+	LineElement,
+	BarElement,
+	Title,
+	Tooltip,
+	Legend,
+	ArcElement,
+	ScatterController,
+	PieController,
+	BarController,
+	LineController,
+);
 
 export default function Page() {
 	const [chartUrl, setChartUrl] = useState('');
 	const [urlHistory, setUrlHistory] = useState(['/images/scenario/charts.png']);
+	const [chartData, setChartData] = useState<any>(null);
+	const [chartConfig, setChartConfig] = useState<any>(null);
+	const [chartType, setChartType] = useState<null | "line" | "bar" | "pie" | "scatter">(null);
+	const [useDynamicChart, setUseDynamicChart] = useState(true);
+	const chartRef = useRef<ChartJS>(null);
 
+	function updateDynamicChart(data: any) {
+		const chartJson = data.chart_json;
+		console.log('updateDynamicChart', chartJson);
+		const datasets = {
+			labels: chartJson.labels,
+			datasets: chartJson.datasets,
+		}
+		setChartData(datasets);
+		setChartType(chartJson.chartType);
+		setChartConfig({
+			responsive: true,
+			scales: {
+				x: {
+				  display: true,
+				  title: {
+					display: true,
+					text: chartJson.options.xTitle,
+				}},
+				y: {
+				  display: true,
+				  title: {
+					display: true,
+					text: chartJson.options.yTitle,
+					}
+				}
+		},
+			plugins: {
+				title: {
+					display: true,
+					text: chartJson.title,
+				},
+			},
+		
+		});
+	}
+
+	const chartGenerationOptions: RadioButtonOption[] = [
+		{
+			value: 'false',
+			text: 'Image',
+			explanation: '',
+		},
+		{
+			value: 'true',
+			text: 'Interactive (Beta)',
+			explanation: '',
+		},
+	];
+
+	function downloadChart() {
+		if (!useDynamicChart) {
+			window.open(chartUrl);
+		}
+		if (chartRef.current !== null && chartType) {
+			const base64Image = chartRef.current.toBase64Image();
+			const a = document.createElement('a');
+			a.download = 'chart.png';
+			a.href = base64Image;;
+			a.click();
+		}
+	}
+	
 	function updateChartUrl(url: string) {
 		setChartUrl(url);
 		setUrlHistory([...urlHistory, url]);
@@ -32,16 +135,24 @@ export default function Page() {
 			</Panel> */}
 
 			<Column>
-				<div className='w-full flex flex-col items-center justify-center gap-y-2'>
+				<div className='w-full flex flex-row items-center justify-center gap-y-2 gap-x-4'>
 					{/* <Card>
             <BigTitle>📈 Chart</BigTitle>
           </Card> */}
-
+					<ToolBar>
+						<RadioButton
+							options={chartGenerationOptions}
+							selectedValue={String(useDynamicChart)}
+							setSelectedValue={(value) => {setUseDynamicChart(value === 'true')}}
+							name='dynamicChartToggle'
+							cols={2}
+						/>
+					</ToolBar>
 					<ToolBar>
 						<ButtonWithExplanation
 							explanation='Download Chart'
 							button={
-								<button onClick={() => window.open(chartUrl)}>
+								<button onClick={downloadChart}>
 									<GoDownload
 										style={{
 											strokeWidth: '2',
@@ -75,21 +186,21 @@ export default function Page() {
 					</ToolBar>
 				</div>
 
-				<Card>
+				{!useDynamicChart ? <Card>
 					<div className='flex flex-row items-center justify-center'>
-						{chartUrl ? (
+						{(chartUrl) ? (
 							<Image
 								unoptimized
 								src={chartUrl}
 								alt='Chart'
 								width={720}
 								height={540}
-								// layout='fixed'
+							// layout='fixed'
 							/>
 						) : (
 							<div>
 								<Instruction>
-									You don't have any chart to display yet. 
+									You don't have any chart to display yet.
 									You can start chatting with the AI Assistant on the right.
 								</Instruction>
 
@@ -99,21 +210,51 @@ export default function Page() {
 									alt='Chart'
 									width={400}
 									height={300}
-									// layout='fixed'
+								// layout='fixed'
 								/>
 							</div>
 						)}
 					</div>
-				</Card>
+				</Card> : <></>}
+				{useDynamicChart ? <Card>
+					<div className='flex flex-row items-center justify-center max-h-[800px] min-h-[300px] md:min-h-[600px]'>
+						{chartType ? (
+							<Chart className='w-full' type={chartType} data={chartData} options={chartConfig} ref={chartRef}></Chart>
+						) : (
+							<div>
+								<Instruction>
+									You don't have any chart to display yet.
+									You can start chatting with the AI Assistant on the right.
+								</Instruction>
+
+								<Image
+									unoptimized
+									src='/images/scenario/charts.png'
+									alt='Chart'
+									width={400}
+									height={300}
+								// layout='fixed'
+								/>
+							</div>
+						)}
+					</div>
+				</Card> : <></>}
 			</Column>
 
-			<AIAssistantChatWindow
+			{useDynamicChart ? <AIAssistantChatWindow
 				onToggle={undefined}
 				slides={[]}
 				currentSlideIndex={0}
 				type='chart'
-				updateChartUrl={updateChartUrl}
-			/>
+				updateDynamicChart={updateDynamicChart}
+			/> :
+				<AIAssistantChatWindow
+					onToggle={undefined}
+					slides={[]}
+					currentSlideIndex={0}
+					type='chart'
+					updateChartUrl={updateChartUrl} />
+			}
 		</div>
 	);
 }

@@ -16,6 +16,7 @@ export type ChatResponse = {
 	suggestions?: string[][]; // used for regenerating the selection
 	chat: string; // used for regenerating the selection
 	images?: string[]; // url
+	chartData?: any;
 };
 
 export type Chat = ChatHistory;

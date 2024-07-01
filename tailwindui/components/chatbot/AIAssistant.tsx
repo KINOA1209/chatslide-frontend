@@ -60,7 +60,8 @@ interface AIAssistantChatWindowProps {
 	currentSlideIndex: number;
 	updateSlidePage?: Function;
 	type?: 'script' | 'slide' | 'chart';
-	updateChartUrl?: (url: string) => void; // for chart type
+	updateChartUrl?: (url: string) => void; // for image chart type
+	updateDynamicChart?: (data: any) => void; // for dynamic chart type
 }
 
 export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
@@ -70,6 +71,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 	updateSlidePage,
 	type = 'slide',
 	updateChartUrl,
+	updateDynamicChart,
 }) => {
 	const [userInput, setUserInput] = useState('');
 	const { chatHistory, addChatHistory, clearChatHistory, chatHistoryStatus } =
@@ -167,6 +169,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 							lastChatMessages,
 							token,
 							model === 'GPT-3.5' ? 'gpt-3.5-turbo' : 'gpt-4o',
+							updateDynamicChart ? 'json' : 'img',
 						)
 					: await ChatBotService.chat(
 							inputToSend,
@@ -256,6 +259,8 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 			if (type === 'chart' && updateChartUrl) {
 				if (response?.images && response.images.length > 0)
 					updateChartUrl(response.images[0]);
+			} else if (type === 'chart' && updateDynamicChart) {
+				updateDynamicChart(response.chartData);
 			}
 
 			addChatHistory(addSuccessMessage(response.chat, response.images));
