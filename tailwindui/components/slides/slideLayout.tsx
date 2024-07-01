@@ -316,6 +316,8 @@ export const Cover_img_0_layout = ({
 		layoutElements.titlePos as Position,
 	) as Position;
 
+	const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
 	return (
 		<div
 			className={`SlideCanvas`}
@@ -342,6 +344,9 @@ export const Cover_img_0_layout = ({
 				currentSlideIndex={currentSlideIndex}
 				positionType='title_position'
 				defaultPos={[layoutElements.titlePos as Position]}
+				elementIndex={0}
+				onHover={setHoveredIndex}
+				hoveredIndex={hoveredIndex ?? -1}
 			>
 				{title}
 			</DragElement>
@@ -454,6 +459,8 @@ export const Cover_img_1_layout = ({
 		layoutElements.imgContainerPos as Position[],
 	) as Position[];
 
+	const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
 	return (
 		<div
 			className={`SlideCanvas`}
@@ -480,6 +487,9 @@ export const Cover_img_1_layout = ({
 				currentSlideIndex={currentSlideIndex}
 				positionType='title_position'
 				defaultPos={[layoutElements.titlePos as Position]}
+				elementIndex={0}
+				onHover={setHoveredIndex}
+				hoveredIndex={hoveredIndex ?? -1}
 			>
 				{title}
 			</DragElement>
@@ -492,6 +502,9 @@ export const Cover_img_1_layout = ({
 				currentSlideIndex={currentSlideIndex}
 				positionType='image_container_position'
 				defaultPos={layoutElements.imgContainerPos as Position[]}
+				elementIndex={1}
+				onHover={setHoveredIndex}
+				hoveredIndex={hoveredIndex ?? -1}
 			>
 				<ImgModule
 					imgsrc={imgs?.[0]}
@@ -610,6 +623,8 @@ export const Col_1_img_0_layout = ({
 		layoutElements.contentPos as Position[],
 	) as Position[];
 
+	const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
 	return (
 		<div
 			ref={containerRef}
@@ -631,6 +646,9 @@ export const Col_1_img_0_layout = ({
 				currentSlideIndex={currentSlideIndex}
 				positionType='topic_position'
 				defaultPos={[layoutElements.topicPos as Position]}
+				elementIndex={0}
+				onHover={setHoveredIndex}
+				hoveredIndex={hoveredIndex ?? -1}
 			>
 				{topic}
 			</DragElement>
@@ -643,6 +661,9 @@ export const Col_1_img_0_layout = ({
 				currentSlideIndex={currentSlideIndex}
 				positionType='subtopic_position'
 				defaultPos={[layoutElements.subtopicPos as Position]}
+				elementIndex={1}
+				onHover={setHoveredIndex}
+				hoveredIndex={hoveredIndex ?? -1}
 			>
 				{subtopic}
 			</DragElement>
@@ -655,6 +676,9 @@ export const Col_1_img_0_layout = ({
 				currentSlideIndex={currentSlideIndex}
 				positionType='content_position'
 				defaultPos={layoutElements.contentPos as Position[]}
+				elementIndex={2}
+				onHover={setHoveredIndex}
+				hoveredIndex={hoveredIndex ?? -1}
 			>
 				{content}
 			</DragElement>
@@ -739,6 +763,8 @@ export const Col_2_img_0_layout = ({
 		layoutElements.contentPos as Position[],
 	) as Position[];
 
+	const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
 	return (
 		<div
 			className={`SlideLayoutCanvas`}
@@ -758,6 +784,9 @@ export const Col_2_img_0_layout = ({
 				currentSlideIndex={currentSlideIndex}
 				positionType='topic_position'
 				defaultPos={[layoutElements.topicPos as Position]}
+				elementIndex={0}
+				onHover={setHoveredIndex}
+				hoveredIndex={hoveredIndex ?? -1}
 			>
 				{topic}
 			</DragElement>
@@ -770,6 +799,9 @@ export const Col_2_img_0_layout = ({
 				currentSlideIndex={currentSlideIndex}
 				positionType='subtopic_position'
 				defaultPos={[layoutElements.subtopicPos as Position]}
+				elementIndex={1}
+				onHover={setHoveredIndex}
+				hoveredIndex={hoveredIndex ?? -1}
 			>
 				{subtopic}
 			</DragElement>
@@ -793,6 +825,9 @@ export const Col_2_img_0_layout = ({
 								currentSlideIndex={currentSlideIndex}
 								positionType='content_position'
 								defaultPos={layoutElements.contentPos as Position[]}
+								elementIndex={2}
+								onHover={setHoveredIndex}
+								hoveredIndex={hoveredIndex ?? -1}
 							>
 								{item}
 							</DragElement>
@@ -820,6 +855,9 @@ export const Col_2_img_0_layout = ({
 								currentSlideIndex={currentSlideIndex}
 								positionType='content_position'
 								defaultPos={layoutElements.contentPos as Position[]}
+								elementIndex={3}
+								onHover={setHoveredIndex}
+								hoveredIndex={hoveredIndex ?? -1}
 							>
 								{item}
 							</DragElement>
@@ -926,6 +964,8 @@ export const Col_3_img_0_layout = ({
 		layoutElements.contentPos as Position[],
 	) as Position[];
 
+	const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
 	return (
 		<div
 			style={{
@@ -944,6 +984,9 @@ export const Col_3_img_0_layout = ({
 				currentSlideIndex={currentSlideIndex}
 				positionType='topic_position'
 				defaultPos={[layoutElements.topicPos as Position]}
+				elementIndex={0}
+				onHover={setHoveredIndex}
+				hoveredIndex={hoveredIndex ?? -1}
 			>
 				{topic}
 			</DragElement>
@@ -956,6 +999,9 @@ export const Col_3_img_0_layout = ({
 				currentSlideIndex={currentSlideIndex}
 				positionType='subtopic_position'
 				defaultPos={[layoutElements.subtopicPos as Position]}
+				elementIndex={1}
+				onHover={setHoveredIndex}
+				hoveredIndex={hoveredIndex ?? -1}
 			>
 				{subtopic}
 			</DragElement>
@@ -979,6 +1025,9 @@ export const Col_3_img_0_layout = ({
 								currentSlideIndex={currentSlideIndex}
 								positionType='content_position'
 								defaultPos={layoutElements.contentPos as Position[]}
+								elementIndex={2}
+								onHover={setHoveredIndex}
+								hoveredIndex={hoveredIndex ?? -1}
 							>
 								{item}
 							</DragElement>
@@ -1006,6 +1055,9 @@ export const Col_3_img_0_layout = ({
 								currentSlideIndex={currentSlideIndex}
 								positionType='content_position'
 								defaultPos={layoutElements.contentPos as Position[]}
+								elementIndex={3}
+								onHover={setHoveredIndex}
+								hoveredIndex={hoveredIndex ?? -1}
 							>
 								{item}
 							</DragElement>
@@ -1033,6 +1085,9 @@ export const Col_3_img_0_layout = ({
 								currentSlideIndex={currentSlideIndex}
 								positionType='content_position'
 								defaultPos={layoutElements.contentPos as Position[]}
+								elementIndex={4}
+								onHover={setHoveredIndex}
+								hoveredIndex={hoveredIndex ?? -1}
 							>
 								{item}
 							</DragElement>
@@ -1188,6 +1243,8 @@ export const Col_2_img_1_layout = ({
 		layoutElements.imgContainerPos as Position[],
 	) as Position[];
 
+	const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
 	return (
 		<div
 			className='SlideCanvas'
@@ -1204,6 +1261,9 @@ export const Col_2_img_1_layout = ({
 				currentSlideIndex={currentSlideIndex}
 				positionType='topic_position'
 				defaultPos={[layoutElements.topicPos as Position]}
+				elementIndex={0}
+				onHover={setHoveredIndex}
+				hoveredIndex={hoveredIndex ?? -1}
 			>
 				{topic}
 			</DragElement>
@@ -1216,6 +1276,9 @@ export const Col_2_img_1_layout = ({
 				currentSlideIndex={currentSlideIndex}
 				positionType='subtopic_position'
 				defaultPos={[layoutElements.subtopicPos as Position]}
+				elementIndex={1}
+				onHover={setHoveredIndex}
+				hoveredIndex={hoveredIndex ?? -1}
 			>
 				{subtopic}
 			</DragElement>
@@ -1228,6 +1291,9 @@ export const Col_2_img_1_layout = ({
 				currentSlideIndex={currentSlideIndex}
 				positionType='content_position'
 				defaultPos={layoutElements.contentPos as Position[]}
+				elementIndex={2}
+				onHover={setHoveredIndex}
+				hoveredIndex={hoveredIndex ?? -1}
 			>
 				{content}
 			</DragElement>
@@ -1242,6 +1308,9 @@ export const Col_2_img_1_layout = ({
 				currentSlideIndex={currentSlideIndex}
 				positionType='image_container_position'
 				defaultPos={layoutElements.imgContainerPos as Position[]}
+				elementIndex={3}
+				onHover={setHoveredIndex}
+				hoveredIndex={hoveredIndex ?? -1}
 			>
 				<ImgModule
 					imgsrc={imgs?.[0]}
@@ -1416,6 +1485,8 @@ export const Col_1_img_1_layout = ({
 		layoutElements.imgContainerPos as Position[],
 	) as Position[];
 
+	const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
 	return (
 		<div
 			ref={containerRef}
@@ -1431,6 +1502,9 @@ export const Col_1_img_1_layout = ({
 				currentSlideIndex={currentSlideIndex}
 				positionType='topic_position'
 				defaultPos={[layoutElements.topicPos as Position]}
+				elementIndex={0}
+				onHover={setHoveredIndex}
+				hoveredIndex={hoveredIndex ?? -1}
 			>
 				{topic}
 			</DragElement>
@@ -1443,6 +1517,9 @@ export const Col_1_img_1_layout = ({
 				currentSlideIndex={currentSlideIndex}
 				positionType='subtopic_position'
 				defaultPos={[layoutElements.subtopicPos as Position]}
+				elementIndex={1}
+				onHover={setHoveredIndex}
+				hoveredIndex={hoveredIndex ?? -1}
 			>
 				{subtopic}
 			</DragElement>
@@ -1455,6 +1532,9 @@ export const Col_1_img_1_layout = ({
 				currentSlideIndex={currentSlideIndex}
 				positionType='image_container_position'
 				defaultPos={layoutElements.imgContainerPos as Position[]}
+				elementIndex={2}
+				onHover={setHoveredIndex}
+				hoveredIndex={hoveredIndex ?? -1}
 			>
 				<ImgModule
 					imgsrc={imgs?.[0]}
@@ -1484,6 +1564,9 @@ export const Col_1_img_1_layout = ({
 				currentSlideIndex={currentSlideIndex}
 				positionType='content_position'
 				defaultPos={layoutElements.contentPos as Position[]}
+				elementIndex={3}
+				onHover={setHoveredIndex}
+				hoveredIndex={hoveredIndex ?? -1}
 			>
 				{content}
 			</DragElement>
@@ -1659,7 +1742,7 @@ export const Col_2_img_2_layout = ({
 		};
 	}, []);
 
-	//const filteredContent: JSX.Element[] = filterEmptyLines(content);
+	const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
 	return (
 		<div
@@ -1681,6 +1764,9 @@ export const Col_2_img_2_layout = ({
 				currentSlideIndex={currentSlideIndex}
 				positionType='topic_position'
 				defaultPos={[layoutElements.topicPos as Position]}
+				elementIndex={0}
+				onHover={setHoveredIndex}
+				hoveredIndex={hoveredIndex ?? -1}
 			>
 				{topic}
 			</DragElement>
@@ -1693,6 +1779,9 @@ export const Col_2_img_2_layout = ({
 				currentSlideIndex={currentSlideIndex}
 				positionType='subtopic_position'
 				defaultPos={[layoutElements.subtopicPos as Position]}
+				elementIndex={1}
+				onHover={setHoveredIndex}
+				hoveredIndex={hoveredIndex ?? -1}
 			>
 				{subtopic}
 			</DragElement>
@@ -1705,6 +1794,9 @@ export const Col_2_img_2_layout = ({
 				currentSlideIndex={currentSlideIndex}
 				positionType='image_container_position'
 				defaultPos={layoutElements.imgContainerPos as Position[]}
+				elementIndex={2}
+				onHover={setHoveredIndex}
+				hoveredIndex={hoveredIndex ?? -1}
 			>
 				<ImgModule
 					imgsrc={imgs?.[0]}
@@ -1735,6 +1827,9 @@ export const Col_2_img_2_layout = ({
 				currentSlideIndex={currentSlideIndex}
 				positionType='image_container_position'
 				defaultPos={layoutElements.imgContainerPos as Position[]}
+				elementIndex={3}
+				onHover={setHoveredIndex}
+				hoveredIndex={hoveredIndex ?? -1}
 			>
 				<ImgModule
 					imgsrc={imgs?.[1]}
@@ -1776,6 +1871,9 @@ export const Col_2_img_2_layout = ({
 								currentSlideIndex={currentSlideIndex}
 								positionType='content_position'
 								defaultPos={layoutElements.contentPos as Position[]}
+								elementIndex={4}
+								onHover={setHoveredIndex}
+								hoveredIndex={hoveredIndex ?? -1}
 							>
 								{item}
 							</DragElement>
@@ -1803,6 +1901,9 @@ export const Col_2_img_2_layout = ({
 								currentSlideIndex={currentSlideIndex}
 								positionType='content_position'
 								defaultPos={layoutElements.contentPos as Position[]}
+								elementIndex={5}
+								onHover={setHoveredIndex}
+								hoveredIndex={hoveredIndex ?? -1}
 							>
 								{item}
 							</DragElement>
@@ -1948,6 +2049,9 @@ export const Col_3_img_3_layout = ({
 	const [showEditorBoxCol3, setShowEditorBoxCol3] = useState(
 		updatedContentCol3.length === 0,
 	);
+
+	const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
 	return (
 		<div
 			style={{
@@ -1966,6 +2070,9 @@ export const Col_3_img_3_layout = ({
 				currentSlideIndex={currentSlideIndex}
 				positionType='topic_position'
 				defaultPos={[layoutElements.topicPos as Position]}
+				elementIndex={0}
+				onHover={setHoveredIndex}
+				hoveredIndex={hoveredIndex ?? -1}
 			>
 				{topic}
 			</DragElement>
@@ -1978,6 +2085,9 @@ export const Col_3_img_3_layout = ({
 				currentSlideIndex={currentSlideIndex}
 				positionType='subtopic_position'
 				defaultPos={[layoutElements.topicPos as Position]}
+				elementIndex={1}
+				onHover={setHoveredIndex}
+				hoveredIndex={hoveredIndex ?? -1}
 			>
 				{subtopic}
 			</DragElement>
@@ -1990,6 +2100,9 @@ export const Col_3_img_3_layout = ({
 				currentSlideIndex={currentSlideIndex}
 				positionType='image_container_position'
 				defaultPos={layoutElements.imgContainerPos as Position[]}
+				elementIndex={2}
+				onHover={setHoveredIndex}
+				hoveredIndex={hoveredIndex ?? -1}
 			>
 				<ImgModule
 					imgsrc={imgs?.[0]}
@@ -2020,6 +2133,9 @@ export const Col_3_img_3_layout = ({
 				currentSlideIndex={currentSlideIndex}
 				positionType='image_container_position'
 				defaultPos={layoutElements.imgContainerPos as Position[]}
+				elementIndex={3}
+				onHover={setHoveredIndex}
+				hoveredIndex={hoveredIndex ?? -1}
 			>
 				<ImgModule
 					imgsrc={imgs?.[1]}
@@ -2050,6 +2166,9 @@ export const Col_3_img_3_layout = ({
 				currentSlideIndex={currentSlideIndex}
 				positionType='image_container_position'
 				defaultPos={layoutElements.imgContainerPos as Position[]}
+				elementIndex={4}
+				onHover={setHoveredIndex}
+				hoveredIndex={hoveredIndex ?? -1}
 			>
 				<ImgModule
 					imgsrc={imgs?.[2]}
@@ -2091,6 +2210,9 @@ export const Col_3_img_3_layout = ({
 								currentSlideIndex={currentSlideIndex}
 								positionType='content_position'
 								defaultPos={layoutElements.contentPos as Position[]}
+								elementIndex={5}
+								onHover={setHoveredIndex}
+								hoveredIndex={hoveredIndex ?? -1}
 							>
 								{item}
 							</DragElement>
@@ -2118,6 +2240,9 @@ export const Col_3_img_3_layout = ({
 								currentSlideIndex={currentSlideIndex}
 								positionType='content_position'
 								defaultPos={layoutElements.contentPos as Position[]}
+								elementIndex={6}
+								onHover={setHoveredIndex}
+								hoveredIndex={hoveredIndex ?? -1}
 							>
 								{item}
 							</DragElement>
@@ -2145,6 +2270,9 @@ export const Col_3_img_3_layout = ({
 								currentSlideIndex={currentSlideIndex}
 								positionType='content_position'
 								defaultPos={layoutElements.contentPos as Position[]}
+								elementIndex={7}
+								onHover={setHoveredIndex}
+								hoveredIndex={hoveredIndex ?? -1}
 							>
 								{item}
 							</DragElement>
@@ -2257,38 +2385,43 @@ export const Full_img_only_layout = ({
 		layoutElements.imgContainerPos as Position[],
 	) as Position[];
 
+	const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
 	return (
 		<div style={layoutElements.canvaCSS}>
 			<DragElement
-							type={ElementType.ImageView}
-							canEdit={canEdit}
-							positions={initImgContainerPos}
-							contentIndex={0}
-							handleSlideEdit={handleSlideEdit}
-							currentSlideIndex={currentSlideIndex}
-							positionType='image_container_position'
-							defaultPos={layoutElements.imgContainerPos as Position[]}
-						>
-							<ImgModule
-								imgsrc={imgs?.[0]}
-								updateSingleCallback={updateImgAtIndex(0)}
-								chartArr={charts}
-								ischartArr={ischarts}
-								handleSlideEdit={handleSlideEdit}
-								currentSlideIndex={currentSlideIndex}
-								currentContentIndex={0}
-								canEdit={canEdit}
-								image_positions={image_positions}
-								layoutElements={layoutElements}
-								customImageStyle={layoutElements.imageCSS}
-								setImgHigherZIndex={setImgHigherZIndex}
-								columnIndex={0}
-								embed_code={embed_code}
-								embed_code_single={embed_code?.[0]}
-								media_types={media_types}
-								media_type={media_types?.[0]}
-							/>
-						</DragElement>
+				type={ElementType.ImageView}
+				canEdit={canEdit}
+				positions={initImgContainerPos}
+				contentIndex={0}
+				handleSlideEdit={handleSlideEdit}
+				currentSlideIndex={currentSlideIndex}
+				positionType='image_container_position'
+				defaultPos={layoutElements.imgContainerPos as Position[]}
+				elementIndex={0}
+				onHover={setHoveredIndex}
+				hoveredIndex={hoveredIndex ?? -1}
+			>
+				<ImgModule
+					imgsrc={imgs?.[0]}
+					updateSingleCallback={updateImgAtIndex(0)}
+					chartArr={charts}
+					ischartArr={ischarts}
+					handleSlideEdit={handleSlideEdit}
+					currentSlideIndex={currentSlideIndex}
+					currentContentIndex={0}
+					canEdit={canEdit}
+					image_positions={image_positions}
+					layoutElements={layoutElements}
+					customImageStyle={layoutElements.imageCSS}
+					setImgHigherZIndex={setImgHigherZIndex}
+					columnIndex={0}
+					embed_code={embed_code}
+					embed_code_single={embed_code?.[0]}
+					media_types={media_types}
+					media_type={media_types?.[0]}
+				/>
+			</DragElement>
 			<div
 				style={{
 					...layoutElements.logoCSS,
