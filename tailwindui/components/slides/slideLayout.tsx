@@ -720,260 +720,103 @@ export const Col_2_img_0_layout = ({
 		updatedContentCol2.length === 0,
 	);
 
-	// useEffect(() => {
-	// 	console.log('contentItemsFor2Col', contentItemsFor2Col);
-	// }, [updatedContent]);
-
-	// const [showAddButton, setShowAddButton] = useState(
-	// 	// slides[slideIndex].content.length <= 1,
-	// 	updatedContent.length <= 1,
-	// );
-
-	// const [showEditorBoxCol3, setShowEditorBoxCol3] = useState(
-	// 	updatedContent.length === 2,
-	// );
+	const initTopicPos = setInitPos(
+		topic_position,
+		layoutElements.topicPos as Position,
+	) as Position;
+	const initSubTopicPos = setInitPos(
+		subtopic_position,
+		layoutElements.subtopicPos as Position,
+	) as Position;
+	const initContentPos = setInitPos(
+		content_positions,
+		layoutElements.contentPos as Position[],
+	) as Position[];
 
 	return (
 		<div
 			className={`SlideLayoutCanvas`}
 			style={{
-				display: 'flex',
-				flexDirection: 'column',
 				width: '100%',
 				height: '100%',
 				...layoutElements.canvaCSS,
 				position: 'relative',
 			}}
 		>
-			<div
-				className='SlideTitleSubtitleContentColumn'
-				style={{
-					display: 'flex',
-					flexDirection: 'column', // Equivalent to flex-col
-					...layoutElements.titleAndContentColumnCSS,
-					backgroundColor: themeElements.slideColumnBackgroundColor
-						? themeElements.slideColumnBackgroundColor
-						: '',
-				}}
+			<DragElement
+				type={ElementType.TextEdit}
+				canEdit={canEdit}
+				positions={[initTopicPos]}
+				contentIndex={0}
+				handleSlideEdit={handleSlideEdit}
+				currentSlideIndex={currentSlideIndex}
+				positionType='topic_position'
 			>
-				<div
-					className={`SlideTopicAndSubtopicBox`}
-					style={{
-						...layoutElements.titleAndSubtopicBoxCSS,
-						zIndex: 50,
-						backgroundColor: themeElements.titleAndSubtopicBoxBackgroundColor
-							? themeElements.titleAndSubtopicBoxBackgroundColor
-							: '',
-					}}
-				>
-					<div className={`SlideTopic`} style={layoutElements.topicCSS}>
-						<DragElement
-							type={ElementType.TextEdit}
-							canEdit={canEdit}
-							positions={[topic_position]}
-							contentIndex={0}
-							handleSlideEdit={handleSlideEdit}
-							currentSlideIndex={currentSlideIndex}
-							positionType='topic_position'
-						>
-							{topic}
-						</DragElement>
-					</div>
-					<div className={`SlideSubtopic`} style={layoutElements.subtopicCSS}>
-						<DragElement
-							type={ElementType.TextEdit}
-							canEdit={canEdit}
-							positions={[subtopic_position]}
-							contentIndex={0}
-							handleSlideEdit={handleSlideEdit}
-							currentSlideIndex={currentSlideIndex}
-							positionType='subtopic_position'
-						>
-							{subtopic}
-						</DragElement>
-					</div>
-				</div>
-
-				<div
-					className={`w-full flex SlideContentContainer`}
-					style={{
-						...layoutElements.contentContainerCSS,
-						zIndex: 40,
-						gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
-						// backgroundColor: themeElements.slideContentContainerBackgroundColor
-						// 	? themeElements.slideContentContainerBackgroundColor
-						// 	: '',
-					}}
-				>
-					<div className='Column1' style={layoutElements.contentCSS}>
-						<div
-							className={`SlideContentIndex`}
-							style={layoutElements.contentIndexCSS}
-						>
-							{1}
-						</div>
-						<div
-							className={`SlideContentIndexTextDivider`}
-							style={layoutElements.contentIndexTextDividerCSS}
-						></div>
-
-						{showEditorBoxCol1 && (
-							<>
-								{setUpdatedContentCol1((prevContent: JSX.Element[]) => [
-									addANewEditorBox({
-										handleSlideEdit: handleSlideEdit,
-										isVerticalContent: false,
-										themeElements: themeElements,
-										fontSize: '16pt',
-										contentIndex: 0,
-										slideIndex: slideIndex,
-										slides: slides,
-									}),
-									...prevContent.slice(1),
-								])}
-								{setShowEditorBoxCol1(false)}
-							</>
-						)}
-						{/* {updatedContent.length === 0 && showAddButton && (
-				<div
-					className={`btn btn-primary ${addButtonStyle} ${addButtonHoverStyle}`}
-					// onClick={handleAddTextColumn}
-					onClick={() =>
-						handleAddTextColumn({
-							handleSlideEdit: handleSlideEdit,
-							isVerticalContent: false,
-							themeElements: themeElements,
-							fontSize: '16pt',
-							contentIndex: 0,
-							slideIndex: slideIndex,
-							slides: slides,
-							setUpdatedContent: setUpdatedContent,
-							setShowAddButton: setShowAddButton,
-							shouldShowAddButton: updatedContent.length <= 1,
-						})
-					}
-				>
-					<RiAddLine className={addIconStyle} />
-					Add One Column of text
-				</div>
-			)} */}
-						{/* {updatedContent.slice(0, 1).map((item, index) => ( */}
-						{updatedContentCol1.map((item, index) => (
-							<React.Fragment key={`contentText_${index}`}>
-								<ul
-									key={`contentText_${index}`}
-									className={`SlideContentText`}
-									style={{
-										...layoutElements.contentTextCSS,
-										flex: index === updatedContentCol1.length - 1 ? 1 : 0,
-									}}
-								>
-									<li style={{ width: '100%' }}>
-										<DragElement
-											type={ElementType.TextEdit}
-											canEdit={canEdit}
-											positions={content_positions}
-											contentIndex={0}
-											handleSlideEdit={handleSlideEdit}
-											currentSlideIndex={currentSlideIndex}
-											positionType='content_position'
-										>
-											{item}
-										</DragElement>
-									</li>
-								</ul>
-							</React.Fragment>
-						))}
-					</div>
-
-					<div className='Column2' style={layoutElements.contentCSS}>
-						<div
-							className={`SlideContentIndex`}
-							style={layoutElements.contentIndexCSS}
-						>
-							{2}
-						</div>
-						<div
-							className={`SlideContentIndexTextDivider`}
-							style={layoutElements.contentIndexTextDividerCSS}
-						></div>
-						{/* {updatedContent.length === 1 && showAddButton && (
-				<div
-					className={`btn btn-primary ${addButtonStyle} ${addButtonHoverStyle}`}
-					// onClick={handleAddColumn}
-					onClick={() =>
-						handleAddTextColumn({
-							handleSlideEdit: handleSlideEdit,
-							isVerticalContent: false,
-							themeElements: themeElements,
-							fontSize: '16pt',
-							contentIndex: 1,
-							slideIndex: slideIndex,
-							slides: slides,
-							setUpdatedContent: setUpdatedContent,
-							setShowAddButton: setShowAddButton,
-							shouldShowAddButton: updatedContent.length <= 1,
-						})
-					}
-				>
-					<div
-						className={`SlideContentIndexTextDivider`}
-						style={layoutElements.contentIndexTextDividerCSS}
-					></div>
-					<RiAddLine className={addIconStyle} />
-					Add One Column of text
-				</div>
-			)} */}
-						{showEditorBoxCol2 && (
-							<>
-								{setUpdatedContentCol2((prevContent: JSX.Element[]) => [
-									// ...prevContent.slice(0, 1),
-									addANewEditorBox({
-										handleSlideEdit: handleSlideEdit,
-										isVerticalContent: false,
-										themeElements: themeElements,
-										fontSize: '16pt',
-										contentIndex: 1,
-										slideIndex: slideIndex,
-										slides: slides,
-									}),
-									// ...prevContent.slice(2),
-									...prevContent.slice(1),
-								])}
-								{setShowEditorBoxCol2(false)}
-							</>
-						)}
-						{/* {updatedContent.slice(1, 2).map((item, index) => ( */}
-
-						{updatedContentCol2.map((item, index) => (
-							<React.Fragment key={`contentText_${index + 1}`}>
-								<ul
-									key={`contentText_${index}`}
-									className={`SlideContentText`}
-									style={{
-										...layoutElements.contentTextCSS,
-										flex: index === updatedContentCol2.length - 1 ? 1 : 0,
-									}}
-								>
-									<li style={{ width: '100%' }}>
-										<DragElement
-											type={ElementType.TextEdit}
-											canEdit={canEdit}
-											positions={content_positions}
-											contentIndex={1}
-											handleSlideEdit={handleSlideEdit}
-											currentSlideIndex={currentSlideIndex}
-											positionType='content_position'
-										>
-											{item}
-										</DragElement>
-									</li>
-								</ul>
-							</React.Fragment>
-						))}
-					</div>
-				</div>
-			</div>
+				{topic}
+			</DragElement>
+			<DragElement
+				type={ElementType.TextEdit}
+				canEdit={canEdit}
+				positions={[initSubTopicPos]}
+				contentIndex={0}
+				handleSlideEdit={handleSlideEdit}
+				currentSlideIndex={currentSlideIndex}
+				positionType='subtopic_position'
+			>
+				{subtopic}
+			</DragElement>
+			{updatedContentCol1.map((item, index) => (
+				<React.Fragment key={`contentText_${index}`}>
+					<ul
+						key={`contentText_${index}`}
+						className={`SlideContentText`}
+						style={{
+							...layoutElements.contentTextCSS,
+							flex: index === updatedContentCol1.length - 1 ? 1 : 0,
+						}}
+					>
+						<li style={{ width: '100%' }}>
+							<DragElement
+								type={ElementType.TextEdit}
+								canEdit={canEdit}
+								positions={initContentPos}
+								contentIndex={0}
+								handleSlideEdit={handleSlideEdit}
+								currentSlideIndex={currentSlideIndex}
+								positionType='content_position'
+							>
+								{item}
+							</DragElement>
+						</li>
+					</ul>
+				</React.Fragment>
+			))}
+			{updatedContentCol2.map((item, index) => (
+				<React.Fragment key={`contentText_${index + 1}`}>
+					<ul
+						key={`contentText_${index}`}
+						className={`SlideContentText`}
+						style={{
+							...layoutElements.contentTextCSS,
+							flex: index === updatedContentCol2.length - 1 ? 1 : 0,
+						}}
+					>
+						<li style={{ width: '100%' }}>
+							<DragElement
+								type={ElementType.TextEdit}
+								canEdit={canEdit}
+								positions={initContentPos}
+								contentIndex={1}
+								handleSlideEdit={handleSlideEdit}
+								currentSlideIndex={currentSlideIndex}
+								positionType='content_position'
+							>
+								{item}
+							</DragElement>
+						</li>
+					</ul>
+				</React.Fragment>
+			))}
 
 			<div
 				className={`SlideLogo`}
@@ -1059,374 +902,129 @@ export const Col_3_img_0_layout = ({
 	const [showEditorBoxCol3, setShowEditorBoxCol3] = useState(
 		updatedContentCol3.length === 0,
 	);
-	// const [showEditorBox, setShowEditorBox] = useState(
-	// 	// slides[slideIndex].content.length <= 2, for three columns
-	// 	updatedContent.length < 3,
-	// );
-	// Determine if the editor box should be shown
-	// const shouldShowEditorBox = updatedContent.length < 3; // Assuming there are three columns
 
-	// Update the showEditorBox state
-	// useEffect(() => {
-	// 	setShowEditorBox(shouldShowEditorBox);
-	// }, [shouldShowEditorBox]);
+	const initTopicPos = setInitPos(
+		topic_position,
+		layoutElements.topicPos as Position,
+	) as Position;
+	const initSubTopicPos = setInitPos(
+		subtopic_position,
+		layoutElements.subtopicPos as Position,
+	) as Position;
+	const initContentPos = setInitPos(
+		content_positions,
+		layoutElements.contentPos as Position[],
+	) as Position[];
 
 	return (
 		<div
 			style={{
-				display: 'flex',
-				flexDirection: 'column',
 				width: '100%',
 				height: '100%',
 				...layoutElements.canvaCSS,
 				position: 'relative',
 			}}
 		>
-			<div
-				className='SlideTitleSubtitleContentColumn'
-				style={{
-					display: 'flex',
-					flexDirection: 'column', // Equivalent to flex-col
-					...layoutElements.titleAndContentColumnCSS,
-					backgroundColor: themeElements.slideColumnBackgroundColor
-						? themeElements.slideColumnBackgroundColor
-						: '',
-				}}
+			<DragElement
+				type={ElementType.TextEdit}
+				canEdit={canEdit}
+				positions={[initTopicPos]}
+				contentIndex={0}
+				handleSlideEdit={handleSlideEdit}
+				currentSlideIndex={currentSlideIndex}
+				positionType='topic_position'
 			>
-				<div
-					style={{
-						...layoutElements.titleAndSubtopicBoxCSS,
-						zIndex: 50,
-						backgroundColor: themeElements.titleAndSubtopicBoxBackgroundColor
-							? themeElements.titleAndSubtopicBoxBackgroundColor
-							: '',
-					}}
-				>
-					<div style={layoutElements.topicCSS}>
-						<DragElement
-							type={ElementType.TextEdit}
-							canEdit={canEdit}
-							positions={[topic_position]}
-							contentIndex={0}
-							handleSlideEdit={handleSlideEdit}
-							currentSlideIndex={currentSlideIndex}
-							positionType='topic_position'
-						>
-							{topic}
-						</DragElement>
-					</div>
-					<div style={layoutElements.subtopicCSS}>
-						<DragElement
-							type={ElementType.TextEdit}
-							canEdit={canEdit}
-							positions={[subtopic_position]}
-							contentIndex={0}
-							handleSlideEdit={handleSlideEdit}
-							currentSlideIndex={currentSlideIndex}
-							positionType='subtopic_position'
-						>
-							{subtopic}
-						</DragElement>
-					</div>
-				</div>
-
-				<div
-					className={`w-full flex SlideContentContainer`}
-					style={{
-						...layoutElements.contentContainerCSS,
-						zIndex: 40,
-						gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
-						// backgroundColor: themeElements.slideContentContainerBackgroundColor
-						// 	? themeElements.slideContentContainerBackgroundColor
-						// 	: '',
-					}}
-				>
-					{/* {Array.isArray(content) &&
-				content.map((item, index) => (
-					<div
-						// className='flex flex-col gap-[0.5rem]'
-						key={index}
+				{topic}
+			</DragElement>
+			<DragElement
+				type={ElementType.TextEdit}
+				canEdit={canEdit}
+				positions={[initSubTopicPos]}
+				contentIndex={0}
+				handleSlideEdit={handleSlideEdit}
+				currentSlideIndex={currentSlideIndex}
+				positionType='subtopic_position'
+			>
+				{subtopic}
+			</DragElement>
+			{updatedContentCol1.map((item, index) => (
+				<React.Fragment key={`contentText_${index}`}>
+					<ul
+						key={`contentText_${index}`}
+						className={`SlideContentText`}
 						style={{
-							...layoutElements.contentCSS,
-							display: item === null || index > 2 ? 'none' : 'flex', // or 'flex' based on your layout
+							...layoutElements.contentTextCSS,
+							flex: index === updatedContentCol1.length - 1 ? 1 : 0,
 						}}
 					>
-						<div style={layoutElements.contentIndexCSS}>{index + 1}</div>
-						<div
-							// className='opacity-50 border border-neutral-900 border-opacity-40'
-							style={layoutElements.contentIndexTextDividerCSS}
-						></div>
-						<ul
-							key={index}
-							// className={`flex flex-row w-full h-full grow `}
-							style={layoutElements.contentTextCSS}
-						>
-							<li className='contentBulletPoint' style={{ width: '100%' }}>
-								{item}
-							</li>
-						</ul>
-					</div>
-				))} */}
-					<div className='Column1' style={layoutElements.contentCSS}>
-						<div
-							className={`SlideContentIndex`}
-							style={layoutElements.contentIndexCSS}
-						>
-							{1}
-						</div>
-						<div
-							className={`SlideContentIndexTextDivider`}
-							style={layoutElements.contentIndexTextDividerCSS}
-						></div>
-
-						{showEditorBoxCol1 && (
-							<>
-								{setUpdatedContentCol1((prevContent: JSX.Element[]) => [
-									addANewEditorBox({
-										handleSlideEdit: handleSlideEdit,
-										isVerticalContent: false,
-										themeElements: themeElements,
-										fontSize: '16pt',
-										contentIndex: 0,
-										slideIndex: slideIndex,
-										slides: slides,
-									}),
-									...prevContent.slice(1),
-								])}
-								{setShowEditorBoxCol1(false)}
-							</>
-						)}
-						{updatedContentCol1.map((item, index) => (
-							<React.Fragment key={`contentText_${index}`}>
-								<ul
-									key={`contentText_${index}`}
-									className={`SlideContentText`}
-									style={{
-										...layoutElements.contentTextCSS,
-										flex: index === updatedContentCol1.length - 1 ? 1 : 0,
-									}}
-								>
-									<li style={{ width: '100%' }}>
-										<DragElement
-											type={ElementType.TextEdit}
-											canEdit={canEdit}
-											positions={content_positions}
-											contentIndex={0}
-											handleSlideEdit={handleSlideEdit}
-											currentSlideIndex={currentSlideIndex}
-											positionType='content_position'
-										>
-											{item}
-										</DragElement>
-									</li>
-								</ul>
-							</React.Fragment>
-						))}
-					</div>
-
-					<div className='Column2' style={layoutElements.contentCSS}>
-						<div
-							className={`SlideContentIndex`}
-							style={layoutElements.contentIndexCSS}
-						>
-							{2}
-						</div>
-						<div
-							className={`SlideContentIndexTextDivider`}
-							style={layoutElements.contentIndexTextDividerCSS}
-						></div>
-						{/* {updatedContent.length === 1 && showAddButton && (
-					<div
-						className={`btn btn-primary ${addButtonStyle} ${addButtonHoverStyle}`}
-						// onClick={handleAddColumn}
-						onClick={() =>
-							handleAddTextColumn({
-								handleSlideEdit: handleSlideEdit,
-								isVerticalContent: false,
-								themeElements: themeElements,
-								fontSize: '16pt',
-								contentIndex: 1,
-								slideIndex: slideIndex,
-								slides: slides,
-								setUpdatedContent: setUpdatedContent,
-								setShowAddButton: setShowAddButton,
-								shouldShowAddButton: updatedContent.length <= 2,
-							})
-						}
-					>
-						<div
-							className={`SlideContentIndexTextDivider`}
-							style={layoutElements.contentIndexTextDividerCSS}
-						></div>
-						<RiAddLine className={addIconStyle} />
-						Add One Column of text
-					</div>
-				)} */}
-						{/* {updatedContent.length === 1 && (
-					// Update the state and show/hide button
-					<>
-						{setUpdatedContent((prevContent: JSX.Element[]) => [
-							...prevContent,
-							<div
-								key={`content_${Date.now()}`}
-								className={`${slideIndex === 0 ? 'hidden' : ''}`}
+						<li style={{ width: '100%' }}>
+							<DragElement
+								type={ElementType.TextEdit}
+								canEdit={canEdit}
+								positions={initContentPos}
+								contentIndex={0}
+								handleSlideEdit={handleSlideEdit}
+								currentSlideIndex={currentSlideIndex}
+								positionType='content_position'
 							>
-								<QuillEditable
-									content={''}
-									handleBlur={(newContent: string | string[]) =>
-										handleSlideEdit(
-											newContent,
-											slideIndex,
-											'content',
-											1,
-											true,
-										)
-									}
-									style={{
-										...themeElements.contentFontCSS_non_vertical_content,
-										fontSize: '16pt',
-									}}
-									isVerticalContent={false}
-									templateKey={slides[slideIndex].template}
-								/>
-							</div>,
-						])}
-					</>
-				)} */}
-						{showEditorBoxCol2 && (
-							<>
-								{setUpdatedContentCol2((prevContent: JSX.Element[]) => [
-									// ...prevContent.slice(0, 1),
-									addANewEditorBox({
-										handleSlideEdit: handleSlideEdit,
-										isVerticalContent: false,
-										themeElements: themeElements,
-										fontSize: '16pt',
-										contentIndex: 1,
-										slideIndex: slideIndex,
-										slides: slides,
-									}),
-									...prevContent.slice(1),
-								])}
-								{setShowEditorBoxCol2(false)}
-							</>
-						)}
-
-						{updatedContentCol2.map((item, index) => (
-							<React.Fragment key={`contentText_${index + 1} `}>
-								<ul
-									key={`contentText_${index} `}
-									className={`SlideContentText`}
-									style={{
-										...layoutElements.contentTextCSS,
-										flex: index === updatedContentCol2.length - 1 ? 1 : 0,
-									}}
-								>
-									<li style={{ width: '100%' }}>
-										<DragElement
-											type={ElementType.TextEdit}
-											canEdit={canEdit}
-											positions={content_positions}
-											contentIndex={1}
-											handleSlideEdit={handleSlideEdit}
-											currentSlideIndex={currentSlideIndex}
-											positionType='content_position'
-										>
-											{item}
-										</DragElement>
-									</li>
-								</ul>
-							</React.Fragment>
-						))}
-					</div>
-
-					<div className='Column3' style={layoutElements.contentCSS}>
-						<div
-							className={`SlideContentIndex`}
-							style={layoutElements.contentIndexCSS}
-						>
-							{3}
-						</div>
-						<div
-							className={`SlideContentIndexTextDivider`}
-							style={layoutElements.contentIndexTextDividerCSS}
-						></div>
-						{/* {updatedContent.length === 2 && showAddButton && (
-					<div
-						className={`btn btn-primary ${addButtonStyle} ${addButtonHoverStyle}`}
-						// onClick={handleAddColumn}
-						onClick={() =>
-							handleAddTextColumn({
-								handleSlideEdit: handleSlideEdit,
-								isVerticalContent: false,
-								themeElements: themeElements,
-								fontSize: '16pt',
-								contentIndex: 2,
-								slideIndex: slideIndex,
-								slides: slides,
-								setUpdatedContent: setUpdatedContent,
-								setShowAddButton: setShowAddButton,
-								shouldShowAddButton: updatedContent.length <= 2,
-							})
-						}
+								{item}
+							</DragElement>
+						</li>
+					</ul>
+				</React.Fragment>
+			))}
+			{updatedContentCol2.map((item, index) => (
+				<React.Fragment key={`contentText_${index + 1} `}>
+					<ul
+						key={`contentText_${index} `}
+						className={`SlideContentText`}
+						style={{
+							...layoutElements.contentTextCSS,
+							flex: index === updatedContentCol2.length - 1 ? 1 : 0,
+						}}
 					>
-						<div
-							className={`SlideContentIndexTextDivider`}
-							style={layoutElements.contentIndexTextDividerCSS}
-						></div>
-						<RiAddLine className={addIconStyle} />
-						Add One Column of text
-					</div>
-				)} */}
-						{/* Editor Box for Column 3 */}
-						{showEditorBoxCol3 && (
-							<>
-								{setUpdatedContentCol3((prevContent: JSX.Element[]) => [
-									// ...prevContent.slice(0, 2),
-									addANewEditorBox({
-										handleSlideEdit: handleSlideEdit,
-										isVerticalContent: false,
-										themeElements: themeElements,
-										fontSize: '16pt',
-										contentIndex: 2,
-										slideIndex: slideIndex,
-										slides: slides,
-									}),
-									...prevContent.slice(1),
-								])}
-								{setShowEditorBoxCol3(false)}
-							</>
-						)}
-						{updatedContentCol3.map((item, index) => (
-							<React.Fragment key={`contentText_${index + 2} `}>
-								<ul
-									key={`contentText_${index} `}
-									className={`SlideContentText`}
-									style={{
-										...layoutElements.contentTextCSS,
-										flex: index === updatedContentCol3.length - 1 ? 1 : 0,
-									}}
-								>
-									<li style={{ width: '100%' }}>
-										<DragElement
-											type={ElementType.TextEdit}
-											canEdit={canEdit}
-											positions={content_positions}
-											contentIndex={2}
-											handleSlideEdit={handleSlideEdit}
-											currentSlideIndex={currentSlideIndex}
-											positionType='content_position'
-										>
-											{item}
-										</DragElement>
-									</li>
-								</ul>
-							</React.Fragment>
-						))}
-					</div>
-				</div>
-			</div>
-
+						<li style={{ width: '100%' }}>
+							<DragElement
+								type={ElementType.TextEdit}
+								canEdit={canEdit}
+								positions={initContentPos}
+								contentIndex={1}
+								handleSlideEdit={handleSlideEdit}
+								currentSlideIndex={currentSlideIndex}
+								positionType='content_position'
+							>
+								{item}
+							</DragElement>
+						</li>
+					</ul>
+				</React.Fragment>
+			))}
+			{updatedContentCol3.map((item, index) => (
+				<React.Fragment key={`contentText_${index + 2} `}>
+					<ul
+						key={`contentText_${index} `}
+						className={`SlideContentText`}
+						style={{
+							...layoutElements.contentTextCSS,
+							flex: index === updatedContentCol3.length - 1 ? 1 : 0,
+						}}
+					>
+						<li style={{ width: '100%' }}>
+							<DragElement
+								type={ElementType.TextEdit}
+								canEdit={canEdit}
+								positions={initContentPos}
+								contentIndex={2}
+								handleSlideEdit={handleSlideEdit}
+								currentSlideIndex={currentSlideIndex}
+								positionType='content_position'
+							>
+								{item}
+							</DragElement>
+						</li>
+					</ul>
+				</React.Fragment>
+			))}
 			<div
 				style={{
 					...layoutElements.logoCSS,
@@ -1976,24 +1574,22 @@ export const Col_2_img_2_layout = ({
 	//const filteredContent: JSX.Element[] = filterEmptyLines(content);
 	// const [updatedContent, setUpdatedContent] = useState(items);
 
-	// const [showEditorBoxCol1, setShowEditorBoxCol1] = useState(
-	// 	updatedContent.length === 0,
-	// );
-	// const [showEditorBoxCol2, setShowEditorBoxCol2] = useState(
-	// 	updatedContent.length === 1,
-	// );
-	// const [showEditorBoxCol3, setShowEditorBoxCol3] = useState(
-	// 	updatedContent.length === 2,
-	// );
-
-	// useEffect(() => {
-	// 	console.log('updatedContent on page', slideIndex, updatedContent);
-	// }, [updatedContent]);
-
-	// const [showAddButton, setShowAddButton] = useState(
-	// 	// slides[slideIndex].content.length <= 2, for three columns
-	// 	updatedContent.length <= 1,
-	// );
+	const initTopicPos = setInitPos(
+		topic_position,
+		layoutElements.topicPos as Position,
+	) as Position;
+	const initSubTopicPos = setInitPos(
+		subtopic_position,
+		layoutElements.subtopicPos as Position,
+	) as Position;
+	const initContentPos = setInitPos(
+		content_positions,
+		layoutElements.contentPos as Position[],
+	) as Position[];
+	const initImgContainerPos = setInitPos(
+		image_container_positions,
+		layoutElements.imgContainerPos as Position[],
+	) as Position[];
 
 	const contentItemsFor2Col = changingTemplateContent(items, 2);
 	const [updatedContentCol1, setUpdatedContentCol1] = useState(
@@ -2053,286 +1649,138 @@ export const Col_2_img_2_layout = ({
 				position: 'relative',
 			}}
 		>
-			<div
-				className='SlideColumn'
-				style={layoutElements.columnCSS}
-				ref={containerRef}
+			<DragElement
+				type={ElementType.TextEdit}
+				canEdit={canEdit}
+				positions={[initTopicPos]}
+				contentIndex={0}
+				handleSlideEdit={handleSlideEdit}
+				currentSlideIndex={currentSlideIndex}
+				positionType='topic_position'
 			>
-				<div
-					className='slideTopicAndSubtopic'
-					style={{
-						...layoutElements.titleAndSubtopicBoxCSS,
-						zIndex: 50,
-						backgroundColor: themeElements.titleAndSubtopicBoxBackgroundColor
-							? themeElements.titleAndSubtopicBoxBackgroundColor
-							: '',
-					}}
-					ref={topicAndSubtopicRef}
-				>
-					<div className={`SlideTopic`} style={layoutElements.topicCSS}>
-						<DragElement
-							type={ElementType.TextEdit}
-							canEdit={canEdit}
-							positions={[topic_position]}
-							contentIndex={0}
-							handleSlideEdit={handleSlideEdit}
-							currentSlideIndex={currentSlideIndex}
-							positionType='topic_position'
-						>
-							{topic}
-						</DragElement>
-					</div>
-					<div className={`SlideSubtopic`} style={layoutElements.subtopicCSS}>
-						<DragElement
-							type={ElementType.TextEdit}
-							canEdit={canEdit}
-							positions={[subtopic_position]}
-							contentIndex={0}
-							handleSlideEdit={handleSlideEdit}
-							currentSlideIndex={currentSlideIndex}
-							positionType='subtopic_position'
-						>
-							{subtopic}
-						</DragElement>
-					</div>
-				</div>
-
-				{/* two columns of images */}
-				<div
-					className='SlideImageContainer'
-					style={{
-						...layoutElements.imageContainerCSS,
-						zIndex: imgHigherZIndex ? 100 : 20,
-					}}
-					ref={imgContainerRef}
-				>
-					<div
-						// className='h-[11rem] grow rounded-md overflow-hidden relative'
-						style={layoutElements.imageCSS}
+				{topic}
+			</DragElement>
+			<DragElement
+				type={ElementType.TextEdit}
+				canEdit={canEdit}
+				positions={[initSubTopicPos]}
+				contentIndex={0}
+				handleSlideEdit={handleSlideEdit}
+				currentSlideIndex={currentSlideIndex}
+				positionType='subtopic_position'
+			>
+				{subtopic}
+			</DragElement>
+			<DragElement
+				type={ElementType.ImageView}
+				canEdit={canEdit}
+				positions={initImgContainerPos}
+				contentIndex={0}
+				handleSlideEdit={handleSlideEdit}
+				currentSlideIndex={currentSlideIndex}
+				positionType='image_container_position'
+			>
+				<ImgModule
+					imgsrc={imgs?.[0]}
+					updateSingleCallback={updateImgAtIndex(0)}
+					chartArr={charts}
+					ischartArr={ischarts}
+					handleSlideEdit={handleSlideEdit}
+					currentSlideIndex={currentSlideIndex}
+					currentContentIndex={0}
+					canEdit={canEdit}
+					image_positions={image_positions}
+					layoutElements={layoutElements}
+					customImageStyle={layoutElements.imageCSS}
+					setImgHigherZIndex={setImgHigherZIndex}
+					columnIndex={0}
+					embed_code={embed_code}
+					embed_code_single={embed_code?.[0]}
+					media_types={media_types}
+					media_type={media_types?.[0]}
+				/>
+			</DragElement>
+			<DragElement
+				type={ElementType.ImageView}
+				canEdit={canEdit}
+				positions={initImgContainerPos}
+				contentIndex={1}
+				handleSlideEdit={handleSlideEdit}
+				currentSlideIndex={currentSlideIndex}
+				positionType='image_container_position'
+			>
+				<ImgModule
+					imgsrc={imgs?.[1]}
+					updateSingleCallback={updateImgAtIndex(1)}
+					chartArr={charts}
+					ischartArr={ischarts}
+					handleSlideEdit={handleSlideEdit}
+					currentSlideIndex={currentSlideIndex}
+					currentContentIndex={1}
+					canEdit={canEdit}
+					image_positions={image_positions}
+					layoutElements={layoutElements}
+					customImageStyle={layoutElements.imageCSS}
+					setImgHigherZIndex={setImgHigherZIndex}
+					columnIndex={1}
+					embed_code={embed_code}
+					embed_code_single={embed_code?.[1]}
+					media_types={media_types}
+					media_type={media_types?.[1]}
+				/>
+			</DragElement>
+			{updatedContentCol1.map((item, index) => (
+				<React.Fragment key={`contentText_${index} `}>
+					<ul
+						key={`contentText_${index} `}
+						className={`SlideContentText`}
+						style={{
+							...layoutElements.contentTextCSS,
+							flex: index === updatedContentCol2.length - 1 ? 1 : 0,
+						}}
 					>
-						{/* Gradient Background */}
-						{/* <div
-							className='absolute inset-0 z-50'
-							style={{
-								background:
-									'linear-gradient(107deg, rgba(27, 108, 201, 0.70) 0%, rgba(176, 32, 199, 0.70) 103.12%)',
-								pointerEvents: 'none', // Allow click events to pass through
-							}}
-						></div> */}
-						<div className='w-full h-full' style={{ position: 'relative' }}>
+						<li style={{ width: '100%' }}>
 							<DragElement
-								type={ElementType.ImageView}
+								type={ElementType.TextEdit}
 								canEdit={canEdit}
-								positions={image_container_positions}
+								positions={initContentPos}
 								contentIndex={0}
 								handleSlideEdit={handleSlideEdit}
 								currentSlideIndex={currentSlideIndex}
-								positionType='image_container_position'
+								positionType='content_position'
 							>
-								<ImgModule
-									imgsrc={imgs?.[0]}
-									updateSingleCallback={updateImgAtIndex(0)}
-									chartArr={charts}
-									ischartArr={ischarts}
-									handleSlideEdit={handleSlideEdit}
-									currentSlideIndex={currentSlideIndex}
-									currentContentIndex={0}
-									canEdit={canEdit}
-									image_positions={image_positions}
-									layoutElements={layoutElements}
-									customImageStyle={layoutElements.imageCSS}
-									setImgHigherZIndex={setImgHigherZIndex}
-									columnIndex={0}
-									embed_code={embed_code}
-									embed_code_single={embed_code?.[0]}
-									media_types={media_types}
-									media_type={media_types?.[0]}
-								/>
+								{item}
 							</DragElement>
-						</div>
-					</div>
-					<div
-						// className='h-[11rem] grow rounded-md overflow-hidden  relative'
-						style={layoutElements.imageCSS}
+						</li>
+					</ul>
+				</React.Fragment>
+			))}
+			{updatedContentCol2.map((item, index) => (
+				<React.Fragment key={`contentText_${index + 1} `}>
+					<ul
+						key={`contentText_${index} `}
+						className={`SlideContentText`}
+						style={{
+							...layoutElements.contentTextCSS,
+							flex: index === updatedContentCol2.length - 1 ? 1 : 0,
+						}}
 					>
-						{/* Gradient Background */}
-						{/* <div
-							className='absolute inset-0 z-50'
-							style={{
-								background:
-									'linear-gradient(107deg, rgba(27, 108, 201, 0.70) 0%, rgba(176, 32, 199, 0.70) 103.12%)',
-								pointerEvents: 'none', // Allow click events to pass through
-							}}
-						></div> */}
-						<div className='w-full h-full' style={{ position: 'relative' }}>
+						<li style={{ width: '100%' }}>
 							<DragElement
-								type={ElementType.ImageView}
+								type={ElementType.TextEdit}
 								canEdit={canEdit}
-								positions={image_container_positions}
+								positions={initContentPos}
 								contentIndex={1}
 								handleSlideEdit={handleSlideEdit}
 								currentSlideIndex={currentSlideIndex}
-								positionType='image_container_position'
+								positionType='content_position'
 							>
-								<ImgModule
-									imgsrc={imgs?.[1]}
-									updateSingleCallback={updateImgAtIndex(1)}
-									chartArr={charts}
-									ischartArr={ischarts}
-									handleSlideEdit={handleSlideEdit}
-									currentSlideIndex={currentSlideIndex}
-									currentContentIndex={1}
-									canEdit={canEdit}
-									image_positions={image_positions}
-									layoutElements={layoutElements}
-									customImageStyle={layoutElements.imageCSS}
-									setImgHigherZIndex={setImgHigherZIndex}
-									columnIndex={1}
-									embed_code={embed_code}
-									embed_code_single={embed_code?.[1]}
-									media_types={media_types}
-									media_type={media_types?.[1]}
-								/>
+								{item}
 							</DragElement>
-						</div>
-					</div>
-				</div>
-				{/* two columns of text */}
-
-				<div
-					className={`w-full flex SlideContentContainer`}
-					style={{
-						...layoutElements.contentContainerCSS,
-						zIndex: 40,
-						gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
-						backgroundColor: themeElements.slideContentContainerBackgroundColor
-							? themeElements.slideContentContainerBackgroundColor
-							: '',
-					}}
-				>
-					<div className='Column1' style={layoutElements.contentCSS}>
-						<div
-							className={`SlideContentIndex`}
-							style={
-								layoutElements.contentIndexCSS !== undefined
-									? { ...layoutElements.contentIndexCSS }
-									: { display: 'none' }
-							}
-						>
-							{1}
-						</div>
-						<div
-							className={`SlideContentIndexTextDivider`}
-							style={layoutElements.contentIndexTextDividerCSS}
-						></div>
-
-						{showEditorBoxCol1 && (
-							<>
-								{setUpdatedContentCol1((prevContent: JSX.Element[]) => [
-									addANewEditorBox({
-										handleSlideEdit: handleSlideEdit,
-										isVerticalContent: false,
-										themeElements: themeElements,
-										fontSize: '16pt',
-										contentIndex: 0,
-										slideIndex: slideIndex,
-										slides: slides,
-									}),
-									...prevContent.slice(1),
-								])}
-								{setShowEditorBoxCol1(false)}
-							</>
-						)}
-						{updatedContentCol1.map((item, index) => (
-							<React.Fragment key={`contentText_${index} `}>
-								<ul
-									key={`contentText_${index} `}
-									className={`SlideContentText`}
-									style={{
-										...layoutElements.contentTextCSS,
-										flex: index === updatedContentCol2.length - 1 ? 1 : 0,
-									}}
-								>
-									<li style={{ width: '100%' }}>
-										<DragElement
-											type={ElementType.TextEdit}
-											canEdit={canEdit}
-											positions={content_positions}
-											contentIndex={0}
-											handleSlideEdit={handleSlideEdit}
-											currentSlideIndex={currentSlideIndex}
-											positionType='content_position'
-										>
-											{item}
-										</DragElement>
-									</li>
-								</ul>
-							</React.Fragment>
-						))}
-					</div>
-
-					<div className='Column2' style={layoutElements.contentCSS}>
-						<div
-							className={`SlideContentIndex`}
-							style={
-								layoutElements.contentIndexCSS !== undefined
-									? { ...layoutElements.contentIndexCSS }
-									: { display: 'none' }
-							}
-						>
-							{2}
-						</div>
-						<div
-							className={`SlideContentIndexTextDivider`}
-							style={layoutElements.contentIndexTextDividerCSS}
-						></div>
-						{showEditorBoxCol2 && (
-							<>
-								{setUpdatedContentCol2((prevContent: JSX.Element[]) => [
-									// ...prevContent.slice(0, 1),
-									addANewEditorBox({
-										handleSlideEdit: handleSlideEdit,
-										isVerticalContent: false,
-										themeElements: themeElements,
-										fontSize: '16pt',
-										contentIndex: 1,
-										slideIndex: slideIndex,
-										slides: slides,
-									}),
-									...prevContent.slice(1),
-								])}
-								{setShowEditorBoxCol2(false)}
-							</>
-						)}
-						{updatedContentCol2.map((item, index) => (
-							<React.Fragment key={`contentText_${index + 1} `}>
-								<ul
-									key={`contentText_${index} `}
-									className={`SlideContentText`}
-									style={{
-										...layoutElements.contentTextCSS,
-										flex: index === updatedContentCol2.length - 1 ? 1 : 0,
-									}}
-								>
-									<li style={{ width: '100%' }}>
-										<DragElement
-											type={ElementType.TextEdit}
-											canEdit={canEdit}
-											positions={content_positions}
-											contentIndex={1}
-											handleSlideEdit={handleSlideEdit}
-											currentSlideIndex={currentSlideIndex}
-											positionType='content_position'
-										>
-											{item}
-										</DragElement>
-									</li>
-								</ul>
-							</React.Fragment>
-						))}
-					</div>
-				</div>
-			</div>
+						</li>
+					</ul>
+				</React.Fragment>
+			))}
 			<div
 				style={{
 					...layoutElements.logoCSS,
@@ -2434,26 +1882,24 @@ export const Col_3_img_3_layout = ({
 	// Ensure content is always an array
 	const items = Array.isArray(content) ? content : [content];
 	const { slides, slideIndex, updateSlidePage, updateVersion } = useSlides();
-	//const filteredContent: JSX.Element[] = filterEmptyLines(content);
-	// const [updatedContent, setUpdatedContent] = useState(items);
 
-	// const [showEditorBoxCol1, setShowEditorBoxCol1] = useState(
-	// 	updatedContent.length === 0,
-	// );
-	// const [showEditorBoxCol2, setShowEditorBoxCol2] = useState(
-	// 	updatedContent.length === 1,
-	// );
-	// const [showEditorBoxCol3, setShowEditorBoxCol3] = useState(
-	// 	updatedContent.length === 2,
-	// );
-	// useEffect(() => {
-	// 	console.log('updatedContent on page', slideIndex, updatedContent);
-	// }, [updatedContent]);
+	const initTopicPos = setInitPos(
+		topic_position,
+		layoutElements.topicPos as Position,
+	) as Position;
+	const initSubTopicPos = setInitPos(
+		subtopic_position,
+		layoutElements.subtopicPos as Position,
+	) as Position;
+	const initContentPos = setInitPos(
+		content_positions,
+		layoutElements.contentPos as Position[],
+	) as Position[];
+	const initImgContainerPos = setInitPos(
+		image_container_positions,
+		layoutElements.imgContainerPos as Position[],
+	) as Position[];
 
-	// const [showAddButton, setShowAddButton] = useState(
-	// 	// slides[slideIndex].content.length <= 2, for three columns
-	// 	updatedContent.length <= 2,
-	// );
 	const contentItemsFor3Col = changingTemplateContent(items, 3);
 	const [updatedContentCol1, setUpdatedContentCol1] = useState(
 		contentItemsFor3Col[0],
@@ -2478,424 +1924,197 @@ export const Col_3_img_3_layout = ({
 			style={{
 				width: '100%',
 				height: '100%',
-				display: 'flex',
 				...layoutElements.canvaCSS,
 				position: 'relative',
 			}}
 		>
-			<div
-				// className='flex flex-col gap-[0.5rem]'
-				style={layoutElements.columnCSS}
+			<DragElement
+				type={ElementType.TextEdit}
+				canEdit={canEdit}
+				positions={[initTopicPos]}
+				contentIndex={0}
+				handleSlideEdit={handleSlideEdit}
+				currentSlideIndex={currentSlideIndex}
+				positionType='topic_position'
 			>
-				<div
-					// className='flex flex-col justify-center items-center'
-					style={{
-						...layoutElements.titleAndSubtopicBoxCSS,
-						zIndex: 50,
-						backgroundColor: themeElements.titleAndSubtopicBoxBackgroundColor
-							? themeElements.titleAndSubtopicBoxBackgroundColor
-							: '',
-					}}
-				>
-					<div className={``} style={layoutElements.topicCSS}>
-						<DragElement
-							type={ElementType.TextEdit}
-							canEdit={canEdit}
-							positions={[topic_position]}
-							contentIndex={0}
-							handleSlideEdit={handleSlideEdit}
-							currentSlideIndex={currentSlideIndex}
-							positionType='topic_position'
-						>
-							{topic}
-						</DragElement>
-					</div>
-					<div className={``} style={layoutElements.subtopicCSS}>
-						<DragElement
-							type={ElementType.TextEdit}
-							canEdit={canEdit}
-							positions={[subtopic_position]}
-							contentIndex={0}
-							handleSlideEdit={handleSlideEdit}
-							currentSlideIndex={currentSlideIndex}
-							positionType='subtopic_position'
-						>
-							{subtopic}
-						</DragElement>
-					</div>
-				</div>
-				{/* three columns of images */}
-				<div
-					// className='w-full grid grid-cols-3 gap-[2rem] '
-					style={{
-						...layoutElements.imageContainerCSS,
-						zIndex: imgHigherZIndex ? 100 : 20,
-					}}
-				>
-					<div
-						// className='h-[11rem] grow rounded-md overflow-hidden'
-						style={layoutElements.imageCSS}
+				{topic}
+			</DragElement>
+			<DragElement
+				type={ElementType.TextEdit}
+				canEdit={canEdit}
+				positions={[initSubTopicPos]}
+				contentIndex={0}
+				handleSlideEdit={handleSlideEdit}
+				currentSlideIndex={currentSlideIndex}
+				positionType='subtopic_position'
+			>
+				{subtopic}
+			</DragElement>
+			<DragElement
+				type={ElementType.ImageView}
+				canEdit={canEdit}
+				positions={initImgContainerPos}
+				contentIndex={0}
+				handleSlideEdit={handleSlideEdit}
+				currentSlideIndex={currentSlideIndex}
+				positionType='image_container_position'
+			>
+				<ImgModule
+					imgsrc={imgs?.[0]}
+					updateSingleCallback={updateImgAtIndex(0)}
+					chartArr={charts}
+					ischartArr={ischarts}
+					handleSlideEdit={handleSlideEdit}
+					currentSlideIndex={currentSlideIndex}
+					currentContentIndex={0}
+					canEdit={canEdit}
+					image_positions={image_positions}
+					layoutElements={layoutElements}
+					customImageStyle={layoutElements.imageCSS}
+					setImgHigherZIndex={setImgHigherZIndex}
+					columnIndex={0}
+					embed_code={embed_code}
+					embed_code_single={embed_code?.[0]}
+					media_types={media_types}
+					media_type={media_types?.[0]}
+				/>
+			</DragElement>
+			<DragElement
+				type={ElementType.ImageView}
+				canEdit={canEdit}
+				positions={initImgContainerPos}
+				contentIndex={1}
+				handleSlideEdit={handleSlideEdit}
+				currentSlideIndex={currentSlideIndex}
+				positionType='image_container_position'
+			>
+				<ImgModule
+					imgsrc={imgs?.[1]}
+					updateSingleCallback={updateImgAtIndex(1)}
+					chartArr={charts}
+					ischartArr={ischarts}
+					handleSlideEdit={handleSlideEdit}
+					currentSlideIndex={currentSlideIndex}
+					currentContentIndex={1}
+					canEdit={canEdit}
+					image_positions={image_positions}
+					layoutElements={layoutElements}
+					customImageStyle={layoutElements.imageCSS}
+					setImgHigherZIndex={setImgHigherZIndex}
+					columnIndex={1}
+					embed_code={embed_code}
+					embed_code_single={embed_code?.[1]}
+					media_types={media_types}
+					media_type={media_types?.[1]}
+				/>
+			</DragElement>
+			<DragElement
+				type={ElementType.ImageView}
+				canEdit={canEdit}
+				positions={initImgContainerPos}
+				contentIndex={2}
+				handleSlideEdit={handleSlideEdit}
+				currentSlideIndex={currentSlideIndex}
+				positionType='image_container_position'
+			>
+				<ImgModule
+					imgsrc={imgs?.[2]}
+					updateSingleCallback={updateImgAtIndex(2)}
+					chartArr={charts}
+					ischartArr={ischarts}
+					handleSlideEdit={handleSlideEdit}
+					currentSlideIndex={currentSlideIndex}
+					currentContentIndex={2}
+					canEdit={canEdit}
+					image_positions={image_positions}
+					layoutElements={layoutElements}
+					customImageStyle={layoutElements.imageCSS}
+					setImgHigherZIndex={setImgHigherZIndex}
+					columnIndex={2}
+					embed_code={embed_code}
+					embed_code_single={embed_code?.[2]}
+					media_types={media_types}
+					media_type={media_types?.[2]}
+				/>
+			</DragElement>
+			{updatedContentCol1.map((item, index) => (
+				<React.Fragment key={`contentText_${index} `}>
+					<ul
+						key={`contentText_${index} `}
+						className={`SlideContentText`}
+						style={{
+							...layoutElements.contentTextCSS,
+							flex: index === updatedContentCol1.length - 1 ? 1 : 0,
+						}}
 					>
-						<div className='w-full h-full' style={{ position: 'relative' }}>
+						<li style={{ width: '100%' }}>
 							<DragElement
-								type={ElementType.ImageView}
+								type={ElementType.TextEdit}
 								canEdit={canEdit}
-								positions={image_container_positions}
+								positions={initContentPos}
 								contentIndex={0}
 								handleSlideEdit={handleSlideEdit}
 								currentSlideIndex={currentSlideIndex}
-								positionType='image_container_position'
+								positionType='content_position'
 							>
-								<ImgModule
-									imgsrc={imgs?.[0]}
-									updateSingleCallback={updateImgAtIndex(0)}
-									chartArr={charts}
-									ischartArr={ischarts}
-									handleSlideEdit={handleSlideEdit}
-									currentSlideIndex={currentSlideIndex}
-									currentContentIndex={0}
-									canEdit={canEdit}
-									image_positions={image_positions}
-									layoutElements={layoutElements}
-									customImageStyle={layoutElements.imageCSS}
-									setImgHigherZIndex={setImgHigherZIndex}
-									columnIndex={0}
-									embed_code={embed_code}
-									embed_code_single={embed_code?.[0]}
-									media_types={media_types}
-									media_type={media_types?.[0]}
-								/>
+								{item}
 							</DragElement>
-						</div>
-					</div>
-					<div
-						// className='h-[11rem] grow rounded-md overflow-hidden'
-						style={layoutElements.imageCSS}
+						</li>
+					</ul>
+				</React.Fragment>
+			))}
+			{updatedContentCol2.map((item, index) => (
+				<React.Fragment key={`contentText_${index + 1}}`}>
+					<ul
+						key={`contentText_${index}}`}
+						className={`SlideContentText`}
+						style={{
+							...layoutElements.contentTextCSS,
+							flex: index === updatedContentCol2.length - 1 ? 1 : 0,
+						}}
 					>
-						<div className='w-full h-full' style={{ position: 'relative' }}>
+						<li style={{ width: '100%' }}>
 							<DragElement
-								type={ElementType.ImageView}
+								type={ElementType.TextEdit}
 								canEdit={canEdit}
-								positions={image_container_positions}
+								positions={initContentPos}
 								contentIndex={1}
 								handleSlideEdit={handleSlideEdit}
 								currentSlideIndex={currentSlideIndex}
-								positionType='image_container_position'
+								positionType='content_position'
 							>
-								<ImgModule
-									imgsrc={imgs?.[1]}
-									updateSingleCallback={updateImgAtIndex(1)}
-									chartArr={charts}
-									ischartArr={ischarts}
-									handleSlideEdit={handleSlideEdit}
-									currentSlideIndex={currentSlideIndex}
-									currentContentIndex={1}
-									canEdit={canEdit}
-									image_positions={image_positions}
-									layoutElements={layoutElements}
-									customImageStyle={layoutElements.imageCSS}
-									setImgHigherZIndex={setImgHigherZIndex}
-									columnIndex={1}
-									embed_code={embed_code}
-									embed_code_single={embed_code?.[1]}
-									media_types={media_types}
-									media_type={media_types?.[1]}
-								/>
+								{item}
 							</DragElement>
-						</div>
-					</div>
-					<div
-						// className='h-[11rem] grow rounded-md overflow-hidden'
-						style={layoutElements.imageCSS}
+						</li>
+					</ul>
+				</React.Fragment>
+			))}
+			{updatedContentCol3.map((item, index) => (
+				<React.Fragment key={`contentText_${index + 2} `}>
+					<ul
+						key={`contentText_${index} `}
+						className={`SlideContentText`}
+						style={{
+							...layoutElements.contentTextCSS,
+							flex: index === updatedContentCol3.length - 1 ? 1 : 0,
+						}}
 					>
-						<div className='w-full h-full' style={{ position: 'relative' }}>
+						<li style={{ width: '100%' }}>
 							<DragElement
-								type={ElementType.ImageView}
+								type={ElementType.TextEdit}
 								canEdit={canEdit}
-								positions={image_container_positions}
+								positions={initContentPos}
 								contentIndex={2}
 								handleSlideEdit={handleSlideEdit}
 								currentSlideIndex={currentSlideIndex}
-								positionType='image_container_position'
+								positionType='content_position'
 							>
-								<ImgModule
-									imgsrc={imgs?.[2]}
-									updateSingleCallback={updateImgAtIndex(2)}
-									chartArr={charts}
-									ischartArr={ischarts}
-									handleSlideEdit={handleSlideEdit}
-									currentSlideIndex={currentSlideIndex}
-									currentContentIndex={2}
-									canEdit={canEdit}
-									image_positions={image_positions}
-									layoutElements={layoutElements}
-									customImageStyle={layoutElements.imageCSS}
-									setImgHigherZIndex={setImgHigherZIndex}
-									columnIndex={2}
-									embed_code={embed_code}
-									embed_code_single={embed_code?.[2]}
-									media_types={media_types}
-									media_type={media_types?.[2]}
-								/>
+								{item}
 							</DragElement>
-						</div>
-					</div>
-				</div>
-				{/* three columns of text */}
-				{/* <div
-					// className='w-full grid grid-cols-3 gap-[2rem]'
-					style={{ ...layoutElements.contentCSS, zIndex: 40 }}
-				>
-					{Array.isArray(content) &&
-						content.map((item, index) => (
-							<div
-								// className='flex flex-col gap-[0.5rem]'
-								key={index}
-								style={{
-									display: item === null || index > 2 ? 'none' : 'block', // or 'flex' based on your layout
-								}}
-							>
-								<div
-									style={
-										layoutElements.contentIndexCSS !== undefined
-											? { ...layoutElements.contentIndexCSS }
-											: { display: 'none' }
-									}
-								>
-									{index + 1}
-								</div>
-								<div
-									// className='opacity-50 border border-neutral-900 border-opacity-40'
-									style={layoutElements.contentIndexTextDividerCSS}
-								></div>
-								<ul key={index} className={`flex flex-row w-full h-full grow`}>
-									<li style={{ width: '100%' }}>{item}</li>
-								</ul>
-							</div>
-						))}
-				</div> */}
-				<div
-					className={`w-full flex SlideContentContainer`}
-					style={{
-						...layoutElements.contentContainerCSS,
-						zIndex: 40,
-						gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
-						backgroundColor: themeElements.slideContentContainerBackgroundColor
-							? themeElements.slideContentContainerBackgroundColor
-							: '',
-					}}
-				>
-					{/* {Array.isArray(content) &&
-					content.map((item, index) => (
-						<div
-							// className='flex flex-col gap-[0.5rem]'
-							key={index}
-							style={{
-								...layoutElements.contentCSS,
-								display: item === null || index > 2 ? 'none' : 'flex', // or 'flex' based on your layout
-							}}
-						>
-							<div style={layoutElements.contentIndexCSS}>{index + 1}</div>
-							<div
-								// className='opacity-50 border border-neutral-900 border-opacity-40'
-								style={layoutElements.contentIndexTextDividerCSS}
-							></div>
-							<ul
-								key={index}
-								// className={`flex flex-row w-full h-full grow `}
-								style={layoutElements.contentTextCSS}
-							>
-								<li className='contentBulletPoint' style={{ width: '100%' }}>
-									{item}
-								</li>
-							</ul>
-						</div>
-					))} */}
-					<div className='Column1' style={layoutElements.contentCSS}>
-						<div
-							className={`SlideContentIndex`}
-							style={
-								layoutElements.contentIndexCSS !== undefined
-									? { ...layoutElements.contentIndexCSS }
-									: { display: 'none' }
-							}
-						>
-							{1}
-						</div>
-						<div
-							className={`SlideContentIndexTextDivider`}
-							style={layoutElements.contentIndexTextDividerCSS}
-						></div>
-
-						{showEditorBoxCol1 && (
-							<>
-								{setUpdatedContentCol1((prevContent: JSX.Element[]) => [
-									addANewEditorBox({
-										handleSlideEdit: handleSlideEdit,
-										isVerticalContent: false,
-										themeElements: themeElements,
-										fontSize: '16pt',
-										contentIndex: 0,
-										slideIndex: slideIndex,
-										slides: slides,
-									}),
-									...prevContent.slice(1),
-								])}
-								{setShowEditorBoxCol1(false)}
-							</>
-						)}
-						{updatedContentCol1.map((item, index) => (
-							<React.Fragment key={`contentText_${index} `}>
-								<ul
-									key={`contentText_${index} `}
-									className={`SlideContentText`}
-									style={{
-										...layoutElements.contentTextCSS,
-										flex: index === updatedContentCol1.length - 1 ? 1 : 0,
-									}}
-								>
-									<li style={{ width: '100%' }}>
-										<DragElement
-											type={ElementType.TextEdit}
-											canEdit={canEdit}
-											positions={content_positions}
-											contentIndex={0}
-											handleSlideEdit={handleSlideEdit}
-											currentSlideIndex={currentSlideIndex}
-											positionType='content_position'
-										>
-											{item}
-										</DragElement>
-									</li>
-								</ul>
-							</React.Fragment>
-						))}
-					</div>
-
-					<div className='Column2' style={layoutElements.contentCSS}>
-						<div
-							className={`SlideContentIndex`}
-							style={
-								layoutElements.contentIndexCSS !== undefined
-									? { ...layoutElements.contentIndexCSS }
-									: { display: 'none' }
-							}
-						>
-							{2}
-						</div>
-						<div
-							className={`SlideContentIndexTextDivider`}
-							style={layoutElements.contentIndexTextDividerCSS}
-						></div>
-						{showEditorBoxCol2 && (
-							<>
-								{setUpdatedContentCol2((prevContent: JSX.Element[]) => [
-									// ...prevContent.slice(0, 1),
-									addANewEditorBox({
-										handleSlideEdit: handleSlideEdit,
-										isVerticalContent: false,
-										themeElements: themeElements,
-										fontSize: '16pt',
-										contentIndex: 1,
-										slideIndex: slideIndex,
-										slides: slides,
-									}),
-									...prevContent.slice(1),
-								])}
-								{setShowEditorBoxCol2(false)}
-							</>
-						)}
-						{updatedContentCol2.map((item, index) => (
-							<React.Fragment key={`contentText_${index + 1}}`}>
-								<ul
-									key={`contentText_${index}}`}
-									className={`SlideContentText`}
-									style={{
-										...layoutElements.contentTextCSS,
-										flex: index === updatedContentCol2.length - 1 ? 1 : 0,
-									}}
-								>
-									<li style={{ width: '100%' }}>
-										<DragElement
-											type={ElementType.TextEdit}
-											canEdit={canEdit}
-											positions={content_positions}
-											contentIndex={1}
-											handleSlideEdit={handleSlideEdit}
-											currentSlideIndex={currentSlideIndex}
-											positionType='content_position'
-										>
-											{item}
-										</DragElement>
-									</li>
-								</ul>
-							</React.Fragment>
-						))}
-					</div>
-
-					<div className='Column3' style={layoutElements.contentCSS}>
-						<div
-							className={`SlideContentIndex`}
-							style={
-								layoutElements.contentIndexCSS !== undefined
-									? { ...layoutElements.contentIndexCSS }
-									: { display: 'none' }
-							}
-						>
-							{3}
-						</div>
-						<div
-							className={`SlideContentIndexTextDivider`}
-							style={layoutElements.contentIndexTextDividerCSS}
-						></div>
-						{/* Editor Box for Column 3 */}
-						{showEditorBoxCol3 && (
-							<>
-								{setUpdatedContentCol3((prevContent: JSX.Element[]) => [
-									// ...prevContent.slice(0, 2),
-									addANewEditorBox({
-										handleSlideEdit: handleSlideEdit,
-										isVerticalContent: false,
-										themeElements: themeElements,
-										fontSize: '16pt',
-										contentIndex: 2,
-										slideIndex: slideIndex,
-										slides: slides,
-									}),
-									...prevContent.slice(1),
-								])}
-								{setShowEditorBoxCol3(false)}
-							</>
-						)}
-						{updatedContentCol3.map((item, index) => (
-							<React.Fragment key={`contentText_${index + 2} `}>
-								<ul
-									key={`contentText_${index} `}
-									className={`SlideContentText`}
-									style={{
-										...layoutElements.contentTextCSS,
-										flex: index === updatedContentCol3.length - 1 ? 1 : 0,
-									}}
-								>
-									<li style={{ width: '100%' }}>
-										<DragElement
-											type={ElementType.TextEdit}
-											canEdit={canEdit}
-											positions={content_positions}
-											contentIndex={2}
-											handleSlideEdit={handleSlideEdit}
-											currentSlideIndex={currentSlideIndex}
-											positionType='content_position'
-										>
-											{item}
-										</DragElement>
-									</li>
-								</ul>
-							</React.Fragment>
-						))}
-					</div>
-				</div>
-			</div>
+						</li>
+					</ul>
+				</React.Fragment>
+			))}
 			<div
 				style={{
 					...layoutElements.logoCSS,

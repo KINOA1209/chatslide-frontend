@@ -205,12 +205,14 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 			display: 'none',
 		},
 		contentTextCSS: {
-			display: 'flex',
-			flexDirection: 'row',
-			width: '100%',
-			height: '100%',
 			flexGrow: 1,
 		},
+		topicPos: { x: 50, y: 50, width: 860, height: 50 },
+		subtopicPos: { x: 50, y: 104, width: 860, height: 50 },
+		contentPos: [
+			{ x: 50, y: 200, width: 405, height: 240 },
+			{ x: 505, y: 200, width: 405, height: 240 },
+		],
 	},
 	Col_3_img_0_layout: {
 		titleAndSubtopicBoxCSS: {
@@ -255,12 +257,15 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 			display: 'none',
 		},
 		contentTextCSS: {
-			display: 'flex',
-			flexDirection: 'row',
-			width: '100%',
-			height: '100%',
 			flexGrow: 1,
 		},
+		topicPos: { x: 50, y: 50, width: 860, height: 50 },
+		subtopicPos: { x: 50, y: 104, width: 860, height: 50 },
+		contentPos: [
+			{ x: 50, y: 200, width: 250, height: 200 },
+			{ x: 350, y: 200, width: 250, height: 200 },
+			{ x: 650, y: 200, width: 250, height: 200 },
+		],
 	},
 	Col_2_img_1_layout: {
 		columnCSS: {
@@ -387,10 +392,6 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 
 		// contentCSS: { borderLeft: '1px solid #C2C2C2', paddingLeft: '0.5rem' },
 		contentTextCSS: {
-			display: 'flex',
-			flexDirection: 'row',
-			width: '100%',
-			height: '100%',
 			flexGrow: 1,
 			paddingLeft: '1rem',
 		},
@@ -411,7 +412,6 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 		canvaCSS: {
 			width: '100%',
 			height: '100%',
-			display: 'flex',
 		},
 		columnCSS: {
 			width: '100%',
@@ -477,12 +477,21 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 		rndCSS: {
 			zIndex: '51',
 		},
+		topicPos: { x: 50, y: 50, width: 860, height: 50 },
+		subtopicPos: { x: 50, y: 104, width: 860, height: 50 },
+		contentPos: [
+			{ x: 50, y: 200, width: 405, height: 100 },
+			{ x: 505, y: 200, width: 405, height: 100 },
+		],
+		imgContainerPos: [
+			{ x: 50, y: 320, width: 405, height: 210 },
+			{ x: 505, y: 320, width: 405, height: 210 },
+		],
 	},
 	Col_3_img_3_layout: {
 		canvaCSS: {
 			width: '100%',
 			height: '100%',
-			display: 'flex',
 		},
 		columnCSS: {
 			width: '100%',
@@ -548,6 +557,18 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 		rndCSS: {
 			zIndex: '51',
 		},
+		topicPos: { x: 50, y: 50, width: 860, height: 50 },
+		subtopicPos: { x: 50, y: 104, width: 860, height: 50 },
+		contentPos: [
+			{ x: 50, y: 310, width: 250, height: 180 },
+			{ x: 350, y: 310, width: 250, height: 180 },
+			{ x: 650, y: 310, width: 250, height: 180 },
+		],
+		imgContainerPos: [
+			{ x: 50, y: 170, width: 250, height: 130 },
+			{ x: 350, y: 170, width: 250, height: 130 },
+			{ x: 650, y: 170, width: 250, height: 130 },
+		],
 	},
 	Full_img_only_layout: {
 		canvaCSS: {
