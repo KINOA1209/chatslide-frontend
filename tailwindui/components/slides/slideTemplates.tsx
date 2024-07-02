@@ -50,6 +50,7 @@ export const generateTemplate = (templateName: string) => {
 		imgs,
 		update_callback,
 		canEdit,
+		scale,
 		// autoSave,
 		isCoverPage,
 		layoutOptionNonCover,
@@ -139,6 +140,7 @@ export const generateTemplate = (templateName: string) => {
 						imgs={imgs}
 						update_callback={update_callback}
 						canEdit={canEdit}
+						scale={scale}
 						// autoSave={autoSave}
 						isCoverPage={isCoverPage}
 						layoutOptionNonCover={layoutOptionNonCover}
@@ -202,6 +204,7 @@ export const generateTemplate = (templateName: string) => {
 						imgs={imgs}
 						update_callback={update_callback}
 						canEdit={canEdit}
+						scale={scale}
 						// autoSave={autoSave}
 						isCoverPage={isCoverPage}
 						layoutOptionNonCover={layoutOptionNonCover}
@@ -290,6 +293,7 @@ export interface MainSlideProps {
 		media_types: Media[],
 	) => void;
 	canEdit: boolean;
+	scale: number;
 	isCoverPage: boolean;
 	layoutOptionNonCover: LayoutKeys;
 	layoutOptionCover: LayoutKeys;

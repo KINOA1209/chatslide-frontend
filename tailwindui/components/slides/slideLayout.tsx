@@ -301,6 +301,7 @@ export const Cover_img_0_layout = ({
 	imgs,
 	update_callback,
 	canEdit,
+	scale,
 	isCoverPage,
 	handleSlideEdit,
 	currentSlideIndex,
@@ -338,6 +339,7 @@ export const Cover_img_0_layout = ({
 			<DragElement
 				type={ElementType.TextEdit}
 				canEdit={canEdit}
+				scale={scale}
 				positions={[initTitlePos]}
 				contentIndex={0}
 				handleSlideEdit={handleSlideEdit}
@@ -388,6 +390,7 @@ export const Cover_img_1_layout = ({
 	imgs,
 	update_callback,
 	canEdit,
+	scale,
 	isCoverPage,
 	layoutOptionNonCover,
 	layoutOptionCover,
@@ -481,6 +484,7 @@ export const Cover_img_1_layout = ({
 			<DragElement
 				type={ElementType.TextEdit}
 				canEdit={canEdit}
+				scale={scale}
 				positions={[initTitlePos]}
 				contentIndex={0}
 				handleSlideEdit={handleSlideEdit}
@@ -496,6 +500,7 @@ export const Cover_img_1_layout = ({
 			<DragElement
 				type={ElementType.ImageView}
 				canEdit={canEdit}
+				scale={scale}
 				positions={initImgContainerPos}
 				contentIndex={0}
 				handleSlideEdit={handleSlideEdit}
@@ -564,6 +569,7 @@ export const Col_1_img_0_layout = ({
 	imgs,
 	update_callback,
 	canEdit,
+	scale,
 	isCoverPage,
 	handleSlideEdit,
 	currentSlideIndex,
@@ -640,6 +646,7 @@ export const Col_1_img_0_layout = ({
 			<DragElement
 				type={ElementType.TextEdit}
 				canEdit={canEdit}
+				scale={scale}
 				positions={[initTopicPos]}
 				contentIndex={0}
 				handleSlideEdit={handleSlideEdit}
@@ -655,6 +662,7 @@ export const Col_1_img_0_layout = ({
 			<DragElement
 				type={ElementType.TextEdit}
 				canEdit={canEdit}
+				scale={scale}
 				positions={[initSubTopicPos]}
 				contentIndex={0}
 				handleSlideEdit={handleSlideEdit}
@@ -670,6 +678,7 @@ export const Col_1_img_0_layout = ({
 			<DragElement
 				type={ElementType.TextEdit}
 				canEdit={canEdit}
+				scale={scale}
 				positions={initContentPos}
 				contentIndex={0}
 				handleSlideEdit={handleSlideEdit}
@@ -718,6 +727,7 @@ export const Col_2_img_0_layout = ({
 	imgs,
 	update_callback,
 	canEdit,
+	scale,
 	isCoverPage,
 	layoutOptionNonCover,
 	layoutOptionCover,
@@ -778,6 +788,7 @@ export const Col_2_img_0_layout = ({
 			<DragElement
 				type={ElementType.TextEdit}
 				canEdit={canEdit}
+				scale={scale}
 				positions={[initTopicPos]}
 				contentIndex={0}
 				handleSlideEdit={handleSlideEdit}
@@ -793,6 +804,7 @@ export const Col_2_img_0_layout = ({
 			<DragElement
 				type={ElementType.TextEdit}
 				canEdit={canEdit}
+				scale={scale}
 				positions={[initSubTopicPos]}
 				contentIndex={0}
 				handleSlideEdit={handleSlideEdit}
@@ -819,6 +831,7 @@ export const Col_2_img_0_layout = ({
 							<DragElement
 								type={ElementType.TextEdit}
 								canEdit={canEdit}
+								scale={scale}
 								positions={initContentPos}
 								contentIndex={0}
 								handleSlideEdit={handleSlideEdit}
@@ -849,6 +862,7 @@ export const Col_2_img_0_layout = ({
 							<DragElement
 								type={ElementType.TextEdit}
 								canEdit={canEdit}
+								scale={scale}
 								positions={initContentPos}
 								contentIndex={1}
 								handleSlideEdit={handleSlideEdit}
@@ -902,6 +916,7 @@ export const Col_3_img_0_layout = ({
 	imgs,
 	update_callback,
 	canEdit,
+	scale,
 	isCoverPage,
 	layoutOptionNonCover,
 	layoutOptionCover,
@@ -978,6 +993,7 @@ export const Col_3_img_0_layout = ({
 			<DragElement
 				type={ElementType.TextEdit}
 				canEdit={canEdit}
+				scale={scale}
 				positions={[initTopicPos]}
 				contentIndex={0}
 				handleSlideEdit={handleSlideEdit}
@@ -993,6 +1009,7 @@ export const Col_3_img_0_layout = ({
 			<DragElement
 				type={ElementType.TextEdit}
 				canEdit={canEdit}
+				scale={scale}
 				positions={[initSubTopicPos]}
 				contentIndex={0}
 				handleSlideEdit={handleSlideEdit}
@@ -1019,6 +1036,7 @@ export const Col_3_img_0_layout = ({
 							<DragElement
 								type={ElementType.TextEdit}
 								canEdit={canEdit}
+								scale={scale}
 								positions={initContentPos}
 								contentIndex={0}
 								handleSlideEdit={handleSlideEdit}
@@ -1049,6 +1067,7 @@ export const Col_3_img_0_layout = ({
 							<DragElement
 								type={ElementType.TextEdit}
 								canEdit={canEdit}
+								scale={scale}
 								positions={initContentPos}
 								contentIndex={1}
 								handleSlideEdit={handleSlideEdit}
@@ -1079,6 +1098,7 @@ export const Col_3_img_0_layout = ({
 							<DragElement
 								type={ElementType.TextEdit}
 								canEdit={canEdit}
+								scale={scale}
 								positions={initContentPos}
 								contentIndex={2}
 								handleSlideEdit={handleSlideEdit}
@@ -1130,6 +1150,7 @@ export const Col_2_img_1_layout = ({
 	imgs,
 	update_callback,
 	canEdit,
+	scale,
 	isCoverPage,
 	layoutOptionNonCover,
 	layoutOptionCover,
@@ -1255,6 +1276,7 @@ export const Col_2_img_1_layout = ({
 			<DragElement
 				type={ElementType.TextEdit}
 				canEdit={canEdit}
+				scale={scale}
 				positions={[initTopicPos]}
 				contentIndex={0}
 				handleSlideEdit={handleSlideEdit}
@@ -1270,6 +1292,7 @@ export const Col_2_img_1_layout = ({
 			<DragElement
 				type={ElementType.TextEdit}
 				canEdit={canEdit}
+				scale={scale}
 				positions={[initSubTopicPos]}
 				contentIndex={0}
 				handleSlideEdit={handleSlideEdit}
@@ -1285,6 +1308,7 @@ export const Col_2_img_1_layout = ({
 			<DragElement
 				type={ElementType.TextEdit}
 				canEdit={canEdit}
+				scale={scale}
 				positions={initContentPos}
 				contentIndex={0}
 				handleSlideEdit={handleSlideEdit}
@@ -1302,6 +1326,7 @@ export const Col_2_img_1_layout = ({
 			<DragElement
 				type={ElementType.ImageView}
 				canEdit={canEdit}
+				scale={scale}
 				positions={initImgContainerPos}
 				contentIndex={0}
 				handleSlideEdit={handleSlideEdit}
@@ -1369,6 +1394,7 @@ export const Col_1_img_1_layout = ({
 	imgs,
 	update_callback,
 	canEdit,
+	scale,
 	isCoverPage,
 	layoutOptionNonCover,
 	layoutOptionCover,
@@ -1496,6 +1522,7 @@ export const Col_1_img_1_layout = ({
 			<DragElement
 				type={ElementType.TextEdit}
 				canEdit={canEdit}
+				scale={scale}
 				positions={[initTopicPos]}
 				contentIndex={0}
 				handleSlideEdit={handleSlideEdit}
@@ -1511,6 +1538,7 @@ export const Col_1_img_1_layout = ({
 			<DragElement
 				type={ElementType.TextEdit}
 				canEdit={canEdit}
+				scale={scale}
 				positions={[initSubTopicPos]}
 				contentIndex={0}
 				handleSlideEdit={handleSlideEdit}
@@ -1526,6 +1554,7 @@ export const Col_1_img_1_layout = ({
 			<DragElement
 				type={ElementType.ImageView}
 				canEdit={canEdit}
+				scale={scale}
 				positions={initImgContainerPos}
 				contentIndex={0}
 				handleSlideEdit={handleSlideEdit}
@@ -1558,6 +1587,7 @@ export const Col_1_img_1_layout = ({
 			<DragElement
 				type={ElementType.TextEdit}
 				canEdit={canEdit}
+				scale={scale}
 				positions={initContentPos}
 				contentIndex={0}
 				handleSlideEdit={handleSlideEdit}
@@ -1607,6 +1637,7 @@ export const Col_2_img_2_layout = ({
 	imgs,
 	update_callback,
 	canEdit,
+	scale,
 	isCoverPage,
 	layoutOptionNonCover,
 	layoutOptionCover,
@@ -1758,6 +1789,7 @@ export const Col_2_img_2_layout = ({
 			<DragElement
 				type={ElementType.TextEdit}
 				canEdit={canEdit}
+				scale={scale}
 				positions={[initTopicPos]}
 				contentIndex={0}
 				handleSlideEdit={handleSlideEdit}
@@ -1773,6 +1805,7 @@ export const Col_2_img_2_layout = ({
 			<DragElement
 				type={ElementType.TextEdit}
 				canEdit={canEdit}
+				scale={scale}
 				positions={[initSubTopicPos]}
 				contentIndex={0}
 				handleSlideEdit={handleSlideEdit}
@@ -1788,6 +1821,7 @@ export const Col_2_img_2_layout = ({
 			<DragElement
 				type={ElementType.ImageView}
 				canEdit={canEdit}
+				scale={scale}
 				positions={initImgContainerPos}
 				contentIndex={0}
 				handleSlideEdit={handleSlideEdit}
@@ -1821,6 +1855,7 @@ export const Col_2_img_2_layout = ({
 			<DragElement
 				type={ElementType.ImageView}
 				canEdit={canEdit}
+				scale={scale}
 				positions={initImgContainerPos}
 				contentIndex={1}
 				handleSlideEdit={handleSlideEdit}
@@ -1865,6 +1900,7 @@ export const Col_2_img_2_layout = ({
 							<DragElement
 								type={ElementType.TextEdit}
 								canEdit={canEdit}
+								scale={scale}
 								positions={initContentPos}
 								contentIndex={0}
 								handleSlideEdit={handleSlideEdit}
@@ -1895,6 +1931,7 @@ export const Col_2_img_2_layout = ({
 							<DragElement
 								type={ElementType.TextEdit}
 								canEdit={canEdit}
+								scale={scale}
 								positions={initContentPos}
 								contentIndex={1}
 								handleSlideEdit={handleSlideEdit}
@@ -1946,6 +1983,7 @@ export const Col_3_img_3_layout = ({
 	imgs,
 	update_callback,
 	canEdit,
+	scale,
 	isCoverPage,
 	layoutOptionNonCover,
 	layoutOptionCover,
@@ -2064,6 +2102,7 @@ export const Col_3_img_3_layout = ({
 			<DragElement
 				type={ElementType.TextEdit}
 				canEdit={canEdit}
+				scale={scale}
 				positions={[initTopicPos]}
 				contentIndex={0}
 				handleSlideEdit={handleSlideEdit}
@@ -2079,6 +2118,7 @@ export const Col_3_img_3_layout = ({
 			<DragElement
 				type={ElementType.TextEdit}
 				canEdit={canEdit}
+				scale={scale}
 				positions={[initSubTopicPos]}
 				contentIndex={0}
 				handleSlideEdit={handleSlideEdit}
@@ -2094,6 +2134,7 @@ export const Col_3_img_3_layout = ({
 			<DragElement
 				type={ElementType.ImageView}
 				canEdit={canEdit}
+				scale={scale}
 				positions={initImgContainerPos}
 				contentIndex={0}
 				handleSlideEdit={handleSlideEdit}
@@ -2127,6 +2168,7 @@ export const Col_3_img_3_layout = ({
 			<DragElement
 				type={ElementType.ImageView}
 				canEdit={canEdit}
+				scale={scale}
 				positions={initImgContainerPos}
 				contentIndex={1}
 				handleSlideEdit={handleSlideEdit}
@@ -2160,6 +2202,7 @@ export const Col_3_img_3_layout = ({
 			<DragElement
 				type={ElementType.ImageView}
 				canEdit={canEdit}
+				scale={scale}
 				positions={initImgContainerPos}
 				contentIndex={2}
 				handleSlideEdit={handleSlideEdit}
@@ -2204,6 +2247,7 @@ export const Col_3_img_3_layout = ({
 							<DragElement
 								type={ElementType.TextEdit}
 								canEdit={canEdit}
+								scale={scale}
 								positions={initContentPos}
 								contentIndex={0}
 								handleSlideEdit={handleSlideEdit}
@@ -2234,6 +2278,7 @@ export const Col_3_img_3_layout = ({
 							<DragElement
 								type={ElementType.TextEdit}
 								canEdit={canEdit}
+								scale={scale}
 								positions={initContentPos}
 								contentIndex={1}
 								handleSlideEdit={handleSlideEdit}
@@ -2264,6 +2309,7 @@ export const Col_3_img_3_layout = ({
 							<DragElement
 								type={ElementType.TextEdit}
 								canEdit={canEdit}
+								scale={scale}
 								positions={initContentPos}
 								contentIndex={2}
 								handleSlideEdit={handleSlideEdit}
@@ -2316,6 +2362,7 @@ export const Full_img_only_layout = ({
 	imgs,
 	update_callback,
 	canEdit,
+	scale,
 	isCoverPage,
 	layoutOptionNonCover,
 	layoutOptionCover,
@@ -2392,6 +2439,7 @@ export const Full_img_only_layout = ({
 			<DragElement
 				type={ElementType.ImageView}
 				canEdit={canEdit}
+				scale={scale}
 				positions={initImgContainerPos}
 				contentIndex={0}
 				handleSlideEdit={handleSlideEdit}

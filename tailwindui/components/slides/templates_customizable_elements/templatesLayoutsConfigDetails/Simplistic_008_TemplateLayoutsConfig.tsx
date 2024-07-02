@@ -484,8 +484,8 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 			{ x: 505, y: 200, width: 405, height: 100 },
 		],
 		imgContainerPos: [
-			{ x: 50, y: 320, width: 405, height: 210 },
-			{ x: 505, y: 320, width: 405, height: 210 },
+			{ x: 50, y: 320, width: 405, height: 220 },
+			{ x: 505, y: 320, width: 405, height: 220 },
 		],
 	},
 	Col_3_img_3_layout: {

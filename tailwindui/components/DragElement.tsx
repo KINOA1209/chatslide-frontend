@@ -14,6 +14,7 @@ interface DragElementProps {
 	children: JSX.Element | JSX.Element[];
 	type: ElementType;
 	canEdit: boolean;
+	scale?: number;
 	positions: Position[];
 	contentIndex: number;
 	handleSlideEdit: Function;
@@ -29,6 +30,7 @@ export const DragElement = ({
 	children,
 	type,
 	canEdit,
+	scale,
 	positions,
 	contentIndex,
 	handleSlideEdit,
@@ -161,8 +163,8 @@ export const DragElement = ({
 		const updatedPosition: Position[] = positions.map((position, index) =>
 			index === contentIndex
 				? {
-						x: pos.x,
-						y: pos.y,
+						x: pos.x / (scale ?? 1),
+						y: pos.y / (scale ?? 1),
 						width: parseInt(ref.style.width),
 						height: parseInt(ref.style.height),
 					}
@@ -176,7 +178,6 @@ export const DragElement = ({
 			className={'ResizableElement w-full h-full'}
 			style={{
 				zIndex: `${hoveredIndex === elementIndex ? '200' : '100'}`,
-				transform: 'translate(0px, 0px)',
 			}}
 			position={elementPos}
 			size={elementSize}

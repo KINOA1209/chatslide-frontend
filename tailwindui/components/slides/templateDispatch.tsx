@@ -48,6 +48,7 @@ export const templateDispatch = (
 	index: number,
 	canEdit: boolean = true,
 	exportToPdfMode: boolean = false,
+	scale: number = 1,
 	editMathMode: boolean = false,
 	setIsEditMode: (isEditMode: boolean) => void = () => {}, // Replace with your default function if you have one
 	handleSlideEdit: (
@@ -428,6 +429,7 @@ export const templateDispatch = (
 				false,
 			)}
 			subtopic_position={slide.subtopic_position || {}}
+			scale={scale}
 			content={
 				slide.layout === 'Col_1_img_0_layout' ||
 				slide.layout === 'Col_2_img_1_layout' ||
@@ -518,12 +520,14 @@ export const uneditableTemplateDispatch = (
 	slide: Slide,
 	index: number,
 	exportToPdfMode: boolean = false,
+	scale: number = 1,
 ) =>
 	templateDispatch(
 		slide,
 		index,
 		false, // canEdit
 		exportToPdfMode, //exportToPdfMode
+		scale,
 		false, //editMathMode
 		() => {}, //setIsEditMode
 		() => {}, // handleSlideEdit
