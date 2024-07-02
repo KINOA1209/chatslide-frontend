@@ -27,17 +27,51 @@ export default function Studio() {
 				</Card>
 
 				<Card>
-					<BigTitle>June 24</BigTitle>
+					<BigTitle>July 2</BigTitle>
 
 					<Instruction>
 						<div>
-							<b>🔄 Move Elements on Slides: </b> We have recreated the editing experience, now you will be able to move the elements on the slide pages around, and resize the text and image boxes. You will also be able to realign them with ease. 
+							<b>📊 Interactive Charts:</b> We’ve enhanced the chart generation
+							experience with a new interactive mode. Now, you can generate
+							interactive charts, and soon, you’ll be able to edit them directly
+							on the webpage.
 						</div>
 					</Instruction>
 
 					<Instruction>
 						<div>
-							<b>📄 Generate Slides with More Pages: </b> Now you will be able to create slides with more pages, up to 60 pages. More pages will cost more credits. 
+							<b>🏷️ Customizable Social Post Logos:</b> You can now change the
+							logo on social posts and add your own branding. More templates are
+							on the way.
+						</div>
+					</Instruction>
+
+					<Instruction>
+						<div>
+							<b>⬆️ Enhanced Content Reading:</b> Our content engine is now more
+							accurate and efficient, making it easier to generate relevant
+							content.
+						</div>
+					</Instruction>
+				</Card>
+
+				<Card>
+					<BigTitle>June 24</BigTitle>
+
+					<Instruction>
+						<div>
+							<b>🔄 Move Elements on Slides: </b> We have recreated the editing
+							experience, now you will be able to move the elements on the slide
+							pages around, and resize the text and image boxes. You will also
+							be able to realign them with ease.
+						</div>
+					</Instruction>
+
+					<Instruction>
+						<div>
+							<b>📄 Generate Slides with More Pages: </b> Now you will be able
+							to create slides with more pages, up to 60 pages. More pages will
+							cost more credits.
 						</div>
 					</Instruction>
 
@@ -130,7 +164,7 @@ export default function Studio() {
 					</Instruction>
 
 					<Instruction>
-					    	<div>
+						<div>
 							<b>📄 Apply Branding to One Page: </b> You can now select to apply
 							branding choices (logo, logo position, background) to only one
 							specific page.
