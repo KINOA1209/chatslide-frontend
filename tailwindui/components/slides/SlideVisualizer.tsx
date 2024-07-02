@@ -223,7 +223,6 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 											{option.text}
 										</option>
 									))}
-									s
 								</DropDown>
 							</div>
 
