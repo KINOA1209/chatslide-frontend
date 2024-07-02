@@ -127,7 +127,7 @@ export default function Page() {
 					<Toggle 
 					isLeft={!useDynamicChart} 
 					setIsLeft={()=>{setUseDynamicChart(!useDynamicChart)}} 
-					leftText='Image'
+					leftText='Static Image'
 					rightText='Interactive (Beta)'/>
 					<ToolBar>
 						<ButtonWithExplanation

@@ -359,8 +359,8 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 										help with creating charts 📈.
 									</span>
 									<WarningMessage>
-										I am only in early beta version now. There might be a higher
-										likelihood of errors, inaccuracies, or timeouts.
+										I am only in beta version now. There might be a higher
+										likelihood of errors or inaccuracies.
 									</WarningMessage>
 									<SuccessMessage>
 										In the future, you will also be able to: directly add chart
