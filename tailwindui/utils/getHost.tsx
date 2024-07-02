@@ -35,7 +35,11 @@ function getLogoUrl(color = true) {
 }
 
 function isChatslide() {
-	return true; 
+	return isLocal() ? localIsChatslide() : getHost().includes('chatslide.ai'); 
+}
+
+function localIsChatslide() {
+  return true;
 }
 
 function isLocal() {
