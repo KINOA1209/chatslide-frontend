@@ -15,6 +15,7 @@ import Modal from '../ui/Modal';
 import { Instruction } from '../ui/Text';
 import RadioButton from '../ui/RadioButton';
 import { GenerationStatusProgressModal } from '../ui/GenerationStatusProgressModal';
+import { DropDown } from '../button/DrlambdaButton';
 
 const SlidesHTML = dynamic(() => import('@/components/slides/SlidesHTML'), {
 	ssr: false,
@@ -47,6 +48,7 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 	const [pronoun, setPronoun] = useState('second');
 	const [style, setStyle] = useState('engaging');
 	const [additionalRequirements, setAdditionalRequirements] = useState('');
+	const [length, setLength] = useState('normal');
 
 	const pronounOptions = [
 		{
@@ -89,6 +91,8 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 	];
 
 	const [showScriptSettingsModal, setShowScriptSettingsModal] = useState(false);
+
+	const [showAdvancedSettings, setShowAdvancedSettings] = useState(false);
 
 	useEffect(() => {
 		if (
@@ -133,8 +137,8 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 			model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4',
 			max_index: isPaidUser ? 0 : 5,
 			pronoun: pronoun,
-      style: style,
-      additional_requirements: additionalRequirements,
+			style: style,
+			additional_requirements: additionalRequirements,
 		};
 
 		try {
@@ -189,42 +193,77 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 							</a>
 						</Instruction>
 					)}
-					<div>
-						<Instruction>
-							What pronoun do you want to use in scripts?
-						</Instruction>
-						<RadioButton
-							name='pronoun'
-							options={pronounOptions}
-							selectedValue={pronoun}
-							setSelectedValue={setPronoun}
-							cols={2}
-						/>
-					</div>
+					{showAdvancedSettings ? (
+						<>
+							<div>
+								<Instruction>
+									What pronoun do you want to use in scripts?
+								</Instruction>
+								<RadioButton
+									name='pronoun'
+									options={pronounOptions}
+									selectedValue={pronoun}
+									setSelectedValue={setPronoun}
+									cols={2}
+								/>
+							</div>
 
-					<div>
-						<Instruction>
-							What style of script do you want to generate?
-						</Instruction>
-						<RadioButton
-							name='script_style'
-							options={styleOptions}
-							selectedValue={style}
-							setSelectedValue={setStyle}
-							cols={4}
-						/>
-					</div>
+							<div>
+								<Instruction>
+									What style of script do you want to generate?
+								</Instruction>
+								<DropDown
+									width='12rem'
+									onChange={(e) => setStyle(e.target.value)}
+									value={style}
+									style='input'
+								>
+									{styleOptions.map((option) => (
+										<option key={option.value} value={option.value}>
+											{option.text}
+										</option>
+									))}
+									s
+								</DropDown>
+							</div>
 
-					<div>
-						<Instruction>
-							Any additional requirements for the scripts?
-						</Instruction>
-						<textarea
-							className='w-full h-24 p-2 border border-gray-300 rounded-md'
-							value={additionalRequirements}
-							onChange={(e) => setAdditionalRequirements(e.target.value)}
-						></textarea>
-					</div>
+							<div>
+								<Instruction>What is the length of the script?</Instruction>
+								<DropDown
+									width='12rem'
+									onChange={(e) => setLength(e.target.value)}
+									value={length}
+									style='input'
+								>
+									<option value='concise'>Concise</option>
+									<option value='normal'>Normal</option>
+									<option value='detailed'>Detailed</option>
+								</DropDown>
+							</div>
+
+							<div>
+								<Instruction>
+									Any additional requirements for the scripts?
+								</Instruction>
+								<textarea
+									className='w-full h-24 p-2 border border-gray-300 rounded-md'
+									value={additionalRequirements}
+									onChange={(e) => setAdditionalRequirements(e.target.value)}
+								></textarea>
+							</div>
+						</>
+					) : (
+						<div>
+							<Instruction>
+								<button
+									onClick={() => setShowAdvancedSettings(true)}
+									className='text-blue-600'
+								>
+									Show advanced settings
+								</button>
+							</Instruction>
+						</div>
+					)}
 				</Modal>
 			)}
 
