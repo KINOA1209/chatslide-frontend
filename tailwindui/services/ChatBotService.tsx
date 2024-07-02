@@ -74,6 +74,7 @@ class ChatBotService {
     prevPrompts: Chat[],
     token: string,
     model: 'gpt-3.5-turbo' | 'gpt-4' | 'gpt-4o',
+	responseType: 'img' | 'json',
   ): Promise<ChatResponse> {
     // console.log('mode', mode)
 
@@ -87,19 +88,36 @@ class ChatBotService {
 		];
 
     try {
-      const resp = await fetch('/api/chart/chat', {
+      if (responseType === 'img') {
+		const resp = await fetch('/api/chart/chat', {
+        method: 'POST',
+        headers: {
+          	'Content-Type': 'application/json',
+          	Authorization: 'Bearer ' + token,
+        	},
+        body: JSON.stringify({
+			messages: messages,
+			model: model,
+        	}),
+      	});
+      	const url = (await resp.json()).data.url;
+      	return { chat: '📈 I have updated the chart for you', role: 'assistant', images: [url] };
+	} else {
+      const chartresp = await fetch('/api/chart/get_chart_json', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Authorization: 'Bearer ' + token,
         },
         body: JSON.stringify({
-          messages: messages,
-          model: model,
+			user_input: messages,
+			model_name: model,
         }),
       });
-      const url = (await resp.json()).data.url;
-      return { chat: '📈 I have updated the chart for you', role: 'assistant', images: [url] };
+
+	  const chartData = (await chartresp.json()).data;
+      return { chat: '📈 I have updated the chart for you', role: 'assistant', chartData: chartData };
+	}
     } catch (error) {
       console.error(error);
       return {
