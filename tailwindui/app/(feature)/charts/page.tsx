@@ -8,9 +8,8 @@ import { ToolBar } from '@/components/ui/ToolBar';
 import ButtonWithExplanation from '@/components/button/ButtonWithExplanation';
 import { GoDownload } from 'react-icons/go';
 import { Column } from '@/components/layout/Column';
-import { BigTitle, Instruction } from '@/components/ui/Text';
+import { Instruction } from '@/components/ui/Text';
 import useHydrated from '@/hooks/use-hydrated';
-import RadioButton, { RadioButtonOption } from '@/components/ui/RadioButton';
 import {
 	Chart as ChartJS,
 	ChartType,
@@ -30,6 +29,7 @@ import {
 	ChartEvent,
 } from 'chart.js';
 import { Chart } from 'react-chartjs-2';
+import Toggle from '@/components/button/Toggle';
 // Register Chart.js components
 ChartJS.register(
 	CategoryScale,
@@ -92,18 +92,6 @@ export default function Page() {
 		});
 	}
 
-	const chartGenerationOptions: RadioButtonOption[] = [
-		{
-			value: 'false',
-			text: 'Image',
-			explanation: '',
-		},
-		{
-			value: 'true',
-			text: 'Interactive (Beta)',
-			explanation: '',
-		},
-	];
 
 	function downloadChart() {
 		if (!useDynamicChart) {
@@ -135,19 +123,12 @@ export default function Page() {
 			</Panel> */}
 
 			<Column>
-				<div className='w-full flex flex-row items-center justify-center gap-y-2 gap-x-4'>
-					{/* <Card>
-            <BigTitle>📈 Chart</BigTitle>
-          </Card> */}
-					<ToolBar>
-						<RadioButton
-							options={chartGenerationOptions}
-							selectedValue={String(useDynamicChart)}
-							setSelectedValue={(value) => {setUseDynamicChart(value === 'true')}}
-							name='dynamicChartToggle'
-							cols={2}
-						/>
-					</ToolBar>
+				<div className='w-full flex flex-row items-center justify-between gap-y-2 gap-x-4'>
+					<Toggle 
+					isLeft={!useDynamicChart} 
+					setIsLeft={()=>{setUseDynamicChart(!useDynamicChart)}} 
+					leftText='Image'
+					rightText='Interactive (Beta)'/>
 					<ToolBar>
 						<ButtonWithExplanation
 							explanation='Download Chart'
@@ -166,28 +147,11 @@ export default function Page() {
 								</button>
 							}
 						/>
-						{/* <ButtonWithExplanation
-							explanation='Save to Uploads'
-							button={
-								<button onClick={() => window.open(chartUrl)}>
-									<FaSave
-										style={{
-											strokeWidth: '2',
-											flex: '1',
-											width: '1.5rem',
-											height: '1.5rem',
-											fontWeight: 'bold',
-											color: '#344054',
-										}}
-									/>
-								</button>
-							}
-						/> */}
 					</ToolBar>
 				</div>
 
 				{!useDynamicChart ? <Card>
-					<div className='flex flex-row items-center justify-center'>
+					<div className='flex flex-row items-center justify-center max-h-[800px] min-h-[300px] md:min-h-[600px]'>
 						{(chartUrl) ? (
 							<Image
 								unoptimized
