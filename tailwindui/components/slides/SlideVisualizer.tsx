@@ -54,39 +54,39 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 		{
 			value: 'first',
 			text: 'First / We',
-			explanation: 'Example: Today, we will be learning math.',
+			explanation: 'Example: Today, we will be learning history.',
 		},
 		{
 			value: 'second',
 			text: 'Second / You',
-			explanation: 'Example: Today, you will be learning math.',
+			explanation: 'Example: Today, you will be learning history.',
 		},
 	];
 
 	const styleOptions = [
 		{
 			value: 'engaging',
-			text: 'Engaging',
+			text: '😊 Engaging', // Smiling face to represent an engaging and friendly tone
 		},
 		{
 			value: 'formal',
-			text: 'Formal',
+			text: '🧐 Formal', // Face with monocle to represent a formal and serious tone
 		},
 		{
 			value: 'casual',
-			text: 'Casual',
+			text: '😎 Casual', // Smiling face with sunglasses to represent a laid-back and casual tone
 		},
 		{
 			value: 'persuasive',
-			text: 'Persuasive',
+			text: '💬 Persuasive', // Speech balloon to represent persuasive communication
 		},
 		{
 			value: 'informative',
-			text: 'Informative',
+			text: '📚 Informative', // Books to represent sharing knowledge and information
 		},
 		{
 			value: 'humorous',
-			text: 'Humorous',
+			text: '😂 Humorous', // Face with tears of joy to represent humor and fun
 		},
 	];
 
@@ -235,9 +235,9 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 									value={length}
 									style='input'
 								>
-									<option value='concise'>Concise</option>
-									<option value='normal'>Normal</option>
-									<option value='detailed'>Detailed</option>
+									<option value='concise'>🔖 Concise</option>
+									<option value='normal'>📄 Normal</option>
+									<option value='detailed'>📖 Detailed</option>
 								</DropDown>
 							</div>
 
