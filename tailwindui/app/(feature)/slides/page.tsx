@@ -21,8 +21,6 @@ export default function WorkflowStep3() {
 
 	const [isSubmitting, setIsSubmitting] = useState(false);
 
-	const [showGenerationStatusModal, setShowGenerationStatusModal] =
-		useState(false);
 
 	const params = useSearchParams();
 	const router = useRouter();
@@ -34,11 +32,6 @@ export default function WorkflowStep3() {
 		return <Blank>Project not found</Blank>;
 	}
 
-	const handleGenerationStatusModal = () => {
-		// console.log('user Research Modal toggled');
-		if (project?.has_scripts == true) return
-		setShowGenerationStatusModal(!showGenerationStatusModal);
-	};
 	// set current page to local storage
 	useEffect(() => {
 		if (typeof window !== 'undefined' && localStorage) {
@@ -59,17 +52,12 @@ export default function WorkflowStep3() {
 				setIsSubmitting={setIsSubmitting}
 				isPaidUser={isPaidUser}
 				nextIsPaidFeature={false}
-				nextText={!isSubmitting ? (project?.has_scripts ? 'Review Scripts' : 'Write Scripts') : (project?.has_scripts ? 'Reviewing Scripts' : 'Writing Scripts')}
-				handleClickingGeneration={project?.has_scripts ? () => router.push(addIdToRedir('/scripts')) : handleGenerationStatusModal}
+				nextText={!isSubmitting ?  'Write Scripts' : 'Writing Scripts'}
+				// handleClickingGeneration={project?.has_scripts ? () => router.push(addIdToRedir('/scripts')) : handleGenerationStatusModal}
 			/>
 
 			<ToastContainer enableMultiContainer containerId={'slides'} />
-			{showGenerationStatusModal && (
-				<GenerationStatusProgressModal
-					onClick={handleGenerationStatusModal}
-					prompts={[['✍️ Writing the scripts based on your slides...', 5]]}
-				></GenerationStatusProgressModal>
-			)}
+			
 			{/* slides */}
 			<SlideVisualizer
 				isGpt35={isGpt35}

@@ -23,6 +23,8 @@ interface ModalProps {
 	maxInputLength?: number;
 	hasTextArea?: boolean;
 	rows?: number;
+  confirmText?: string;
+  onCancel?: () => void;
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -42,6 +44,8 @@ const Modal: React.FC<ModalProps> = ({
 	maxInputLength,
 	hasTextArea = false,
 	rows,
+  confirmText = 'Confirm',
+  onCancel = () => {},
 }) => {
 	const modalRef = React.useRef<HTMLDivElement>(null);
 	const modalContentRef = React.useRef<HTMLDivElement>(null);
@@ -206,7 +210,11 @@ const Modal: React.FC<ModalProps> = ({
 								<div className='mx-auto'>
 									<InversedBigBlueButton
 										id='modal-cancel'
-										onClick={handleCloseModal}
+										onClick={() => {
+                      handleCloseModal();
+                      onCancel();
+                    }
+                  }
 									>
 										Cancel
 									</InversedBigBlueButton>
@@ -217,7 +225,7 @@ const Modal: React.FC<ModalProps> = ({
 								isSubmitting={isSubmitting}
 								onClick={onClick}
 							>
-								Confirm
+								{confirmText}
 							</BigBlueButton>
 						</div>
 					)}
