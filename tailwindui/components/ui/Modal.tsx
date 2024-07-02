@@ -83,6 +83,7 @@ const Modal: React.FC<ModalProps> = ({
 		const handleEsc = (e: KeyboardEvent) => {
 			if (e.key === 'Escape') {
 				handleCloseModal();
+        onCancel();
 				e.stopPropagation();
 			}
 		};
@@ -169,7 +170,11 @@ const Modal: React.FC<ModalProps> = ({
 									id='close-modal'
 									// className='absolute top-0 right-0 text-[24px] focus:outline-none'
 									className='text-[24px] focus:outline-none'
-									onClick={handleCloseModal}
+									onClick={() => {
+                      handleCloseModal();
+                      onCancel();
+                    }
+                  }
 								>
 									<FaTimes className='text-gray-600 hover:text-gray-800' />
 								</button>

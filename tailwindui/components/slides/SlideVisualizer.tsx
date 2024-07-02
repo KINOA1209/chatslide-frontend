@@ -15,9 +15,6 @@ import Modal from '../ui/Modal';
 import { Instruction } from '../ui/Text';
 import RadioButton from '../ui/RadioButton';
 import { GenerationStatusProgressModal } from '../ui/GenerationStatusProgressModal';
-import { set } from 'lodash';
-import { SecondaryButton } from '@/app/(account)/pricing/subscriptionCTAs';
-import { InversedBigBlueButton } from '../button/DrlambdaButton';
 
 const SlidesHTML = dynamic(() => import('@/components/slides/SlidesHTML'), {
 	ssr: false,
@@ -41,7 +38,6 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 	const { slides, setTranscripts, saveStatus, SaveStatus } = useSlides();
 	const { token, isPaidUser } = useUser();
 	const { isShared, updateIsShared, project } = useProject();
-	const [showShareLink, setShowShareLink] = useState(true);
 	const router = useRouter();
 
 	const [showGenerationStatusModal, setShowGenerationStatusModal] =
@@ -49,6 +45,8 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 
 	const exportSlidesRef = useRef<HTMLDivElement>(null);
 	const [pronoun, setPronoun] = useState('second');
+	const [style, setStyle] = useState('engaging');
+	const [additionalRequirements, setAdditionalRequirements] = useState('');
 
 	const pronounOptions = [
 		{
@@ -62,13 +60,35 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 			explanation: 'Example: Today, you will be learning math.',
 		},
 	];
-	const [showScriptSettingsModal, setShowScriptSettingsModal] = useState(false);
 
-	useEffect(() => {
-		if (isShared) {
-			setShowShareLink(true);
-		}
-	}, [isShared]);
+	const styleOptions = [
+		{
+			value: 'engaging',
+			text: 'Engaging',
+		},
+		{
+			value: 'formal',
+			text: 'Formal',
+		},
+		{
+			value: 'casual',
+			text: 'Casual',
+		},
+		{
+			value: 'persuasive',
+			text: 'Persuasive',
+		},
+		{
+			value: 'informative',
+			text: 'Informative',
+		},
+		{
+			value: 'humorous',
+			text: 'Humorous',
+		},
+	];
+
+	const [showScriptSettingsModal, setShowScriptSettingsModal] = useState(false);
 
 	useEffect(() => {
 		if (
@@ -113,6 +133,8 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 			model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4',
 			max_index: isPaidUser ? 0 : 5,
 			pronoun: pronoun,
+      style: style,
+      additional_requirements: additionalRequirements,
 		};
 
 		try {
@@ -151,9 +173,12 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 				<Modal
 					showModal={showScriptSettingsModal}
 					setShowModal={setShowScriptSettingsModal}
-					onConfirm={handleSubmitTranscript}
-          onCancel={() => setIsSubmitting(false)}
-          confirmText={!project?.has_scripts ? 'Generate' : 'Regenerate'}
+					onConfirm={() => {
+						handleSubmitTranscript();
+						setShowScriptSettingsModal(false);
+					}}
+					onCancel={() => setIsSubmitting(false)}
+					confirmText={!project?.has_scripts ? 'Generate' : 'Regenerate'}
 					title='Script Generation Settings'
 				>
 					{project?.has_scripts && (
@@ -175,6 +200,30 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 							setSelectedValue={setPronoun}
 							cols={2}
 						/>
+					</div>
+
+					<div>
+						<Instruction>
+							What style of script do you want to generate?
+						</Instruction>
+						<RadioButton
+							name='script_style'
+							options={styleOptions}
+							selectedValue={style}
+							setSelectedValue={setStyle}
+							cols={4}
+						/>
+					</div>
+
+					<div>
+						<Instruction>
+							Any additional requirements for the scripts?
+						</Instruction>
+						<textarea
+							className='w-full h-24 p-2 border border-gray-300 rounded-md'
+							value={additionalRequirements}
+							onChange={(e) => setAdditionalRequirements(e.target.value)}
+						></textarea>
 					</div>
 				</Modal>
 			)}
