@@ -104,11 +104,11 @@ export default class Slide {
 		};
 
 		this.head = '';
-		this.head_position = {};
+		this.head_position = { x: 0, y: 0, width: -1, height: -1 };
 		this.title = 'New Slide';
-		this.title_position = {};
+		this.title_position = { x: 0, y: 0, width: -1, height: -1 };
 		this.subtopic = 'New Slide';
-		this.subtopic_position = {};
+		this.subtopic_position = { x: 0, y: 0, width: -1, height: -1 };
 		this.userName = '';
 		this.template = 'Default';
 		this.content = [
@@ -116,7 +116,11 @@ export default class Slide {
 			'You can also ask AI Assistant to generate content for you',
 			'AI Assistant is at bottom right corner of the screen',
 		];
-		this.content_positions = [{}, {}, {}];
+		this.content_positions = [
+			{ x: 0, y: 0, width: -1, height: -1 },
+			{ x: 0, y: 0, width: -1, height: -1 },
+			{ x: 0, y: 0, width: -1, height: -1 },
+		];
 		this.is_chart = [false, false, false];
 		this.images = ['', '', ''];
 		this.media_types = ['image', 'image', 'image'];
@@ -127,7 +131,11 @@ export default class Slide {
 			axis: { x: '', y: '' },
 		}));
 		this.image_positions = [{}, {}, {}];
-		this.image_container_positions = [{}, {}, {}];
+		this.image_container_positions = [
+			{ x: 0, y: 0, width: -1, height: -1 },
+			{ x: 0, y: 0, width: -1, height: -1 },
+			{ x: 0, y: 0, width: -1, height: -1 },
+		];
 		this.layout = 'Col_2_img_1_layout';
 		this.logo = 'Default';
 		this.additional_images = [];

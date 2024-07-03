@@ -28,7 +28,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { LayoutKeys } from './slideLayout';
 import { layoutOptions } from './slideLayout';
 import Image from 'next/image';
-import { LogoPosition, Media } from '@/models/Slide';
+import { LogoPosition, Media, SlideKeys } from '@/models/Slide';
 import Chart from '@/models/Chart';
 import Position from '@/types/Position';
 
