@@ -11,6 +11,7 @@ import {
 	ALL_EXTENSIONS,
 	DOCUMENT_EXTENSIONS,
 	MEDIA_EXTENSIONS,
+	THEMEPAGE_EXTENSIONs,
 	sizeLimit,
 } from '../file/FileUploadButton';
 import { toast } from 'react-toastify';
@@ -58,7 +59,7 @@ const UploadOptionsDropdownMenu: React.FC<UploadOptionsDropdownMenuProps> = ({
 	// }, [isSubmitting]);
 	const determineSupportedFormats = (pageInvoked: string) => {
 		if (pageInvoked === 'theme') {
-			return MEDIA_EXTENSIONS;
+			return THEMEPAGE_EXTENSIONs;
 		} else if (pageInvoked === 'summary') {
 			return DOCUMENT_EXTENSIONS;
 		}

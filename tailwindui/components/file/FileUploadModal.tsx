@@ -11,6 +11,8 @@ type FileUploadModalProps = {
 	setShowModal: (value: boolean) => void;
 	pageInvoked: string;
 	type?: string;
+	uploadSection?: 'Template Extraction' | ''; // templateExtraction
+	fileNameExtension?: string;
 };
 
 const FileUploadModal: React.FC<FileUploadModalProps> = ({
@@ -20,10 +22,14 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
 	setShowModal,
 	pageInvoked,
 	type = 'file',
+	uploadSection = '',
+	fileNameExtension = '',
 }) => {
 	return (
 		<Modal showModal={showModal} setShowModal={setShowModal}>
-			<h4 className='h4 text-blue-600 text-center'>Select {type}</h4>
+			<h4 className='h4 text-blue-600 text-center'>
+				Select {type} {uploadSection ? 'for ' + uploadSection : ''}
+			</h4>
 			<div className='h-[60vh] w-full overflow-y-hidden '>
 				<MyFiles
 					selectable={true}
@@ -31,6 +37,8 @@ const FileUploadModal: React.FC<FileUploadModalProps> = ({
 					setSelectedResources={setSelectedResources}
 					pageInvoked={pageInvoked}
 					fileType={type}
+					uploadSection={uploadSection}
+					fileNameExtension={fileNameExtension}
 				/>
 			</div>
 			<div className='w-full flex flex-row items-center justify-center'>

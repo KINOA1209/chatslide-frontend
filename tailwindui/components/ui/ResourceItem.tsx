@@ -190,6 +190,7 @@ export function getFileExtension(name: string) {
 	const lastDotIndex = new_name.lastIndexOf('.');
 	if (lastDotIndex !== -1) {
 		const extension = new_name.slice(lastDotIndex + 1).toLowerCase();
+		console.log('extracted extension is', extension);
 		// List of valid file extensions
 		const validExtensions = [
 			'pdf',
@@ -246,6 +247,8 @@ export function getFileExtension(name: string) {
 			'deb',
 			'rpm',
 			'apk',
+			'ppt',
+			'pptx',
 			// Add more valid extensions as needed
 		];
 		if (validExtensions.includes(extension)) {
