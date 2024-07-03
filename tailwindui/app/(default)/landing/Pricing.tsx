@@ -1,5 +1,6 @@
 'use client';
 
+import { SubscriptionModal } from '@/app/(account)/account/page';
 import MultiwayToggle from '@/components/button/MultiwayToggle';
 import { Explanation } from '@/components/ui/Text';
 import { useUser } from '@/hooks/use-user';
@@ -23,6 +24,7 @@ const PricingComparison: React.FC<{
 	const router = useRouter();
 	const [interval, setInterval] = useState<Interval>(isChatslide() ? 'yearly' : 'lifetime');
 	const smallSuffix = small ? '-small' : '';
+  const [showManageSubscription, setShowManageSubscription] = useState(false);
 	// console.log('smallSuffix', smallSuffix);
 
 	const getCta = (tier: Tier): string => {
@@ -216,17 +218,7 @@ const PricingComparison: React.FC<{
 	};
 
 	const handleManageSubscription = async (token: string) => {
-    if(!token) {
-      return;
-    }
-		try {
-			const url = await UserService.createStripePortalSession(token);
-			router.push(url);
-		} catch (error) {
-			toast.error(
-				'We cannot find your purchase information from Stripe, did you purchase through 3rd party?',
-			);
-		}
+    setShowManageSubscription(true);
 	};
 
 	const handleSubscription = async (tier: Tier, token: string) => {
@@ -298,6 +290,13 @@ const PricingComparison: React.FC<{
 				{interval === 'lifetime' && '14 day money back guarantee'}
 				{interval === 'yearly' && '3 day money back guarantee'}
 			</Explanation>
+
+			{showManageSubscription && (
+				<SubscriptionModal
+					showManageSubscription={showManageSubscription}
+					setShowManageSubscription={setShowManageSubscription}
+				/>
+			)}
 
 			<div
 				data-w-id='a8590735-7e8f-bd41-a09e-37f58b801ed3'

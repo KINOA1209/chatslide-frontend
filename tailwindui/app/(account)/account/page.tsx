@@ -37,6 +37,7 @@ import { getBrand } from '@/utils/getHost';
 import { UnlimitedUpgrade } from '@/components/slides/card/UnlimitedUpgrade';
 import { trackRewardfulConversion } from '@/components/integrations/Rewardful';
 import { WrappableRow } from '@/components/layout/WrappableRow';
+import Modal from '@/components/ui/Modal';
 
 const Profile = () => {
 	const { username, email, token, setUsername, user } = useUser();
@@ -133,7 +134,7 @@ const Profile = () => {
 							id='update-email'
 							onClick={handleSubmitUsernameAndEmail}
 							isSubmitting={isSubmitting}
-              width='8rem'
+							width='8rem'
 						>
 							Update
 						</InversedBigBlueButton>
@@ -148,7 +149,7 @@ const Profile = () => {
 						onClick={() => {
 							window.location.href = '/reset-password';
 						}}
-            width='12rem'
+						width='12rem'
 					>
 						Change Password
 					</InversedBigBlueButton>
@@ -173,7 +174,7 @@ const Profile = () => {
 							id='update-username'
 							onClick={handleSubmitUsernameAndEmail}
 							isSubmitting={isSubmitting}
-              width='8rem'
+							width='8rem'
 						>
 							Update
 						</InversedBigBlueButton>
@@ -248,7 +249,7 @@ const OpenAIKey = () => {
 						id='update-oai-key'
 						onClick={updateKey}
 						isSubmitting={isSubmitting}
-            width='8rem'
+						width='8rem'
 					>
 						Update
 					</InversedBigBlueButton>
@@ -329,7 +330,7 @@ const ApplyPromo = () => {
 						id='apply-promo'
 						onClick={applyPromo}
 						isSubmitting={isSubmitting}
-            width='8rem'
+						width='8rem'
 					>
 						Apply
 					</InversedBigBlueButton>
@@ -417,7 +418,7 @@ const Affiliate = () => {
 					<InversedBigBlueButton
 						onClick={handleUpdateRewardfulCode}
 						isSubmitting={isSubmitting}
-            width='8rem'
+						width='8rem'
 					>
 						Update
 					</InversedBigBlueButton>
@@ -446,37 +447,66 @@ const Affiliate = () => {
 	);
 };
 
+interface SubscriptionModalProps {
+	showManageSubscription: boolean;
+	setShowManageSubscription: (show: boolean) => void;
+}
+
+export const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
+	showManageSubscription,
+	setShowManageSubscription,
+}) => {
+	return (
+		<Modal
+			showModal={showManageSubscription}
+			setShowModal={setShowManageSubscription}
+			title='Manage Subscription'
+			description='You can manage your subscription by chatting with our support agent on the lower left.'
+			onConfirm={() => {
+				setShowManageSubscription(false);
+			}}
+		/>
+	);
+};
+
 const CreditHistory = () => {
 	const { credits, token } = useUser();
 	const router = useRouter();
-	const [stripeLink, setStripeLink] = useState('');
+	// const [stripeLink, setStripeLink] = useState('');
+	const [showManageSubscription, setShowManageSubscription] = useState(false);
 
-	useEffect(() => {
-		async function fetchStripeLink() {
-      if(!token) return;
-			const link = await UserService.createStripePortalSession(token);
-			setStripeLink(link);
-		}
-		fetchStripeLink();
-	}, [token]);
+	// useEffect(() => {
+	// 	async function fetchStripeLink() {
+	//     if(!token) return;
+	// 		const link = await UserService.createStripePortalSession(token);
+	// 		setStripeLink(link);
+	// 	}
+	// 	fetchStripeLink();
+	// }, [token]);
 
 	return (
 		<div className='w-full'>
 			<Instruction>⭐️ Credit Balance</Instruction>
+
+			{showManageSubscription && (
+				<SubscriptionModal
+					showManageSubscription={showManageSubscription}
+					setShowManageSubscription={setShowManageSubscription}
+				/>
+			)}
+
 			<WrappableRow type='flex' justify='between'>
 				<BigTitle>
 					<>{credits}</>
 				</BigTitle>
-				{stripeLink && (
-					<InversedBigBlueButton
-						onClick={() => {
-							router.push(stripeLink);
-						}}
-            width='12rem'
-					>
-						Mange Subscription
-					</InversedBigBlueButton>
-				)}
+				<InversedBigBlueButton
+					onClick={() => {
+						setShowManageSubscription(!showManageSubscription);
+					}}
+					width='12rem'
+				>
+					Mange Subscription
+				</InversedBigBlueButton>
 			</WrappableRow>
 		</div>
 	);
