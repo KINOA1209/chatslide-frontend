@@ -168,39 +168,12 @@ export const generateTemplateLogo = ({
 
 	// const { slides, isTemplateLogoLeftSide, setIsTemplateLogoLeftSide } =
 	// 	useSlides();
-	const logoPosConfig = (
-		logoPosition: LogoPosition,
-		logoShapeType: 'rectangle' | 'square',
-	) => {
-		// console.log('logoShapeType:', logoShapeType);
-		if (logoPosition === 'BottomLeft') {
-			return 'top-[90%]';
-		} else if (logoPosition === 'BottomRight') {
-			if (logoShapeType === 'rectangle') {
-				return 'top-[90%] left-[83%]';
-			} else {
-				return 'top-[90%] left-[90%]';
-			}
-		} else if (logoPosition === 'TopLeft') {
-			return 'top-[5%] ';
-		} else if (logoPosition === 'TopRight') {
-			if (logoShapeType === 'rectangle') {
-				return 'top-[5%] left-[83%]';
-			} else {
-				return 'top-[5%] left-[90%]';
-			}
-		} else {
-			return 'top-[90%] ';
-		}
-	};
 
 	return (
 		<>
 			{custom_logo === template_name || custom_logo === 'Default' ? (
 				// use original template logo
-				<div
-					className={`absolute inset-0 w-full h-14 justify-start items-center gap-7 inline-flex pl-[12px] pb-[12px] z-40 pr-[12px] ${logoPosConfig(logoPosition || 'BottomLeft', logoShapeType || 'rectangle')}`}
-				>
+				<div className='absolute'>
 					<Image
 						onClick={openBrandingModal}
 						unoptimized={true}
@@ -221,9 +194,7 @@ export const generateTemplateLogo = ({
 					/>
 				</div>
 			) : (
-				<div
-					className={`absolute inset-0 w-full h-14 justify-start items-center gap-7 inline-flex pl-[12px] pb-[12px] z-40 pr-[12px] ${logoPosConfig(logoPosition || 'BottomLeft', logoShapeType || 'rectangle')}`}
-				>
+				<div className='absolute'>
 					<Image
 						onClick={openBrandingModal}
 						unoptimized={true}

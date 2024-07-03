@@ -28,7 +28,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { LayoutKeys } from './slideLayout';
 import { layoutOptions } from './slideLayout';
 import Image from 'next/image';
-import { Media, SlideKeys } from '@/models/Slide';
+import { LogoPosition, Media } from '@/models/Slide';
 import Chart from '@/models/Chart';
 import Position from '@/types/Position';
 
@@ -69,6 +69,8 @@ export const generateTemplate = (templateName: string) => {
 		layoutElements,
 		embed_code,
 		media_types,
+		logo_position,
+		logo_numeric_position,
 	}: // initialTemplateTitleFontFamily,
 	MainSlideProps) => {
 		const {
@@ -156,6 +158,8 @@ export const generateTemplate = (templateName: string) => {
 						image_container_positions={image_container_positions}
 						embed_code={embed_code}
 						media_types={media_types}
+						logo_position={logo_position}
+						logo_numeric_position={logo_numeric_position}
 					></ChosenLayoutNonCover>
 				</div>
 				{/* for cover page */}
@@ -220,6 +224,8 @@ export const generateTemplate = (templateName: string) => {
 						image_container_positions={image_container_positions}
 						embed_code={embed_code}
 						media_types={media_types}
+						logo_position={logo_position}
+						logo_numeric_position={logo_numeric_position}
 					></ChosenLayoutCover>
 				</div>
 			</>
@@ -313,6 +319,8 @@ export interface MainSlideProps {
 	layoutElements: LayoutElements;
 	embed_code: string[];
 	media_types: Media[];
+	logo_position: LogoPosition;
+	logo_numeric_position: Position;
 	// initialTemplateTitleFontFamily?: string;
 }
 

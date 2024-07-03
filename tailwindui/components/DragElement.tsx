@@ -11,7 +11,7 @@ export enum ElementType {
 }
 
 interface DragElementProps {
-	children: JSX.Element | JSX.Element[];
+	children: JSX.Element | JSX.Element[] | undefined;
 	type: ElementType;
 	canEdit: boolean;
 	scale?: number;

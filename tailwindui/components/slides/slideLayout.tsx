@@ -30,7 +30,7 @@ import ResizeSlider from './drag_resize/resize_slider';
 import '@/components/slides/drag_resize/dragAndResizeCSS.css';
 import Draggable from 'react-draggable';
 import dynamic from 'next/dynamic';
-import Slide, { Media, SlideKeys } from '@/models/Slide';
+import Slide, { LogoPosition, Media, SlideKeys } from '@/models/Slide';
 import { DragElement, ElementType } from '../DragElement';
 const QuillEditable = dynamic(
 	() => import('@/components/slides/quillEditorSlide'),
@@ -291,6 +291,23 @@ const setInitPos = (
 	} else return Object.keys(prevPos).length !== 0 ? prevPos : initPos;
 };
 
+const defaultLogoPos = {
+	BottomLeft: { x: 12, y: 470, width: 58, height: 58 },
+	BottomRight: { x: 890, y: 470, width: 58, height: 58 },
+	TopLeft: { x: 12, y: 12, width: 58, height: 58 },
+	TopRight: { x: 890, y: 12, width: 58, height: 58 },
+};
+
+const setInitLogoPos = (
+	logo_position: LogoPosition,
+	logo_numeric_position: Position,
+): Position => {
+	if (logo_numeric_position === undefined) return defaultLogoPos[logo_position];
+	return Object.keys(logo_numeric_position).length !== 0
+		? logo_numeric_position
+		: defaultLogoPos[logo_position];
+};
+
 export const Cover_img_0_layout = ({
 	user_name,
 	title,
@@ -311,11 +328,14 @@ export const Cover_img_0_layout = ({
 	themeElements,
 	layoutElements,
 	templateLogo,
+	logo_position,
+	logo_numeric_position,
 }: MainSlideProps) => {
 	const initTitlePos = setInitPos(
 		title_position,
 		layoutElements.titlePos as Position,
 	) as Position;
+	const initLogoPos = setInitLogoPos(logo_position, logo_numeric_position);
 
 	const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
@@ -352,6 +372,22 @@ export const Cover_img_0_layout = ({
 			>
 				{title}
 			</DragElement>
+			<DragElement
+				type={ElementType.TextEdit}
+				canEdit={canEdit}
+				scale={scale}
+				positions={[initLogoPos]}
+				contentIndex={0}
+				handleSlideEdit={handleSlideEdit}
+				currentSlideIndex={currentSlideIndex}
+				positionType='logo_numeric_position'
+				defaultPos={[defaultLogoPos[logo_position] as Position]}
+				elementIndex={1}
+				onHover={setHoveredIndex}
+				hoveredIndex={hoveredIndex ?? -1}
+			>
+				{templateLogo}
+			</DragElement>
 			<div
 				className={`SlideVisualElement`}
 				style={{ ...layoutElements.visualElementsCSS, position: 'absolute' }}
@@ -366,16 +402,6 @@ export const Cover_img_0_layout = ({
 						unoptimized={true}
 					/>
 				)}
-			</div>
-			<div
-				className={`SlideLogo`}
-				style={{
-					...layoutElements.logoCSS,
-					zIndex: 30,
-					pointerEvents: 'none',
-				}}
-			>
-				{templateLogo}
 			</div>
 		</div>
 	);
@@ -407,6 +433,8 @@ export const Cover_img_1_layout = ({
 	media_types,
 	title_position,
 	image_container_positions,
+	logo_position,
+	logo_numeric_position,
 }: MainSlideProps) => {
 	const updateImgAtIndex =
 		(index: number) =>
@@ -461,6 +489,7 @@ export const Cover_img_1_layout = ({
 		image_container_positions,
 		layoutElements.imgContainerPos as Position[],
 	) as Position[];
+	const initLogoPos = setInitLogoPos(logo_position, logo_numeric_position);
 
 	const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
@@ -532,7 +561,22 @@ export const Cover_img_1_layout = ({
 					containerSize={initImgContainerPos}
 				/>
 			</DragElement>
-
+			<DragElement
+				type={ElementType.TextEdit}
+				canEdit={canEdit}
+				scale={scale}
+				positions={[initLogoPos]}
+				contentIndex={0}
+				handleSlideEdit={handleSlideEdit}
+				currentSlideIndex={currentSlideIndex}
+				positionType='logo_numeric_position'
+				defaultPos={[defaultLogoPos[logo_position] as Position]}
+				elementIndex={2}
+				onHover={setHoveredIndex}
+				hoveredIndex={hoveredIndex ?? -1}
+			>
+				{templateLogo}
+			</DragElement>
 			<div
 				className={`SlideVisualElement`}
 				style={{ ...layoutElements.visualElementsCSS, position: 'absolute' }}
@@ -547,16 +591,6 @@ export const Cover_img_1_layout = ({
 						className='w-[960px] h-[540px]'
 					/>
 				)}
-			</div>
-			<div
-				className={`SlideLogo`}
-				style={{
-					...layoutElements.logoCSS,
-					zIndex: 30,
-					pointerEvents: 'none',
-				}}
-			>
-				{templateLogo}
 			</div>
 		</div>
 	);
@@ -583,6 +617,8 @@ export const Col_1_img_0_layout = ({
 	topic_position,
 	subtopic_position,
 	content_positions,
+	logo_position,
+	logo_numeric_position,
 }: MainSlideProps) => {
 	const [maxContentHeight, setMaxContentHeight] = useState<number | null>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -629,6 +665,7 @@ export const Col_1_img_0_layout = ({
 		content_positions,
 		layoutElements.contentPos as Position[],
 	) as Position[];
+	const initLogoPos = setInitLogoPos(logo_position, logo_numeric_position);
 
 	const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
@@ -692,15 +729,22 @@ export const Col_1_img_0_layout = ({
 			>
 				{content}
 			</DragElement>
-			<div
-				style={{
-					...layoutElements.logoCSS,
-					zIndex: 30,
-					pointerEvents: 'none',
-				}}
+			<DragElement
+				type={ElementType.TextEdit}
+				canEdit={canEdit}
+				scale={scale}
+				positions={[initLogoPos]}
+				contentIndex={3}
+				handleSlideEdit={handleSlideEdit}
+				currentSlideIndex={currentSlideIndex}
+				positionType='logo_numeric_position'
+				defaultPos={[defaultLogoPos[logo_position] as Position]}
+				elementIndex={1}
+				onHover={setHoveredIndex}
+				hoveredIndex={hoveredIndex ?? -1}
 			>
 				{templateLogo}
-			</div>
+			</DragElement>
 			<div
 				className='SlideVisualElements'
 				style={{ ...layoutElements.visualElementsCSS, position: 'absolute' }}
@@ -740,6 +784,8 @@ export const Col_2_img_0_layout = ({
 	topic_position,
 	subtopic_position,
 	content_positions,
+	logo_position,
+	logo_numeric_position,
 }: MainSlideProps) => {
 	// Ensure content is always an array
 	const items = Array.isArray(content) ? content : [content];
@@ -773,6 +819,7 @@ export const Col_2_img_0_layout = ({
 		content_positions,
 		layoutElements.contentPos as Position[],
 	) as Position[];
+	const initLogoPos = setInitLogoPos(logo_position, logo_numeric_position);
 
 	const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
@@ -880,17 +927,22 @@ export const Col_2_img_0_layout = ({
 					</ul>
 				</React.Fragment>
 			))}
-
-			<div
-				className={`SlideLogo`}
-				style={{
-					...layoutElements.logoCSS,
-					zIndex: 30,
-					pointerEvents: 'none',
-				}}
+			<DragElement
+				type={ElementType.TextEdit}
+				canEdit={canEdit}
+				scale={scale}
+				positions={[initLogoPos]}
+				contentIndex={0}
+				handleSlideEdit={handleSlideEdit}
+				currentSlideIndex={currentSlideIndex}
+				positionType='logo_numeric_position'
+				defaultPos={[defaultLogoPos[logo_position] as Position]}
+				elementIndex={4}
+				onHover={setHoveredIndex}
+				hoveredIndex={hoveredIndex ?? -1}
 			>
 				{templateLogo}
-			</div>
+			</DragElement>
 			<div
 				className={`SlideVisualElements`}
 				style={{ ...layoutElements.visualElementsCSS, position: 'absolute' }}
@@ -929,6 +981,8 @@ export const Col_3_img_0_layout = ({
 	topic_position,
 	subtopic_position,
 	content_positions,
+	logo_position,
+	logo_numeric_position,
 }: MainSlideProps) => {
 	//const filteredContent: JSX.Element[] = filterEmptyLines(content);
 
@@ -979,6 +1033,7 @@ export const Col_3_img_0_layout = ({
 		content_positions,
 		layoutElements.contentPos as Position[],
 	) as Position[];
+	const initLogoPos = setInitLogoPos(logo_position, logo_numeric_position);
 
 	const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
@@ -1116,15 +1171,22 @@ export const Col_3_img_0_layout = ({
 					</ul>
 				</React.Fragment>
 			))}
-			<div
-				style={{
-					...layoutElements.logoCSS,
-					zIndex: 30,
-					pointerEvents: 'none',
-				}}
+			<DragElement
+				type={ElementType.TextEdit}
+				canEdit={canEdit}
+				scale={scale}
+				positions={[initLogoPos]}
+				contentIndex={0}
+				handleSlideEdit={handleSlideEdit}
+				currentSlideIndex={currentSlideIndex}
+				positionType='logo_numeric_position'
+				defaultPos={[defaultLogoPos[logo_position] as Position]}
+				elementIndex={5}
+				onHover={setHoveredIndex}
+				hoveredIndex={hoveredIndex ?? -1}
 			>
 				{templateLogo}
-			</div>
+			</DragElement>
 			<div
 				style={{ ...layoutElements.visualElementsCSS, position: 'absolute' }}
 			>
@@ -1169,6 +1231,8 @@ export const Col_2_img_1_layout = ({
 	subtopic_position,
 	content_positions,
 	image_container_positions,
+	logo_position,
+	logo_numeric_position,
 }: MainSlideProps) => {
 	const updateImgAtIndex =
 		(index: number) =>
@@ -1264,6 +1328,7 @@ export const Col_2_img_1_layout = ({
 		image_container_positions,
 		layoutElements.imgContainerPos as Position[],
 	) as Position[];
+	const initLogoPos = setInitLogoPos(logo_position, logo_numeric_position);
 
 	const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
@@ -1358,17 +1423,22 @@ export const Col_2_img_1_layout = ({
 					containerSize={initImgContainerPos}
 				/>
 			</DragElement>
-
-			{/* logo section */}
-			<div
-				style={{
-					...layoutElements.logoCSS,
-					zIndex: 30,
-					pointerEvents: 'none',
-				}}
+			<DragElement
+				type={ElementType.TextEdit}
+				canEdit={canEdit}
+				scale={scale}
+				positions={[initLogoPos]}
+				contentIndex={0}
+				handleSlideEdit={handleSlideEdit}
+				currentSlideIndex={currentSlideIndex}
+				positionType='logo_numeric_position'
+				defaultPos={[defaultLogoPos[logo_position] as Position]}
+				elementIndex={5}
+				onHover={setHoveredIndex}
+				hoveredIndex={hoveredIndex ?? -1}
 			>
 				{templateLogo}
-			</div>
+			</DragElement>
 			<div
 				style={{ ...layoutElements.visualElementsCSS, position: 'absolute' }}
 			>
@@ -1414,6 +1484,8 @@ export const Col_1_img_1_layout = ({
 	subtopic_position,
 	content_positions,
 	image_container_positions,
+	logo_position,
+	logo_numeric_position,
 }: MainSlideProps) => {
 	const updateImgAtIndex =
 		(index: number) =>
@@ -1512,6 +1584,7 @@ export const Col_1_img_1_layout = ({
 		image_container_positions,
 		layoutElements.imgContainerPos as Position[],
 	) as Position[];
+	const initLogoPos = setInitLogoPos(logo_position, logo_numeric_position);
 
 	const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
@@ -1603,16 +1676,22 @@ export const Col_1_img_1_layout = ({
 			>
 				{content}
 			</DragElement>
-			<div
-				className={`SlideLogo`}
-				style={{
-					...layoutElements.logoCSS,
-					zIndex: 30,
-					pointerEvents: 'none',
-				}}
+			<DragElement
+				type={ElementType.TextEdit}
+				canEdit={canEdit}
+				scale={scale}
+				positions={[initLogoPos]}
+				contentIndex={4}
+				handleSlideEdit={handleSlideEdit}
+				currentSlideIndex={currentSlideIndex}
+				positionType='logo_numeric_position'
+				defaultPos={[defaultLogoPos[logo_position] as Position]}
+				elementIndex={1}
+				onHover={setHoveredIndex}
+				hoveredIndex={hoveredIndex ?? -1}
 			>
 				{templateLogo}
-			</div>
+			</DragElement>
 			<div
 				style={{ ...layoutElements.visualElementsCSS, position: 'absolute' }}
 			>
@@ -1658,6 +1737,8 @@ export const Col_2_img_2_layout = ({
 	subtopic_position,
 	content_positions,
 	image_container_positions,
+	logo_position,
+	logo_numeric_position,
 }: MainSlideProps) => {
 	const updateImgAtIndex =
 		(index: number) =>
@@ -1730,6 +1811,7 @@ export const Col_2_img_2_layout = ({
 		image_container_positions,
 		layoutElements.imgContainerPos as Position[],
 	) as Position[];
+	const initLogoPos = setInitLogoPos(logo_position, logo_numeric_position);
 
 	const contentItemsFor2Col = changingTemplateContent(items, 2);
 	const [updatedContentCol1, setUpdatedContentCol1] = useState(
@@ -1953,15 +2035,22 @@ export const Col_2_img_2_layout = ({
 					</ul>
 				</React.Fragment>
 			))}
-			<div
-				style={{
-					...layoutElements.logoCSS,
-					zIndex: 30,
-					pointerEvents: 'none',
-				}}
+			<DragElement
+				type={ElementType.TextEdit}
+				canEdit={canEdit}
+				scale={scale}
+				positions={[initLogoPos]}
+				contentIndex={0}
+				handleSlideEdit={handleSlideEdit}
+				currentSlideIndex={currentSlideIndex}
+				positionType='logo_numeric_position'
+				defaultPos={[defaultLogoPos[logo_position] as Position]}
+				elementIndex={6}
+				onHover={setHoveredIndex}
+				hoveredIndex={hoveredIndex ?? -1}
 			>
 				{templateLogo}
-			</div>
+			</DragElement>
 			<div
 				style={{ ...layoutElements.visualElementsCSS, position: 'absolute' }}
 			>
@@ -2006,6 +2095,8 @@ export const Col_3_img_3_layout = ({
 	subtopic_position,
 	content_positions,
 	image_container_positions,
+	logo_position,
+	logo_numeric_position,
 }: MainSlideProps) => {
 	const updateImgAtIndex =
 		(index: number) =>
@@ -2072,6 +2163,7 @@ export const Col_3_img_3_layout = ({
 		image_container_positions,
 		layoutElements.imgContainerPos as Position[],
 	) as Position[];
+	const initLogoPos = setInitLogoPos(logo_position, logo_numeric_position);
 
 	const contentItemsFor3Col = changingTemplateContent(items, 3);
 	const [updatedContentCol1, setUpdatedContentCol1] = useState(
@@ -2334,15 +2426,22 @@ export const Col_3_img_3_layout = ({
 					</ul>
 				</React.Fragment>
 			))}
-			<div
-				style={{
-					...layoutElements.logoCSS,
-					zIndex: 30,
-					pointerEvents: 'none',
-				}}
+			<DragElement
+				type={ElementType.TextEdit}
+				canEdit={canEdit}
+				scale={scale}
+				positions={[initLogoPos]}
+				contentIndex={0}
+				handleSlideEdit={handleSlideEdit}
+				currentSlideIndex={currentSlideIndex}
+				positionType='logo_numeric_position'
+				defaultPos={[defaultLogoPos[logo_position] as Position]}
+				elementIndex={8}
+				onHover={setHoveredIndex}
+				hoveredIndex={hoveredIndex ?? -1}
 			>
 				{templateLogo}
-			</div>
+			</DragElement>
 			<div
 				style={{ ...layoutElements.visualElementsCSS, position: 'absolute' }}
 			>
@@ -2385,6 +2484,8 @@ export const Full_img_only_layout = ({
 	embed_code,
 	media_types,
 	image_container_positions,
+	logo_position,
+	logo_numeric_position,
 }: MainSlideProps) => {
 	const updateImgAtIndex =
 		(index: number) =>
@@ -2439,6 +2540,7 @@ export const Full_img_only_layout = ({
 		image_container_positions,
 		layoutElements.imgContainerPos as Position[],
 	) as Position[];
+	const initLogoPos = setInitLogoPos(logo_position, logo_numeric_position);
 
 	const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
@@ -2479,15 +2581,22 @@ export const Full_img_only_layout = ({
 					containerSize={initImgContainerPos}
 				/>
 			</DragElement>
-			<div
-				style={{
-					...layoutElements.logoCSS,
-					zIndex: 30,
-					pointerEvents: 'none',
-				}}
+			<DragElement
+				type={ElementType.TextEdit}
+				canEdit={canEdit}
+				scale={scale}
+				positions={[initLogoPos]}
+				contentIndex={0}
+				handleSlideEdit={handleSlideEdit}
+				currentSlideIndex={currentSlideIndex}
+				positionType='logo_numeric_position'
+				defaultPos={[defaultLogoPos[logo_position] as Position]}
+				elementIndex={1}
+				onHover={setHoveredIndex}
+				hoveredIndex={hoveredIndex ?? -1}
 			>
 				{templateLogo}
-			</div>
+			</DragElement>
 		</div>
 	);
 };

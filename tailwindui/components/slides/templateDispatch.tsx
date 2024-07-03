@@ -511,6 +511,8 @@ export const templateDispatch = (
 			embed_code={slide.embed_code || ['', '', '']}
 			// initialTemplateTitleFontFamily={initialTemplateTitleFontFamily}
 			media_types={slide.media_types}
+			logo_position={slide.logo_position}
+			logo_numeric_position={slide.logo_numeric_position}
 		/>
 	);
 	// }

@@ -593,6 +593,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				currentSlide.content_positions = content as Position[];
 			} else if (className === 'image_container_position') {
 				currentSlide.image_container_positions = content as Position[];
+			} else if (className === 'logo_numeric_position') {
+				currentSlide.logo_numeric_position = (content as Position[])[0];
 			} else {
 				console.error(`Unknown tag: ${tag}`);
 			}
@@ -721,6 +723,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	const uneditableTemplateDispatch = (
 		slide: Slide,
 		index: number,
+		canEdit: boolean,
 		exportToPdfMode: boolean = false,
 		scale: number,
 	) =>
