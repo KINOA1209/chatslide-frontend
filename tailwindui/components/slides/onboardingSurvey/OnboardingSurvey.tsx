@@ -4,6 +4,7 @@ import SurveySection from './SurveySection';
 import surveyStaticDataObject from './SurveyObject';
 import { useUser } from '@/hooks/use-user';
 import { isChatslide } from '@/utils/getHost';
+import { getUserCountryCode } from '@/utils/userLocation';
 
 type OnboardingSurveyProps = {
 	handleBack: () => void;
@@ -21,6 +22,7 @@ const OnboardingSurvey: React.FC<OnboardingSurveyProps> = ({ handleBack }) => {
 	// ease-in-out effect
 	const [referralSectionEffect, setReferralSectionEffect] = useState(false);
 	const [purposeSectionEffect, setPurposeSectionEffect] = useState(false);
+  const [location, setLocation] = useState<string>('');
 	const { token } = useUser();
 
 	useEffect(() => {
@@ -34,6 +36,12 @@ const OnboardingSurvey: React.FC<OnboardingSurveyProps> = ({ handleBack }) => {
 			setPurposeSectionEffect(true);
 		}
 	}, [showPurposeSection]);
+
+  useEffect(() => {
+    getUserCountryCode().then((code) => {
+      setLocation(code);
+    });
+  }, []);
 
 	const handleNextToPurpose = () => {
 		setShowPurposeSection(true);
@@ -149,7 +157,8 @@ const OnboardingSurvey: React.FC<OnboardingSurveyProps> = ({ handleBack }) => {
 				selectedPurposes,
 				surveyStaticDataObject.purpose.itemsArr,
 			),
-      platform: isChatslide() ? 'chatslide' : 'drlambda',
+			platform: isChatslide() ? 'chatslide' : 'drlambda',
+			location: location,
 		};
 		//console.log(formData)
 		try {
