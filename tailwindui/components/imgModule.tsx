@@ -126,6 +126,7 @@ interface ImgModuleProp {
 	embed_code_single?: string;
 	media_types?: Media[];
 	media_type?: Media;
+	containerSize?: Position[];
 }
 
 enum ImgQueryMode {
@@ -207,6 +208,7 @@ export const ImgModule = ({
 	embed_code_single,
 	media_types,
 	media_type,
+	containerSize,
 }: ImgModuleProp) => {
 	// Replace width and height attributes with '100%'
 
@@ -1269,36 +1271,25 @@ export const ImgModule = ({
 
 	//for drag and resize
 
-	const [imageSize, setImageSize] = useState({ width: 0, height: 0 });
 	const imageRefs = Array(3)
 		.fill(null)
 		.map(() => useRef<HTMLDivElement>(null));
 	//const [isDraggingOrResizing, setIsDraggingOrResizing] = useState(false); //distinguish openModal and drag
 	const [hasInteracted, setHasInteracted] = useState(false);
-	const [imagesDimensions, setImagesDimensions] = useState<
-		(
-			| Position
-			| { x?: number; y?: number; height?: number; width?: number }
-		)[]
-	>([]);
 	const [startPos, setStartPos] = useState<Array<{ x: number; y: number }>>(
 		Array(3).fill({ x: 0, y: 0 }),
 	);
 	const [isImgEditMode, setIsImgEditMode] = useState(false);
 	const [showImgButton, setShowImgButton] = useState(false);
-	const [zoomLevel, setZoomLevel] = useState(100);
-	const [parentDimension, setParentDimension] = useState({
-		height: 0,
-		width: 0,
-	});
-	const [isParentDimension, setIsParentDimension] = useState(false);
 	const [imgLoadError, setImgLoadError] = useState(false);
-	const prevDimensionRef = useRef(parentDimension);
+	const [actualImagePositions, setActualImagePositions] = useState<Position[]>(
+		[],
+	);
 
 	//handler for drag and resize also autosave
 	const handleSave = onMouseLeave(
 		slideIndex,
-		imagesDimensions,
+		actualImagePositions,
 		hasInteracted,
 		setHasInteracted,
 		setShowImgButton,
@@ -1315,14 +1306,14 @@ export const ImgModule = ({
 		setHasInteracted,
 	);
 	const handleDragStop = onDragStop(
-		imagesDimensions,
-		setImagesDimensions,
+		actualImagePositions,
+		setActualImagePositions,
 		startPos,
 		//setIsDraggingOrResizing,
 	);
 	const handleResizeStop = onResizeStop(
-		imagesDimensions,
-		setImagesDimensions,
+		actualImagePositions,
+		setActualImagePositions,
 		//setIsDraggingOrResizing,
 	);
 
@@ -1339,105 +1330,37 @@ export const ImgModule = ({
 		}
 	};
 
-	const customScale = (
-		width: number,
-		height: number,
-		parentWidth: number,
-		parentHeight: number,
-	) => {
-		const aspectRatio = width / height;
-		const parentAspectRatio = parentWidth / parentHeight;
-		let newWidth, newHeight, newX, newY;
-
-		// vertical image initialization (perform as contain)
-		// vertical image: image is taller than its wide
-		if (aspectRatio <= 1) {
-			newWidth = parentWidth;
-			newHeight = parentWidth / aspectRatio;
-			newX = 0;
-			newY = (parentHeight - newHeight) / 2;
-		} else {
-			// Compare the aspect ratios to decide how to scale
-			if (aspectRatio > parentAspectRatio) {
-				// Image is wider than the container proportionally
-				newWidth = parentHeight * aspectRatio;
-				newHeight = parentHeight;
-				newX = (parentWidth - newWidth) / 2; // Center horizontally
-				newY = 0;
-			} else {
-				// Image is taller than the container proportionally
-				newWidth = parentWidth;
-				newHeight = parentWidth / aspectRatio;
-				newX = 0; // Align to left
-				newY = (parentHeight - newHeight) / 2; // Center vertically
-			}
-		}
-		return { width: newWidth, height: newHeight, x: newX, y: newY };
-	};
-
-	//reposition to default if images changed
 	useEffect(() => {
-		// make sure we got non-zero value for parentDimension
-		if (
-			isParentDimension &&
-			image_positions[currentContentIndex] &&
-			Object.keys(image_positions[currentContentIndex]).length == 0
-		) {
-			const img = new window.Image();
-			img.src = imgsrc;
-			img.onload = () => {
-				const {
-					height: newHeight,
-					width: newWidth,
-					x: newX,
-					y: newY,
-				} = customScale(
-					img.naturalWidth,
-					img.naturalHeight,
-					parentDimension.width,
-					parentDimension.height,
-				);
-				if (newWidth !== imageSize.width || newHeight !== imageSize.height) {
-					setImageSize({ width: newWidth, height: newHeight });
-				}
-				const updatedDimensions = [...imagesDimensions];
-				updatedDimensions[currentContentIndex] = {
-					...updatedDimensions[currentContentIndex],
-					width: newWidth,
-					height: newHeight,
-					x: newX,
-					y: newY,
-				};
-				setImagesDimensions(updatedDimensions);
-			};
-		}
-	}, [imgsrc, isParentDimension]);
+		const img = new window.Image();
+		img.src = imgsrc;
 
-	useEffect(() => {
-		const initializedData = initializeImageData(image_positions, imageRefs);
-		setImagesDimensions(initializedData);
-	}, [image_positions]);
+		img.onload = () => {
+			const ctnSize: Position = containerSize
+				? containerSize[currentContentIndex]
+				: {};
 
-	// new version to get parent container's dimension, reduce unnecessary state updates
-	// prevent infinite loop bugs
-	useEffect(() => {
-		const currentElement = imageRefs[currentContentIndex]?.current;
-		if (currentElement) {
-			const { clientHeight, clientWidth } = currentElement;
-			// Only update if there's a real change in dimensions
+			const initW = Number(ctnSize.width);
+			const initH = Number(ctnSize.width) * (img.height / img.width);
+			const initX = 0;
+			const initY = (Number(ctnSize.height) - initH) / 2;
+
+			let initPos: Position = {};
 			if (
-				clientHeight !== parentDimension.height ||
-				clientWidth !== parentDimension.width
-			) {
-				setParentDimension({ height: clientHeight, width: clientWidth });
-				setIsParentDimension(clientHeight > 0 && clientWidth > 0);
-			}
-		} else {
-			if (isParentDimension) {
-				setIsParentDimension(false);
-			}
-		}
-	}, [currentContentIndex, imageRefs]);
+				!image_positions ||
+				!image_positions[currentContentIndex] ||
+				Object.keys(image_positions[currentContentIndex]).length === 0
+			)
+				initPos = { x: initX, y: initY, width: initW, height: initH };
+			else initPos = image_positions[currentContentIndex];
+
+			const actPositions: Position[] = image_positions ?? [];
+			setActualImagePositions(
+				actPositions.map((pos, index) =>
+					index === currentContentIndex ? initPos : pos,
+				),
+			);
+		};
+	}, [containerSize]);
 
 	//detect the mouse click event is outside the image container or not, if it's, trigger autosave
 	useEffect(() => {
@@ -1489,11 +1412,6 @@ export const ImgModule = ({
 
 	type CombinedLayoutKeys = LayoutKeys | SocialPostLayoutKeys;
 	const showIconsFunctionText = (layout: CombinedLayoutKeys) => {
-		// console.log(
-		// 	'passed in layout test',
-		// 	layout,
-		// 	layout === 'First_page_img_1_reading_notes',
-		// );
 		if (
 			layout === 'Col_2_img_2_layout' ||
 			layout === 'Col_3_img_3_layout' ||
@@ -1943,18 +1861,15 @@ export const ImgModule = ({
 								style={{ ...layoutElements?.rndCSS }}
 								size={{
 									width:
-										imagesDimensions[currentContentIndex]?.width ??
+										actualImagePositions[currentContentIndex]?.width ??
 										'max-content',
-									//imageRefs[currentContentIndex]?.current?.clientWidth ??
-									//imageSize.width ? imageSize.width : ,
 									height:
-										imagesDimensions[currentContentIndex]?.height ?? 'auto',
-									// imageRefs[currentContentIndex]?.current?.clientHeight ??
-									//imageSize.height ? imageSize.height : 'auto',
+										actualImagePositions[currentContentIndex]?.height ??
+										'max-content',
 								}}
 								position={{
-									x: imagesDimensions[currentContentIndex]?.x ?? 0,
-									y: imagesDimensions[currentContentIndex]?.y ?? 0,
+									x: actualImagePositions[currentContentIndex]?.x ?? 0,
+									y: actualImagePositions[currentContentIndex]?.y ?? 0,
 								}}
 								enableResizing={canEdit && isImgEditMode}
 								lockAspectRatio={false}
@@ -1970,14 +1885,26 @@ export const ImgModule = ({
 									topRight: circle_indicator,
 									bottomLeft: circle_indicator,
 									bottomRight: circle_indicator,
-									top: { ...rectangular_indicator, ...rectangular_horizontal, top: '-5px' },
+									top: {
+										...rectangular_indicator,
+										...rectangular_horizontal,
+										top: '-5px',
+									},
 									bottom: {
 										...rectangular_indicator,
 										...rectangular_horizontal,
-										bottom: '-5px'
+										bottom: '-5px',
 									},
-									left: { ...rectangular_indicator, ...rectangular_vertical, left: '-5px' },
-									right: { ...rectangular_indicator, ...rectangular_vertical, right: '-5px' },
+									left: {
+										...rectangular_indicator,
+										...rectangular_vertical,
+										left: '-5px',
+									},
+									right: {
+										...rectangular_indicator,
+										...rectangular_vertical,
+										right: '-5px',
+									},
 								}}
 							>
 								<Image

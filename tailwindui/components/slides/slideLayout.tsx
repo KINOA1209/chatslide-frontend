@@ -529,6 +529,7 @@ export const Cover_img_1_layout = ({
 					embed_code_single={embed_code?.[0]}
 					media_types={media_types}
 					media_type={media_types?.[0]}
+					containerSize={initImgContainerPos}
 				/>
 			</DragElement>
 
@@ -1354,6 +1355,7 @@ export const Col_2_img_1_layout = ({
 					embed_code_single={embed_code?.[0]}
 					media_types={media_types}
 					media_type={media_types?.[0]}
+					containerSize={initImgContainerPos}
 				/>
 			</DragElement>
 
@@ -1582,6 +1584,7 @@ export const Col_1_img_1_layout = ({
 					embed_code_single={embed_code?.[0]}
 					media_types={media_types}
 					media_type={media_types?.[0]}
+					containerSize={initImgContainerPos}
 				/>
 			</DragElement>
 			<DragElement
@@ -1850,6 +1853,7 @@ export const Col_2_img_2_layout = ({
 					embed_code_single={embed_code?.[0]}
 					media_types={media_types}
 					media_type={media_types?.[0]}
+					containerSize={initImgContainerPos}
 				/>
 			</DragElement>
 			<DragElement
@@ -1884,6 +1888,7 @@ export const Col_2_img_2_layout = ({
 					embed_code_single={embed_code?.[1]}
 					media_types={media_types}
 					media_type={media_types?.[1]}
+					containerSize={initImgContainerPos}
 				/>
 			</DragElement>
 			{updatedContentCol1.map((item, index) => (
@@ -2163,6 +2168,7 @@ export const Col_3_img_3_layout = ({
 					embed_code_single={embed_code?.[0]}
 					media_types={media_types}
 					media_type={media_types?.[0]}
+					containerSize={initImgContainerPos}
 				/>
 			</DragElement>
 			<DragElement
@@ -2197,6 +2203,7 @@ export const Col_3_img_3_layout = ({
 					embed_code_single={embed_code?.[1]}
 					media_types={media_types}
 					media_type={media_types?.[1]}
+					containerSize={initImgContainerPos}
 				/>
 			</DragElement>
 			<DragElement
@@ -2231,6 +2238,7 @@ export const Col_3_img_3_layout = ({
 					embed_code_single={embed_code?.[2]}
 					media_types={media_types}
 					media_type={media_types?.[2]}
+					containerSize={initImgContainerPos}
 				/>
 			</DragElement>
 			{updatedContentCol1.map((item, index) => (
@@ -2468,6 +2476,7 @@ export const Full_img_only_layout = ({
 					embed_code_single={embed_code?.[0]}
 					media_types={media_types}
 					media_type={media_types?.[0]}
+					containerSize={initImgContainerPos}
 				/>
 			</DragElement>
 			<div
