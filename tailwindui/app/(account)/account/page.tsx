@@ -364,7 +364,7 @@ const Affiliate = () => {
 
 	return (
 		<Card>
-			<BigTitle>💸 Earn Money with {getBrand()}</BigTitle>
+			<BigTitle>💸 Join Affiliate Program</BigTitle>
 			<Instruction>
 				<div className='flex flex-col gap-y-1'>
 					<span>

@@ -359,7 +359,7 @@ const SideBar = ({}: SideBarProps) => {
 										'var(--spacing-md, 0.5rem) var(--spacing-lg, 0.75rem)',
 								}}
 							>
-								💸 Monetize
+								💸 Affiliate
 							</a>
 						</>
 					)}
