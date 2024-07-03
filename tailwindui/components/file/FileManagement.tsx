@@ -434,6 +434,8 @@ interface filesInterface {
 	setSelectedResources?: Function;
 	pageInvoked?: string;
 	fileType?: string;
+	uploadSection?: 'Template Extraction' | ''; // templateExtraction
+	fileNameExtension?: string;
 }
 
 // Define file extensions for different types
@@ -502,6 +504,8 @@ const MyFiles: React.FC<filesInterface> = ({
 	setSelectedResources,
 	pageInvoked,
 	fileType = 'logo',
+	uploadSection = '',
+	fileNameExtension = '',
 }) => {
 	const [resources, setResources] = useState<Resource[]>([]);
 	const [filteredResources, setFilteredResources] = useState<Resource[]>([]);
@@ -537,6 +541,7 @@ const MyFiles: React.FC<filesInterface> = ({
 		};
 		// Execute the created function directly
 		fetchUserFiles();
+		// console.log('uploadSection', uploadSection);
 	}, []);
 
 	useEffect(() => {
@@ -605,9 +610,23 @@ const MyFiles: React.FC<filesInterface> = ({
 					: []; // uploads page, all resources
 
 		ResourceService.fetchResources(resource_type, token).then((resources) => {
-			setResources(resources);
-			setFilteredResources(resources);
-			setRendered(true);
+			console.log('resources 0 extension', getFileExtension(resources[0].name));
+			if (uploadSection === 'Template Extraction') {
+				console.log('upload section is', uploadSection);
+				// another filter, only needs those resource in resources list whose extension etracted from name field contains 'ppt' or 'pptx'
+				const filteredResources = resources.filter((resource) => {
+					const ext = getFileExtension(resource.name);
+					console.log('file extension is', ext);
+					return ext === 'ppt' || ext === 'pptx';
+				});
+				setResources(filteredResources);
+				setFilteredResources(filteredResources);
+				setRendered(true);
+			} else {
+				setResources(resources);
+				setFilteredResources(resources);
+				setRendered(true);
+			}
 		});
 	};
 
@@ -917,6 +936,8 @@ const MyFiles: React.FC<filesInterface> = ({
 								onFileSelected={onFileSelected}
 								isSubmitting={isSubmitting}
 								pageInvoked={pageInvoked}
+								uploadSection={uploadSection}
+								fileNameExtension={fileNameExtension}
 							/>
 						</div>
 					</div>

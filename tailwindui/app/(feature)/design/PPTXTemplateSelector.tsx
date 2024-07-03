@@ -14,6 +14,7 @@ import ResourceService from '@/services/ResourceService';
 import Image from 'next/image'; // Import the Image component
 import { SpinIcon } from '../icons';
 import ImageSelector from './ImageSelector';
+import { ResourceItem, getFileExtension } from '@/components/ui/ResourceItem';
 
 interface Props {
 	type: string;
@@ -58,12 +59,15 @@ const PPTXTemplateSelector: React.FC<Props> = ({
 	setSelectedBackground,
 	buttonCols = 3,
 }) => {
+	// console.log('selectedTemplate', selectedTemplate);
 	const [showFileModal, setShowFileModal] = useState(false);
 	const { isPaidUser, token } = useUser();
 	const [showPaywall, setShowPaywall] = useState(false);
 	const [selectedValue, setSelectedValue] = useState<string>('no');
 	// const [extractedTemplateImgUrl, setExtractedTemplateImgUrl] = useState('');
 	const [loading, setLoading] = useState(false); // Add a loading state
+	const [selectedTemplateFileExtension, setSelectedTemplateFileExtension] =
+		useState('');
 
 	const removeImageAtIndex = (indexToRemove: number) => {
 		const newSelectedImage = selectedTemplate.filter(
@@ -76,8 +80,18 @@ const PPTXTemplateSelector: React.FC<Props> = ({
 	useEffect(() => {
 		if (selectedTemplate.length > 0) {
 			handleTemplateExtraction(selectedTemplate);
+			setSelectedTemplateFileExtension(
+				getFileExtension(selectedTemplate[0]?.name),
+			);
 		}
 	}, [selectedTemplate]);
+
+	useEffect(() => {
+		console.log(
+			'SelectedTemplateFileExtension is:',
+			selectedTemplateFileExtension,
+		);
+	}, [selectedTemplateFileExtension]);
 
 	const handleTemplateExtraction = async (pptxResource: Resource[]) => {
 		try {
@@ -218,6 +232,8 @@ const PPTXTemplateSelector: React.FC<Props> = ({
 				setShowModal={setShowFileModal}
 				pageInvoked='theme'
 				type='doc'
+				uploadSection='Template Extraction'
+				fileNameExtension={selectedTemplateFileExtension}
 			/>
 		</div>
 	);

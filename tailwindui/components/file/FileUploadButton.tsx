@@ -31,9 +31,17 @@ export const PPTX_EXTENSION = ['pptx', 'ppt'];
 export const THEMEPAGE_EXTENSIONs = [...MEDIA_EXTENSIONS, ...PPTX_EXTENSION];
 export const ALL_EXTENSIONS = [...MEDIA_EXTENSIONS, ...DOCUMENT_EXTENSIONS];
 
-const determineSupportedFormats = (pageInvoked: string) => {
+const determineSupportedFormats = (
+	pageInvoked: string,
+	fileNameExtension?: string,
+	uploadSection?: 'Template Extraction' | '',
+) => {
 	if (pageInvoked === 'theme') {
-		return THEMEPAGE_EXTENSIONs;
+		if (uploadSection === 'Template Extraction') {
+			return PPTX_EXTENSION;
+		} else {
+			return THEMEPAGE_EXTENSIONs;
+		}
 	} else if (pageInvoked === 'summary') {
 		return DOCUMENT_EXTENSIONS;
 	}
@@ -49,6 +57,8 @@ interface FileUploadButtonProps {
 	//extensions?: string[];
 	isSubmitting?: boolean;
 	pageInvoked?: string;
+	fileNameExtension?: string;
+	uploadSection?: 'Template Extraction' | ''; // templateExtraction
 }
 
 export const FileUploadButton: FC<FileUploadButtonProps> = ({
@@ -57,6 +67,8 @@ export const FileUploadButton: FC<FileUploadButtonProps> = ({
 	//extensions = supportedExtensions,
 	isSubmitting = false,
 	pageInvoked = 'resources',
+	fileNameExtension = '',
+	uploadSection = '',
 }) => {
 	const [fileName, setFileName] = useState<string | null>(null);
 	const inputFileRef = useRef<HTMLInputElement>(null);
@@ -65,8 +77,13 @@ export const FileUploadButton: FC<FileUploadButtonProps> = ({
 		console.log('isSubmitting', isSubmitting);
 	}, [isSubmitting]);
 
-	const formats = determineSupportedFormats(pageInvoked);
-	const extensions = determineSupportedFormats(pageInvoked);
+	// const formats = determineSupportedFormats(pageInvoked);
+	const extensions = determineSupportedFormats(
+		pageInvoked,
+		fileNameExtension,
+		uploadSection,
+	);
+	const formattedExtensions = extensions.join(', ').toUpperCase();
 
 	const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files ? e.target.files[0] : null;
@@ -88,17 +105,22 @@ export const FileUploadButton: FC<FileUploadButtonProps> = ({
 
 		const ext = file?.name.split('.').pop()?.toLowerCase();
 		if (ext && !extensions.includes(ext)) {
-			toast.error(ext.toUpperCase() + ' file is not supported!', {
-				position: 'top-center',
-				autoClose: 5000,
-				hideProgressBar: false,
-				closeOnClick: true,
-				pauseOnHover: true,
-				draggable: true,
-				progress: undefined,
-				theme: 'light',
-				containerId: 'upload',
-			});
+			toast.error(
+				ext.toUpperCase() +
+					' file is not supported! Supported file types: ' +
+					formattedExtensions,
+				{
+					position: 'top-center',
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+					theme: 'light',
+					containerId: 'upload',
+				},
+			);
 			return;
 		}
 
