@@ -15,6 +15,7 @@ type SlideContainerProps = {
 		index: number,
 		canEdit: boolean,
 		exportToPdfMode: boolean,
+		scale: number,
 	) => JSX.Element; // Adjust the types accordingly
 	containerRef?: React.RefObject<HTMLDivElement>;
 	slideRef?: React.RefObject<HTMLDivElement>;
@@ -119,6 +120,7 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
 						index,
 						!isViewing && !isPresenting,
 						exportToPdfMode,
+						scale,
 					)}
 			</div>
 		</div>

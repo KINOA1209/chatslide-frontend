@@ -93,6 +93,7 @@ export default class Slide {
 	palette: PaletteKeys;
 	// is_logo_left: boolean;
 	logo_position: LogoPosition;
+	logo_numeric_position: Position;
 
 	constructor() {
 		const emptyGroup: Group = {
@@ -142,5 +143,6 @@ export default class Slide {
 		this.embed_code = ['', '', ''];
 		// this.is_logo_left = true;
 		this.logo_position = 'BottomLeft';
+		this.logo_numeric_position = {};
 	}
 }

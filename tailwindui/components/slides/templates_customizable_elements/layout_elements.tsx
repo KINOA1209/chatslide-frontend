@@ -25,6 +25,7 @@ import { New_Education_009_TemplateLayoutsConfig } from './templatesLayoutsConfi
 import { Event_Report_010_TemplateLayoutsConfig } from './templatesLayoutsConfigDetails/Event_Report_010_TemplateLayoutsConfig';
 import { Creative_Brief_011_TemplateLayoutsConfig } from './templatesLayoutsConfigDetails/Creative_Brief_011_TemplateLayoutsConfig';
 import { Business_Review_012_TemplateLayoutsConfig } from './templatesLayoutsConfigDetails/Business_Review_012_TemplateLayoutsConfig';
+import Position from '@/types/Position';
 export type LayoutElements = {
 	canvaCSS?: React.CSSProperties;
 	logoCSS?: React.CSSProperties;
@@ -50,6 +51,11 @@ export type LayoutElements = {
 	rndCSS?: React.CSSProperties;
 	titleAndContentColumnCSS?: React.CSSProperties;
 	handlerCSS?: React.CSSProperties;
+	titlePos?: Position;
+	topicPos?: Position;
+	subtopicPos?: Position;
+	contentPos?: Position[];
+	imgContainerPos?: Position[];
 };
 
 export type TemplateLayoutsConfig = {

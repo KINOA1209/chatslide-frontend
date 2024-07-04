@@ -11,25 +11,35 @@ export enum ElementType {
 }
 
 interface DragElementProps {
-	children: JSX.Element | JSX.Element[];
+	children: JSX.Element | JSX.Element[] | undefined;
 	type: ElementType;
 	canEdit: boolean;
+	scale?: number;
 	positions: Position[];
 	contentIndex: number;
 	handleSlideEdit: Function;
 	currentSlideIndex: number;
 	positionType: string;
+	defaultPos: Position[];
+	elementIndex: number;
+	onHover: (index: number) => void;
+	hoveredIndex: number;
 }
 
 export const DragElement = ({
 	children,
 	type,
 	canEdit,
+	scale,
 	positions,
 	contentIndex,
 	handleSlideEdit,
 	currentSlideIndex,
 	positionType,
+	defaultPos,
+	elementIndex,
+	onHover,
+	hoveredIndex,
 }: DragElementProps) => {
 	const [elementPos, setElementPos] = useState<{ x: number; y: number }>({
 		x: 0,
@@ -150,19 +160,11 @@ export const DragElement = ({
 		setElementSize({ width: ref.style.width, height: ref.style.height });
 		setElementPos({ x: pos.x, y: pos.y });
 
-		console.log(
-			'MYLOG: ',
-			ref.style.width,
-			ref.style.height,
-			parseInt(ref.style.width),
-			parseInt(ref.style.height),
-		);
-
 		const updatedPosition: Position[] = positions.map((position, index) =>
 			index === contentIndex
 				? {
-						x: pos.x,
-						y: pos.y,
+						x: pos.x / (scale ?? 1),
+						y: pos.y / (scale ?? 1),
 						width: parseInt(ref.style.width),
 						height: parseInt(ref.style.height),
 					}
@@ -174,7 +176,9 @@ export const DragElement = ({
 	return (
 		<Rnd
 			className={'ResizableElement w-full h-full'}
-			style={{ position: 'relative', transform: 'translate(0px, 0px)' }}
+			style={{
+				zIndex: `${hoveredIndex === elementIndex ? '200' : '100'}`,
+			}}
 			position={elementPos}
 			size={elementSize}
 			lockAspectRatio={false}
@@ -245,13 +249,17 @@ export const DragElement = ({
 				onMouseEnter={onEnterHandler}
 				onMouseLeave={onLeaveHandler}
 				onClick={() => {
-					setElementPos({ x: 0, y: 0 });
-					setElementSize({ width: 'max-content', height: 'max-content' });
+					setElementPos({
+						x: Number(defaultPos[contentIndex].x),
+						y: Number(defaultPos[contentIndex].y),
+					});
+					setElementSize({
+						width: Number(defaultPos[contentIndex].width),
+						height: Number(defaultPos[contentIndex].height),
+					});
 					const updatedPosition: Position[] = positions.map(
 						(position, index) =>
-							index === contentIndex
-								? { x: 0, y: 0, width: -1, height: -1 }
-								: position,
+							index === contentIndex ? defaultPos[contentIndex] : position,
 					);
 					handleSlideEdit(updatedPosition, currentSlideIndex, positionType);
 				}}
@@ -262,6 +270,7 @@ export const DragElement = ({
 				style={elementCSS}
 				onMouseEnter={() => {
 					setIsHover(true);
+					onHover(elementIndex);
 				}}
 				onMouseLeave={() => {
 					setIsHover(false);

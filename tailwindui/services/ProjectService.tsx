@@ -301,6 +301,7 @@ class ProjectService {
 			slide.subtopic_position = slideData.subtopic_position || {};
 			slide.content_positions = slideData.content_positions || [{}, {}, {}];
 			slide.image_container_positions = slideData.image_container_positions || [{}, {}, {}];
+			slide.logo_numeric_position = slideData.logo_numeric_position || {};
 
 			// console.log('slide.images', slide.images);
 			if (index === 0) {
