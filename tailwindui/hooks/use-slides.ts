@@ -11,6 +11,7 @@ import SlidesService from '@/services/SlidesService';
 import dynamic from 'next/dynamic';
 import { LayoutKeys } from '@/components/slides/slideLayout';
 import Resource from '@/models/Resource';
+import Position from '@/types/Position';
 // import { colorPreviews } from '@/app/(feature)/design/TemplateSelector';
 // Dynamically import the component with SSR disabled
 
@@ -350,10 +351,18 @@ export const useSlides = () => {
 		logo: string,
 		selectedLogo: Resource[],
 		logoPosition: LogoPosition,
-    selectedBackground: Resource[],
+		logoNumericPosition: Position,
+		selectedBackground: Resource[],
 		applyToAll: boolean,
 	) => {
-		console.log('-- setLogo: ', { logo, selectedLogo, logoPosition, selectedBackground, applyToAll });
+		console.log('-- setLogo: ', {
+			logo,
+			selectedLogo,
+			logoPosition,
+      logoNumericPosition,
+			selectedBackground,
+			applyToAll,
+		});
 
 		let newSlides = [];
 		const logoUrl = selectedLogo[0]?.thumbnail_url || '';
@@ -364,7 +373,8 @@ export const useSlides = () => {
 					logo: logo,
 					logo_url: logoUrl,
 					logo_position: logoPosition,
-          background_url: selectedBackground[0]?.thumbnail_url || '',
+					background_url: selectedBackground[0]?.thumbnail_url || '',
+					logo_numeric_position: logoNumericPosition,
 				};
 			});
 		} else {
@@ -375,7 +385,8 @@ export const useSlides = () => {
 						logo: logo,
 						logo_url: logoUrl,
 						logo_position: logoPosition,
-            background_url: selectedBackground[0]?.thumbnail_url || '',
+						background_url: selectedBackground[0]?.thumbnail_url || '',
+						logo_numeric_position: logoNumericPosition,
 					};
 				}
 				return slide;

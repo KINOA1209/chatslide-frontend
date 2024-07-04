@@ -16,6 +16,7 @@ import { PlusLabel } from '../ui/GrayLabel';
 import { LogoPosition } from '@/models/Slide';
 import Toggle from './Toggle';
 import Project from '@/models/Project';
+import Position from '@/types/Position';
 
 export const BrandingButton: React.FC<{}> = () => {
 	const { project, updateProject, bulkUpdateProject } = useProject();
@@ -67,12 +68,27 @@ export const BrandingButton: React.FC<{}> = () => {
 			logoMode,
 			selectedLogo,
 			selectedTemplateLogoPosition,
+      {}, // logo numeric position
 			selectedBackground,
 			applyToAll,
 		);
 
 		setShowModal(false);
 	};
+
+
+	function setNumericLogoPosition(p: Position) {
+		updateBranding(
+			logoMode,
+			selectedLogo,
+			selectedTemplateLogoPosition,
+			p,
+			selectedBackground,
+			true,
+		);
+    setShowModal(false);
+	}
+
 
 	const [selectedTemplateLogoPosition, setSelectedTemplateLogoPosition] =
 		useState(slides[slideIndex]?.logo_position || 'BottomLeft');
@@ -102,6 +118,7 @@ export const BrandingButton: React.FC<{}> = () => {
 					setSelectedBackground={setSelectedBackground}
 					logoPosition={selectedTemplateLogoPosition}
 					setLogoPosition={setSelectedTemplateLogoPosition}
+					setNumericLogoPosition={setNumericLogoPosition}
 				/>
 				<Instruction>
 					Change branding color and fonts on

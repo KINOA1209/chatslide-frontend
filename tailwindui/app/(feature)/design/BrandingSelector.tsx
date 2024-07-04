@@ -8,6 +8,8 @@ import { useEffect, useState } from 'react';
 import PaywallModal from '@/components/paywallModal';
 import { LogoPosition } from '@/models/Slide';
 import { getBrand } from '@/utils/getHost';
+import { useSlides } from '@/hooks/use-slides';
+import Position from '@/types/Position';
 
 const brandingOptions = [
 	{
@@ -55,6 +57,7 @@ const BrandingSelector: React.FC<{
 	logoPosition: LogoPosition;
 	setLogoPosition: (position: LogoPosition) => void;
 	buttonCols?: number;
+	setNumericLogoPosition?: (position: Position) => void;
 }> = ({
 	logoMode,
 	setLogoMode,
@@ -65,9 +68,11 @@ const BrandingSelector: React.FC<{
 	logoPosition,
 	setLogoPosition,
 	buttonCols = 3,
+  setNumericLogoPosition
 }) => {
 	const { isPaidUser } = useUser();
 	const [showPaywall, setShowPaywall] = useState(false);
+	const { slides, slideIndex, updateBranding } = useSlides();
 
 	useEffect(() => {
 		console.log('logoMode', logoMode);
@@ -142,6 +147,23 @@ const BrandingSelector: React.FC<{
 						name='logoPosition'
 						cols={buttonCols}
 					/>
+					{setNumericLogoPosition &&
+            slides?.[slideIndex]?.logo_numeric_position &&
+						Object.keys(slides[slideIndex].logo_numeric_position).length >
+							0 && (
+							<Instruction>
+								<div
+									className='text-blue-600 cursor-pointer'
+									onClick={() =>
+										setNumericLogoPosition(
+											slides[slideIndex].logo_numeric_position,
+										)
+									}
+								>
+									Apply custom logo position of this page to all pages.
+								</div>
+							</Instruction>
+						)}
 				</div>
 			)}
 
