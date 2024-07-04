@@ -1,6 +1,6 @@
 'use client';
 
-import { SubscriptionModal } from '@/app/(account)/account/page';
+import SubscriptionModal from '@/app/(account)/SubscriptionModal';
 import MultiwayToggle from '@/components/button/MultiwayToggle';
 import { Explanation } from '@/components/ui/Text';
 import { useUser } from '@/hooks/use-user';
