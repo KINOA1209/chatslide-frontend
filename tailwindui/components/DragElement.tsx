@@ -53,8 +53,8 @@ export const DragElement = ({
 	useEffect(() => {
 		setElementPos(() => {
 			if (
-				positions[contentIndex]?.x === undefined ||
-				positions[contentIndex]?.y === undefined
+				positions?.[contentIndex]?.x === undefined ||
+				positions?.[contentIndex]?.y === undefined
 			)
 				return { x: 0, y: 0 };
 			else
@@ -64,7 +64,7 @@ export const DragElement = ({
 				};
 		});
 		setElementSize(() => {
-			if (!positions[contentIndex]?.width || !positions[contentIndex]?.height)
+			if (!positions?.[contentIndex]?.width || !positions?.[contentIndex]?.height)
 				return { width: 'max-content', height: 'max-content' };
 			return {
 				width: Number(positions[contentIndex].width) + 'px',
