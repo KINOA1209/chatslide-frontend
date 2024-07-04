@@ -19,6 +19,8 @@ import Project from '@/models/Project';
 import Folder from '@/models/Folder';
 import UserService from '@/services/UserService';
 import { useTeam } from '@/hooks/use-team';
+import { isChatslide } from '@/utils/getHost';
+import { getUserCountryCode } from '@/utils/userLocation';
 
 export default function Dashboard() {
 
@@ -64,6 +66,37 @@ export default function Dashboard() {
     const hasNonDefaultFolder = folders.some(folder => folder.folderName !== 'drlambda-default');
     setHasFolder(hasNonDefaultFolder);
   }, [folders]);
+
+  useEffect(() => {
+		const submitPartialSurvey = async () => {
+			const platform = isChatslide() ? 'chatslide' : 'drlambda';
+
+			try {
+				// Get the user's country code
+				const code = await getUserCountryCode();
+
+				// Prepare the formData object with the resolved location
+				const formData = {
+					platform: platform,
+					location: code,
+				};
+
+				// Send the data to the server
+				await fetch('/api/user/save_survey', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						Authorization: `Bearer ${token}`,
+					},
+					body: JSON.stringify({ OnboardingSurvey: formData }),
+				});
+			} catch (error) {
+				console.error('Failed to submit partial survey:', error);
+			}
+		};
+
+		submitPartialSurvey(); // Call the async function to submit the survey
+	}, [token]);
 
   const fetchProjects = async () => {
     try {
