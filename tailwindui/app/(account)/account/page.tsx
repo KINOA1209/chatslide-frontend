@@ -37,7 +37,8 @@ import { getBrand } from '@/utils/getHost';
 import { UnlimitedUpgrade } from '@/components/slides/card/UnlimitedUpgrade';
 import { trackRewardfulConversion } from '@/components/integrations/Rewardful';
 import { WrappableRow } from '@/components/layout/WrappableRow';
-import Modal from '@/components/ui/Modal';
+import SubscriptionModal from '../SubscriptionModal';
+
 
 const Profile = () => {
 	const { username, email, token, setUsername, user } = useUser();
@@ -444,28 +445,6 @@ const Affiliate = () => {
 				</Explanation>
 			)}
 		</Card>
-	);
-};
-
-interface SubscriptionModalProps {
-	showManageSubscription: boolean;
-	setShowManageSubscription: (show: boolean) => void;
-}
-
-export const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
-	showManageSubscription,
-	setShowManageSubscription,
-}) => {
-	return (
-		<Modal
-			showModal={showManageSubscription}
-			setShowModal={setShowManageSubscription}
-			title='Manage Subscription'
-			description='You can manage your subscription by chatting with our support agent on the lower left.'
-			onConfirm={() => {
-				setShowManageSubscription(false);
-			}}
-		/>
 	);
 };
 
