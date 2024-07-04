@@ -521,6 +521,7 @@ export const templateDispatch = (
 export const uneditableTemplateDispatch = (
 	slide: Slide,
 	index: number,
+  canEdit: boolean = false,  // this param is not used, adding here for build to pass
 	exportToPdfMode: boolean = false,
 	scale: number = 1,
 ) =>

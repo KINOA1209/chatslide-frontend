@@ -723,6 +723,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	const uneditableTemplateDispatch = (
 		slide: Slide,
 		index: number,
+    canEdit: boolean = false, // unused, put here to let build pass
 		exportToPdfMode: boolean = false,
 		scale: number,
 	) =>
