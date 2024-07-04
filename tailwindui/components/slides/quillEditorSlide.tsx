@@ -356,7 +356,7 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 						'italic',
 						style?.fontStyle === 'italic' ? 'italic' : 'normal',
 					);
-					this.format('align', style?.textAlign || 'left');
+					// this.format('align', style?.textAlign || 'left');
 					this.format('direction', language === 'Arabic' || language === 'Hebrew' ? 'rtl' : 'ltr',)
 				}
 
@@ -376,9 +376,9 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 						case 'italic':
 							this.domNode.style.fontStyle = value;
 							break;
-						case 'align':
-							this.domNode.style.textAlign = value;
-							break;
+						// case 'align':
+						// 	this.domNode.style.textAlign = value;
+						// 	break;
 						case 'direction':
 							this.domNode.style.direction = value;
 							break;
