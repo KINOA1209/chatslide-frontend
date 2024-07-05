@@ -155,7 +155,7 @@ export const DragElement = ({
 					}
 				: position,
 		);
-		handleSlideEdit(updatedPosition, currentSlideIndex, positionType);
+		handleSlideEdit(updatedPosition, currentSlideIndex, positionType, contentIndex, true);
 	};
 
 	const onHandleResizeStop = (
@@ -179,7 +179,7 @@ export const DragElement = ({
 					}
 				: position,
 		);
-		handleSlideEdit(updatedPosition, currentSlideIndex, positionType);
+		handleSlideEdit(updatedPosition, currentSlideIndex, positionType, contentIndex, true);
 	};
 
 	return (
@@ -270,7 +270,7 @@ export const DragElement = ({
 						(position, index) =>
 							index === contentIndex ? defaultPos[contentIndex] : position,
 					);
-					handleSlideEdit(updatedPosition, currentSlideIndex, positionType);
+					handleSlideEdit(updatedPosition, currentSlideIndex, positionType, contentIndex, true);
 				}}
 			>
 				<MdRefresh size={16} color={'white'} />
