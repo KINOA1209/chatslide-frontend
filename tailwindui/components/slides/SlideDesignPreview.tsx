@@ -169,7 +169,7 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 			// canEdit,
 			false, // canEdit
 			exportToPdfMode,
-      1, // scale
+			1, // scale
 			false,
 			() => {},
 			() => {},

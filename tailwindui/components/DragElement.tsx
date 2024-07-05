@@ -51,9 +51,6 @@ export const DragElement = ({
 	}>({ width: 'max-content', height: 'max-content' });
 
 	useEffect(() => {
-		console.log("MYLOG: currentSlideIndex", currentSlideIndex);
-		console.log("MYLOG: positions", positions);
-		console.log("MYLOG: defaultPos", defaultPos);
 		setElementPos(() => {
 			if (
 				positions?.[contentIndex]?.x === undefined ||
