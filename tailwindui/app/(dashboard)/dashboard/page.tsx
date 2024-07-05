@@ -68,6 +68,8 @@ export default function Dashboard() {
   }, [folders]);
 
   useEffect(() => {
+    if (!token) return;
+
 		const submitPartialSurvey = async () => {
 			const platform = isChatslide() ? 'chatslide' : 'drlambda';
 
