@@ -51,12 +51,18 @@ export const DragElement = ({
 	}>({ width: 'max-content', height: 'max-content' });
 
 	useEffect(() => {
+		console.log("MYLOG: currentSlideIndex", currentSlideIndex);
+		console.log("MYLOG: positions", positions);
+		console.log("MYLOG: defaultPos", defaultPos);
 		setElementPos(() => {
 			if (
 				positions?.[contentIndex]?.x === undefined ||
 				positions?.[contentIndex]?.y === undefined
 			)
-				return { x: 0, y: 0 };
+				return {
+					x: defaultPos[contentIndex].x ?? 0,
+					y: defaultPos[contentIndex].y ?? 0,
+				};
 			else
 				return {
 					x: Number(positions[contentIndex].x),
@@ -64,8 +70,14 @@ export const DragElement = ({
 				};
 		});
 		setElementSize(() => {
-			if (!positions?.[contentIndex]?.width || !positions?.[contentIndex]?.height)
-				return { width: 'max-content', height: 'max-content' };
+			if (
+				!positions?.[contentIndex]?.width ||
+				!positions?.[contentIndex]?.height
+			)
+				return {
+					width: defaultPos[contentIndex].width ?? 'max-content',
+					height: defaultPos[contentIndex].height ?? 'max-content',
+				};
 			return {
 				width: Number(positions[contentIndex].width) + 'px',
 				height: Number(positions[contentIndex].height) + 'px',
