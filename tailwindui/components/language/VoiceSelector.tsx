@@ -178,13 +178,13 @@ const VoiceSelector: React.FC<{
 								}}
 							>
 								{/* Grouping voice options */}
-								<optgroup label="Cloned Voices">
+								{/* <optgroup label="Cloned Voices">
 									{voiceOptions.filter(isClonedVoice).map((voice) => (
 										<option key={voice} value={voice}>
 											{formatVoiceName(voice)}
 										</option>
 									))}
-								</optgroup>
+								</optgroup> */}
 								<optgroup label="Default Voices">
 									{voiceOptions.filter((voice) => !isClonedVoice(voice)).map((voice) => (
 										<option key={voice} value={voice}>
