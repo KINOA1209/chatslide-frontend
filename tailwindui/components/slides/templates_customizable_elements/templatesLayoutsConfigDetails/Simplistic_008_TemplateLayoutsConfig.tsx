@@ -45,7 +45,7 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 			height: '100%', // Equivalent to h-full
 			gap: '2rem',
 		},
-		titlePos: { x: 80, y: 130, width: 390, height: 70 },
+		titlePos: { x: 80, y: 130, width: 390, height: 200 },
 	},
 	Cover_img_1_layout: {
 		canvaCSS: {
@@ -115,7 +115,7 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 		rndCSS: {
 			zIndex: '51',
 		},
-		titlePos: { x: 80, y: 130, width: 390, height: 70 },
+		titlePos: { x: 80, y: 130, width: 390, height: 200 },
 		imgContainerPos: [{ x: 480, y: 30, width: 450, height: 480 }],
 	},
 	Col_1_img_0_layout: {
@@ -159,7 +159,7 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 			display: 'none',
 		},
 		topicPos: { x: 50, y: 50, width: 860, height: 50 },
-		subtopicPos: { x: 50, y: 104, width: 860, height: 50 },
+		subtopicPos: { x: 50, y: 104, width: 860, height: 80 },
 		contentPos: [{ x: 50, y: 200, width: 860, height: 240 }],
 	},
 	Col_2_img_0_layout: {
@@ -262,9 +262,9 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 		topicPos: { x: 50, y: 50, width: 860, height: 50 },
 		subtopicPos: { x: 50, y: 104, width: 860, height: 50 },
 		contentPos: [
-			{ x: 50, y: 200, width: 250, height: 200 },
-			{ x: 350, y: 200, width: 250, height: 200 },
-			{ x: 650, y: 200, width: 250, height: 200 },
+			{ x: 50, y: 200, width: 250, height: 240 },
+			{ x: 350, y: 200, width: 250, height: 240 },
+			{ x: 650, y: 200, width: 250, height: 240 },
 		],
 	},
 	Col_2_img_1_layout: {
@@ -336,8 +336,8 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 			zIndex: '51',
 		},
 		topicPos: { x: 50, y: 50, width: 430, height: 50 },
-		subtopicPos: { x: 50, y: 104, width: 430, height: 100 },
-		contentPos: [{ x: 50, y: 200, width: 430, height: 250 }],
+		subtopicPos: { x: 50, y: 104, width: 430, height: 80 },
+		contentPos: [{ x: 50, y: 200, width: 430, height: 300 }],
 		imgContainerPos: [{ x: 480, y: 30, width: 450, height: 480 }],
 	},
 	Col_1_img_1_layout: {
@@ -478,7 +478,7 @@ export const Simplistic_008_TemplateLayoutsConfig: {
 			zIndex: '51',
 		},
 		topicPos: { x: 50, y: 50, width: 860, height: 50 },
-		subtopicPos: { x: 50, y: 104, width: 860, height: 50 },
+		subtopicPos: { x: 50, y: 104, width: 860, height: 80 },
 		contentPos: [
 			{ x: 50, y: 200, width: 405, height: 100 },
 			{ x: 505, y: 200, width: 405, height: 100 },

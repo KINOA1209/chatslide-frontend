@@ -56,7 +56,10 @@ export const DragElement = ({
 				positions?.[contentIndex]?.x === undefined ||
 				positions?.[contentIndex]?.y === undefined
 			)
-				return { x: 0, y: 0 };
+				return {
+					x: defaultPos[contentIndex].x ?? 0,
+					y: defaultPos[contentIndex].y ?? 0,
+				};
 			else
 				return {
 					x: Number(positions[contentIndex].x),
@@ -64,8 +67,14 @@ export const DragElement = ({
 				};
 		});
 		setElementSize(() => {
-			if (!positions?.[contentIndex]?.width || !positions?.[contentIndex]?.height)
-				return { width: 'max-content', height: 'max-content' };
+			if (
+				!positions?.[contentIndex]?.width ||
+				!positions?.[contentIndex]?.height
+			)
+				return {
+					width: defaultPos[contentIndex].width ?? 'max-content',
+					height: defaultPos[contentIndex].height ?? 'max-content',
+				};
 			return {
 				width: Number(positions[contentIndex].width) + 'px',
 				height: Number(positions[contentIndex].height) + 'px',
@@ -146,7 +155,7 @@ export const DragElement = ({
 					}
 				: position,
 		);
-		handleSlideEdit(updatedPosition, currentSlideIndex, positionType);
+		handleSlideEdit(updatedPosition, currentSlideIndex, positionType, contentIndex, true);
 	};
 
 	const onHandleResizeStop = (
@@ -170,7 +179,7 @@ export const DragElement = ({
 					}
 				: position,
 		);
-		handleSlideEdit(updatedPosition, currentSlideIndex, positionType);
+		handleSlideEdit(updatedPosition, currentSlideIndex, positionType, contentIndex, true);
 	};
 
 	return (
@@ -261,7 +270,7 @@ export const DragElement = ({
 						(position, index) =>
 							index === contentIndex ? defaultPos[contentIndex] : position,
 					);
-					handleSlideEdit(updatedPosition, currentSlideIndex, positionType);
+					handleSlideEdit(updatedPosition, currentSlideIndex, positionType, contentIndex, true);
 				}}
 			>
 				<MdRefresh size={16} color={'white'} />
