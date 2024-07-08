@@ -459,6 +459,8 @@ export default function Topic() {
 
 				if (!topic) {
 					// if there is no topic (file mode), and cannot summarize, end early
+					setShowGenerationStatusModal(false);
+					setIsSubmitting(false);
 					return;
 				}
 			}
