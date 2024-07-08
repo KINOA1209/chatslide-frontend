@@ -352,7 +352,7 @@ export default function Studio() {
 					</Instruction>
 					<Instruction>
 						<div>
-							<b>💸 Monetize Your Content: </b> Get paid for your shared content
+							<b>💸 Join Affiliate Program: </b> Get paid for your shared content
 							when they drive conversion!
 						</div>
 						<a

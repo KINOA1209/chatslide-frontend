@@ -105,8 +105,8 @@ const ctas = [
 	{
 		href: 'https://blog.drlambda.ai/how-to-make-money-with-your-high-quality-content-using-chatslide-ai/',
 		imgSrc: FillOutFormImg.src,
-		alt: 'Monetize your content',
-		instruction: 'Monetize your content',
+		alt: 'Join affiliate program',
+		instruction: 'Join affiliate program',
 		emoji: '💸💸💸💸💸',
 		explanation: '5 mins',
 	},
