@@ -26,6 +26,7 @@ export const DOCUMENT_EXTENSIONS = [
 	'm4a',
 	'png',
 	'jpg',
+  'jpeg'
 ];
 export const PPTX_EXTENSION = ['pptx', 'ppt'];
 export const THEMEPAGE_EXTENSIONs = [...MEDIA_EXTENSIONS, ...PPTX_EXTENSION];
