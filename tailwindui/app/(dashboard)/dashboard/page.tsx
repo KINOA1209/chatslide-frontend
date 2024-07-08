@@ -98,7 +98,7 @@ export default function Dashboard() {
 		};
 
 		submitPartialSurvey(); // Call the async function to submit the survey
-	}, []);
+	}, [token]);
 
   const fetchProjects = async () => {
     try {
