@@ -57,8 +57,8 @@ export const DragElement = ({
 				positions?.[contentIndex]?.y === undefined
 			)
 				return {
-					x: defaultPos[contentIndex].x ?? 0,
-					y: defaultPos[contentIndex].y ?? 0,
+					x: defaultPos?.[contentIndex]?.x ?? 0,
+					y: defaultPos?.[contentIndex]?.y ?? 0,
 				};
 			else
 				return {
@@ -72,8 +72,8 @@ export const DragElement = ({
 				!positions?.[contentIndex]?.height
 			)
 				return {
-					width: defaultPos[contentIndex].width ?? 'max-content',
-					height: defaultPos[contentIndex].height ?? 'max-content',
+					width: defaultPos?.[contentIndex]?.width ?? 'max-content',
+					height: defaultPos?.[contentIndex]?.height ?? 'max-content',
 				};
 			return {
 				width: Number(positions[contentIndex].width) + 'px',
