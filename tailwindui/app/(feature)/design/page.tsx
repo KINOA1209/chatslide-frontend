@@ -299,6 +299,11 @@ export default function DesignPage() {
 			text: 'Fewer images',
 			explanation: '30% decks contain images',
 		},
+		{
+			value: 'no_image',
+			text: 'No image',
+			explanation: 'No image in the slides, you can still add later',
+		},
 	];
 
 	const [imageLicense, setImageLicense] = useState('all');
@@ -339,48 +344,58 @@ export default function DesignPage() {
 		}
 		try {
 			if (project.id && project.topic && token) {
-				const { slides, additional_images } = await SlidesService.initImages(
-					project.id,
-					project.topic,
-					imageLicense,
-					imageAmount,
-					token,
-				);
+				let newSlides = slides;
+				let additional_images: string[] = [];
 
-				const newSlides = slides.map((slide) => {
-					return {
-						...slide,
-						template: template,
-						palette: colorPalette,
-						background_color: hasSelectedCustomTemplateBgColor
-							? selectedTemplateBgColor
-							: undefined,
-						titleFontFamily: HasSelectedCustomizedTemplateTitleFontFamily
-							? selectedTemplateTitleFontFamily
-							: '',
-						subtitleFontFamily: HasSelectedCustomizedTemplateSubtitleFontFamily
-							? selectedTemplateSubtitleFontFamily
-							: '',
-						contentFontFamily: HasSelectedCustomizedTemplateContentFontFamily
-							? selectedTemplateContentFontFamily
-							: '',
-						titleFontColor: hasSelectedCustomizedTemplateTitleFontColor
-							? selectedTemplateTitleFontColor
-							: '',
-						subtitleFontColor: hasSelectedCustomizedTemplateSubtitleFontColor
-							? selectedTemplateSubtitleFontColor
-							: '',
-						contentFontColor: hasSelectedCustomizedTemplateContentFontColor
-							? selectedTemplateContentFontColor
-							: '',
-						logo: logoMode,
-						logo_url: selectedLogo?.[0]?.thumbnail_url || '',
-						background_url: selectedBackground?.[0]?.thumbnail_url || '',
-						media_type: ['image', 'image', 'image'],
-						transcript: '',
-						logo_position: selectedLogoPosition,
-					};
-				});
+				if (imageAmount !== 'no_image') {
+					// Destructuring the result into a temporary variable and then reassigning the existing variables
+					const result = await SlidesService.initImages(
+						project.id,
+						project.topic,
+						imageLicense,
+						imageAmount,
+						token,
+					);
+
+					newSlides = result.slides;
+					additional_images = result.additional_images;
+
+					newSlides = slides.map((slide) => {
+						return {
+							...slide,
+							template: template,
+							palette: colorPalette,
+							background_color: hasSelectedCustomTemplateBgColor
+								? selectedTemplateBgColor
+								: undefined,
+							titleFontFamily: HasSelectedCustomizedTemplateTitleFontFamily
+								? selectedTemplateTitleFontFamily
+								: '',
+							subtitleFontFamily:
+								HasSelectedCustomizedTemplateSubtitleFontFamily
+									? selectedTemplateSubtitleFontFamily
+									: '',
+							contentFontFamily: HasSelectedCustomizedTemplateContentFontFamily
+								? selectedTemplateContentFontFamily
+								: '',
+							titleFontColor: hasSelectedCustomizedTemplateTitleFontColor
+								? selectedTemplateTitleFontColor
+								: '',
+							subtitleFontColor: hasSelectedCustomizedTemplateSubtitleFontColor
+								? selectedTemplateSubtitleFontColor
+								: '',
+							contentFontColor: hasSelectedCustomizedTemplateContentFontColor
+								? selectedTemplateContentFontColor
+								: '',
+							logo: logoMode,
+							logo_url: selectedLogo?.[0]?.thumbnail_url || '',
+							background_url: selectedBackground?.[0]?.thumbnail_url || '',
+							media_type: ['image', 'image', 'image'],
+							transcript: '',
+							logo_position: selectedLogoPosition,
+						};
+					});
+				}
 
 				bulkUpdateProject({
 					logo: logoMode,
@@ -432,7 +447,8 @@ export default function DesignPage() {
 			color_palette: colorPalette,
 			selected_template_bg_color: selectedTemplateBgColor,
 			selected_template_title_font_family: selectedTemplateTitleFontFamily,
-			selected_template_subtitle_font_family: selectedTemplateSubtitleFontFamily,
+			selected_template_subtitle_font_family:
+				selectedTemplateSubtitleFontFamily,
 			selected_template_content_font_family: selectedTemplateContentFontFamily,
 			selected_template_content_font_color: selectedTemplateContentFontColor,
 			selected_template_subtitle_font_color: selectedTemplateSubtitleFontColor,
@@ -444,7 +460,7 @@ export default function DesignPage() {
 			image_amount: imageAmount,
 			image_license: imageLicense,
 		};
-	
+
 		try {
 			await DesignSettingsService.createDesignSettings(defaultProfile, token);
 			toast.success('Profile saved successfully');
@@ -453,7 +469,7 @@ export default function DesignPage() {
 			toast.error('Error saving profile');
 		}
 	};
-	
+
 	const loadFromProfile = async (token: string) => {
 		try {
 			const profile = await DesignSettingsService.getDesignSettings(token);
@@ -474,30 +490,48 @@ export default function DesignPage() {
 					image_amount,
 					image_license,
 				} = profile;
-	
+
 				setTemplate(template);
 				setColorPalette(color_palette);
 				setSelectedTemplateBgColor(selected_template_bg_color);
 				setSelectedTemplateTitleFontFamily(selected_template_title_font_family);
-				setSelectedTemplateSubtitleFontFamily(selected_template_subtitle_font_family);
-				setSelectedTemplateContentFontFamily(selected_template_content_font_family);
-				setSelectedTemplateContentFontColor(selected_template_content_font_color);
-				setSelectedTemplateSubtitleFontColor(selected_template_subtitle_font_color);
+				setSelectedTemplateSubtitleFontFamily(
+					selected_template_subtitle_font_family,
+				);
+				setSelectedTemplateContentFontFamily(
+					selected_template_content_font_family,
+				);
+				setSelectedTemplateContentFontColor(
+					selected_template_content_font_color,
+				);
+				setSelectedTemplateSubtitleFontColor(
+					selected_template_subtitle_font_color,
+				);
 				setSelectedTemplateTitleFontColor(selected_template_title_font_color);
-	
-				setCustomizedTemplateContentFontFamily(selected_template_content_font_family);
-				setCustomizedTemplateTitleFontFamily(selected_template_title_font_family);
-				setCustomizedTemplateSubtitleFontFamily(selected_template_subtitle_font_family);
-				setCustomizedTemplateContentFontColor(selected_template_content_font_color);
-				setCustomizedTemplateSubtitleFontColor(selected_template_subtitle_font_color);
+
+				setCustomizedTemplateContentFontFamily(
+					selected_template_content_font_family,
+				);
+				setCustomizedTemplateTitleFontFamily(
+					selected_template_title_font_family,
+				);
+				setCustomizedTemplateSubtitleFontFamily(
+					selected_template_subtitle_font_family,
+				);
+				setCustomizedTemplateContentFontColor(
+					selected_template_content_font_color,
+				);
+				setCustomizedTemplateSubtitleFontColor(
+					selected_template_subtitle_font_color,
+				);
 				setCustomizedTemplateTitleFontColor(selected_template_title_font_color);
-	
+
 				setSelectedLogo(selected_logo);
 				setSelectedBackground(selected_background);
 				setSelectedLogoPosition(selected_logo_position);
 				setImageAmount(image_amount);
 				setImageLicense(image_license);
-	
+
 				toast.success('Profile loaded successfully');
 			} else {
 				toast.error('No profile found');
@@ -511,11 +545,11 @@ export default function DesignPage() {
 	const handleLoadFromProfile = (token: string) => () => {
 		loadFromProfile(token);
 	};
-	
+
 	const handleSaveToDefaultProfile = (token: string) => () => {
 		saveToDefaultProfile(token);
 	};
-	
+
 	return (
 		<section className='design-page-content-section relative'>
 			<ToastContainer />
@@ -617,24 +651,26 @@ export default function DesignPage() {
 									cols={1}
 								/>
 							</div>
-							<div>
-								<Instruction boldenFont={true}>
-									What image license do you want to use?
-								</Instruction>
-								{/* <Explanation>
+							{imageAmount != 'no_image' && (
+								<div>
+									<Instruction boldenFont={true}>
+										What image license do you want to use?
+									</Instruction>
+									{/* <Explanation>
 									An image license is a set of rules that tell you how you can
 									use a picture. <br />
 									You are free to use images with a creative license or stock
 									pictures for commercial use. <br />
 								</Explanation> */}
-								<RadioButton
-									options={imageLicenseOptions}
-									selectedValue={imageLicense}
-									setSelectedValue={setImageLicense}
-									name='imageLicense'
-									cols={1}
-								/>
-							</div>
+									<RadioButton
+										options={imageLicenseOptions}
+										selectedValue={imageLicense}
+										setSelectedValue={setImageLicense}
+										name='imageLicense'
+										cols={1}
+									/>
+								</div>
+							)}
 						</Card>
 
 						<Card>
@@ -671,7 +707,7 @@ export default function DesignPage() {
 						</Card>
 
 						<Card>
-							<BigTitle>Settings (beta)</BigTitle>
+							<BigTitle>Save to Profile</BigTitle>
 							<Instruction>
 								You can save all the settings on this page to your profile, and
 								apply it in the future for a deck with the same design.
