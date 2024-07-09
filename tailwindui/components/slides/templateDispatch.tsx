@@ -475,7 +475,7 @@ export const templateDispatch = (
 							</div>
 						))
 			}
-			content_positions={slide.content_positions || {}}
+			content_positions={slide.content_positions || [{}, {}, {}]}
 			imgs={slide.images as string[]}
 			update_callback={updateImgUrlArray(index)}
 			isCoverPage={isCoverPage}
@@ -512,7 +512,7 @@ export const templateDispatch = (
 			// initialTemplateTitleFontFamily={initialTemplateTitleFontFamily}
 			media_types={slide.media_types}
 			logo_position={slide.logo_position}
-			logo_numeric_position={slide.logo_numeric_position}
+			logo_numeric_position={slide.logo_numeric_position || {}}
 		/>
 	);
 	// }
