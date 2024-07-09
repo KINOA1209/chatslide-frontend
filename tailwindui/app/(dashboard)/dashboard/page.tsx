@@ -68,7 +68,7 @@ export default function Dashboard() {
   }, [folders]);
 
   useEffect(() => {
-    if (!token) return;
+		if (!token) return;
 
 		const submitPartialSurvey = async () => {
 			const platform = isChatslide() ? 'chatslide' : 'drlambda';
@@ -92,12 +92,19 @@ export default function Dashboard() {
 					},
 					body: JSON.stringify({ OnboardingSurvey: formData }),
 				});
+
+				// Store a flag in local storage to indicate the survey has been submitted
+				localStorage.setItem('partialSurveySubmitted', 'true');
 			} catch (error) {
 				console.error('Failed to submit partial survey:', error);
 			}
 		};
 
-		submitPartialSurvey(); // Call the async function to submit the survey
+		// Check if the survey has already been submitted
+		const surveySubmitted = localStorage.getItem('partialSurveySubmitted');
+		if (!surveySubmitted) {
+			submitPartialSurvey(); // Call the async function to submit the survey
+		}
 	}, [token]);
 
   const fetchProjects = async () => {
