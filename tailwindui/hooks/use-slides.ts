@@ -14,6 +14,21 @@ import Resource from '@/models/Resource';
 import Position from '@/types/Position';
 // import { colorPreviews } from '@/app/(feature)/design/TemplateSelector';
 // Dynamically import the component with SSR disabled
+import moment from 'moment';
+
+// Customize the calendar format for moment.js
+moment.updateLocale('en', {
+	calendar: {
+		sameDay: '[Today at] h:mm A',
+		nextDay: '[Tomorrow at] h:mm A',
+		nextWeek: 'dddd [at] h:mm A',
+		lastDay: '[Yesterday at] h:mm A',
+		lastWeek: '[Last] dddd [at] h:mm A',
+		sameElse: 'MMM D, YYYY',
+	},
+});
+
+import { SlidesVersion } from '@/components/slides/SlidesVersionHistoryWindow';
 
 const colorPreviews: any = dynamic(
 	() => import('@/app/(feature)/design/TemplateSelector'),
@@ -24,7 +39,7 @@ const colorPreviews: any = dynamic(
 
 const useSlidesBear = createBearStore<Slide[]>()('slides', [], true);
 const useSlideIndex = createBearStore<number>()('slideIndex', 0, true);
-const useSlidesHistoryBear = createBearStore<Slide[][]>()(
+const useSlidesHistoryBear = createBearStore<SlidesVersion[]>()(
 	'slidesHistory',
 	[],
 	true,
@@ -340,14 +355,14 @@ export const useSlides = () => {
 
 		// setSlideIndex(0);
 		setVersion(0);
-		setSlidesHistory([slides]);
+		setSlidesHistory([{ slides, timestamp: moment().calendar() }]); // Add timestamp here
 		setSlidesHistoryIndex(0);
 		console.log('-- init slides: ', { slidesStatus, slides });
 
 		slidesStatus = SlidesStatus.Inited;
 	};
 
-  const updateBranding = (
+	const updateBranding = (
 		logo: string,
 		selectedLogo: Resource[],
 		logoPosition: LogoPosition,
@@ -359,7 +374,7 @@ export const useSlides = () => {
 			logo,
 			selectedLogo,
 			logoPosition,
-      logoNumericPosition,
+			logoNumericPosition,
 			selectedBackground,
 			applyToAll,
 		});
@@ -530,7 +545,7 @@ export const useSlides = () => {
 			// Truncate history up to the current index, then append the new slides
 			const updatedHistory = [
 				...prevHistory.slice(0, slidesHistoryIndex + 1),
-				slides,
+				{ slides, timestamp: moment().calendar() }, // Add timestamp here
 			];
 
 			// Check if the updated history exceeds 10 entries
@@ -554,11 +569,12 @@ export const useSlides = () => {
 	const undoChange = () => {
 		if (slidesHistoryIndex <= 0) return;
 
-		if (slidesHistory[slidesHistoryIndex - 1].length === 0) {
+		if (slidesHistory[slidesHistoryIndex - 1].slides.length === 0) {
 			return;
 		}
-		setSlides(slidesHistory[slidesHistoryIndex - 1]);
-		const maxSlideIndex = slidesHistory[slidesHistoryIndex - 1].length - 1;
+		setSlides(slidesHistory[slidesHistoryIndex - 1].slides);
+		const maxSlideIndex =
+			slidesHistory[slidesHistoryIndex - 1].slides.length - 1;
 		if (slideIndex > maxSlideIndex) {
 			setSlideIndex(maxSlideIndex);
 		}
@@ -569,15 +585,15 @@ export const useSlides = () => {
 
 		// TODO: check if the cover page is changed
 		debouncedSyncSlides(
-			slidesHistory[slidesHistoryIndex - 1],
+			slidesHistory[slidesHistoryIndex - 1].slides,
 			false,
-			slidesHistory[slidesHistoryIndex - 1].length,
+			slidesHistory[slidesHistoryIndex - 1].slides.length,
 		);
 	};
 
 	const redoChange = () => {
 		if (slidesHistoryIndex >= slidesHistory.length - 1) return;
-		setSlides(slidesHistory[slidesHistoryIndex + 1]);
+		setSlides(slidesHistory[slidesHistoryIndex + 1].slides);
 		setSlidesHistoryIndex(slidesHistoryIndex + 1);
 		updateVersion();
 		// Add your redo logic here
@@ -586,9 +602,9 @@ export const useSlides = () => {
 
 		// TODO: check if the cover page is changed
 		debouncedSyncSlides(
-			slidesHistory[slidesHistoryIndex + 1],
+			slidesHistory[slidesHistoryIndex + 1].slides,
 			false,
-			slidesHistory[slidesHistoryIndex + 1].length,
+			slidesHistory[slidesHistoryIndex + 1].slides.length,
 		);
 	};
 
@@ -728,7 +744,8 @@ export const useSlides = () => {
 		setSlides(slides);
 		// setIsTemplateLogoLeftSide(slides[0].is_logo_left);
 		setSlideIndex(0);
-		setSlidesHistory([slides]);
+		// setSlidesHistory([slides]);
+		setSlidesHistory([{ slides, timestamp: moment().calendar() }]);
 		setSlidesHistoryIndex(0);
 		clearChatHistory();
 		setIsPresenting(false);

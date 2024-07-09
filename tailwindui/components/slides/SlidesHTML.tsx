@@ -62,6 +62,8 @@ import { addIdToRedir } from '@/utils/redirWithId';
 import { useRouter } from 'next/navigation';
 import { Blank } from '../ui/Loading';
 import IFrameEmbed from '../utils/IFrameEmbed';
+import { SlidesVersionHistoryWindow } from './SlidesVersionHistoryWindow';
+import { MdManageHistory } from 'react-icons/md';
 
 type SlidesHTMLProps = {
 	isViewing?: boolean; // viewing another's shared project
@@ -295,7 +297,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	const [showExportToPdfModal, setShowExportToPdfModal] = useState(false); // Define state in the export
 	const [showShareModal, setShowShareModal] = useState(false);
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
-	const { isPaidUser, token } = useUser();
+	const { isPaidUser, token, username } = useUser();
 	const { isPresenting, setIsPresenting } = useSlides();
 	const slideRef = useRef<HTMLDivElement>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -311,6 +313,9 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 	//const [isChatWindowOpen, setIsChatWindowOpen] = useState(false);
 	const { isChatWindowOpen, setIsChatWindowOpen } = useChatHistory();
+
+	const [isVersionHistoryWindowOpen, setIsVersionHistoryWindowOpen] =
+		useState(false);
 
 	const [nonPresentScale, setNonPresentScale] = useState(
 		calculateNonPresentScale(
@@ -348,7 +353,21 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				!isChatWindowOpen,
 			),
 		);
+		setIsVersionHistoryWindowOpen(false);
 		setIsChatWindowOpen(!isChatWindowOpen);
+	};
+
+	const toggleVersionHistoryWindow = () => {
+		setNonPresentScale(
+			calculateNonPresentScale(
+				window.innerWidth,
+				window.innerHeight,
+				!isChatWindowOpen,
+			),
+		);
+		// shut down ai chat window first
+		setIsChatWindowOpen(false);
+		setIsVersionHistoryWindowOpen(!isVersionHistoryWindowOpen);
 	};
 
 	// show chatwindow if width > 1200
@@ -626,7 +645,13 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			});
 		} else {
 			applyUpdate(
-				content as string | string[] | Chart[] | boolean[] | Position | Position[],
+				content as
+					| string
+					| string[]
+					| Chart[]
+					| boolean[]
+					| Position
+					| Position[],
 				className,
 			);
 		}
@@ -723,7 +748,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	const uneditableTemplateDispatch = (
 		slide: Slide,
 		index: number,
-    canEdit: boolean = false, // unused, put here to let build pass
+		canEdit: boolean = false, // unused, put here to let build pass
 		exportToPdfMode: boolean = false,
 		scale: number,
 	) =>
@@ -907,6 +932,22 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 									setShowShareModal={setShowShareModal}
 								/>
 							)}
+
+							{
+								// version history
+								<button onClick={toggleVersionHistoryWindow}>
+									<MdManageHistory
+										style={{
+											// strokeWidth: '0.8',
+											// flex: '1',
+											width: `24px`,
+											height: `24px`,
+											// fontWeight: 'bold',
+											color: 'var(--colors-text-text-secondary-700, #344054)',
+										}}
+									/>
+								</button>
+							}
 						</ActionsToolBar>
 						{!isViewing && !isPresenting && (
 							<div className='hidden ml-2 sm:block cursor-pointer'>
@@ -1053,6 +1094,21 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 								slides={slides}
 								currentSlideIndex={slideIndex}
 								updateSlidePage={updateSlidePage}
+							/>
+						</div>
+					) : (
+						<div className='hidden sm:block w-0 h-0'></div>
+					) // empty div for justify-around
+				}
+
+				{/* version history */}
+				{
+					!isViewing && isVersionHistoryWindowOpen ? (
+						<div className='sticky right-0 top-0 h-full z-20'>
+							<SlidesVersionHistoryWindow
+								onToggle={toggleVersionHistoryWindow}
+								slidesHistory={slidesHistory}
+								userName ={username}
 							/>
 						</div>
 					) : (
