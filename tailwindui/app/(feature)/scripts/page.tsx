@@ -195,7 +195,7 @@ export default function WorkflowStep5() {
 		// If there are slides with empty scripts, display a detailed error message
 		if (emptyScriptIndices.length > 0) {
 			toast.error(
-				`The following pages have empty scripts: ${emptyScriptIndices.join(', ')}. Please double check.`,
+				`The following pages have empty scripts: ${emptyScriptIndices.map((index) => index + 1).join(', ')}. Please double check.`,
 			);
 			setIsSubmitting(false);
 			return;
