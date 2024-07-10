@@ -59,9 +59,9 @@ const MyCustomJoyride: React.FC<MyCustomJoyrideProps> = ({ steps }) => {
 		}
 	}, []);
 
-	useEffect(() => {
-		console.log('current page: ', currentPage);
-	}, [currentPage]);
+	// useEffect(() => {
+	// 	console.log('current page: ', currentPage);
+	// }, [currentPage]);
 
 	useEffect(() => {
 		if (typeof window !== 'undefined') {

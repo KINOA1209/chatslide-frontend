@@ -239,9 +239,9 @@ export default function DesignPage() {
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
 	const [slideBackgroundImgUrl, setSlideBackgroundImgUrl] = useState('');
 
-	useEffect(() => {
-		console.log('current project details:', project);
-	}, [project]);
+	// useEffect(() => {
+	// 	console.log('current project details:', project);
+	// }, [project]);
 	useEffect(() => {
 		console.log('Current slide background img url:', slideBackgroundImgUrl);
 		// setSelectedBackground(
@@ -359,8 +359,10 @@ export default function DesignPage() {
 
 					newSlides = result.slides;
 					additional_images = result.additional_images;
-				}
-				newSlides = slides.map((slide) => {
+				} else {
+          newSlides = ProjectService.parseSlides(project.presentation_slides || "{}");
+        }
+				newSlides = newSlides.map((slide) => {
 					return {
 						...slide,
 						template: template,
