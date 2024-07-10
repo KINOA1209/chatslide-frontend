@@ -185,14 +185,21 @@ const SlideVisualizer: React.FC<SlideVisualizerProps> = ({
 					confirmText={!project?.has_scripts ? 'Generate' : 'Regenerate'}
 					title='Script Generation Settings'
 				>
-					{project?.has_scripts && (
+					{project?.has_scripts ? (
 						<Instruction>
 							You already have scripts generated for this project.{' '}
 							<a href={addIdToRedir('/scripts')} className='text-blue-600'>
 								View scripts
 							</a>
 						</Instruction>
+					) : (
+						<Instruction>
+							<a href={addIdToRedir('/scripts')} className='text-blue-600'>
+								Write my own scripts manually
+							</a>
+						</Instruction>
 					)}
+
 					{showAdvancedSettings ? (
 						<>
 							<div>
