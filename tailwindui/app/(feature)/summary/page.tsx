@@ -295,6 +295,7 @@ export default function Topic() {
 	const [structureMode, setStructureMode] = useState('custom');
 	const [resourceToFollowStructureFrom, setResourceToFollowStructureFrom] =
 		useState<Resource>();
+	const [resourcesErrorMessage, setResourcesErrorMessage] = useState('');
 
 	const handleGenerationStatusModal = () => {
 		// console.log('user Research Modal toggled');
@@ -448,19 +449,38 @@ export default function Topic() {
 				setSummarizing(false);
 			} catch (error) {
 				if (error instanceof Error && error.message.includes('Bad request')) {
-          const resourceExt = selectedResources[0].name.split('.').pop();
-          let reason = ''
-          if (resourceExt === 'pdf' || resourceExt === 'docx' || resourceExt === 'pptx' || resourceExt === 'ppt') {
-            reason = 'If you uploaded a document, please make sure it is not corrupted or empty.';
-          } else if (resourceExt === 'mp3' || resourceExt === 'wav' || resourceExt === 'm4a') {
-            reason = 'If you uploaded an audio, please make sure there is voice in it.';
-          } else if (resourceExt === 'jpg' || resourceExt === 'jpeg' || resourceExt === 'png') {
-            reason = 'If you uploaded an image, please make sure there is text in it.';
-          }
+					const resourceExt = selectedResources[0].name.split('.').pop();
+					let reason = '';
+					if (
+						resourceExt === 'pdf' ||
+						resourceExt === 'docx' ||
+						resourceExt === 'pptx' ||
+						resourceExt === 'ppt'
+					) {
+						reason =
+							'If you uploaded a document, please make sure it is not corrupted or empty.';
+					} else if (
+						resourceExt === 'mp3' ||
+						resourceExt === 'wav' ||
+						resourceExt === 'm4a'
+					) {
+						reason =
+							'If you uploaded an audio, please make sure there is voice in it.';
+					} else if (
+						resourceExt === 'jpg' ||
+						resourceExt === 'jpeg' ||
+						resourceExt === 'png'
+					) {
+						reason =
+							'If you uploaded an image, please make sure there is text in it.';
+					}
 
 					toast.error(
-						'The resource you provided does not provide sufficient information. ' + reason,
+						'The resource you provided does not provide sufficient information. ' +
+							reason,
 					);
+          if (reason)
+            setResourcesErrorMessage(reason);
 				} else {
 					console.error('Error summarizing resources', error);
 				}
@@ -628,6 +648,8 @@ export default function Topic() {
 						isRequired
 						generationMode='from_files'
 						setGenerationMode={setGenerationMode}
+						errorMessage={resourcesErrorMessage}
+						setErrorMessage={setResourcesErrorMessage}
 					/>
 				)}
 
@@ -760,6 +782,8 @@ export default function Topic() {
 						selectedResources={selectedResources}
 						setSelectedResources={setSelectedResources}
 						removeResourceAtIndex={removeResourceAtIndex}
+						errorMessage={resourcesErrorMessage}
+						setErrorMessage={setResourcesErrorMessage}
 					/>
 				)}
 			</Column>
