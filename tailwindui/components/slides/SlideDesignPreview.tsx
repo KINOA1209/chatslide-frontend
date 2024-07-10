@@ -24,8 +24,8 @@ type SlideDesignPreviewProps = {
 	slideContainerScale?: number;
 	selectedSlideBackgroundImgResource?: Resource[];
 	selectedSlideLogoResource?: Resource[];
-	selectedLayouts: string[];
-  setSelectedLayouts: Function;
+	selectedLayouts?: string[];
+	setSelectedLayouts?: Function;
 };
 
 const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
@@ -37,8 +37,8 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 	slideContainerScale = 0.2,
 	selectedSlideBackgroundImgResource,
 	selectedSlideLogoResource,
-  selectedLayouts,
-  setSelectedLayouts
+	selectedLayouts,
+	setSelectedLayouts,
 }) => {
 	const { slides, version } = useSlides();
 	const [previewSlides, setPreviewSlides] = useState<Slide[]>([]);
@@ -122,6 +122,7 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 	]);
 
 	const handleCheckboxChange = (layoutKey: string) => {
+		if (!setSelectedLayouts) return;
 		if (
 			layoutKey === 'Cover_img_0_layout' ||
 			layoutKey === 'Col_1_img_0_layout'
@@ -173,10 +174,12 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 
 	return (
 		<>
-			<Instruction>
-				(Optional) Please select the layouts you would like to initialize your
-				slides. You can also add new layouts back in the next step.
-			</Instruction>
+			{selectedLayouts && (
+				<Instruction>
+					(Optional) Please select the layouts you would like to initialize your
+					slides. You can also add new layouts back in the next step.
+				</Instruction>
+			)}
 			<ScrollBar
 				axial={axial}
 				useGridLayout={useGridLayout}
@@ -187,16 +190,17 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 						className='DesignpreviewContainer flex flex-col items-center gap-1 p-2'
 						key={`DesignpreviewContainer` + index.toString()}
 					>
-						<label className='flex items-center gap-2'>
-							<input
-								type='checkbox'
-								checked={selectedLayouts.includes(slide.layout)}
-								onChange={() => handleCheckboxChange(slide.layout)}
-								disabled={
-									slide.layout === 'Cover_img_0_layout' ||
-									slide.layout === 'Col_1_img_0_layout'
-								}
-								className={`
+						{selectedLayouts && (
+							<label className='flex items-center gap-2'>
+								<input
+									type='checkbox'
+									checked={selectedLayouts.includes(slide.layout)}
+									onChange={() => handleCheckboxChange(slide.layout)}
+									disabled={
+										slide.layout === 'Cover_img_0_layout' ||
+										slide.layout === 'Col_1_img_0_layout'
+									}
+									className={`
 								${
 									slide.layout === 'Cover_img_0_layout' ||
 									slide.layout === 'Col_1_img_0_layout'
@@ -204,19 +208,18 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 										: ''
 								}
 							`}
-							/>
-							<Explanation>{layoutNameArray[index]}</Explanation>
-						</label>
-						{selectedLayouts.includes(slide.layout) && (
-							<SlideContainer
-								slide={slide}
-								index={index}
-								scale={slideContainerScale}
-								isViewing={true}
-								templateDispatch={unEditableTemplateDispatch}
-								key={version}
-							/>
+								/>
+								<Explanation>{layoutNameArray[index]}</Explanation>
+							</label>
 						)}
+						<SlideContainer
+							slide={slide}
+							index={index}
+							scale={slideContainerScale}
+							isViewing={true}
+							templateDispatch={unEditableTemplateDispatch}
+							key={version}
+						/>
 					</div>
 				))}
 			</ScrollBar>
