@@ -320,7 +320,7 @@ export default function WorkflowStep5() {
 					<Instruction>
 						Select the voice you want to use for your video.
 					</Instruction>
-					<Instruction>
+					{/* <Instruction>
 						<span>
 							Voice cloning is now available for ULTIMATE users. Click button
 							below to clone and use your voice.
@@ -330,7 +330,7 @@ export default function WorkflowStep5() {
 						onClick={() => (window.location.href = '/studio')}
 					>
 						Clone your voice
-					</InversedBigBlueButton>
+					</InversedBigBlueButton> */}
 					<ClonedVoicesProvider>
 						<VoiceSelector
 							selectedVoice={voice}
