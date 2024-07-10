@@ -425,6 +425,7 @@ export default function DesignPage() {
 			}
 		} catch (e) {
 			setIsSubmitting(false);
+      setShowGenerationStatusModal(false);
 			console.error(e);
 			toast.error(
 				'Server is busy now. Please try again later. Reference code: ' +
