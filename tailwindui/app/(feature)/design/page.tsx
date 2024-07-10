@@ -60,6 +60,7 @@ const SlideDesignPreview = dynamic(
 // import ImageSelector from './ImageSelector';
 // import PPTXTemplateSelector from './PPTXTemplateSelector';
 import { Suspense } from 'react';
+import { layoutOptions } from '@/components/slides/slideLayout';
 const PPTXTemplateSelector: any = dynamic(
 	() => import('@/app/(feature)/design/PPTXTemplateSelector'),
 	{
@@ -336,6 +337,10 @@ export default function DesignPage() {
 	const [selectedLogoPosition, setSelectedLogoPosition] =
 		useState<LogoPosition>(project?.logo_position || 'BottomLeft');
 
+	const [selectedLayouts, setSelectedLayouts] = useState<string[]>(
+		Object.keys(layoutOptions),
+	);
+
 	async function viewSlidesSubmit() {
 		if (!project) {
 			console.error('Project not found');
@@ -355,13 +360,16 @@ export default function DesignPage() {
 						imageLicense,
 						imageAmount,
 						token,
+            selectedLayouts
 					);
 
 					newSlides = result.slides;
 					additional_images = result.additional_images;
 				} else {
-          newSlides = ProjectService.parseSlides(project.presentation_slides || "{}");
-        }
+					newSlides = ProjectService.parseSlides(
+						project.presentation_slides || '{}',
+					);
+				}
 				newSlides = newSlides.map((slide) => {
 					return {
 						...slide,
@@ -759,6 +767,8 @@ export default function DesignPage() {
 						slideContainerScale={screenWidth > 1440 ? 0.4 : 0.3}
 						selectedSlideBackgroundImgResource={selectedBackground}
 						selectedSlideLogoResource={selectedLogo}
+            selectedLayouts={selectedLayouts}
+            setSelectedLayouts={setSelectedLayouts}
 					/>
 				</Column>
 				{/* </div> */}
