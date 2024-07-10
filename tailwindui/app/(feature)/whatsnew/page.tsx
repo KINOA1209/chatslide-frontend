@@ -30,7 +30,7 @@ export default function Studio() {
 					<BigTitle>July 10</BigTitle>
 					<Instruction>
 						<div>
-							<b>🎨 Design Step Layout Choices:</b> You can now choose from
+							<b>🎨 Design Step Layout Choices:</b> You can now choose (and ban) from
 							various layouts during the design step. There is also a 'no image'
 							option for a cleaner look.
 						</div>

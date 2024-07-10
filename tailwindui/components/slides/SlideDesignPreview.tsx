@@ -176,7 +176,7 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 		<>
 			{selectedLayouts && (
 				<Instruction>
-					(Optional) Please select the layouts you would like to initialize your
+					(Optional) Please select the layouts you would like to use to initialize your
 					slides. You can also add new layouts back in the next step.
 				</Instruction>
 			)}
