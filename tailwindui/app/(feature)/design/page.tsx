@@ -359,43 +359,41 @@ export default function DesignPage() {
 
 					newSlides = result.slides;
 					additional_images = result.additional_images;
-
-					newSlides = slides.map((slide) => {
-						return {
-							...slide,
-							template: template,
-							palette: colorPalette,
-							background_color: hasSelectedCustomTemplateBgColor
-								? selectedTemplateBgColor
-								: undefined,
-							titleFontFamily: HasSelectedCustomizedTemplateTitleFontFamily
-								? selectedTemplateTitleFontFamily
-								: '',
-							subtitleFontFamily:
-								HasSelectedCustomizedTemplateSubtitleFontFamily
-									? selectedTemplateSubtitleFontFamily
-									: '',
-							contentFontFamily: HasSelectedCustomizedTemplateContentFontFamily
-								? selectedTemplateContentFontFamily
-								: '',
-							titleFontColor: hasSelectedCustomizedTemplateTitleFontColor
-								? selectedTemplateTitleFontColor
-								: '',
-							subtitleFontColor: hasSelectedCustomizedTemplateSubtitleFontColor
-								? selectedTemplateSubtitleFontColor
-								: '',
-							contentFontColor: hasSelectedCustomizedTemplateContentFontColor
-								? selectedTemplateContentFontColor
-								: '',
-							logo: logoMode,
-							logo_url: selectedLogo?.[0]?.thumbnail_url || '',
-							background_url: selectedBackground?.[0]?.thumbnail_url || '',
-							media_type: ['image', 'image', 'image'],
-							transcript: '',
-							logo_position: selectedLogoPosition,
-						};
-					});
 				}
+				newSlides = slides.map((slide) => {
+					return {
+						...slide,
+						template: template,
+						palette: colorPalette,
+						background_color: hasSelectedCustomTemplateBgColor
+							? selectedTemplateBgColor
+							: undefined,
+						titleFontFamily: HasSelectedCustomizedTemplateTitleFontFamily
+							? selectedTemplateTitleFontFamily
+							: '',
+						subtitleFontFamily: HasSelectedCustomizedTemplateSubtitleFontFamily
+							? selectedTemplateSubtitleFontFamily
+							: '',
+						contentFontFamily: HasSelectedCustomizedTemplateContentFontFamily
+							? selectedTemplateContentFontFamily
+							: '',
+						titleFontColor: hasSelectedCustomizedTemplateTitleFontColor
+							? selectedTemplateTitleFontColor
+							: '',
+						subtitleFontColor: hasSelectedCustomizedTemplateSubtitleFontColor
+							? selectedTemplateSubtitleFontColor
+							: '',
+						contentFontColor: hasSelectedCustomizedTemplateContentFontColor
+							? selectedTemplateContentFontColor
+							: '',
+						logo: logoMode,
+						logo_url: selectedLogo?.[0]?.thumbnail_url || '',
+						background_url: selectedBackground?.[0]?.thumbnail_url || '',
+						media_type: ['image', 'image', 'image'],
+						transcript: '',
+						logo_position: selectedLogoPosition,
+					};
+				});
 
 				bulkUpdateProject({
 					logo: logoMode,
