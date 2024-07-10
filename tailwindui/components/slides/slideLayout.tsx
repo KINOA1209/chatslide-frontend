@@ -343,7 +343,6 @@ export const Cover_img_0_layout = ({
 		<div
 			className={`SlideCanvas`}
 			style={{
-				display: 'flex',
 				width: '100%',
 				height: '100%',
 				...layoutElements.canvaCSS,
@@ -497,7 +496,6 @@ export const Cover_img_1_layout = ({
 		<div
 			className={`SlideCanvas`}
 			style={{
-				display: 'flex',
 				width: '100%',
 				height: '100%',
 				...layoutElements.canvaCSS,
@@ -1866,7 +1864,6 @@ export const Col_2_img_2_layout = ({
 			style={{
 				width: '100%',
 				height: '100%',
-				// display: 'flex',
 				...layoutElements.canvaCSS,
 				position: 'relative',
 			}}
