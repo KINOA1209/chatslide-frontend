@@ -5,13 +5,13 @@ import { HiOutlineDotsVertical } from 'react-icons/hi';
 
 export const Menu: React.FC<{
 	children: React.ReactNode;
-  button?: React.ReactNode;
+	button?: React.ReactNode;
 	icon?: React.ReactNode;
 	iconPadding?: string;
 	mode?: 'hover' | 'click';
 }> = ({
 	children,
-  button = null,
+	button = null,
 	icon = (
 		<HiOutlineDotsVertical
 			style={{ color: '#667085', width: '1rem', height: '1rem' }}
@@ -32,6 +32,10 @@ export const Menu: React.FC<{
 			setIsDropdownVisible((prev) => !prev);
 		}
 	};
+
+	//   useEffect(() => {
+	//     console.log('children is ', children)
+	// }, [children]);
 
 	const handleMouseEnter = (event: React.MouseEvent<HTMLDivElement>) => {
 		if (mode === 'hover') {
@@ -91,7 +95,7 @@ export const Menu: React.FC<{
 					{button ? button : icon}
 				</div>
 
-				{isDropdownVisible && (
+				{isDropdownVisible && children !== undefined && (
 					<div
 						ref={dropdownRef}
 						className='absolute top-full right-0 bg-white shadow-md rounded-md border border-2 border-gray-200 mt-1 lg:w-[180px]'

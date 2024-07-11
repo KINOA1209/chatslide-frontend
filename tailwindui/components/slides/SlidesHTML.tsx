@@ -1047,7 +1047,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				{/* chatbot */}
 				{
 					!isViewing && isChatWindowOpen ? (
-						<div className='sticky right-0 top-0 h-full z-20'>
+						<div className='sticky right-0 top-0 h-full'>
 							<AIAssistantChatWindow
 								onToggle={toggleChatWindow}
 								slides={slides}
