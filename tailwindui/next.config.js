@@ -81,6 +81,11 @@ const nextConfig = {
         source: '/my-resources',
         destination: '/upload',
         permanent: true,
+      },
+      {
+        source: '/about_us',
+        destination: '/about.html',
+        permanent: true,
       }
 		]
 	},

@@ -68,7 +68,7 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
 			<PaywallModal
 				showModal={showPaymentModal}
 				setShowModal={setShowPaymentModal}
-				message='Upgrade to unlock more features. 🚀'
+				message='Upgrade to unlock more features 🚀'
 			/>
 		</div>
 	);

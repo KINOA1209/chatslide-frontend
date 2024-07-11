@@ -194,7 +194,7 @@ const DesignSystemButton: React.FC<DesignSystemButtonProps> = ({
 			<PaywallModal
 				showModal={showPaywallModal}
 				setShowModal={setShowPaywallModal}
-				message='Upgrade to unlock more features. 🚀'
+				message='Upgrade to unlock more features 🚀'
 			/>
 			<button
 				id={'primary-' + id}

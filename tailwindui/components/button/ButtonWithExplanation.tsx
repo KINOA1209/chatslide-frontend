@@ -4,11 +4,11 @@ import { useState } from 'react';
 
 function ButtonWithExplanation({
 	button,
-	explanation,
+	explanation = '',
 	id,
 }: {
 	button: JSX.Element;
-	explanation: string;
+	explanation?: string;
 	id?: string;
 }) {
 	const [showExplanation, setShowExplanation] = useState(false);
@@ -24,7 +24,7 @@ function ButtonWithExplanation({
 			}}
 		>
 			<div className='flex items-center justify-center'>{button}</div>
-			{showExplanation && (
+			{showExplanation && explanation && (
 				<div
 					className={`flex absolute z-10 p-1 bg-black text-white rounded-md transition-opacity duration-200`}
 				>

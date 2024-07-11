@@ -7,7 +7,6 @@ export const Event_Report_010_TemplateLayoutsConfig: {
 } = {
 	Cover_img_0_layout: {
 		canvaCSS: {
-			display: 'flex',
 			width: '100%',
 			height: '100%',
 			position: 'relative',
@@ -47,10 +46,10 @@ export const Event_Report_010_TemplateLayoutsConfig: {
 			// height: '100%', // Equivalent to h-full
 			// gap: '2rem',
 		},
+		titlePos: { x: 80, y: 130, width: 390, height: 200 },
 	},
 	Cover_img_1_layout: {
 		canvaCSS: {
-			display: 'flex',
 			width: '100%',
 			height: '100%',
 			position: 'relative',
@@ -78,8 +77,6 @@ export const Event_Report_010_TemplateLayoutsConfig: {
 			// paddingLeft: '2rem', // Equivalent to px-[2rem], for left padding
 			// paddingRight: '2rem', // Equivalent to px-[2rem], for right padding
 			width: '50%', // Equivalent to w-1/2
-			display: 'flex', // Equivalent to flex
-			flexDirection: 'column', // Equivalent to flex-col
 			justifyContent: 'flex-start', // Equivalent to justify-start
 			height: '100%', // Equivalent to h-full
 			gap: '2rem',
@@ -88,7 +85,6 @@ export const Event_Report_010_TemplateLayoutsConfig: {
 			width: '50%', // Equivalent to w-1/2
 			height: '100%', // Equivalent to h-full
 			//overflow: 'hidden',
-			display: 'flex',
 			alignItems: 'center',
 			zIndex: 20,
 			// padding: '50px 30px 50px 30px', // top right bottom left
@@ -117,13 +113,13 @@ export const Event_Report_010_TemplateLayoutsConfig: {
 		rndCSS: {
 			zIndex: '51',
 		},
+		titlePos: { x: 80, y: 130, width: 390, height: 200 },
+		imgContainerPos: [{ x: 480, y: 30, width: 450, height: 480 }],
 	},
 	Col_1_img_0_layout: {
 		canvaCSS: {
 			width: '100%', // Equivalent to w-full
 			height: '100%', // Equivalent to h-full
-			display: 'flex', // Equivalent to flex
-			flexDirection: 'column', // Equivalent to flex-col
 		},
 		contentCSS: {
 			width: '100%', // Equivalent to w-full
@@ -134,7 +130,6 @@ export const Event_Report_010_TemplateLayoutsConfig: {
 		},
 		columnCSS: {
 			width: '100%', // Equivalent to w-full
-			display: 'flex',
 		},
 		titleAndSubtopicBoxCSS: {
 			// backgroundColor: '#F1F1F1',
@@ -142,8 +137,6 @@ export const Event_Report_010_TemplateLayoutsConfig: {
 			paddingBottom: '50px',
 			paddingLeft: '50px',
 			paddingRight: '50px',
-			display: 'flex',
-			flexDirection: 'column', // Equivalent to flex
 		},
 		topicCSS: {
 			order: '0',
@@ -158,6 +151,9 @@ export const Event_Report_010_TemplateLayoutsConfig: {
 		titlesAndContentDividerCSS: {
 			display: 'none',
 		},
+		topicPos: { x: 50, y: 50, width: 860, height: 50 },
+		subtopicPos: { x: 50, y: 104, width: 860, height: 80 },
+		contentPos: [{ x: 50, y: 200, width: 860, height: 240 }],
 	},
 	Col_2_img_0_layout: {
 		titleAndSubtopicBoxCSS: {
@@ -165,8 +161,6 @@ export const Event_Report_010_TemplateLayoutsConfig: {
 			paddingBottom: '30px',
 			paddingLeft: '50px',
 			paddingRight: '50px',
-			display: 'flex',
-			flexDirection: 'column', // Equivalent to flex
 		},
 		topicCSS: {
 			order: '0',
@@ -189,8 +183,6 @@ export const Event_Report_010_TemplateLayoutsConfig: {
 			paddingBottom: '0px',
 		},
 		contentCSS: {
-			display: 'flex',
-			flexDirection: 'column',
 			gap: '0.5rem',
 			// paddingLeft: '1rem',
 			// borderLeft: '1px solid #C2C2C2',
@@ -202,12 +194,14 @@ export const Event_Report_010_TemplateLayoutsConfig: {
 			display: 'none',
 		},
 		contentTextCSS: {
-			display: 'flex',
-			flexDirection: 'row',
-			width: '100%',
-			height: '100%',
 			flexGrow: 1,
 		},
+		topicPos: { x: 50, y: 50, width: 860, height: 50 },
+		subtopicPos: { x: 50, y: 104, width: 860, height: 50 },
+		contentPos: [
+			{ x: 50, y: 200, width: 405, height: 240 },
+			{ x: 505, y: 200, width: 405, height: 240 },
+		],
 	},
 	Col_3_img_0_layout: {
 		titleAndSubtopicBoxCSS: {
@@ -215,8 +209,6 @@ export const Event_Report_010_TemplateLayoutsConfig: {
 			paddingBottom: '30px',
 			paddingLeft: '50px',
 			paddingRight: '50px',
-			display: 'flex',
-			flexDirection: 'column', // Equivalent to flex
 		},
 		topicCSS: {
 			order: '0',
@@ -239,8 +231,6 @@ export const Event_Report_010_TemplateLayoutsConfig: {
 			paddingBottom: '0px',
 		},
 		contentCSS: {
-			display: 'flex',
-			flexDirection: 'column',
 			gap: '0.5rem',
 			// paddingLeft: '1rem',
 			// borderLeft: '1px solid #C2C2C2',
@@ -252,18 +242,19 @@ export const Event_Report_010_TemplateLayoutsConfig: {
 			display: 'none',
 		},
 		contentTextCSS: {
-			display: 'flex',
-			flexDirection: 'row',
-			width: '100%',
-			height: '100%',
 			flexGrow: 1,
 		},
+		topicPos: { x: 50, y: 50, width: 860, height: 50 },
+		subtopicPos: { x: 50, y: 104, width: 860, height: 50 },
+		contentPos: [
+			{ x: 50, y: 200, width: 250, height: 240 },
+			{ x: 350, y: 200, width: 250, height: 240 },
+			{ x: 650, y: 200, width: 250, height: 240 },
+		],
 	},
 	Col_2_img_1_layout: {
 		columnCSS: {
 			width: '50%', // equivalent to w-1/2
-			display: 'flex',
-			flexDirection: 'column',
 			alignItems: 'flex-start',
 			height: '100%',
 			gap: '0.1rem',
@@ -271,8 +262,6 @@ export const Event_Report_010_TemplateLayoutsConfig: {
 		canvaCSS: {
 			width: '100%',
 			height: '100%',
-			display: 'flex',
-			flexDirection: 'row',
 			justifyContent: 'flex-start',
 			alignItems: 'flex-start',
 		},
@@ -282,8 +271,6 @@ export const Event_Report_010_TemplateLayoutsConfig: {
 			paddingBottom: '12px',
 			paddingLeft: '50px',
 			paddingRight: '0px',
-			display: 'flex',
-			flexDirection: 'column', // Equivalent to flex
 			height: 'fit-content',
 		},
 		topicCSS: {
@@ -302,7 +289,6 @@ export const Event_Report_010_TemplateLayoutsConfig: {
 		imageContainerCSS: {
 			width: '50%', // equivalent to w-1/2
 			height: '100%', // equivalent to h-[90%]
-			display: 'flex',
 			alignItems: 'center', // equivalent to items-center
 			// padding: '50px 50px 50px 30px',
 		},
@@ -328,6 +314,10 @@ export const Event_Report_010_TemplateLayoutsConfig: {
 		rndCSS: {
 			zIndex: '51',
 		},
+		topicPos: { x: 50, y: 50, width: 430, height: 50 },
+		subtopicPos: { x: 50, y: 104, width: 430, height: 80 },
+		contentPos: [{ x: 50, y: 200, width: 430, height: 300 }],
+		imgContainerPos: [{ x: 480, y: 30, width: 450, height: 480 }],
 	},
 	Col_1_img_1_layout: {
 		columnCSS: {
@@ -345,8 +335,6 @@ export const Event_Report_010_TemplateLayoutsConfig: {
 			paddingBottom: '12px',
 			paddingLeft: '50px',
 			paddingRight: '50px',
-			display: 'flex',
-			flexDirection: 'column', // Equivalent to flex
 			gridRow: 1,
 			height: 'fit-content',
 		},
@@ -382,8 +370,6 @@ export const Event_Report_010_TemplateLayoutsConfig: {
 
 		// contentCSS: { borderLeft: '1px solid #C2C2C2', paddingLeft: '0.5rem' },
 		contentTextCSS: {
-			display: 'flex',
-			flexDirection: 'row',
 			width: '100%',
 			height: '100%',
 			flexGrow: 1,
@@ -397,12 +383,15 @@ export const Event_Report_010_TemplateLayoutsConfig: {
 		rndCSS: {
 			zIndex: '51',
 		},
+		topicPos: { x: 50, y: 50, width: 860, height: 50 },
+		subtopicPos: { x: 50, y: 104, width: 860, height: 50 },
+		contentPos: [{ x: 50, y: 170, width: 860, height: 140 }],
+		imgContainerPos: [{ x: 50, y: 320, width: 860, height: 210 }],
 	},
 	Col_2_img_2_layout: {
 		canvaCSS: {
 			width: '100%',
 			height: '100%',
-			display: 'flex',
 		},
 		columnCSS: {
 			width: '100%',
@@ -418,8 +407,6 @@ export const Event_Report_010_TemplateLayoutsConfig: {
 			paddingBottom: '12px',
 			paddingLeft: '50px',
 			paddingRight: '50px',
-			display: 'flex',
-			flexDirection: 'column', // Equivalent to flex
 			gridRow: 1,
 			height: 'fit-content',
 		},
@@ -471,12 +458,21 @@ export const Event_Report_010_TemplateLayoutsConfig: {
 		rndCSS: {
 			zIndex: '51',
 		},
+		topicPos: { x: 50, y: 50, width: 860, height: 50 },
+		subtopicPos: { x: 50, y: 104, width: 860, height: 80 },
+		contentPos: [
+			{ x: 50, y: 200, width: 405, height: 100 },
+			{ x: 505, y: 200, width: 405, height: 100 },
+		],
+		imgContainerPos: [
+			{ x: 50, y: 320, width: 405, height: 220 },
+			{ x: 505, y: 320, width: 405, height: 220 },
+		],
 	},
 	Col_3_img_3_layout: {
 		canvaCSS: {
 			width: '100%',
 			height: '100%',
-			display: 'flex',
 		},
 		columnCSS: {
 			width: '100%',
@@ -493,8 +489,6 @@ export const Event_Report_010_TemplateLayoutsConfig: {
 			paddingBottom: '12px',
 			paddingLeft: '50px',
 			paddingRight: '50px',
-			display: 'flex',
-			flexDirection: 'column', // Equivalent to flex
 			gridRow: 1,
 			height: 'fit-content',
 		},
@@ -547,12 +541,23 @@ export const Event_Report_010_TemplateLayoutsConfig: {
 		rndCSS: {
 			zIndex: '51',
 		},
+		topicPos: { x: 50, y: 50, width: 860, height: 50 },
+		subtopicPos: { x: 50, y: 104, width: 860, height: 50 },
+		contentPos: [
+			{ x: 50, y: 310, width: 250, height: 180 },
+			{ x: 350, y: 310, width: 250, height: 180 },
+			{ x: 650, y: 310, width: 250, height: 180 },
+		],
+		imgContainerPos: [
+			{ x: 50, y: 170, width: 250, height: 130 },
+			{ x: 350, y: 170, width: 250, height: 130 },
+			{ x: 650, y: 170, width: 250, height: 130 },
+		],
 	},
 	Full_img_only_layout: {
 		canvaCSS: {
 			width: '100%',
 			height: '100%',
-			display: 'flex',
 		},
 
 		imageContainerCSS: {
@@ -573,5 +578,6 @@ export const Event_Report_010_TemplateLayoutsConfig: {
 		rndCSS: {
 			zIndex: '51',
 		},
+		imgContainerPos: [{ x: 30, y: 30, width: 900, height: 480 }],
 	},
 };

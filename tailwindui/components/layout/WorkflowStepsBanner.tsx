@@ -14,9 +14,10 @@ interface YourComponentProps {
 	lastStep?: boolean;
 	nextStep?: boolean;
 	nextText?: string;
-	handleClickingGeneration?: () => void;
+	onClickNext?: () => void;
 	workflow?: string;
 	showLoadingButton?: boolean;
+	menuItems?: React.ReactNode;
 }
 
 const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
@@ -28,9 +29,10 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 	lastStep = false,
 	nextStep = true,
 	nextText = 'Next',
-	handleClickingGeneration,
+	onClickNext,
 	workflow = 'slides',
 	showLoadingButton = false,
+	menuItems,
 }) => {
 	const [showPing, setShowPing] = useState(true);
 
@@ -81,11 +83,8 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 					// empty div to keep the layout consistent
 					<div className='min-w-[10rem] sm:min-w-[12rem]'></div>
 				) : showLoadingButton ? (
-					<DrlambdaButton
-						isSubmitting={true}
-            disabled={true}
-					>
-            Loading...
+					<DrlambdaButton isSubmitting={true} disabled={true}>
+						Loading...
 					</DrlambdaButton>
 				) : (
 					<div className='user-onboarding-generate relative'>
@@ -101,19 +100,17 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 								}}
 							></div>
 						)}
-						<div
-							className={buttonBounce ? 'animate-bounce' : ''}
-							onClick={(e) => {
-								if (isPaidUser || !nextIsPaidFeature)
-									handleClickingGeneration && handleClickingGeneration();
-							}}
-						>
+						<div className={buttonBounce ? 'animate-bounce' : ''}>
 							<DrlambdaButton
 								isSubmitting={isSubmitting}
 								isPaidUser={isPaidUser}
 								isPaidFeature={nextIsPaidFeature}
-								onClick={(e) => setIsSubmitting(true)}
+								onClick={(e) => {  // paid user status checked inside
+									onClickNext && onClickNext();
+									setIsSubmitting(true);
+								}}
 								id={nextText.replace(/[^A-Za-z0-9]/g, '_')}
+								menuItems={menuItems}
 							>
 								{nextText}
 							</DrlambdaButton>

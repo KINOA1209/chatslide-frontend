@@ -7,7 +7,6 @@ export const Business_002_TemplateLayoutsConfig: {
 } = {
 	Cover_img_0_layout: {
 		canvaCSS: {
-			display: 'flex',
 			width: '100%',
 			height: '100%',
 			// position: 'relative',
@@ -41,8 +40,6 @@ export const Business_002_TemplateLayoutsConfig: {
 		},
 		columnCSS: {
 			width: '100%', // Equivalent to w-1/2
-			display: 'flex', // Equivalent to flex
-			flexDirection: 'column', // Equivalent to flex-col
 			justifyContent: 'flex-start', // Equivalent to justify-start
 			height: '100%', // Equivalent to h-full
 			gap: '2rem',
@@ -62,10 +59,10 @@ export const Business_002_TemplateLayoutsConfig: {
 			// display: 'none',
 			pointerEvents: 'none' /* Make the layer transparent to pointer events */,
 		},
+		titlePos: { x: 80, y: 130, width: 390, height: 200 },
 	},
 	Cover_img_1_layout: {
 		canvaCSS: {
-			display: 'flex',
 			width: '100%',
 			height: '100%',
 			// position: 'relative',
@@ -108,8 +105,6 @@ export const Business_002_TemplateLayoutsConfig: {
 			paddingLeft: '2rem', // Equivalent to px-[2rem], for left padding
 			paddingRight: '2rem', // Equivalent to px-[2rem], for right padding
 			width: '50%', // Equivalent to w-1/2
-			display: 'flex', // Equivalent to flex
-			flexDirection: 'column', // Equivalent to flex-col
 			justifyContent: 'flex-start', // Equivalent to justify-start
 			height: '100%', // Equivalent to h-full
 			gap: '2rem',
@@ -134,13 +129,13 @@ export const Business_002_TemplateLayoutsConfig: {
 			position: 'relative',
 		},
 		rndCSS: {},
+		titlePos: { x: 80, y: 130, width: 390, height: 200 },
+		imgContainerPos: [{ x: 480, y: 30, width: 450, height: 480 }],
 	},
 	Col_1_img_0_layout: {
 		canvaCSS: {
 			width: '100%', // Equivalent to w-full
 			height: '100%', // Equivalent to h-full
-			display: 'flex', // Equivalent to flex
-			flexDirection: 'column', // Equivalent to flex-col
 		},
 		contentCSS: {
 			width: '100%', // Equivalent to w-full
@@ -152,7 +147,6 @@ export const Business_002_TemplateLayoutsConfig: {
 			paddingLeft: '1rem',
 			paddingTop: '1.2rem',
 			paddingBottom: '1.2rem',
-			display: 'flex',
 		},
 		titleAndSubtopicBoxCSS: {
 			backgroundColor: '#DEFF56',
@@ -161,6 +155,9 @@ export const Business_002_TemplateLayoutsConfig: {
 			paddingLeft: '2rem',
 			paddingRight: '2rem',
 		},
+		topicPos: { x: 50, y: 50, width: 860, height: 50 },
+		subtopicPos: { x: 50, y: 104, width: 860, height: 80 },
+		contentPos: [{ x: 50, y: 200, width: 860, height: 240 }],
 	},
 	Col_2_img_0_layout: {
 		titleAndSubtopicBoxCSS: {
@@ -181,7 +178,7 @@ export const Business_002_TemplateLayoutsConfig: {
 			paddingLeft: '2rem',
 			paddingRight: '2rem',
 		},
-		contentCSS: { display: 'flex', flexDirection: 'column', gap: '0.5rem' },
+		contentCSS: { gap: '0.5rem' },
 		contentIndexCSS: {
 			mixBlendMode: 'hard-light',
 			color: 'black', // Assuming text-neutral-900 corresponds to #374155
@@ -194,17 +191,18 @@ export const Business_002_TemplateLayoutsConfig: {
 			paddingTop: '2rem',
 		},
 		contentIndexTextDividerCSS: {
-			display: 'flex',
 			opacity: 0.5,
 			border: '1px solid rgba(55, 65, 81, 0.4)',
 		},
 		contentTextCSS: {
-			display: 'flex',
-			flexDirection: 'row',
-			width: '100%',
-			height: '100%',
 			flexGrow: 1,
 		},
+		topicPos: { x: 50, y: 50, width: 860, height: 50 },
+		subtopicPos: { x: 50, y: 104, width: 860, height: 50 },
+		contentPos: [
+			{ x: 50, y: 200, width: 405, height: 240 },
+			{ x: 505, y: 200, width: 405, height: 240 },
+		],
 	},
 	Col_3_img_0_layout: {
 		titleAndSubtopicBoxCSS: {
@@ -225,7 +223,7 @@ export const Business_002_TemplateLayoutsConfig: {
 			paddingLeft: '2rem',
 			paddingRight: '2rem',
 		},
-		contentCSS: { display: 'flex', flexDirection: 'column', gap: '0.5rem' },
+		contentCSS: { gap: '0.5rem' },
 		contentIndexCSS: {
 			mixBlendMode: 'hard-light',
 			color: 'black', // Assuming text-neutral-900 corresponds to #374155
@@ -238,23 +236,23 @@ export const Business_002_TemplateLayoutsConfig: {
 			paddingTop: '2rem',
 		},
 		contentIndexTextDividerCSS: {
-			display: 'flex',
 			opacity: 0.5,
 			border: '1px solid rgba(55, 65, 81, 0.4)',
 		},
 		contentTextCSS: {
-			display: 'flex',
-			flexDirection: 'row',
-			width: '100%',
-			height: '100%',
 			flexGrow: 1,
 		},
+		topicPos: { x: 50, y: 50, width: 860, height: 50 },
+		subtopicPos: { x: 50, y: 104, width: 860, height: 50 },
+		contentPos: [
+			{ x: 50, y: 200, width: 250, height: 240 },
+			{ x: 350, y: 200, width: 250, height: 240 },
+			{ x: 650, y: 200, width: 250, height: 240 },
+		],
 	},
 	Col_2_img_1_layout: {
 		columnCSS: {
 			width: '50%', // equivalent to w-1/2
-			display: 'flex',
-			flexDirection: 'column',
 			alignItems: 'flex-start',
 			height: '100%',
 			gap: '0.1rem',
@@ -262,15 +260,11 @@ export const Business_002_TemplateLayoutsConfig: {
 		canvaCSS: {
 			width: '100%',
 			height: '100%',
-			display: 'flex',
-			flexDirection: 'row',
 			justifyContent: 'flex-start',
 			alignItems: 'flex-start',
 		},
 		titleAndSubtopicBoxCSS: {
 			width: '100%',
-			display: 'flex',
-			flexDirection: 'column',
 			backgroundColor: '#DEFF56',
 			paddingTop: '1rem',
 			paddingBottom: '1rem',
@@ -282,7 +276,6 @@ export const Business_002_TemplateLayoutsConfig: {
 			height: '100%', // equivalent to h-[90%]
 			borderRadius: '0.375rem', // equivalent to rounded-md
 			//overflow: 'hidden',
-			display: 'flex',
 			alignItems: 'center', // equivalent to items-center
 		},
 		contentContainerCSS: {
@@ -298,12 +291,14 @@ export const Business_002_TemplateLayoutsConfig: {
 		rndCSS: {
 			zIndex: '51',
 		},
+		topicPos: { x: 50, y: 50, width: 430, height: 50 },
+		subtopicPos: { x: 50, y: 104, width: 430, height: 80 },
+		contentPos: [{ x: 50, y: 200, width: 430, height: 300 }],
+		imgContainerPos: [{ x: 480, y: 30, width: 450, height: 480 }],
 	},
 	Col_1_img_1_layout: {
 		columnCSS: { width: '100%', display: 'grid', gridTemplateColumns: '1fr' },
 		titleAndSubtopicBoxCSS: {
-			display: 'flex',
-			flexDirection: 'column',
 			backgroundColor: '#DEFF56',
 			paddingTop: '1rem',
 			paddingBottom: '1rem',
@@ -323,14 +318,10 @@ export const Business_002_TemplateLayoutsConfig: {
 			paddingRight: '2rem',
 			height: '100%',
 			width: '100%',
-			display: 'flex',
-			flexDirection: 'column',
 			gap: '0.5rem',
 		},
 		contentCSS: {},
 		contentTextCSS: {
-			display: 'flex',
-			flexDirection: 'row',
 			width: '100%',
 			height: '100%',
 			flexGrow: 1,
@@ -344,12 +335,13 @@ export const Business_002_TemplateLayoutsConfig: {
 		rndCSS: {
 			zIndex: '51',
 		},
+		topicPos: { x: 50, y: 50, width: 860, height: 50 },
+		subtopicPos: { x: 50, y: 104, width: 860, height: 50 },
+		contentPos: [{ x: 50, y: 170, width: 860, height: 140 }],
+		imgContainerPos: [{ x: 50, y: 320, width: 860, height: 210 }],
 	},
 	Col_2_img_2_layout: {
-		columnCSS: { display: 'flex', flexDirection: 'column' },
 		titleAndSubtopicBoxCSS: {
-			display: 'flex',
-			flexDirection: 'column',
 			// justifyContent: 'center',
 			// alignItems: 'center',
 			backgroundColor: '#DEFF56',
@@ -388,12 +380,19 @@ export const Business_002_TemplateLayoutsConfig: {
 		rndCSS: {
 			zIndex: '51',
 		},
+		topicPos: { x: 50, y: 50, width: 860, height: 50 },
+		subtopicPos: { x: 50, y: 104, width: 860, height: 80 },
+		contentPos: [
+			{ x: 50, y: 200, width: 405, height: 100 },
+			{ x: 505, y: 200, width: 405, height: 100 },
+		],
+		imgContainerPos: [
+			{ x: 50, y: 320, width: 405, height: 220 },
+			{ x: 505, y: 320, width: 405, height: 220 },
+		],
 	},
 	Col_3_img_3_layout: {
-		columnCSS: { display: 'flex', flexDirection: 'column' },
 		titleAndSubtopicBoxCSS: {
-			display: 'flex',
-			flexDirection: 'column',
 			// justifyContent: 'center',
 			// alignItems: 'center',
 			backgroundColor: '#DEFF56',
@@ -431,12 +430,23 @@ export const Business_002_TemplateLayoutsConfig: {
 		rndCSS: {
 			zIndex: '51',
 		},
+		topicPos: { x: 50, y: 50, width: 860, height: 50 },
+		subtopicPos: { x: 50, y: 104, width: 860, height: 50 },
+		contentPos: [
+			{ x: 50, y: 310, width: 250, height: 180 },
+			{ x: 350, y: 310, width: 250, height: 180 },
+			{ x: 650, y: 310, width: 250, height: 180 },
+		],
+		imgContainerPos: [
+			{ x: 50, y: 170, width: 250, height: 130 },
+			{ x: 350, y: 170, width: 250, height: 130 },
+			{ x: 650, y: 170, width: 250, height: 130 },
+		],
 	},
 	Full_img_only_layout: {
 		canvaCSS: {
 			width: '100%',
 			height: '100%',
-			display: 'flex',
 		},
 
 		imageContainerCSS: {
@@ -457,5 +467,6 @@ export const Business_002_TemplateLayoutsConfig: {
 		rndCSS: {
 			zIndex: '51',
 		},
+		imgContainerPos: [{ x: 30, y: 30, width: 900, height: 480 }],
 	},
 };

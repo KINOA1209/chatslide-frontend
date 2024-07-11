@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { GoPlus, GoShare } from 'react-icons/go';
 import { LuTrash2, LuPalette } from 'react-icons/lu';
 import ButtonWithExplanation from '../button/ButtonWithExplanation';
@@ -17,6 +17,8 @@ import brandingIcon from 'public/icons/button/show_logo.svg';
 import Image from 'next/image';
 import { SocialPostSlide } from '@/models/SocialPost';
 import Resource from '@/models/Resource';
+import { DropDown } from '../button/DrlambdaButton';
+import { Menu, MenuItem } from '../button/Menu';
 
 type SaveButtonProps = {
 	saveSlides: () => void;
@@ -65,55 +67,65 @@ export const PresentButton: React.FC<PresentButtonProps> = ({
 	);
 };
 
+
 export const AddSlideButton: React.FC<{
-	currentSlideIndex: number;
-	addPage: () => void;
-}> = ({ currentSlideIndex, addPage }) => {
+  currentSlideIndex: number;
+  addPage: () => void;
+  duplicatePage: () => void;
+}> = ({ currentSlideIndex, addPage, duplicatePage }) => {
+
 	return (
-		<ButtonWithExplanation
-			button={
-				<button onClick={addPage}>
-					<GoPlus
-						style={{
-							strokeWidth: '0.9',
-							flex: '1',
-							width: '1.7rem',
-							height: '1.7rem',
-							fontWeight: 'bold',
-							color: '#344054',
-						}}
-					/>
-				</button>
+		<Menu
+			icon={
+				<GoPlus
+					style={{
+						strokeWidth: '0.9',
+						flex: '1',
+						width: '1.7rem',
+						height: '1.7rem',
+						fontWeight: 'bold',
+						color: '#344054',
+					}}
+				/>
 			}
-			explanation={'Add Page'}
-		/>
+      iconPadding='0'
+			mode='hover'
+		>
+			<MenuItem label='Add Page' icon={<GoPlus />} onClick={addPage} />
+			<MenuItem
+				label='Duplicate Page'
+				icon={<FaRegClone />}
+				onClick={duplicatePage}
+			/>
+		</Menu>
 	);
 };
 
-export const DuplicateSlidePageButton: React.FC<{
-	currentSlideIndex: number;
-	duplicatePage: () => void;
-}> = ({ currentSlideIndex, duplicatePage }) => {
-	return (
-		<ButtonWithExplanation
-			button={
-				<button onClick={duplicatePage}>
-					<FaRegClone
-						style={{
-							strokeWidth: '1',
-							flex: '1',
-							width: '1.3rem',
-							height: '1.3rem',
-							fontWeight: 'bold',
-							color: '#344054',
-						}}
-					/>
-				</button>
-			}
-			explanation={'Duplicate Page'}
-		/>
-	);
-};
+// moved to add page
+// export const DuplicateSlidePageButton: React.FC<{
+// 	currentSlideIndex: number;
+// 	duplicatePage: () => void;
+// }> = ({ currentSlideIndex, duplicatePage }) => {
+// 	return (
+// 		<ButtonWithExplanation
+// 			button={
+// 				<button onClick={duplicatePage}>
+// 					<FaRegClone
+// 						style={{
+// 							strokeWidth: '1',
+// 							flex: '1',
+// 							width: '1.3rem',
+// 							height: '1.3rem',
+// 							fontWeight: 'bold',
+// 							color: '#344054',
+// 						}}
+// 					/>
+// 				</button>
+// 			}
+// 			explanation={'Duplicate Page'}
+// 		/>
+// 	);
+// };
 
 export const SlidesBrandingButton: React.FC<{
 	currentSlideIndex: number;

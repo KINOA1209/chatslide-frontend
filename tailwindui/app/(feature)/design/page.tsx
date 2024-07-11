@@ -60,6 +60,7 @@ const SlideDesignPreview = dynamic(
 // import ImageSelector from './ImageSelector';
 // import PPTXTemplateSelector from './PPTXTemplateSelector';
 import { Suspense } from 'react';
+import { layoutOptions } from '@/components/slides/slideLayout';
 const PPTXTemplateSelector: any = dynamic(
 	() => import('@/app/(feature)/design/PPTXTemplateSelector'),
 	{
@@ -239,9 +240,9 @@ export default function DesignPage() {
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
 	const [slideBackgroundImgUrl, setSlideBackgroundImgUrl] = useState('');
 
-	useEffect(() => {
-		console.log('current project details:', project);
-	}, [project]);
+	// useEffect(() => {
+	// 	console.log('current project details:', project);
+	// }, [project]);
 	useEffect(() => {
 		console.log('Current slide background img url:', slideBackgroundImgUrl);
 		// setSelectedBackground(
@@ -336,6 +337,10 @@ export default function DesignPage() {
 	const [selectedLogoPosition, setSelectedLogoPosition] =
 		useState<LogoPosition>(project?.logo_position || 'BottomLeft');
 
+	const [selectedLayouts, setSelectedLayouts] = useState<string[]>(
+		Object.keys(layoutOptions),
+	);
+
 	async function viewSlidesSubmit() {
 		if (!project) {
 			console.error('Project not found');
@@ -355,47 +360,50 @@ export default function DesignPage() {
 						imageLicense,
 						imageAmount,
 						token,
+            selectedLayouts
 					);
 
 					newSlides = result.slides;
 					additional_images = result.additional_images;
-
-					newSlides = slides.map((slide) => {
-						return {
-							...slide,
-							template: template,
-							palette: colorPalette,
-							background_color: hasSelectedCustomTemplateBgColor
-								? selectedTemplateBgColor
-								: undefined,
-							titleFontFamily: HasSelectedCustomizedTemplateTitleFontFamily
-								? selectedTemplateTitleFontFamily
-								: '',
-							subtitleFontFamily:
-								HasSelectedCustomizedTemplateSubtitleFontFamily
-									? selectedTemplateSubtitleFontFamily
-									: '',
-							contentFontFamily: HasSelectedCustomizedTemplateContentFontFamily
-								? selectedTemplateContentFontFamily
-								: '',
-							titleFontColor: hasSelectedCustomizedTemplateTitleFontColor
-								? selectedTemplateTitleFontColor
-								: '',
-							subtitleFontColor: hasSelectedCustomizedTemplateSubtitleFontColor
-								? selectedTemplateSubtitleFontColor
-								: '',
-							contentFontColor: hasSelectedCustomizedTemplateContentFontColor
-								? selectedTemplateContentFontColor
-								: '',
-							logo: logoMode,
-							logo_url: selectedLogo?.[0]?.thumbnail_url || '',
-							background_url: selectedBackground?.[0]?.thumbnail_url || '',
-							media_type: ['image', 'image', 'image'],
-							transcript: '',
-							logo_position: selectedLogoPosition,
-						};
-					});
+				} else {
+					newSlides = ProjectService.parseSlides(
+						project.presentation_slides || '{}',
+					);
 				}
+				newSlides = newSlides.map((slide) => {
+					return {
+						...slide,
+						template: template,
+						palette: colorPalette,
+						background_color: hasSelectedCustomTemplateBgColor
+							? selectedTemplateBgColor
+							: undefined,
+						titleFontFamily: HasSelectedCustomizedTemplateTitleFontFamily
+							? selectedTemplateTitleFontFamily
+							: '',
+						subtitleFontFamily: HasSelectedCustomizedTemplateSubtitleFontFamily
+							? selectedTemplateSubtitleFontFamily
+							: '',
+						contentFontFamily: HasSelectedCustomizedTemplateContentFontFamily
+							? selectedTemplateContentFontFamily
+							: '',
+						titleFontColor: hasSelectedCustomizedTemplateTitleFontColor
+							? selectedTemplateTitleFontColor
+							: '',
+						subtitleFontColor: hasSelectedCustomizedTemplateSubtitleFontColor
+							? selectedTemplateSubtitleFontColor
+							: '',
+						contentFontColor: hasSelectedCustomizedTemplateContentFontColor
+							? selectedTemplateContentFontColor
+							: '',
+						logo: logoMode,
+						logo_url: selectedLogo?.[0]?.thumbnail_url || '',
+						background_url: selectedBackground?.[0]?.thumbnail_url || '',
+						media_type: ['image', 'image', 'image'],
+						transcript: '',
+						logo_position: selectedLogoPosition,
+					};
+				});
 
 				bulkUpdateProject({
 					logo: logoMode,
@@ -417,6 +425,7 @@ export default function DesignPage() {
 			}
 		} catch (e) {
 			setIsSubmitting(false);
+      setShowGenerationStatusModal(false);
 			console.error(e);
 			toast.error(
 				'Server is busy now. Please try again later. Reference code: ' +
@@ -567,7 +576,7 @@ export default function DesignPage() {
 				isPaidUser={true}
 				nextIsPaidFeature={false}
 				nextText={isSubmitting ? 'Designing Slides' : 'Design Slides'}
-				handleClickingGeneration={handleGenerationStatusModal}
+				onClickNext={handleGenerationStatusModal}
 				showLoadingButton={project?.presentation_slides ? false : true}
 			/>
 
@@ -759,6 +768,8 @@ export default function DesignPage() {
 						slideContainerScale={screenWidth > 1440 ? 0.4 : 0.3}
 						selectedSlideBackgroundImgResource={selectedBackground}
 						selectedSlideLogoResource={selectedLogo}
+						selectedLayouts={selectedLayouts}
+						setSelectedLayouts={setSelectedLayouts}
 					/>
 				</Column>
 				{/* </div> */}

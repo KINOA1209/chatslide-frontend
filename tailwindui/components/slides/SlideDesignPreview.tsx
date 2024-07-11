@@ -1,5 +1,5 @@
 'use client';
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Slide from '@/models/Slide';
 import { templateDispatch } from './templateDispatch';
 import {
@@ -9,11 +9,12 @@ import {
 } from '@/components/slides/slideTemplates';
 import { layoutOptions } from './slideLayout';
 import SlideContainer from './SlideContainer';
-import { Explanation } from '../ui/Text';
+import { Explanation, Instruction } from '../ui/Text';
 import { ScrollBar } from '../ui/ScrollBar';
 import { useProject } from '@/hooks/use-project';
 import { useSlides } from '@/hooks/use-slides';
 import Resource from '@/models/Resource';
+
 type SlideDesignPreviewProps = {
 	selectedTemplate: string;
 	selectedPalette: string;
@@ -23,6 +24,8 @@ type SlideDesignPreviewProps = {
 	slideContainerScale?: number;
 	selectedSlideBackgroundImgResource?: Resource[];
 	selectedSlideLogoResource?: Resource[];
+	selectedLayouts?: string[];
+	setSelectedLayouts?: Function;
 };
 
 const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
@@ -34,21 +37,12 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 	slideContainerScale = 0.2,
 	selectedSlideBackgroundImgResource,
 	selectedSlideLogoResource,
+	selectedLayouts,
+	setSelectedLayouts,
 }) => {
 	const { slides, version } = useSlides();
 	const [previewSlides, setPreviewSlides] = useState<Slide[]>([]);
 	const { project } = useProject();
-	// const template = isValidTemplateKey(selectedTemplate) ? selectedTemplate : 'Default';
-	// const slides = Object.keys(layoutOptions).map((layoutKey) => {
-	//     const newSlide = new Slide();
-	//     newSlide.template = template;
-	//     newSlide.layout = layoutKey as keyof typeof layoutOptions;
-	//     if(layoutKey === 'Col_2_img_0_layout' || layoutKey === 'Col_2_img_2_layout'){
-	//         newSlide.content = ['Some content here', 'Some more content here']
-	//     }
-	//     newSlide.images = ["https://img.freepik.com/free-photo/beatiful-blue-sky-with-clouds-sunny-day_839833-5069.jpg","https://upload.wikimedia.org/wikipedia/commons/0/07/Beatiful_kunar_Afghanistan.jpg","https://img.freepik.com/free-photo/roof-building-covered-snow-against-cloudy-sky_181624-37509.jpg"]
-	//     return newSlide;
-	// });
 
 	useEffect(() => {
 		console.log('current project', project);
@@ -60,10 +54,6 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 			? selectedTemplate
 			: 'Default';
 
-		// const color_theme =
-		// 	typeof selectedPalette === 'string'
-		// 		? (selectedPalette as PaletteKeys)
-		// 		: ('Original' as PaletteKeys);
 		const color_theme = selectedPalette as PaletteKeys;
 
 		const newSlides = Object.keys(layoutOptions).map((layoutKey) => {
@@ -76,11 +66,8 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 			newSlide.palette = color_theme;
 			newSlide.layout = layoutKey as keyof typeof layoutOptions;
 			newSlide.image_positions = slides[0]?.image_positions;
-			// add background url and logo_url for preview
 			newSlide.background_url =
 				selectedSlideBackgroundImgResource?.[0]?.thumbnail_url || '';
-			// project?.selected_background?.[0]?.thumbnail_url || '';
-			// newSlide.logo_url = project?.selected_logo?.[0]?.thumbnail_url || '';
 			newSlide.logo_url = selectedSlideLogoResource?.[0]?.thumbnail_url || '';
 			newSlide.logo = project?.logo || '';
 			newSlide.logo_position = project?.logo_position || 'BottomLeft';
@@ -92,12 +79,6 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 				newSlide.content = ['Some content here', 'Some more content here'];
 			}
 
-			// use imges that fit with the theme
-			// newSlide.images = [
-			// 	'https://img.freepik.com/free-photo/beatiful-blue-sky-with-clouds-sunny-day_839833-5069.jpg',
-			// 	'https://upload.wikimedia.org/wikipedia/commons/0/07/Beatiful_kunar_Afghanistan.jpg',
-			// 	'https://img.freepik.com/free-photo/roof-building-covered-snow-against-cloudy-sky_181624-37509.jpg',
-			// ];
 			if (
 				layoutKey === 'Col_1_img_1_layout' ||
 				layoutKey === 'Col_2_img_1_layout' ||
@@ -106,14 +87,11 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 				layoutKey === 'Cover_img_1_layout' ||
 				layoutKey === 'Full_img_only_layout'
 			) {
-				// corresponding layout key and also images array should not empty
 				let slideWithImages = Object.values(slides).find(
 					(slide) => slide.layout === layoutKey && slide.images.length > 0,
 				);
-				// console.log('find images for', layoutKey, slideWithImages);
 
 				if (!slideWithImages) {
-					// If no slide with images is found for the specified layout, search for a slide with 'col_3_img_3' layout
 					slideWithImages = Object.values(slides).find(
 						(slide) =>
 							slide.layout === 'Col_3_img_3_layout' && slide.images.length > 0,
@@ -123,7 +101,6 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 				if (slideWithImages) {
 					newSlide.images = slideWithImages.images;
 				} else {
-					// no such layout, placeholder pics
 					newSlide.images = [
 						'https://img.freepik.com/free-photo/beatiful-blue-sky-with-clouds-sunny-day_839833-5069.jpg',
 						'https://upload.wikimedia.org/wikipedia/commons/0/07/Beatiful_kunar_Afghanistan.jpg',
@@ -143,6 +120,21 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 		selectedSlideLogoResource,
 		selectedSlideBackgroundImgResource,
 	]);
+
+	const handleCheckboxChange = (layoutKey: string) => {
+		if (!setSelectedLayouts) return;
+		if (
+			layoutKey === 'Cover_img_0_layout' ||
+			layoutKey === 'Col_1_img_0_layout'
+		) {
+			return; // Prevent these layouts from being unselected
+		}
+		setSelectedLayouts((prevSelectedLayouts: string[]) =>
+			prevSelectedLayouts.includes(layoutKey)
+				? prevSelectedLayouts.filter((key) => key !== layoutKey)
+				: [...prevSelectedLayouts, layoutKey],
+		);
+	};
 
 	const layoutNameArray = [
 		'Cover page without image',
@@ -166,41 +158,72 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 		templateDispatch(
 			slide,
 			index,
-			// canEdit,
-			false, // canEdit
+			false,
 			exportToPdfMode,
-			1, // scale
+			1,
 			false,
 			() => {},
 			() => {},
 			() => () => {},
 			() => {},
-			// slide.palette,
 			index === 0,
 			slide.layout,
 			slide.layout,
-			true, // isCurrentSlide
+			true,
 		);
+
 	return (
-		<ScrollBar axial={axial} useGridLayout={useGridLayout} gridCols={gridCols}>
-			{previewSlides.map((slide, index) => (
-				<div
-					className='DesignpreviewContainer flex flex-col items-center gap-1 p-2'
-					key={`DesignpreviewContainer` + index.toString()}
-				>
-					{/* {index + 1} */}
-					<SlideContainer
-						slide={slide}
-						index={index}
-						scale={slideContainerScale}
-						isViewing={true}
-						templateDispatch={unEditableTemplateDispatch}
-						key={version}
-					/>
-					<Explanation>{layoutNameArray[index]}</Explanation>
-				</div>
-			))}
-		</ScrollBar>
+		<>
+			{selectedLayouts && (
+				<Instruction>
+					(Optional) Please select the layouts you would like to use to initialize your
+					slides. You can also add new layouts back in the next step.
+				</Instruction>
+			)}
+			<ScrollBar
+				axial={axial}
+				useGridLayout={useGridLayout}
+				gridCols={gridCols}
+			>
+				{previewSlides.map((slide, index) => (
+					<div
+						className='DesignpreviewContainer flex flex-col items-center gap-1 p-2'
+						key={`DesignpreviewContainer` + index.toString()}
+					>
+						{selectedLayouts && (
+							<label className='flex items-center gap-2'>
+								<input
+									type='checkbox'
+									checked={selectedLayouts.includes(slide.layout)}
+									onChange={() => handleCheckboxChange(slide.layout)}
+									disabled={
+										slide.layout === 'Cover_img_0_layout' ||
+										slide.layout === 'Col_1_img_0_layout'
+									}
+									className={`
+								${
+									slide.layout === 'Cover_img_0_layout' ||
+									slide.layout === 'Col_1_img_0_layout'
+										? 'text-gray-500 cursor-not-allowed'
+										: ''
+								}
+							`}
+								/>
+								<Explanation>{layoutNameArray[index]}</Explanation>
+							</label>
+						)}
+						<SlideContainer
+							slide={slide}
+							index={index}
+							scale={slideContainerScale}
+							isViewing={true}
+							templateDispatch={unEditableTemplateDispatch}
+							key={version}
+						/>
+					</div>
+				))}
+			</ScrollBar>
+		</>
 	);
 };
 

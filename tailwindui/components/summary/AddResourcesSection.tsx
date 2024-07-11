@@ -15,7 +15,13 @@ import { useUser } from '@/hooks/use-user';
 import RadioButton, { RadioButtonOption } from '../ui/RadioButton';
 import { FaInternetExplorer, FaNewspaper, FaWikipediaW } from 'react-icons/fa';
 import { IoIosRemoveCircle, IoIosRemoveCircleOutline } from 'react-icons/io';
-import { Instruction, Explanation, BigTitle, WarningMessage } from '../ui/Text';
+import {
+	Instruction,
+	Explanation,
+	BigTitle,
+	WarningMessage,
+	ErrorMessage,
+} from '../ui/Text';
 import Card from '../ui/Card';
 import {
 	DOCUMENT_EXTENSIONS,
@@ -35,6 +41,8 @@ interface AddResourcesProps {
 	isRequired?: boolean;
 	generationMode?: 'from_topic' | 'from_files';
 	setGenerationMode?: (mode: 'from_topic' | 'from_files') => void;
+	errorMessage?: string;
+	setErrorMessage?: (message: string) => void;
 }
 
 const AddResourcesSection: React.FC<AddResourcesProps> = ({
@@ -47,6 +55,8 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 	isRequired = false,
 	generationMode,
 	setGenerationMode,
+	errorMessage,
+	setErrorMessage,
 }) => {
 	const [resources, setResources] = useState<Resource[]>([]);
 	const { token } = useUser();
@@ -96,6 +106,11 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 	};
 
 	const [isDragging, setIsDragging] = useState(false);
+
+  useEffect(() => {
+    if(!setErrorMessage) return;
+    setErrorMessage('');
+  }, [selectedResources]);
 
 	const handleDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
 		e.preventDefault();
@@ -271,6 +286,7 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 							The performance and accuracy may degrade with more than 4 sources.
 						</WarningMessage>
 					)}
+					{errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
 					<SelectedResourcesList
 						selectedResources={selectedResources}
 						removeResourceAtIndex={removeResourceAtIndex}

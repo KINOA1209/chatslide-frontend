@@ -15,15 +15,43 @@ export default function Studio() {
 		<Column>
 			<Panel>
 				<Card>
-					<BigTitle>Coming Next...</BigTitle>
+					{/* <BigTitle>Coming Next...</BigTitle>
 					<Instruction>
 						🎰 Directly add scripts, voiceover, and avatar to PPTX
-					</Instruction>
+					</Instruction> */}
 
 					<FeedbackButton
 						instructionText='What features would you like to see next?'
 						displayText='Ask for more features!'
 					/>
+				</Card>
+
+				<Card>
+					<BigTitle>July 10</BigTitle>
+					<Instruction>
+						<div>
+							<b>🎨 Design Step Layout Choices:</b> You can now choose (and ban) from
+							various layouts during the design step. There is also a 'no image'
+							option for a cleaner look.
+						</div>
+					</Instruction>
+
+					<Instruction>
+						<div>
+							<b>✍️ Script Step Customization:</b> In the script step, you now
+							have the option to fine tune your script generation, and 
+              even directly write your own scripts for more
+							personalized content.
+						</div>
+					</Instruction>
+
+					<Instruction>
+						<div>
+							<b>🔄 Custom Logo Positioning:</b> You can move the logos around
+							and apply the custom logo position to all slide pages, providing
+							more flexibility in your design.
+						</div>
+					</Instruction>
 				</Card>
 
 				<Card>
@@ -352,8 +380,8 @@ export default function Studio() {
 					</Instruction>
 					<Instruction>
 						<div>
-							<b>💸 Join Affiliate Program: </b> Get paid for your shared content
-							when they drive conversion!
+							<b>💸 Join Affiliate Program: </b> Get paid for your shared
+							content when they drive conversion!
 						</div>
 						<a
 							className='text-blue-600'

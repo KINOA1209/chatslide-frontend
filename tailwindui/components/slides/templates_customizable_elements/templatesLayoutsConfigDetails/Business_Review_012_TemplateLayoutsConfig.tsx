@@ -7,7 +7,6 @@ export const Business_Review_012_TemplateLayoutsConfig: {
 } = {
 	Cover_img_0_layout: {
 		canvaCSS: {
-			display: 'flex',
 			width: '100%',
 			height: '100%',
 			position: 'relative',
@@ -21,10 +20,6 @@ export const Business_Review_012_TemplateLayoutsConfig: {
 			padding: '25px',
 			borderRadius: '24px',
 			width: '100%',
-			display: 'flex',
-			// width: '50%', // Equivalent to w-1/2
-			// display: 'flex', // Equivalent to flex
-			flexDirection: 'column', // Equivalent to flex-col
 			justifyContent: 'space-between', // Equivalent to justify-start
 			// gap: '2rem',
 		},
@@ -53,10 +48,10 @@ export const Business_Review_012_TemplateLayoutsConfig: {
 			// transform: 'translate(-50%, -50%)', // Centering trick
 			// textAlign: 'center',
 		},
+		titlePos: { x: 80, y: 130, width: 390, height: 200 },
 	},
 	Cover_img_1_layout: {
 		canvaCSS: {
-			display: 'flex',
 			width: '100%',
 			height: '100%',
 			position: 'relative',
@@ -70,10 +65,7 @@ export const Business_Review_012_TemplateLayoutsConfig: {
 			padding: '25px',
 			borderRadius: '24px',
 			width: '50%',
-			display: 'flex',
 			// width: '50%', // Equivalent to w-1/2
-			// display: 'flex', // Equivalent to flex
-			flexDirection: 'column', // Equivalent to flex-col
 			justifyContent: 'space-between', // Equivalent to justify-start
 			// gap: '2rem',
 		},
@@ -115,7 +107,6 @@ export const Business_Review_012_TemplateLayoutsConfig: {
 			width: '50%', // Equivalent to w-1/2
 			height: '100%', // Equivalent to h-full
 			//overflow: 'hidden',
-			display: 'flex',
 			alignItems: 'center',
 			zIndex: 20,
 			padding: '25px 25px 25px 0px', // top right bottom left
@@ -144,13 +135,13 @@ export const Business_Review_012_TemplateLayoutsConfig: {
 		rndCSS: {
 			zIndex: '51',
 		},
+		titlePos: { x: 80, y: 130, width: 390, height: 200 },
+		imgContainerPos: [{ x: 480, y: 30, width: 450, height: 480 }],
 	},
 	Col_1_img_0_layout: {
 		canvaCSS: {
 			width: '100%', // Equivalent to w-full
 			height: '100%', // Equivalent to h-full
-			display: 'flex', // Equivalent to flex
-			flexDirection: 'column', // Equivalent to flex-col
 			// marginTop: '25px', // Equivalent to pt-[1rem]
 			// marginLeft: '25px', // Equivalent to px-[2rem], for left padding
 			// marginRight: '25px', // Equivalent to px-[2rem], for right padding
@@ -168,10 +159,6 @@ export const Business_Review_012_TemplateLayoutsConfig: {
 			padding: '25px',
 			borderRadius: '24px',
 			height: '100%',
-			display: 'flex',
-			// width: '50%', // Equivalent to w-1/2
-			// display: 'flex', // Equivalent to flex
-			flexDirection: 'column', // Equivalent to flex-col
 			// justifyContent: 'space-between', // Equivalent to justify-start
 		},
 		contentCSS: {
@@ -189,20 +176,8 @@ export const Business_Review_012_TemplateLayoutsConfig: {
 		},
 		columnCSS: {
 			width: '100%', // Equivalent to w-full
-			display: 'flex',
 		},
 		titleAndSubtopicBoxCSS: {
-			// backgroundColor: '#F1F1F1',
-			// paddingTop: '50px',
-			// paddingBottom: '50px',
-			// paddingLeft: '50px',
-			// paddingRight: '50px',
-			// marginTop: '25px', // Equivalent to pt-[1rem]
-			// marginLeft: '25px', // Equivalent to px-[2rem], for left padding
-			// marginRight: '25px', // Equivalent to px-[2rem], for right padding
-			// marginBottom: '0px',
-			display: 'flex',
-			flexDirection: 'column', // Equivalent to flex
 			// borderRadius: '24px 24px 0px 0px',
 		},
 		topicCSS: {
@@ -218,6 +193,9 @@ export const Business_Review_012_TemplateLayoutsConfig: {
 		titlesAndContentDividerCSS: {
 			display: 'none',
 		},
+		topicPos: { x: 50, y: 50, width: 860, height: 50 },
+		subtopicPos: { x: 50, y: 104, width: 860, height: 80 },
+		contentPos: [{ x: 50, y: 200, width: 860, height: 240 }],
 	},
 	Col_2_img_0_layout: {
 		titleAndSubtopicBoxCSS: {
@@ -225,11 +203,6 @@ export const Business_Review_012_TemplateLayoutsConfig: {
 			paddingBottom: '80px',
 			paddingLeft: '25px',
 			paddingRight: '25px',
-			display: 'flex',
-			flexDirection: 'column', // Equivalent to flex
-			// marginTop: '25px',
-			// marginLeft: '25px',
-			// marginRight: '25px',
 			borderRadius: '24px',
 		},
 		titleAndContentColumnCSS: {
@@ -240,10 +213,6 @@ export const Business_Review_012_TemplateLayoutsConfig: {
 			// padding: '25px',
 			borderRadius: '24px',
 			height: '100%',
-			display: 'flex',
-			// width: '50%', // Equivalent to w-1/2
-			// display: 'flex', // Equivalent to flex
-			flexDirection: 'column', // Equivalent to flex-col
 			// justifyContent: 'space-between', // Equivalent to justify-start
 		},
 		topicCSS: {
@@ -271,8 +240,6 @@ export const Business_Review_012_TemplateLayoutsConfig: {
 			// marginRight: '25px',
 		},
 		contentCSS: {
-			display: 'flex',
-			flexDirection: 'column',
 			gap: '0.5rem',
 			// paddingLeft: '1rem',
 			// borderLeft: '1px solid #C2C2C2',
@@ -284,12 +251,14 @@ export const Business_Review_012_TemplateLayoutsConfig: {
 			display: 'none',
 		},
 		contentTextCSS: {
-			display: 'flex',
-			flexDirection: 'row',
-			width: '100%',
-			height: '100%',
 			flexGrow: 1,
 		},
+		topicPos: { x: 50, y: 50, width: 860, height: 50 },
+		subtopicPos: { x: 50, y: 104, width: 860, height: 50 },
+		contentPos: [
+			{ x: 50, y: 200, width: 405, height: 240 },
+			{ x: 505, y: 200, width: 405, height: 240 },
+		],
 	},
 	Col_3_img_0_layout: {
 		titleAndSubtopicBoxCSS: {
@@ -297,8 +266,6 @@ export const Business_Review_012_TemplateLayoutsConfig: {
 			paddingBottom: '80px',
 			paddingLeft: '25px',
 			paddingRight: '25px',
-			display: 'flex',
-			flexDirection: 'column', // Equivalent to flex
 			// marginTop: '25px',
 			// marginLeft: '25px',
 			// marginRight: '25px',
@@ -312,10 +279,6 @@ export const Business_Review_012_TemplateLayoutsConfig: {
 			// padding: '25px',
 			borderRadius: '24px',
 			height: '100%',
-			display: 'flex',
-			// width: '50%', // Equivalent to w-1/2
-			// display: 'flex', // Equivalent to flex
-			flexDirection: 'column', // Equivalent to flex-col
 			// justifyContent: 'space-between', // Equivalent to justify-start
 		},
 		topicCSS: {
@@ -343,8 +306,6 @@ export const Business_Review_012_TemplateLayoutsConfig: {
 			// marginRight: '25px',
 		},
 		contentCSS: {
-			display: 'flex',
-			flexDirection: 'column',
 			gap: '0.5rem',
 			// paddingLeft: '1rem',
 			// borderLeft: '1px solid #C2C2C2',
@@ -356,18 +317,19 @@ export const Business_Review_012_TemplateLayoutsConfig: {
 			display: 'none',
 		},
 		contentTextCSS: {
-			display: 'flex',
-			flexDirection: 'row',
-			width: '100%',
-			height: '100%',
 			flexGrow: 1,
 		},
+		topicPos: { x: 50, y: 50, width: 860, height: 50 },
+		subtopicPos: { x: 50, y: 104, width: 860, height: 50 },
+		contentPos: [
+			{ x: 50, y: 200, width: 250, height: 240 },
+			{ x: 350, y: 200, width: 250, height: 240 },
+			{ x: 650, y: 200, width: 250, height: 240 },
+		],
 	},
 	Col_2_img_1_layout: {
 		columnCSS: {
 			width: '50%', // equivalent to w-1/2
-			display: 'flex',
-			flexDirection: 'column',
 			alignItems: 'flex-start',
 			height: '100%',
 			// gap: '0.1rem',
@@ -376,8 +338,6 @@ export const Business_Review_012_TemplateLayoutsConfig: {
 		canvaCSS: {
 			width: '100%',
 			height: '100%',
-			display: 'flex',
-			flexDirection: 'row',
 			justifyContent: 'flex-start',
 			alignItems: 'flex-start',
 			gap: '6px',
@@ -388,8 +348,6 @@ export const Business_Review_012_TemplateLayoutsConfig: {
 			paddingBottom: '12px',
 			paddingLeft: '25px',
 			paddingRight: '25px',
-			display: 'flex',
-			flexDirection: 'column', // Equivalent to flex
 			borderRadius: '24px 24px 0px 0px',
 			marginTop: '25px',
 		},
@@ -409,7 +367,6 @@ export const Business_Review_012_TemplateLayoutsConfig: {
 		imageContainerCSS: {
 			width: '50%', // equivalent to w-1/2
 			height: '100%', // equivalent to h-[90%]
-			display: 'flex',
 			alignItems: 'center', // equivalent to items-center
 
 			padding: '25px 25px 25px 0px', // top right bottom left
@@ -444,6 +401,10 @@ export const Business_Review_012_TemplateLayoutsConfig: {
 		rndCSS: {
 			zIndex: '51',
 		},
+		topicPos: { x: 50, y: 50, width: 430, height: 50 },
+		subtopicPos: { x: 50, y: 104, width: 430, height: 80 },
+		contentPos: [{ x: 50, y: 200, width: 430, height: 300 }],
+		imgContainerPos: [{ x: 480, y: 30, width: 450, height: 480 }],
 	},
 	Col_1_img_1_layout: {
 		canvaCSS: {
@@ -471,8 +432,6 @@ export const Business_Review_012_TemplateLayoutsConfig: {
 			// paddingLeft: '50px',
 			// paddingRight: '50px',
 
-			display: 'flex',
-			flexDirection: 'column', // Equivalent to flex
 			gridRow: 1,
 			padding: '25px 25px 0px 25px',
 			borderRadius: '24px 24px 0px 0px', // border radius 1.25rem for image
@@ -513,10 +472,6 @@ export const Business_Review_012_TemplateLayoutsConfig: {
 
 		// contentCSS: { borderLeft: '1px solid #C2C2C2', paddingLeft: '0.5rem' },
 		contentTextCSS: {
-			display: 'flex',
-			flexDirection: 'row',
-			width: '100%',
-			height: '100%',
 			flexGrow: 1,
 			paddingLeft: '1rem',
 		},
@@ -528,12 +483,15 @@ export const Business_Review_012_TemplateLayoutsConfig: {
 		rndCSS: {
 			zIndex: '51',
 		},
+		topicPos: { x: 50, y: 50, width: 860, height: 50 },
+		subtopicPos: { x: 50, y: 104, width: 860, height: 50 },
+		contentPos: [{ x: 50, y: 170, width: 860, height: 140 }],
+		imgContainerPos: [{ x: 50, y: 320, width: 860, height: 210 }],
 	},
 	Col_2_img_2_layout: {
 		canvaCSS: {
 			width: '100%',
 			height: '100%',
-			display: 'flex',
 		},
 		columnCSS: {
 			width: '100%',
@@ -551,8 +509,6 @@ export const Business_Review_012_TemplateLayoutsConfig: {
 			// backgroundColor: '#F1F1F1',
 			padding: '25px 25px 0px 25px',
 			borderRadius: '24px 24px 0px 0px', // border radius 1.25rem for image
-			display: 'flex',
-			flexDirection: 'column', // Equivalent to flex
 			gridRow: 1,
 		},
 		topicCSS: {
@@ -600,12 +556,21 @@ export const Business_Review_012_TemplateLayoutsConfig: {
 		rndCSS: {
 			zIndex: '51',
 		},
+		topicPos: { x: 50, y: 50, width: 860, height: 50 },
+		subtopicPos: { x: 50, y: 104, width: 860, height: 80 },
+		contentPos: [
+			{ x: 50, y: 200, width: 405, height: 100 },
+			{ x: 505, y: 200, width: 405, height: 100 },
+		],
+		imgContainerPos: [
+			{ x: 50, y: 320, width: 405, height: 220 },
+			{ x: 505, y: 320, width: 405, height: 220 },
+		],
 	},
 	Col_3_img_3_layout: {
 		canvaCSS: {
 			width: '100%',
 			height: '100%',
-			display: 'flex',
 		},
 		columnCSS: {
 			width: '100%',
@@ -623,7 +588,6 @@ export const Business_Review_012_TemplateLayoutsConfig: {
 			// backgroundColor: '#F1F1F1',
 			padding: '25px 25px 0px 25px',
 			borderRadius: '24px 24px 0px 0px', // border radius 1.25rem for image
-			display: 'flex',
 			flexDirection: 'column', // Equivalent to flex
 			gridRow: 1,
 		},
@@ -672,12 +636,23 @@ export const Business_Review_012_TemplateLayoutsConfig: {
 		rndCSS: {
 			zIndex: '51',
 		},
+		topicPos: { x: 50, y: 50, width: 860, height: 50 },
+		subtopicPos: { x: 50, y: 104, width: 860, height: 50 },
+		contentPos: [
+			{ x: 50, y: 310, width: 250, height: 180 },
+			{ x: 350, y: 310, width: 250, height: 180 },
+			{ x: 650, y: 310, width: 250, height: 180 },
+		],
+		imgContainerPos: [
+			{ x: 50, y: 170, width: 250, height: 130 },
+			{ x: 350, y: 170, width: 250, height: 130 },
+			{ x: 650, y: 170, width: 250, height: 130 },
+		],
 	},
 	Full_img_only_layout: {
 		canvaCSS: {
 			width: '100%',
 			height: '100%',
-			display: 'flex',
 		},
 
 		imageContainerCSS: {
@@ -698,5 +673,6 @@ export const Business_Review_012_TemplateLayoutsConfig: {
 		rndCSS: {
 			zIndex: '51',
 		},
+		imgContainerPos: [{ x: 30, y: 30, width: 900, height: 480 }],
 	},
 };

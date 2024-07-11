@@ -49,6 +49,8 @@ import {
 	ClonedVoicesProvider,
 	useClonedVoices,
 } from '@/components/language/ClonedVoicesContext';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const ScriptSection = dynamic(
 	() => import('@/components/script/ScriptSection'),
@@ -182,7 +184,8 @@ export default function WorkflowStep5() {
 		// If there are slides with transcripts exceeding 4096 characters, display a detailed error message
 		if (longScriptIndices.length > 0) {
 			toast.error(
-				`The following pages have more than 4096 characters: ${longScriptIndices.join(', ')}. Please remove some characters.`,
+				`The following pages have more than 4096 characters: ${longScriptIndices.map((index) => index + 1).join(', ')}. Please remove some characters.`,
+				{ containerId: 'script' },
 			);
 			setIsSubmitting(false);
 			return;
@@ -195,7 +198,8 @@ export default function WorkflowStep5() {
 		// If there are slides with empty scripts, display a detailed error message
 		if (emptyScriptIndices.length > 0) {
 			toast.error(
-				`The following pages have empty scripts: ${emptyScriptIndices.join(', ')}. Please double check.`,
+				`The following pages have empty scripts: ${emptyScriptIndices.map((index) => index + 1).join(', ')}. Please double check.`,
+				{ containerId: 'script' },
 			);
 			setIsSubmitting(false);
 			return;
@@ -204,7 +208,9 @@ export default function WorkflowStep5() {
 		if (canSubmitVideo()) {
 			setLastSubmissionTime();
 		} else {
-			toast.error('Please wait at least 5 minutes between video submissions.');
+			toast.error('Please wait at least 5 minutes between video submissions.', {
+				containerId: 'script',
+			});
 			setIsSubmitting(false);
 			return;
 		}
@@ -320,7 +326,7 @@ export default function WorkflowStep5() {
 					<Instruction>
 						Select the voice you want to use for your video.
 					</Instruction>
-					<Instruction>
+					{/* <Instruction>
 						<span>
 							Voice cloning is now available for ULTIMATE users. Click button
 							below to clone and use your voice.
@@ -330,7 +336,7 @@ export default function WorkflowStep5() {
 						onClick={() => (window.location.href = '/studio')}
 					>
 						Clone your voice
-					</InversedBigBlueButton>
+					</InversedBigBlueButton> */}
 					<ClonedVoicesProvider>
 						<VoiceSelector
 							selectedVoice={voice}

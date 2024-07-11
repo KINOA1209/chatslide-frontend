@@ -45,6 +45,7 @@ class SlidesService {
 		license: string,
 		image_amount: string,
 		token: string,
+    selectedLayouts?: string[]
 	) {
 		const resp = await fetch('/api/init_slide_images', {
 			method: 'POST',
@@ -57,6 +58,7 @@ class SlidesService {
 				topic: topic,
 				license: license,
 				image_amount: image_amount,
+        selected_layouts: selectedLayouts
 			}),
 		});
 		const data = await resp.json();

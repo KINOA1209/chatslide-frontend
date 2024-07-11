@@ -51,8 +51,6 @@ export const Fun_Education_004_TemplateLayoutsConfig: {
 			paddingLeft: '2rem', // Equivalent to px-[2rem], for left padding
 			paddingRight: '2rem', // Equivalent to px-[2rem], for right padding
 			width: '50%', // Equivalent to w-1/2
-			display: 'flex', // Equivalent to flex
-			flexDirection: 'column', // Equivalent to flex-col
 			justifyContent: 'flex-start', // Equivalent to justify-start
 			height: '100%', // Equivalent to h-full
 			gap: '2rem',
@@ -73,6 +71,7 @@ export const Fun_Education_004_TemplateLayoutsConfig: {
 			// display: 'none',
 			pointerEvents: 'none' /* Make the layer transparent to pointer events */,
 		},
+		titlePos: { x: 80, y: 130, width: 390, height: 200 },
 	},
 	Cover_img_1_layout: {
 		titleCSS: {
@@ -110,8 +109,6 @@ export const Fun_Education_004_TemplateLayoutsConfig: {
 			paddingLeft: '2rem', // Equivalent to px-[2rem], for left padding
 			paddingRight: '2rem', // Equivalent to px-[2rem], for right padding
 			width: '50%', // Equivalent to w-1/2
-			display: 'flex', // Equivalent to flex
-			flexDirection: 'column', // Equivalent to flex-col
 			justifyContent: 'flex-start', // Equivalent to justify-start
 			height: '100%', // Equivalent to h-full
 			gap: '2rem',
@@ -139,13 +136,13 @@ export const Fun_Education_004_TemplateLayoutsConfig: {
 		rndCSS: {
 			zIndex: '10',
 		},
+		titlePos: { x: 80, y: 130, width: 390, height: 200 },
+		imgContainerPos: [{ x: 480, y: 30, width: 450, height: 480 }],
 	},
 	Col_1_img_0_layout: {
 		canvaCSS: {
 			width: '100%', // Equivalent to w-full
 			height: '100%', // Equivalent to h-full
-			display: 'flex', // Equivalent to flex
-			flexDirection: 'column', // Equivalent to flex-col
 			position: 'relative', // Equivalent to
 			// overflow: 'hidden',
 		},
@@ -181,7 +178,6 @@ export const Fun_Education_004_TemplateLayoutsConfig: {
 			marginRight: '2rem',
 			marginTop: '1rem',
 			marginBottom: '1rem',
-			display: 'flex',
 			// zIndex: 10,
 			backgroundColor: '#E4F9F6',
 			borderRadius: '1.25rem',
@@ -189,6 +185,9 @@ export const Fun_Education_004_TemplateLayoutsConfig: {
 		titlesAndContentDividerCSS: {
 			display: 'none',
 		},
+		topicPos: { x: 50, y: 50, width: 860, height: 50 },
+		subtopicPos: { x: 50, y: 104, width: 860, height: 80 },
+		contentPos: [{ x: 50, y: 200, width: 860, height: 240 }],
 	},
 	Col_2_img_0_layout: {
 		visualElementsCSS: {
@@ -221,8 +220,6 @@ export const Fun_Education_004_TemplateLayoutsConfig: {
 			padding: '2rem 2rem', // Add left and right padding
 		},
 		contentCSS: {
-			display: 'flex',
-			flexDirection: 'column',
 			gap: '0.5rem',
 			width: '100%', // Equivalent to w-full
 			flexGrow: 0,
@@ -247,13 +244,15 @@ export const Fun_Education_004_TemplateLayoutsConfig: {
 			display: 'none',
 		},
 		contentTextCSS: {
-			display: 'flex',
-			flexDirection: 'row',
-			width: '100%',
-			height: '100%',
 			flexGrow: 1,
 			zIndex: 30,
 		},
+		topicPos: { x: 50, y: 50, width: 860, height: 50 },
+		subtopicPos: { x: 50, y: 104, width: 860, height: 50 },
+		contentPos: [
+			{ x: 50, y: 200, width: 405, height: 240 },
+			{ x: 505, y: 200, width: 405, height: 240 },
+		],
 	},
 	Col_3_img_0_layout: {
 		canvaCSS: {
@@ -290,8 +289,6 @@ export const Fun_Education_004_TemplateLayoutsConfig: {
 			padding: '2rem 2rem', // Add left and right padding
 		},
 		contentCSS: {
-			display: 'flex',
-			flexDirection: 'column',
 			gap: '0.5rem',
 			width: '100%', // Equivalent to w-full
 			// maxWidth: '200px', // Set your desired maximum width here
@@ -318,21 +315,21 @@ export const Fun_Education_004_TemplateLayoutsConfig: {
 			display: 'none',
 		},
 		contentTextCSS: {
-			display: 'flex',
-			flexDirection: 'row',
 			flexWrap: 'wrap', // Add this line to enable wrapping
-			width: '100%',
-			// maxWidth: '300px',
-			height: '100%',
 			flexGrow: 1,
 			zIndex: 30,
 		},
+		topicPos: { x: 50, y: 50, width: 860, height: 50 },
+		subtopicPos: { x: 50, y: 104, width: 860, height: 50 },
+		contentPos: [
+			{ x: 50, y: 200, width: 250, height: 240 },
+			{ x: 350, y: 200, width: 250, height: 240 },
+			{ x: 650, y: 200, width: 250, height: 240 },
+		],
 	},
 	Col_2_img_1_layout: {
 		columnCSS: {
 			width: '50%', // equivalent to w-1/2
-			display: 'flex',
-			flexDirection: 'column',
 			alignItems: 'flex-start',
 			height: '100%',
 			gap: '0.1rem',
@@ -355,15 +352,11 @@ export const Fun_Education_004_TemplateLayoutsConfig: {
 		canvaCSS: {
 			width: '100%',
 			height: '100%',
-			display: 'flex',
-			flexDirection: 'row',
 			// gap: '2rem',
 			justifyContent: 'flex-start',
 			alignItems: 'flex-start',
 		},
 		titleAndSubtopicBoxCSS: {
-			display: 'flex',
-			flexDirection: 'column',
 			width: '100%',
 			zIndex: 40,
 		},
@@ -372,7 +365,6 @@ export const Fun_Education_004_TemplateLayoutsConfig: {
 			height: '100%',
 			// borderRadius: '1.25rem',
 			//overflow: 'hidden',
-			display: 'flex',
 			alignItems: 'center',
 			padding: '2rem 2rem 2rem 4rem', // top right bottom left
 		},
@@ -387,6 +379,10 @@ export const Fun_Education_004_TemplateLayoutsConfig: {
 		rndCSS: {
 			zIndex: '10',
 		},
+		topicPos: { x: 50, y: 50, width: 430, height: 50 },
+		subtopicPos: { x: 50, y: 104, width: 430, height: 80 },
+		contentPos: [{ x: 50, y: 200, width: 430, height: 300 }],
+		imgContainerPos: [{ x: 480, y: 30, width: 450, height: 480 }],
 	},
 	Col_1_img_1_layout: {
 		canvaCSS: {},
@@ -400,8 +396,6 @@ export const Fun_Education_004_TemplateLayoutsConfig: {
 			paddingBottom: '2rem',
 		},
 		titleAndSubtopicBoxCSS: {
-			display: 'flex',
-			flexDirection: 'column',
 			zIndex: 40,
 		},
 		imageContainerCSS: {
@@ -420,8 +414,6 @@ export const Fun_Education_004_TemplateLayoutsConfig: {
 			paddingBottom: '0.5rem',
 			height: '100%',
 			width: '100%',
-			display: 'flex',
-			flexDirection: 'column',
 			gap: '0.5rem',
 			gridRow: 2,
 		},
@@ -435,8 +427,6 @@ export const Fun_Education_004_TemplateLayoutsConfig: {
 			top: '0%',
 		},
 		contentTextCSS: {
-			display: 'flex',
-			flexDirection: 'row',
 			width: '100%',
 			height: '100%',
 			flexGrow: 1,
@@ -450,18 +440,18 @@ export const Fun_Education_004_TemplateLayoutsConfig: {
 		rndCSS: {
 			zIndex: '10',
 		},
+		topicPos: { x: 50, y: 50, width: 860, height: 50 },
+		subtopicPos: { x: 50, y: 104, width: 860, height: 50 },
+		contentPos: [{ x: 50, y: 170, width: 860, height: 140 }],
+		imgContainerPos: [{ x: 50, y: 320, width: 860, height: 210 }],
 	},
 	Col_2_img_2_layout: {
 		columnCSS: {
-			display: 'flex',
-			flexDirection: 'column',
 			gap: '0.5rem',
 			padding: '2rem 2rem 2rem 2rem',
 		},
 		titleAndSubtopicBoxCSS: {
 			zIndex: 30,
-			display: 'flex',
-			flexDirection: 'column',
 			// justifyContent: 'center',
 			// alignItems: 'center',
 		},
@@ -503,18 +493,24 @@ export const Fun_Education_004_TemplateLayoutsConfig: {
 		rndCSS: {
 			zIndex: '10',
 		},
+		topicPos: { x: 50, y: 50, width: 860, height: 50 },
+		subtopicPos: { x: 50, y: 104, width: 860, height: 80 },
+		contentPos: [
+			{ x: 50, y: 200, width: 405, height: 100 },
+			{ x: 505, y: 200, width: 405, height: 100 },
+		],
+		imgContainerPos: [
+			{ x: 50, y: 320, width: 405, height: 220 },
+			{ x: 505, y: 320, width: 405, height: 220 },
+		],
 	},
 	Col_3_img_3_layout: {
 		columnCSS: {
-			display: 'flex',
-			flexDirection: 'column',
 			gap: '0.5rem',
 			padding: '2rem 2rem 2rem 2rem',
 		},
 		titleAndSubtopicBoxCSS: {
 			zIndex: 30,
-			display: 'flex',
-			flexDirection: 'column',
 			// justifyContent: 'center',
 			// alignItems: 'center',
 		},
@@ -555,12 +551,23 @@ export const Fun_Education_004_TemplateLayoutsConfig: {
 		rndCSS: {
 			zIndex: '10',
 		},
+		topicPos: { x: 50, y: 50, width: 860, height: 50 },
+		subtopicPos: { x: 50, y: 104, width: 860, height: 50 },
+		contentPos: [
+			{ x: 50, y: 310, width: 250, height: 180 },
+			{ x: 350, y: 310, width: 250, height: 180 },
+			{ x: 650, y: 310, width: 250, height: 180 },
+		],
+		imgContainerPos: [
+			{ x: 50, y: 170, width: 250, height: 130 },
+			{ x: 350, y: 170, width: 250, height: 130 },
+			{ x: 650, y: 170, width: 250, height: 130 },
+		],
 	},
 	Full_img_only_layout: {
 		canvaCSS: {
 			width: '100%',
 			height: '100%',
-			display: 'flex',
 		},
 
 		imageContainerCSS: {
@@ -581,5 +588,6 @@ export const Fun_Education_004_TemplateLayoutsConfig: {
 		rndCSS: {
 			zIndex: '51',
 		},
+		imgContainerPos: [{ x: 30, y: 30, width: 900, height: 480 }],
 	},
 };

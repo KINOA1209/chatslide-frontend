@@ -283,10 +283,10 @@ const SideBar = ({}: SideBarProps) => {
 											'var(--spacing-md, 0.5rem) var(--spacing-lg, 0.75rem)',
 									}}
 								>
-									Join our user study and discord to earn free credits
+									Join our discord to earn free credits
 								</div>
 							)}
-							{isChatslide() && (
+							{/* {isChatslide() && (
 								<a
 									href='/meet'
 									target='_blank'
@@ -301,8 +301,8 @@ const SideBar = ({}: SideBarProps) => {
 								>
 									Get 1000 ⭐️credits
 								</a>
-							)}
-							{isChatslide() ? (
+							)} */}
+							{/* {isChatslide() ? (
 								<a
 									href='https://qualtricsxm6ltvkn8sw.qualtrics.com/jfe/form/SV_6nF7L74Sv68ynzw'
 									target='_blank'
@@ -332,7 +332,7 @@ const SideBar = ({}: SideBarProps) => {
 								>
 									Get 100 ⭐️credits
 								</a>
-							)}
+							)} */}
 							{isChatslide() &&  <a
 								href='/discord'
 								target='_blank'

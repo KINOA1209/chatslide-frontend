@@ -7,13 +7,16 @@ import Image from 'next/image';
 import mode_choices from './mode_choices.json';
 import AuthService from '@/services/AuthService';
 import { BackButton } from '@/components/button/DrlambdaButton';
+import { useSlides } from '@/hooks/use-slides';
 
 const GenerationModePage = () => {
 	const router = useRouter(); // Initialize the router
 	const [username, setUsername] = useState(''); // Initialize the username state
+  const { setSlides  } = useSlides();
 
 	const navigate = (type: string) => {
 		sessionStorage.setItem('generation_mode', type);
+    setSlides([]);
 		router.push('/summary');
 	};
 

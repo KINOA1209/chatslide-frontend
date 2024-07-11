@@ -79,11 +79,11 @@ export default function SubscriptionAndUserResearch() {
 		<div className='flex flex-col items-center mx-auto w-full'>
 			<ToastContainer />
 			{/* user research modal */}
-			{showUserResearchModal && (
+			{/* {showUserResearchModal && (
 				<UserResearchWindow
 					onClick={handleUserResearchModal}
 				></UserResearchWindow>
-			)}
+			)} */}
 			<Panel>
 				<Subscription />
 				<Card>

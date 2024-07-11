@@ -44,14 +44,14 @@ const ProgressButton: FC<{
 };
 
 const ctas = [
-	{
-		href: 'https://calendar.app.google/2uGV3B6h9UdYBHPB8',
-		imgSrc: BookASessionImg.src,
-		alt: 'Book a session',
-		instruction: 'Book a session',
-		emoji: '+1000⭐',
-		explanation: '~30 mins',
-	},
+	// {
+	// 	href: 'https://calendar.app.google/2uGV3B6h9UdYBHPB8',
+	// 	imgSrc: BookASessionImg.src,
+	// 	alt: 'Book a session',
+	// 	instruction: 'Book a session',
+	// 	emoji: '+1000⭐',
+	// 	explanation: '~30 mins',
+	// },
 	{
 		href: '/account',
 		imgSrc: BookASessionImg.src,
@@ -67,16 +67,16 @@ const ctas = [
 			credits: string;
 		}) => isPaidUser && credits !== 'Unlimited',
 	},
-	{
-		href: isChatslide()
-			? 'https://qualtricsxm6ltvkn8sw.qualtrics.com/jfe/form/SV_6nF7L74Sv68ynzw'
-			: 'https://forms.gle/kncWqBjU4n5xps1w8',
-		imgSrc: FillOutFormImg.src,
-		alt: 'Fill out a form',
-		instruction: 'Fill out form',
-		emoji: isChatslide() ? '+200⭐️' : '+100⭐',
-		explanation: '5-10 mins',
-	},
+	// {
+	// 	href: isChatslide()
+	// 		? 'https://qualtricsxm6ltvkn8sw.qualtrics.com/jfe/form/SV_6nF7L74Sv68ynzw'
+	// 		: 'https://forms.gle/kncWqBjU4n5xps1w8',
+	// 	imgSrc: FillOutFormImg.src,
+	// 	alt: 'Fill out a form',
+	// 	instruction: 'Fill out form',
+	// 	emoji: isChatslide() ? '+200⭐️' : '+100⭐',
+	// 	explanation: '5-10 mins',
+	// },
 	{
 		href: `https://twitter.com/${getBrand()}_ai`,
 		imgSrc: FillOutFormImg.src,
@@ -93,15 +93,15 @@ const ctas = [
 		emoji: '+50⭐',
 		explanation: '1 click',
 	},
-	{
-		href: 'https://appsumo.com/products/drlambda/',
-		imgSrc: FillOutFormImg.src,
-		alt: 'Write a review',
-		instruction: 'Write a review',
-		emoji: '🌮🌮🌮🌮🌮',
-		explanation: '5 mins',
-		condition: ({ tier }: { tier: string }) => tier === 'PRO_LIFETIME',
-	},
+	// {
+	// 	href: 'https://appsumo.com/products/drlambda/',
+	// 	imgSrc: FillOutFormImg.src,
+	// 	alt: 'Write a review',
+	// 	instruction: 'Write a review',
+	// 	emoji: '🌮🌮🌮🌮🌮',
+	// 	explanation: '5 mins',
+	// 	condition: ({ tier }: { tier: string }) => tier === 'PRO_LIFETIME',
+	// },
 	{
 		href: 'https://blog.drlambda.ai/how-to-make-money-with-your-high-quality-content-using-chatslide-ai/',
 		imgSrc: FillOutFormImg.src,
@@ -141,7 +141,7 @@ export const GenerationStatusProgressModal: FC<
 	useEffect(() => {
 		const filteredCTAs = ctas.filter(
 			(item) =>
-				!item.condition || item.condition({ isPaidUser, credits, tier }),
+				!item.condition || item.condition({ isPaidUser, credits }),
 		);
 		setSelectedCtas(pickRandomCTAs(filteredCTAs, 2));
 	}, [isPaidUser, credits, tier]);

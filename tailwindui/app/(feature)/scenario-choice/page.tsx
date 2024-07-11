@@ -13,6 +13,7 @@ import Project from '@/models/Project';
 import { Column } from '@/components/layout/Column';
 import { Instruction, Title } from '@/components/ui/Text';
 import { MinorScenarioButton, ScenarioButton } from '@/components/button/ScenarioButton';
+import { useSlides } from '@/hooks/use-slides';
 
 const ScenarioChoicePage = () => {
 	const router = useRouter();
@@ -20,11 +21,13 @@ const ScenarioChoicePage = () => {
 	const scenarios =
 		workflowType == 'presentation' ? slideScenarios : socialpostScenarios;
 	const { project, initProject, clearProject, updateProject } = useProject();
+  const { setSlides } = useSlides();
 	// Function to navigate to the "scenario-choice" page
 	const navigateToSummary = (scenarioType: string) => {
 		//sessionStorage.setItem('scenarioType', scenarioType);
 		console.log('scenarioType', scenarioType);
 		clearProject();
+    setSlides([]);
 		if (workflowType == 'presentation') {
 			initProject({
 				scenario_type: scenarioType,
