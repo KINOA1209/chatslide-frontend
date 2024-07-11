@@ -28,7 +28,7 @@ export const Event_Report_010_TemplateThemeConfig: {
 			fontWeight: 'normal',
 			fontFamily: 'Poppins SemiBold',
 			lineHeight: '32px',
-			color: '#ACA1F6',
+			color: '#2B2A34',
 			textTransform: 'capitalize', // Add this line to capitalize the text
 			opacity: '0.7',
 		},
@@ -38,7 +38,7 @@ export const Event_Report_010_TemplateThemeConfig: {
 			fontSize: '24pt',
 			lineHeight: '32px',
 			textTransform: 'uppercase', // Add this line to capitalize the text
-			color: '#ACA1F6',
+			color: '#2B2A34',
 		},
 		contentFontCSS: {
 			fontSize: '16pt',
