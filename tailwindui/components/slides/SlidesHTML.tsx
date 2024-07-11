@@ -3,7 +3,6 @@ import { useUser } from '@/hooks/use-user';
 import PaywallModal from '../paywallModal';
 import 'react-toastify/dist/ReactToastify.css';
 import ExportToPdfButton from './ExportButton';
-import { DuplicateSlidePageButton } from '@/components/slides/SlideButtons';
 import ShareButton from '@/components/button/ShareButton';
 import './slidesHTML.css';
 import {
@@ -855,12 +854,13 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 								<>
 									<AddSlideButton
 										addPage={handleAddPage}
-										currentSlideIndex={slideIndex}
-									/>
-									<DuplicateSlidePageButton
 										duplicatePage={handleDuplicatePage}
 										currentSlideIndex={slideIndex}
 									/>
+									{/* <DuplicateSlidePageButton
+										duplicatePage={handleDuplicatePage}
+										currentSlideIndex={slideIndex}
+									/> */}
 									<DeleteSlideButton
 										deletePage={handleDeletePage}
 										currentSlideIndex={slideIndex}

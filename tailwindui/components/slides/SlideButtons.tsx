@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { GoPlus, GoShare } from 'react-icons/go';
 import { LuTrash2, LuPalette } from 'react-icons/lu';
 import ButtonWithExplanation from '../button/ButtonWithExplanation';
@@ -65,55 +65,139 @@ export const PresentButton: React.FC<PresentButtonProps> = ({
 	);
 };
 
+
 export const AddSlideButton: React.FC<{
-	currentSlideIndex: number;
-	addPage: () => void;
-}> = ({ currentSlideIndex, addPage }) => {
+  currentSlideIndex: number;
+  addPage: () => void;
+  duplicatePage: () => void;
+}> = ({ currentSlideIndex, addPage, duplicatePage }) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+        setIsHovered(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  const handleMouseEnter = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    timeoutRef.current = setTimeout(() => {
+      setIsHovered(false);
+    }, 300);
+  };
+
 	return (
-		<ButtonWithExplanation
-			button={
-				<button onClick={addPage}>
-					<GoPlus
+		<div
+			ref={containerRef}
+			onMouseEnter={handleMouseEnter}
+			onMouseLeave={handleMouseLeave}
+			style={{ position: 'relative', display: 'inline-block' }}
+		>
+			<ButtonWithExplanation
+				button={
+					<button>
+						<GoPlus
+							style={{
+								strokeWidth: '0.9',
+								flex: '1',
+								width: '1.7rem',
+								height: '1.7rem',
+								fontWeight: 'bold',
+								color: '#344054',
+							}}
+						/>
+					</button>
+				}
+				// explanation={'Add Page'}
+			/>
+			{isHovered && (
+				<div
+					style={{
+						position: 'absolute',
+						top: '100%',
+						left: '50%',
+						transform: 'translateX(-50%)',
+						display: 'flex',
+						flexDirection: 'column',
+						marginTop: '0.5rem',
+						backgroundColor: 'white',
+						boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+						zIndex: 1000,
+					}}
+				>
+					<button
+						onClick={addPage}
 						style={{
-							strokeWidth: '0.9',
-							flex: '1',
-							width: '1.7rem',
-							height: '1.7rem',
-							fontWeight: 'bold',
-							color: '#344054',
+							padding: '0.5rem 1rem',
+							border: 'none',
+							backgroundColor: 'white',
+							cursor: 'pointer',
+							textAlign: 'left',
+							width: '100%',
+							borderBottom: '1px solid #ddd',
 						}}
-					/>
-				</button>
-			}
-			explanation={'Add Page'}
-		/>
+					>
+						Add
+					</button>
+					<button
+						onClick={duplicatePage}
+						style={{
+							padding: '0.5rem 1rem',
+							border: 'none',
+							backgroundColor: 'white',
+							cursor: 'pointer',
+							textAlign: 'left',
+							width: '100%',
+						}}
+					>
+						Duplicate
+					</button>
+				</div>
+			)}
+		</div>
 	);
 };
 
-export const DuplicateSlidePageButton: React.FC<{
-	currentSlideIndex: number;
-	duplicatePage: () => void;
-}> = ({ currentSlideIndex, duplicatePage }) => {
-	return (
-		<ButtonWithExplanation
-			button={
-				<button onClick={duplicatePage}>
-					<FaRegClone
-						style={{
-							strokeWidth: '1',
-							flex: '1',
-							width: '1.3rem',
-							height: '1.3rem',
-							fontWeight: 'bold',
-							color: '#344054',
-						}}
-					/>
-				</button>
-			}
-			explanation={'Duplicate Page'}
-		/>
-	);
-};
+// moved to add page
+// export const DuplicateSlidePageButton: React.FC<{
+// 	currentSlideIndex: number;
+// 	duplicatePage: () => void;
+// }> = ({ currentSlideIndex, duplicatePage }) => {
+// 	return (
+// 		<ButtonWithExplanation
+// 			button={
+// 				<button onClick={duplicatePage}>
+// 					<FaRegClone
+// 						style={{
+// 							strokeWidth: '1',
+// 							flex: '1',
+// 							width: '1.3rem',
+// 							height: '1.3rem',
+// 							fontWeight: 'bold',
+// 							color: '#344054',
+// 						}}
+// 					/>
+// 				</button>
+// 			}
+// 			explanation={'Duplicate Page'}
+// 		/>
+// 	);
+// };
 
 export const SlidesBrandingButton: React.FC<{
 	currentSlideIndex: number;
