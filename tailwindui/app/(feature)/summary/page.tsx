@@ -629,7 +629,7 @@ export default function Topic() {
 						? `Write Outline (${getCreditCost()}⭐️)`
 						: 'Writing Outline...'
 				}
-				handleClickingGeneration={handleGenerationStatusModal}
+				onClickNext={handleGenerationStatusModal}
 			/>
 
 			{/* main content */}

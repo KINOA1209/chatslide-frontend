@@ -576,7 +576,7 @@ export default function DesignPage() {
 				isPaidUser={true}
 				nextIsPaidFeature={false}
 				nextText={isSubmitting ? 'Designing Slides' : 'Design Slides'}
-				handleClickingGeneration={handleGenerationStatusModal}
+				onClickNext={handleGenerationStatusModal}
 				showLoadingButton={project?.presentation_slides ? false : true}
 			/>
 
@@ -768,8 +768,8 @@ export default function DesignPage() {
 						slideContainerScale={screenWidth > 1440 ? 0.4 : 0.3}
 						selectedSlideBackgroundImgResource={selectedBackground}
 						selectedSlideLogoResource={selectedLogo}
-            selectedLayouts={selectedLayouts}
-            setSelectedLayouts={setSelectedLayouts}
+						selectedLayouts={selectedLayouts}
+						setSelectedLayouts={setSelectedLayouts}
 					/>
 				</Column>
 				{/* </div> */}

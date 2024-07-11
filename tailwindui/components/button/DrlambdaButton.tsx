@@ -14,6 +14,7 @@ import { useRouter } from 'next/navigation';
 import { BlueLabel, GrayLabel, PlusLabel } from '../ui/GrayLabel';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import DesignSystemButton from '../ui/design_systems/ButtonsOrdinary';
+import { Menu, MenuItem } from './Menu';
 
 type DrlambdaButtonProps = {
 	children: ReactNode;
@@ -29,6 +30,7 @@ type DrlambdaButtonProps = {
 	customizeStyle?: React.CSSProperties;
 	isUploadDropdownItem?: boolean;
 	width?: string;
+  menuItems?: ReactNode;
 };
 
 const DrlambdaButton: React.FC<DrlambdaButtonProps> = ({
@@ -41,8 +43,10 @@ const DrlambdaButton: React.FC<DrlambdaButtonProps> = ({
 	bgColor,
 	isFlashing = false,
 	id = '',
+	menuItems,
 }) => {
 	const [showPaywallModal, setShowPaywallModal] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
 
 	function getButtonBg() {
 		if (isFlashing) {
@@ -79,24 +83,31 @@ const DrlambdaButton: React.FC<DrlambdaButtonProps> = ({
 				setShowModal={setShowPaywallModal}
 				message='Upgrade to unlock more features 🚀'
 			/>
-			<button
-				id={'primary-' + id}
-				disabled={isSubmitting}
-				onClick={checkPaidUser}
-				className={`sm:min-w-[6rem] lg:min-w-[12rem] px-2 h-[36px] sm:h-[36px] ${getButtonBg()} disabled:animate-pulse rounded-[0.4375rem] flex justify-center items-center gap-2 cursor-pointer }`}
+
+			<Menu
+				mode='hover'
+				button={<button
+					id={'primary-' + id}
+					disabled={isSubmitting}
+					onClick={checkPaidUser}
+					className={`sm:min-w-[6rem] lg:min-w-[12rem] px-2 h-[36px] sm:h-[36px] ${getButtonBg()} disabled:animate-pulse rounded-[0.4375rem] flex justify-center items-center gap-2 cursor-pointer }`}
+					onMouseEnter={() => setShowMenu(true)}
+				>
+					{isSubmitting && <SpinIcon />}
+					<span className='text-[#5168F6] font-semibold tracking-tight whitespace-nowrap flex flex-row gap-2'>
+						{children}
+						{isPaidFeature && !isPaidUser && <PlusLabel />}
+						{/* {isPaidFeature && isPaidUser && '🚀 '} */}
+					</span>
+					{/* Replace with the actual icon component or element */}
+					{/* {!isSubmitting && showArrow && <RightTurnArrowIcon />} */}
+					{!isSubmitting && showArrow && (
+						<FaChevronRight style={{ color: '#5168F6' }} />
+					)}
+				</button>}
 			>
-				{isSubmitting && <SpinIcon />}
-				<span className='text-[#5168F6] font-semibold tracking-tight whitespace-nowrap flex flex-row gap-2'>
-					{children}
-					{isPaidFeature && !isPaidUser && <PlusLabel />}
-					{/* {isPaidFeature && isPaidUser && '🚀 '} */}
-				</span>
-				{/* Replace with the actual icon component or element */}
-				{/* {!isSubmitting && showArrow && <RightTurnArrowIcon />} */}
-				{!isSubmitting && showArrow && (
-					<FaChevronRight style={{ color: '#5168F6' }} />
-				)}
-			</button>
+				{menuItems}
+			</Menu>
 		</>
 	);
 };

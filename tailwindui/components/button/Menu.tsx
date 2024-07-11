@@ -5,11 +5,13 @@ import { HiOutlineDotsVertical } from 'react-icons/hi';
 
 export const Menu: React.FC<{
 	children: React.ReactNode;
+  button?: React.ReactNode;
 	icon?: React.ReactNode;
 	iconPadding?: string;
 	mode?: 'hover' | 'click';
 }> = ({
 	children,
+  button = null,
 	icon = (
 		<HiOutlineDotsVertical
 			style={{ color: '#667085', width: '1rem', height: '1rem' }}
@@ -20,7 +22,7 @@ export const Menu: React.FC<{
 }) => {
 	const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 	const dropdownRef = useRef<HTMLDivElement>(null);
-	const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+	// const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
 	const showDropdown = () => setIsDropdownVisible(true);
 	const hideDropdown = () => setIsDropdownVisible(false);
@@ -33,9 +35,9 @@ export const Menu: React.FC<{
 
 	const handleMouseEnter = (event: React.MouseEvent<HTMLDivElement>) => {
 		if (mode === 'hover') {
-			if (timeoutRef.current) {
-				clearTimeout(timeoutRef.current);
-			}
+			// if (timeoutRef.current) {
+			// 	clearTimeout(timeoutRef.current);
+			// }
 			showDropdown();
 		} else {
 			event.currentTarget.style.background =
@@ -77,7 +79,7 @@ export const Menu: React.FC<{
 					style={{
 						display: 'flex',
 						cursor: 'pointer',
-						padding: iconPadding,
+						padding: button ? '0px' : iconPadding,
 						alignItems: 'center',
 						borderRadius: 'var(--radius-sm, 6px)',
 						transition: 'background-color 0.3s',
@@ -86,7 +88,7 @@ export const Menu: React.FC<{
 					onMouseLeave={mode === 'click' ? handleMouseLeave : undefined}
 					onClick={toggleDropdown}
 				>
-					{icon}
+					{button ? button : icon}
 				</div>
 
 				{isDropdownVisible && (
