@@ -51,44 +51,45 @@ const ActionsToolBar: React.FC<ActionsToolBarProps> = ({
 	}, []);
 
 	return onlyShowTutorial ? (
-		<ToolBar>
-			{/* user tutorial control */}
-			<ButtonWithExplanation
-				button={
-					<button
-						onClick={handleStartTour}
-						style={{
-							display: 'flex',
-							justifyContent: 'center',
-							alignItems: 'center',
-						}}
-					>
-						<GoQuestion
-							style={{
-								strokeWidth: '1',
-								flex: '1',
-								width: '1.5rem',
-								height: '1.5rem',
-								fontWeight: 'bold',
-								color: '#344054',
-							}}
-						/>
-					</button>
-				}
-				explanation={'User tutorial'}
-			/>
+		// <ToolBar>
+		// 	{/* user tutorial control */}
+		// 	<ButtonWithExplanation
+		// 		button={
+		// 			<button
+		// 				onClick={handleStartTour}
+		// 				style={{
+		// 					display: 'flex',
+		// 					justifyContent: 'center',
+		// 					alignItems: 'center',
+		// 				}}
+		// 			>
+		// 				<GoQuestion
+		// 					style={{
+		// 						strokeWidth: '1',
+		// 						flex: '1',
+		// 						width: '1.5rem',
+		// 						height: '1.5rem',
+		// 						fontWeight: 'bold',
+		// 						color: '#344054',
+		// 					}}
+		// 				/>
+		// 			</button>
+		// 		}
+		// 		explanation={'User tutorial'}
+		// 	/>
 
-			{showTutorialPrompt && (
-				<StartATourGuidePromptWindow
-					onClose={handleCloseTutorialPrompt}
-					onConfirm={handleConfirmStartTour}
-				/>
-			)}
-		</ToolBar>
+		// 	{showTutorialPrompt && (
+		// 		<StartATourGuidePromptWindow
+		// 			onClose={handleCloseTutorialPrompt}
+		// 			onConfirm={handleConfirmStartTour}
+		// 		/>
+		// 	)}
+		// </ToolBar>
+    <></>
 	) : (
 		<ToolBar>
 			{/* user tutorial control */}
-			{!isViewing && (
+			{/* {!isViewing && (
 				<>
 					<ButtonWithExplanation
 						button={
@@ -116,7 +117,7 @@ const ActionsToolBar: React.FC<ActionsToolBarProps> = ({
 					/>
 					<div className='h-8 w-0.5 bg-gray-200'></div>
 				</>
-			)}
+			)} */}
 
 			{!isViewing && (
 				<>
