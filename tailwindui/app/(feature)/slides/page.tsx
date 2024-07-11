@@ -21,6 +21,7 @@ import RadioButton from '@/components/ui/RadioButton';
 import { SaveStatus, useSlides } from '@/hooks/use-slides';
 import SlidesService from '@/services/SlidesService';
 import { sleep } from '@/utils/sleep';
+import Project from '@/models/Project';
 
 const SlidesHTML = dynamic(() => import('@/components/slides/SlidesHTML'), {
 	ssr: false,
@@ -68,7 +69,7 @@ const styleOptions = [
 
 export default function WorkflowStep3() {
 	const { isPaidUser, token } = useUser();
-	const { project } = useProject();
+	const { project, updateProject } = useProject();
   const { saveStatus, slides, setTranscripts } = useSlides();
 
 	const [isSubmitting, setIsSubmitting] = useState(false);
@@ -241,6 +242,7 @@ export default function WorkflowStep3() {
 			setIsSubmitting(false);
 			setShowGenerationStatusModal(false);
 			router.push(addIdToRedir('/scripts'));
+      updateProject('has_scripts', true);
 		} catch (error) {
 			toast.error(
 				'Server is busy now. Please try again later. Reference code: ' +
