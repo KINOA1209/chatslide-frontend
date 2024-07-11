@@ -9,8 +9,6 @@ import {
 	PresentButton,
 	AddSlideButton,
 	DeleteSlideButton,
-	ChangeTemplateOptions,
-	DuplicateSlidePageButton,
 	ChangeSlideTemplateButton,
 	SlidesBrandingButton,
 } from '@/components/slides/SlideButtons';
@@ -723,9 +721,6 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 						<>
 							<AddSlideButton
 								addPage={handleAddPage}
-								currentSlideIndex={socialPostsIndex}
-							/>
-							<DuplicateSlidePageButton
 								duplicatePage={handleDuplicatePage}
 								currentSlideIndex={socialPostsIndex}
 							/>
