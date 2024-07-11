@@ -23,6 +23,8 @@ import { templateDispatch } from './templateDispatch';
 import { useSlides } from '@/hooks/use-slides';
 import { uneditableTemplateDispatch } from '@/components/slides/templateDispatch';
 import { FiDownload } from 'react-icons/fi';
+import { Menu, MenuItem } from '../button/Menu';
+
 interface ExportToPdfProps {
 	exportSlidesRef: React.RefObject<HTMLDivElement>;
 	hasScript?: boolean;
@@ -84,20 +86,28 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 		// await generatePDF(exportSlidesRef, exportOptions);
 	}
 
-  const downloadThumbnail = () => {
-    const url = project?.thumbnail_url;
-    if (url) {
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = 'thumbnail.png';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
-  }
+	const downloadThumbnail = () => {
+		const url = project?.thumbnail_url;
+		if (url) {
+			const link = document.createElement('a');
+			link.href = url;
+			link.download = 'thumbnail.png';
+			document.body.appendChild(link);
+			link.click();
+			document.body.removeChild(link);
+		}
+	};
 
-	const handleExport = async (type: 'pptx' | 'key' | 'pdf', frontend: boolean) => {
+	const handleExport = async (
+		type: 'pptx' | 'key' | 'pdf',
+		frontend: boolean,
+	) => {
 		if (!project) return;
+
+    if(!isPaidUser) {
+      setShowPaymentModal(true);
+      return;
+    }
 
 		setShowExportToPdfModal(false);
 
@@ -187,131 +197,72 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 			<PaywallModal
 				showModal={showPaymentModal}
 				setShowModal={setShowPaymentModal}
-				message='You need more ⭐️credits'
-				showReferralLink={true}
+				message='Upgrade to export your work!'
+				showReferralLink={false}
 			/>
 
 			<ToastContainer />
 
-			<ButtonWithExplanation
-				button={
-					<button
-						onClick={() => setShowExportToPdfModal(!showExportToPdfModal)}
-					>
-						{!downloading ? (
-							<GoDownload
-								style={{
-									strokeWidth: '1',
-									flex: '1',
-									width: `${width ? width : '24px'}`,
-									height: `${height ? height : '24px'}`,
-									// fontWeight: 'bold',
-									color: 'var(--colors-text-text-secondary-700, #344054)',
-									// fontWeight: 'bold',
-								}}
-							/>
-						) : (
-							<SpinIcon />
-						)}
-					</button>
+			<Menu
+				icon={
+					!downloading ? (
+						<GoDownload
+							style={{
+								strokeWidth: '1',
+								flex: '1',
+								width: `${width ? width : '24px'}`,
+								height: `${height ? height : '24px'}`,
+								// fontWeight: 'bold',
+								color: 'var(--colors-text-text-secondary-700, #344054)',
+								// fontWeight: 'bold',
+							}}
+						/>
+					) : (
+						<SpinIcon />
+					)
 				}
-				explanation={'Export'}
-			/>
-
-			{/* hidden div for export to pdf */}
-			<div className='fixed left-[-9999px] top-[-9999px] -z-1'>
-				<div ref={exportSlidesRef}>
-					{/* Render all of your slides here. This can be a map of your slides array */}
-					{slides.map((slide, index) => (
-						<div
-							key={`exportToPdfContainer` + index.toString()}
-							style={{ pageBreakAfter: 'always' }}
-						>
-							<SlideContainer
-								slide={slide}
-								index={index}
-								templateDispatch={uneditableTemplateDispatch}
-								exportToPdfMode={true}
-							/>
-						</div>
-					))}
-				</div>
-			</div>
-
-			<Modal
-				showModal={showExportToPdfModal}
-				setShowModal={setShowExportToPdfModal}
-				title='Download and Export'
-				description='Choose the format of the export.'
+				mode='hover'
+				iconPadding='0'
 			>
-				<div className='flex flex-row flex-wrap gap-4'>
-					{/* <BigGrayButton
-						onClick={() => handleExport('pdf', true)}
-						isSubmitting={downloading}
-						isPaidUser={isPaidUser}
-						bgColor='bg-Gray'
-					>
-						<FaRegFilePdf />
-						<span>PDF (medium)</span>
-					</BigGrayButton> */}
-
-					<BigGrayButton
-						onClick={() => downloadThumbnail()}
-						isSubmitting={downloading}
-						isPaidUser={isPaidUser}
-						isPaidFeature={true}
-						bgColor='bg-Gray'
-					>
-						<FaImage />
-						<span className='flex flex-row gap-2 items-center'>
-							Thumbnail
-						</span>
-					</BigGrayButton>
-
-					<BigGrayButton
-						onClick={() => handleExport('pdf', false)}
-						isSubmitting={downloading}
-						isPaidUser={isPaidUser}
-						isPaidFeature={true}
-						bgColor='bg-Gray'
-					>
-						<FaRegFilePdf />
-						<span className='flex flex-row gap-2 items-center'>
-							PDF
-							{/* (high) */}
-							{!isPaidUser && <PlusLabel />}
-						</span>
-					</BigGrayButton>
-
-					<BigGrayButton
-						onClick={() => handleExport('pptx', false)}
-						isSubmitting={downloading}
-						isPaidUser={isPaidUser}
-						isPaidFeature={true}
-						bgColor='bg-Gray'
-					>
-						<RiSlideshow2Fill />
-						<span className='flex flex-row gap-2 items-center'>
-							PPTX {!isPaidUser && <PlusLabel />}
-						</span>
-					</BigGrayButton>
-
-					<BigGrayButton
-						onClick={() => handleExport('key', false)}
-						isSubmitting={downloading}
-						isPaidUser={isPaidUser}
-						isPaidFeature={true}
-						bgColor='bg-Gray'
-					>
-						<RiSlideshow2Fill />
-						<span className='flex flex-row gap-2 items-center'>
-							Keynote {!isPaidUser && <PlusLabel />}
-						</span>
-					</BigGrayButton>
-
-					{hasScript && <SaveScriptsButton slides={slides} />}
-				</div>
-			</Modal>
+				<MenuItem
+					label='PDF'
+					onClick={() => handleExport('pdf', false)}
+					icon={
+						<>
+							<FaRegFilePdf /> {!isPaidUser && <PlusLabel />}{' '}
+						</>
+					}
+				/>
+				<MenuItem
+					label='PPTX'
+					onClick={() => handleExport('pptx', false)}
+					icon={
+						<>
+							<RiSlideshow2Fill /> {!isPaidUser && <PlusLabel />}{' '}
+						</>
+					}
+				/>
+				<MenuItem
+					label='Keynote'
+					onClick={() => handleExport('key', false)}
+					icon={
+						<>
+							<RiSlideshow2Fill /> {!isPaidUser && <PlusLabel />}{' '}
+						</>
+					}
+				/>
+				<MenuItem
+					label='Thumbnail'
+					onClick={() => downloadThumbnail()}
+					icon={<FaImage />}
+				/>
+				{hasScript && (
+					<MenuItem
+						label='Save Scripts'
+						onClick={() => <SaveScriptsButton slides={slides} />}
+					/>
+				)}
+			</Menu>
 		</div>
 	);
 };

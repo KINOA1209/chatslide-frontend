@@ -52,7 +52,7 @@ const GPTToggle: React.FC<GPTToggleProps> = ({
 			<PaywallModal
 				showModal={showPaymentModal}
 				setShowModal={setShowPaymentModal}
-				message='Upgrade to unlock more features. 🚀'
+				message='Upgrade to unlock more powerful LLMs 🚀'
 			/>
 		</div>
 	);
