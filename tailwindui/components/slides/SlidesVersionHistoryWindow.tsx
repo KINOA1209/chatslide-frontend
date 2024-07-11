@@ -22,11 +22,19 @@ interface SlidesVersionHistoryWindowProps {
 	onToggle?: () => void;
 	slidesHistory: SlidesVersion[];
 	userName: string;
+	onJumpToVersion: (versionIndex: number) => void; // Add this prop
+	slidesHistoryIndex: number; // Add this prop
 }
 
 export const SlidesVersionHistoryWindow: React.FC<
 	SlidesVersionHistoryWindowProps
-> = ({ onToggle, slidesHistory, userName }) => {
+> = ({
+	onToggle,
+	slidesHistory,
+	userName,
+	onJumpToVersion,
+	slidesHistoryIndex,
+}) => {
 	const { updateVersion, setSlides, setSlideIndex, slideIndex } = useSlides();
 	const versionHistoryWindowRef = useRef<HTMLDivElement>(null);
 
@@ -59,19 +67,24 @@ export const SlidesVersionHistoryWindow: React.FC<
 				<ScrollBar axial='y'>
 					{/* version history render */}
 					{slidesHistory.map((version, versionIndex) => (
-						<div key={versionIndex} className='mb-4'>
+						<div
+							key={versionIndex}
+							className='mb-4 cursor-pointer'
+							onClick={() => onJumpToVersion(versionIndex)}
+						>
 							<h3 className='text-sm font-semibold'>
-								Version {versionIndex + 1}
+								Version {versionIndex + 1}{' '}
+								{slidesHistoryIndex === versionIndex && <span>(current)</span>}
 							</h3>
 							<h2>{userName}</h2>
 							<h1>{version.timestamp ?? 'No timestamp'}</h1>
-							{version.slides.map((slide, slideIndex) => (
+							{/* {version.slides.map((slide, slideIndex) => (
 								<div key={slideIndex} className='flex items-center gap-2 mb-2'>
 									<div className='text-xs'>
 										<span>Slide {slideIndex + 1}</span>
 									</div>
 								</div>
-							))}
+							))} */}
 						</div>
 					))}
 				</ScrollBar>

@@ -284,6 +284,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		// changeTemplateAndPalette,
 		undoChange,
 		redoChange,
+		jumpToVersion,
 		slidesHistoryIndex,
 		setSlides,
 		updateSlidePage,
@@ -1108,7 +1109,9 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 							<SlidesVersionHistoryWindow
 								onToggle={toggleVersionHistoryWindow}
 								slidesHistory={slidesHistory}
-								userName ={username}
+								userName={username}
+								onJumpToVersion={jumpToVersion}
+								slidesHistoryIndex={slidesHistoryIndex}
 							/>
 						</div>
 					) : (

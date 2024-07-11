@@ -608,6 +608,38 @@ export const useSlides = () => {
 		);
 	};
 
+	const jumpToVersion = (versionIndex: number) => {
+		if (versionIndex < 0 || versionIndex >= slidesHistory.length) {
+			console.warn('Invalid version index');
+			return;
+		}
+
+		const selectedVersion = slidesHistory[versionIndex];
+
+		if (selectedVersion.slides.length === 0) {
+			console.warn('Selected version has no slides');
+			return;
+		}
+
+		setSlides(selectedVersion.slides);
+		const maxSlideIndex = selectedVersion.slides.length - 1;
+
+		if (slideIndex > maxSlideIndex) {
+			setSlideIndex(maxSlideIndex);
+		}
+
+		setSlidesHistoryIndex(versionIndex);
+		updateVersion();
+		console.log(`Jumping to version ${versionIndex}...`);
+
+		// TODO: check if the cover page is changed
+		debouncedSyncSlides(
+			selectedVersion.slides,
+			false,
+			selectedVersion.slides.length,
+		);
+	};
+
 	const changePalette = (newPalette: PaletteKeys) => {
 		console.log('Changing color theme to:', newPalette);
 		let newSlides = slides.map((slide, index) => {
@@ -859,6 +891,7 @@ export const useSlides = () => {
 		slidesHistoryIndex,
 		undoChange,
 		redoChange,
+		jumpToVersion,
 		slideIndex,
 		setSlideIndex,
 		gotoPage,
