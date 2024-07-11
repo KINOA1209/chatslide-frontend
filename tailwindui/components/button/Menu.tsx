@@ -1,35 +1,63 @@
-'use client'
+'use client';
 
 import { useEffect, useRef, useState } from 'react';
 import { HiOutlineDotsVertical } from 'react-icons/hi';
 
 export const Menu: React.FC<{
 	children: React.ReactNode;
-}> = ({ children }) => {
+	icon?: React.ReactNode;
+	iconPadding?: string;
+	mode?: 'hover' | 'click';
+}> = ({
+	children,
+	icon = (
+		<HiOutlineDotsVertical
+			style={{ color: '#667085', width: '1rem', height: '1rem' }}
+		/>
+	),
+	mode = 'click',
+	iconPadding = '5px',
+}) => {
 	const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
+	const dropdownRef = useRef<HTMLDivElement>(null);
+	const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+	const showDropdown = () => setIsDropdownVisible(true);
+	const hideDropdown = () => setIsDropdownVisible(false);
 
 	const toggleDropdown = () => {
-		setIsDropdownVisible((prev) => !prev);
+		if (mode === 'click') {
+			setIsDropdownVisible((prev) => !prev);
+		}
 	};
 
-	// for hovering effect change dropdown menu section color
 	const handleMouseEnter = (event: React.MouseEvent<HTMLDivElement>) => {
-		event.currentTarget.style.background =
-			'var(--Colors-Background-bg-tertiary, #F2F4F7)';
+		if (mode === 'hover') {
+			if (timeoutRef.current) {
+				clearTimeout(timeoutRef.current);
+			}
+			showDropdown();
+		} else {
+			event.currentTarget.style.background =
+				'var(--Colors-Background-bg-tertiary, #F2F4F7)';
+		}
 	};
 
 	const handleMouseLeave = (event: React.MouseEvent<HTMLDivElement>) => {
-		event.currentTarget.style.background = 'transparent';
+		if (mode === 'hover') {
+			// do nothing, since we want to keep the dropdown open
+		} else {
+			event.currentTarget.style.background = 'transparent';
+		}
 	};
 
-  useEffect(() => {
+	useEffect(() => {
 		function handleClickOutside(event: MouseEvent) {
 			if (
 				dropdownRef.current &&
 				!dropdownRef.current.contains(event.target as Node)
 			) {
-				setIsDropdownVisible(false);
+				hideDropdown();
 			}
 		}
 
@@ -40,29 +68,25 @@ export const Menu: React.FC<{
 	}, []);
 
 	return (
-		<div
-			className='col-span-1 flex'
-		>
-			<div className='h-full flex justify-end items-center w-full gap-4 relative'>
+		<div className='col-span-1 flex'>
+			<div
+				className='h-full flex justify-end items-center w-full gap-4 relative'
+				onMouseLeave={mode === 'hover' ? handleMouseLeave : undefined}
+			>
 				<div
 					style={{
 						display: 'flex',
 						cursor: 'pointer',
-						padding: '5px',
+						padding: iconPadding,
 						alignItems: 'center',
 						borderRadius: 'var(--radius-sm, 6px)',
-						transition: 'background-color 0.3s', // Smooth transition
+						transition: 'background-color 0.3s',
 					}}
 					onMouseEnter={handleMouseEnter}
-					onMouseLeave={handleMouseLeave}
-					onClick={() => {
-						toggleDropdown();
-						// Add functionality for the share button
-					}}
+					onMouseLeave={mode === 'click' ? handleMouseLeave : undefined}
+					onClick={toggleDropdown}
 				>
-					<HiOutlineDotsVertical
-						style={{ color: '#667085', width: '1rem', height: '1rem' }}
-					></HiOutlineDotsVertical>
+					{icon}
 				</div>
 
 				{isDropdownVisible && (
@@ -74,11 +98,41 @@ export const Menu: React.FC<{
 							display: 'flex',
 							flexDirection: 'column',
 						}}
+						onMouseEnter={mode === 'hover' ? showDropdown : undefined}
+						onMouseLeave={mode === 'hover' ? hideDropdown : undefined}
 					>
 						{children}
 					</div>
 				)}
 			</div>
 		</div>
+	);
+};
+
+export const MenuItem: React.FC<{
+	icon?: React.ReactNode;
+	label: string;
+	onClick: () => void;
+	className?: string;
+	style?: React.CSSProperties;
+}> = ({ icon, label, onClick, className = '', style = {} }) => {
+	return (
+		<button
+			className={`block px-[10px] py-[9px] text-sm text-[#182230] rounded-md hover:bg-zinc-100 w-full text-left ${className}`}
+			onClick={onClick}
+			style={{
+				display: 'flex',
+				flexDirection: 'row',
+				alignItems: 'center',
+				justifyContent: 'flex-start',
+				gap: 'var(--spacing-lg, 12px)',
+				borderBottom:
+					'1px solid var(--Colors-Border-border-secondary, #EAECF0)',
+				...style,
+			}}
+		>
+			{icon}
+			{label}
+		</button>
 	);
 };

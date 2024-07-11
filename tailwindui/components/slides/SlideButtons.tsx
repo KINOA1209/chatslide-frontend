@@ -17,6 +17,8 @@ import brandingIcon from 'public/icons/button/show_logo.svg';
 import Image from 'next/image';
 import { SocialPostSlide } from '@/models/SocialPost';
 import Resource from '@/models/Resource';
+import { DropDown } from '../button/DrlambdaButton';
+import { Menu, MenuItem } from '../button/Menu';
 
 type SaveButtonProps = {
 	saveSlides: () => void;
@@ -71,105 +73,31 @@ export const AddSlideButton: React.FC<{
   addPage: () => void;
   duplicatePage: () => void;
 }> = ({ currentSlideIndex, addPage, duplicatePage }) => {
-  const [isHovered, setIsHovered] = useState(false);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
-        setIsHovered(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
-
-  const handleMouseEnter = () => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
-    setIsHovered(true);
-  };
-
-  const handleMouseLeave = () => {
-    timeoutRef.current = setTimeout(() => {
-      setIsHovered(false);
-    }, 300);
-  };
 
 	return (
-		<div
-			ref={containerRef}
-			onMouseEnter={handleMouseEnter}
-			onMouseLeave={handleMouseLeave}
-			style={{ position: 'relative', display: 'inline-block' }}
-		>
-			<ButtonWithExplanation
-				button={
-					<button>
-						<GoPlus
-							style={{
-								strokeWidth: '0.9',
-								flex: '1',
-								width: '1.7rem',
-								height: '1.7rem',
-								fontWeight: 'bold',
-								color: '#344054',
-							}}
-						/>
-					</button>
-				}
-				// explanation={'Add Page'}
-			/>
-			{isHovered && (
-				<div
+		<Menu
+			icon={
+				<GoPlus
 					style={{
-						position: 'absolute',
-						top: '100%',
-						left: '50%',
-						transform: 'translateX(-50%)',
-						display: 'flex',
-						flexDirection: 'column',
-						marginTop: '0.5rem',
-						backgroundColor: 'white',
-						boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-						zIndex: 1000,
+						strokeWidth: '0.9',
+						flex: '1',
+						width: '1.7rem',
+						height: '1.7rem',
+						fontWeight: 'bold',
+						color: '#344054',
 					}}
-				>
-					<button
-						onClick={addPage}
-						style={{
-							padding: '0.5rem 1rem',
-							border: 'none',
-							backgroundColor: 'white',
-							cursor: 'pointer',
-							textAlign: 'left',
-							width: '100%',
-							borderBottom: '1px solid #ddd',
-						}}
-					>
-						Add
-					</button>
-					<button
-						onClick={duplicatePage}
-						style={{
-							padding: '0.5rem 1rem',
-							border: 'none',
-							backgroundColor: 'white',
-							cursor: 'pointer',
-							textAlign: 'left',
-							width: '100%',
-						}}
-					>
-						Duplicate
-					</button>
-				</div>
-			)}
-		</div>
+				/>
+			}
+      iconPadding='0'
+			mode='hover'
+		>
+			<MenuItem label='Add Page' icon={<GoPlus />} onClick={addPage} />
+			<MenuItem
+				label='Duplicate Page'
+				icon={<FaRegClone />}
+				onClick={duplicatePage}
+			/>
+		</Menu>
 	);
 };
 
