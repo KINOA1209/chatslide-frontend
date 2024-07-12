@@ -13,23 +13,25 @@ interface Props {
 	slides: Slide[];
 }
 
-const SaveScriptsButton: React.FC<Props> = ({ slides }) => {
-	const handleSaveScripts = async () => {
-		const transcripts = slides.map((slide) => slide.transcript);
-		const formattedTranscripts = transcripts.join('\n\n');
-		const blob = new Blob([formattedTranscripts], { type: 'text/plain' });
-		const url = URL.createObjectURL(blob);
-		const a = document.createElement('a');
-		a.href = url;
-		a.download = 'scripts.txt';
-		document.body.appendChild(a);
-		a.click();
-		URL.revokeObjectURL(url);
-		document.body.removeChild(a);
-	};
+export const handleSaveScripts = async (slides: Slide[]) => {
+  const transcripts = slides.map((slide) => slide.transcript);
+  const formattedTranscripts = transcripts.join('\n\n');
+  const blob = new Blob([formattedTranscripts], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'scripts.txt';
+  document.body.appendChild(a);
+  a.click();
+  URL.revokeObjectURL(url);
+  document.body.removeChild(a);
+};
 
+
+// unused
+const SaveScriptsButton: React.FC<Props> = ({ slides }) => {
 	return (
-		<BigGrayButton onClick={handleSaveScripts}>
+		<BigGrayButton onClick={() => handleSaveScripts(slides)}>
 			<div className='flex flex-row items-center gap-x-2'>
 				<FaDownload />
 				Save Scripts

@@ -14,7 +14,7 @@ import { sleep } from '../../utils/sleep';
 import Modal from '../ui/Modal';
 import { GoDownload } from 'react-icons/go';
 import ButtonWithExplanation from '../button/ButtonWithExplanation';
-import SaveScriptsButton from '../script/SaveScriptsButton';
+import SaveScriptsButton, { handleSaveScripts } from '../script/SaveScriptsButton';
 import { SpinIcon } from '@/app/(feature)/icons';
 import { PlusLabel } from '../ui/GrayLabel';
 import { ToastContainer, toast } from 'react-toastify';
@@ -262,7 +262,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 					<MenuItem
 						label='Save Scripts'
 						icon={<PiFileText />}
-						onClick={() => <SaveScriptsButton slides={slides} />}
+						onClick={() => handleSaveScripts(slides) }
 					/>
 				)}
 			</Menu>
