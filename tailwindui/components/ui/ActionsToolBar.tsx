@@ -5,12 +5,15 @@ import { StartATourGuidePromptWindow } from '@/components/user_onboarding/Custom
 import ButtonWithExplanation from '../button/ButtonWithExplanation';
 import { ToolBar } from './ToolBar';
 import { MdManageHistory } from 'react-icons/md';
+import { CiAlignLeft } from 'react-icons/ci';
+import { LuAlignCenter, LuAlignLeft } from 'react-icons/lu';
 
 type ActionsToolBarProps = {
 	undo?: () => void;
 	redo?: () => void;
 	canUndo?: boolean;
 	canRedo?: boolean;
+  resetAllPositions?: () => void;
 	// Other props...
 	startTour: () => void;
 	onlyShowTutorial: boolean;
@@ -24,6 +27,7 @@ const ActionsToolBar: React.FC<ActionsToolBarProps> = ({
 	redo,
 	canUndo,
 	canRedo,
+  resetAllPositions,
 	startTour,
 	onlyShowTutorial,
 	isViewing = false,
@@ -149,7 +153,6 @@ const ActionsToolBar: React.FC<ActionsToolBarProps> = ({
 						}
 						explanation={'Undo'}
 					/>
-
 					<ButtonWithExplanation
 						button={
 							<button
@@ -176,8 +179,8 @@ const ActionsToolBar: React.FC<ActionsToolBarProps> = ({
 						explanation={'Redo'}
 					/>
 
+					{/* version history */}
 					<ButtonWithExplanation
-						// version history
 						button={
 							<button onClick={toggleVersionHistoryWindow}>
 								<MdManageHistory
@@ -194,7 +197,24 @@ const ActionsToolBar: React.FC<ActionsToolBarProps> = ({
 						}
 						explanation='Version History'
 					/>
-          
+
+          {/* reset all positions */}
+          <ButtonWithExplanation
+            button={
+              <button onClick={resetAllPositions}>
+                <LuAlignLeft
+                  style={{
+                    width: `24px`,
+                    height: `24px`,
+                    color: 'var(--colors-text-text-secondary-700, #344054)',
+                  }}
+                />
+              </button>
+            }
+            explanation='Realign'
+          />
+
+
 					<div className='h-8 w-0.5 bg-gray-200'></div>
 				</>
 			)}

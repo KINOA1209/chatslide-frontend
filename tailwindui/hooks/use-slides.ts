@@ -433,6 +433,31 @@ export const useSlides = () => {
 		debouncedSyncSlides(newSlides, true);
 	};
 
+  const resetAllPositions = () => {
+    // reset positions on one page:
+    const newSlides = slides.map((slide, index) => {
+      if (index === slideIndex) {
+        return {
+          ...slide,
+          // image_positions: [{}, {}, {}],
+          image_container_positions: [{}, {}, {}],
+          logo_numeric_position: {},
+          head_position: {},
+          title_position: {},
+          subtopic_position: {},
+          content_positions: [{}, {}, {}],
+        };
+      }
+      return slide;
+    });
+
+    setSlides(newSlides);
+    updateVersion();
+    updateSlideHistory(newSlides);
+    debouncedSyncSlides(newSlides, true);
+  
+  }
+
 	const updateLayoutAllNonCoverPages = (newLayout: LayoutKeys) => {
 		console.log('Changing layout to:', newLayout);
 
@@ -892,6 +917,7 @@ export const useSlides = () => {
 		slidesHistoryIndex,
 		undoChange,
 		redoChange,
+    resetAllPositions,
 		jumpToVersion,
 		slideIndex,
 		setSlideIndex,

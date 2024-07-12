@@ -283,6 +283,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		// changeTemplateAndPalette,
 		undoChange,
 		redoChange,
+    resetAllPositions,
 		jumpToVersion,
 		slidesHistoryIndex,
 		setSlides,
@@ -872,6 +873,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 							redo={redoChange}
 							canRedo={canRedo}
 							canUndo={canUndo}
+              resetAllPositions={resetAllPositions}
 							startTour={startTour}
 							onlyShowTutorial={false}
 							isViewing={isViewing}
