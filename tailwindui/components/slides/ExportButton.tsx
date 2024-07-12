@@ -4,11 +4,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import Slide from '../../models/Slide';
 import PaywallModal from '../paywallModal';
 import { BigGrayButton, DropDown } from '../button/DrlambdaButton';
-import { FaImage, FaRegFilePdf } from 'react-icons/fa';
+import { FaImage, FaRegFilePdf, FaRegFilePowerpoint } from 'react-icons/fa';
 import { generatePdf } from '../utils/DownloadImage';
 import ProjectService from '@/services/ProjectService';
 import { useUser } from '@/hooks/use-user';
-import { RiSlideshow2Fill } from 'react-icons/ri';
+import { RiAppleFill, RiAppleLine, RiImage2Line, RiKeynoteLine, RiSlideshow2Fill } from 'react-icons/ri';
 import { useProject } from '@/hooks/use-project';
 import { sleep } from '../../utils/sleep';
 import Modal from '../ui/Modal';
@@ -24,6 +24,7 @@ import { useSlides } from '@/hooks/use-slides';
 import { uneditableTemplateDispatch } from '@/components/slides/templateDispatch';
 import { FiDownload } from 'react-icons/fi';
 import { Menu, MenuItem } from '../button/Menu';
+import { PiFileText, PiMicrosoftPowerpointLogo } from 'react-icons/pi';
 
 interface ExportToPdfProps {
 	exportSlidesRef: React.RefObject<HTMLDivElement>;
@@ -234,11 +235,11 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 					}
 				/>
 				<MenuItem
-					label='PPTX'
+					label='PowerPoint'
 					onClick={() => handleExport('pptx', false)}
 					icon={
 						<>
-							<RiSlideshow2Fill /> {!isPaidUser && <PlusLabel />}{' '}
+							<FaRegFilePowerpoint /> {!isPaidUser && <PlusLabel />}{' '}
 						</>
 					}
 				/>
@@ -247,18 +248,19 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 					onClick={() => handleExport('key', false)}
 					icon={
 						<>
-							<RiSlideshow2Fill /> {!isPaidUser && <PlusLabel />}{' '}
+							<RiKeynoteLine /> {!isPaidUser && <PlusLabel />}{' '}
 						</>
 					}
 				/>
 				<MenuItem
 					label='Thumbnail'
 					onClick={() => downloadThumbnail()}
-					icon={<FaImage />}
+					icon={<RiImage2Line />}
 				/>
 				{hasScript && (
 					<MenuItem
 						label='Save Scripts'
+						icon={<PiFileText />}
 						onClick={() => <SaveScriptsButton slides={slides} />}
 					/>
 				)}
