@@ -875,7 +875,9 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 							startTour={startTour}
 							onlyShowTutorial={false}
 							isViewing={isViewing}
+							toggleVersionHistoryWindow={toggleVersionHistoryWindow}
 						>
+
 							{!isViewing && (
 								<>
 									<AddSlideButton
@@ -933,22 +935,6 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 									setShowShareModal={setShowShareModal}
 								/>
 							)}
-
-							{
-								// version history
-								<button onClick={toggleVersionHistoryWindow}>
-									<MdManageHistory
-										style={{
-											// strokeWidth: '0.8',
-											// flex: '1',
-											width: `24px`,
-											height: `24px`,
-											// fontWeight: 'bold',
-											color: 'var(--colors-text-text-secondary-700, #344054)',
-										}}
-									/>
-								</button>
-							}
 						</ActionsToolBar>
 						{!isViewing && !isPresenting && (
 							<div className='hidden ml-2 sm:block cursor-pointer'>

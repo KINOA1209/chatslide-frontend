@@ -71,7 +71,7 @@ export const SlidesVersionHistoryWindow: React.FC<
 			<div className='w-full h-full overflow-y-scroll flex flex-col flex-grow'>
 				<ScrollBar axial='y'>
 					{/* version history render */}
-					{slidesHistory.map((version, versionIndex) => (
+					{slidesHistory.reverse().map((version, versionIndex) => (
 						<div
 							key={versionIndex}
 							className='py-[0.8rem] flex flex-col gap-[0.4rem] w-full'

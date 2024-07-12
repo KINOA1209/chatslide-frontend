@@ -4,6 +4,7 @@ import { GoQuestion } from 'react-icons/go';
 import { StartATourGuidePromptWindow } from '@/components/user_onboarding/CustomComponents';
 import ButtonWithExplanation from '../button/ButtonWithExplanation';
 import { ToolBar } from './ToolBar';
+import { MdManageHistory } from 'react-icons/md';
 
 type ActionsToolBarProps = {
 	undo?: () => void;
@@ -15,6 +16,7 @@ type ActionsToolBarProps = {
 	onlyShowTutorial: boolean;
 	isViewing?: boolean;
 	children?: React.ReactNode;
+	toggleVersionHistoryWindow?: () => void;
 };
 
 const ActionsToolBar: React.FC<ActionsToolBarProps> = ({
@@ -26,6 +28,7 @@ const ActionsToolBar: React.FC<ActionsToolBarProps> = ({
 	onlyShowTutorial,
 	isViewing = false,
 	children,
+  toggleVersionHistoryWindow,
 }) => {
 	const [showTutorialPrompt, setShowTutorialPrompt] = useState(false);
 	const handleStartTour = () => {
@@ -85,7 +88,7 @@ const ActionsToolBar: React.FC<ActionsToolBarProps> = ({
 		// 		/>
 		// 	)}
 		// </ToolBar>
-    <></>
+		<></>
 	) : (
 		<ToolBar>
 			{/* user tutorial control */}
@@ -172,6 +175,26 @@ const ActionsToolBar: React.FC<ActionsToolBarProps> = ({
 						}
 						explanation={'Redo'}
 					/>
+
+					<ButtonWithExplanation
+						// version history
+						button={
+							<button onClick={toggleVersionHistoryWindow}>
+								<MdManageHistory
+									style={{
+										// strokeWidth: '0.8',
+										// flex: '1',
+										width: `24px`,
+										height: `24px`,
+										// fontWeight: 'bold',
+										color: 'var(--colors-text-text-secondary-700, #344054)',
+									}}
+								/>
+							</button>
+						}
+						explanation='Version History'
+					/>
+          
 					<div className='h-8 w-0.5 bg-gray-200'></div>
 				</>
 			)}
