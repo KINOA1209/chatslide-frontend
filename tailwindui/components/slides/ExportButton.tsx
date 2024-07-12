@@ -205,6 +205,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 			<ToastContainer />
 
 			<Menu
+        align='left'
 				icon={
 					!downloading ? (
 						<GoDownload

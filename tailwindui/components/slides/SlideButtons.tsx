@@ -76,6 +76,7 @@ export const AddSlideButton: React.FC<{
 
 	return (
 		<Menu
+      align='left'
 			icon={
 				<GoPlus
 					style={{

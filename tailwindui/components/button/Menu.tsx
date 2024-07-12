@@ -9,6 +9,7 @@ export const Menu: React.FC<{
 	icon?: React.ReactNode;
 	iconPadding?: string;
 	mode?: 'hover' | 'click';
+  align?: 'left' | 'right';
 }> = ({
 	children,
 	button = null,
@@ -19,12 +20,18 @@ export const Menu: React.FC<{
 	),
 	mode = 'click',
 	iconPadding = '5px',
+  align = 'right'
 }) => {
 	const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 	const dropdownRef = useRef<HTMLDivElement>(null);
-	// const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+	const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-	const showDropdown = () => setIsDropdownVisible(true);
+	const showDropdown = () => {
+    setIsDropdownVisible(true);
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+  };
 	const hideDropdown = () => setIsDropdownVisible(false);
 
 	const toggleDropdown = () => {
@@ -51,7 +58,10 @@ export const Menu: React.FC<{
 
 	const handleMouseLeave = (event: React.MouseEvent<HTMLDivElement>) => {
 		if (mode === 'hover') {
-			// do nothing, since we want to keep the dropdown open
+      // wait for 200ms before hiding the dropdown
+      timeoutRef.current = setTimeout(() => {
+        hideDropdown();
+      }, 200);
 		} else {
 			event.currentTarget.style.background = 'transparent';
 		}
@@ -98,7 +108,7 @@ export const Menu: React.FC<{
 				{isDropdownVisible && children !== undefined && (
 					<div
 						ref={dropdownRef}
-						className='absolute top-full right-0 bg-white shadow-md rounded-md border border-2 border-gray-200 mt-1 lg:w-[180px]'
+						className={`absolute top-full ${align}-0 bg-white shadow-md rounded-md border border-2 border-gray-200 mt-1 lg:w-[180px]`}
 						style={{
 							zIndex: 999,
 							display: 'flex',

@@ -22,6 +22,8 @@ import { SaveStatus, useSlides } from '@/hooks/use-slides';
 import SlidesService from '@/services/SlidesService';
 import { sleep } from '@/utils/sleep';
 import Project from '@/models/Project';
+import { PiFileText } from 'react-icons/pi';
+import { FaRegStar } from 'react-icons/fa';
 
 const SlidesHTML = dynamic(() => import('@/components/slides/SlidesHTML'), {
 	ssr: false,
@@ -96,10 +98,12 @@ export default function WorkflowStep3() {
 			<MenuItem
 				label={project?.has_scripts ? 'Show Scripts' : 'Write Scripts Manually'}
 				onClick={() => router.push(addIdToRedir('/scripts'))}
+        icon={<PiFileText />}
 			/>
 			<MenuItem
 				label='Advanced Generation'
 				onClick={() => setShowScriptsSettingsModal(true)}
+        icon={<FaRegStar />}
 			/>
 		</>
 	);
