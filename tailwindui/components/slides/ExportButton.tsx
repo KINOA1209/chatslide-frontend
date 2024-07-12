@@ -205,7 +205,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 			<ToastContainer />
 
 			<Menu
-        align='left'
+				align='left'
 				icon={
 					!downloading ? (
 						<GoDownload
@@ -229,29 +229,20 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 				<MenuItem
 					label='PDF'
 					onClick={() => handleExport('pdf', false)}
-					icon={
-						<>
-							<FaRegFilePdf /> {!isPaidUser && <PlusLabel />}{' '}
-						</>
-					}
+					icon={<FaRegFilePdf />}
+          isPaidFeature={true}
 				/>
 				<MenuItem
 					label='PowerPoint'
 					onClick={() => handleExport('pptx', false)}
-					icon={
-						<>
-							<FaRegFilePowerpoint /> {!isPaidUser && <PlusLabel />}{' '}
-						</>
-					}
+					icon={<FaRegFilePowerpoint />}
+          isPaidFeature={true}
 				/>
 				<MenuItem
 					label='Keynote'
 					onClick={() => handleExport('key', false)}
-					icon={
-						<>
-							<RiKeynoteLine /> {!isPaidUser && <PlusLabel />}{' '}
-						</>
-					}
+					icon={<RiKeynoteLine />}
+          isPaidFeature={true}
 				/>
 				<MenuItem
 					label='Thumbnail'
@@ -260,9 +251,9 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 				/>
 				{hasScript && (
 					<MenuItem
-						label='Save Scripts'
+						label='Scripts'
 						icon={<PiFileText />}
-						onClick={() => handleSaveScripts(slides) }
+						onClick={() => handleSaveScripts(slides)}
 					/>
 				)}
 			</Menu>

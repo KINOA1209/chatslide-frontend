@@ -1,7 +1,9 @@
 'use client';
 
+import { useUser } from '@/hooks/use-user';
 import { useEffect, useRef, useState } from 'react';
 import { HiOutlineDotsVertical } from 'react-icons/hi';
+import { PlusLabel } from '../ui/GrayLabel';
 
 export const Menu: React.FC<{
 	children: React.ReactNode;
@@ -131,24 +133,37 @@ export const MenuItem: React.FC<{
 	onClick: () => void;
 	className?: string;
 	style?: React.CSSProperties;
-}> = ({ icon, label, onClick, className = '', style = {} }) => {
+	isPaidFeature?: boolean;
+}> = ({
+	icon,
+	label,
+	onClick,
+	className = '',
+	style = {},
+	isPaidFeature = false,
+}) => {
+  const {isPaidUser} = useUser();
 	return (
 		<button
-			className={`block px-[10px] py-[9px] text-sm text-[#182230] rounded-md hover:bg-zinc-100 w-full text-left ${className}`}
+			className={`block px-[10px] py-[9px] text-sm text-[#182230] rounded-md hover:bg-zinc-100 w-full text-left ${className} justify-between`}
 			onClick={onClick}
 			style={{
 				display: 'flex',
 				flexDirection: 'row',
 				alignItems: 'center',
-				justifyContent: 'flex-start',
 				gap: 'var(--spacing-lg, 12px)',
 				borderBottom:
 					'1px solid var(--Colors-Border-border-secondary, #EAECF0)',
 				...style,
 			}}
 		>
-			{icon}
-			{label}
+			<div className='flex flex-row gap-x-2'>
+				{icon}
+				{label}
+			</div>
+      {isPaidFeature && !isPaidUser && (
+        <PlusLabel />
+      )}
 		</button>
 	);
 };
