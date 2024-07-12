@@ -352,18 +352,21 @@ export const useSlides = () => {
 
 	useEffect(() => {
 		const currentSlide = slides[slideIndex];
-    if(!currentSlide) return;
+		if (!currentSlide) return;
 		if (
-			Object.keys(currentSlide?.image_container_positions?.[0]).length > 0 ||
-			Object.keys(currentSlide?.image_container_positions?.[1]).length > 0 ||
-			Object.keys(currentSlide?.image_container_positions?.[2]).length > 0 ||
-			Object.keys(currentSlide?.logo_numeric_position).length > 0 ||
-			Object.keys(currentSlide?.head_position).length > 0 ||
-			Object.keys(currentSlide?.title_position).length > 0 ||
-			Object.keys(currentSlide?.subtopic_position).length > 0 ||
-			Object.keys(currentSlide?.content_positions?.[0]).length > 0 ||
-			Object.keys(currentSlide?.content_positions?.[1]).length > 0 ||
-			Object.keys(currentSlide?.content_positions?.[2]).length > 0
+			Object.keys(currentSlide?.image_container_positions?.[0] ?? {}).length >
+				0 ||
+			Object.keys(currentSlide?.image_container_positions?.[1] ?? {}).length >
+				0 ||
+			Object.keys(currentSlide?.image_container_positions?.[2] ?? {}).length >
+				0 ||
+			Object.keys(currentSlide?.logo_numeric_position ?? {}).length > 0 ||
+			Object.keys(currentSlide?.head_position ?? {}).length > 0 ||
+			Object.keys(currentSlide?.title_position ?? {}).length > 0 ||
+			Object.keys(currentSlide?.subtopic_position ?? {}).length > 0 ||
+			Object.keys(currentSlide?.content_positions?.[0] ?? {}).length > 0 ||
+			Object.keys(currentSlide?.content_positions?.[1] ?? {}).length > 0 ||
+			Object.keys(currentSlide?.content_positions?.[2] ?? {}).length > 0
 		)
 			setCanResetAllPositions(true);
 		else setCanResetAllPositions(false);
