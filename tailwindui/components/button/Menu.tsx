@@ -157,7 +157,7 @@ export const MenuItem: React.FC<{
 				...style,
 			}}
 		>
-			<div className='flex flex-row gap-x-2'>
+			<div className='flex flex-row items-center gap-x-2'>
 				{icon}
 				{label}
 			</div>
