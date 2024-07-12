@@ -51,6 +51,7 @@ export const Creative_Brief_011_TemplateLayoutsConfig: {
 			opacity: '0.7',
 		},
 		titlePos: { x: 80, y: 130, width: 390, height: 200 },
+		usernamePos: {x: 80, y: 400, width: 390, height: 50},
 	},
 	Cover_img_1_layout: {
 		canvaCSS: {
@@ -120,6 +121,7 @@ export const Creative_Brief_011_TemplateLayoutsConfig: {
 		},
 		titlePos: { x: 80, y: 130, width: 390, height: 200 },
 		imgContainerPos: [{ x: 480, y: 30, width: 450, height: 480 }],
+		usernamePos: {x: 80, y: 400, width: 390, height: 50},
 	},
 	Col_1_img_0_layout: {
 		canvaCSS: {
