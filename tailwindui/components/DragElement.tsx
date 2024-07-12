@@ -51,41 +51,41 @@ export const DragElement = ({
 	}>({ width: 'max-content', height: 'max-content' });
 
 	useEffect(() => {
-		setElementPos(() => {
-			if (
-				positions?.[contentIndex]?.x === undefined ||
-				positions?.[contentIndex]?.y === undefined
-			)
-				return {
-					x: defaultPos?.[contentIndex]?.x ?? 0,
-					y: defaultPos?.[contentIndex]?.y ?? 0,
-				};
-			else
-				return {
-					x: Number(positions[contentIndex].x),
-					y: Number(positions[contentIndex].y),
-				};
-		});
-		setElementSize(() => {
-			if (
-				!positions?.[contentIndex]?.width ||
-				!positions?.[contentIndex]?.height
-			)
-				return {
-					width: defaultPos?.[contentIndex]?.width ?? 'max-content',
-					height: defaultPos?.[contentIndex]?.height ?? 'max-content',
-				};
-			return {
-				width: Number(positions[contentIndex].width) + 'px',
-				height: Number(positions[contentIndex].height) + 'px',
-			};
-		});
+		let x: number, y: number;
+		let width: number | string, height: number | string;
+		if (
+			positions?.[contentIndex]?.x === undefined ||
+			positions?.[contentIndex]?.y === undefined
+		) {
+			x = defaultPos?.[contentIndex]?.x ?? 0;
+			y = defaultPos?.[contentIndex]?.y ?? 0;
+		} else {
+			x = Number(positions[contentIndex].x);
+			y = Number(positions[contentIndex].y);
+		}
+		if (
+			!positions?.[contentIndex]?.width ||
+			!positions?.[contentIndex]?.height
+		) {
+			width = defaultPos?.[contentIndex]?.width ?? 'max-content';
+			height = defaultPos?.[contentIndex]?.height ?? 'max-content';
+		} else {
+			width = Number(positions[contentIndex].width) + 'px';
+			height = Number(positions[contentIndex].height) + 'px';
+		}
+		setElementPos({x, y});
+		setElementSize({width, height});
+		setMoveHandlerPos(x, y);
+		setResetHandlerPos(x, y);
 	}, []);
 
 	const [isHover, setIsHover] = useState<boolean>(false);
 	const [isResizing, setIsResizing] = useState<boolean>(false);
 	const [isDragging, setIsDragging] = useState<boolean>(false);
 	const [isOverHandler, setIsOverHandler] = useState<boolean>(false);
+
+	const moveHandlerRef = useRef<HTMLDivElement>(null);
+	const resetHandlerRef = useRef<HTMLDivElement>(null);
 
 	const isVisible: boolean = useMemo(
 		() => canEdit && (isHover || isResizing || isOverHandler || isDragging),
@@ -99,10 +99,7 @@ export const DragElement = ({
 			height: '20px',
 			padding: '2px',
 			position: 'absolute',
-			left: '-20px',
 			zIndex: '120',
-			borderTopLeftRadius: '5px',
-			borderBottomLeftRadius: '5px',
 			visibility: `${isVisible ? 'visible' : 'hidden'}`,
 		}),
 		[isVisible],
@@ -140,6 +137,54 @@ export const DragElement = ({
 
 	const onLeaveHandler = () => {
 		setIsOverHandler(false);
+	};
+
+	const setMoveHandlerPos = (x: number, y: number) => {
+		if (moveHandlerRef.current) {
+			if (x < -25 && y < -90) {
+				moveHandlerRef.current.style.left = '';
+				moveHandlerRef.current.style.right = '-20px';
+				moveHandlerRef.current.style.bottom = '-20px';
+			} else if (x < -25) {
+				moveHandlerRef.current.style.left = '';
+				moveHandlerRef.current.style.right = '-20px';
+				moveHandlerRef.current.style.bottom = '';
+			} else if (y < -90) {
+				moveHandlerRef.current.style.left = '-20px';
+				moveHandlerRef.current.style.right = '';
+				moveHandlerRef.current.style.bottom = '-20px';
+			} else {
+				moveHandlerRef.current.style.left = '-20px';
+				moveHandlerRef.current.style.right = '';
+				moveHandlerRef.current.style.bottom = '';
+			}
+		}
+	};
+
+	const setResetHandlerPos = (x: number, y: number) => {
+		if (resetHandlerRef.current) {
+			if (x < -25 && y < -90) {
+				resetHandlerRef.current.style.left = '';
+				resetHandlerRef.current.style.right = '-20px';
+				resetHandlerRef.current.style.top = '';
+				resetHandlerRef.current.style.bottom = '23px';
+			} else if (x < -25) {
+				resetHandlerRef.current.style.left = '';
+				resetHandlerRef.current.style.right = '-20px';
+				resetHandlerRef.current.style.top = '23px';
+				resetHandlerRef.current.style.bottom = '';
+			} else if (y < -90) {
+				resetHandlerRef.current.style.left = '-20px';
+				resetHandlerRef.current.style.right = '';
+				resetHandlerRef.current.style.top = '';
+				resetHandlerRef.current.style.bottom = '23px';
+			} else {
+				resetHandlerRef.current.style.left = '-20px';
+				resetHandlerRef.current.style.right = '';
+				resetHandlerRef.current.style.top = '23px';
+				resetHandlerRef.current.style.bottom = '';
+			}
+		}
 	};
 
 	const onHandleDragStop = (e: any, data: any) => {
@@ -250,11 +295,12 @@ export const DragElement = ({
 				onMouseEnter={onEnterHandler}
 				onMouseLeave={onLeaveHandler}
 				className='drag-handler'
+				ref={moveHandlerRef}
 			>
 				<MdDragIndicator size={16} color={'white'} />
 			</div>
 			<div
-				style={{ ...elementHandlerCSS, top: '23px' }}
+				style={{ ...elementHandlerCSS, cursor: 'cell' }}
 				onMouseEnter={onEnterHandler}
 				onMouseLeave={onLeaveHandler}
 				onClick={() => {
@@ -272,6 +318,7 @@ export const DragElement = ({
 					);
 					handleSlideEdit(updatedPosition, currentSlideIndex, positionType, contentIndex, true);
 				}}
+				ref={resetHandlerRef}
 			>
 				<MdRefresh size={16} color={'white'} />
 			</div>
