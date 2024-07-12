@@ -6,6 +6,8 @@ import { BigTitle, Explanation, Instruction } from '@/components/ui/Text';
 import { PlusLabel, ProLabel } from '@/components/ui/GrayLabel';
 import FeedbackButton from '@/components/ui/feedback';
 import { getBrand, isChatslide } from '@/utils/getHost';
+import { LuAlignLeft } from 'react-icons/lu';
+import { MdManageHistory } from 'react-icons/md';
 
 export default function Studio() {
 	// avoid hydration error during development caused by persistence
@@ -27,21 +29,76 @@ export default function Studio() {
 				</Card>
 
 				<Card>
+					<BigTitle>July 12</BigTitle>
+					<Instruction>
+						<span>
+							<b>🛠️ Slides Toolbar Overhaul:</b> We've streamlined the toolbar
+							by merging some features and adding new ones. A notable addition
+							is the ability to <b>realign all elements</b> on a slide page,
+							giving you more control over your layout. The button is{' '}
+							<LuAlignLeft
+								style={{
+									display: 'inline-block',
+									verticalAlign: 'text-bottom',
+								}}
+							/>
+							.
+						</span>
+					</Instruction>
+
+					<Instruction>
+						<span>
+							<p>
+								<b>🕰️ Version History (Beta):</b> You can now view your
+								project's version history, revert to previous versions, or
+								compare different iterations. The button is{' '}
+								<MdManageHistory
+									style={{
+										display: 'inline-block',
+										verticalAlign: 'text-bottom',
+									}}
+								/>
+								.
+							</p>
+							<p>
+								Currently, this information is saved in your browser, with
+								server-side storage coming soon.
+							</p>
+						</span>
+					</Instruction>
+
+					<Instruction>
+						<div>
+							<b>🎬 Subtitles to Your Videos:</b> We've brought back transitions
+							and introduced the option to add subtitles to your videos. <br />
+							Stay tuned for the upcoming feature to customize background music.
+						</div>
+					</Instruction>
+
+					<Instruction>
+						<div>
+							<b>📊 Multiple Color Charts:</b> We now support multiple color
+							charts for your data visualization needs. <br />
+							Coming soon: the ability to edit charts interactively.
+						</div>
+					</Instruction>
+				</Card>
+
+				<Card>
 					<BigTitle>July 10</BigTitle>
 					<Instruction>
 						<div>
-							<b>🎨 Design Step Layout Choices:</b> You can now choose (and ban) from
-							various layouts during the design step. There is also a 'no image'
-							option for a cleaner look.
+							<b>🎨 Design Step Layout Choices:</b> You can now choose (and ban)
+							from various layouts during the design step. There is also a 'no
+							image' option for a cleaner look.
 						</div>
 					</Instruction>
 
 					<Instruction>
 						<div>
 							<b>✍️ Script Step Customization:</b> In the script step, you now
-							have the option to fine tune your script generation, and 
-              even directly write your own scripts for more
-							personalized content.
+							have the option to fine tune your script generation, and even
+							directly write your own scripts for more personalized content.
 						</div>
 					</Instruction>
 
