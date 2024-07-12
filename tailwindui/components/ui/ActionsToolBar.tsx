@@ -13,7 +13,6 @@ type ActionsToolBarProps = {
 	redo?: () => void;
 	canUndo?: boolean;
 	canRedo?: boolean;
-  resetAllPositions?: () => void;
 	// Other props...
 	startTour: () => void;
 	onlyShowTutorial: boolean;
@@ -27,7 +26,6 @@ const ActionsToolBar: React.FC<ActionsToolBarProps> = ({
 	redo,
 	canUndo,
 	canRedo,
-  resetAllPositions,
 	startTour,
 	onlyShowTutorial,
 	isViewing = false,
@@ -197,24 +195,6 @@ const ActionsToolBar: React.FC<ActionsToolBarProps> = ({
 						}
 						explanation='Version History'
 					/>
-
-          {/* reset all positions */}
-          <ButtonWithExplanation
-            button={
-              <button onClick={resetAllPositions}>
-                <LuAlignLeft
-                  style={{
-                    width: `24px`,
-                    height: `24px`,
-                    color: 'var(--colors-text-text-secondary-700, #344054)',
-                  }}
-                />
-              </button>
-            }
-            explanation='Realign'
-          />
-
-
 					<div className='h-8 w-0.5 bg-gray-200'></div>
 				</>
 			)}

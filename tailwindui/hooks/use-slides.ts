@@ -29,6 +29,7 @@ moment.updateLocale('en', {
 });
 
 import { SlidesVersion } from '@/components/slides/SlidesVersionHistoryWindow';
+import { set } from 'lodash';
 
 const colorPreviews: any = dynamic(
 	() => import('@/app/(feature)/design/TemplateSelector'),
@@ -347,6 +348,26 @@ export const useSlides = () => {
 		// setHasSelectedCustomTemplateBgColor(true);
 	};
 
+	const [canResetAllPositions, setCanResetAllPositions] = useState(false);
+
+	useEffect(() => {
+		const currentSlide = slides[slideIndex];
+		if (
+			Object.keys(currentSlide.image_container_positions[0]).length > 0 ||
+			Object.keys(currentSlide.image_container_positions[1]).length > 0 ||
+			Object.keys(currentSlide.image_container_positions[2]).length > 0 ||
+			Object.keys(currentSlide.logo_numeric_position).length > 0 ||
+			Object.keys(currentSlide.head_position).length > 0 ||
+			Object.keys(currentSlide.title_position).length > 0 ||
+			Object.keys(currentSlide.subtopic_position).length > 0 ||
+			Object.keys(currentSlide.content_positions[0]).length > 0 ||
+			Object.keys(currentSlide.content_positions[1]).length > 0 ||
+			Object.keys(currentSlide.content_positions[2]).length > 0
+		)
+			setCanResetAllPositions(true);
+		else setCanResetAllPositions(false);
+	}, [slides, slideIndex]);
+
 	// to control show or not show logo
 
 	const init = async () => {
@@ -433,30 +454,29 @@ export const useSlides = () => {
 		debouncedSyncSlides(newSlides, true);
 	};
 
-  const resetAllPositions = () => {
-    // reset positions on one page:
-    const newSlides = slides.map((slide, index) => {
-      if (index === slideIndex) {
-        return {
-          ...slide,
-          // image_positions: [{}, {}, {}],
-          image_container_positions: [{}, {}, {}],
-          logo_numeric_position: {},
-          head_position: {},
-          title_position: {},
-          subtopic_position: {},
-          content_positions: [{}, {}, {}],
-        };
-      }
-      return slide;
-    });
+	const resetAllPositions = () => {
+		// reset positions on one page:
+		const newSlides = slides.map((slide, index) => {
+			if (index === slideIndex) {
+				return {
+					...slide,
+					// image_positions: [{}, {}, {}],
+					image_container_positions: [{}, {}, {}],
+					logo_numeric_position: {},
+					head_position: {},
+					title_position: {},
+					subtopic_position: {},
+					content_positions: [{}, {}, {}],
+				};
+			}
+			return slide;
+		});
 
-    setSlides(newSlides);
-    updateVersion();
-    updateSlideHistory(newSlides);
-    debouncedSyncSlides(newSlides, true);
-  
-  }
+		setSlides(newSlides);
+		updateVersion();
+		updateSlideHistory(newSlides);
+		debouncedSyncSlides(newSlides, true);
+	};
 
 	const updateLayoutAllNonCoverPages = (newLayout: LayoutKeys) => {
 		console.log('Changing layout to:', newLayout);
@@ -917,7 +937,8 @@ export const useSlides = () => {
 		slidesHistoryIndex,
 		undoChange,
 		redoChange,
-    resetAllPositions,
+		canResetAllPositions,
+		resetAllPositions,
 		jumpToVersion,
 		slideIndex,
 		setSlideIndex,

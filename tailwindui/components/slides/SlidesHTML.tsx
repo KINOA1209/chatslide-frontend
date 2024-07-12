@@ -63,6 +63,7 @@ import { Blank } from '../ui/Loading';
 import IFrameEmbed from '../utils/IFrameEmbed';
 import { SlidesVersionHistoryWindow } from './SlidesVersionHistoryWindow';
 import { MdManageHistory } from 'react-icons/md';
+import { LuAlignLeft } from 'react-icons/lu';
 
 type SlidesHTMLProps = {
 	isViewing?: boolean; // viewing another's shared project
@@ -283,6 +284,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		// changeTemplateAndPalette,
 		undoChange,
 		redoChange,
+    canResetAllPositions,
     resetAllPositions,
 		jumpToVersion,
 		slidesHistoryIndex,
@@ -873,13 +875,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 							redo={redoChange}
 							canRedo={canRedo}
 							canUndo={canUndo}
-              resetAllPositions={resetAllPositions}
 							startTour={startTour}
 							onlyShowTutorial={false}
 							isViewing={isViewing}
 							toggleVersionHistoryWindow={toggleVersionHistoryWindow}
 						>
-
 							{!isViewing && (
 								<>
 									<AddSlideButton
@@ -907,6 +907,23 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 										availableLayouts={availableLayouts}
 									/>
 									<BrandingButton />
+
+									{/* reset all positions */}
+									<ButtonWithExplanation
+										button={
+											<button onClick={resetAllPositions} disabled={!canResetAllPositions}>
+												<LuAlignLeft
+													style={{
+														width: `24px`,
+														height: `24px`,
+														color: canResetAllPositions ? '#344054' : '#C6C6C6',
+															// 'var(--colors-text-text-secondary-700, #344054)',
+													}}
+												/>
+											</button>
+										}
+										explanation='Realign'
+									/>
 
 									<div className='h-8 w-0.5 bg-gray-200'></div>
 								</>
