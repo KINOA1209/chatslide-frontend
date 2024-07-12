@@ -75,6 +75,7 @@ export default function WorkflowStep5() {
 	const [voiceIsHD, setVoiceIsHD] = useState(false);
 	const [creditCost, setCreditCost] = useState(20);
 	const [transitionType, setTransitionType] = useState('');
+  const [withSubtitle, setWithSubtitle] = useState(false);
 
 	const params = useSearchParams();
 
@@ -86,6 +87,7 @@ export default function WorkflowStep5() {
 		} else setCreditCost(20);
 	}, [avatar, voiceIsHD, voice]);
 
+  // unused
 	const CreditCost = () => {
 		function getCreditCostPerPageAndReason() {
 			if (avatar) return { cost: 30, reason: '🦹‍♂️ You are using an avatar' };
@@ -250,6 +252,7 @@ export default function WorkflowStep5() {
 					bgmVolume,
 					creditCost,
 					transitionType,
+					withSubtitle,
 				);
 				updateCreditsFE(-20);
 				router.push(addIdToRedir('/video'));
@@ -425,6 +428,16 @@ export default function WorkflowStep5() {
 							)}
 						</WrappableRow>
 					</div> */}
+
+					<div className='flex flex-row items-center gap-x-2'>
+						{/* checkbox for adding subtitle */}
+						<input
+							type='checkbox'
+							checked={withSubtitle}
+							onChange={() => setWithSubtitle(!withSubtitle)}
+						/>{' '}
+						<Instruction>Add subtitle to my video.</Instruction>
+					</div>
 				</Card>
 
 				<Card>
