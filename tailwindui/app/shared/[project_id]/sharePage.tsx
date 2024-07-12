@@ -114,7 +114,7 @@ const SharePage: React.FC<SharePageProps> = ({ project, embed = false }) => {
 					const slides = ProjectService.parseSlides(
 						project.presentation_slides || '',
 					);
-					initSlides(slides);
+					initSlides(slides, true);
 					setLoading(false);
 				} else if (project.content_type === 'social_posts') {
 					setPostType(project.post_type || ''); // Ensure project.post_type is not undefined

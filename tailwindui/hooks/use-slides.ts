@@ -347,7 +347,7 @@ export const useSlides = () => {
 		slidesStatus = SlidesStatus.Inited;
 	};
 
-  const updateBranding = (
+	const updateBranding = (
 		logo: string,
 		selectedLogo: Resource[],
 		logoPosition: LogoPosition,
@@ -359,7 +359,7 @@ export const useSlides = () => {
 			logo,
 			selectedLogo,
 			logoPosition,
-      logoNumericPosition,
+			logoNumericPosition,
 			selectedBackground,
 			applyToAll,
 		});
@@ -719,8 +719,8 @@ export const useSlides = () => {
 		debouncedSyncSlides(newSlides, true);
 	};
 
-	const initSlides = (slides: Slide[]) => {
-		console.log('-- init slides: ', { slides });
+	const initSlides = (slides: Slide[], resetHistory = false) => {
+		console.log('-- init slides: ', { slides }, 'resetHistory:', resetHistory);
 		if (slides.length === 0) {
 			return;
 		}
@@ -728,8 +728,10 @@ export const useSlides = () => {
 		setSlides(slides);
 		// setIsTemplateLogoLeftSide(slides[0].is_logo_left);
 		setSlideIndex(0);
-		setSlidesHistory([slides]);
-		setSlidesHistoryIndex(0);
+		if (resetHistory) {
+			setSlidesHistory([slides]);
+			setSlidesHistoryIndex(0);
+		}
 		clearChatHistory();
 		setIsPresenting(false);
 
