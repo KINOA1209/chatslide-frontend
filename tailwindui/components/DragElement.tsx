@@ -329,7 +329,9 @@ export const DragElement = ({
 					onHover(elementIndex);
 				}}
 				onMouseLeave={() => {
-					setIsHover(false);
+          setTimeout(() => {
+            setIsHover(false);
+          }, 300);
 				}}
 			>
 				{children}
