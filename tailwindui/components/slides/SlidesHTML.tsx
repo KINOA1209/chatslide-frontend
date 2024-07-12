@@ -1105,7 +1105,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				{/* version history */}
 				{
 					!isViewing && isVersionHistoryWindowOpen ? (
-						<div className='sticky right-0 top-0 h-full z-20'>
+						<div className='sticky right-0 top-0 h-full'>
 							<SlidesVersionHistoryWindow
 								onToggle={toggleVersionHistoryWindow}
 								slidesHistory={slidesHistory}
