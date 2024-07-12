@@ -401,6 +401,7 @@ export const templateDispatch = (
 					/>
 				)
 			}
+			username_position={slide.username_position || {}}
 			title={generateContentElement(
 				slide.head,
 				'head',

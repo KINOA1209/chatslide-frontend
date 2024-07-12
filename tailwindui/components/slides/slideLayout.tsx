@@ -310,6 +310,7 @@ const setInitLogoPos = (
 
 export const Cover_img_0_layout = ({
 	user_name,
+	username_position,
 	title,
 	title_position,
 	topic,
@@ -335,6 +336,10 @@ export const Cover_img_0_layout = ({
 		title_position,
 		layoutElements.titlePos as Position,
 	) as Position;
+	const initUserNamePos = setInitPos(
+		username_position,
+		layoutElements.usernamePos as Position,
+	) as Position;
 	const initLogoPos = setInitLogoPos(logo_position, logo_numeric_position);
 
 	const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -349,12 +354,22 @@ export const Cover_img_0_layout = ({
 				position: 'relative',
 			}}
 		>
-			<div
-				className={`SlideUserName`}
-				style={{ ...layoutElements.userNameCSS, zIndex: 60 }}
+			<DragElement
+				type={ElementType.TextEdit}
+				canEdit={canEdit}
+				scale={scale}
+				positions={[initUserNamePos]}
+				contentIndex={0}
+				handleSlideEdit={handleSlideEdit}
+				currentSlideIndex={currentSlideIndex}
+				positionType='username_position'
+				defaultPos={[layoutElements.usernamePos as Position]}
+				elementIndex={2}
+				onHover={setHoveredIndex}
+				hoveredIndex={hoveredIndex ?? -1}
 			>
 				{user_name}
-			</div>
+			</DragElement>
 			<DragElement
 				type={ElementType.TextEdit}
 				canEdit={canEdit}
@@ -408,6 +423,7 @@ export const Cover_img_0_layout = ({
 
 export const Cover_img_1_layout = ({
 	user_name,
+	username_position,
 	title,
 	topic,
 	subtopic,
@@ -480,6 +496,10 @@ export const Cover_img_1_layout = ({
 
 	const [imgHigherZIndex, setImgHigherZIndex] = useState(false);
 
+	const initUserNamePos = setInitPos(
+		username_position,
+		layoutElements.usernamePos as Position,
+	) as Position;
 	const initTitlePos = setInitPos(
 		title_position,
 		layoutElements.titlePos as Position,
@@ -502,12 +522,22 @@ export const Cover_img_1_layout = ({
 				position: 'relative',
 			}}
 		>
-			<div
-				className={`SlideUserName`}
-				style={{ ...layoutElements.userNameCSS, zIndex: 60 }}
+			<DragElement
+				type={ElementType.TextEdit}
+				canEdit={canEdit}
+				scale={scale}
+				positions={[initUserNamePos]}
+				contentIndex={0}
+				handleSlideEdit={handleSlideEdit}
+				currentSlideIndex={currentSlideIndex}
+				positionType='username_position'
+				defaultPos={[layoutElements.usernamePos as Position]}
+				elementIndex={3}
+				onHover={setHoveredIndex}
+				hoveredIndex={hoveredIndex ?? -1}
 			>
 				{user_name}
-			</div>
+			</DragElement>
 			<DragElement
 				type={ElementType.TextEdit}
 				canEdit={canEdit}

@@ -352,12 +352,13 @@ export const useSlides = () => {
 
 	useEffect(() => {
 		const currentSlide = slides[slideIndex];
-    if(!currentSlide) return;
+		if (!currentSlide) return;
 		if (
 			Object.keys(currentSlide?.image_container_positions[0]).length > 0 ||
 			Object.keys(currentSlide?.image_container_positions[1]).length > 0 ||
 			Object.keys(currentSlide?.image_container_positions[2]).length > 0 ||
 			Object.keys(currentSlide?.logo_numeric_position).length > 0 ||
+			Object.keys(currentSlide?.username_position).length > 0 ||
 			Object.keys(currentSlide?.head_position).length > 0 ||
 			Object.keys(currentSlide?.title_position).length > 0 ||
 			Object.keys(currentSlide?.subtopic_position).length > 0 ||
@@ -463,6 +464,7 @@ export const useSlides = () => {
 					...slide,
 					// image_positions: [{}, {}, {}],
 					image_container_positions: [{}, {}, {}],
+					username_position: {},
 					logo_numeric_position: {},
 					head_position: {},
 					title_position: {},
