@@ -354,31 +354,17 @@ export const useSlides = () => {
 		const currentSlide = slides[slideIndex];
 		if (!currentSlide) return;
 		else if (
-			!currentSlide?.image_container_positions ||
-			!currentSlide?.image_container_positions ||
-			!currentSlide?.image_container_positions ||
-			!currentSlide?.logo_numeric_position ||
-			!currentSlide?.username_position ||
-			!currentSlide?.head_position ||
-			!currentSlide?.title_position ||
-			!currentSlide?.subtopic_position ||
-			!currentSlide?.content_positions ||
-			!currentSlide?.content_positions ||
-			!currentSlide?.content_positions
-		)
-			setCanResetAllPositions(false);
-		else if (
-			Object.keys(currentSlide?.image_container_positions[0]).length > 0 ||
-			Object.keys(currentSlide?.image_container_positions[1]).length > 0 ||
-			Object.keys(currentSlide?.image_container_positions[2]).length > 0 ||
-			Object.keys(currentSlide?.logo_numeric_position).length > 0 ||
-			Object.keys(currentSlide?.username_position).length > 0 ||
-			Object.keys(currentSlide?.head_position).length > 0 ||
-			Object.keys(currentSlide?.title_position).length > 0 ||
-			Object.keys(currentSlide?.subtopic_position).length > 0 ||
-			Object.keys(currentSlide?.content_positions[0]).length > 0 ||
-			Object.keys(currentSlide?.content_positions[1]).length > 0 ||
-			Object.keys(currentSlide?.content_positions[2]).length > 0
+			(currentSlide?.image_container_positions && Object.keys(currentSlide?.image_container_positions[0]).length > 0) ||
+			(currentSlide?.image_container_positions && Object.keys(currentSlide?.image_container_positions[1]).length > 0) ||
+			(currentSlide?.image_container_positions && Object.keys(currentSlide?.image_container_positions[2]).length > 0) ||
+			(currentSlide?.logo_numeric_position && Object.keys(currentSlide?.logo_numeric_position).length > 0) ||
+			(currentSlide?.username_position && Object.keys(currentSlide?.username_position).length > 0) ||
+			(currentSlide?.head_position && Object.keys(currentSlide?.head_position).length > 0) ||
+			(currentSlide?.title_position && Object.keys(currentSlide?.title_position).length > 0) ||
+			(currentSlide?.subtopic_position && Object.keys(currentSlide?.subtopic_position).length > 0) ||
+			(currentSlide?.content_positions && Object.keys(currentSlide?.content_positions[0]).length > 0) ||
+			(currentSlide?.content_positions && Object.keys(currentSlide?.content_positions[1]).length > 0) ||
+			(currentSlide?.content_positions && Object.keys(currentSlide?.content_positions[2]).length > 0)
 		)
 			setCanResetAllPositions(true);
 		else setCanResetAllPositions(false);
