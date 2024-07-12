@@ -353,20 +353,18 @@ export const useSlides = () => {
 	useEffect(() => {
 		const currentSlide = slides[slideIndex];
 		if (!currentSlide) return;
-		if (
-			Object.keys(currentSlide?.image_container_positions?.[0] ?? {}).length >
-				0 ||
-			Object.keys(currentSlide?.image_container_positions?.[1] ?? {}).length >
-				0 ||
-			Object.keys(currentSlide?.image_container_positions?.[2] ?? {}).length >
-				0 ||
-			Object.keys(currentSlide?.logo_numeric_position ?? {}).length > 0 ||
-			Object.keys(currentSlide?.head_position ?? {}).length > 0 ||
-			Object.keys(currentSlide?.title_position ?? {}).length > 0 ||
-			Object.keys(currentSlide?.subtopic_position ?? {}).length > 0 ||
-			Object.keys(currentSlide?.content_positions?.[0] ?? {}).length > 0 ||
-			Object.keys(currentSlide?.content_positions?.[1] ?? {}).length > 0 ||
-			Object.keys(currentSlide?.content_positions?.[2] ?? {}).length > 0
+		else if (
+			(currentSlide?.image_container_positions && Object.keys(currentSlide?.image_container_positions[0]).length > 0) ||
+			(currentSlide?.image_container_positions && Object.keys(currentSlide?.image_container_positions[1]).length > 0) ||
+			(currentSlide?.image_container_positions && Object.keys(currentSlide?.image_container_positions[2]).length > 0) ||
+			(currentSlide?.logo_numeric_position && Object.keys(currentSlide?.logo_numeric_position).length > 0) ||
+			(currentSlide?.username_position && Object.keys(currentSlide?.username_position).length > 0) ||
+			(currentSlide?.head_position && Object.keys(currentSlide?.head_position).length > 0) ||
+			(currentSlide?.title_position && Object.keys(currentSlide?.title_position).length > 0) ||
+			(currentSlide?.subtopic_position && Object.keys(currentSlide?.subtopic_position).length > 0) ||
+			(currentSlide?.content_positions && Object.keys(currentSlide?.content_positions[0]).length > 0) ||
+			(currentSlide?.content_positions && Object.keys(currentSlide?.content_positions[1]).length > 0) ||
+			(currentSlide?.content_positions && Object.keys(currentSlide?.content_positions[2]).length > 0)
 		)
 			setCanResetAllPositions(true);
 		else setCanResetAllPositions(false);
@@ -466,6 +464,7 @@ export const useSlides = () => {
 					...slide,
 					// image_positions: [{}, {}, {}],
 					image_container_positions: [{}, {}, {}],
+					username_position: {},
 					logo_numeric_position: {},
 					head_position: {},
 					title_position: {},

@@ -66,6 +66,7 @@ export default class Slide {
 	subtopic: string;
 	subtopic_position: Position;
 	userName: string;
+	username_position: Position;
 	template: TemplateKeys;
 	content: string[];
 	content_positions: Position[];
@@ -110,6 +111,7 @@ export default class Slide {
 		this.subtopic = 'New Slide';
 		this.subtopic_position = {};
 		this.userName = '';
+		this.username_position = {};
 		this.template = 'Default';
 		this.content = [
 			'You can edit this text',

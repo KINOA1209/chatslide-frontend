@@ -39,6 +39,7 @@ import { useSlides } from '@/hooks/use-slides';
 export const generateTemplate = (templateName: string) => {
 	return ({
 		user_name,
+		username_position,
 		title,
 		title_position,
 		topic,
@@ -133,6 +134,7 @@ export const generateTemplate = (templateName: string) => {
 						content={content}
 						content_positions={content_positions}
 						user_name={user_name}
+						username_position={username_position}
 						title={title}
 						title_position={title_position}
 						topic={topic}
@@ -199,6 +201,7 @@ export const generateTemplate = (templateName: string) => {
 						content={content}
 						content_positions={content_positions}
 						user_name={user_name}
+						username_position={username_position}
 						title={title}
 						title_position={title_position}
 						topic={topic}
@@ -281,6 +284,7 @@ const Business_Review_012_template = generateTemplate(
 );
 export interface MainSlideProps {
 	user_name: JSX.Element;
+	username_position: Position;
 	title: JSX.Element;
 	title_position: Position;
 	topic: JSX.Element;

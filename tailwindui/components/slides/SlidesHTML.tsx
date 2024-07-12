@@ -607,6 +607,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				currentSlide.image_positions = content as Position[];
 			} else if (className === 'title_position') {
 				currentSlide.head_position = (content as Position[])[0];
+			} else if (className === 'username_position') {
+				currentSlide.username_position = (content as Position[])[0];
 			} else if (className === 'topic_position') {
 				currentSlide.title_position = (content as Position[])[0];
 			} else if (className === 'subtopic_position') {

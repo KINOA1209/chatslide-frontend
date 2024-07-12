@@ -52,6 +52,7 @@ export type LayoutElements = {
 	titleAndContentColumnCSS?: React.CSSProperties;
 	handlerCSS?: React.CSSProperties;
 	titlePos?: Position;
+	usernamePos?: Position;
 	topicPos?: Position;
 	subtopicPos?: Position;
 	contentPos?: Position[];

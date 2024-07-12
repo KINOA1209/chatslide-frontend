@@ -297,6 +297,7 @@ class ProjectService {
 			// 	: true;
 
 			slide.head_position = slideData.head_position || {};
+			slide.username_position = slideData.username_position || {};
 			slide.title_position = slideData.title_position || {};
 			slide.subtopic_position = slideData.subtopic_position || {};
 			slide.content_positions = slideData.content_positions || [{}, {}, {}];
