@@ -353,7 +353,21 @@ export const useSlides = () => {
 	useEffect(() => {
 		const currentSlide = slides[slideIndex];
 		if (!currentSlide) return;
-		if (
+		else if (
+			!currentSlide?.image_container_positions ||
+			!currentSlide?.image_container_positions ||
+			!currentSlide?.image_container_positions ||
+			!currentSlide?.logo_numeric_position ||
+			!currentSlide?.username_position ||
+			!currentSlide?.head_position ||
+			!currentSlide?.title_position ||
+			!currentSlide?.subtopic_position ||
+			!currentSlide?.content_positions ||
+			!currentSlide?.content_positions ||
+			!currentSlide?.content_positions
+		)
+			setCanResetAllPositions(false);
+		else if (
 			Object.keys(currentSlide?.image_container_positions[0]).length > 0 ||
 			Object.keys(currentSlide?.image_container_positions[1]).length > 0 ||
 			Object.keys(currentSlide?.image_container_positions[2]).length > 0 ||
