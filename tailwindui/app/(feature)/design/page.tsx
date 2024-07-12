@@ -416,7 +416,7 @@ export default function DesignPage() {
 					logo_position: selectedLogoPosition,
 				} as Project);
 
-				initSlides(newSlides);
+				initSlides(newSlides, true);
 				debouncedSyncSlides(newSlides);
 
 				router.push(addIdToRedir('/slides'));
@@ -440,7 +440,7 @@ export default function DesignPage() {
 				const parsedSlides = ProjectService.parseSlides(
 					project.presentation_slides,
 				);
-				initSlides(parsedSlides);
+				initSlides(parsedSlides, true);
 				setShowGenerationStatusModal(true);
 				viewSlidesSubmit();
 				setIsSubmitting(false);

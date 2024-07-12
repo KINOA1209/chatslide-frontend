@@ -34,7 +34,6 @@ const GenerateSlidesSubmit = ({
 }) => {
 	const router = useRouter();
 	const { token } = useUser();
-	const { initSlides } = useSlides();
 	const { project, updateProject, bulkUpdateProject, updateOutlines } =
 		useProject();
 

@@ -767,8 +767,8 @@ export const useSlides = () => {
 		debouncedSyncSlides(newSlides, true);
 	};
 
-	const initSlides = (slides: Slide[]) => {
-		console.log('-- init slides: ', { slides });
+	const initSlides = (slides: Slide[], resetHistory = false) => {
+		console.log('-- init slides: ', { slides }, 'resetHistory:', resetHistory);
 		if (slides.length === 0) {
 			return;
 		}
@@ -776,9 +776,10 @@ export const useSlides = () => {
 		setSlides(slides);
 		// setIsTemplateLogoLeftSide(slides[0].is_logo_left);
 		setSlideIndex(0);
-		// setSlidesHistory([slides]);
-		setSlidesHistory([{ slides, timestamp: moment().calendar() }]);
-		setSlidesHistoryIndex(0);
+		if (resetHistory) {
+			setSlidesHistory([{ slides, timestamp: moment().calendar() }]);
+			setSlidesHistoryIndex(0);
+		}
 		clearChatHistory();
 		setIsPresenting(false);
 

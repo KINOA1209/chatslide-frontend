@@ -60,7 +60,7 @@ const ProjectLoading = () => {
 				// console.log('fetchProhectDetails loaded parsedSlides', parsedSlides);
 
 				if (parsedSlides && parsedSlides.length > 0) {
-					initSlides(parsedSlides);
+					initSlides(parsedSlides, true);
 				}
 				if (project?.parsed_socialPosts) {
 					initSocialPosts(project.parsed_socialPosts);
