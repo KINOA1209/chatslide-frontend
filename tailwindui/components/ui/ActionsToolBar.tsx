@@ -5,8 +5,6 @@ import { StartATourGuidePromptWindow } from '@/components/user_onboarding/Custom
 import ButtonWithExplanation from '../button/ButtonWithExplanation';
 import { ToolBar } from './ToolBar';
 import { MdManageHistory } from 'react-icons/md';
-import { CiAlignLeft } from 'react-icons/ci';
-import { LuAlignCenter, LuAlignLeft } from 'react-icons/lu';
 
 type ActionsToolBarProps = {
 	undo?: () => void;
