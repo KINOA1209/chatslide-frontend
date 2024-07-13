@@ -1,12 +1,14 @@
 import { DataGrid } from '@mui/x-data-grid';
-import { useEffect, useState } from 'react';
+import { RefObject, useEffect, useState } from 'react';
+import { Chart as ChartJS } from 'chart.js';
 
 interface ChartEditorProps {
     chartData: any;
     setChartData: (chartData: any) => void;
+    chartRef: RefObject<ChartJS>;
 }
 
-export const ChartEditor = ({ chartData, setChartData }: ChartEditorProps) => {
+export const ChartEditor = ({ chartData, setChartData, chartRef }: ChartEditorProps) => {
     const [editorData, setEditorData] = useState<{ rows: { [key: string]: any }[], columns: any[] }>({ rows: [], columns: [] });
     useEffect(() => {
         var rows: { [key: string]: any }[] = [];
@@ -15,7 +17,7 @@ export const ChartEditor = ({ chartData, setChartData }: ChartEditorProps) => {
             columns = chartData.labels.map((label: any, i: number) => {
                 return { field: (i + 1).toString(), headerName: label, editable: true };
             });
-            columns.unshift({ field: "0", headerName: "Category", editable: false });
+            columns.unshift({ field: "0", headerName: "Category", editable: true });
             rows = chartData.datasets.map((dataset: any, i: number) => {
                 return { id: i, "0": dataset.label, editable: true };
             });
@@ -38,13 +40,16 @@ export const ChartEditor = ({ chartData, setChartData }: ChartEditorProps) => {
         for (const key in updatedRow) {
             if (key === "id" || key === "editable") continue;
             if (key === "0") {
+                if (chartRef.current) {
+                    chartRef.current.data.datasets[rowId].label = updatedRow[key];
+                    chartRef.current.update();
+                }
                 newChartData.datasets[rowId].label = updatedRow[key];
             } else {
                 const colId = parseInt(key);
                 newChartData.datasets[rowId].data[colId - 1] = parseFloat(updatedRow[key]);
             }
         }
-        console.log("Updated Chart Data: ", newChartData);
         setChartData(newChartData);
         return updatedRow
     }

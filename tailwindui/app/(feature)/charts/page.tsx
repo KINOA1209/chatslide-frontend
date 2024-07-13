@@ -106,7 +106,6 @@ export default function Page() {
 		if (chartData) {
 			updateDynamicChart();
 		}
-		console.log("Chart Values: ", chartValues);
 	}, [chartData]);
 
 	function downloadChart() {
@@ -215,7 +214,7 @@ export default function Page() {
 						{useDynamicChart && chartType ?
 							<Card>
 								<div className='w-full'>
-									<ChartEditor chartData={chartData} setChartData={setChartData} />
+									<ChartEditor chartData={chartData} setChartData={setChartData} chartRef={chartRef} />
 								</div>
 							</Card> : <></>}
 					</div>
