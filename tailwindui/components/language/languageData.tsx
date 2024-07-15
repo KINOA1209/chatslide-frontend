@@ -13,7 +13,12 @@ const LANGUAGES: Language[] = [
 		code: 'en-GB',
 	},
 	{
-		displayName: '🌎 Español (Latinoamérica)',
+		displayName: '🇮🇳 English (India)',
+		englishName: 'Indian English',
+		code: 'en-IN',
+	},
+	{
+		displayName: '🇲🇽 Español (Mexico)',
 		englishName: 'Spanish',
 		code: 'es-MX',
 	},
@@ -28,6 +33,7 @@ const LANGUAGES: Language[] = [
 		englishName: 'Traditional Chinese',
 		code: 'zh-TW',
 	},
+	{ displayName: '🇭🇰 粵語', englishName: 'Catonese', code: 'zh-HK' },
 	{ displayName: '🇩🇪 Deutsch', englishName: 'German', code: 'de-DE' },
 	{ displayName: '🇫🇷 Français', englishName: 'French', code: 'fr-FR' },
 	{ displayName: '🇷🇺 Русский', englishName: 'Russian', code: 'ru-RU' },
@@ -84,7 +90,7 @@ const ACCENTS: Language[] = [
 		englishName: 'French (Global)',
 		code: 'fr-Global',
 	},
-	{ displayName: '🇭🇰 粵語', englishName: 'Catonese', code: 'zh-HK' },
+
 ];
 
 export const LANGUAGES_WITH_ACCENTS: Language[] = [...ACCENTS, ...LANGUAGES];

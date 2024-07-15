@@ -16,7 +16,7 @@ import {
 import { BetaLabel, GrayLabel, ProLabel } from '@/components/ui/GrayLabel';
 import { useState, useRef, useEffect } from 'react';
 import { readingData } from './readingData';
-import { LANGUAGES_WITH_ACCENTS } from '@/components/language/languageData';
+import LANGUAGES, { LANGUAGES_WITH_ACCENTS } from '@/components/language/languageData';
 import VoiceCloneService from '@/services/VoiceService';
 import { useUser } from '@/hooks/use-user';
 import VoiceProfile from '@/models/VoiceProfile';
@@ -29,11 +29,12 @@ import { FiPlay } from 'react-icons/fi';
 import { getBrand } from '@/utils/getHost';
 import { Column } from '@/components/layout/Column';
 
-const MIN_AUDIO_LENGTH = 1;
+const MIN_AUDIO_LENGTH = 10;
 
 const VoiceCloning = () => {
 	const [selectedLanguageCode, setSelectedLanguageCode] =
 		useState<string>('en-US');
+  const [selectedTestLanguageCode, setSelectedTestLanguageCode] = useState<string>('en-US');
 	const [inputBoxText, setInputBoxText] = useState<string>(
 		readingData['en-US'],
 	);
@@ -62,9 +63,7 @@ const VoiceCloning = () => {
 	const [showPaywallModal, setShowPaywallModal] = useState(false);
 
   const [isSubmittingConsent, setIsSubmittingConsent] = useState<boolean>(false);
-  const [consentId, setConsentId] = useState<string>(
-		'drlambda_consent_40aaa98f-1dc1-4b0e-8e5e-ec417136bd78',
-	);
+  const [consentId, setConsentId] = useState<string>('');
 
   function submitConsent() {
     setIsSubmittingConsent(true);
@@ -236,10 +235,11 @@ const VoiceCloning = () => {
 	const handleGenerateVoice = async () => {
 		setGenerating(true);
 		try {
+      setCustomRecording('');
 			const result = await VoiceCloneService.generateVoice(
 				selectedProfile?.voice_id || '',
 				customerInput,
-        'en-US',
+        selectedTestLanguageCode,
 				token,
 			);
 			setCustomRecording(result.audio_url);
@@ -255,6 +255,7 @@ const VoiceCloning = () => {
 			(profile) => profile.name === event.target.value,
 		);
 		setSelectedProfile(profile || null);
+    setCustomRecording('');
 	};
 
 	const handleDeleteProfile = async () => {
@@ -293,7 +294,7 @@ const VoiceCloning = () => {
 			/>
 			<Card>
 				<BigTitle>
-					🎙️ Create New Voice Profile <BetaLabel />{' '}
+					🎙️ Create New Voice Profile
 				</BigTitle>
 
 				<Column>
@@ -309,7 +310,7 @@ const VoiceCloning = () => {
 						textarea
 					/>
 					<BigBlueButton
-						disabled={isRecordingRecord || cloning}
+						disabled={isRecordingRecord || cloning || isSubmittingConsent || (isRecordingConsent && consentTimeLeft > 20- MIN_AUDIO_LENGTH)}
 						onClick={() => handleRecordAudio(true)}
 					>
 						{isRecordingConsent ? (
@@ -345,13 +346,7 @@ const VoiceCloning = () => {
 					)}
 				</Column>
 
-				{audioLength < MIN_AUDIO_LENGTH && (
-					<WarningMessage>
-						Please record for at least {MIN_AUDIO_LENGTH} seconds.
-					</WarningMessage>
-				)} 
-        
-        { consentId && (
+				{consentId && (
 					<Column>
 						<Title>Step 2</Title>
 						<Instruction>
@@ -366,7 +361,7 @@ const VoiceCloning = () => {
 								value={selectedLanguageCode}
 								onChange={handleLanguageChange}
 							>
-								{LANGUAGES_WITH_ACCENTS.map((lang) => (
+								{LANGUAGES.map((lang) => (
 									<option key={lang.code} value={lang.code}>
 										{lang.displayName}
 									</option>
@@ -440,9 +435,10 @@ const VoiceCloning = () => {
 					</Column>
 				)}
 			</Card>
+
 			<Card>
 				<BigTitle>
-					📂 Existing Voice Profiles <BetaLabel />{' '}
+					📂 Existing Voice Profiles
 				</BigTitle>
 
 				<Instruction>
@@ -474,29 +470,37 @@ const VoiceCloning = () => {
 						</WrappableRow>
 					</WrappableRow>
 				)}
+
 				{selectedProfile ? (
 					<>
-						{/* <p>Name: {selectedProfile.name}</p>
-						<p>Training Voice:</p>
-						<audio key={selectedProfile.training_file_path} controls>
-							<source
-								src={`/api/voice/download?filename=${encodeURIComponent(selectedProfile.training_file_path)}&foldername=${encodeURIComponent(uid)}`}
-								type='audio/webm'
-							/>
-						</audio>
-						<p>Preview Voice:</p>
-						<audio key={selectedProfile.preview_url} controls>
-							<source
-								src={`/api/voice/download?filename=${encodeURIComponent(selectedProfile.preview_url)}&foldername=${encodeURIComponent(uid)}`}
-								type='audio/webm'
-							/>
-						</audio> */}
+						<WrappableRow type='grid' cols={2}>
+							<Instruction> Select a language:</Instruction>
+							<WrappableRow type='flex'>
+								<DropDown
+									value={selectedTestLanguageCode}
+									onChange={(e) => {
+										setSelectedTestLanguageCode(e.target.value);
+										setCustomRecording('');
+									}}
+								>
+									{LANGUAGES.map((lang) => (
+										<option key={lang.code} value={lang.code}>
+											{lang.displayName}
+										</option>
+									))}
+								</DropDown>
+							</WrappableRow>
+						</WrappableRow>
+
 						<Instruction>Add some example text to test the voice:</Instruction>
 						<NewInputBox
 							placeholder='Enter text to preview voice'
 							value={customerInput}
 							maxLength={2000}
-							onChange={setCustomerInput}
+							onChange={(element) => {
+								setCustomRecording('');
+								setCustomerInput(element);
+							}}
 							textarea
 						/>
 						<BigBlueButton onClick={handleGenerateVoice} disabled={generating}>

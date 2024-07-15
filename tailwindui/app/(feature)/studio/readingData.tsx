@@ -15,7 +15,7 @@ Adequate sleep is also essential for overall health. Most adults need between se
   
 Lastly, managing stress through meditation, or hobbies can enhance both mental and physical health. By incorporating these elements into your daily routine, you can significantly improve your overall well-being and quality of life.`,
   
-  'en-Global': `A healthy lifestyle involves a balanced diet, regular physical activity, enough sleep, and effective stress management. Eating a balanced diet means consuming a variety of foods that provide the necessary nutrients your body needs to function correctly, including fruits, vegetables, whole grains, lean proteins, and healthy fats.
+  'en-IN': `A healthy lifestyle involves a balanced diet, regular physical activity, enough sleep, and effective stress management. Eating a balanced diet means consuming a variety of foods that provide the necessary nutrients your body needs to function correctly, including fruits, vegetables, whole grains, lean proteins, and healthy fats.
   
 Regular physical activity is crucial for maintaining a healthy weight and boosting mental well-being. It is recommended to engage in at least one hundred and fifties minutes of moderate aerobic exercise or seventy five minutes of exercise each week.
   
