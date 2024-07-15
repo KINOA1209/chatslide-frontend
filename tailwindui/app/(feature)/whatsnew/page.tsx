@@ -34,7 +34,7 @@ export default function Studio() {
 						<span>
 							<b>🔊 New Voice Cloning:</b> Our latest voice cloning technology
 							is now available, offering improved quality for non-English use
-							cases. The credit cost is also reduced. <a href='/studio'>Try it</a>.
+							cases. The credit cost is also reduced. <a href='/studio' className='text-blue-600'>Try it</a>.
 						</span>
 					</Instruction>
 
@@ -44,7 +44,7 @@ export default function Studio() {
 								<b>📊 Interactive Chart Editing:</b> You 
 								can edit interactive charts directly within our platform.
 								Additionally, you will be able to save and export the charts as
-								PNG files soon. <a href='/charts'>Try it</a>.
+								PNG files soon. <a href='/charts' className='text-blue-600'>Try it</a>.
 							</p>
 						</span>
 					</Instruction>
