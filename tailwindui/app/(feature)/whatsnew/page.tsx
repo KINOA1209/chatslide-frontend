@@ -29,6 +29,36 @@ export default function Studio() {
 				</Card>
 
 				<Card>
+					<BigTitle>July 15</BigTitle>
+					<Instruction>
+						<span>
+							<b>🔊 New Voice Cloning:</b> Our latest voice cloning technology
+							is now available, offering improved quality for non-English use
+							cases. The credit cost is also reduced. <a href='/studio'>Try it</a>.
+						</span>
+					</Instruction>
+
+					<Instruction>
+						<span>
+							<p>
+								<b>📊 Interactive Chart Editing:</b> You 
+								can edit interactive charts directly within our platform.
+								Additionally, you will be able to save and export the charts as
+								PNG files soon. <a href='/charts'>Try it</a>.
+							</p>
+						</span>
+					</Instruction>
+
+					<Instruction>
+						<div>
+							<b>🖼️ Improved Image Reading and Generation:</b> We've enhanced
+							the reliability and quality of our image reading and generation
+							features, ensuring better results for your projects.
+						</div>
+					</Instruction>
+				</Card>
+
+				<Card>
 					<BigTitle>July 12</BigTitle>
 					<Instruction>
 						<span>
