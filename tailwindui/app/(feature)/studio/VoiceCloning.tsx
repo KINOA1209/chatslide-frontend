@@ -9,9 +9,8 @@ import Card from '@/components/ui/Card';
 import { NewInputBox } from '@/components/ui/InputBox';
 import {
 	BigTitle,
-	ErrorMessage,
-	Explanation,
 	Instruction,
+	Title,
 	WarningMessage,
 } from '@/components/ui/Text';
 import { BetaLabel, GrayLabel, ProLabel } from '@/components/ui/GrayLabel';
@@ -27,6 +26,10 @@ import { FaClone, FaTrash, FaMicrophone, FaStop } from 'react-icons/fa';
 import PaywallModal from '@/components/paywallModal';
 import useHydrated from '@/hooks/use-hydrated';
 import { FiPlay } from 'react-icons/fi';
+import { getBrand } from '@/utils/getHost';
+import { Column } from '@/components/layout/Column';
+
+const MIN_AUDIO_LENGTH = 1;
 
 const VoiceCloning = () => {
 	const [selectedLanguageCode, setSelectedLanguageCode] =
@@ -34,10 +37,14 @@ const VoiceCloning = () => {
 	const [inputBoxText, setInputBoxText] = useState<string>(
 		readingData['en-US'],
 	);
+	const { username } = useUser();
 	const [recordedAudio, setRecordedAudio] = useState<null | Blob>(null);
-	const [isRecording, setIsRecording] = useState<boolean>(false);
-	const [timeLeft, setTimeLeft] = useState<number>(60);
-	const [audioLength, setAudioLength] = useState<number>(0);
+	const [consentAudio, setConsentAudio] = useState<null | Blob>(null);
+	const [isRecordingRecord, setIsRecordingRecord] = useState<boolean>(false);
+	const [isRecordingConsent, setIsRecordingConsent] = useState<boolean>(false);
+	const [recordTimeLeft, setRecordTimeLeft] = useState<number>(60);
+	const [consentTimeLeft, setConsentTimeLeft] = useState<number>(20);
+	const [audioLength, setAudioLength] = useState<number>(0); // only applies to recordedAudio
 	const mediaRecorderRef = useRef<MediaRecorder | null>(null);
 	const audioChunksRef = useRef<Blob[]>([]);
 	const timerRef = useRef<NodeJS.Timeout | null>(null);
@@ -50,9 +57,32 @@ const VoiceCloning = () => {
 	const [customRecording, setCustomRecording] = useState<string>('');
 	const [customerInput, setCustomerInput] = useState<string>('');
 	const [loading, setLoading] = useState(false);
-  const [generating, setGenerating] = useState(false);
+	const [generating, setGenerating] = useState(false);
 	const [cloning, setCloning] = useState(false);
 	const [showPaywallModal, setShowPaywallModal] = useState(false);
+
+  const [isSubmittingConsent, setIsSubmittingConsent] = useState<boolean>(false);
+  const [consentId, setConsentId] = useState<string>(
+		'drlambda_consent_40aaa98f-1dc1-4b0e-8e5e-ec417136bd78',
+	);
+
+  function submitConsent() {
+    setIsSubmittingConsent(true);
+    const consetnAudioFile = new File([consentAudio!], 'consent.webm');
+    VoiceCloneService.submitConsent(username, consetnAudioFile, token)
+			.then((consentId) => {
+				toast.success('Consent verified successfully!');
+        setConsentId(consentId);
+        console.log('Consent ID:', consentId);
+			})
+			.catch((error: any) => {
+				console.error('Error submitting consent:', error.message);
+				toast.error(`Failed to submit consent: ${error.message}`);
+			})
+			.finally(() => {
+				setIsSubmittingConsent(false);
+			});
+  }
 
 	const fetchVoiceProfiles = async () => {
 		try {
@@ -82,18 +112,34 @@ const VoiceCloning = () => {
 		setInputBoxText(value);
 	};
 
-	const handleRecordAudio = async () => {
-		if (isRecording) {
+	const handleRecordAudio = async (isConsentAudio = false) => {
+		if (isRecordingRecord) {
 			mediaRecorderRef.current?.stop();
-			setIsRecording(false);
+			mediaRecorderRef.current?.stream
+				.getTracks()
+				.forEach((track) => track.stop()); // Stop all tracks
+			setIsRecordingRecord(false);
 			if (timerRef.current) {
 				clearInterval(timerRef.current);
 				timerRef.current = null;
-				setAudioLength(60 - timeLeft);
+				setAudioLength(60 - recordTimeLeft);
 			}
-			setTimeLeft(60);
+			setRecordTimeLeft(60);
+		} else if (isRecordingConsent) {
+			mediaRecorderRef.current?.stop();
+			mediaRecorderRef.current?.stream
+				.getTracks()
+				.forEach((track) => track.stop()); // Stop all tracks
+			setIsRecordingConsent(false);
+			if (timerRef.current) {
+				clearInterval(timerRef.current);
+				timerRef.current = null;
+				setAudioLength(20 - consentTimeLeft);
+			}
+			setConsentTimeLeft(20);
 		} else {
-			setRecordedAudio(null);
+			if (!isConsentAudio) setRecordedAudio(null);
+			else setConsentAudio(null);
 			const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
 			mediaRecorderRef.current = new MediaRecorder(stream);
 			audioChunksRef.current = [];
@@ -102,26 +148,45 @@ const VoiceCloning = () => {
 			};
 			mediaRecorderRef.current.onstop = () => {
 				const audioBlob = new Blob(audioChunksRef.current, {
-					type: 'audio/mp3',
+					type: 'audio/webm',
 				});
-				setRecordedAudio(audioBlob);
+				if (!isConsentAudio) setRecordedAudio(audioBlob);
+				else setConsentAudio(audioBlob);
 				audioChunksRef.current = [];
+				stream.getTracks().forEach((track) => track.stop()); // Stop all tracks
 			};
 			mediaRecorderRef.current.start();
-			setIsRecording(true);
+			if (!isConsentAudio) setIsRecordingRecord(true);
+			else setIsRecordingConsent(true);
 
 			timerRef.current = setInterval(() => {
-				setTimeLeft((prevTime) => {
-					if (prevTime <= 1) {
-						mediaRecorderRef.current?.stop();
-						setIsRecording(false);
-						clearInterval(timerRef.current!);
-						timerRef.current = null;
-						setAudioLength(60);
-						return 60;
-					}
-					return prevTime - 1;
-				});
+				if (isConsentAudio) {
+					setConsentTimeLeft((prevTime) => {
+						if (prevTime <= 1) {
+							mediaRecorderRef.current?.stop();
+							setConsentAudio(null);
+							setIsRecordingConsent(false);
+							clearInterval(timerRef.current!);
+							timerRef.current = null;
+							setConsentTimeLeft(20);
+							return 20;
+						}
+						return prevTime - 1;
+					});
+				} else {
+					setRecordTimeLeft((prevTime) => {
+						if (prevTime <= 1) {
+							mediaRecorderRef.current?.stop();
+							setRecordedAudio(null);
+							setIsRecordingRecord(false);
+							clearInterval(timerRef.current!);
+							timerRef.current = null;
+							setRecordTimeLeft(60);
+							return 60;
+						}
+						return prevTime - 1;
+					});
+				}
 			}, 1000);
 		}
 	};
@@ -131,48 +196,52 @@ const VoiceCloning = () => {
 			toast.error('Please enter a name for the voice profile.');
 			return;
 		}
+
 		if (!tier.includes('ULTIMATE') && !tier.includes('PRO')) {
 			setShowPaywallModal(true);
 			return;
 		}
-		if (recordedAudio) {
-			const formData = new FormData();
-			formData.append('file', recordedAudio, 'recording.mp3');
-			formData.append('name', voiceName);
-			formData.append('description', 'A description of the voice clone');
-			formData.append(
-				'labels',
-				JSON.stringify({ genre: 'narrative', age: '30s' }),
-			);
 
-			try {
-				setCloning(true);
-				const result = await VoiceCloneService.cloneVoice(formData, token);
-				toast.success('Voice cloned successfully!');
-				await fetchVoiceProfiles();
-			} catch (error: any) {
-				console.error('Error cloning voice:', error.message);
-			} finally {
-				setCloning(false);
-			}
-		} else {
-			toast.error('Please record your voice first.');
+		if (!recordedAudio) {
+			toast.error('Please record both your voice and consent audio.');
+			return;
+		}
+
+		if (audioLength < MIN_AUDIO_LENGTH) {
+			toast.error(
+				`Please record at least ${MIN_AUDIO_LENGTH} seconds of audio.`,
+			);
+			return;
+		}
+
+		try {
+			setCloning(true);
+      const trainingRecordFile = new File([recordedAudio], 'training.webm');
+			const response = await VoiceCloneService.cloneVoice(
+				consentId,
+				trainingRecordFile,
+        voiceName,
+				token,
+			);
+			toast.success('Voice cloned successfully!');
+			await fetchVoiceProfiles();
+		} catch (error: any) {
+			console.error('Error cloning voice:', error.message);
+			toast.error(`Failed to clone voice: ${error.message}`);
+		} finally {
+			setCloning(false);
 		}
 	};
 
 	const handleGenerateVoice = async () => {
 		setGenerating(true);
-		const requestData = {
-			voice_id: selectedProfile?.voice_id || '',
-			text: customerInput,
-			voice_settings: {
-				stability: 0.65,
-				similarity_boost: 0.3,
-				style: 0.3,
-			},
-		};
 		try {
-			const result = await VoiceCloneService.generateVoice(requestData, token);
+			const result = await VoiceCloneService.generateVoice(
+				selectedProfile?.voice_id || '',
+				customerInput,
+        'en-US',
+				token,
+			);
 			setCustomRecording(result.audio_url);
 		} catch (error: any) {
 			console.error('Error generating voice:', error.message);
@@ -226,98 +295,149 @@ const VoiceCloning = () => {
 				<BigTitle>
 					🎙️ Create New Voice Profile <BetaLabel />{' '}
 				</BigTitle>
-				<Explanation>
-					Note: voice cloning works best for 🇺🇸 American English. It works for
-					🇬🇧 British English and 🇪🇺 European languages as well, but the quality
-					may vary. For 🌏 non-western languages e.g. Arabic, Chinese, etc, the
-					quality may not be as good. We are improving the performance of voice
-					cloning over time.
-				</Explanation>
-				{!tier.includes('ULTIMATE') && (
-					<WarningMessage>
-						⚠️ This feature is in Beta version. It is only available for
-						ULTIMATE users. Access to this feature by PRO users is coming soon.
-					</WarningMessage>
-				)}
-				<WrappableRow type='grid' cols={2}>
-					<Instruction>Select a language:</Instruction>
-					<DropDown
-						value={selectedLanguageCode}
-						onChange={handleLanguageChange}
+
+				<Column>
+					<Title>Step 1</Title>
+					<Instruction>
+						Please also record the consent message below (English only):
+					</Instruction>
+
+					<NewInputBox
+						onChange={handleInputBoxChange}
+						value={`I, ${username}, am aware that recording of my voice will be used by ${getBrand()} to create and use a synthetic version of my voice.`}
+						maxLength={2000}
+						textarea
+					/>
+					<BigBlueButton
+						disabled={isRecordingRecord || cloning}
+						onClick={() => handleRecordAudio(true)}
 					>
-						{LANGUAGES_WITH_ACCENTS.map((lang) => (
-							<option key={lang.code} value={lang.code}>
-								{lang.displayName}
-							</option>
-						))}
-					</DropDown>
-				</WrappableRow>
-				<Instruction>
-					Click the record button, and read the text below for at least 30
-					seconds.
-				</Instruction>
+						{isRecordingConsent ? (
+							<span className='flex flex-row gap-x-2 items-center whitespace-nowrap'>
+								<FaStop /> Stop Recording ({consentTimeLeft}s)
+							</span>
+						) : (
+							<>
+								<FaMicrophone /> Record
+							</>
+						)}
+					</BigBlueButton>
 
-				<NewInputBox
-					onChange={handleInputBoxChange}
-					value={inputBoxText}
-					maxLength={2000}
-					textarea
-				/>
-				<BigBlueButton onClick={handleRecordAudio}>
-					{isRecording ? (
-						<>
-							<FaStop /> Stop Recording ({timeLeft}s)
-						</>
-					) : (
-						<>
-							<FaMicrophone /> Record
-						</>
+					{consentAudio && (
+						<WrappableRow type='grid' cols={2}>
+							<Instruction>Preview your consent recording:</Instruction>
+							<audio controls className='mx-auto h-[36px]'>
+								<source
+									src={URL.createObjectURL(consentAudio)}
+									type='audio/webm'
+								/>
+							</audio>
+						</WrappableRow>
 					)}
-				</BigBlueButton>
 
+					{consentAudio && (
+						<BigBlueButton
+							onClick={submitConsent}
+							isSubmitting={isSubmittingConsent}
+						>
+							{isSubmittingConsent ? 'Verifying...' : 'Verify and Continue'}
+						</BigBlueButton>
+					)}
+				</Column>
 
-				{recordedAudio && (
-					<WrappableRow type='grid' cols={2}>
-						<Instruction>Preview your recording:</Instruction>
-						<audio controls className='mx-auto h-[36px]'>
-							<source
-								src={URL.createObjectURL(recordedAudio)}
-								type='audio/wav'
-							/>
-						</audio>
-					</WrappableRow>
+				{audioLength < MIN_AUDIO_LENGTH && (
+					<WarningMessage>
+						Please record for at least {MIN_AUDIO_LENGTH} seconds.
+					</WarningMessage>
+				)} 
+        
+        { consentId && (
+					<Column>
+						<Title>Step 2</Title>
+						<Instruction>
+							Click the record button, and read the text below for at least{' '}
+							{MIN_AUDIO_LENGTH}
+							seconds. You can also edit the text if you want.
+						</Instruction>
+
+						<WrappableRow type='grid' cols={2}>
+							<Instruction>Select a language:</Instruction>
+							<DropDown
+								value={selectedLanguageCode}
+								onChange={handleLanguageChange}
+							>
+								{LANGUAGES_WITH_ACCENTS.map((lang) => (
+									<option key={lang.code} value={lang.code}>
+										{lang.displayName}
+									</option>
+								))}
+							</DropDown>
+						</WrappableRow>
+
+						<NewInputBox
+							onChange={handleInputBoxChange}
+							value={inputBoxText}
+							maxLength={2000}
+							textarea
+						/>
+						<BigBlueButton
+							disabled={isRecordingConsent || cloning}
+							onClick={() => handleRecordAudio(false)}
+						>
+							{isRecordingRecord ? (
+								<span className='flex flex-row gap-x-2 items-center whitespace-nowrap'>
+									<FaStop /> Stop Recording ({recordTimeLeft}s)
+								</span>
+							) : (
+								<>
+									<FaMicrophone /> Record
+								</>
+							)}
+						</BigBlueButton>
+
+						{recordedAudio && (
+							<WrappableRow type='grid' cols={2}>
+								<Instruction>Preview your recording:</Instruction>
+								<audio controls className='mx-auto h-[36px]'>
+									<source
+										src={URL.createObjectURL(recordedAudio)}
+										type='audio/webm'
+									/>
+								</audio>
+							</WrappableRow>
+						)}
+					</Column>
 				)}
 
 				{/* if the audio is not 60s, show an error */}
-				{audioLength < 30 ? (
-					<WarningMessage>
-						Please record for at least 30 seconds.
-					</WarningMessage>
-				) : (
-					<div className='flex flex-row items-center justify-center gap-x-2'>
-						<NewInputBox
-							placeholder='Enter a name'
-							value={voiceName}
-							maxLength={20}
-							onChange={setVoiceName}
-						/>
-						<InversedBigBlueButton
-							width='8rem'
-							onClick={handleCloneVoice}
-							isSubmitting={cloning}
-							disabled={audioLength < 30 || cloning}
-						>
-							{cloning ? (
-								<>
-									<FaClone /> Cloning...
-								</>
-							) : (
-								<>
-									<FaClone /> Clone
-								</>
-							)}
-						</InversedBigBlueButton>
-					</div>
+				{audioLength >= MIN_AUDIO_LENGTH && consentId && (
+					<Column>
+						<Title>Step 3</Title>
+						<Instruction>
+							Name your voice profile and click the clone button.
+						</Instruction>
+						<div className='flex flex-row items-center justify-center gap-x-2'>
+							<NewInputBox
+								placeholder='Enter a name'
+								value={voiceName}
+								maxLength={20}
+								onChange={setVoiceName}
+							/>
+							<BigBlueButton
+								width='8rem'
+								onClick={handleCloneVoice}
+								isSubmitting={cloning}
+								disabled={
+									audioLength < MIN_AUDIO_LENGTH ||
+									cloning ||
+									isRecordingConsent ||
+									isRecordingRecord
+								}
+							>
+								{cloning ? 'Cloning...' : 'Clone'}
+							</BigBlueButton>
+						</div>
+					</Column>
 				)}
 			</Card>
 			<Card>
@@ -361,14 +481,14 @@ const VoiceCloning = () => {
 						<audio key={selectedProfile.training_file_path} controls>
 							<source
 								src={`/api/voice/download?filename=${encodeURIComponent(selectedProfile.training_file_path)}&foldername=${encodeURIComponent(uid)}`}
-								type='audio/mp3'
+								type='audio/webm'
 							/>
 						</audio>
 						<p>Preview Voice:</p>
 						<audio key={selectedProfile.preview_url} controls>
 							<source
 								src={`/api/voice/download?filename=${encodeURIComponent(selectedProfile.preview_url)}&foldername=${encodeURIComponent(uid)}`}
-								type='audio/mp3'
+								type='audio/webm'
 							/>
 						</audio> */}
 						<Instruction>Add some example text to test the voice:</Instruction>
@@ -390,7 +510,7 @@ const VoiceCloning = () => {
 						</BigBlueButton>
 						{customRecording && (
 							<audio controls className='mx-auto h-[36px]'>
-								<source src={customRecording} type='audio/mp3' />
+								<source src={customRecording} type='audio/webm' />
 							</audio>
 						)}
 					</>
