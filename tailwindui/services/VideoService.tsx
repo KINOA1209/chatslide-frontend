@@ -78,6 +78,7 @@ export default class VideoService {
 		style: string,
 		foldername: string,
 		token: string,
+    locale: string
 	): Promise<string> {
 		const response = await fetch('/api/generate_audio_single_slide', {
 			method: 'POST',
@@ -90,6 +91,7 @@ export default class VideoService {
 				voice: voice,
 				style: style,
 				foldername: foldername,
+        locale: locale
 			}),
 		});
 

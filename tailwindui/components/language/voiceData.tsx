@@ -73,7 +73,6 @@ const AZURE_VOICE_OPTIONS: LangToVoiceOptions = {
 			'en-AU-TinaNeural',
 			'en-NZ-MollyNeural',
 			'en-CA-ClaraNeural',
-			'en-IN-NeerjaNeural',
 			'en-SG-LunaNeural',
 			'en-IE-EmilyNeural',
 			'en-PK-RozinaNeural',
@@ -87,11 +86,14 @@ const AZURE_VOICE_OPTIONS: LangToVoiceOptions = {
 			'en-AU-TimNeural',
 			'en-NZ-MitchellNeural',
 			'en-CA-LiamNeural',
-			'en-IN-PrabhatNeural',
 			'en-SG-WayneNeural',
 			'en-IE-ConnorNeural',
 			'en-PK-UsmanNeural',
 		],
+	},
+	'en-IN': {
+		female: ['en-IN-NeerjaNeural'],
+		male: ['en-IN-PrabhatNeural'],
 	},
 	'es-ES': {
 		female: [
@@ -398,8 +400,8 @@ export function isOpenaiVoice(voice: string): boolean {
 	);
 }
 
-export function isELabsVoice(voice: string): boolean {
-  return voice.startsWith('elabs_');
+export function isClonedVoice(voice: string) {
+	return voice.startsWith('cloned_');
 }
 
 export function isMultilingualVoice(voice: string): boolean {
