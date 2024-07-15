@@ -65,6 +65,10 @@ const VoiceCloning = () => {
   const [isSubmittingConsent, setIsSubmittingConsent] = useState<boolean>(false);
   const [consentId, setConsentId] = useState<string>('');
 
+  const [consentText, setConsentText] = useState<string>(
+    `I, ${username}, am aware that the recording of my voice will be used by ${getBrand()} to create and use a synthetic version of my voice.`
+  );
+
   function submitConsent() {
     setIsSubmittingConsent(true);
     const consetnAudioFile = new File([consentAudio!], 'consent.webm');
@@ -304,8 +308,8 @@ const VoiceCloning = () => {
 					</Instruction>
 
 					<NewInputBox
-						onChange={handleInputBoxChange}
-						value={`I, ${username}, am aware that recording of my voice will be used by ${getBrand()} to create and use a synthetic version of my voice.`}
+						onChange={(e) => {setConsentText(e)}}
+						value={consentText}
 						maxLength={2000}
 						textarea
 					/>
@@ -352,7 +356,7 @@ const VoiceCloning = () => {
 						<Instruction>
 							Click the record button, and read the text below for at least{' '}
 							{MIN_AUDIO_LENGTH}
-							seconds. You can also edit the text if you want.
+							s. You can also edit the text if you want.
 						</Instruction>
 
 						<WrappableRow type='grid' cols={2}>
