@@ -7,7 +7,7 @@ import AZURE_VOICE_OPTIONS, {
 	isOpenaiVoice,
 	AZURE_MULTILINGUAL_VOICE_OPTIONS,
 	isMultilingualVoice,
-	isELabsVoice,
+	isClonedVoice,
 } from './voiceData';
 import LANGUAGES, { LANGUAGES_WITH_ACCENTS } from './languageData';
 import {
@@ -34,8 +34,8 @@ export const previewVoice = async (
 		let audio_url = `/voice/${voice}.mp3`;
 		console.log('previewing voice:', voice);
 		
-		if (isELabsVoice(voice) && clonedVoices && token) {
-			const clonedVoiceProfile = clonedVoices.find(profile => `elabs_${profile.voice_id}` === voice);
+		if (isClonedVoice(voice) && clonedVoices && token) {
+			const clonedVoiceProfile = clonedVoices.find(profile => `cloned_${profile.voice_id}` === voice);
 			if (clonedVoiceProfile && clonedVoiceProfile.preview_url) {
 				try {
 					audio_url = await VoiceCloneService.downloadAudio(clonedVoiceProfile.preview_url, token);
@@ -71,10 +71,12 @@ export const getVoiceStyles = (voice: string): string[] => {
 const VoiceSelector: React.FC<{
 	selectedVoice: string;
 	setSelectedVoice: (language: string) => void;
+  selectedLanguage: string;
+  setSelectedLanguage: (language: string) => void;
 	style: string;
 	setStyle: (style: string) => void;
 	isHD: boolean;
-}> = ({ selectedVoice, setSelectedVoice, style, setStyle, isHD }) => {
+}> = ({ selectedVoice, setSelectedVoice, selectedLanguage, setSelectedLanguage, style, setStyle, isHD }) => {
 	const getCodeFromLanguage = (language: string | undefined): string => {
 		const selectedLanguage = LANGUAGES.find(
 			(lang) => lang.englishName === language,
@@ -84,8 +86,6 @@ const VoiceSelector: React.FC<{
 
 	const { project } = useProject();
 	const originalLanguageCode = getCodeFromLanguage(project?.language);
-	const [selectedLanguage, setSelectedLanguage] =
-		useState<string>(originalLanguageCode);
 	const [selectedGender, setSelectedGender] = useState<'female' | 'male'>(
 		'female',
 	);
@@ -93,19 +93,28 @@ const VoiceSelector: React.FC<{
 	const { clonedVoices } = useClonedVoices();
 	const { token } = useUser();
 
+  useEffect(() => {
+    setSelectedLanguage(originalLanguageCode);
+  }, [originalLanguageCode]);
+  
 	// Update voice options based on selected language and gender
 	useEffect(() => {
 		const voices = AZURE_VOICE_OPTIONS[selectedLanguage]?.[selectedGender] ?? [
 			'Default',
 		];
-		const clonedVoiceNames = clonedVoices.map((voiceProfile) => `elabs_${voiceProfile.voice_id}`);
+		const clonedVoiceNames = clonedVoices.map(
+			(voiceProfile) => `cloned_${voiceProfile.voice_id}`,
+		);
 		setVoiceOptions([...clonedVoiceNames, ...voices]);
 		setSelectedVoice(clonedVoiceNames[0] ?? voices[0]);
 	}, [selectedLanguage, selectedGender, clonedVoices]);
 
 	const formatVoiceName = (voiceName: string): string => {
-		const isCloned = voiceName.startsWith('elabs_');
-		const formattedName = isCloned ? clonedVoices.find((voice) => `elabs_${voice.voice_id}` === voiceName)?.name : voiceName;
+		const isCloned = voiceName.startsWith('cloned_');
+		const formattedName = isCloned
+			? clonedVoices.find((voice) => `cloned_${voice.voice_id}` === voiceName)
+					?.name
+			: voiceName;
 		if (isCloned) {
 			return formattedName + ' 🔄';
 		}
@@ -126,8 +135,6 @@ const VoiceSelector: React.FC<{
 
 		return voiceName;
 	};
-
-	const isClonedVoice = (voice: string) => voice.startsWith('elabs_');
 
 	return (
 		<>
@@ -178,13 +185,13 @@ const VoiceSelector: React.FC<{
 								}}
 							>
 								{/* Grouping voice options */}
-								{/* <optgroup label="Cloned Voices">
+								<optgroup label="Cloned Voices">
 									{voiceOptions.filter(isClonedVoice).map((voice) => (
 										<option key={voice} value={voice}>
 											{formatVoiceName(voice)}
 										</option>
 									))}
-								</optgroup> */}
+								</optgroup>
 								<optgroup label="Default Voices">
 									{voiceOptions.filter((voice) => !isClonedVoice(voice)).map((voice) => (
 										<option key={voice} value={voice}>
@@ -248,9 +255,9 @@ const VoiceSelector: React.FC<{
 					may change in the future.
 				</Explanation>
 			)}
-			{isELabsVoice(selectedVoice) && (
+			{isClonedVoice(selectedVoice) && (
 				<Explanation>
-					🔄 This voice is a clone of your voice. It will cost 400⭐️ per video.
+					🔄 This voice is a clone of your voice. It will cost 300⭐️ per video.
 				</Explanation>
 			)}
 			{selectedLanguage !== originalLanguageCode &&

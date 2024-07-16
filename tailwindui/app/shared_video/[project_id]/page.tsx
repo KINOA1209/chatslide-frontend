@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-import SharePage from '../../shared/[project_id]/sharePage';
 import ProjectService from '@/services/ProjectService';
 import { GetServerSideProps, Metadata } from 'next';
 import Header from '@/components/layout/header';

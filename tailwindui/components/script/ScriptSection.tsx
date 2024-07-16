@@ -18,7 +18,8 @@ const ScriptSection: React.FC<{
 	voice: string;
 	voiceStyle: string;
 	updateSlidePage: (index: number, slide: Slide) => void;
-}> = ({ slides, index, voice, voiceStyle, updateSlidePage }) => {
+  locale: string
+}> = ({ slides, index, voice, voiceStyle, updateSlidePage, locale }) => {
 	const [scale, setScale] = useState(calculateScale());
 	const [isPlaying, setIsPlaying] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
@@ -60,6 +61,7 @@ const ScriptSection: React.FC<{
 				voiceStyle,
 				project?.foldername as string,
 				token,
+        locale
 			); // Fetch voice from backend
 			const audioElement = new Audio(audio); // Create an audio element with the fetched voice
 			setIsLoading(false);

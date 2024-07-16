@@ -17,6 +17,7 @@ export default class VideoService {
 		creditCost: number,
     transitionType: string,
     withSubtitle: boolean,
+    locale: string
 	): Promise<void> {
 		fetch('/api/export/generate_video', {
 			method: 'POST',
@@ -39,6 +40,7 @@ export default class VideoService {
 				credit_cost: creditCost,
         transition_type: transitionType,
         with_subtitle: withSubtitle,
+        locale: locale
 			}),
 		});
 	}
@@ -78,6 +80,7 @@ export default class VideoService {
 		style: string,
 		foldername: string,
 		token: string,
+    locale: string
 	): Promise<string> {
 		const response = await fetch('/api/generate_audio_single_slide', {
 			method: 'POST',
@@ -90,6 +93,7 @@ export default class VideoService {
 				voice: voice,
 				style: style,
 				foldername: foldername,
+        locale: locale
 			}),
 		});
 

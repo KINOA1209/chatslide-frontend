@@ -1,6 +1,44 @@
 export default class VoiceCloneService {
-	static async cloneVoice(formData: any, token: string) {
-		const response = await fetch('/api/voice/clone', {
+	static async submitConsent(
+		voiceTalentName: string,
+		audioData: File,
+		token: string,
+	) {
+		const formData = new FormData();
+		formData.append('voice_talent_name', voiceTalentName);
+		formData.append('audiodata', audioData);
+
+		const response = await fetch('/api/clone/consent', {
+			method: 'POST',
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+			body: formData,
+		});
+
+		if (response.ok) {
+			const resp = await response.json();
+			return resp.consent_id;
+		} else {
+			const errorResp = await response.json();
+			throw new Error('Error when submitting consent: ' + errorResp.error);
+		}
+	}
+
+	static async cloneVoice(
+		consentId: string,
+		audioData: File,
+		name: string,
+		token: string,
+	) {
+		// Create a new FormData object
+		const formData = new FormData();
+		formData.append('consent_id', consentId);
+		formData.append('audiodata', audioData);
+		formData.append('name', name);
+
+		// Make the POST request with the constructed formData
+		const response = await fetch('/api/clone/voice', {
 			method: 'POST',
 			headers: {
 				Authorization: `Bearer ${token}`,
@@ -16,7 +54,7 @@ export default class VoiceCloneService {
 			};
 		} else {
 			const errorResp = await response.json();
-			throw new Error('Error when cloning voice: ' + errorResp.message);
+			throw new Error('Error when cloning voice: ' + errorResp.error);
 		}
 	}
 
@@ -40,8 +78,19 @@ export default class VoiceCloneService {
 		}
 	}
 
-	static async generateVoice(data: any, token: string) {
-		const response = await fetch('/api/voice/generate', {
+	static async generateVoice(
+		voiceId: string,
+		text: string,
+		locale: string = 'en-US',
+		token: string,
+	) {
+		const data = {
+			voice_id: voiceId,
+			text: text,
+			locale: locale,
+		};
+
+		const response = await fetch('/api/clone/generate', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',

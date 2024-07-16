@@ -37,7 +37,7 @@ import { FiPlay } from 'react-icons/fi';
 import Modal from '@/components/ui/Modal';
 import RangeSlider from '@/components/ui/RangeSlider';
 import { WrappableRow } from '@/components/layout/WrappableRow';
-import { isELabsVoice, isOpenaiVoice } from '@/components/language/voiceData';
+import { isClonedVoice, isOpenaiVoice } from '@/components/language/voiceData';
 import Toggle from '@/components/button/Toggle';
 import { AIAssistantChatWindow } from '@/components/chatbot/AIAssistant';
 import {
@@ -50,7 +50,7 @@ import {
 	useClonedVoices,
 } from '@/components/language/ClonedVoicesContext';
 import 'react-toastify/dist/ReactToastify.css';
-
+import LANGUAGES from '@/components/language/languageData';
 
 const ScriptSection = dynamic(
 	() => import('@/components/script/ScriptSection'),
@@ -64,6 +64,7 @@ export default function WorkflowStep5() {
 	const { username, token, updateCreditsFE, isPaidUser } = useUser();
 	const router = useRouter();
 	const [voice, setVoice] = useState('en-US-AvaNeural');
+
 	const [style, setStyle] = useState('');
 	const [avatar, setAvatar] = useState('');
 	const [posture, setPosture] = useState('casual-sitting');
@@ -75,19 +76,21 @@ export default function WorkflowStep5() {
 	const [voiceIsHD, setVoiceIsHD] = useState(false);
 	const [creditCost, setCreditCost] = useState(20);
 	const [transitionType, setTransitionType] = useState('');
-  const [withSubtitle, setWithSubtitle] = useState(false);
+	const [withSubtitle, setWithSubtitle] = useState(false);
 
 	const params = useSearchParams();
 
+	const [selectedLanguage, setSelectedLanguage] = useState('en-US');
+
 	useEffect(() => {
 		if (avatar) setCreditCost(400);
-		else if (isELabsVoice(voice)) setCreditCost(400);
+		else if (isClonedVoice(voice)) setCreditCost(300);
 		else if (voiceIsHD || isOpenaiVoice(voice)) {
 			setCreditCost(100);
 		} else setCreditCost(20);
 	}, [avatar, voiceIsHD, voice]);
 
-  // unused
+	// unused
 	const CreditCost = () => {
 		function getCreditCostPerPageAndReason() {
 			if (avatar) return { cost: 30, reason: '🦹‍♂️ You are using an avatar' };
@@ -180,7 +183,9 @@ export default function WorkflowStep5() {
 
 	async function handleSubmitVideo() {
 		const longScriptIndices = slides
-			.map((slide, index) => ((slide.transcript?.length || 0) >= 4096 ? index : -1))
+			.map((slide, index) =>
+				(slide.transcript?.length || 0) >= 4096 ? index : -1,
+			)
 			.filter((index) => index !== -1);
 
 		// If there are slides with transcripts exceeding 4096 characters, display a detailed error message
@@ -231,7 +236,7 @@ export default function WorkflowStep5() {
 		}
 
 		const generateVideo = async () => {
-			if (isELabsVoice(voice) || isOpenaiVoice(voice)) {
+			if (isClonedVoice(voice) || isOpenaiVoice(voice)) {
 				setAvatar('');
 			}
 
@@ -253,6 +258,7 @@ export default function WorkflowStep5() {
 					creditCost,
 					transitionType,
 					withSubtitle,
+          selectedLanguage,  // locale
 				);
 				updateCreditsFE(-20);
 				router.push(addIdToRedir('/video'));
@@ -327,23 +333,23 @@ export default function WorkflowStep5() {
 					</WrappableRow>
 
 					<Instruction>
-						Select the voice you want to use for your video.
-					</Instruction>
-					{/* <Instruction>
 						<span>
-							Voice cloning is now available for ULTIMATE users. Click button
-							below to clone and use your voice.
+							Voice cloning is now available for PRO and ULTIMATE users.{' '}
+							<a className='text-blue-600' href='/studio' target='_blank'>
+								Clone voice.
+							</a>{' '}
 						</span>
 					</Instruction>
-					<InversedBigBlueButton
-						onClick={() => (window.location.href = '/studio')}
-					>
-						Clone your voice
-					</InversedBigBlueButton> */}
+
+					<Instruction>
+						Select the voice you want to use for your video.
+					</Instruction>
 					<ClonedVoicesProvider>
 						<VoiceSelector
 							selectedVoice={voice}
 							setSelectedVoice={setVoice}
+							selectedLanguage={selectedLanguage}
+							setSelectedLanguage={setSelectedLanguage}
 							style={style}
 							setStyle={setStyle}
 							isHD={voiceIsHD}
@@ -420,13 +426,13 @@ export default function WorkflowStep5() {
 								<option value='slide'>➡️ Slide In</option>
 								{/* <option value='zoom'>🔎 Zoom</option> */}
 							</DropDown>
-							{transitionType &&  (
-									<img
-										src={`/images/script/${transitionType}.gif`}
-										alt='Transition'
-										className='h-24'
-									/>
-								)}
+							{transitionType && (
+								<img
+									src={`/images/script/${transitionType}.gif`}
+									alt='Transition'
+									className='h-24'
+								/>
+							)}
 						</WrappableRow>
 					</div>
 
@@ -437,7 +443,7 @@ export default function WorkflowStep5() {
 							checked={withSubtitle}
 							onChange={() => setWithSubtitle(!withSubtitle)}
 						/>{' '}
-						<Instruction>Add subtitle to my video.</Instruction>
+						<Instruction>Add subtitle to video.</Instruction>
 					</div>
 				</Card>
 
@@ -455,7 +461,7 @@ export default function WorkflowStep5() {
 						change in the future.
 					</Explanation>
 					{/* TODO: is ClonedVoice */}
-					{isOpenaiVoice(voice) || isELabsVoice(voice) ? (
+					{isOpenaiVoice(voice) || isClonedVoice(voice) ? (
 						<WarningMessage>
 							The voice you selected does not support avatars yet.
 						</WarningMessage>
@@ -527,6 +533,7 @@ export default function WorkflowStep5() {
 							voice={voice}
 							voiceStyle={style}
 							updateSlidePage={updateSlidePage}
+							locale={selectedLanguage}
 						/>
 
 						<div className='flex flex-row items-center'>
