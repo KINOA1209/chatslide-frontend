@@ -141,18 +141,21 @@ export const addLogoElement = (slide: PptxGenJS.Slide, position: Position) => {
 	});
 };
 
-const getImageData = async (url: string) => {
-	const imgElement = document.createElement('img');
-	imgElement.src = url;
-
-	const dataUrl = await domToPng(imgElement);
-	if (dataUrl) {
-		const base64Data = dataUrl.split(',')[1];
-		return base64Data;
+const getImageData = async (imageUrl: string): Promise<string> => {
+	try {
+		const response = await fetch(imageUrl, { mode: 'cors' });
+		const blob = await response.blob();
+		return new Promise((resolve, reject) => {
+			const reader = new FileReader();
+			reader.onloadend = () => resolve(reader.result as string);
+			reader.onerror = reject;
+			reader.readAsDataURL(blob);
+		});
+	} catch (error) {
+		console.error('Error fetching image:', error);
+		throw new Error('Failed to fetch and convert image to base64');
 	}
-
-	return "";
-}
+};
 
 export const addImageElement = async (
 	slide: PptxGenJS.Slide,
@@ -189,10 +192,20 @@ export const addImageElement = async (
 		Number(container_position.y) + Number(position.y) + Number(position.height),
 	);
 
-	const imageData = await getImageData(imageUrl);
+	const imgData = await getImageData(imageUrl)
+		.then((base64Image) => {
+			return base64Image;
+		})
+		.catch((error) => {
+			console.log("Failed to fetch image. Url: ", imageUrl);
+			return "";
+		});
+
+	console.log(imgData);
+
 
 	slide.addImage({
-		data: imageData,
+		data: imgData,
 		x: dispX / 96,
 		y: dispY / 96,
 		w: Number(position.width) / 96,
