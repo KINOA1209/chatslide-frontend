@@ -258,6 +258,7 @@ export default function WorkflowStep5() {
 					creditCost,
 					transitionType,
 					withSubtitle,
+          selectedLanguage,  // locale
 				);
 				updateCreditsFE(-20);
 				router.push(addIdToRedir('/video'));
