@@ -2,6 +2,8 @@ import Position from '@/types/Position';
 import PptxGenJS from 'pptxgenjs';
 import { parseDOM } from 'htmlparser2';
 import { ContentType } from './getPositions';
+import { useRef } from 'react';
+import { domToPng } from 'modern-screenshot';
 
 const parseHtmlToTextOptions = (html: string, defaultSize: number) => {
 	const dom = parseDOM(html);
@@ -139,7 +141,20 @@ export const addLogoElement = (slide: PptxGenJS.Slide, position: Position) => {
 	});
 };
 
-export const addImageElement = (
+const getImageData = async (url: string) => {
+	const imgElement = document.createElement('img');
+	imgElement.src = url;
+
+	const dataUrl = await domToPng(imgElement);
+	if (dataUrl) {
+		const base64Data = dataUrl.split(',')[1];
+		return base64Data;
+	}
+
+	return "";
+}
+
+export const addImageElement = async (
 	slide: PptxGenJS.Slide,
 	imageUrl: string,
 	position: Position,
@@ -174,8 +189,10 @@ export const addImageElement = (
 		Number(container_position.y) + Number(position.y) + Number(position.height),
 	);
 
+	const imageData = await getImageData(imageUrl);
+
 	slide.addImage({
-		path: imageUrl,
+		data: imageData,
 		x: dispX / 96,
 		y: dispY / 96,
 		w: Number(position.width) / 96,

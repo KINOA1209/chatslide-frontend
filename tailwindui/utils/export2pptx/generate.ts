@@ -84,7 +84,7 @@ export const generatePPTX = async (slides: Slide[]) => {
 				0.5,
 			);
 			addLogoElement(slideView, logo_position);
-			addImageElement(
+			await addImageElement(
 				slideView,
 				slide.images[0],
 				image_position[0],
@@ -226,7 +226,7 @@ export const generatePPTX = async (slides: Slide[]) => {
 				14,
 				content_positions[0],
 			);
-			addImageElement(
+			await addImageElement(
 				slideView,
 				slide.images[0],
 				image_position[0],
@@ -268,7 +268,7 @@ export const generatePPTX = async (slides: Slide[]) => {
 				14,
 				content_positions[0],
 			);
-			addImageElement(
+			await addImageElement(
 				slideView,
 				slide.images[0],
 				image_position[0],
@@ -314,8 +314,8 @@ export const generatePPTX = async (slides: Slide[]) => {
 				);
 			});
 
-			images.forEach((img, index) => {
-				addImageElement(
+			images.forEach(async (img, index) => {
+				await addImageElement(
 					slideView,
 					img,
 					image_position[index],
@@ -323,7 +323,7 @@ export const generatePPTX = async (slides: Slide[]) => {
 				);
 			});
 
-			addImageElement(
+			await addImageElement(
 				slideView,
 				slide.images[0],
 				image_position[0],
@@ -369,8 +369,8 @@ export const generatePPTX = async (slides: Slide[]) => {
 				);
 			});
 
-			images.forEach((img, index) => {
-				addImageElement(
+			images.forEach(async (img, index) => {
+				await addImageElement(
 					slideView,
 					img,
 					image_position[index],
@@ -378,7 +378,7 @@ export const generatePPTX = async (slides: Slide[]) => {
 				);
 			});
 
-			addImageElement(
+			await addImageElement(
 				slideView,
 				slide.images[0],
 				image_position[0],
