@@ -201,9 +201,6 @@ export const addImageElement = async (
 			return "";
 		});
 
-	console.log(imgData);
-
-
 	slide.addImage({
 		data: imgData,
 		x: dispX / 96,

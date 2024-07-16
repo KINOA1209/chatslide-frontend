@@ -24,7 +24,6 @@ export const generatePPTX = async (slides: Slide[]) => {
 	const pptx = new PptxGenJS();
 
 	const host = getHost();
-	console.log('MYLOG: ', host);
 
 	for (const slide of slides) {
 		const slideView = pptx.addSlide();
