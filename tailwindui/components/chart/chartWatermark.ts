@@ -1,3 +1,4 @@
+import { getBrand } from '@/utils/getHost';
 import { Plugin } from 'chart.js';
 
 const plugin: Plugin = {
@@ -8,20 +9,30 @@ const plugin: Plugin = {
         const height = ctx.canvas.clientHeight;
         const width = ctx.canvas.clientWidth;
         ctx.fillStyle = "rgba(0, 0, 0, .12)"
-        ctx.font = "15px bold sans-serif";
-        let text = "Created with ChatCharts";
-        if (options.text) {
-            text = options.text;
-        }
+        const text = options.text;
         const textSize = ctx.measureText(text);
-        for (let y = -30; y < height + 10; y += textSize.fontBoundingBoxAscent + textSize.fontBoundingBoxDescent + 60) {
-            for (let x = -30 - 2 * y; x < width + 10; x += textSize.width + 30) {
-                ctx.fillText(text, x, y);
+
+        if (options.style === "repeat") {
+            ctx.font = "bold 15px Inter,sans-serif";
+            const layerHeight = textSize.fontBoundingBoxAscent + textSize.fontBoundingBoxDescent + 60;
+            const halfGap = 25;
+            for (let _y = 0; _y * layerHeight < height + 200; _y += 1) {
+                const y = _y * layerHeight
+                for (let x = (_y % 2) * (-textSize.width - halfGap); x < width + 50; x += textSize.width * 2 + halfGap * 2) {
+                    ctx.fillText(text, x, 10 + y);
+                }
             }
+        } else if (options.style === "single") {
+            ctx.font = "bold 30px Inter,sans-serif";
+            ctx.fillText(text, 10, height - (textSize.fontBoundingBoxAscent + textSize.fontBoundingBoxDescent) - 10);
         }
+        
         ctx.restore();
     },
-    defaults: {}
+    defaults: {
+        text: "Created with " + getBrand(),
+        style: "single"
+    }
 }
 
 export default plugin;
