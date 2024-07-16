@@ -30,8 +30,10 @@ import {
 	ChartEvent,
 } from 'chart.js';
 import { Chart } from 'react-chartjs-2';
+import WatermarkPlugin from '@/components/chart/chartWatermark';
 
 import Toggle from '@/components/button/Toggle';
+import { useUser } from '@/hooks/use-user';
 // Register Chart.js components
 ChartJS.register(
 	CategoryScale,
@@ -47,9 +49,11 @@ ChartJS.register(
 	PieController,
 	BarController,
 	LineController,
+	WatermarkPlugin
 );
 
 export default function Page() {
+	const isPaidTier = useUser().isPaidUser;
 	const [chartUrl, setChartUrl] = useState('');
 	const [urlHistory, setUrlHistory] = useState(['/images/scenario/charts.png']);
 	const [chartData, setChartData] = useState<any>(null);
@@ -97,6 +101,7 @@ export default function Page() {
 					display: true,
 					text: chartData.title,
 				},
+				water_mark_plugin: isPaidTier ? false : {}
 			},
 
 		});
