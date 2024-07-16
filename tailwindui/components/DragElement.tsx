@@ -300,7 +300,7 @@ export const DragElement = ({
 				<MdDragIndicator size={16} color={'white'} />
 			</div>
 			<div
-				style={{ ...elementHandlerCSS, cursor: 'cell' }}
+				style={{ ...elementHandlerCSS }}
 				onMouseEnter={onEnterHandler}
 				onMouseLeave={onLeaveHandler}
 				onClick={() => {
