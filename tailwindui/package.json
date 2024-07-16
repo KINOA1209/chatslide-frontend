@@ -31,7 +31,6 @@
 		"encoding": "0.1.13",
 		"file-saver": "2.0.5",
 		"firebase": "9.23.0",
-		"fix-webm-duration": "^1.0.6",
 		"html-to-image": "1.11.11",
 		"html2canvas": "1.4.1",
 		"html2pdf.js": "0.10.1",
