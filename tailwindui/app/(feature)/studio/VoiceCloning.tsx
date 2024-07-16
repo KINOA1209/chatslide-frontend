@@ -75,9 +75,11 @@ const VoiceCloning = () => {
 	);
 
 	async function submitConsent() {
+    if (!consentAudio) 
+      return;
+
 		setIsSubmittingConsent(true);
-		const consentAudioBlob = await convertToWav(consentAudio!);
-		const consentAudioFile = new File([consentAudioBlob], 'consent.wav', {
+		const consentAudioFile = new File([consentAudio], 'consent.wav', {
 			type: 'audio/wav',
 		});
 		VoiceCloneService.submitConsent(username, consentAudioFile, token)
@@ -229,8 +231,7 @@ const VoiceCloning = () => {
 
 		try {
 			setCloning(true);
-			const trainingAudioBlob = await convertToWav(recordedAudio);
-			const trainingRecordFile = new File([trainingAudioBlob], 'training.wav', {
+			const trainingRecordFile = new File([recordedAudio], 'training.wav', {
 				type: 'audio/wav',
 			});
 			const response = await VoiceCloneService.cloneVoice(
