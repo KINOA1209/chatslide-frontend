@@ -25,11 +25,38 @@ export default class VoiceCloneService {
 		}
 	}
 
+	static async convertAudio(audioData: File, token: string) {
+		const formData = new FormData();
+		formData.append('audiodata', audioData);
+
+		try {
+			const response = await fetch('/api/clone/convert', {
+				method: 'POST',
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+				body: formData,
+			});
+
+			if (response.ok) {
+				const result = await response.json();
+				return result.message;
+			} else {
+				const errorResp = await response.json();
+				throw new Error('Error when converting audio: ' + errorResp.error);
+			}
+		} catch (error) {
+			console.error('Error in convertAudio:', error);
+			throw error;
+		}
+	}
+
 	static async cloneVoice(
-    consentId: string, 
-    audioData: File,
-    name: string, 
-    token: string) {
+		consentId: string,
+		audioData: File,
+		name: string,
+		token: string,
+	) {
 		// Create a new FormData object
 		const formData = new FormData();
 		formData.append('consent_id', consentId);
@@ -77,22 +104,27 @@ export default class VoiceCloneService {
 		}
 	}
 
-	static async generateVoice(voiceId: string, text: string, locale: string = 'en-US', token: string) {
-    const data = {
-      voice_id: voiceId,
-      text: text,
-      locale: locale,
-    };
+	static async generateVoice(
+		voiceId: string,
+		text: string,
+		locale: string = 'en-US',
+		token: string,
+	) {
+		const data = {
+			voice_id: voiceId,
+			text: text,
+			locale: locale,
+		};
 
-    const response = await fetch('/api/clone/generate', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(data),
-    });
-    
+		const response = await fetch('/api/clone/generate', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify(data),
+		});
+
 		if (response.ok) {
 			const audioBlob = await response.blob();
 			const audioUrl = URL.createObjectURL(audioBlob);
