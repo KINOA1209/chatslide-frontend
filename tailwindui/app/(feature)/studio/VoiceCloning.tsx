@@ -90,7 +90,7 @@ const VoiceCloning = () => {
 			})
 			.catch((error: any) => {
 				console.error('Error submitting consent:', error.message);
-				toast.error(`Failed to submit consent: ${error.message}`);
+				toast.error(`${error.message}`);
 			})
 			.finally(() => {
 				setIsSubmittingConsent(false);
@@ -244,7 +244,7 @@ const VoiceCloning = () => {
 			await fetchVoiceProfiles();
 		} catch (error: any) {
 			console.error('Error cloning voice:', error.message);
-			toast.error(`Failed to clone voice: ${error.message}`);
+			toast.error(`${error.message}`);
 		} finally {
 			setCloning(false);
 		}

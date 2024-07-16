@@ -21,33 +21,7 @@ export default class VoiceCloneService {
 			return resp.consent_id;
 		} else {
 			const errorResp = await response.json();
-			throw new Error('Error when submitting consent: ' + errorResp.message);
-		}
-	}
-
-	static async convertAudio(audioData: File, token: string) {
-		const formData = new FormData();
-		formData.append('audiodata', audioData);
-
-		try {
-			const response = await fetch('/api/clone/convert', {
-				method: 'POST',
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
-				body: formData,
-			});
-
-			if (response.ok) {
-				const result = await response.json();
-				return result.message;
-			} else {
-				const errorResp = await response.json();
-				throw new Error('Error when converting audio: ' + errorResp.error);
-			}
-		} catch (error) {
-			console.error('Error in convertAudio:', error);
-			throw error;
+			throw new Error('Error when submitting consent: ' + errorResp.error);
 		}
 	}
 
@@ -80,7 +54,7 @@ export default class VoiceCloneService {
 			};
 		} else {
 			const errorResp = await response.json();
-			throw new Error('Error when cloning voice: ' + errorResp.message);
+			throw new Error('Error when cloning voice: ' + errorResp.error);
 		}
 	}
 
