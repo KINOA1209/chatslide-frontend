@@ -24,6 +24,7 @@ import { sleep } from '@/utils/sleep';
 import Project from '@/models/Project';
 import { PiFileText } from 'react-icons/pi';
 import { FaRegStar } from 'react-icons/fa';
+import { GenerationStatusProgressModal } from '@/components/ui/GenerationStatusProgressModal';
 
 const SlidesHTML = dynamic(() => import('@/components/slides/SlidesHTML'), {
 	ssr: false,
@@ -295,15 +296,10 @@ export default function WorkflowStep3() {
 			{showScriptsSettingsModal && <ScriptsSettingModal />}
 
 			{showGenerationStatusModal && (
-        <Modal
-          showModal={showGenerationStatusModal}
-          setShowModal={setShowGenerationStatusModal}
-          title='Generating Scripts'
-        >
-          <div className='flex flex-col items-center justify-center gap-4'>
-            <Blank>Generating scripts...</Blank>
-          </div>
-        </Modal>
+        <GenerationStatusProgressModal
+					onClick={() => {setShowGenerationStatusModal(false);}}
+					prompts={[['✍️ Writing scripts for you...', 12]]}
+				></GenerationStatusProgressModal>
       )}
 		</div>
 	);
