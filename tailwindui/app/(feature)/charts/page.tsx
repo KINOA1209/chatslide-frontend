@@ -73,7 +73,7 @@ export default function Page() {
 		if (!chartData) return;
 		const datasets = {
 			labels: chartData.labels,
-			datasets: chartData.datasets,
+			datasets: [...chartData.datasets],
 		}
 		setChartValues(datasets);
 		setChartType(chartData.chartType);
@@ -219,7 +219,7 @@ export default function Page() {
 						{useDynamicChart && chartType ?
 							<Card>
 								<div className='w-full'>
-									<ChartEditor chartData={chartData} setChartData={setChartData} chartRef={chartRef} />
+									<ChartEditor chartData={chartData} setChartData={setChartData} />
 								</div>
 							</Card> : <></>}
 					</div>

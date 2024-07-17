@@ -1,15 +1,17 @@
 import { DataGrid } from '@mui/x-data-grid';
 import { RefObject, useEffect, useState } from 'react';
 import { Chart as ChartJS } from 'chart.js';
+import { Button } from '@mui/material';
+import { AddSectionIcon, DeleteIcon, AddTopicIcon, AddSlideIcon } from '@/app/(feature)/icons';
 
 interface ChartEditorProps {
     chartData: any;
     setChartData: (chartData: any) => void;
-    chartRef: RefObject<ChartJS>;
 }
 
-export const ChartEditor = ({ chartData, setChartData, chartRef }: ChartEditorProps) => {
+export const ChartEditor = ({ chartData, setChartData }: ChartEditorProps) => {
     const [editorData, setEditorData] = useState<{ rows: { [key: string]: any }[], columns: any[] }>({ rows: [], columns: [] });
+
     useEffect(() => {
         var rows: { [key: string]: any }[] = [];
         var columns = [];
@@ -26,6 +28,8 @@ export const ChartEditor = ({ chartData, setChartData, chartRef }: ChartEditorPr
                 data.data.forEach((value: any, i: number) => {
                     if (value) {
                         rows[id][(i + 1).toString()] = value.toString();
+                    } else {
+                        rows[id][(i + 1).toString()] = "0";
                     }
                 });
             }
@@ -40,25 +44,46 @@ export const ChartEditor = ({ chartData, setChartData, chartRef }: ChartEditorPr
         for (const key in updatedRow) {
             if (key === "id" || key === "editable") continue;
             if (key === "0") {
-                if (chartRef.current) {
-                    chartRef.current.data.datasets[rowId].label = updatedRow[key];
-                    chartRef.current.update();
-                }
                 newChartData.datasets[rowId].label = updatedRow[key];
             } else {
                 const colId = parseInt(key);
-                newChartData.datasets[rowId].data[colId - 1] = parseFloat(updatedRow[key]);
+                const value = parseFloat(updatedRow[key]);
+                if (!isNaN(value)) {
+                    newChartData.datasets[rowId].data[colId - 1] = parseFloat(updatedRow[key]);
+                }
+                else {
+                    newChartData.datasets[rowId].data[colId - 1] = 0;
+                }
             }
         }
         setChartData(newChartData);
         return updatedRow
     }
 
+    function handleAddEntry() {
+        let newChartData = { ...chartData };
+        const newEntry = {
+            backgroundColor: "rgb(209, 209, 224)",
+            borderColor: "rgb(102, 102, 153)",
+            label: "New Entry",
+            data: new Array(chartData.labels.length).fill(0)
+        };
+        newChartData.datasets.push(newEntry);
+        setChartData(newChartData);
+    }
+
     return (
         <div className="w-full">
-            <h2 className="text-lg font-bold">Edit Data</h2>
+            <div className='w-full flex justify-between'>
+                <h2 className="text-lg font-bold">Edit Data</h2>
+                <div>
+                    <Button variant="outlined" startIcon={<AddSectionIcon />} onClick={handleAddEntry}>
+                        Add Entry
+                    </Button>
+                </div>
+            </div>
             <div className="mt-4 w-full">
-                <DataGrid autoHeight rows={editorData.rows} columns={editorData.columns} processRowUpdate={(updatedRow, originalRow) => updateChartData(updatedRow)} onProcessRowUpdateError={(error) => { console.log(error) }} />
+                <DataGrid autoHeight rows={editorData.rows} columns={editorData.columns} processRowUpdate={(updatedRow, originalRow) => updateChartData(updatedRow)} onProcessRowUpdateError={(error) => { console.error(error) }} />
             </div>
         </div>
     );
