@@ -450,6 +450,7 @@ export const Cover_img_1_layout = ({
 	image_container_positions,
 	logo_position,
 	logo_numeric_position,
+	image_Refs,
 }: MainSlideProps) => {
 	const updateImgAtIndex =
 		(index: number) =>
@@ -569,6 +570,7 @@ export const Cover_img_1_layout = ({
 				hoveredIndex={hoveredIndex ?? -1}
 			>
 				<ImgModule
+					ref={image_Refs[0]}
 					imgsrc={imgs?.[0]}
 					updateSingleCallback={updateImgAtIndex(0)}
 					chartArr={charts}
@@ -1261,6 +1263,7 @@ export const Col_2_img_1_layout = ({
 	image_container_positions,
 	logo_position,
 	logo_numeric_position,
+	image_Refs,
 }: MainSlideProps) => {
 	const updateImgAtIndex =
 		(index: number) =>
@@ -1432,6 +1435,7 @@ export const Col_2_img_1_layout = ({
 				hoveredIndex={hoveredIndex ?? -1}
 			>
 				<ImgModule
+					ref={image_Refs[0]}
 					imgsrc={imgs?.[0]}
 					updateSingleCallback={updateImgAtIndex(0)}
 					chartArr={charts}
@@ -1514,6 +1518,7 @@ export const Col_1_img_1_layout = ({
 	image_container_positions,
 	logo_position,
 	logo_numeric_position,
+	image_Refs,
 }: MainSlideProps) => {
 	const updateImgAtIndex =
 		(index: number) =>
@@ -1669,6 +1674,7 @@ export const Col_1_img_1_layout = ({
 				hoveredIndex={hoveredIndex ?? -1}
 			>
 				<ImgModule
+					ref={image_Refs[0]}
 					imgsrc={imgs?.[0]}
 					updateSingleCallback={updateImgAtIndex(0)}
 					chartArr={charts}
@@ -1767,6 +1773,7 @@ export const Col_2_img_2_layout = ({
 	image_container_positions,
 	logo_position,
 	logo_numeric_position,
+	image_Refs,
 }: MainSlideProps) => {
 	const updateImgAtIndex =
 		(index: number) =>
@@ -1945,6 +1952,7 @@ export const Col_2_img_2_layout = ({
 				hoveredIndex={hoveredIndex ?? -1}
 			>
 				<ImgModule
+					ref={image_Refs[0]}
 					imgsrc={imgs?.[0]}
 					updateSingleCallback={updateImgAtIndex(0)}
 					chartArr={charts}
@@ -1980,6 +1988,7 @@ export const Col_2_img_2_layout = ({
 				hoveredIndex={hoveredIndex ?? -1}
 			>
 				<ImgModule
+					ref={image_Refs[1]}
 					imgsrc={imgs?.[1]}
 					updateSingleCallback={updateImgAtIndex(1)}
 					chartArr={charts}
@@ -2124,6 +2133,7 @@ export const Col_3_img_3_layout = ({
 	image_container_positions,
 	logo_position,
 	logo_numeric_position,
+	image_Refs,
 }: MainSlideProps) => {
 	const updateImgAtIndex =
 		(index: number) =>
@@ -2270,6 +2280,7 @@ export const Col_3_img_3_layout = ({
 				hoveredIndex={hoveredIndex ?? -1}
 			>
 				<ImgModule
+					ref={image_Refs[0]}
 					imgsrc={imgs?.[0]}
 					updateSingleCallback={updateImgAtIndex(0)}
 					chartArr={charts}
@@ -2305,6 +2316,7 @@ export const Col_3_img_3_layout = ({
 				hoveredIndex={hoveredIndex ?? -1}
 			>
 				<ImgModule
+					ref={image_Refs[1]}
 					imgsrc={imgs?.[1]}
 					updateSingleCallback={updateImgAtIndex(1)}
 					chartArr={charts}
@@ -2340,6 +2352,7 @@ export const Col_3_img_3_layout = ({
 				hoveredIndex={hoveredIndex ?? -1}
 			>
 				<ImgModule
+					ref={image_Refs[2]}
 					imgsrc={imgs?.[2]}
 					updateSingleCallback={updateImgAtIndex(2)}
 					chartArr={charts}
@@ -2513,6 +2526,7 @@ export const Full_img_only_layout = ({
 	image_container_positions,
 	logo_position,
 	logo_numeric_position,
+	image_Refs,
 }: MainSlideProps) => {
 	const updateImgAtIndex =
 		(index: number) =>
@@ -2588,6 +2602,7 @@ export const Full_img_only_layout = ({
 				hoveredIndex={hoveredIndex ?? -1}
 			>
 				<ImgModule
+					ref={image_Refs[0]}
 					imgsrc={imgs?.[0]}
 					updateSingleCallback={updateImgAtIndex(0)}
 					chartArr={charts}

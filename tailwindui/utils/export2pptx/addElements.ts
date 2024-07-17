@@ -141,83 +141,84 @@ export const addLogoElement = (slide: PptxGenJS.Slide, position: Position) => {
 	});
 };
 
-const getImageData = async (imageUrl: string): Promise<string> => {
-	try {
-		const response = await fetch(imageUrl, { mode: 'cors' });
-		const blob = await response.blob();
-		return new Promise((resolve, reject) => {
-			const reader = new FileReader();
-			reader.onloadend = () => resolve(reader.result as string);
-			reader.onerror = reject;
-			reader.readAsDataURL(blob);
-		});
-	} catch (error) {
-		console.error('Error fetching image:', error);
-		throw new Error('Failed to fetch and convert image to base64');
+const getImageData = async (
+	ref: React.RefObject<HTMLImageElement>,
+): Promise<string | undefined> => {
+	if (ref.current) {
+		try {
+			const dataUrl = await domToPng(ref.current);
+			return dataUrl;
+		} catch (error) {
+			console.error('Error capturing image:', error);
+			return undefined;
+		}
+	} else {
+		console.log('Waiting for images to load');
+		return undefined;
 	}
 };
 
 export const addImageElement = async (
 	slide: PptxGenJS.Slide,
 	imageUrl: string,
+	imgRef: React.RefObject<HTMLImageElement>,
 	position: Position,
 	container_position: Position,
 ) => {
-	const dispX = Math.max(
-		Number(container_position.x) + Number(position.x),
-		Number(container_position.x),
-	);
-	const dispY = Math.max(
-		Number(container_position.y) + Number(position.y),
-		Number(container_position.y),
-	);
+	if (imgRef) {
+		const dispX = Math.max(
+			Number(container_position.x) + Number(position.x),
+			Number(container_position.x),
+		);
+		const dispY = Math.max(
+			Number(container_position.y) + Number(position.y),
+			Number(container_position.y),
+		);
 
-	const cropX = Math.abs(Math.min(0, Number(position.x)));
-	const cropY = Math.abs(Math.min(0, Number(position.y)));
+		const cropX = Math.abs(Math.min(0, Number(position.x)));
+		const cropY = Math.abs(Math.min(0, Number(position.y)));
 
-	const overlap_length = (s1: number, e1: number, s2: number, e2: number) => {
-		return Math.max(0, Math.min(e2, e1) - Math.max(s2, s1));
-	};
+		const overlap_length = (s1: number, e1: number, s2: number, e2: number) => {
+			return Math.max(0, Math.min(e2, e1) - Math.max(s2, s1));
+		};
 
-	const cropWidth = overlap_length(
-		Number(container_position.x),
-		Number(container_position.x) + Number(container_position.width),
-		Number(container_position.x) + Number(position.x),
-		Number(container_position.x) + Number(position.x) + Number(position.width),
-	);
-	const cropHeight = overlap_length(
-		Number(container_position.y),
-		Number(container_position.y) + Number(container_position.height),
-		Number(container_position.y) + Number(position.y),
-		Number(container_position.y) + Number(position.y) + Number(position.height),
-	);
+		const cropWidth = overlap_length(
+			Number(container_position.x),
+			Number(container_position.x) + Number(container_position.width),
+			Number(container_position.x) + Number(position.x),
+			Number(container_position.x) +
+				Number(position.x) +
+				Number(position.width),
+		);
+		const cropHeight = overlap_length(
+			Number(container_position.y),
+			Number(container_position.y) + Number(container_position.height),
+			Number(container_position.y) + Number(position.y),
+			Number(container_position.y) +
+				Number(position.y) +
+				Number(position.height),
+		);
 
-	const imgData = await getImageData(imageUrl)
-		.then((base64Image) => {
-			return base64Image;
-		})
-		.catch((error) => {
-			console.log("Failed to fetch image. Url: ", imageUrl);
-			return "";
+		const imgBase64Data = await getImageData(imgRef);
+
+		slide.addImage({
+			data: imgBase64Data,
+			x: dispX / 96,
+			y: dispY / 96,
+			w: Number(position.width) / 96,
+			h: Number(position.height) / 96,
+
+			sizing: {
+				type: 'crop',
+				x: cropX / 96,
+				y: cropY / 96,
+				w: cropWidth / 96,
+				h: cropHeight / 96,
+			},
+
+			altText: 'Image',
 		});
-
-	slide.addImage({
-		data: imgData,
-		x: dispX / 96,
-		y: dispY / 96,
-		w: Number(position.width) / 96,
-		h: Number(position.height) / 96,
-
-		sizing: {
-			type: 'crop',
-			x: cropX / 96,
-			y: cropY / 96,
-			w: cropWidth / 96,
-			h: cropHeight / 96,
-		},
-
-		altText: 'Image',
-	});
+	}
 };
 
 export const createGradientImage = (

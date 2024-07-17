@@ -514,6 +514,7 @@ export const templateDispatch = (
 			media_types={slide.media_types}
 			logo_position={slide.logo_position}
 			logo_numeric_position={slide.logo_numeric_position || {}}
+			image_Refs={slide.image_Refs}
 		/>
 	);
 	// }

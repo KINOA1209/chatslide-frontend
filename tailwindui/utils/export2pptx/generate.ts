@@ -86,6 +86,7 @@ export const generatePPTX = async (slides: Slide[]) => {
 			await addImageElement(
 				slideView,
 				slide.images[0],
+				slide.image_Refs[0],
 				image_position[0],
 				image_container_position[0],
 			);
@@ -228,6 +229,7 @@ export const generatePPTX = async (slides: Slide[]) => {
 			await addImageElement(
 				slideView,
 				slide.images[0],
+				slide.image_Refs[0],
 				image_position[0],
 				image_container_position[0],
 			);
@@ -270,6 +272,7 @@ export const generatePPTX = async (slides: Slide[]) => {
 			await addImageElement(
 				slideView,
 				slide.images[0],
+				slide.image_Refs[0],
 				image_position[0],
 				image_container_position[0],
 			);
@@ -317,17 +320,11 @@ export const generatePPTX = async (slides: Slide[]) => {
 				await addImageElement(
 					slideView,
 					img,
+					slide.image_Refs[index],
 					image_position[index],
 					image_container_position[index],
 				);
 			});
-
-			await addImageElement(
-				slideView,
-				slide.images[0],
-				image_position[0],
-				image_container_position[0],
-			);
 			addLogoElement(slideView, logo_position);
 		} else if (slide.layout === 'Col_3_img_3_layout') {
 			const topic_content = slide.title;
@@ -372,19 +369,23 @@ export const generatePPTX = async (slides: Slide[]) => {
 				await addImageElement(
 					slideView,
 					img,
+					slide.image_Refs[index],
 					image_position[index],
 					image_container_position[index],
 				);
 			});
-
+			addLogoElement(slideView, logo_position);
+		} else if (slide.layout === 'Full_img_only_layout') {
+			const image_container_position: Position[] =
+				getImgContainerPositions(slide);
+			const image_position: Position[] = await getImagePositions(slide);
 			await addImageElement(
 				slideView,
 				slide.images[0],
+				slide.image_Refs[0],
 				image_position[0],
 				image_container_position[0],
 			);
-			addLogoElement(slideView, logo_position);
-		} else if (slide.layout === 'Full_img_only_layout') {
 		}
 	}
 
