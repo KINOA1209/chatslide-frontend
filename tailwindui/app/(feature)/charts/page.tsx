@@ -30,7 +30,7 @@ import {
 	ChartEvent,
 } from 'chart.js';
 import { Chart } from 'react-chartjs-2';
-import WatermarkPlugin from '@/components/chart/chartWatermark';
+import { WatermarkPlugin, BackgroundColor } from '@/components/chart/chartPluginUtils';
 
 import Toggle from '@/components/button/Toggle';
 import { useUser } from '@/hooks/use-user';
@@ -49,7 +49,8 @@ ChartJS.register(
 	PieController,
 	BarController,
 	LineController,
-	WatermarkPlugin
+	WatermarkPlugin,
+	BackgroundColor
 );
 
 export default function Page() {
@@ -97,6 +98,7 @@ export default function Page() {
 				}
 			},
 			plugins: {
+				background_color_plugin: {},
 				title: {
 					display: true,
 					text: chartData.title,

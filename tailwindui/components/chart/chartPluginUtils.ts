@@ -1,7 +1,7 @@
 import { getBrand } from '@/utils/getHost';
 import { Plugin } from 'chart.js';
 
-const plugin: Plugin = {
+export const WatermarkPlugin: Plugin = {
     id: 'water_mark_plugin',
     afterDraw: (chart, args, options) => {
         const { ctx } = chart;
@@ -26,7 +26,6 @@ const plugin: Plugin = {
             ctx.font = "bold 30px Inter,sans-serif";
             ctx.fillText(text, 10, height - (textSize.fontBoundingBoxAscent + textSize.fontBoundingBoxDescent) - 10);
         }
-        
         ctx.restore();
     },
     defaults: {
@@ -35,4 +34,17 @@ const plugin: Plugin = {
     }
 }
 
-export default plugin;
+export const BackgroundColor: Plugin = {
+    id: 'background_color_plugin',
+    beforeDraw: (chart, args, options) => {
+        const { ctx } = chart;
+        ctx.save();
+        ctx.globalCompositeOperation = 'destination-over';
+        ctx.fillStyle = options.color;
+        ctx.fillRect(0, 0, chart.width, chart.height);
+        ctx.restore();
+    },
+    defaults: {
+        color: "#FFFFFF"
+    }
+}
