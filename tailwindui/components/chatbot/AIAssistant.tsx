@@ -82,9 +82,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 	const lastMessageRef = useRef<HTMLDivElement>(null); // Ensure you have a ref for the last message
 	const { project } = useProject();
 	const chatWindowRef = useRef<HTMLDivElement>(null);
-	const [model, setModel] = useState(
-		type === 'chart' ? 'GPT-4o' : 'GPT-3.5',
-	);
+	const [model, setModel] = useState(type === 'chart' ? 'GPT-4o' : 'GPT-3.5');
 
 	const handleEnter = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
 		if (event.key === 'Enter') {
