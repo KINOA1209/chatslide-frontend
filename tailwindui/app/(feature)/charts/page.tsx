@@ -30,8 +30,10 @@ import {
 	ChartEvent,
 } from 'chart.js';
 import { Chart } from 'react-chartjs-2';
+import { WatermarkPlugin, BackgroundColor } from '@/components/chart/chartPluginUtils';
 
 import Toggle from '@/components/button/Toggle';
+import { useUser } from '@/hooks/use-user';
 // Register Chart.js components
 ChartJS.register(
 	CategoryScale,
@@ -47,9 +49,12 @@ ChartJS.register(
 	PieController,
 	BarController,
 	LineController,
+	WatermarkPlugin,
+	BackgroundColor
 );
 
 export default function Page() {
+	const isPaidTier = useUser().isPaidUser;
 	const [chartUrl, setChartUrl] = useState('');
 	const [urlHistory, setUrlHistory] = useState(['/images/scenario/charts.png']);
 	const [chartData, setChartData] = useState<any>(null);
@@ -69,7 +74,7 @@ export default function Page() {
 		if (!chartData) return;
 		const datasets = {
 			labels: chartData.labels,
-			datasets: chartData.datasets,
+			datasets: [...chartData.datasets],
 		}
 		setChartValues(datasets);
 		setChartType(chartData.chartType);
@@ -93,10 +98,12 @@ export default function Page() {
 				}
 			},
 			plugins: {
+				background_color_plugin: {},
 				title: {
 					display: true,
 					text: chartData.title,
 				},
+				water_mark_plugin: isPaidTier ? false : {}
 			},
 
 		});
@@ -214,7 +221,7 @@ export default function Page() {
 						{useDynamicChart && chartType ?
 							<Card>
 								<div className='w-full'>
-									<ChartEditor chartData={chartData} setChartData={setChartData} chartRef={chartRef} />
+									<ChartEditor chartData={chartData} setChartData={setChartData} />
 								</div>
 							</Card> : <></>}
 					</div>
