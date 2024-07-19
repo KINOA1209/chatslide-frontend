@@ -2,6 +2,8 @@ export type TeamMember = {
   id: string,
   username: string,
   email: string,
+  role: 'member' | 'admin' | 'owner',
+  tier: string,
 }
 
 export type Team = {
