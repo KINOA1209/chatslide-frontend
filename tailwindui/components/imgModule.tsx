@@ -1,4 +1,4 @@
-import React, { CSSProperties, useEffect, useRef, useState } from 'react';
+import React, { CSSProperties, forwardRef, useEffect, useRef, useState } from 'react';
 import AuthService from '@/services/AuthService';
 import { createPortal } from 'react-dom';
 import { ToastContainer, toast } from 'react-toastify';
@@ -183,7 +183,7 @@ const getImageLicenseExplanation = (license: string) => {
 	}
 };
 
-export const ImgModule = ({
+export const ImgModule = forwardRef<HTMLImageElement, ImgModuleProp>(({
 	imgsrc,
 	updateSingleCallback,
 	chartArr,
@@ -209,7 +209,7 @@ export const ImgModule = ({
 	media_types,
 	media_type,
 	containerSize,
-}: ImgModuleProp) => {
+}, imgRef) => {
 	// Replace width and height attributes with '100%'
 
 	const sourceImage = useImageStore((state) => state.sourceImage);
@@ -1340,9 +1340,9 @@ export const ImgModule = ({
 				: {};
 
 			const initW = Number(ctnSize.width);
-			const initH = Number(ctnSize.width) * (img.height / img.width);
+			const initH = Number(ctnSize.height);
 			const initX = 0;
-			const initY = (Number(ctnSize.height) - initH) / 2;
+			const initY = 0;
 
 			let initPos: Position = {};
 			if (
@@ -1908,6 +1908,7 @@ export const ImgModule = ({
 								}}
 							>
 								<Image
+									ref={imgRef}
 									unoptimized={
 										imgsrc?.includes('freepik') || imgsrc?.includes('icons8')
 											? false
@@ -2098,4 +2099,4 @@ export const ImgModule = ({
 			}
 		</>
 	);
-};
+});
