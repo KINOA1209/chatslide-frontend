@@ -1,8 +1,10 @@
-import { DataGrid } from '@mui/x-data-grid';
-import { RefObject, useEffect, useState } from 'react';
+import { DataGrid, GridActionsCellItem, GridColDef, GridColumnMenu, GridColumnMenuItemProps, GridColumnMenuProps, GridRowId, useGridApiRef } from '@mui/x-data-grid';
+import { RefObject, useEffect, useRef, useState } from 'react';
 import { Chart as ChartJS } from 'chart.js';
-import { Button } from '@mui/material';
+import { Button, ListItemIcon, ListItemText, MenuItem, Typography } from '@mui/material';
 import { AddSectionIcon, DeleteIcon, AddTopicIcon, AddSlideIcon } from '@/app/(feature)/icons';
+import TextField from "@mui/material/TextField";
+import Popover from "@mui/material/Popover";
 
 interface ChartEditorProps {
     chartData: any;
@@ -11,28 +13,52 @@ interface ChartEditorProps {
 
 export const ChartEditor = ({ chartData, setChartData }: ChartEditorProps) => {
     const [editorData, setEditorData] = useState<{ rows: { [key: string]: any }[], columns: any[] }>({ rows: [], columns: [] });
+    const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null);
+    const apiRef = useGridApiRef();
+    const [columnToEdit, setColumnToEdit] = useState<{ field: string, headerName: string } | null>(null);
 
     useEffect(() => {
         var rows: { [key: string]: any }[] = [];
-        var columns = [];
+        var columns: GridColDef[] = [];
         if (chartData) {
-            columns = chartData.labels.map((label: any, i: number) => {
-                return { field: (i + 1).toString(), headerName: label, editable: true };
-            });
-            columns.unshift({ field: "0", headerName: "Category", editable: true });
-            rows = chartData.datasets.map((dataset: any, i: number) => {
-                return { id: i, "0": dataset.label, editable: true };
-            });
-            for (let id = 0; id < chartData.datasets.length; id++) {
-                const data = chartData.datasets[id];
-                data.data.forEach((value: any, i: number) => {
-                    if (value) {
-                        rows[id][(i + 1).toString()] = value.toString();
-                    } else {
-                        rows[id][(i + 1).toString()] = "0";
-                    }
+            if (!['pie', 'doughnut'].includes(chartData.chartType)) {
+                columns = chartData.labels.map((label: any, i: number) => {
+                    return { field: i.toString(), headerName: label, editable: true };
+                });
+                columns.unshift({ field: "cat", headerName: "Category", editable: true });
+                rows = chartData.datasets.map((dataset: any, i: number) => {
+                    return { id: i, "cat": dataset.label, editable: true };
+                });
+                for (let id = 0; id < chartData.datasets.length; id++) {
+                    const data = chartData.datasets[id];
+                    data.data.forEach((value: any, i: number) => {
+                        if (value) {
+                            rows[id][i.toString()] = value.toString();
+                        } else {
+                            rows[id][i.toString()] = "0";
+                        }
+                    });
+                }
+            } else {
+                columns = [{ field: "cat", headerName: "Category", editable: true }, { field: "val", headerName: "Value", editable: true }];
+                rows = chartData.labels.map((label: any, i: number) => {
+                    return { id: i, "cat": label, "val": chartData.datasets[0].data[i] };
                 });
             }
+            // add delete action column
+            columns.push({
+                field: "act", headerName: "Action", type: "actions", getActions: ({ id }) => {
+                    return [
+                        <GridActionsCellItem
+                            key="delete"
+                            icon={<DeleteIcon />}
+                            label="Delete"
+                            showInMenu={false}
+                            onClick={() => handleDeleteRow(id)}
+                        />,
+                    ];
+                }
+            });
         }
         setEditorData({ rows, columns })
     }, [chartData]);
@@ -40,50 +66,216 @@ export const ChartEditor = ({ chartData, setChartData }: ChartEditorProps) => {
     function updateChartData(updatedRow: { [key: string]: any; }): { [key: string]: any; } {
         var newChartData = { ...chartData }
         const rowId = updatedRow.id;
-        //  loop each property in the updated row
-        for (const key in updatedRow) {
-            if (key === "id" || key === "editable") continue;
-            if (key === "0") {
-                newChartData.datasets[rowId].label = updatedRow[key];
-            } else {
-                const colId = parseInt(key);
-                const value = parseFloat(updatedRow[key]);
-                if (!isNaN(value)) {
-                    newChartData.datasets[rowId].data[colId - 1] = parseFloat(updatedRow[key]);
-                }
-                else {
-                    newChartData.datasets[rowId].data[colId - 1] = 0;
+        if (!['pie', 'doughnut'].includes(newChartData.chartType)) {
+            //  loop each property in the updated row
+            for (const key in updatedRow) {
+                if (key === "id" || key === "editable") continue;
+                if (key === "cat") {
+                    newChartData.datasets[rowId].label = updatedRow[key];
+                } else {
+                    const colId = parseInt(key);
+                    const value = parseFloat(updatedRow[key]);
+                    if (!isNaN(value)) {
+                        newChartData.datasets[rowId].data[colId] = value;
+                    }
+                    else {
+                        newChartData.datasets[rowId].data[colId] = 0;
+                    }
                 }
             }
+        } else {
+            const value = parseFloat(updatedRow['val']);
+            if (!isNaN(value)) {
+                newChartData.datasets[0].data[rowId] = value;
+            }
+            else {
+                newChartData.datasets[0].data[rowId] = 0;
+            }
+            newChartData.labels[rowId] = updatedRow['cat'];
         }
         setChartData(newChartData);
         return updatedRow
     }
 
-    function handleAddEntry() {
+    function handleAddRow() {
         let newChartData = { ...chartData };
-        const newEntry = {
-            backgroundColor: "rgb(209, 209, 224)",
-            borderColor: "rgb(102, 102, 153)",
-            label: "New Entry",
-            data: new Array(chartData.labels.length).fill(0)
-        };
-        newChartData.datasets.push(newEntry);
+        if (!['pie', 'doughnut'].includes(newChartData.chartType)) {
+            const newEntry = {
+                backgroundColor: "rgb(209, 209, 224)",
+                borderColor: "rgb(102, 102, 153)",
+                label: "New Entry",
+                data: new Array(chartData.labels.length).fill(0)
+            };
+            newChartData.datasets.push(newEntry);
+        } else {
+            newChartData.datasets[0].data.push(0);
+            newChartData.datasets[0].backgroundColor.push("rgb(209, 209, 224)");
+            newChartData.labels.push("New Entry");
+        }
         setChartData(newChartData);
+    }
+
+    function handleAddColumn() {
+        if (chartData.chartType === 'pie' || chartData.chartType === 'doughnut') {
+            console.error("Cannot add column in pie or doughnut chart");
+            return;
+        }
+        let newChartData = { ...chartData };
+        if (!['pie', 'doughnut'].includes(newChartData.chartType)) {
+            newChartData.datasets.forEach((dataset: any) => {
+                dataset.data.push(0);
+            });
+            newChartData.labels.push("New Column");
+        } else {
+            console.error("Cannot add column in pie or doughnut chart");
+        }
+        setChartData(newChartData);
+    }
+
+    function handleUpdateColumn(field: string, headerName: string) {
+        if (apiRef.current !== null) {
+            setAnchorEl(apiRef.current.getColumnHeaderElement(field))
+            setColumnToEdit({
+                field: field,
+                headerName: headerName
+            });
+        }
+    }
+
+    function finishUpdateColumn() {
+        if (columnToEdit && columnToEdit.headerName !== "" && !isNaN(parseInt(columnToEdit.field))) {
+            const colId = parseInt(columnToEdit.field);
+            let newChartData = { ...chartData };
+            if (!['pie', 'doughnut'].includes(newChartData.chartType)) {
+                newChartData.labels[colId] = columnToEdit.headerName;
+            } else {
+                console.error("Cannot modify column in pie or doughnut chart");
+            }
+            setChartData(newChartData);
+        }
+        setAnchorEl(null);
+        setColumnToEdit(null);
+    }
+
+    function handleDeleteColumn(field: string, headerName: string) {
+        if (chartData.chartType === 'pie' || chartData.chartType === 'doughnut') {
+            console.error("Cannot delete column in pie or doughnut chart");
+            return;
+        }
+        const colId = parseInt(field);
+        let newChartData = { ...chartData };
+        if (!isNaN(colId)) {
+            if (!['pie', 'doughnut'].includes(newChartData.chartType)) {
+                newChartData.datasets.forEach((dataset: any) => {
+                    dataset.data.splice(colId, 1);
+                });
+                newChartData.labels.splice(colId, 1);
+            } else {
+                console.error("Cannot delete column in pie or doughnut chart");
+            }
+        }
+        setChartData(newChartData);
+    }
+
+    function handleDeleteRow(id: GridRowId) {
+        const rowID: number = typeof id === 'number' ? id : parseInt(id);
+        if (isNaN(rowID)) {
+            console.error("Invalid Row ID");
+        }
+        let newChartData = { ...chartData };
+        if (!['pie', 'doughnut'].includes(newChartData.chartType)) {
+            newChartData.datasets.splice(rowID, 1);
+        } else {
+            newChartData.datasets[0].data.splice(rowID, 1);
+            newChartData.datasets[0].backgroundColor.splice(rowID, 1);
+            newChartData.labels.splice(rowID, 1);
+        }
+        setChartData(newChartData);
+    }
+
+    function CustomUserItem(props: GridColumnMenuItemProps) {
+        const { menuItemIcon, menuItemHandler, menuItemValue } = props;
+        return (
+            <MenuItem onClick={menuItemHandler}>
+                <ListItemIcon>
+                    {menuItemIcon}
+                </ListItemIcon>
+                <ListItemText>{menuItemValue}</ListItemText>
+            </MenuItem>
+        );
+    }
+
+
+    function CustomColumnMenu(props: GridColumnMenuProps) {
+        const { onClick, colDef, id, labelledby } = props;
+        const showMenuItem = (!['pie', 'doughnut'].includes(chartData.chartType)) && colDef.field !== "cat";
+        return (
+            <GridColumnMenu
+                {...props}
+                slots={{
+                    ...(showMenuItem) && { columnMenuUpdateItem: CustomUserItem },
+                    ...(showMenuItem) && { columnMenuDeleteItem: CustomUserItem },
+                }}
+                slotProps={{
+                    columnMenuUpdateItem: {
+                        menuItemIcon: <DeleteIcon />,
+                        menuItemValue: 'Edit Column Title',
+                        menuItemHandler: () => { handleUpdateColumn(colDef.field, colDef.headerName || "") },
+                    },
+                    columnMenuDeleteItem: {
+                        menuItemIcon: <DeleteIcon />,
+                        menuItemValue: 'Delete Column "' + colDef.headerName + '"',
+                        menuItemHandler: () => { handleDeleteColumn(colDef.field, colDef.headerName || "") },
+                    },
+                }}
+            />
+        );
     }
 
     return (
         <div className="w-full">
+            <Popover
+                id="columnTitleInput"
+                open={anchorEl !== null}
+                anchorEl={anchorEl}
+                onClose={finishUpdateColumn}
+                anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "left"
+                }}
+            >
+                <div className='flex flex-col gap-2 m-2'>
+                    <Typography sx={{ p: 2 }}>Enter new column name</Typography>
+                    <TextField value={columnToEdit?.headerName || ""} onChange={(e) => setColumnToEdit({ field: columnToEdit?.field || "", headerName: e.target.value })} onKeyDown={
+                        e => {
+                            if (e.key === 'Enter' || e.key === 'Tab') {
+                                e.preventDefault();
+                                finishUpdateColumn();
+                            }
+                        }
+                    } />
+                </div>
+            </Popover>
             <div className='w-full flex justify-between'>
                 <h2 className="text-lg font-bold">Edit Data</h2>
-                <div>
-                    <Button variant="outlined" startIcon={<AddSectionIcon />} onClick={handleAddEntry}>
-                        Add Entry
+                <div className='flex flex-row gap-2'>
+                    <Button variant="outlined" startIcon={<AddSectionIcon />} onClick={handleAddRow}>
+                        Add Row
                     </Button>
+                    {chartData.chartType !== 'pie' && chartData.chartType !== 'doughnut' &&
+                        <Button variant="outlined" startIcon={<AddSectionIcon />} onClick={handleAddColumn}>
+                            Add Column
+                        </Button>}
                 </div>
             </div>
             <div className="mt-4 w-full">
-                <DataGrid autoHeight rows={editorData.rows} columns={editorData.columns} processRowUpdate={(updatedRow, originalRow) => updateChartData(updatedRow)} onProcessRowUpdateError={(error) => { console.error(error) }} />
+                <DataGrid autoHeight disableColumnSorting
+                    rows={editorData.rows}
+                    columns={editorData.columns}
+                    processRowUpdate={(updatedRow, originalRow) => updateChartData(updatedRow)}
+                    onProcessRowUpdateError={(error) => { console.error(error) }}
+                    slots={{ columnMenu: CustomColumnMenu }}
+                    apiRef={apiRef} />
             </div>
         </div>
     );
