@@ -51,6 +51,13 @@ import {
 } from '@/components/language/ClonedVoicesContext';
 import 'react-toastify/dist/ReactToastify.css';
 import LANGUAGES from '@/components/language/languageData';
+import {
+	Accordion,
+	AccordionContent,
+	AccordionItem,
+	AccordionTrigger,
+} from '@/components/ui/accordion';
+import AudioVideoDetailSettingsSection from '@/app/(feature)/scripts/AudioVideoDetailSettingsSection';
 
 const ScriptSection = dynamic(
 	() => import('@/components/script/ScriptSection'),
@@ -106,174 +113,6 @@ export default function WorkflowStep5() {
 		// Clean up event listener on component unmount
 		return () => window.removeEventListener('resize', handleResize);
 	}, []);
-
-	const AudioVideoDetailSettingsSection = () => {
-		return (
-			<>
-				{/* <CreditCost /> */}
-				<Card>
-					<WrappableRow type='flex' justify='between'>
-						<BigTitle>🎙️ Voice</BigTitle>
-
-						{!isOpenaiVoice(voice) && (
-							<Toggle
-								isLeft={!voiceIsHD}
-								setIsLeft={(value: boolean) => setVoiceIsHD(!value)}
-								leftText='Standard'
-								rightText='Hi-Fi 🎧'
-							/>
-						)}
-					</WrappableRow>
-
-					<Instruction>
-						<span>
-							Voice cloning is now available for PRO and ULTIMATE users.{' '}
-							<a className='text-blue-600' href='/studio' target='_blank'>
-								Clone voice.
-							</a>{' '}
-						</span>
-					</Instruction>
-
-					<Instruction>
-						Select the voice you want to use for your video.
-					</Instruction>
-					<ClonedVoicesProvider>
-						<VoiceSelector
-							selectedVoice={voice}
-							setSelectedVoice={setVoice}
-							selectedLanguage={selectedLanguage}
-							setSelectedLanguage={setSelectedLanguage}
-							style={style}
-							setStyle={setStyle}
-							isHD={voiceIsHD}
-						/>
-					</ClonedVoicesProvider>
-				</Card>
-
-				<Card>
-					<BigTitle>🎥 Video Effects</BigTitle>
-					<WrappableRow type='grid' cols={2}>
-						<div>
-							<Instruction>Background Music:</Instruction>
-							<div className='flex flex-row gap-4 items-center'>
-								<DropDown
-									width='12rem'
-									onChange={(e) => setBgm(e.target.value)}
-									value={bgm}
-									style='input'
-								>
-									{Object.entries(bgmDisplayNames).map(([key, value]) => (
-										<option key={key} value={key}>
-											{value}
-										</option>
-									))}
-								</DropDown>
-								{bgm && (
-									<ButtonWithExplanation
-										explanation='Preview'
-										button={
-											<a href={`/bgm/${bgm}.mp3`} target='_blank'>
-												<FiPlay
-													style={{
-														strokeWidth: '2',
-														flex: '1',
-														width: '1.5rem',
-														height: '1.5rem',
-														fontWeight: 'bold',
-														color: '#344054',
-													}}
-												/>
-											</a>
-										}
-									/>
-								)}
-							</div>
-						</div>
-						{bgm && (
-							<div>
-								<Instruction>Volume: {bgmVolume * 100}</Instruction>
-								<RangeSlider
-									onChange={(value: number) => {
-										if (value !== 0) {
-											console.log(value);
-											setBgmVolume(value);
-										}
-									}}
-									value={bgmVolume}
-									minValue={0.05}
-									choices={[0, 0.05, 0.1, 0.2, 0.3, 0.4]}
-								/>
-							</div>
-						)}
-					</WrappableRow>
-
-					<div>
-						<Instruction>Transition Between Slides:</Instruction>
-						<WrappableRow type='grid' cols={2}>
-							<DropDown
-								onChange={(e) => setTransitionType(e.target.value)}
-								value={transitionType}
-							>
-								<option value=''>⏹️ None</option>
-								<option value='crossfade'>🌫️ Fade</option>
-								<option value='slide'>➡️ Slide In</option>
-								{/* <option value='zoom'>🔎 Zoom</option> */}
-							</DropDown>
-							{transitionType && (
-								<img
-									src={`/images/script/${transitionType}.gif`}
-									alt='Transition'
-									className='h-24'
-								/>
-							)}
-						</WrappableRow>
-					</div>
-
-					<div className='flex flex-row items-center gap-x-2'>
-						{/* checkbox for adding subtitle */}
-						<input
-							type='checkbox'
-							checked={withSubtitle}
-							onChange={() => setWithSubtitle(!withSubtitle)}
-						/>{' '}
-						<Instruction>Add subtitle to video.</Instruction>
-					</div>
-				</Card>
-
-				<Card>
-					<BigTitle>🦹‍♂️ Avatar</BigTitle>
-					<Instruction>
-						Select the avatar you want to use for your video.
-						<GrayLabel>Beta</GrayLabel>
-					</Instruction>
-					<Explanation>
-						Due to the limitation of our resources, we can only provide a
-						limited number of video generations with avatars. <br />
-						This feature will cost more credits. <br />
-						The credit cost for videos with avatar is 400⭐️ per video. This may
-						change in the future.
-					</Explanation>
-					{/* TODO: is ClonedVoice */}
-					{isOpenaiVoice(voice) || isClonedVoice(voice) ? (
-						<WarningMessage>
-							The voice you selected does not support avatars yet.
-						</WarningMessage>
-					) : (
-						<AvatarSelector
-							avatar={avatar}
-							setAvatar={setAvatar}
-							posture={posture}
-							setPosture={setPosture}
-							size={size}
-							setSize={setSize}
-							position={position}
-							setPosition={setPosition}
-						/>
-					)}
-				</Card>
-			</>
-		);
-	};
 
 	useEffect(() => {
 		if (avatar) setCreditCost(400);
@@ -515,7 +354,32 @@ export default function WorkflowStep5() {
 				{/* column for voice effects and avatar */}
 				{showAudioVideoDetailSettingSection && (
 					<Column width={'100%'} customStyle={{ width: '33.33%' }}>
-						<AudioVideoDetailSettingsSection />
+						<AudioVideoDetailSettingsSection
+							voice={voice}
+							setVoice={setVoice}
+							voiceIsHD={voiceIsHD}
+							setVoiceIsHD={setVoiceIsHD}
+							selectedLanguage={selectedLanguage}
+							setSelectedLanguage={setSelectedLanguage}
+							style={style}
+							setStyle={setStyle}
+							bgm={bgm}
+							setBgm={setBgm}
+							bgmVolume={bgmVolume}
+							setBgmVolume={setBgmVolume}
+							transitionType={transitionType}
+							setTransitionType={setTransitionType}
+							withSubtitle={withSubtitle}
+							setWithSubtitle={setWithSubtitle}
+							avatar={avatar}
+							setAvatar={setAvatar}
+							posture={posture}
+							setPosture={setPosture}
+							size={size}
+							setSize={setSize}
+							position={position}
+							setPosition={setPosition}
+						/>
 					</Column>
 				)}
 
@@ -605,10 +469,37 @@ export default function WorkflowStep5() {
 			{!showAudioVideoDetailSettingSection && (
 				<div className='w-[90vw] mx-auto'>
 					<Column width={'100%'} customStyle={{ width: 'auto' }}>
-						<AudioVideoDetailSettingsSection />
+						<AudioVideoDetailSettingsSection
+							voice={voice}
+							setVoice={setVoice}
+							voiceIsHD={voiceIsHD}
+							setVoiceIsHD={setVoiceIsHD}
+							selectedLanguage={selectedLanguage}
+							setSelectedLanguage={setSelectedLanguage}
+							style={style}
+							setStyle={setStyle}
+							bgm={bgm}
+							setBgm={setBgm}
+							bgmVolume={bgmVolume}
+							setBgmVolume={setBgmVolume}
+							transitionType={transitionType}
+							setTransitionType={setTransitionType}
+							withSubtitle={withSubtitle}
+							setWithSubtitle={setWithSubtitle}
+							avatar={avatar}
+							setAvatar={setAvatar}
+							posture={posture}
+							setPosture={setPosture}
+							size={size}
+							setSize={setSize}
+							position={position}
+							setPosition={setPosition}
+						/>
 					</Column>
 				</div>
 			)}
+
+			
 		</div>
 	);
 }

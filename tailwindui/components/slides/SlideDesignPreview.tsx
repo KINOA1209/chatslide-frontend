@@ -176,8 +176,9 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 		<>
 			{selectedLayouts && (
 				<Instruction>
-					(Optional) Please select the layouts you would like to use to initialize your
-					slides. You can also add new layouts back in the next step.
+					(Optional) Please select the layouts you would like to use to
+					initialize your slides. You can also add new layouts back in the next
+					step.
 				</Instruction>
 			)}
 			<ScrollBar
@@ -187,7 +188,7 @@ const SlideDesignPreview: React.FC<SlideDesignPreviewProps> = ({
 			>
 				{previewSlides.map((slide, index) => (
 					<div
-						className='DesignpreviewContainer flex flex-col items-center gap-1 p-2'
+						className='DesignpreviewContainer flex flex-col items-center gap-1 w-fit'
 						key={`DesignpreviewContainer` + index.toString()}
 					>
 						{selectedLayouts && (
