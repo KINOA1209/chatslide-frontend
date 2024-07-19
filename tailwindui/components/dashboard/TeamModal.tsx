@@ -3,15 +3,12 @@ import Modal from '../ui/Modal';
 import { FaClone, FaTrash } from 'react-icons/fa';
 import { BigBlueButton } from '../button/DrlambdaButton';
 import { ErrorMessage, Explanation, Instruction, SmallTitle } from '../ui/Text';
-import { DropDown } from '../button/DrlambdaButton';
 import TeamService from '@/services/TeamService';
 import UserService from '@/services/UserService';
 import { useUser } from '@/hooks/use-user';
 import { toast } from 'react-toastify';
 import { userInEU } from '@/utils/userLocation';
-import { Team } from '@/models/Team';
 import { useTeam } from '@/hooks/use-team';
-import ButtonWithExplanation from '../button/ButtonWithExplanation';
 import { LuTrash2 } from 'react-icons/lu';
 
 interface TeamModalProps {

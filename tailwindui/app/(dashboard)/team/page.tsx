@@ -13,16 +13,19 @@ import 'react-toastify/dist/ReactToastify.css';
 import { BackButton } from '@/components/button/DrlambdaButton';
 import { Column } from '@/components/layout/Column';
 import { Title } from '@/components/ui/Text';
+import { useTeam } from '@/hooks/use-team';
 
 const Team = () => {
 	const [showCreateTeamModal, setShowCreateTeamModal] = useState(false);
 	const [showJoinTeamModal, setShowJoinTeamModal] = useState(false);
 	const { token, tier } = useUser();
 	const [showPaywallModal, setShowPaywallModal] = useState(false);
+  const { initTeam } = useTeam(); 
 
 	const handleCreateTeam = async (teamName: string) => {
 		try {
 			const response = await TeamService.createTeam(teamName, token);
+      await initTeam();
 			window.location.href = '/dashboard?mode=team';
 		} catch (error: any) {
 			toast.error(`Error: ${error.message}`);
@@ -32,6 +35,7 @@ const Team = () => {
 	const handleJoinTeam = async (inviteCode: string) => {
 		try {
 			const response = await TeamService.joinTeam(inviteCode, token);
+      await initTeam();
 			window.location.href = '/dashboard?mode=team';
 		} catch (error: any) {
 			toast.error(`Error: ${error.message}`);
