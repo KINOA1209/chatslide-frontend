@@ -198,6 +198,7 @@ const DesignSystemButton: React.FC<DesignSystemButtonProps> = ({
 			/>
 			<button
 				id={'primary-' + id}
+        className='disabled:cursor-not-allowed'
 				disabled={isSubmitting || buttonStatus === 'disabled'}
 				onClick={checkPaidUser}
 				style={{ ...buttonStyles, ...customButtonStyles }}

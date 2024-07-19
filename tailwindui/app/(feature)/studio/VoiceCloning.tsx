@@ -370,6 +370,7 @@ const VoiceCloning = () => {
 						<BigBlueButton
 							onClick={submitConsent}
 							isSubmitting={isSubmittingConsent}
+              disabled={isRecordingRecord || cloning || isRecordingConsent}
 						>
 							{isSubmittingConsent ? 'Verifying...' : 'Verify and Continue'}
 						</BigBlueButton>
