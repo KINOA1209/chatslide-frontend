@@ -53,6 +53,7 @@ export type SlideKeys =
 
 export type Media = 'image' | 'chart' | 'embed';
 export type LogoPosition =
+	| 'No'
 	| 'BottomLeft'
 	| 'BottomRight'
 	| 'TopLeft'
