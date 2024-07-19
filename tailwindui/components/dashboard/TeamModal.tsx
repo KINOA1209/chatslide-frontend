@@ -192,7 +192,8 @@ const TeamModal: React.FC<TeamModalProps> = ({
 										{team?.free_members <= freeMembersCount ? (
 											<ErrorMessage>
 												You have reached the maximum number of{' '}
-												{team.free_members} free member(s) allowed for your team.
+												{team.free_members} free member(s) allowed for your
+												team.
 											</ErrorMessage>
 										) : team.invitation_code_free ? (
 											<>
@@ -220,8 +221,8 @@ const TeamModal: React.FC<TeamModalProps> = ({
 										{team.max_members <= paidMembersCount ? (
 											<ErrorMessage>
 												You have reached the maximum number of{' '}
-												{team.max_members} member(s) allowed for your team. Please
-												purchase a seat.
+												{team.max_members} member(s) allowed for your team.
+												Please purchase a seat.
 											</ErrorMessage>
 										) : team.invitation_code ? (
 											<>
@@ -269,6 +270,21 @@ const TeamModal: React.FC<TeamModalProps> = ({
 						</>
 					)}
 					<div className='mb-4'>
+						<SmallTitle>Owner</SmallTitle>
+						<div className='flex flex-col items-center mb-2'>
+							<div className='flex justify-between w-full'>
+								<div>
+									<p>
+										{team?.owner?.username}{' '}
+										{team?.owner?.email == email && '(You)'}
+									</p>
+									<p className='text-gray-500 text-sm'>{team?.owner?.email}</p>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div className='mb-4'>
 						<SmallTitle>Members</SmallTitle>
 						{team?.members?.length === 0 && (
 							<Explanation>
@@ -280,7 +296,9 @@ const TeamModal: React.FC<TeamModalProps> = ({
 							<div key={index} className='flex flex-col items-center mb-2'>
 								<div className='flex justify-between w-full'>
 									<div>
-										<p>{member.username}</p>
+										<p>
+											{member.username} {member.email == email && '(You)'}
+										</p>
 										<p className='text-gray-500 text-sm'>{member.email}</p>
 									</div>
 									{isOwner && member.role !== 'owner' && (
