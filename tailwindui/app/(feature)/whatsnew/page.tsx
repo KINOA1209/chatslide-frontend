@@ -29,22 +29,64 @@ export default function Studio() {
 				</Card>
 
 				<Card>
+					<BigTitle>July 19</BigTitle>
+					<Instruction>
+						<span>
+							<b>📈 Improved Chart Accuracy and Editing:</b> Our interactive charts now
+							offer enhanced accuracy, and you can also add or delete columns
+							and rows for greater editing flexibility.{' '}
+							<a href='/charts' className='text-blue-600'>
+								Try it
+							</a>
+							.
+						</span>
+					</Instruction>
+
+					<Instruction>
+						<span>
+							<span>
+								<p>
+									<b>📄 Enhanced Document Reading:</b> We've further improved
+									the quality and reliability of our document reading features,
+									ensuring better results for your projects.
+								</p>
+							</span>
+						</span>
+					</Instruction>
+
+					<Instruction>
+						<div>
+							<b>🔧 Teams Function Fixes:</b> We've resolved several bugs
+							related to our teams functionality, ensuring a smoother and more
+							reliable experience for team collaboration.
+						</div>
+					</Instruction>
+				</Card>
+
+				<Card>
 					<BigTitle>July 15</BigTitle>
 					<Instruction>
 						<span>
 							<b>🔊 New Voice Cloning:</b> Our latest voice cloning technology
 							is now available, offering improved quality for non-English use
-							cases. The credit cost is also reduced. <a href='/studio' className='text-blue-600'>Try it</a>.
+							cases. The credit cost is also reduced.{' '}
+							<a href='/studio' className='text-blue-600'>
+								Try it
+							</a>
+							.
 						</span>
 					</Instruction>
 
 					<Instruction>
 						<span>
 							<p>
-								<b>📊 Interactive Chart Editing:</b> You 
-								can edit interactive charts directly within our platform.
-								Additionally, you will be able to save and export the charts as
-								PNG files soon. <a href='/charts' className='text-blue-600'>Try it</a>.
+								<b>📊 Interactive Chart Editing:</b> You can edit interactive
+								charts directly within our platform. Additionally, you will be
+								able to save and export the charts as PNG files soon.{' '}
+								<a href='/charts' className='text-blue-600'>
+									Try it
+								</a>
+								.
 							</p>
 						</span>
 					</Instruction>
