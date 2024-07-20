@@ -45,6 +45,7 @@ import { WrappableRow } from '@/components/layout/WrappableRow';
 import { InputBox, NewInputBox } from '@/components/ui/InputBox';
 import RadioButton from '@/components/ui/RadioButton';
 import SessionStorage from '@/utils/SessionStorage';
+import SelectedResourcesList from '@/components/file/SelectedResources';
 
 const MAX_TOPIC_LENGTH = 3000;
 const MIN_TOPIC_LENGTH = 3;
@@ -271,6 +272,7 @@ export default function Topic() {
 	const [selectedResources, setSelectedResources] = useState<Resource[]>(
 		project?.resources || [],
 	);
+	const [pastedResources, setPastedResources] = useState<Resource[]>([]); // will merge with selected resources on submit
 	const [searchOnlineScope, setSearchOnlineScope] = useState('');
 
 	const [llmModel, setLlmModel] = useState(isPaidUser ? 'GPT-4o' : 'GPT-3.5');
@@ -388,7 +390,10 @@ export default function Topic() {
 			audience: audience,
 			language: language,
 			project_id: project_id,
-			resources: selectedResources.map((resource: Resource) => resource.id),
+			resources: [
+				...selectedResources.map((resource: Resource) => resource.id),
+				...pastedResources.map((resource: Resource) => resource.id),
+			],
 			model_name: llmModel === 'GPT-3.5' ? 'gpt-3.5-turbo' : 'gpt-4o',
 			//schoolTemplate: schoolTemplate,
 			scenario_type: scenarioType,
@@ -409,7 +414,7 @@ export default function Topic() {
 			topic: topic,
 			audience: audience,
 			language: language,
-			resources: selectedResources,
+			resources: [...selectedResources, ...pastedResources],
 			scenario_type: scenarioType,
 			search_online: searchOnlineScope,
 			knowledge_summary: knowledge_summary,
@@ -418,14 +423,17 @@ export default function Topic() {
 		} as Project);
 
 		// if needs to summarize resources
-		if (selectedResources?.length > 0 || searchOnlineScope) {
+		if (selectedResources?.length + pastedResources?.length > 0 || searchOnlineScope) {
 			setSummarizing(true); // should already be set to true
 			try {
 				console.log('resources', selectedResources);
 				console.log('summarizing resources');
 				const response = await ResourceService.summarizeResource(
 					project_id,
-					selectedResources.map((r: Resource) => r.id),
+					[
+						...selectedResources.map((resource: Resource) => resource.id),
+						...pastedResources.map((resource: Resource) => resource.id),
+					],
 					topic,
 					audience,
 					language,
@@ -479,8 +487,7 @@ export default function Topic() {
 						'The resource you provided does not provide sufficient information. ' +
 							reason,
 					);
-          if (reason)
-            setResourcesErrorMessage(reason);
+					if (reason) setResourcesErrorMessage(reason);
 				} else {
 					console.error('Error summarizing resources', error);
 				}
@@ -560,10 +567,45 @@ export default function Topic() {
 		}
 	}, []);
 
-	const removeResourceAtIndex = (indexToRemove: number) => {
-		setSelectedResources((currentResources) =>
-			currentResources.filter((_, index) => index !== indexToRemove),
-		);
+	const removeResourceAtIndex = (
+		indexToRemove: number,
+		isPasted: boolean = false,
+	) => {
+		if (isPasted) {
+			setPastedResources((currentResources) =>
+				currentResources.filter((_, index) => index !== indexToRemove),
+			);
+		} else {
+			setSelectedResources((currentResources) =>
+				currentResources.filter((_, index) => index !== indexToRemove),
+			);
+		}
+	};
+
+	const handlePaste = async (e: React.ClipboardEvent<HTMLTextAreaElement>) => {
+		const pasteText = e.clipboardData.getData('text');
+		if (pasteText.length > 500) {
+			// Set your threshold for "large text" here
+			e.preventDefault();
+			const blob = new Blob([pasteText], { type: 'text/plain' });
+			const file = new File([blob], pasteText.substring(0, 10) + '....txt', {
+				type: 'text/plain',
+			});
+			const infoId = toast.info(
+				'Converting your clipboard information to file...',
+			);
+			const newResource = await ResourceService.uploadResource(
+				file,
+				token,
+				'summary',
+				'docs',
+			);
+			setPastedResources([...pastedResources, newResource]);
+			toast.dismiss(infoId);
+			toast.success('Clipboard information uploaded as a file');
+		} else {
+			updateTopic(pasteText);
+		}
 	};
 
 	// avoid hydration error during development caused by persistence
@@ -679,15 +721,17 @@ export default function Topic() {
 					{generationMode === 'from_topic' && (
 						<div>
 							<div className='flex items-center gap-1'>
-								<Instruction>Project Topic</Instruction>
+								<Instruction>Project Topic and Instruction</Instruction>
 								<ExplanationPopup>
 									The main subject or theme of your project. It will set the
 									direction and focus of the contents.
+                  You can also paste any text and add instructions here. 
 								</ExplanationPopup>
 							</div>
 							<div className='border border-2 border-gray-200 rounded-md min-h-[10rem] flex flex-col justify-between'>
 								<TextareaAutosize
 									onChange={(e: any) => updateTopic(e.target.value)}
+									onPaste={handlePaste}
 									className='focus:ring-0 text-l md:text-l'
 									id='topic'
 									value={topic}
@@ -710,6 +754,25 @@ export default function Topic() {
 								</div>
 							</Explanation>
 							<ErrorMessage>{topicError}</ErrorMessage>
+
+							{/* pasted resources */}
+							{pastedResources.length > 0 && (
+								<div className='mt-2'>
+									<Instruction>Your clipboard sources:</Instruction>
+									{selectedResources.length + pastedResources.length > 4 && (
+										<WarningMessage>
+											The performance and accuracy may degrade with more than 4
+											sources.
+										</WarningMessage>
+									)}
+									<SelectedResourcesList
+										selectedResources={pastedResources}
+										removeResourceAtIndex={(i) =>
+											removeResourceAtIndex(i, true)
+										}
+									/>
+								</div>
+							)}
 						</div>
 					)}
 
