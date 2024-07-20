@@ -105,15 +105,23 @@ const options: ScenarioOption[] = [
 		structure: 'Introduction, statistical methods, case study reviews.',
 		icon: <FaChartBar />,
 	},
-	{
-		id: 'policy_training',
-		title: 'Policy Training',
-		imageSrc: '/images/scenario/policy_training.jpg',
-		audience: 'Office_Colleagues',
-		structure:
-			'Introduction, company rules, employee expectations, compliance procedures.',
-		icon: <FaBuilding />,
-	},
+    {
+    id: 'elearning',
+    title: 'E-learning',
+    imageSrc: '/images/scenario/elearning.jpg',
+    audience: 'Students',
+    structure: 'Short Introduction, learning objective, main content, summary.',
+    icon: <FaGraduationCap />,
+  },
+	// {
+	// 	id: 'policy_training',
+	// 	title: 'Policy Training',
+	// 	imageSrc: '/images/scenario/policy_training.jpg',
+	// 	audience: 'Office_Colleagues',
+	// 	structure:
+	// 		'Introduction, company rules, employee expectations, compliance procedures.',
+	// 	icon: <FaBuilding />,
+	// },
 	{
 		id: 'recommendation',
 		title: 'Listicle',
