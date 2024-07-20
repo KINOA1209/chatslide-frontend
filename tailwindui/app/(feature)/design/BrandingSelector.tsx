@@ -92,6 +92,7 @@ const BrandingSelector: React.FC<{
 					showModal={showPaywall}
 					setShowModal={setShowPaywall}
 					message='Unlock this feature to customize logo on your slides.'
+          trigger='design/branding_selector'
 				/>
 			)}
 
@@ -132,6 +133,7 @@ const BrandingSelector: React.FC<{
 						showModal={showPaywall}
 						setShowModal={setShowPaywall}
 						message='Unlock this feature to adjust your logo position'
+            trigger='design/logo_position'
 					/>
 					<Instruction boldenFont={true}>
 						Where do you want to put the logo?{' '}

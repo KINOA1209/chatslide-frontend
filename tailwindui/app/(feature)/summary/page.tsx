@@ -623,6 +623,7 @@ export default function Topic() {
 				setShowModal={setShowPaymentModal}
 				message='You need more ⭐️credits'
 				showReferralLink={true}
+        trigger='summary/credits'
 			/>
 
 			<ToastContainer />

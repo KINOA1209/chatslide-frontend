@@ -150,7 +150,13 @@ const TeamModal: React.FC<TeamModalProps> = ({
 
 	const handlePurchaseSeat = async (plan: string, token: string) => {
 		try {
-			const url = await UserService.checkout(plan, email, currency, token);
+			const url = await UserService.checkout(
+				plan,
+				email,
+				currency,
+				token,
+				'team', // trigger
+			);
 			window.open(url, '_blank');
 		} catch (error) {
 			console.error('An error occurred:', error);

@@ -13,6 +13,7 @@ interface PaywallModalProps {
 	setShowModal: (value: boolean) => void;
 	message: string;
 	showReferralLink?: boolean;
+  trigger: string;
 }
 
 const PaywallModal: React.FC<PaywallModalProps> = ({
@@ -20,6 +21,7 @@ const PaywallModal: React.FC<PaywallModalProps> = ({
 	setShowModal,
 	message,
 	showReferralLink = false,
+  trigger
 }) => {
 	const modalRef = React.useRef<HTMLDivElement>(null);
 	const modalContentRef = React.useRef<HTMLDivElement>(null);
@@ -68,7 +70,7 @@ const PaywallModal: React.FC<PaywallModalProps> = ({
 					</Card>
 				)}
 				{/* <Title>🚀 Upgrade for more credits</Title> */}
-				<PricingComparison />
+				<PricingComparison trigger={trigger}/>
 			</div>
 		</Modal>
 	);

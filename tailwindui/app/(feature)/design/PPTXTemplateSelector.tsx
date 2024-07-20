@@ -145,6 +145,7 @@ const PPTXTemplateSelector: React.FC<Props> = ({
 				showModal={showPaywall}
 				message='Upgrade for this 🌟premium feature!'
 				setShowModal={setShowPaywall}
+        trigger='design/pptx_template'
 			/>
 			{showQuestion && (
 				<div className='gap-1 flex flex-col justify-start'>

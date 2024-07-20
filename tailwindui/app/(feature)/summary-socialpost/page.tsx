@@ -381,6 +381,7 @@ export default function Topic_SocialPost() {
 				setShowModal={setShowPaymentModal}
 				message='You need more ⭐️credits'
 				showReferralLink={true}
+        trigger='socialpost/credits'
 			/>
 
 			<ToastContainer />

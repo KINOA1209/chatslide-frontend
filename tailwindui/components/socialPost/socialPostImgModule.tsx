@@ -551,6 +551,7 @@ export const ImgModule = ({
 						setShowModal={setShowPaymentModal}
 						message='You need more ⭐️credits'
 						showReferralLink={true}
+            trigger='socialpost/credits'
 					/>
 					<div className='grow md:grow-0'></div>
 					<Transition

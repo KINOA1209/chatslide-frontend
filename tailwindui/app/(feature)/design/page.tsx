@@ -584,6 +584,7 @@ export default function DesignPage() {
 				showModal={showPaymentModal}
 				message='Upgrade for this 🌟premium feature!'
 				setShowModal={setShowPaymentModal}
+        trigger='design'
 			/>
 
 			<div

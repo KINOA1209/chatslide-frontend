@@ -275,6 +275,7 @@ class UserService {
 		email: string,
 		currency: string,
 		token: string,
+    trigger: string,  // which trigger the user to pay
 	) {
 		const requestData = {
 			tier: plan,
@@ -282,6 +283,7 @@ class UserService {
 			currency: currency === '$' ? 'usd' : 'eur',
 			is_chatslide: isChatslide(),
 			client_reference_id: await getRewardfulReferralId(),
+			trigger: trigger,
 		};
 
 		const response = await fetch('/api/create-checkout-session', {

@@ -18,7 +18,8 @@ const PricingComparison: React.FC<{
 	extraPadding?: boolean;
 	small?: boolean;
 	showFreeTier?: boolean;
-}> = ({ extraPadding, small = false, showFreeTier = true }) => {
+  trigger: string;
+}> = ({ extraPadding, small = false, showFreeTier = true, trigger }) => {
 	const { token, email, tier: userTier, user } = useUser();
 	const [currency, setCurrency] = useState<string>('$');
 	const router = useRouter();
@@ -226,7 +227,7 @@ const PricingComparison: React.FC<{
 		const plan = tier + suffix;
 
 		try {
-			const url = await UserService.checkout(plan, email, currency, token);
+			const url = await UserService.checkout(plan, email, currency, token, trigger);
 
 			// Redirect to the checkout page
 			window.open(url, '_blank');
@@ -858,7 +859,7 @@ export function Pricing() {
 						</div>
 					</div>
 				</div>
-				<PricingComparison extraPadding={true} />
+				<PricingComparison extraPadding={true} trigger='pricing'/>
 			</div>
 		</div>
 	);

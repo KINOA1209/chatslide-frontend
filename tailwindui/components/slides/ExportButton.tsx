@@ -205,6 +205,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 				setShowModal={setShowPaymentModal}
 				message='Upgrade to export your work!'
 				showReferralLink={false}
+        trigger='slides/export'
 			/>
 
 			<ToastContainer />

@@ -987,6 +987,7 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 							showModal={showPaywall}
 							setShowModal={setShowPaywall}
 							message='Unlock this feature to customize logo on your slides.'
+              trigger='socialpost/logo'
 						/>
 						<div className={`titleAndRadioButtons flex flex-col gap-[4px]`}>
 							<span

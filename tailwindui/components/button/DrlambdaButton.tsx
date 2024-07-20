@@ -82,6 +82,7 @@ const DrlambdaButton: React.FC<DrlambdaButtonProps> = ({
 				showModal={showPaywallModal}
 				setShowModal={setShowPaywallModal}
 				message='Upgrade to unlock more features 🚀'
+        trigger={'button/' + id}
 			/>
 
 			<Menu
@@ -207,6 +208,7 @@ export const BigBlueButton: React.FC<DrlambdaButtonProps> = ({
 				showModal={showPaywallModal}
 				setShowModal={setShowPaywallModal}
 				message='Upgrade to unlock more features 🚀'
+        trigger={'button/' + id}
 			/>
 			<div id={id} className='mx-auto'>
 				{isUploadDropdownItem ? (
@@ -267,6 +269,7 @@ export const BigGrayButton: React.FC<DrlambdaButtonProps> = ({
 				showModal={paywallModal}
 				setShowModal={setShowPaywallModal}
 				message='Upgrade to unlock more features 🚀'
+        trigger={'button/' + id}
 			/>
 			<DesignSystemButton
 				onClick={(e) => {

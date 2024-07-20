@@ -99,7 +99,8 @@ const Team = () => {
 			<PaywallModal
 				showModal={showPaywallModal}
 				setShowModal={setShowPaywallModal}
-				message='Upgrade to get an early access to Beta features. 🚀'
+				message='Upgrade to get access to teams features'
+        trigger='team'
 			/>
 			<ToastContainer />
 		</div>
