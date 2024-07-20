@@ -29,12 +29,49 @@ export default function Studio() {
 				</Card>
 
 				<Card>
+					<BigTitle>July 21</BigTitle>
+					<Instruction>
+						<span>
+							<b>🎨 Improved Design of the Scripts Page:</b> We've enhanced the
+							design of the scripts page for a more intuitive and visually
+							appealing experience.
+						</span>
+					</Instruction>
+					<Instruction>
+						<span>
+							<p>
+								<b>🔊 More Reliable Generation of Voices and Videos:</b> Our
+								platform now ensures even more reliable generation of voices and
+								videos, providing better quality and consistency for your
+								projects.
+							</p>
+						</span>
+					</Instruction>
+
+					<Instruction>
+						<div>
+							<b>🖱️ UX Improvements:</b> You can now paste text directly
+							from your clipboard on the summary page, making it easier to incorporate content into
+							your projects.
+						</div>
+					</Instruction>
+
+					<Instruction>
+						<div>
+							<b>📚 eLearning Added as a Scenario:</b> We've added eLearning as
+							a new scenario, offering tailored features and optimizations for
+							educational content.
+						</div>
+					</Instruction>
+				</Card>
+
+				<Card>
 					<BigTitle>July 19</BigTitle>
 					<Instruction>
 						<span>
-							<b>📈 Improved Chart Accuracy and Editing:</b> Our interactive charts now
-							offer enhanced accuracy, and you can also add or delete columns
-							and rows for greater editing flexibility.{' '}
+							<b>📈 Improved Chart Accuracy and Editing:</b> Our interactive
+							charts now offer enhanced accuracy, and you can also add or delete
+							columns and rows for greater editing flexibility.{' '}
 							<a href='/charts' className='text-blue-600'>
 								Try it
 							</a>
