@@ -25,7 +25,6 @@ import { uneditableTemplateDispatch } from '@/components/slides/templateDispatch
 import { FiDownload } from 'react-icons/fi';
 import { Menu, MenuItem } from '../button/Menu';
 import { PiFileText, PiMicrosoftPowerpointLogo } from 'react-icons/pi';
-import { generatePPTX } from '@/utils/export2pptx/generate';
 
 interface ExportToPdfProps {
 	exportSlidesRef: React.RefObject<HTMLDivElement>;
@@ -194,10 +193,6 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 		});
 	};
 
-	const handleExportPptx = () => {
-		generatePPTX(slides);
-	}
-
 	return (
 		<div>
 			<PaywallModal
@@ -240,7 +235,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 				/>
 				<MenuItem
 					label='PowerPoint'
-					onClick={handleExportPptx}
+					onClick={() => handleExport('pptx', false)}
 					icon={<FaRegFilePowerpoint />}
           isPaidFeature={true}
 				/>
