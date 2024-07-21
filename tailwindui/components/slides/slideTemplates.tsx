@@ -72,7 +72,6 @@ export const generateTemplate = (templateName: string) => {
 		media_types,
 		logo_position,
 		logo_numeric_position,
-		image_Refs,
 	}: // initialTemplateTitleFontFamily,
 	MainSlideProps) => {
 		const {
@@ -163,7 +162,6 @@ export const generateTemplate = (templateName: string) => {
 						media_types={media_types}
 						logo_position={logo_position}
 						logo_numeric_position={logo_numeric_position}
-						image_Refs={image_Refs}
 					></ChosenLayoutNonCover>
 				</div>
 				{/* for cover page */}
@@ -231,7 +229,6 @@ export const generateTemplate = (templateName: string) => {
 						media_types={media_types}
 						logo_position={logo_position}
 						logo_numeric_position={logo_numeric_position}
-						image_Refs={image_Refs}
 					></ChosenLayoutCover>
 				</div>
 			</>
@@ -328,7 +325,6 @@ export interface MainSlideProps {
 	media_types: Media[];
 	logo_position: LogoPosition;
 	logo_numeric_position: Position;
-	image_Refs: React.Ref<HTMLImageElement>[];
 	// initialTemplateTitleFontFamily?: string;
 }
 

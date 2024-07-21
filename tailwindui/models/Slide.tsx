@@ -2,7 +2,6 @@ import { LayoutKeys } from '@/components/slides/slideLayout';
 import { PaletteKeys, TemplateKeys } from '@/components/slides/slideTemplates';
 import Chart, { Group } from '@/models/Chart';
 import Position from '@/types/Position';
-import React from 'react';
 
 export interface SlideElement {
 	type: 'h1' | 'h2' | 'h3' | 'h4' | 'p' | 'ul' | 'li' | 'br' | 'div';
@@ -97,7 +96,6 @@ export default class Slide {
 	// is_logo_left: boolean;
 	logo_position: LogoPosition;
 	logo_numeric_position: Position;
-	image_Refs: React.RefObject<HTMLImageElement>[];
 
 	constructor() {
 		const emptyGroup: Group = {
@@ -141,6 +139,5 @@ export default class Slide {
 		// this.is_logo_left = true;
 		this.logo_position = 'BottomLeft';
 		this.logo_numeric_position = {};
-		this.image_Refs = this.images.map(() => React.createRef<HTMLImageElement>());
 	}
 }
