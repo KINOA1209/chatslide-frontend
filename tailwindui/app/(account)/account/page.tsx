@@ -38,6 +38,7 @@ import { UnlimitedUpgrade } from '@/components/slides/card/UnlimitedUpgrade';
 import { trackRewardfulConversion } from '@/components/integrations/Rewardful';
 import { WrappableRow } from '@/components/layout/WrappableRow';
 import SubscriptionModal from '../SubscriptionModal';
+import Modal from '@/components/ui/Modal';
 
 
 const Profile = () => {
@@ -491,6 +492,38 @@ const CreditHistory = () => {
 	);
 };
 
+const DangerZone = () => {
+  const { token, signOut } = useUser();
+  const [showModal, setShowModal] = useState(false);
+
+  function deleteAndSignOut() {
+    UserService.deleteUser(token);
+    signOut();
+  }
+
+  const ConfirmModal: React.FC<{}> = () => {
+    return (
+      <Modal
+        title='Delete Account and Sign Out'
+        description='Are you sure you want to delete your account? This cannot be undone.'
+        showModal={showModal}
+        setShowModal={setShowModal}
+        onConfirm={deleteAndSignOut}
+        />
+    )
+  }
+
+  return (
+		<Card>
+      {showModal && <ConfirmModal />}
+			<Instruction>🔥 Danger Zone</Instruction>
+			<Instruction>
+				<span className='text-red-600 cursor-pointer' onClick={()=>{setShowModal(true)}}>Delete Account and Sign Out</span>
+			</Instruction>
+		</Card>
+	);
+};
+
 export default function Account() {
 	// To add a new section
 	// Add tabRef for header animation
@@ -541,6 +574,8 @@ export default function Account() {
 				<UnlimitedUpgrade />
 
 				<Affiliate />
+
+        <DangerZone />
 			</Panel>
 		</Column>
 	);
