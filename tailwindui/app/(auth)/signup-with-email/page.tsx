@@ -3,6 +3,7 @@ import SignupForm from '@/components/signup/signup-form';
 import CustomerServiceInfo from '@/components/signup/customerService';
 import { generateMetadata } from '@/app/layout';
 import { getBrand } from '@/utils/getHost';
+import { BigTitle } from '@/components/ui/Text';
 
 const title = `Sign Up with Email | ${getBrand()}`;
 const description = `${getBrand()} is your AI assistant to create professional slides and posts. Join us to experience the power of AI in creating professional slides and posts.`;
@@ -15,7 +16,7 @@ export default function SignUp() {
 				<div className='pt-32 pb-12 md:pt-40 md:pb-20'>
 					{/* Page header */}
 					<div className='max-w-3xl mx-auto text-center pb-12 md:pb-20'>
-						<h1 className='h1'>💙 Hello!</h1>
+						<BigTitle center>💙 Hello!</BigTitle>
 					</div>
 
 					{/* Form */}

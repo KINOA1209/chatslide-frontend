@@ -7,9 +7,9 @@ const Title: React.FC<{ center?: boolean; children: React.ReactNode }> = ({
 }) => {
 	if (center)
 		return (
-			<div className='text-neutral-800 text-xl font-bold py-1 text-center'>
+			<h1 className='text-neutral-800 text-xl font-bold py-1 text-center'>
 				{children}
-			</div>
+			</h1>
 		);
 	else
 		return (
@@ -19,16 +19,27 @@ const Title: React.FC<{ center?: boolean; children: React.ReactNode }> = ({
 
 const SmallTitle: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 	return (
-		<div className='block text-grey-700 text-md font-bold mb-2'>{children}</div>
+		<h2 className='block text-grey-700 text-md font-bold mb-2'>{children}</h2>
 	);
 };
 
-const BigTitle: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-	return (
-		<div className='text-neutral-800 text-2xl font-bold py-1 flex flex-row items-center gap-x-2'>
-			{children}
-		</div>
-	);
+const BigTitle: React.FC<{ center?: boolean; children: React.ReactNode }> = ({
+	center = false,
+	children,
+}) => {
+	if (center) {
+		return (
+			<h1 className='text-neutral-800 text-2xl font-bold py-1 text-center'>
+				{children}
+			</h1>
+		);
+	} else {
+		return (
+			<h1 className='text-neutral-800 text-2xl font-bold py-1 flex flex-row items-center gap-x-2'>
+				{children}
+			</h1>
+		);
+	}
 };
 
 const Instruction: React.FC<{
