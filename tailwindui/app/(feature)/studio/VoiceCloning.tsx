@@ -309,6 +309,7 @@ const VoiceCloning = () => {
 				showModal={showPaywallModal}
 				setShowModal={setShowPaywallModal}
 				message='Upgrade to get an early access to Beta features. 🚀'
+        trigger='studio/voice_cloning'
 			/>
 			<Card>
 				<BigTitle>🎙️ Create a New Voice Profile</BigTitle>
