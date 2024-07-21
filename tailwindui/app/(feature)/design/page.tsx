@@ -360,7 +360,7 @@ export default function DesignPage() {
 						imageLicense,
 						imageAmount,
 						token,
-            selectedLayouts
+						selectedLayouts,
 					);
 
 					newSlides = result.slides;
@@ -425,7 +425,7 @@ export default function DesignPage() {
 			}
 		} catch (e) {
 			setIsSubmitting(false);
-      setShowGenerationStatusModal(false);
+			setShowGenerationStatusModal(false);
 			console.error(e);
 			toast.error(
 				'Server is busy now. Please try again later. Reference code: ' +
@@ -592,7 +592,7 @@ export default function DesignPage() {
 				style={{
 					display: screenWidth < 1280 ? 'block' : 'flex',
 					padding: '10px',
-					gap: '10px',
+					gap: '32px',
 				}}
 			>
 				{/* <div
@@ -759,7 +759,10 @@ export default function DesignPage() {
 						// flex: '2 0 66%',
 					}}
 				>
-					<BigTitle>Template Preview</BigTitle>
+					<div>
+						<BigTitle>Template Preview</BigTitle>
+					</div>
+
 					<SlideDesignPreview
 						selectedTemplate={template}
 						selectedPalette={colorPalette}
