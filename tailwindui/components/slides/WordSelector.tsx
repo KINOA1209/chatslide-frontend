@@ -1,6 +1,5 @@
-import { removeTags } from '@/hooks/use-slides';
-import { remove } from 'lodash';
 import { useState } from 'react';
+
 
 type WordSelectorProps = {
 	text: string;
@@ -9,6 +8,19 @@ type WordSelectorProps = {
 
 function textIsChineseJapaneseOrKorean(text: string): boolean {
 	return text.match(/[\u3400-\u9FBF]/) !== null;
+}
+
+function splitWords(text: string): string[] {
+	if (typeof Intl !== 'undefined' && 'Segmenter' in Intl) {
+		const segmenter = new Intl.Segmenter(undefined, { granularity: 'word' });
+		const segments = segmenter.segment(text);
+		return Array.from(segments)
+			.map((s) => s.segment)
+			.filter((word) => word.trim() !== '');
+	} else {
+		// Fallback for browsers that don't support Intl.Segmenter
+		return text.split(/\s+/);
+	}
 }
 
 export const WordSelector: React.FC<WordSelectorProps> = ({
@@ -25,7 +37,9 @@ export const WordSelector: React.FC<WordSelectorProps> = ({
 	// remove ',' and '.' from words
 	words = words.map((word) => word.replace(/[,\.]/g, ''));
 
-	if (textIsChineseJapaneseOrKorean(text)) words = text.split('');
+	if (textIsChineseJapaneseOrKorean(text)) {
+    words = splitWords(text);
+  }
 
 	if (words.length == 0) return null;
 
