@@ -570,7 +570,7 @@ export default function Topic_SocialPost() {
 										}}
 										isSubmitting={isAddingLink}
 									>
-										{isAddingLink ? 'Adding...' : 'Add'}
+										{isAddingLink ? 'Reading...' : 'Add'}
 									</SmallBlueButton>
 								</div>
 
