@@ -35,7 +35,7 @@ const Subscription = () => {
 				</div> */}
 				<Title>Find tailored plans for you</Title>
 
-				<PricingComparison small={true} trigger='pricing/user_research'/>
+				<PricingComparison small={true} trigger='pricing'/>
 
 				<Title>
 					Looking to redeem your code? Click{' '}
