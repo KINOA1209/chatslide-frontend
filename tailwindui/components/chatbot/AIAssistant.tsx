@@ -37,7 +37,7 @@ export const AIAssistantIcon: React.FC<{
 				<Image
 					src={getLogoUrl()}
 					alt={'AIAssistantImage'}
-					className='w-[2rem] h-[2rem] z-10'
+					className='w-[2rem] h-[2rem]'
 					width={32}
 					height={32}
 				/>
@@ -45,7 +45,7 @@ export const AIAssistantIcon: React.FC<{
 				<Image
 					src={DrlambdaCartoonImage}
 					alt={'AIAssistantImage'}
-					className='w-[1.75rem] h-[2rem] z-10'
+					className='w-[1.75rem] h-[2rem]'
 					width={28}
 					height={32}
 				/>
