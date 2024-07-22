@@ -184,6 +184,7 @@ const VoiceCloning = () => {
 							clearInterval(timerRef.current!);
 							timerRef.current = null;
 							setConsentTimeLeft(20);
+              setAudioLength(20);
 							return 20;
 						}
 						return prevTime - 1;
@@ -197,6 +198,7 @@ const VoiceCloning = () => {
 							clearInterval(timerRef.current!);
 							timerRef.current = null;
 							setRecordTimeLeft(60);
+              setAudioLength(60);
 							return 60;
 						}
 						return prevTime - 1;
