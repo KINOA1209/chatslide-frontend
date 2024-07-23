@@ -51,6 +51,13 @@ import {
 } from '@/components/language/ClonedVoicesContext';
 import 'react-toastify/dist/ReactToastify.css';
 import LANGUAGES from '@/components/language/languageData';
+import {
+	Accordion,
+	AccordionContent,
+	AccordionItem,
+	AccordionTrigger,
+} from '@/components/ui/accordion';
+import AudioVideoDetailSettingsSection from '@/app/(feature)/scripts/AudioVideoDetailSettingsSection';
 
 const ScriptSection = dynamic(
 	() => import('@/components/script/ScriptSection'),
@@ -81,6 +88,31 @@ export default function WorkflowStep5() {
 	const params = useSearchParams();
 
 	const [selectedLanguage, setSelectedLanguage] = useState('en-US');
+
+	// to show audio video detail setting or not for responsive design
+	const [
+		showAudioVideoDetailSettingSection,
+		setShowAudioVideoDetailSettingSection,
+	] = useState(true);
+
+	useEffect(() => {
+		const handleResize = () => {
+			if (window.innerWidth < 1024) {
+				setShowAudioVideoDetailSettingSection(false);
+			} else {
+				setShowAudioVideoDetailSettingSection(true);
+			}
+		};
+
+		// Set initial state
+		handleResize();
+
+		// Add event listener for resize
+		window.addEventListener('resize', handleResize);
+
+		// Clean up event listener on component unmount
+		return () => window.removeEventListener('resize', handleResize);
+	}, []);
 
 	useEffect(() => {
 		if (avatar) setCreditCost(400);
@@ -258,6 +290,7 @@ export default function WorkflowStep5() {
 					creditCost,
 					transitionType,
 					withSubtitle,
+					selectedLanguage, // locale
 				);
 				updateCreditsFE(-20);
 				router.push(addIdToRedir('/video'));
@@ -315,157 +348,29 @@ export default function WorkflowStep5() {
 
 			{showConfirmRegenModal && <ConfirmVideoRegenModal />}
 
-			<Column>
-				{/* <CreditCost /> */}
-				<Card>
-					<WrappableRow type='flex' justify='between'>
-						<BigTitle>🎙️ Voice</BigTitle>
+			{/* three columns: voice & avatar & effects, scripts, chat window */}
 
-						{!isOpenaiVoice(voice) && (
-							<Toggle
-								isLeft={!voiceIsHD}
-								setIsLeft={(value: boolean) => setVoiceIsHD(!value)}
-								leftText='Standard'
-								rightText='Hi-Fi 🎧'
-							/>
-						)}
-					</WrappableRow>
-
-					<Instruction>
-						<span>
-							Voice cloning is now available for PRO and ULTIMATE users.{' '}
-							<a className='text-blue-600' href='/studio' target='_blank'>
-								Clone voice.
-							</a>{' '}
-						</span>
-					</Instruction>
-
-					<Instruction>
-						Select the voice you want to use for your video.
-					</Instruction>
-					<ClonedVoicesProvider>
-						<VoiceSelector
-							selectedVoice={voice}
-							setSelectedVoice={setVoice}
+			<div className='flex flex-row w-full gap-[24px] items-start justify-between'>
+				{/* column for voice effects and avatar */}
+				{showAudioVideoDetailSettingSection && (
+					<Column width={'100%'} customStyle={{ width: '33.33%' }}>
+						<AudioVideoDetailSettingsSection
+							voice={voice}
+							setVoice={setVoice}
+							voiceIsHD={voiceIsHD}
+							setVoiceIsHD={setVoiceIsHD}
 							selectedLanguage={selectedLanguage}
 							setSelectedLanguage={setSelectedLanguage}
 							style={style}
 							setStyle={setStyle}
-							isHD={voiceIsHD}
-						/>
-					</ClonedVoicesProvider>
-				</Card>
-
-				<Card>
-					<BigTitle>🎥 Video Effects</BigTitle>
-					<WrappableRow type='grid' cols={2}>
-						<div>
-							<Instruction>Background Music:</Instruction>
-							<div className='flex flex-row gap-4 items-center'>
-								<DropDown
-									width='12rem'
-									onChange={(e) => setBgm(e.target.value)}
-									value={bgm}
-									style='input'
-								>
-									{Object.entries(bgmDisplayNames).map(([key, value]) => (
-										<option key={key} value={key}>
-											{value}
-										</option>
-									))}
-								</DropDown>
-								{bgm && (
-									<ButtonWithExplanation
-										explanation='Preview'
-										button={
-											<a href={`/bgm/${bgm}.mp3`} target='_blank'>
-												<FiPlay
-													style={{
-														strokeWidth: '2',
-														flex: '1',
-														width: '1.5rem',
-														height: '1.5rem',
-														fontWeight: 'bold',
-														color: '#344054',
-													}}
-												/>
-											</a>
-										}
-									/>
-								)}
-							</div>
-						</div>
-						{bgm && (
-							<div>
-								<Instruction>Volume: {bgmVolume * 100}</Instruction>
-								<RangeSlider
-									onChange={(value: number) => {
-										if (value !== 0) {
-											console.log(value);
-											setBgmVolume(value);
-										}
-									}}
-									value={bgmVolume}
-									minValue={0.05}
-									choices={[0, 0.05, 0.1, 0.2, 0.3, 0.4]}
-								/>
-							</div>
-						)}
-					</WrappableRow>
-
-					<div>
-						<Instruction>Transition Between Slides:</Instruction>
-						<WrappableRow type='grid' cols={2}>
-							<DropDown
-								onChange={(e) => setTransitionType(e.target.value)}
-								value={transitionType}
-							>
-								<option value=''>⏹️ None</option>
-								<option value='crossfade'>🌫️ Fade</option>
-								<option value='slide'>➡️ Slide In</option>
-								{/* <option value='zoom'>🔎 Zoom</option> */}
-							</DropDown>
-							{transitionType && (
-								<img
-									src={`/images/script/${transitionType}.gif`}
-									alt='Transition'
-									className='h-24'
-								/>
-							)}
-						</WrappableRow>
-					</div>
-
-					<div className='flex flex-row items-center gap-x-2'>
-						{/* checkbox for adding subtitle */}
-						<input
-							type='checkbox'
-							checked={withSubtitle}
-							onChange={() => setWithSubtitle(!withSubtitle)}
-						/>{' '}
-						<Instruction>Add subtitle to video.</Instruction>
-					</div>
-				</Card>
-
-				<Card>
-					<BigTitle>🦹‍♂️ Avatar</BigTitle>
-					<Instruction>
-						Select the avatar you want to use for your video.
-						<GrayLabel>Beta</GrayLabel>
-					</Instruction>
-					<Explanation>
-						Due to the limitation of our resources, we can only provide a
-						limited number of video generations with avatars. <br />
-						This feature will cost more credits. <br />
-						The credit cost for videos with avatar is 400⭐️ per video. This may
-						change in the future.
-					</Explanation>
-					{/* TODO: is ClonedVoice */}
-					{isOpenaiVoice(voice) || isClonedVoice(voice) ? (
-						<WarningMessage>
-							The voice you selected does not support avatars yet.
-						</WarningMessage>
-					) : (
-						<AvatarSelector
+							bgm={bgm}
+							setBgm={setBgm}
+							bgmVolume={bgmVolume}
+							setBgmVolume={setBgmVolume}
+							transitionType={transitionType}
+							setTransitionType={setTransitionType}
+							withSubtitle={withSubtitle}
+							setWithSubtitle={setWithSubtitle}
 							avatar={avatar}
 							setAvatar={setAvatar}
 							posture={posture}
@@ -475,97 +380,126 @@ export default function WorkflowStep5() {
 							position={position}
 							setPosition={setPosition}
 						/>
-					)}
-				</Card>
-				{/* <Card>
-					<BigTitle>🦹‍♂️ Avatar</BigTitle>
-					<div className='flex flex-row gap-x-4 items-end'>
-						<Instruction>
-							This is coming soon... We are finding some pilot users to test this feature.
-						</Instruction>
-						<EarlyAccessButton
-							username={username}
-							token={token}
-							feature='avatar'
-							project_id={project.id}
-						/>
-					</div>
-				</Card> */}
-			</Column>
+					</Column>
+				)}
 
-			<div className='flex flex-row justify-between gap-x-4 lg:px-4 pb-4'>
-				<Card>
-					<BigTitle>📝 Scripts</BigTitle>
-					{!isOpenaiVoice(voice) && (
-						<Instruction>
-							<div className='flex flex-col gap-y-1'>
-								<p>💡 Script to voice tips: </p>
-								<p>
-									⏸️ Use <span className='text-green-600'>...</span> to denote
-									pause{' '}
-								</p>
-								<p>
-									*️⃣ Use <span className='text-green-600'>*word*</span> to
-									denote emphasis{' '}
-								</p>
-								<p>
-									🔤 Use <span className='text-green-600'>[word]</span> to spell
-									out the word.{' '}
-								</p>
-								<p>
-									🌟 For example:{' '}
-									<span
-										className='text-blue-600 hover:cursor-pointer'
-										onClick={() => previewVoice('denotation')}
-									>
-										🔈 We also support creating *slides* from... [doc] files.{' '}
-									</span>
-								</p>
+				{/*  column for scripts window */}
+				<Column width={'100%'} customStyle={{ width: 'auto' }}>
+					<Card>
+						<BigTitle>📝 Scripts</BigTitle>
+						{!isOpenaiVoice(voice) && (
+							<Instruction>
+								<div className='flex flex-col gap-y-1'>
+									<p>💡 Script to voice tips: </p>
+									<p>
+										⏸️ Use <span className='text-green-600'>...</span> to denote
+										pause{' '}
+									</p>
+									<p>
+										*️⃣ Use <span className='text-green-600'>*word*</span> to
+										denote emphasis{' '}
+									</p>
+									<p>
+										🔤 Use <span className='text-green-600'>[word]</span> to
+										spell out the word.{' '}
+									</p>
+									<p>
+										🌟 For example:{' '}
+										<span
+											className='text-blue-600 hover:cursor-pointer'
+											onClick={() => previewVoice('denotation')}
+										>
+											🔈 We also support creating *slides* from... [doc] files.{' '}
+										</span>
+									</p>
+								</div>
+							</Instruction>
+						)}
+
+						<div className='flex flex-col gap-y-2 items-center '>
+							<ScriptSection
+								slides={slides}
+								index={slideIndex}
+								voice={voice}
+								voiceStyle={style}
+								updateSlidePage={updateSlidePage}
+								locale={selectedLanguage}
+							/>
+
+							<div className='flex flex-row items-center'>
+								<SlideLeftNavigator
+									currentSlideIndex={slideIndex}
+									slides={slides}
+									goToSlide={gotoPage}
+								/>
+								<SlidePagesIndicator
+									currentSlideIndex={slideIndex}
+									slides={slides}
+								/>
+								<SlideRightNavigator
+									currentSlideIndex={slideIndex}
+									slides={slides}
+									goToSlide={gotoPage}
+								/>
 							</div>
-						</Instruction>
-					)}
-
-					<div className='flex flex-col gap-y-2 items-center '>
-						<ScriptSection
-							slides={slides}
-							index={slideIndex}
-							voice={voice}
-							voiceStyle={style}
-							updateSlidePage={updateSlidePage}
-							locale={selectedLanguage}
-						/>
-
-						<div className='flex flex-row items-center'>
-							<SlideLeftNavigator
-								currentSlideIndex={slideIndex}
-								slides={slides}
-								goToSlide={gotoPage}
-							/>
-							<SlidePagesIndicator
-								currentSlideIndex={slideIndex}
-								slides={slides}
-							/>
-							<SlideRightNavigator
-								currentSlideIndex={slideIndex}
-								slides={slides}
-								goToSlide={gotoPage}
-							/>
 						</div>
-					</div>
-				</Card>
-
-				<div className='h-full flex flex-col justify-end'>
-					<div className='h-[600px] sticky bottom-0'>
-						<AIAssistantChatWindow
-							onToggle={undefined}
-							slides={slides}
-							currentSlideIndex={slideIndex}
-							updateSlidePage={updateSlidePage}
-							type='script'
-						/>
-					</div>
-				</div>
+					</Card>
+				</Column>
+				{/*  column for ai chat window */}
+				<Column
+					width={'100%'}
+					customStyle={{ width: 'auto', height: '90vh', minHeight: '80vh' }}
+				>
+					{/* <div className='h-full flex flex-col justify-end'> */}
+					{/* <div> */}
+					<AIAssistantChatWindow
+						onToggle={undefined}
+						slides={slides}
+						currentSlideIndex={slideIndex}
+						updateSlidePage={updateSlidePage}
+						type='script'
+					/>
+					{/* </div> */}
+					{/* </div> */}
+				</Column>
 			</div>
+
+			{/* when smaller screen: <1024px we will show audio and video detail section under script and chat */}
+			{/* column for voice effects and avatar */}
+			{!showAudioVideoDetailSettingSection && (
+				<div className='w-[90vw] mx-auto'>
+					<Column width={'100%'} customStyle={{ width: 'auto' }}>
+						<AudioVideoDetailSettingsSection
+							voice={voice}
+							setVoice={setVoice}
+							voiceIsHD={voiceIsHD}
+							setVoiceIsHD={setVoiceIsHD}
+							selectedLanguage={selectedLanguage}
+							setSelectedLanguage={setSelectedLanguage}
+							style={style}
+							setStyle={setStyle}
+							bgm={bgm}
+							setBgm={setBgm}
+							bgmVolume={bgmVolume}
+							setBgmVolume={setBgmVolume}
+							transitionType={transitionType}
+							setTransitionType={setTransitionType}
+							withSubtitle={withSubtitle}
+							setWithSubtitle={setWithSubtitle}
+							avatar={avatar}
+							setAvatar={setAvatar}
+							posture={posture}
+							setPosture={setPosture}
+							size={size}
+							setSize={setSize}
+							position={position}
+							setPosition={setPosition}
+						/>
+					</Column>
+				</div>
+			)}
+
+			
 		</div>
 	);
 }

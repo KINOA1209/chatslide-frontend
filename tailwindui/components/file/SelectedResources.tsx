@@ -49,6 +49,7 @@ const ResourceEntry: React.FC<ResourceEntryProps> = ({
 				message='Subscribe to use OCR'
 				showModal={showPaywall}
 				setShowModal={setShowPaywall}
+        trigger='summary/ocr'
 			/>
 
 			<div className='flex items-center gap-2'>

@@ -410,7 +410,7 @@ const ProjectItem: React.FC<{
 											setShowMoveToTeamModal={setShowMoveToTeamModal}
 											setRefreshMenu={setRefreshMenu}
 										/>
-										Move to teamTeam List
+										Move to team
 									</button>
 								)}
 

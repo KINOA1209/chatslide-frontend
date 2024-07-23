@@ -123,7 +123,7 @@ export const ChangeProjectDescriptionButton: React.FC<{
                 progress: undefined,
                 theme: 'light',
             });
-            console.error('Network error:', error);
+            console.error(error);
         }
         setShowChangeProjectDescriptionModal(false);
         setProjectDescriptionChangeInput('');

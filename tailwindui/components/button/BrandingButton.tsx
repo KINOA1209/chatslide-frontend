@@ -155,6 +155,7 @@ export const BrandingButton: React.FC<{}> = () => {
 				showModal={showPaymentModal}
 				message='Upgrade for this 🌟premium feature!'
 				setShowModal={setShowPaymentModal}
+        trigger='design/remove_username'
 			/>
 			<ButtonWithExplanation
 				button={

@@ -21,15 +21,16 @@ export default class VoiceCloneService {
 			return resp.consent_id;
 		} else {
 			const errorResp = await response.json();
-			throw new Error('Error when submitting consent: ' + errorResp.message);
+			throw new Error('Error when submitting consent: ' + errorResp.error);
 		}
 	}
 
 	static async cloneVoice(
-    consentId: string, 
-    audioData: File,
-    name: string, 
-    token: string) {
+		consentId: string,
+		audioData: File,
+		name: string,
+		token: string,
+	) {
 		// Create a new FormData object
 		const formData = new FormData();
 		formData.append('consent_id', consentId);
@@ -53,7 +54,7 @@ export default class VoiceCloneService {
 			};
 		} else {
 			const errorResp = await response.json();
-			throw new Error('Error when cloning voice: ' + errorResp.message);
+			throw new Error('Error when cloning voice: ' + errorResp.error);
 		}
 	}
 
@@ -77,22 +78,27 @@ export default class VoiceCloneService {
 		}
 	}
 
-	static async generateVoice(voiceId: string, text: string, locale: string = 'en-US', token: string) {
-    const data = {
-      voice_id: voiceId,
-      text: text,
-      locale: locale,
-    };
+	static async generateVoice(
+		voiceId: string,
+		text: string,
+		locale: string = 'en-US',
+		token: string,
+	) {
+		const data = {
+			voice_id: voiceId,
+			text: text,
+			locale: locale,
+		};
 
-    const response = await fetch('/api/clone/generate', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(data),
-    });
-    
+		const response = await fetch('/api/clone/generate', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify(data),
+		});
+
 		if (response.ok) {
 			const audioBlob = await response.blob();
 			const audioUrl = URL.createObjectURL(audioBlob);

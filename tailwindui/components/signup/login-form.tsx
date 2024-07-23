@@ -6,6 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Link from 'next/link';
 import AuthService from '../../services/AuthService';
+import { BigBlueButton } from '../button/DrlambdaButton';
 
 const LoginForm: React.FC = () => {
 	const router = useRouter();
@@ -28,7 +29,8 @@ const LoginForm: React.FC = () => {
 			let message = error.message || 'An error occurred';
 			console.log('message', message);
 			if (message == 'User does not exist.') {
-				message = 'Please sign up first. If you signed up with Google, please sign in with Google.';
+				message =
+					'Please sign up first. If you signed up with Google, please sign in with Google.';
 			}
 			toast.error(message, {
 				position: 'top-center',
@@ -93,11 +95,10 @@ const LoginForm: React.FC = () => {
 			</div>
 			<div className='flex flex-wrap -mx-3 mt-6'>
 				<div className='w-full px-3'>
-					<button
-						className='btn text-white font-bold w-full bg-Blue disabled:bg-gray-200 disabled:text-gray-600'
-						disabled={isSubmitting}
-					>
-						{isSubmitting ? 'Signing in...' : 'Sign in'}
+					<button>
+						<BigBlueButton width='384px' disabled={isSubmitting}>
+							{isSubmitting ? 'Signing in...' : 'Sign in'}
+						</BigBlueButton>
 					</button>
 					<ToastContainer />
 				</div>

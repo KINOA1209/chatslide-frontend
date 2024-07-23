@@ -1,24 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import Modal from '../ui/Modal';
-import { FaClone } from 'react-icons/fa';
+import { FaClone, FaTrash } from 'react-icons/fa';
 import { BigBlueButton } from '../button/DrlambdaButton';
-import { ErrorMessage, Instruction, SmallTitle } from '../ui/Text';
-import { DropDown } from '../button/DrlambdaButton';
+import { ErrorMessage, Explanation, Instruction, SmallTitle } from '../ui/Text';
 import TeamService from '@/services/TeamService';
 import UserService from '@/services/UserService';
 import { useUser } from '@/hooks/use-user';
 import { toast } from 'react-toastify';
 import { userInEU } from '@/utils/userLocation';
-import { Team } from '@/models/Team';
 import { useTeam } from '@/hooks/use-team';
-
-interface TeamMember {
-	id: string;
-	name: string;
-	email: string;
-	role: string;
-	member_type?: string;
-}
+import { LuTrash2 } from 'react-icons/lu';
 
 interface TeamModalProps {
 	showModal: boolean;
@@ -31,7 +22,6 @@ const TeamModal: React.FC<TeamModalProps> = ({
 	setShowModal,
 	teamId,
 }) => {
-	const [members, setMembers] = useState<TeamMember[]>([]);
 	// const [newMemberEmail, setNewMemberEmail] = useState<string>('');
 	// const [inviteCode, setInviteCode] = useState<string>('');
 	// const [maxMembers, setMaxMembers] = useState<number>(0);
@@ -41,7 +31,7 @@ const TeamModal: React.FC<TeamModalProps> = ({
 	const { token, email, username } = useUser();
 	const [currency, setCurrency] = useState('$');
 
-	const { team, updateInvitationCode } = useTeam();
+	const { team, updateInvitationCode, removeMember } = useTeam();
 
 	useEffect(() => {
 		userInEU().then((res) => {
@@ -49,14 +39,13 @@ const TeamModal: React.FC<TeamModalProps> = ({
 		});
 	}, []);
 
-  useEffect(() => {
-    if (!team)
-      return;
-    console.log('tea')
-    setIsOwner(
+	useEffect(() => {
+		if (!team) return;
+		console.log('tea');
+		setIsOwner(
 			team.owner.username === username || team.owner.username === email,
 		);
-  }, [team])
+	}, [team]);
 
 	// useEffect(() => {
 	// 	if (showModal && teamId) {
@@ -113,23 +102,22 @@ const TeamModal: React.FC<TeamModalProps> = ({
 	// 	}
 	// };
 
-	const handleRoleChange = (index: number, role: string) => {
-		if (role === 'Remove') {
-			handleRemoveMember(index);
-		} else {
-			const updatedMembers = members.map((member, i) =>
-				i === index ? { ...member, role } : member,
-			);
-			setMembers(updatedMembers);
-		}
-	};
+	// const handleRoleChange = (index: number, role: string) => {
+	// 	if (role === 'Remove') {
+	// 		handleRemoveMember(index);
+	// 	} else {
+	// 		const updatedMembers = members.map((member, i) =>
+	// 			i === index ? { ...member, role } : member,
+	// 		);
+	// 		setMembers(updatedMembers);
+	// 	}
+	// };
 
 	const handleRemoveMember = async (index: number) => {
 		try {
-			const memberId = members[index].id;
-			await TeamService.removeMember(teamId, memberId, token);
-			const updatedMembers = members.filter((_, i) => i !== index);
-			setMembers(updatedMembers);
+			const memberId = team?.members[index]?.id;
+			if (!memberId) return;
+			removeMember(memberId, token);
 		} catch (err) {
 			console.error('Error removing member:', err);
 		}
@@ -140,10 +128,10 @@ const TeamModal: React.FC<TeamModalProps> = ({
 			const inviteCode = await TeamService.generateInviteCode(
 				teamId,
 				false,
-        isFree,
-        token,
+				isFree,
+				token,
 			);
-      updateInvitationCode(isFree, inviteCode);
+			updateInvitationCode(isFree, inviteCode);
 		} catch (err) {
 			console.error(err);
 		}
@@ -162,18 +150,24 @@ const TeamModal: React.FC<TeamModalProps> = ({
 
 	const handlePurchaseSeat = async (plan: string, token: string) => {
 		try {
-			const url = await UserService.checkout(plan, email, currency, token);
+			const url = await UserService.checkout(
+				plan,
+				email,
+				currency,
+				token,
+				'team', // trigger
+			);
 			window.open(url, '_blank');
 		} catch (error) {
 			console.error('An error occurred:', error);
 		}
 	};
 
-	const paidMembersCount = members.filter(
-		(member) => member.member_type !== 'free',
+	const paidMembersCount = (team?.members || []).filter(
+		(member) => member.tier !== 'free',
 	).length;
-	const freeMembersCount = members.filter(
-		(member) => member.member_type === 'free',
+	const freeMembersCount = (team?.members || []).filter(
+		(member) => member.tier === 'free',
 	).length;
 
 	return (
@@ -203,8 +197,9 @@ const TeamModal: React.FC<TeamModalProps> = ({
 										<span className='text-gray-800'>Free Tier:</span>
 										{team?.free_members <= freeMembersCount ? (
 											<ErrorMessage>
-												You have reached the maximum number of free members
-												allowed for your team.
+												You have reached the maximum number of{' '}
+												{team.free_members} free member(s) allowed for your
+												team.
 											</ErrorMessage>
 										) : team.invitation_code_free ? (
 											<>
@@ -231,8 +226,9 @@ const TeamModal: React.FC<TeamModalProps> = ({
 										<span className='text-gray-800'>Pro Tier:</span>
 										{team.max_members <= paidMembersCount ? (
 											<ErrorMessage>
-												You have reached the maximum number of members allowed
-												for your team. Please purchase a seat.
+												You have reached the maximum number of{' '}
+												{team.max_members} member(s) allowed for your team.
+												Please purchase a seat.
 											</ErrorMessage>
 										) : team.invitation_code ? (
 											<>
@@ -255,12 +251,13 @@ const TeamModal: React.FC<TeamModalProps> = ({
 								</div>
 							</div>
 							<div className='mb-4'>
-								<SmallTitle>Purchase New Seat at Pro Tier</SmallTitle>
+								<SmallTitle>Purchase Lifetime Seats at Pro Tier</SmallTitle>
 								<div className='mt-2'>
 									<BigBlueButton
+										width='16rem'
 										onClick={() => handlePurchaseSeat('TEAM_ONE_SEAT', token)}
 									>
-										Purchase One Lifetime Seat (60% off)
+										Purchase a Seat (60% off)
 									</BigBlueButton>
 								</div>
 								<div className='mt-2'>
@@ -279,24 +276,43 @@ const TeamModal: React.FC<TeamModalProps> = ({
 						</>
 					)}
 					<div className='mb-4'>
+						<SmallTitle>Owner</SmallTitle>
+						<div className='flex flex-col items-center mb-2'>
+							<div className='flex justify-between w-full'>
+								<div>
+									<p>
+										{team?.owner?.username}{' '}
+										{team?.owner?.email == email && '(You)'}
+									</p>
+									<p className='text-gray-500 text-sm'>{team?.owner?.email}</p>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div className='mb-4'>
 						<SmallTitle>Members</SmallTitle>
-						{members.map((member, index) => (
-							<div key={index} className='flex flex-col items-start mb-2'>
+						{team?.members?.length === 0 && (
+							<Explanation>
+								No members found. Please invite members to your team.
+							</Explanation>
+						)}
+
+						{team?.members.map((member, index) => (
+							<div key={index} className='flex flex-col items-center mb-2'>
 								<div className='flex justify-between w-full'>
 									<div>
-										<p>{member.name}</p>
+										<p>
+											{member.username} {member.email == email && '(You)'}
+										</p>
 										<p className='text-gray-500 text-sm'>{member.email}</p>
 									</div>
-									{isOwner && member.role !== 'Owner' && (
-										<DropDown
-											onChange={(e) => handleRoleChange(index, e.target.value)}
-											value={member.role}
-										>
-											<option value='Member'>Member</option>
-											<option value='Remove' className='text-red-500'>
-												Remove
-											</option>
-										</DropDown>
+									{isOwner && member.role !== 'owner' && (
+										// delete button
+										<LuTrash2
+											className='cursor-pointer'
+											onClick={() => handleRemoveMember(index)}
+										/>
 									)}
 								</div>
 							</div>

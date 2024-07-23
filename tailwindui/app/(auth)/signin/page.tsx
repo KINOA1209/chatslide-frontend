@@ -5,6 +5,8 @@ import GoogleSignIn from '@/components/button/GoogleSignIn';
 import CustomerServiceInfo from '@/components/signup/customerService';
 import { generateMetadata } from '@/app/layout';
 import { getBrand } from '@/utils/getHost';
+import { BigBlueButton } from '@/components/button/DrlambdaButton';
+import { BigTitle } from '@/components/ui/Text';
 
 const title = `Sign In | ${getBrand()}`;
 const description = `${getBrand()} is your AI assistant to create professional slides and posts. Join us to experience the power of AI in creating professional slides and posts.`;
@@ -17,7 +19,7 @@ export default function SignIn() {
 				<div className='pt-32 pb-12 md:pt-40 md:pb-20'>
 					{/* Page header */}
 					<div className='max-w-3xl mx-auto text-center pb-12 md:pb-20'>
-						<h1 className='h1'>💙 Welcome back!</h1>
+						<BigTitle center>💙 Welcome back!</BigTitle>
 					</div>
 
 					{/* Form */}

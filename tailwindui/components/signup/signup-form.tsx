@@ -15,6 +15,7 @@ import AuthService from '@/services/AuthService';
 import UserService from '@/services/UserService';
 import Promo from './Promo';
 import SessionStorage from '../../utils/SessionStorage';
+import { BigBlueButton } from '../button/DrlambdaButton';
 
 const SignupForm: React.FC = () => {
 	const router = useRouter();
@@ -242,11 +243,10 @@ const SignupForm: React.FC = () => {
 			</div>
 			<div className='flex flex-wrap -mx-3 mt-6'>
 				<div className='w-full px-3'>
-					<button
-						className='btn text-white font-bold bg-Blue w-full disabled:bg-gray-200 disabled:text-gray-600'
-						disabled={submitting}
-					>
-						{!submitting ? 'Sign up' : 'Signing up...'}
+					<button>
+						<BigBlueButton disabled={submitting} width='384px'>
+							{!submitting ? 'Sign up' : 'Signing up...'}
+						</BigBlueButton>
 					</button>
 				</div>
 			</div>

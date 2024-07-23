@@ -275,6 +275,7 @@ class UserService {
 		email: string,
 		currency: string,
 		token: string,
+    trigger: string,  // which trigger the user to pay
 	) {
 		const requestData = {
 			tier: plan,
@@ -282,6 +283,7 @@ class UserService {
 			currency: currency === '$' ? 'usd' : 'eur',
 			is_chatslide: isChatslide(),
 			client_reference_id: await getRewardfulReferralId(),
+			trigger: trigger,
 		};
 
 		const response = await fetch('/api/create-checkout-session', {
@@ -384,6 +386,7 @@ class UserService {
 		}
 	}
 
+  // unused
 	static async updateRewardfulCode(
 		code: string,
 		idToken: string,
@@ -408,6 +411,27 @@ class UserService {
 			throw error; // Rethrow the error so that it can be handled by the caller
 		}
 	}
+
+  static async deleteUser(idToken: string): Promise<boolean> {
+    try {
+      const response = await fetch(`/api/user/delete`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${idToken}`,
+        },
+      });
+
+      if (response.ok) {
+        return true;
+      } else {
+        throw new Error(`Error ${response.status}: ${await response.text()}`);
+      }
+    } catch (error) {
+      console.error('Error in deleteUser:', error);
+      throw error; // Rethrow the error so that it can be handled by the caller
+    }
+  }
 }
 
 export default UserService;

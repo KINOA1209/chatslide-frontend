@@ -186,7 +186,9 @@ const LinkInput = ({
 						onClick={(e) => (e.target as HTMLInputElement).select()}
 						onPaste={(e) => {
 							// console.log('pasting');
-              addLink(e.clipboardData.getData('text'));
+							addLink(e.clipboardData.getData('text'));
+              e.stopPropagation();  // prevent on change
+              e.preventDefault();
 						}}
 						onKeyDown={(e) => {
 							if (e.key === 'Enter') {
@@ -205,7 +207,7 @@ const LinkInput = ({
 					disabled={linkUrl === ''}
 					isSubmitting={isAddingLink}
 				>
-					{isAddingLink ? 'Adding...' : 'Add'}
+					{isAddingLink ? 'Reading...' : 'Add'}
 				</SmallBlueButton>
 			</div>
 

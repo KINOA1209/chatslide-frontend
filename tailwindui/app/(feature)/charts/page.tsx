@@ -13,7 +13,6 @@ import useHydrated from '@/hooks/use-hydrated';
 import { ChartEditor } from '@/components/chart/chartEditor';
 import {
 	Chart as ChartJS,
-	ChartType,
 	PieController,
 	BarController,
 	LineController,
@@ -27,11 +26,14 @@ import {
 	Legend,
 	ArcElement,
 	ScatterController,
-	ChartEvent,
 } from 'chart.js';
 import { Chart } from 'react-chartjs-2';
+import {
+	WatermarkPlugin,
+	BackgroundColor,
+} from '@/components/chart/chartPluginUtils';
 
-import Toggle from '@/components/button/Toggle';
+import { useUser } from '@/hooks/use-user';
 // Register Chart.js components
 ChartJS.register(
 	CategoryScale,
@@ -47,30 +49,32 @@ ChartJS.register(
 	PieController,
 	BarController,
 	LineController,
+	WatermarkPlugin,
+	BackgroundColor,
 );
 
 export default function Page() {
-	const [chartUrl, setChartUrl] = useState('');
-	const [urlHistory, setUrlHistory] = useState(['/images/scenario/charts.png']);
+	const isPaidTier = useUser().isPaidUser;
 	const [chartData, setChartData] = useState<any>(null);
 	const [chartValues, setChartValues] = useState<any>(null);
 	const [chartConfig, setChartConfig] = useState<any>(null);
-	const [chartType, setChartType] = useState<null | "line" | "bar" | "pie" | "scatter">(null);
-	const [useDynamicChart, setUseDynamicChart] = useState(true);
+	const [chartType, setChartType] = useState<
+		null | 'line' | 'bar' | 'pie' | 'scatter'
+	>(null);
 	const chartRef = useRef<ChartJS>(null);
 
 	function receiveChart(data: any) {
 		// internal chart data contains only the chart_json field
 		setChartData(data.chart_json);
-		console.log("Chart Data: ", data.chart_json);
+		console.log('Chart Data: ', data.chart_json);
 	}
 
 	function updateDynamicChart() {
 		if (!chartData) return;
 		const datasets = {
 			labels: chartData.labels,
-			datasets: chartData.datasets,
-		}
+			datasets: [...chartData.datasets],
+		};
 		setChartValues(datasets);
 		setChartType(chartData.chartType);
 		setChartConfig({
@@ -82,23 +86,24 @@ export default function Page() {
 					title: {
 						display: true,
 						text: chartData.options.xTitle,
-					}
+					},
 				},
 				y: {
 					display: true,
 					title: {
 						display: true,
 						text: chartData.options.yTitle,
-					}
-				}
+					},
+				},
 			},
 			plugins: {
+				background_color_plugin: {},
 				title: {
 					display: true,
 					text: chartData.title,
 				},
+				water_mark_plugin: isPaidTier ? false : {},
 			},
-
 		});
 	}
 
@@ -109,42 +114,36 @@ export default function Page() {
 	}, [chartData]);
 
 	function downloadChart() {
-		if (!useDynamicChart) {
-			window.open(chartUrl);
-		}
 		if (chartRef.current !== null && chartType) {
 			const base64Image = chartRef.current.toBase64Image();
 			const a = document.createElement('a');
 			a.download = 'chart.png';
-			a.href = base64Image;;
+			a.href = base64Image;
 			a.click();
 		}
-	}
-
-	function updateChartUrl(url: string) {
-		setChartUrl(url);
-		setUrlHistory([...urlHistory, url]);
 	}
 
 	// avoid hydration error during development caused by persistence
 	if (!useHydrated()) return <></>;
 
 	// Shared no chart message
-	const noChart = <div className='flex flex-col justify-center items-center'>
-		<Instruction>
-			You don't have any chart to display yet.
-			You can start chatting with the AI Assistant on the right.
-		</Instruction>
+	const noChart = (
+		<div className='flex flex-col justify-center items-center'>
+			<Instruction>
+				You don't have any chart to display yet. You can start chatting with the
+				AI Assistant on the right.
+			</Instruction>
 
-		<Image
-			unoptimized
-			src='/images/scenario/charts.png'
-			alt='Chart'
-			width={400}
-			height={300}
-		// layout='fixed'
-		/>
-	</div>
+			<Image
+				unoptimized
+				src='/images/scenario/charts.png'
+				alt='Chart'
+				width={400}
+				height={300}
+				// layout='fixed'
+			/>
+		</div>
+	);
 
 	return (
 		<div className='flex flex-row flex-grow justify-around items-center relative h-screen'>
@@ -154,14 +153,9 @@ export default function Page() {
 				</Card>
 			</Panel> */}
 
-			<Column customStyle={{ height: "100%", overflowY: "auto" }}>
+			<Column customStyle={{ height: '100%', overflowY: 'auto' }}>
 				<div className='w-full flex flex-col gap-4 my-auto'>
-					<div className='w-full flex flex-row items-center justify-between gap-y-2 gap-x-4'>
-						<Toggle
-							isLeft={!useDynamicChart}
-							setIsLeft={() => { setUseDynamicChart(!useDynamicChart) }}
-							leftText='Static Image'
-							rightText='Interactive (Beta)' />
+					<div className='w-full flex flex-row items-center justify-center gap-y-2 gap-x-4'>
 						<ToolBar>
 							<ButtonWithExplanation
 								explanation='Download Chart'
@@ -185,57 +179,46 @@ export default function Page() {
 
 					<div className='flex items-center'>
 						<Card>
-							{!useDynamicChart ?
+							{chartType ? (
 								<>
-									{chartUrl ? <Image
-										unoptimized
-										src={chartUrl}
-										alt='Chart'
-										width={720}
-										height={540}
-									// layout='fixed'
-									/> :
-										noChart}
-
+									<Chart
+										className=''
+										type={chartType!}
+										data={chartValues}
+										options={chartConfig}
+										ref={chartRef}
+									></Chart>
 								</>
-								:
-								<>
-									{chartType ?
-										<>
-											<Chart className='' type={chartType!} data={chartValues} options={chartConfig} ref={chartRef}></Chart>
-										</> :
-										noChart}
-								</>
-							}
+							) : (
+								noChart
+							)}
 						</Card>
 					</div>
 
 					<div>
-						{useDynamicChart && chartType ?
+						{chartType ? (
 							<Card>
 								<div className='w-full'>
-									<ChartEditor chartData={chartData} setChartData={setChartData} chartRef={chartRef} />
+									<ChartEditor
+										chartData={chartData}
+										setChartData={setChartData}
+									/>
 								</div>
-							</Card> : <></>}
+							</Card>
+						) : (
+							<></>
+						)}
 					</div>
 				</div>
-			</Column >
+			</Column>
 
-			{
-				useDynamicChart ? <AIAssistantChatWindow
-					onToggle={undefined}
-					slides={[]}
-					currentSlideIndex={0}
-					type='chart'
-					updateDynamicChart={receiveChart}
-				/> :
-					<AIAssistantChatWindow
-						onToggle={undefined}
-						slides={[]}
-						currentSlideIndex={0}
-						type='chart'
-						updateChartUrl={updateChartUrl} />
-			}
-		</div >
+			<AIAssistantChatWindow
+				onToggle={undefined}
+				slides={[]}
+				currentSlideIndex={0}
+				type='chart'
+				updateDynamicChart={receiveChart}
+			/>
+		</div>
 	);
 }

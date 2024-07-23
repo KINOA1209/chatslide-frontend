@@ -18,7 +18,7 @@ const ScriptSection: React.FC<{
 	voice: string;
 	voiceStyle: string;
 	updateSlidePage: (index: number, slide: Slide) => void;
-  locale: string
+	locale: string;
 }> = ({ slides, index, voice, voiceStyle, updateSlidePage, locale }) => {
 	const [scale, setScale] = useState(calculateScale());
 	const [isPlaying, setIsPlaying] = useState(false);
@@ -28,25 +28,25 @@ const ScriptSection: React.FC<{
 	const { token } = useUser();
 	const { project } = useProject();
 
-  function calculateScale() {
-    const width = window.innerWidth;
-    if (width > 1024) {
-      return ((width - 400) / 1920) * 0.8; // 400 is for chatbot
-    } else if (width > 640) {
-      return (width - 400) / 1920; // vertical 
-    } else {
-      return width / 1920 * 0.8; // no chatbot
-    }
-  }
+	function calculateScale() {
+		const width = window.innerWidth;
+		if (width > 1024) {
+			return ((width - 400) / 1920) * 0.8; // 400 is for chatbot
+		} else if (width > 640) {
+			return (width - 400) / 1920; // vertical
+		} else {
+			return (width / 1920) * 0.8; // no chatbot
+		}
+	}
 
-  // reset scale on resize
-  useEffect(() => {
-    const handleResize = () => {
-      setScale(calculateScale());
-    };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+	// reset scale on resize
+	useEffect(() => {
+		const handleResize = () => {
+			setScale(calculateScale());
+		};
+		window.addEventListener('resize', handleResize);
+		return () => window.removeEventListener('resize', handleResize);
+	}, []);
 
 	const playScript = async () => {
 		const script = slides[index].transcript || '';
@@ -61,7 +61,7 @@ const ScriptSection: React.FC<{
 				voiceStyle,
 				project?.foldername as string,
 				token,
-        locale
+				locale,
 			); // Fetch voice from backend
 			const audioElement = new Audio(audio); // Create an audio element with the fetched voice
 			setIsLoading(false);
@@ -88,7 +88,7 @@ const ScriptSection: React.FC<{
 
 	const PlayButton = () => {
 		return (
-			<div className='mt-4'>
+			<div className='mt-4 mx-auto'>
 				{isLoading ? (
 					<SpinIcon />
 				) : !isPlaying ? (
@@ -133,7 +133,7 @@ const ScriptSection: React.FC<{
 	};
 
 	return (
-		<div className='flex flex-col lg:flex-row'>
+		<div className='flex flex-col'>
 			<SlideContainer
 				index={index}
 				slide={slides[index]}

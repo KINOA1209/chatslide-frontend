@@ -69,6 +69,7 @@ const RangeSlider: React.FC<RangeSliderProps> = ({
 				showModal={showPaymentModal}
 				setShowModal={setShowPaymentModal}
 				message='Upgrade to unlock more features 🚀'
+        trigger={'button/range_slider' + label}
 			/>
 		</div>
 	);

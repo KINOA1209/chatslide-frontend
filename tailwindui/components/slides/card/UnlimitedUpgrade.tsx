@@ -28,6 +28,7 @@ export const UnlimitedUpgrade: React.FC<{}> = ({}) => {
 			email,
 			!useEuro ? '$' : '€',
 			token,
+      'unlimited_upgrade' // trigger
 		);
 		if (url) {
 			// open a new tab

@@ -38,7 +38,7 @@ export const AIAssistantIcon: React.FC<{
 				<Image
 					src={getLogoUrl()}
 					alt={'AIAssistantImage'}
-					className='w-[2rem] h-[2rem] z-10'
+					className='w-[2rem] h-[2rem]'
 					width={32}
 					height={32}
 				/>
@@ -46,7 +46,7 @@ export const AIAssistantIcon: React.FC<{
 				<Image
 					src={DrlambdaCartoonImage}
 					alt={'AIAssistantImage'}
-					className='w-[1.75rem] h-[2rem] z-10'
+					className='w-[1.75rem] h-[2rem]'
 					width={28}
 					height={32}
 				/>
@@ -83,9 +83,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 	const lastMessageRef = useRef<HTMLDivElement>(null); // Ensure you have a ref for the last message
 	const { project } = useProject();
 	const chatWindowRef = useRef<HTMLDivElement>(null);
-	const [model, setModel] = useState(
-		type === 'chart' ? 'GPT-4o' : 'GPT-3.5',
-	);
+	const [model, setModel] = useState(type === 'chart' ? 'GPT-4o' : 'GPT-3.5');
 
 	const handleEnter = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
 		if (event.key === 'Enter') {

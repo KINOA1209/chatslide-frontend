@@ -856,6 +856,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				setShowModal={setShowPaymentModal}
 				message='You need more ⭐️credits'
 				showReferralLink={true}
+        trigger='slides/credits'
 			/>
 
 			<div className='w-full h-full flex flex-row items-start justify-center lg:justify-around gap-2'>

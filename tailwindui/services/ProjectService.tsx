@@ -255,8 +255,8 @@ class ProjectService {
 			// console.log('slideData:', slideData);
 			const slide = new Slide();
 			slide.head = slideData.head || '';
-			slide.title = slideData.title || 'New Slide';
-			slide.subtopic = slideData.subtopic || 'New Slide';
+			slide.title = slideData.title || '';
+			slide.subtopic = slideData.subtopic || '';
 			slide.userName = slideData.userName || '';
 			slide.template =
 				slideData.template || ('Business_Light_006' as TemplateKeys);
