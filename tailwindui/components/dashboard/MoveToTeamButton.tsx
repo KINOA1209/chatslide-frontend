@@ -36,8 +36,8 @@ export const MoveToTeamButton: React.FC<{
 				console.error('Error moving project to team:', response.message);
 			}
 		} catch (error: any) {
-			toast.error('Network error: ' + error.message);
-			console.error('Network error:', error);
+			toast.error(error.message);
+			console.error(error);
 		}
 	};
 

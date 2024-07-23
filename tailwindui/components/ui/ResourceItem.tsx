@@ -22,7 +22,7 @@ export const ResourceIcon: React.FC<{
 	contain?: boolean;
 }> = ({ resource, contain = false }) => {
 	// console.log('resource.file_extension is', resource.file_extension);
-	// console.log('resource.type', resource.type);
+	// console.log('resource.thumbnail_url', resource.thumbnail_url);
 	if (!resource.thumbnail_url) {
 		return (
 			<div className='p-[10px]'>
@@ -41,8 +41,8 @@ export const ResourceIcon: React.FC<{
 		<Image
 			src={resource.thumbnail_url}
 			alt={resource.name}
-			width={40}
-			height={40}
+			width={32}
+			height={32}
 			unoptimized={true}
 			style={style}
 			onError={(e) => {
@@ -275,7 +275,7 @@ export const ResourceItem: React.FC<Resource> = ({
 	// 	lastDotIndex !== -1 ? name.slice(lastDotIndex + 1).toLowerCase() : '';
 	const fileExtension = getFileExtension(name);
 
-	// console.log('resource file extension: ', name, fileExtension);
+	// console.log('resource file thumbnail_url: ', name, thumbnail_url);
 	return (
 		<div
 			key={id}

@@ -46,6 +46,7 @@ const ImageSelector: React.FC<Props> = ({
 				showModal={showPaywall}
 				message='Upgrade for this 🌟premium feature!'
 				setShowModal={setShowPaywall}
+        trigger='design/image_selector'
 			/>
 			{showQuestion && (
 				<div className='gap-1 flex flex-col justify-start'>

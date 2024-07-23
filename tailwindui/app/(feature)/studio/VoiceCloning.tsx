@@ -184,6 +184,7 @@ const VoiceCloning = () => {
 							clearInterval(timerRef.current!);
 							timerRef.current = null;
 							setConsentTimeLeft(20);
+              setAudioLength(20);
 							return 20;
 						}
 						return prevTime - 1;
@@ -197,6 +198,7 @@ const VoiceCloning = () => {
 							clearInterval(timerRef.current!);
 							timerRef.current = null;
 							setRecordTimeLeft(60);
+              setAudioLength(60);
 							return 60;
 						}
 						return prevTime - 1;
@@ -309,6 +311,7 @@ const VoiceCloning = () => {
 				showModal={showPaywallModal}
 				setShowModal={setShowPaywallModal}
 				message='Upgrade to get an early access to Beta features. 🚀'
+        trigger='studio/voice_cloning'
 			/>
 			<Card>
 				<BigTitle>🎙️ Create a New Voice Profile</BigTitle>
@@ -370,6 +373,7 @@ const VoiceCloning = () => {
 						<BigBlueButton
 							onClick={submitConsent}
 							isSubmitting={isSubmittingConsent}
+              disabled={isRecordingRecord || cloning || isRecordingConsent}
 						>
 							{isSubmittingConsent ? 'Verifying...' : 'Verify and Continue'}
 						</BigBlueButton>

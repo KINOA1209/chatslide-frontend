@@ -79,10 +79,45 @@ export const useTeam = () => {
     }
   }
 
+  async function removeMember(memberId: string, token: string) {
+		if (!team) return;
+
+		const newTeam = {
+			...team,
+			members: team.members.filter((member) => member.id !== memberId),
+		};
+
+		setTeam(newTeam as Team);
+
+		await TeamService.removeMember(teamId, memberId, token);
+	}
+
+  // async function changeMemberRole(token: string, memberId: string, role: string) {
+  //   if (!team) return;
+
+  //   const newTeam = {
+  //     ...team,
+  //     members: team.members.map(member => {
+  //       if (member.id === memberId) {
+  //         return {
+  //           ...member,
+  //           role
+  //         }
+  //       }
+  //       return member;
+  //     })
+  //   }
+
+  //   setTeam(newTeam as Team);
+
+  //   await TeamService.changeMemberRole(teamId, memberId, role, token);
+  // }
+
 	return {
 		team,
 		teamId,
 		initTeam,
 		updateInvitationCode,
+    removeMember,
 	};
 };

@@ -67,8 +67,8 @@ export const RenameProjectButton: React.FC<{
                 console.error('Error updating project name:', errorData.message);
             }
         } catch (error: any) {
-            toast.error('Network error: ' + error.message);
-            console.error('Network error:', error);
+            toast.error(error.message);
+            console.error(error);
         }
         setShowRenameProjectModal(false);
         setProjectRenameInput('');

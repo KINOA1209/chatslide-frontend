@@ -292,6 +292,7 @@ const setInitPos = (
 };
 
 const defaultLogoPos = {
+	No: {x: -9999, y: -9999, width: 58, height: 58},
 	BottomLeft: { x: 12, y: 470, width: 58, height: 58 },
 	BottomRight: { x: 890, y: 470, width: 58, height: 58 },
 	TopLeft: { x: 12, y: 12, width: 58, height: 58 },

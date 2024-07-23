@@ -3,19 +3,23 @@ import GoogleSignIn from '@/components/button/GoogleSignIn';
 import Promo from '@/components/signup/Promo';
 import { generateMetadata } from '@/app/layout';
 import { getBrand } from '@/utils/getHost';
+import { BigBlueButton } from '@/components/button/DrlambdaButton';
+import { BigTitle, Title } from '@/components/ui/Text';
+
 
 const title = `Sign Up | ${getBrand()}`;
 const description = `${getBrand()} is your AI assistant to create professional slides and posts. Join us to experience the power of AI in creating professional slides and posts.`;
 export const metadata = generateMetadata({ title, description });
 
 export default function SignUp() {
+
 	return (
 		<section className='bg-gradient-to-b from-gray-100 to-white'>
 			<div className='max-w-6xl mx-auto px-4 sm:px-6'>
 				<div className='pt-32 pb-12 md:pt-40 md:pb-20'>
 					{/* Page header */}
 					<div className='max-w-3xl mx-auto text-center pb-12 md:pb-20'>
-						<h1 className='h1'>💙 Welcome!</h1>
+						<BigTitle center>💙 Welcome!</BigTitle>
 					</div>
 
 					{/* Form */}
@@ -50,13 +54,11 @@ export default function SignUp() {
 
 						<div className='flex flex-wrap -mx-3 mt-6'>
 							<div className='w-full px-3'>
-								<a
-									href={'/signup-with-email'}
-									className='btn text-white font-bold bg-Blue w-full'
-								>
-									Sign up with email
+								<a href={'/signup-with-email'}>
+									<BigBlueButton width='384px'>
+										Sign up with email
+									</BigBlueButton>
 								</a>
-								{/* <ToastContainer /> */}
 							</div>
 						</div>
 

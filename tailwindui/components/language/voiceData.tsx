@@ -389,8 +389,8 @@ export const AZURE_MULTILINGUAL_VOICE_OPTIONS: VoiceOptions = {
 };
 
 export const OAI_VOICE_OPTIONS: VoiceOptions = {
-	female: ['nova'],
-	male: ['alloy', 'echo', 'fable', 'onyx', 'shimmer'],
+	female: ['nova', 'shimmer'],
+	male: ['alloy', 'echo', 'fable', 'onyx'],
 };
 
 export function isOpenaiVoice(voice: string): boolean {

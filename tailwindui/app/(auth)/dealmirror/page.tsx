@@ -1,6 +1,9 @@
 import Link from 'next/link';
 import GoogleSignIn from '@/components/button/GoogleSignIn';
 import Promo from '@/components/signup/Promo';
+import { BsFillChatTextFill } from 'react-icons/bs';
+import { BigTitle } from '@/components/ui/Text';
+import { BigBlueButton } from '@/components/button/DrlambdaButton';
 
 export default function SignUp() {
 	return (
@@ -9,7 +12,7 @@ export default function SignUp() {
 				<div className='pt-32 pb-12 md:pt-40 md:pb-20'>
 					{/* Page header */}
 					<div className='max-w-3xl mx-auto text-center pb-12 md:pb-20'>
-						<h2 className='h2'>💙 Welcome, Deal Mirror Users!</h2>
+						<BigTitle center>💙 Welcome, Deal Mirror Users!</BigTitle>
 					</div>
 
 					{/* Form */}
@@ -44,11 +47,10 @@ export default function SignUp() {
 
 						<div className='flex flex-wrap -mx-3 mt-6'>
 							<div className='w-full px-3'>
-								<a
-									href={'signup-with-email'}
-									className='btn text-white font-bold bg-Blue w-full'
-								>
-									Sign up with email
+								<a href={'signup-with-email'}>
+									<BigBlueButton width='384px'>
+										Sign up with email
+									</BigBlueButton>
 								</a>
 								{/* <ToastContainer /> */}
 							</div>

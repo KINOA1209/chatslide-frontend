@@ -18,6 +18,7 @@ export const ScenarioButton: FC<{
 				showModal={showPaywall}
 				setShowModal={setShowPaywall}
 				message='🥇 Upgrade to ULTIMATE to get early access!'
+        trigger='scenario'
 			/>
 			<div
 				key={scenario.id}

@@ -34,6 +34,7 @@ const GPTToggle: React.FC<GPTToggleProps> = ({ isGpt35, setIsGpt35 }) => {
 				showModal={showPaymentModal}
 				setShowModal={setShowPaymentModal}
 				message='Upgrade to unlock more powerful LLMs 🚀'
+        trigger='button/gpt_toggle'
 			/>
 		</div>
 	);

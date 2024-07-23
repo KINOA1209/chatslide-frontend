@@ -183,6 +183,7 @@ export default function WorkflowStep3() {
 						className='w-full h-24 p-2 border border-gray-300 rounded-md'
 						value={additionalRequirements}
 						onChange={(e) => setAdditionalRequirements(e.target.value)}
+            placeholder="e.g. Do not use wordings like let's dive in."
 					></textarea>
 				</div>
 			</Modal>
