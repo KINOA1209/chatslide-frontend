@@ -578,7 +578,7 @@ const PricingComparison: React.FC<{
 							<div className='brix---text-300-medium'>📚 Upload documents</div>
 						</div>
 						<div className='brix---text-300-medium'>
-							Up to <b>5</b>
+							Up to <b>10</b>
 						</div>
 					</div>
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
@@ -723,7 +723,7 @@ const PricingComparison: React.FC<{
 							<div className='brix---text-300-medium'>📚 Upload documents</div>
 						</div>
 						<div className='brix---text-300-medium'>
-							Up to <b>10</b>
+							<b>Unlimited</b>
 						</div>
 					</div>
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
@@ -774,7 +774,7 @@ const PricingComparison: React.FC<{
 								🎙️ Voice cloning (new)
 							</div>
 						</div>
-						<div className='brix---text-300-medium'>10 Voices</div>
+						<div className='brix---text-300-medium'><b>Unlimited</b></div>
 					</div>
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className='brix---pricing-v8-title-table'>
