@@ -18,14 +18,16 @@ const PricingComparison: React.FC<{
 	extraPadding?: boolean;
 	small?: boolean;
 	showFreeTier?: boolean;
-  trigger: string;
+	trigger: string;
 }> = ({ extraPadding, small = false, showFreeTier = true, trigger }) => {
 	const { token, email, tier: userTier, user } = useUser();
 	const [currency, setCurrency] = useState<string>('$');
 	const router = useRouter();
-	const [interval, setInterval] = useState<Interval>(isChatslide() ? 'yearly' : 'lifetime');
+	const [interval, setInterval] = useState<Interval>(
+		isChatslide() ? 'yearly' : 'lifetime',
+	);
 	const smallSuffix = small ? '-small' : '';
-  const [showManageSubscription, setShowManageSubscription] = useState(false);
+	const [showManageSubscription, setShowManageSubscription] = useState(false);
 	// console.log('smallSuffix', smallSuffix);
 
 	const getCta = (tier: Tier): string => {
@@ -89,11 +91,13 @@ const PricingComparison: React.FC<{
 			case 'FREE':
 				return 0;
 			case 'PLUS':
-				return 9.9;
+				if (isChatslide()) return 8.5;
+				else return 9.9;
 			case 'PRO':
 				return 14.9;
 			case 'ULTIMATE':
-				return 59.9;
+        if (isChatslide()) return 59.9;
+        else return 69.9;
 		}
 	};
 
@@ -109,13 +113,13 @@ const PricingComparison: React.FC<{
 				amount = amount;
 				break;
 			case 'monthly':
-				amount = amount * (firstTime ? 0.7 : 1);  // 30% off first time
+				amount = amount * (firstTime ? 0.7 : 1); // 30% off first time
 				break;
 			case 'yearly':
-				amount = amount * 0.6;  // 40% off forever
+				amount = amount * 0.6; // 40% off forever
 				break;
 			case 'lifetime':
-				amount = amount * 14;  // original price is * 20, so this is a 30% off discount
+				amount = amount * 14; // original price is * 40, so this is a 60% off discount
 		}
 
 		// special for lifetime ultimate
@@ -125,14 +129,14 @@ const PricingComparison: React.FC<{
 				return (
 					<span className='text-green-600'>
 						{currency + amount.toFixed(2)}
-						<span className='text-xs'>-60%</span>
+						<span className='text-xs'>-80%</span>
 					</span>
 				);
 			} else {
 				return (
 					<span>
 						{currency + amount.toFixed(2)}
-						<span className='text-xs'> -30%</span>
+						<span className='text-xs'> -60%</span>
 					</span>
 				);
 			}
@@ -170,7 +174,7 @@ const PricingComparison: React.FC<{
 			case 'lifetime':
 				return (
 					<span className='text-gray-600'>
-						<s>{currency + (getOriginalPrice(tier) * 20).toFixed(2)}</s>
+						<s>{currency + (getOriginalPrice(tier) * 40).toFixed(2)}</s>
 					</span>
 				);
 		}
@@ -194,7 +198,8 @@ const PricingComparison: React.FC<{
 			toast.success('Your plan already includes this feature');
 		} else if (userTier.includes('CANCELLED') || userTier === 'FREE') {
 			return handleSubscription(tier, token);
-		} else if (interval === 'onetime') {  // top-up
+		} else if (interval === 'onetime') {
+			// top-up
 			return handleSubscription(tier, token);
 		} else if (userTier.includes('PLUS')) {
 			if (tier === 'PLUS') {
@@ -219,7 +224,7 @@ const PricingComparison: React.FC<{
 	};
 
 	const handleManageSubscription = async (token: string) => {
-    setShowManageSubscription(true);
+		setShowManageSubscription(true);
 	};
 
 	const handleSubscription = async (tier: Tier, token: string) => {
@@ -227,7 +232,13 @@ const PricingComparison: React.FC<{
 		const plan = tier + suffix;
 
 		try {
-			const url = await UserService.checkout(plan, email, currency, token, trigger);
+			const url = await UserService.checkout(
+				plan,
+				email,
+				currency,
+				token,
+				trigger,
+			);
 
 			// Redirect to the checkout page
 			window.open(url, '_blank');
@@ -236,7 +247,7 @@ const PricingComparison: React.FC<{
 		}
 	};
 
-  const options = isChatslide()
+	const options = isChatslide()
 		? [
 				{ key: 'onetime', text: '15-Day' },
 				{
@@ -259,7 +270,7 @@ const PricingComparison: React.FC<{
 					key: 'lifetime',
 					element: (
 						<span className='text-green-600'>
-							Lifetime <span className='text-xs'>-60%</span>
+							Lifetime <span className='text-xs'>-80%</span>
 						</span>
 					),
 				},
@@ -859,7 +870,7 @@ export function Pricing() {
 						</div>
 					</div>
 				</div>
-				<PricingComparison extraPadding={true} trigger='pricing'/>
+				<PricingComparison extraPadding={true} trigger='pricing' />
 			</div>
 		</div>
 	);
