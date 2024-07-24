@@ -3,7 +3,7 @@ import { FaShareAlt, FaFilm, FaChartBar, FaImage } from 'react-icons/fa';
 import { ScenarioOption } from '../scenario-choice/slidesScenarios';
 
 
-const options: ScenarioOption[] = [
+const drlambdaOptions: ScenarioOption[] = [
 	{
 		id: 'social_posts',
 		title: 'Social Post',
@@ -26,22 +26,51 @@ const options: ScenarioOption[] = [
 	},
 ];
 
-const minorOptions: ScenarioOption[] = [
+const chatslideOptions: ScenarioOption[] = [
+  {
+    id: 'presentation',
+    title: 'Slide / Video',
+    imageSrc: '/images/scenario/slides.png',
+    icon: <FaFilm />,
+    featured: true,
+  },
+];
+
+const chatslideMinorOptions: ScenarioOption[] = [
 	{
-		id: 'image',
-		title: 'Image (Coming)',
+		id: 'social_posts',
+		title: 'Social Post (Beta)',
+		imageSrc: '/images/scenario/socialpost.png',
+		icon: <FaShareAlt />,
+	},
+	{
+		id: 'charts',
+		title: 'Charts (Beta)',
 		imageSrc: '/images/scenario/charts.png',
-		icon: <FaImage />,
-		// previewOnly: true,
-    disabled: true
+		icon: <FaChartBar />,
+		previewOnly: false,
 	},
 ];
 
-const workflowTypeOptions = {
-  message: 'What type of content do you want to create?',
-  description: 'We will guide you through the process.',
-  options,
-  minorOptions,
+const drlambdaMinorOptions: ScenarioOption[] = [
+	{
+		id: 'image',
+		title: 'Image',
+		imageSrc: '/images/scenario/charts.png',
+		icon: <FaImage />,
+	},
+];
+
+export const drlambdaWorkflowTypeOptions = {
+	message: 'What type of content do you want to create?',
+	description: 'We will guide you through the process.',
+	options: drlambdaOptions,
+	minorOptions: drlambdaMinorOptions,
 };
 
-export default workflowTypeOptions;
+export const chatslideWorkflowTypeOptions = {
+	message: 'What type of content do you want to create?',
+	description: 'We will guide you through the process.',
+	options: chatslideOptions,
+	minorOptions: chatslideMinorOptions,
+};
