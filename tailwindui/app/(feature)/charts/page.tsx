@@ -63,10 +63,18 @@ export default function Page() {
 	>(null);
 	const chartRef = useRef<ChartJS>(null);
 
-	function receiveChart(data: any) {
-		// internal chart data contains only the chart_json field
-		setChartData(data.chart_json);
-		console.log('Chart Data: ', data.chart_json);
+	function receiveChart(receivedData: any) {
+		const data = receivedData.chart_json;
+		for (let i = 0; i < data.datasets.length; i++) {
+			data.datasets[i].borderWidth = 2;
+		}
+
+		if (['pie', 'doughnut'].includes(data.chartType)) {
+			if (typeof data.datasets[0].borderColor === 'string') {
+				data.datasets[0].borderColor = new Array(data.datasets[0].data.length).fill(data.datasets[0].borderColor);
+			}
+		}
+		setChartData(data);
 	}
 
 	function updateDynamicChart() {
@@ -140,7 +148,6 @@ export default function Page() {
 				alt='Chart'
 				width={400}
 				height={300}
-				// layout='fixed'
 			/>
 		</div>
 	);
