@@ -386,7 +386,7 @@ const Affiliate = () => {
 			</Instruction>
 			<Instruction>
 				<a
-					href='https://blog.drlambda.ai/how-to-make-money-with-your-high-quality-content-using-chatslide-ai/'
+					href='/affiliate'
 					className='text-blue-600'
 				>
 					Learn more about affiliate program.{' '}
@@ -438,7 +438,7 @@ const Affiliate = () => {
 					</span>
 					<br />
 					<a
-						href='https://blog.drlambda.ai/how-to-make-money-with-your-high-quality-content-using-chatslide-ai/'
+						href='/affiliate'
 						className='text-blue-600'
 					>
 						Learn more.{' '}

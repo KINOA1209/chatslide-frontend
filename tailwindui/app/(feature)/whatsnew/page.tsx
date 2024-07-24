@@ -551,7 +551,7 @@ export default function Studio() {
 						</div>
 						<a
 							className='text-blue-600'
-							href='https://blog.drlambda.ai/how-to-make-money-with-your-high-quality-content-using-chatslide-ai/'
+							href='/affiliate'
 						>
 							Learn more
 						</a>
