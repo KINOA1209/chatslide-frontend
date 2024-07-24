@@ -469,7 +469,7 @@ const TemplateSelector: React.FC<{
 							<WrappableRow type='grid' cols={3}>
 								<div className='flex flex-col gap-[4px]'>
 									<div className='flex flex-row items-center gap-2'>
-										<Instruction>Cover Heading</Instruction>
+										<Instruction>Cover Title</Instruction>
 										<Explanation>
 											Change this directly in the editor.
 										</Explanation>
@@ -500,7 +500,7 @@ const TemplateSelector: React.FC<{
 								</div>
 
 								<div className='flex flex-col gap-[4px]'>
-									<Instruction>Non-cover Heading</Instruction>
+									<Instruction>Section Heading</Instruction>
 									<FontFamilyPicker
 										onCustomFontFamilyChange={
 											handleCustomTemplateTitleFontFamilyChange
@@ -528,7 +528,7 @@ const TemplateSelector: React.FC<{
 								</div>
 
 								<div className='flex flex-col gap-[4px]'>
-									<Instruction>Non-cover Subheading</Instruction>
+									<Instruction>Section Subheading</Instruction>
 									<FontFamilyPicker
 										onCustomFontFamilyChange={
 											handleCustomTemplateSubtitleFontFamilyChange
@@ -556,7 +556,7 @@ const TemplateSelector: React.FC<{
 								</div>
 
 								<div className='flex flex-col gap-[4px]'>
-									<Instruction>Non-cover Content</Instruction>
+									<Instruction>Section Content</Instruction>
 									<FontFamilyPicker
 										onCustomFontFamilyChange={
 											handleCustomTemplateContentFontFamilyChange
