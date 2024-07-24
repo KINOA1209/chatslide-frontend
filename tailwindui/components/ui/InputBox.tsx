@@ -41,6 +41,7 @@ export const NewInputBox: React.FC<{
 	textarea?: boolean;
 	rows?: number; // number of columns for textarea
 	id?: string;
+  width?: string;
 }> = ({
 	value,
 	onChange,
@@ -51,6 +52,7 @@ export const NewInputBox: React.FC<{
 	textarea = false,
 	rows,
 	id,
+  width,
 }) => {
 	const ref = useRef<HTMLDivElement>(null);
 
@@ -66,10 +68,10 @@ export const NewInputBox: React.FC<{
 	}, []);
 
 	return (
-		<div className='flex flex-col'>
+		<div className={'flex flex-col' + (width ? ` w-[${width}]` : '')}>
 			<div
 				className={
-					'w-full flex flex-col flex-nowrap items-center justify-center border border-2 border-gray-200 px-3 py-2.5 gap-x-2 cursor-text rounded-lg overflow-visible ' +
+					'flex flex-col flex-nowrap items-center justify-center border border-2 border-gray-200 px-3 py-2.5 gap-x-2 cursor-text rounded-lg overflow-visible ' +
 					(textarea ? 'h-[200px]' : 'h-[36px]')
 				}
 				ref={ref}

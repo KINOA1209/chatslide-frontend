@@ -155,7 +155,7 @@ const Header = ({
 								<li>
 									<Link
 										href='/signup'
-										className='btn-sm drop-shadow-xl rounded-full text-white w-auto mb-0 cursor-pointer  bg-Blue'
+										className='p-2 drop-shadow-xl rounded-full text-white w-auto mb-0 cursor-pointer  bg-Blue'
 									>
 										<span>Sign Up</span>
 									</Link>

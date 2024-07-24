@@ -315,27 +315,26 @@ const ApplyPromo = () => {
 			<div className='text-green-600 text-md py-1'>
 				🌟 Apply Promo Code or License Key
 			</div>
-			<div className='w-full justify-center flex flex-row'>
-				<div className='flex grow max-w-[60rem] flex-row gap-4 justify-center mt-2'>
-					<NewInputBox
-						id='promo_code'
-						value={promo}
-						onChange={setPromo}
-						autoSelect
-						placeholder='Promo code'
-						maxLength={50}
-						icon={<FaStar className='text-gray-600' />}
-					/>
+			<div className='w-full mx-auto justify-center flex flex-row gap-x-2'>
+				<NewInputBox
+					id='promo_code'
+					value={promo}
+					onChange={setPromo}
+					autoSelect
+					placeholder='Promo code'
+					maxLength={50}
+					width='200px'
+					icon={<FaStar className='text-gray-600' />}
+				/>
 
-					<InversedBigBlueButton
-						id='apply-promo'
-						onClick={applyPromo}
-						isSubmitting={isSubmitting}
-						width='8rem'
-					>
-						Apply
-					</InversedBigBlueButton>
-				</div>
+				<InversedBigBlueButton
+					id='apply-promo'
+					onClick={applyPromo}
+					isSubmitting={isSubmitting}
+					width='8rem'
+				>
+					Apply
+				</InversedBigBlueButton>
 			</div>
 		</div>
 	);
@@ -489,14 +488,13 @@ const DangerZone = () => {
 	const { token, signOut } = useUser();
 	const [showModal, setShowModal] = useState(false);
 
-
 	function deleteAndSignOut(reason: string) {
 		UserService.deleteUser(token, reason);
 		signOut();
 	}
 
 	const ConfirmModal: React.FC<{}> = () => {
-    const [reason, setReason] = useState('');
+		const [reason, setReason] = useState('');
 
 		return (
 			<Modal
