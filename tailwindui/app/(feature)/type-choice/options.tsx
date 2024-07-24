@@ -6,7 +6,7 @@ import { ScenarioOption } from '../scenario-choice/slidesScenarios';
 const drlambdaOptions: ScenarioOption[] = [
 	{
 		id: 'social_posts',
-		title: 'Social Post',
+		title: 'Social Media Post',
 		imageSrc: '/images/scenario/socialpost.png',
 		icon: <FaShareAlt />,
 	},
@@ -19,7 +19,7 @@ const drlambdaOptions: ScenarioOption[] = [
 	},
 	{
 		id: 'charts',
-		title: 'Charts',
+		title: 'Infographics',
 		imageSrc: '/images/scenario/charts.png',
 		icon: <FaChartBar />,
 		previewOnly: false,
