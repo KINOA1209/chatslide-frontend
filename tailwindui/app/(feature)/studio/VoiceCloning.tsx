@@ -33,6 +33,10 @@ import { Column } from '@/components/layout/Column';
 import { convertToWav } from '@/utils/wav';
 
 const MIN_AUDIO_LENGTH = 10;
+const MAX_AUDIO_LENGTH = 120;
+const MIN_CONSENT_LENGTH = 5;
+const MAX_CONSENT_LENGTH = 20;
+
 
 const VoiceCloning = () => {
 	const [selectedLanguageCode, setSelectedLanguageCode] =
@@ -47,8 +51,8 @@ const VoiceCloning = () => {
 	const [consentAudio, setConsentAudio] = useState<null | Blob>(null);
 	const [isRecordingRecord, setIsRecordingRecord] = useState<boolean>(false);
 	const [isRecordingConsent, setIsRecordingConsent] = useState<boolean>(false);
-	const [recordTimeLeft, setRecordTimeLeft] = useState<number>(60);
-	const [consentTimeLeft, setConsentTimeLeft] = useState<number>(20);
+	const [recordTimeLeft, setRecordTimeLeft] = useState<number>(MAX_AUDIO_LENGTH);
+	const [consentTimeLeft, setConsentTimeLeft] = useState<number>(MAX_CONSENT_LENGTH);
 	const [audioLength, setAudioLength] = useState<number>(0); // only applies to recordedAudio
 	const mediaRecorderRef = useRef<MediaRecorder | null>(null);
 	const audioChunksRef = useRef<Blob[]>([]);
@@ -136,9 +140,9 @@ const VoiceCloning = () => {
 			if (timerRef.current) {
 				clearInterval(timerRef.current);
 				timerRef.current = null;
-				setAudioLength(60 - recordTimeLeft);
+				setAudioLength(MAX_AUDIO_LENGTH - recordTimeLeft);
 			}
-			setRecordTimeLeft(60);
+			setRecordTimeLeft(MAX_AUDIO_LENGTH);
 		} else if (isRecordingConsent) {
 			mediaRecorderRef.current?.stop();
 			mediaRecorderRef.current?.stream
@@ -148,9 +152,9 @@ const VoiceCloning = () => {
 			if (timerRef.current) {
 				clearInterval(timerRef.current);
 				timerRef.current = null;
-				setAudioLength(20 - consentTimeLeft);
+				setAudioLength(MAX_CONSENT_LENGTH - consentTimeLeft);
 			}
-			setConsentTimeLeft(20);
+			setConsentTimeLeft(MAX_CONSENT_LENGTH);
 		} else {
 			if (!isConsentAudio) setRecordedAudio(null);
 			else setConsentAudio(null);
@@ -183,9 +187,9 @@ const VoiceCloning = () => {
 							setIsRecordingConsent(false);
 							clearInterval(timerRef.current!);
 							timerRef.current = null;
-							setConsentTimeLeft(20);
-              setAudioLength(20);
-							return 20;
+							setConsentTimeLeft(MAX_CONSENT_LENGTH);
+              setAudioLength(MAX_CONSENT_LENGTH);
+							return MAX_CONSENT_LENGTH;
 						}
 						return prevTime - 1;
 					});
@@ -197,9 +201,9 @@ const VoiceCloning = () => {
 							setIsRecordingRecord(false);
 							clearInterval(timerRef.current!);
 							timerRef.current = null;
-							setRecordTimeLeft(60);
-              setAudioLength(60);
-							return 60;
+							setRecordTimeLeft(MAX_AUDIO_LENGTH);
+              setAudioLength(MAX_AUDIO_LENGTH);
+							return MAX_AUDIO_LENGTH;
 						}
 						return prevTime - 1;
 					});
@@ -342,7 +346,7 @@ const VoiceCloning = () => {
 							isRecordingRecord ||
 							cloning ||
 							isSubmittingConsent ||
-							(isRecordingConsent && consentTimeLeft > 20 - MIN_AUDIO_LENGTH)
+							(isRecordingConsent && consentTimeLeft > MAX_CONSENT_LENGTH - MIN_CONSENT_LENGTH)
 						}
 						onClick={() => handleRecordAudio(true)}
 					>
@@ -386,7 +390,7 @@ const VoiceCloning = () => {
 						<Instruction>
 							Click the record button, and read the text below for at least{' '}
 							{MIN_AUDIO_LENGTH}
-							s. You can also edit the text if you want.
+							s. You can also edit the text if you want. You don't have to finish the whole text.
 						</Instruction>
 
 						<WrappableRow type='grid' cols={2}>
@@ -414,7 +418,7 @@ const VoiceCloning = () => {
 								isRecordingConsent ||
 								cloning ||
 								isSubmittingConsent ||
-								(isRecordingRecord && 60 - recordTimeLeft < MIN_AUDIO_LENGTH)
+								(isRecordingRecord && MAX_AUDIO_LENGTH - recordTimeLeft < MIN_AUDIO_LENGTH)
 							}
 							onClick={() => handleRecordAudio(false)}
 						>
@@ -443,7 +447,6 @@ const VoiceCloning = () => {
 					</Column>
 				)}
 
-				{/* if the audio is not 60s, show an error */}
 				{audioLength >= MIN_AUDIO_LENGTH && consentId && (
 					<Column width='100%'>
 						<Title>Step 3</Title>
