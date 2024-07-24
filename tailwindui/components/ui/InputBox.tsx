@@ -81,7 +81,9 @@ export const NewInputBox: React.FC<{
 						id='key'
 						type='text'
 						className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800'
-						onChange={(e) => onChange(e.target.value)}
+						onChange={(e) => {
+              onChange(e.target.value);
+            }}
 						onClick={(e) => {
 							autoSelect && (e.target as HTMLInputElement)?.select();
 						}}
@@ -92,7 +94,9 @@ export const NewInputBox: React.FC<{
 				) : (
 					<textarea
 						className='w-full h-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800'
-						onChange={(e) => onChange(e.target.value)}
+						onChange={(e) => {
+              onChange(e.target.value);
+            }}
 						onClick={(e) => {
 							autoSelect && (e.target as HTMLInputElement)?.select();
 						}}
