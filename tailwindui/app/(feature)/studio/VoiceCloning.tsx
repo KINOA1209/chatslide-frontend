@@ -311,7 +311,7 @@ const VoiceCloning = () => {
 				showModal={showPaywallModal}
 				setShowModal={setShowPaywallModal}
 				message='Upgrade to get an early access to Beta features. 🚀'
-        trigger='studio/voice_cloning'
+				trigger='studio/voice_cloning'
 			/>
 			<Card>
 				<BigTitle>🎙️ Create a New Voice Profile</BigTitle>
@@ -323,7 +323,7 @@ const VoiceCloning = () => {
 					anyone else. You can also delete your voice profile at any time.
 				</Instruction>
 
-				<Column>
+				<Column width='100%'>
 					<Title>Step 1</Title>
 					<Instruction>
 						Please also record the consent message below (English only):
@@ -360,7 +360,7 @@ const VoiceCloning = () => {
 					{consentAudio && (
 						<WrappableRow type='grid' cols={2}>
 							<Instruction>Preview your consent recording:</Instruction>
-							<audio controls className='mx-auto h-[36px]'>
+							<audio controls className='mx-auto h-[36px] w-[16rem]'>
 								<source
 									src={URL.createObjectURL(consentAudio)}
 									type='audio/wav'
@@ -373,7 +373,7 @@ const VoiceCloning = () => {
 						<BigBlueButton
 							onClick={submitConsent}
 							isSubmitting={isSubmittingConsent}
-              disabled={isRecordingRecord || cloning || isRecordingConsent}
+							disabled={isRecordingRecord || cloning || isRecordingConsent}
 						>
 							{isSubmittingConsent ? 'Verifying...' : 'Verify and Continue'}
 						</BigBlueButton>
@@ -381,7 +381,7 @@ const VoiceCloning = () => {
 				</Column>
 
 				{consentId && (
-					<Column>
+					<Column width='100%'>
 						<Title>Step 2</Title>
 						<Instruction>
 							Click the record button, and read the text below for at least{' '}
@@ -432,7 +432,7 @@ const VoiceCloning = () => {
 						{recordedAudio && (
 							<WrappableRow type='grid' cols={2}>
 								<Instruction>Preview your recording:</Instruction>
-								<audio controls className='mx-auto h-[36px]'>
+								<audio controls className='mx-auto h-[36px] w-[16rem]'>
 									<source
 										src={URL.createObjectURL(recordedAudio)}
 										type='audio/wav'
@@ -445,7 +445,7 @@ const VoiceCloning = () => {
 
 				{/* if the audio is not 60s, show an error */}
 				{audioLength >= MIN_AUDIO_LENGTH && consentId && (
-					<Column>
+					<Column width='100%'>
 						<Title>Step 3</Title>
 						<Instruction>
 							Name your voice profile and click the clone button.
@@ -550,7 +550,7 @@ const VoiceCloning = () => {
 							)}
 						</BigBlueButton>
 						{customRecording && (
-							<audio controls className='mx-auto h-[36px]'>
+							<audio controls className='mx-auto h-[36px] w-[16rem]'>
 								<source src={customRecording} type='audio/webm' />
 							</audio>
 						)}
