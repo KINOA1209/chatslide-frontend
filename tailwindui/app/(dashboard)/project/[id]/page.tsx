@@ -47,7 +47,12 @@ const ProjectLoading = () => {
 		headers.append('Content-Type', 'application/json');
 
 		try {
-			const project_id = pathname?.split('/').pop();
+			let project_id = pathname?.split('/').pop();
+      // remove any text after space or . 
+      project_id = project_id?.split(' ')[0];
+      project_id = project_id?.split('.')[0];
+      project_id = project_id?.split('%20')[0];
+
 			if (project_id) {
 				console.log('loading project with id', project_id);
 				const project = await ProjectService.getProjectDetails(
