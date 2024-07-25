@@ -324,6 +324,11 @@ export default function DesignPage() {
 			text: 'All',
 			explanation: 'Wider range, personal use',
 		},
+    {
+      value: 'illustration',
+      text: 'Illustration',
+      explanation: 'Small set of illustration images',
+    }
 	];
 
 	if (project?.logo === undefined) {
