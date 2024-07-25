@@ -40,7 +40,6 @@ import { WrappableRow } from '@/components/layout/WrappableRow';
 import SubscriptionModal from '../SubscriptionModal';
 import Modal from '@/components/ui/Modal';
 
-
 const Profile = () => {
 	const { username, email, token, setUsername, user } = useUser();
 	const [editUsername, setEditUsername] = useState(username);
@@ -316,27 +315,26 @@ const ApplyPromo = () => {
 			<div className='text-green-600 text-md py-1'>
 				🌟 Apply Promo Code or License Key
 			</div>
-			<div className='w-full justify-center flex flex-row'>
-				<div className='flex grow max-w-[60rem] flex-row gap-4 justify-center mt-2'>
-					<NewInputBox
-						id='promo_code'
-						value={promo}
-						onChange={setPromo}
-						autoSelect
-						placeholder='Promo code'
-						maxLength={50}
-						icon={<FaStar className='text-gray-600' />}
-					/>
+			<div className='w-full mx-auto justify-center flex flex-row gap-x-2'>
+				<NewInputBox
+					id='promo_code'
+					value={promo}
+					onChange={setPromo}
+					autoSelect
+					placeholder='Promo code'
+					maxLength={50}
+					width='200px'
+					icon={<FaStar className='text-gray-600' />}
+				/>
 
-					<InversedBigBlueButton
-						id='apply-promo'
-						onClick={applyPromo}
-						isSubmitting={isSubmitting}
-						width='8rem'
-					>
-						Apply
-					</InversedBigBlueButton>
-				</div>
+				<InversedBigBlueButton
+					id='apply-promo'
+					onClick={applyPromo}
+					isSubmitting={isSubmitting}
+					width='8rem'
+				>
+					Apply
+				</InversedBigBlueButton>
 			</div>
 		</div>
 	);
@@ -385,10 +383,7 @@ const Affiliate = () => {
 				</div>
 			</Instruction>
 			<Instruction>
-				<a
-					href='https://blog.drlambda.ai/how-to-make-money-with-your-high-quality-content-using-chatslide-ai/'
-					className='text-blue-600'
-				>
+				<a href='/affiliate' className='text-blue-600'>
 					Learn more about affiliate program.{' '}
 				</a>
 			</Instruction>
@@ -437,10 +432,7 @@ const Affiliate = () => {
 						this link.
 					</span>
 					<br />
-					<a
-						href='https://blog.drlambda.ai/how-to-make-money-with-your-high-quality-content-using-chatslide-ai/'
-						className='text-blue-600'
-					>
+					<a href='/affiliate' className='text-blue-600'>
 						Learn more.{' '}
 					</a>
 				</Explanation>
@@ -493,32 +485,58 @@ const CreditHistory = () => {
 };
 
 const DangerZone = () => {
-  const { token, signOut } = useUser();
-  const [showModal, setShowModal] = useState(false);
+	const { token, signOut } = useUser();
+	const [showModal, setShowModal] = useState(false);
 
-  function deleteAndSignOut() {
-    UserService.deleteUser(token);
-    signOut();
-  }
+	function deleteAndSignOut(reason: string) {
+		UserService.deleteUser(token, reason);
+		signOut();
+	}
 
-  const ConfirmModal: React.FC<{}> = () => {
-    return (
-      <Modal
-        title='Delete Account and Sign Out'
-        description='Are you sure you want to delete your account? This cannot be undone.'
-        showModal={showModal}
-        setShowModal={setShowModal}
-        onConfirm={deleteAndSignOut}
-        />
-    )
-  }
+	const ConfirmModal: React.FC<{}> = () => {
+		const [reason, setReason] = useState('');
 
-  return (
+		return (
+			<Modal
+				title='Delete Account and Sign Out'
+				description='Would you like to share why you want to delete your account?'
+				showModal={showModal}
+				setShowModal={setShowModal}
+				hasInputArea
+				inputValue={reason}
+				setInputValue={setReason}
+			>
+				{reason && (
+					<Instruction>
+						<div
+							onClick={() => deleteAndSignOut(reason)}
+							className='text-red-600'
+						>
+							Confirm Deletion
+						</div>
+					</Instruction>
+				)}
+			</Modal>
+		);
+	};
+
+	if (!token) {
+		return null;
+	}
+
+	return (
 		<Card>
-      {showModal && <ConfirmModal />}
+			{showModal && <ConfirmModal />}
 			<Instruction>🔥 Danger Zone</Instruction>
 			<Instruction>
-				<span className='text-red-600 cursor-pointer' onClick={()=>{setShowModal(true)}}>Delete Account and Sign Out</span>
+				<span
+					className='text-red-600 cursor-pointer'
+					onClick={() => {
+						setShowModal(true);
+					}}
+				>
+					Delete Account and Sign Out
+				</span>
 			</Instruction>
 		</Card>
 	);
@@ -575,7 +593,7 @@ export default function Account() {
 
 				<Affiliate />
 
-        <DangerZone />
+				<DangerZone />
 			</Panel>
 		</Column>
 	);

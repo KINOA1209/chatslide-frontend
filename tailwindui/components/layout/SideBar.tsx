@@ -348,7 +348,7 @@ const SideBar = ({}: SideBarProps) => {
 								Get 50 ⭐️credits
 							</a>}
 							<a
-								href='https://blog.drlambda.ai/how-to-make-money-with-your-high-quality-content-using-chatslide-ai/'
+								href='/affiliate'
 								target='_blank'
 								className='block flew flex-row items-center gap-1 text-sm  rounded-lg hover:bg-[#F2F4F7] '
 								role='menuitem'

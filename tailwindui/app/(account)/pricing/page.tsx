@@ -28,18 +28,17 @@ const Subscription = () => {
 
 	return (
 		<div className='w-full'>
-
 			<Card>
 				{/* <div className='w-fit text-[#363E4A] text-[17px] font-bold'>
 					Subscription
 				</div> */}
 				<Title>Find tailored plans for you</Title>
 
-				<PricingComparison small={true} trigger='pricing'/>
+				<PricingComparison small={true} trigger='pricing' />
 
 				<Title>
 					Looking to redeem your code? Click{' '}
-					<Link className='text-blue-600' href='/account'>
+					<Link className='text-[#4A3AFF]' href='/account'>
 						here
 					</Link>
 					!

@@ -178,7 +178,7 @@ export default function Footer() {
 							</li>
 							<li className='mb-2'>
 								<a
-									href='https://blog.drlambda.ai/how-to-make-money-with-your-high-quality-content-using-chatslide-ai/'
+									href='/affiliate'
 									className='text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out'
 								>
 									Affliate Program

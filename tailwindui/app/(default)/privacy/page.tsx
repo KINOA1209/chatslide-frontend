@@ -1,5 +1,6 @@
 import Footer from '@/components/layout/footer';
 import Header from '@/components/layout/header';
+import { BigTitle } from '@/components/ui/Text';
 import { getBrand } from '@/utils/getHost';
 
 export const metadata = {
@@ -15,7 +16,7 @@ export default function Privacy() {
 				<div className='pt-32 pb-12 md:pt-40 md:pb-20'>
 					{/* Page header */}
 					<div className='max-w-3xl mx-auto text-center pb-12 md:pb-16'>
-						<h1 className='h1'>Privacy Policy</h1>
+						<BigTitle center>Privacy Policy</BigTitle>
 					</div>
 					<div className='max-w-3xl mx-auto'>
 						<div className='pb-16'>

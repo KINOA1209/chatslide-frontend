@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Link from 'next/link';
 import AuthService from '../../services/AuthService';
 import { BigBlueButton } from '../button/DrlambdaButton';
+import useHydrated from '@/hooks/use-hydrated';
 
 const LoginForm: React.FC = () => {
 	const router = useRouter();
@@ -46,6 +47,9 @@ const LoginForm: React.FC = () => {
 
 		setIsSubmitting(false);
 	};
+
+	// avoid hydration error during development caused by persistence
+	if (!useHydrated()) return <></>;
 
 	return (
 		<form onSubmit={handleSubmit}>

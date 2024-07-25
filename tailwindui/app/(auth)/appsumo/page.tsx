@@ -3,6 +3,7 @@ import GoogleSignIn from '@/components/button/GoogleSignIn';
 import Promo from '@/components/signup/Promo';
 import { BigTitle } from '@/components/ui/Text';
 import { BigBlueButton } from '@/components/button/DrlambdaButton';
+import useHydrated from '@/hooks/use-hydrated';
 
 export default function SignUp() {
 	return (

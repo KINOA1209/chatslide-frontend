@@ -25,6 +25,7 @@ import Project from '@/models/Project';
 import { PiFileText } from 'react-icons/pi';
 import { FaRegStar } from 'react-icons/fa';
 import { GenerationStatusProgressModal } from '@/components/ui/GenerationStatusProgressModal';
+import { InputBox, NewInputBox } from '@/components/ui/InputBox';
 
 const SlidesHTML = dynamic(() => import('@/components/slides/SlidesHTML'), {
 	ssr: false,
@@ -73,8 +74,7 @@ const styleOptions = [
 export default function WorkflowStep3() {
 	const { isPaidUser, token } = useUser();
 	const { project, updateProject } = useProject();
-  const { saveStatus, slides, setTranscripts } = useSlides();
-
+	const { saveStatus, slides, setTranscripts } = useSlides();
 	const [isSubmitting, setIsSubmitting] = useState(false);
 
 	const params = useSearchParams();
@@ -89,27 +89,28 @@ export default function WorkflowStep3() {
 
 	const [pronoun, setPronoun] = useState('second');
 	const [style, setStyle] = useState('engaging');
-	const [additionalRequirements, setAdditionalRequirements] = useState('');
 	const [length, setLength] = useState('normal');
 
-  const isGpt35 = true;
+	const isGpt35 = true;
 
 	const menuItems = (
 		<>
 			<MenuItem
 				label={project?.has_scripts ? 'Show Scripts' : 'Write Scripts Manually'}
 				onClick={() => router.push(addIdToRedir('/scripts'))}
-        icon={<PiFileText />}
+				icon={<PiFileText />}
 			/>
 			<MenuItem
 				label='Advanced Generation'
 				onClick={() => setShowScriptsSettingsModal(true)}
-        icon={<FaRegStar />}
+				icon={<FaRegStar />}
 			/>
 		</>
 	);
 
-	const ScriptsSettingModal: React.FC<{}> = () => {
+	const ScriptsSettingModal: React.FC<{}> = ({}) => {
+		const [additionalRequirements, setAdditionalRequirements] = useState('');
+
 		return (
 			<Modal
 				showModal={showScriptsSettingsModal}
@@ -117,8 +118,8 @@ export default function WorkflowStep3() {
 				onConfirm={() => {
 					setIsSubmitting(true);
 					setShowScriptsSettingsModal(false);
-          setShowGenerationStatusModal(true);
-          handleSubmitTranscript();
+					setShowGenerationStatusModal(true);
+					handleSubmitTranscript(additionalRequirements);
 				}}
 				onCancel={() => setIsSubmitting(false)}
 				confirmText={!project?.has_scripts ? 'Generate' : 'Regenerate'}
@@ -179,12 +180,13 @@ export default function WorkflowStep3() {
 					<Instruction>
 						Any additional requirements for the scripts?
 					</Instruction>
-					<textarea
-						className='w-full h-24 p-2 border border-gray-300 rounded-md'
+					<NewInputBox
 						value={additionalRequirements}
-						onChange={(e) => setAdditionalRequirements(e.target.value)}
-            placeholder="e.g. Do not use wordings like let's dive in."
-					></textarea>
+						onChange={setAdditionalRequirements}
+						placeholder="e.g. Do not use wordings like let's dive in."
+						textarea
+						maxLength={3000}
+					/>
 				</div>
 			</Modal>
 		);
@@ -204,7 +206,7 @@ export default function WorkflowStep3() {
 		}
 	}, []);
 
-  async function handleSubmitTranscript() {
+	async function handleSubmitTranscript(additionalRequirements?: string) {
 		// console.log('handleSubmitTranscript');
 
 		if (!project) {
@@ -248,7 +250,7 @@ export default function WorkflowStep3() {
 			setIsSubmitting(false);
 			setShowGenerationStatusModal(false);
 			router.push(addIdToRedir('/scripts'));
-      updateProject('has_scripts', true);
+			updateProject('has_scripts', true);
 		} catch (error) {
 			toast.error(
 				'Server is busy now. Please try again later. Reference code: ' +
@@ -266,7 +268,7 @@ export default function WorkflowStep3() {
 	function onClickGenerate() {
 		console.log('onClickGenerate');
 		setShowGenerationStatusModal(true);
-    handleSubmitTranscript();
+		handleSubmitTranscript();
 	}
 
 	return (
@@ -297,11 +299,13 @@ export default function WorkflowStep3() {
 			{showScriptsSettingsModal && <ScriptsSettingModal />}
 
 			{showGenerationStatusModal && (
-        <GenerationStatusProgressModal
-					onClick={() => {setShowGenerationStatusModal(false);}}
+				<GenerationStatusProgressModal
+					onClick={() => {
+						setShowGenerationStatusModal(false);
+					}}
 					prompts={[['✍️ Writing scripts for you...', 12]]}
 				></GenerationStatusProgressModal>
-      )}
+			)}
 		</div>
 	);
 }

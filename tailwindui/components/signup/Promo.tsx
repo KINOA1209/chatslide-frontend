@@ -4,16 +4,19 @@ import { useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import SessionStorage from '../../utils/SessionStorage';
 import { GrayLabel } from '../ui/GrayLabel';
+import useHydrated from '@/hooks/use-hydrated';
 
 interface PromoComponentProps {
+  initShowPromo?: boolean;
 	text?: string;
 }
 
 const PromoComponent: React.FC<PromoComponentProps> = ({
+  initShowPromo = false,
 	text = 'You are going to get more credits with this code!',
 }) => {
 	const [referralValue, setReferralValue] = useState('');
-	const [showPromo, setShowPromo] = useState(false);
+	const [showPromo, setShowPromo] = useState(initShowPromo);
 	const searchParams = useSearchParams();
 
 	useEffect(() => {
@@ -33,6 +36,9 @@ const PromoComponent: React.FC<PromoComponentProps> = ({
 			SessionStorage.setItem('promo', promo);
 		}
 	}, []);
+
+	// avoid hydration error during development caused by persistence
+	if (!useHydrated()) return <></>;
 
 	return (
 		<>

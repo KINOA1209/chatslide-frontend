@@ -16,6 +16,7 @@ import UserService from '@/services/UserService';
 import Promo from './Promo';
 import SessionStorage from '../../utils/SessionStorage';
 import { BigBlueButton } from '../button/DrlambdaButton';
+import useHydrated from '@/hooks/use-hydrated';
 
 const SignupForm: React.FC = () => {
 	const router = useRouter();
@@ -177,6 +178,9 @@ const SignupForm: React.FC = () => {
 			}
 		}
 	}, []);
+
+	// avoid hydration error during development caused by persistence
+	if (!useHydrated()) return <></>;
 
 	return (
 		<form onSubmit={handleSubmit}>
