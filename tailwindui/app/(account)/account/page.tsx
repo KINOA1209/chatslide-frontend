@@ -39,6 +39,7 @@ import { trackRewardfulConversion } from '@/components/integrations/Rewardful';
 import { WrappableRow } from '@/components/layout/WrappableRow';
 import SubscriptionModal from '../SubscriptionModal';
 import Modal from '@/components/ui/Modal';
+import { Router } from 'next/router';
 
 const Profile = () => {
 	const { username, email, token, setUsername, user } = useUser();
@@ -487,10 +488,12 @@ const CreditHistory = () => {
 const DangerZone = () => {
 	const { token, signOut } = useUser();
 	const [showModal, setShowModal] = useState(false);
+  const router = useRouter();
 
 	function deleteAndSignOut(reason: string) {
 		UserService.deleteUser(token, reason);
 		signOut();
+    router.push('/landing');
 	}
 
 	const ConfirmModal: React.FC<{}> = () => {
