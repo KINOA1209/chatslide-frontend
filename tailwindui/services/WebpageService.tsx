@@ -6,6 +6,11 @@ export default class WebService {
 		url: string,
 		userToken: string,
 	): Promise<Resource | null> {
+    if (url.includes('linkedin.com')) {
+      throw new Error('LinkedIn links are not supported.');
+    }
+
+
 		try {
 			const response = await fetch('/api/scrape_webpage', {
 				method: 'POST',
