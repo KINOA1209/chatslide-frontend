@@ -1,3 +1,4 @@
+import { isChatslide } from '@/utils/getHost';
 import {
 	FaLaptop,
 	FaBook,
@@ -57,7 +58,7 @@ const surveyObject: Record<string, SurveySectionConfig> = {
 		itemsArr: [
 			'Google',
 			'Reddit',
-			'AppSumo',
+			isChatslide() ? 'DealMirror' : 'AppSumo',
       'Blog',
 			'ProductHunt',
 			'Friend',
@@ -104,6 +105,7 @@ function itemToIcon(item: string) {
 		Other: FaComments,
 		Google: FaGoogle,
 		AppSumo: FaStore,
+    DealMirror: FaStore,
 		Reddit: FaRedditAlien,
 		ProductHunt: FaProductHunt,
 		Friend: FaUserFriends,

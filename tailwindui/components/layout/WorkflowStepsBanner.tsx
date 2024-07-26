@@ -84,7 +84,7 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 					<div className='min-w-[10rem] sm:min-w-[12rem]'></div>
 				) : showLoadingButton ? (
 					<DrlambdaButton isSubmitting={true} disabled={true}>
-						Loading...
+						Generating...
 					</DrlambdaButton>
 				) : (
 					<div className='user-onboarding-generate relative'>

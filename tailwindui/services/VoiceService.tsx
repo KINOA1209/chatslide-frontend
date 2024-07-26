@@ -54,7 +54,8 @@ export default class VoiceCloneService {
 			};
 		} else {
 			const errorResp = await response.json();
-			throw new Error('Error when cloning voice: ' + errorResp.error);
+      const errMsg = errorResp.error || errorResp.message;
+			throw new Error('Error when cloning voice: ' + errMsg);
 		}
 	}
 
