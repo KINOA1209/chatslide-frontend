@@ -412,7 +412,7 @@ class UserService {
 		}
 	}
 
-  static async deleteUser(idToken: string): Promise<boolean> {
+  static async deleteUser(idToken: string, reason: string): Promise<boolean> {
     try {
       const response = await fetch(`/api/user/delete`, {
         method: 'POST',
@@ -420,6 +420,7 @@ class UserService {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${idToken}`,
         },
+        body: JSON.stringify({ reason: reason }),
       });
 
       if (response.ok) {

@@ -4,6 +4,7 @@ import Promo from '@/components/signup/Promo';
 import { BsFillChatTextFill } from 'react-icons/bs';
 import { BigTitle } from '@/components/ui/Text';
 import { BigBlueButton } from '@/components/button/DrlambdaButton';
+import useHydrated from '@/hooks/use-hydrated';
 
 export default function SignUp() {
 	return (
@@ -12,12 +13,15 @@ export default function SignUp() {
 				<div className='pt-32 pb-12 md:pt-40 md:pb-20'>
 					{/* Page header */}
 					<div className='max-w-3xl mx-auto text-center pb-12 md:pb-20'>
-						<BigTitle center>💙 Welcome, Deal Mirror Users!</BigTitle>
+						<BigTitle center>💙 Welcome, DealMirror Users!</BigTitle>
 					</div>
 
 					{/* Form */}
 					<div className='max-w-sm mx-auto'>
-						<Promo text='Enter your Deal Mirror redemption code here' />
+						<Promo
+							text='Enter your DealMirror redemption code here'
+							initShowPromo
+						/>
 
 						<div className='flex items-center my-6'>
 							<div

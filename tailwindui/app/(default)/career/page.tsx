@@ -1,5 +1,6 @@
 import Footer from '@/components/layout/footer';
 import Header from '@/components/layout/header';
+import { BigTitle } from '@/components/ui/Text';
 import { getBrand } from '@/utils/getHost';
 
 export const metadata = {
@@ -16,7 +17,7 @@ export default function Career() {
 				<div className='pt-32 pb-12 md:pt-40 md:pb-20'>
 					{/* Page header */}
 					<div className='max-w-3xl mx-auto text-center pb-12 md:pb-16'>
-						<h1 className='h1'>Careers at DrLambda (ChatSlide)</h1>
+						<BigTitle center>Careers at DrLambda (ChatSlide)</BigTitle>
 					</div>
 
 					<div className='max-w-3xl mx-auto pb-4'>
@@ -120,8 +121,8 @@ export default function Career() {
 									<br />
 									<br />
 									<strong>What You Bring:</strong>
-                  <br /> 
-                  - 1+ year of experience in frontend development.
+									<br />
+									- 1+ year of experience in frontend development.
 									<br />
 									- Strong proficiency in JavaScript, React.js, and context
 									manager like Zustand.
@@ -187,8 +188,8 @@ export default function Career() {
 									<br />
 									<br />
 									<strong>What You Bring:</strong>
-                  <br />
-                  - 1+ year of experience in backend development.
+									<br />
+									- 1+ year of experience in backend development.
 									<br />
 									- Proficiency in Python and familiarity with Flask framework.
 									<br />
@@ -253,8 +254,8 @@ export default function Career() {
 									<br />
 									<br />
 									<strong>What You Bring:</strong>
-                  <br />
-                  - 1+ year of experience in data analysis or data science.
+									<br />
+									- 1+ year of experience in data analysis or data science.
 									<br />
 									- Proficiency in Python and libraries such as Pandas, NumPy,
 									and Scikit-learn.

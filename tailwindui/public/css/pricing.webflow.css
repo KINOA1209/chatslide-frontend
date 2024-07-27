@@ -5642,7 +5642,7 @@ h6 {
 	color: var(--elements-webflow-library--neutral--100);
 	text-align: center;
 	transform-style: preserve-3d;
-	background-color: #5168f6;
+	background-color: #4A3AFF;
 	border-radius: 8px;
 	justify-content: center;
 	width: 100%;
@@ -5658,10 +5658,10 @@ h6 {
 }
 
 .brix---btn-secondary-small-full-width {
-	color: #5168f6;
+	color: #4A3AFF;
 	text-align: center;
 	transform-style: preserve-3d;
-	background-color: #ffffff;
+	background-color: #F2F1FF;
 	border-radius: 8px;
 	justify-content: center;
 	width: 100%;

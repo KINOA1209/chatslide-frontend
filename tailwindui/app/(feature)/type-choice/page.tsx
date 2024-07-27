@@ -3,7 +3,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import '@/app/css/workflow-scenario-choice.css';
-import workflowTypeOptions from './options';
 import { BackButton } from '@/components/button/DrlambdaButton';
 import { BigTitle, Explanation, Title } from '@/components/ui/Text';
 import { Column } from '@/components/layout/Column';
@@ -17,6 +16,10 @@ import SessionStorage from '@/utils/SessionStorage';
 import { FaPlus } from 'react-icons/fa';
 import { FeedbackForm } from '@/components/ui/feedback';
 import { isChatslide } from '@/utils/getHost';
+import {
+	chatslideWorkflowTypeOptions,
+	drlambdaWorkflowTypeOptions,
+} from './options';
 
 const ScenarioChoicePage = () => {
 	const router = useRouter(); // Initialize the router
@@ -25,6 +28,9 @@ const ScenarioChoicePage = () => {
 	const teamMode = SessionStorage.getItem('currentTeam');
 
 	const [showFeedbackModal, setShowFeedbackModal] = useState(false);
+	const workflowTypeOptions = isChatslide()
+		? chatslideWorkflowTypeOptions
+		: drlambdaWorkflowTypeOptions;
 
 	// Function to navigate to the "scenario-choice" page
 	const navigate = (type: string) => {
@@ -75,31 +81,29 @@ const ScenarioChoicePage = () => {
 						/>
 					))}
 				</div>
-				{!isChatslide() && (
-					<div
-						className='flex flex-wrap flex-row gap-x-8 gap-y-6 md:gap-6 w-full mx-auto justify-center mt-[2rem]'
-						id='choice_container'
-					>
-						{workflowTypeOptions.minorOptions.map((scenario) => (
-							<MinorScenarioButton
-								key={scenario.id}
-								scenario={scenario}
-								navigate={navigate}
-							/>
-						))}
-
+				<div
+					className='flex flex-wrap flex-row gap-x-8 gap-y-6 md:gap-6 w-full mx-auto justify-center mt-[2rem]'
+					id='choice_container'
+				>
+					{workflowTypeOptions.minorOptions.map((scenario) => (
 						<MinorScenarioButton
-							key={'others'}
-							scenario={{
-								id: 'others',
-								title: 'Others',
-								imageSrc: '',
-								icon: <FaPlus />,
-							}}
-							navigate={() => setShowFeedbackModal(true)}
+							key={scenario.id}
+							scenario={scenario}
+							navigate={navigate}
 						/>
-					</div>
-				)}
+					))}
+
+					<MinorScenarioButton
+						key={'others'}
+						scenario={{
+							id: 'others',
+							title: 'Others',
+							imageSrc: '',
+							icon: <FaPlus />,
+						}}
+						navigate={() => setShowFeedbackModal(true)}
+					/>
+				</div>
 			</Column>
 
 			{showFeedbackModal && (
