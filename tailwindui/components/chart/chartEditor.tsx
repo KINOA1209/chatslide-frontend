@@ -1,10 +1,10 @@
-import { DataGrid, GridActionsCellItem, GridColDef, GridColumnMenu, GridColumnMenuItemProps, GridColumnMenuProps, GridRowId, useGridApiRef } from '@mui/x-data-grid';
-import { RefObject, useEffect, useRef, useState } from 'react';
-import { Chart as ChartJS } from 'chart.js';
+import { DataGrid, GridActionsCellItem, GridColDef, GridColumnMenu, GridColumnMenuItemProps, GridColumnMenuProps, GridRenderCellParams, GridRowId, useGridApiRef } from '@mui/x-data-grid';
+import { useEffect, useState } from 'react';
 import { Button, ListItemIcon, ListItemText, MenuItem, Typography } from '@mui/material';
-import { AddSectionIcon, DeleteIcon, AddTopicIcon, AddSlideIcon } from '@/app/(feature)/icons';
+import { AddSectionIcon, DeleteIcon } from '@/app/(feature)/icons';
 import TextField from "@mui/material/TextField";
 import Popover from "@mui/material/Popover";
+import MiniColorPicker from '../utils/miniColorPicker';
 
 interface ChartEditorProps {
     chartData: any;
@@ -17,6 +17,17 @@ export const ChartEditor = ({ chartData, setChartData }: ChartEditorProps) => {
     const apiRef = useGridApiRef();
     const [columnToEdit, setColumnToEdit] = useState<{ field: string, headerName: string } | null>(null);
 
+    function handleUpdateColor(color: string, params: GridRenderCellParams<any>) {
+        let newChartData = { ...chartData };
+        if (!['pie', 'doughnut'].includes(newChartData.chartType)) {
+            newChartData.datasets[params.row.id][params.field] = color;
+        } else {
+            newChartData.datasets[0][params.field][params.row.id] = color;
+        }
+        newChartData.datasets = [...newChartData.datasets];
+        setChartData(newChartData);
+    }
+
     useEffect(() => {
         var rows: { [key: string]: any }[] = [];
         var columns: GridColDef[] = [];
@@ -26,6 +37,22 @@ export const ChartEditor = ({ chartData, setChartData }: ChartEditorProps) => {
                     return { field: i.toString(), headerName: label, editable: true };
                 });
                 columns.unshift({ field: "cat", headerName: "Category", editable: true });
+                columns.push({
+                    field: "backgroundColor", headerName: "Fill Color", editable: false,
+                    renderCell: (params: GridRenderCellParams<any>) => {
+                        return <div className='w-full h-full flex justify-center items-center' >
+                            <MiniColorPicker color={params.value} setColor={(color) => { handleUpdateColor(color, params) }} />
+                        </div >
+                    }
+                });
+                columns.push({
+                    field: "borderColor", headerName: "Border Color", editable: false,
+                    renderCell: (params: GridRenderCellParams<any>) => {
+                        return <div className='w-full h-full flex justify-center items-center' >
+                            <MiniColorPicker color={params.value} setColor={(color) => { handleUpdateColor(color, params) }} />
+                        </div >
+                    }
+                });
                 rows = chartData.datasets.map((dataset: any, i: number) => {
                     return { id: i, "cat": dataset.label, editable: true };
                 });
@@ -38,12 +65,37 @@ export const ChartEditor = ({ chartData, setChartData }: ChartEditorProps) => {
                             rows[id][i.toString()] = "0";
                         }
                     });
+                    rows[id]['backgroundColor'] = data.backgroundColor;
+                    rows[id]['borderColor'] = data.borderColor;
                 }
             } else {
                 columns = [{ field: "cat", headerName: "Category", editable: true }, { field: "val", headerName: "Value", editable: true }];
+
+                columns.push({
+                    field: "backgroundColor", headerName: "Fill Color", editable: false,
+                    renderCell: (params: GridRenderCellParams<any>) => {
+                        return <div className='w-full h-full flex justify-center items-center' >
+                            <MiniColorPicker color={params.value} setColor={(color) => { handleUpdateColor(color, params) }} />
+                        </div >
+                    }
+                });
+                columns.push({
+                    field: "borderColor", headerName: "Border Color", editable: false,
+                    renderCell: (params: GridRenderCellParams<any>) => {
+                        return <div className='w-full h-full flex justify-center items-center' >
+                            <MiniColorPicker color={params.value} setColor={(color) => { handleUpdateColor(color, params) }} />
+                        </div >
+                    }
+                });
                 rows = chartData.labels.map((label: any, i: number) => {
                     return { id: i, "cat": label, "val": chartData.datasets[0].data[i] };
                 });
+                for (let id = 0; id < chartData.datasets[0].data.length; id++) {
+                    const backgroundColor = chartData.datasets[0].backgroundColor;
+                    const borderColor = chartData.datasets[0].borderColor;
+                    rows[id]['backgroundColor'] = backgroundColor[id];
+                    rows[id]['borderColor'] = borderColor[id];
+                }
             }
             // add delete action column
             columns.push({
@@ -103,13 +155,15 @@ export const ChartEditor = ({ chartData, setChartData }: ChartEditorProps) => {
             const newEntry = {
                 backgroundColor: "rgb(209, 209, 224)",
                 borderColor: "rgb(102, 102, 153)",
+                borderWidth: "2",
                 label: "New Entry",
                 data: new Array(chartData.labels.length).fill(0)
             };
             newChartData.datasets.push(newEntry);
         } else {
             newChartData.datasets[0].data.push(0);
-            newChartData.datasets[0].backgroundColor.push("rgb(209, 209, 224)");
+            newChartData.datasets[0].backgroundColor.push("rgba(209, 209, 224, 1)");
+            newChartData.datasets[0].borderColor.push("rgba(0, 0, 0, 0)");
             newChartData.labels.push("New Entry");
         }
         setChartData(newChartData);
@@ -188,6 +242,7 @@ export const ChartEditor = ({ chartData, setChartData }: ChartEditorProps) => {
         } else {
             newChartData.datasets[0].data.splice(rowID, 1);
             newChartData.datasets[0].backgroundColor.splice(rowID, 1);
+            newChartData.datasets[0].borderColor.splice(rowID, 1);
             newChartData.labels.splice(rowID, 1);
         }
         setChartData(newChartData);
@@ -208,7 +263,7 @@ export const ChartEditor = ({ chartData, setChartData }: ChartEditorProps) => {
 
     function CustomColumnMenu(props: GridColumnMenuProps) {
         const { onClick, colDef, id, labelledby } = props;
-        const showMenuItem = (!['pie', 'doughnut'].includes(chartData.chartType)) && colDef.field !== "cat";
+        const showMenuItem = (!['pie', 'doughnut'].includes(chartData.chartType)) && colDef.field !== "cat" && colDef.field !== "backgroundColor" && colDef.field !== "borderColor";
         return (
             <GridColumnMenu
                 {...props}
@@ -277,6 +332,8 @@ export const ChartEditor = ({ chartData, setChartData }: ChartEditorProps) => {
                     slots={{ columnMenu: CustomColumnMenu }}
                     apiRef={apiRef} />
             </div>
+
+
         </div>
     );
 
