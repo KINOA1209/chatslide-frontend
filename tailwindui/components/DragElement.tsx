@@ -1,6 +1,9 @@
 import Position from '@/types/Position';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
+import { FaUndo } from 'react-icons/fa';
+import { IoMove } from 'react-icons/io5';
+import { LuUndo2 } from 'react-icons/lu';
 import { MdDragIndicator, MdRefresh } from 'react-icons/md';
 import { TbRefresh } from 'react-icons/tb';
 import { Rnd } from 'react-rnd';
@@ -73,8 +76,8 @@ export const DragElement = ({
 			width = Number(positions[contentIndex].width) + 'px';
 			height = Number(positions[contentIndex].height) + 'px';
 		}
-		setElementPos({x, y});
-		setElementSize({width, height});
+		setElementPos({ x, y });
+		setElementSize({ width, height });
 		setMoveHandlerPos(x, y);
 		setResetHandlerPos(x, y);
 	}, []);
@@ -95,9 +98,9 @@ export const DragElement = ({
 	const elementHandlerCSS: React.CSSProperties = useMemo(
 		() => ({
 			background: '#545657',
-			width: '20px',
-			height: '20px',
-			padding: '2px',
+			width: '28px',
+			height: '28px',
+			padding: '4px',
 			position: 'absolute',
 			zIndex: '120',
 			visibility: `${isVisible ? 'visible' : 'hidden'}`,
@@ -127,7 +130,7 @@ export const DragElement = ({
 			borderTopLeftRadius: '0px',
 			width: '100%',
 			height: '100%',
-      overflow: 'visible',
+			overflow: 'visible',
 		}),
 		[isVisible],
 	);
@@ -144,18 +147,18 @@ export const DragElement = ({
 		if (moveHandlerRef.current) {
 			if (x < -25 && y < -90) {
 				moveHandlerRef.current.style.left = '';
-				moveHandlerRef.current.style.right = '-20px';
-				moveHandlerRef.current.style.bottom = '-20px';
+				moveHandlerRef.current.style.right = '-28px';
+				moveHandlerRef.current.style.bottom = '-28px';
 			} else if (x < -25) {
 				moveHandlerRef.current.style.left = '';
-				moveHandlerRef.current.style.right = '-20px';
+				moveHandlerRef.current.style.right = '-28px';
 				moveHandlerRef.current.style.bottom = '';
 			} else if (y < -90) {
-				moveHandlerRef.current.style.left = '-20px';
+				moveHandlerRef.current.style.left = '-28px';
 				moveHandlerRef.current.style.right = '';
-				moveHandlerRef.current.style.bottom = '-20px';
+				moveHandlerRef.current.style.bottom = '-28px';
 			} else {
-				moveHandlerRef.current.style.left = '-20px';
+				moveHandlerRef.current.style.left = '-28px';
 				moveHandlerRef.current.style.right = '';
 				moveHandlerRef.current.style.bottom = '';
 			}
@@ -166,23 +169,23 @@ export const DragElement = ({
 		if (resetHandlerRef.current) {
 			if (x < -25 && y < -90) {
 				resetHandlerRef.current.style.left = '';
-				resetHandlerRef.current.style.right = '-20px';
+				resetHandlerRef.current.style.right = '-28px';
 				resetHandlerRef.current.style.top = '';
-				resetHandlerRef.current.style.bottom = '23px';
+				resetHandlerRef.current.style.bottom = '30px';
 			} else if (x < -25) {
 				resetHandlerRef.current.style.left = '';
-				resetHandlerRef.current.style.right = '-20px';
-				resetHandlerRef.current.style.top = '23px';
+				resetHandlerRef.current.style.right = '-28px';
+				resetHandlerRef.current.style.top = '30px';
 				resetHandlerRef.current.style.bottom = '';
 			} else if (y < -90) {
-				resetHandlerRef.current.style.left = '-20px';
+				resetHandlerRef.current.style.left = '-28px';
 				resetHandlerRef.current.style.right = '';
 				resetHandlerRef.current.style.top = '';
-				resetHandlerRef.current.style.bottom = '23px';
+				resetHandlerRef.current.style.bottom = '30px';
 			} else {
-				resetHandlerRef.current.style.left = '-20px';
+				resetHandlerRef.current.style.left = '-28px';
 				resetHandlerRef.current.style.right = '';
-				resetHandlerRef.current.style.top = '23px';
+				resetHandlerRef.current.style.top = '30px';
 				resetHandlerRef.current.style.bottom = '';
 			}
 		}
@@ -201,7 +204,13 @@ export const DragElement = ({
 					}
 				: position,
 		);
-		handleSlideEdit(updatedPosition, currentSlideIndex, positionType, contentIndex, true);
+		handleSlideEdit(
+			updatedPosition,
+			currentSlideIndex,
+			positionType,
+			contentIndex,
+			true,
+		);
 	};
 
 	const onHandleResizeStop = (
@@ -225,7 +234,13 @@ export const DragElement = ({
 					}
 				: position,
 		);
-		handleSlideEdit(updatedPosition, currentSlideIndex, positionType, contentIndex, true);
+		handleSlideEdit(
+			updatedPosition,
+			currentSlideIndex,
+			positionType,
+			contentIndex,
+			true,
+		);
 	};
 
 	return (
@@ -291,8 +306,7 @@ export const DragElement = ({
 			disableDragging={!canEdit}
 			dragHandleClassName='drag-handler'
 		>
-
-      {/* handler icons  */}
+			{/* handler icons  */}
 			<div
 				style={{ ...elementHandlerCSS, cursor: 'move' }}
 				onMouseEnter={onEnterHandler}
@@ -300,10 +314,10 @@ export const DragElement = ({
 				className='drag-handler'
 				ref={moveHandlerRef}
 			>
-				<MdDragIndicator size={16} color={'white'} />
+				<IoMove size={20} color={'white'} />
 			</div>
 			<div
-				style={{ ...elementHandlerCSS, cursor: 'cell' }}
+				style={{ ...elementHandlerCSS, cursor: 'pointer' }}
 				onMouseEnter={onEnterHandler}
 				onMouseLeave={onLeaveHandler}
 				onClick={() => {
@@ -319,11 +333,17 @@ export const DragElement = ({
 						(position, index) =>
 							index === contentIndex ? defaultPos[contentIndex] : position,
 					);
-					handleSlideEdit(updatedPosition, currentSlideIndex, positionType, contentIndex, true);
+					handleSlideEdit(
+						updatedPosition,
+						currentSlideIndex,
+						positionType,
+						contentIndex,
+						true,
+					);
 				}}
 				ref={resetHandlerRef}
 			>
-				<MdRefresh size={16} color={'white'} />
+				<LuUndo2 size={20} color={'white'} />
 			</div>
 			<div
 				style={elementCSS}
@@ -332,9 +352,9 @@ export const DragElement = ({
 					onHover(elementIndex);
 				}}
 				onMouseLeave={() => {
-          setTimeout(() => {
-            setIsHover(false);
-          }, 300);
+					setTimeout(() => {
+						setIsHover(false);
+					}, 300);
 				}}
 			>
 				{children}
