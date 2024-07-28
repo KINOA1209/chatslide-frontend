@@ -127,6 +127,7 @@ export const DragElement = ({
 			borderTopLeftRadius: '0px',
 			width: '100%',
 			height: '100%',
+      overflow: 'visible',
 		}),
 		[isVisible],
 	);
@@ -290,6 +291,8 @@ export const DragElement = ({
 			disableDragging={!canEdit}
 			dragHandleClassName='drag-handler'
 		>
+
+      {/* handler icons  */}
 			<div
 				style={{ ...elementHandlerCSS, cursor: 'move' }}
 				onMouseEnter={onEnterHandler}

@@ -766,7 +766,8 @@ const QuillEditable: React.FC<QuillEditableProps> = ({
 	//console.log(hoveredSentence)
 
 	return (
-		<div className='w-full h-full'>
+		<div className='w-full
+    '>
 			<div ref={editorRef}></div>
 		</div>
 	);
