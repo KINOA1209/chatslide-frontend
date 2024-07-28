@@ -23,6 +23,7 @@ import ChatBotService from '@/services/ChatBotService';
 import { GrayLabel } from '../ui/GrayLabel';
 import { Explanation, SuccessMessage, WarningMessage } from '../ui/Text';
 import GPTToggle from '../button/WorkflowGPTToggle';
+import { WritableDraft } from "@/types/immer";
 
 export const AIAssistantIcon: React.FC<{
 	onClick: () => void;
@@ -31,7 +32,7 @@ export const AIAssistantIcon: React.FC<{
 		<div
 			className='rounded-md p-2 bg-white border border-gray-200 border-2 flex items-center justify-center relative'
 			onClick={onClick}
-			// style={{ animation: 'pulse 0.5s infinite' }}
+		// style={{ animation: 'pulse 0.5s infinite' }}
 		>
 			{isChatslide() ? (
 				<Image
@@ -160,31 +161,30 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 		try {
 			setLoading(true);
 
-			const response =
-				type === 'chart'
-					? await ChatBotService.chatChart(
-							inputToSend,
-							lastChatMessages,
-							token,
-							model === 'GPT-3.5' ? 'gpt-3.5-turbo' : 'gpt-4o',
-							updateDynamicChart ? 'json' : 'img',
-						)
-					: await ChatBotService.chat(
-							inputToSend,
-							lastChatMessages,
-							token,
-							slides[currentSlideIndex],
-							project?.id || '',
-							slideIndex,
-							undefined, // selectedText
-							type,
-							model === 'GPT-3.5' ? 'gpt-3.5-turbo' : 'gpt-4o',
-						);
+			const response = type === 'chart'
+				? await ChatBotService.chatChart(
+					inputToSend,
+					lastChatMessages,
+					token,
+					model === 'GPT-3.5' ? 'gpt-3.5-turbo' : 'gpt-4o',
+					updateDynamicChart ? 'json' : 'img',
+				)
+				: await ChatBotService.chat(
+					inputToSend,
+					lastChatMessages,
+					token,
+					slides[currentSlideIndex],
+					project?.id || '',
+					slideIndex,
+					undefined, // selectedText
+					type,
+					model === 'GPT-3.5' ? 'gpt-3.5-turbo' : 'gpt-4o',
+				);
 
 			setLoading(false);
 
 			console.log('responseData structure:', response);
-			// If the slide data is updated
+
 			if (response.slide) {
 				console.log('updateSlide content after api call:', response.slide);
 
@@ -196,19 +196,16 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 						images: [],
 					} as Slide;
 
-					// insert the newSlide after the currentSlideIndex
-					setSlides((prevSlides) => {
+					setSlides((prevSlides: WritableDraft<Slide>[]) => {
 						const newSlides = [...prevSlides];
-						newSlides.splice(currentSlideIndex + 1, 0, newSlide);
+						newSlides.splice(currentSlideIndex + 1, 0, newSlide as WritableDraft<Slide>);
 						return newSlides;
 					});
 					setSlideIndex(currentSlideIndex + 1);
 				} else {
-					// change the current slide
 					let content = response.slide.content;
 
 					if (content.length >= 6 && JSON.stringify(content).length > 600) {
-						// too much new content in one page, need to split into two pages
 						const mid = Math.floor(content.length / 2);
 						const slidePage1 = {
 							...slides[currentSlideIndex],
@@ -220,43 +217,31 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 							...response.slide,
 							content: content.slice(mid),
 						};
-						// replace the current slide with the 2 new slides
 						setSlides((prevSlides) => {
 							const newSlides = [...prevSlides];
-							newSlides.splice(currentSlideIndex, 1, slidePage1, slidePage2);
+							newSlides.splice(currentSlideIndex, 1, slidePage1 as WritableDraft<Slide>, slidePage2 as WritableDraft<Slide>);
 							return newSlides;
 						});
 						setSlideIndex(currentSlideIndex + 1);
-						addChatHistory(
-							addSuccessMessage(
-								'📄 Because of too much content on one page, I have split the content into two pages.',
-							),
-						);
+						addChatHistory(addSuccessMessage('📄 Because of too much content on one page, I have split the content into two pages.'));
 					} else {
-						// Update state with the new slides
-						// console.log('updating script at index', currentSlideIndex)
-						updateSlidePage &&
-							updateSlidePage(currentSlideIndex, response.slide);
-						updateVersion(); // force rerender when version changes and index does not change
+						updateSlidePage && updateSlidePage(currentSlideIndex, response.slide);
+						updateVersion();
 					}
 				}
 			} else if (response.action) {
-				// not add_page action with slide
-				// send this as a document signal
 				let action = response.action;
 				if (action === 'upload_background') {
-					action = 'change_logo'; // for branding
+					action = 'change_logo';
 				}
 				if (action === 'change_font') {
 					action = 'change_template';
 				}
-
 				document.dispatchEvent(new Event(action));
 			}
 
 			if (type === 'chart' && updateChartUrl) {
-				if (response?.images && response.images.length > 0)
-					updateChartUrl(response.images[0]);
+				if (response?.images && response.images.length > 0) updateChartUrl(response.images[0]);
 			} else if (type === 'chart' && updateDynamicChart) {
 				updateDynamicChart(response.chartData);
 			}
@@ -264,9 +249,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 			addChatHistory(addSuccessMessage(response.chat, response.images));
 		} catch (error) {
 			console.error('Failed to get AI response');
-			const errorMessage = addErrorMessage(
-				'😞 Sorry, I do not understand your request, can you try something else?',
-			);
+			const errorMessage = addErrorMessage('😞 Sorry, I do not understand your request, can you try something else?');
 			addChatHistory(errorMessage);
 		}
 	};
