@@ -13,304 +13,70 @@ import {
 	Title,
 	WarningMessage,
 } from '@/components/ui/Text';
-import { BetaLabel, GrayLabel, ProLabel } from '@/components/ui/GrayLabel';
-import { useState, useRef, useEffect } from 'react';
-import { readingData } from './readingData';
+import { WrappableRow } from '@/components/layout/WrappableRow';
+import { FaClone, FaTrash, FaMicrophone, FaStop } from 'react-icons/fa';
+import { FiPlay } from 'react-icons/fi';
+import PaywallModal from '@/components/paywallModal';
+import useHydrated from '@/hooks/use-hydrated';
+import { Column } from '@/components/layout/Column';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useVoiceCloning } from '../scripts/useVoiceCloning';
 import LANGUAGES, {
 	LANGUAGES_WITH_ACCENTS,
 } from '@/components/language/languageData';
-import VoiceCloneService from '@/services/VoiceService';
-import { useUser } from '@/hooks/use-user';
-import VoiceProfile from '@/models/VoiceProfile';
-import { toast } from 'react-toastify';
-import { WrappableRow } from '@/components/layout/WrappableRow';
-import { FaClone, FaTrash, FaMicrophone, FaStop } from 'react-icons/fa';
-import PaywallModal from '@/components/paywallModal';
-import useHydrated from '@/hooks/use-hydrated';
-import { FiPlay } from 'react-icons/fi';
-import { getBrand } from '@/utils/getHost';
-import { Column } from '@/components/layout/Column';
-import { convertToWav } from '@/utils/wav';
 
-const MIN_AUDIO_LENGTH = 10;
-const MAX_AUDIO_LENGTH = 120;
-const MIN_CONSENT_LENGTH = 5;
-const MAX_CONSENT_LENGTH = 20;
-
-
+import {
+	MIN_AUDIO_LENGTH,
+	MAX_AUDIO_LENGTH,
+	MIN_CONSENT_LENGTH,
+	MAX_CONSENT_LENGTH,
+} from '../scripts/useVoiceCloning';
 const VoiceCloning = () => {
-	const [selectedLanguageCode, setSelectedLanguageCode] =
-		useState<string>('en-US');
-	const [selectedTestLanguageCode, setSelectedTestLanguageCode] =
-		useState<string>('en-US');
-	const [inputBoxText, setInputBoxText] = useState<string>(
-		readingData['en-US'],
-	);
-	const { username } = useUser();
-	const [recordedAudio, setRecordedAudio] = useState<null | Blob>(null);
-	const [consentAudio, setConsentAudio] = useState<null | Blob>(null);
-	const [isRecordingRecord, setIsRecordingRecord] = useState<boolean>(false);
-	const [isRecordingConsent, setIsRecordingConsent] = useState<boolean>(false);
-	const [recordTimeLeft, setRecordTimeLeft] = useState<number>(MAX_AUDIO_LENGTH);
-	const [consentTimeLeft, setConsentTimeLeft] = useState<number>(MAX_CONSENT_LENGTH);
-	const [audioLength, setAudioLength] = useState<number>(0); // only applies to recordedAudio
-	const mediaRecorderRef = useRef<MediaRecorder | null>(null);
-	const audioChunksRef = useRef<Blob[]>([]);
-	const timerRef = useRef<NodeJS.Timeout | null>(null);
-	const { token, tier } = useUser();
-	const [voiceProfiles, setVoiceProfiles] = useState<VoiceProfile[]>([]);
-	const [selectedProfile, setSelectedProfile] = useState<VoiceProfile | null>(
-		null,
-	);
-	const [voiceName, setVoiceName] = useState<string>('');
-	const [customRecording, setCustomRecording] = useState<string>('');
-	const [customerInput, setCustomerInput] = useState<string>('');
-	const [loading, setLoading] = useState(false);
-	const [generating, setGenerating] = useState(false);
-	const [cloning, setCloning] = useState(false);
-	const [showPaywallModal, setShowPaywallModal] = useState(false);
+	const {
+		selectedLanguageCode,
+		selectedTestLanguageCode,
+		inputBoxText,
+		recordedAudio,
+		consentAudio,
+		isRecordingRecord,
+		isRecordingConsent,
+		recordTimeLeft,
+		consentTimeLeft,
+		audioLength,
+		voiceProfiles,
+		selectedProfile,
+		voiceName,
+		customRecording,
+		customerInput,
+		loading,
+		generating,
+		cloning,
+		showPaywallModal,
+		isSubmittingConsent,
+		consentId,
+		consentText,
+		handleLanguageChange,
+		handleInputBoxChange,
+		handleRecordAudio,
+		submitConsent,
+		handleCloneVoice,
+		handleGenerateVoice,
+		handleProfileChange,
+		handleDeleteProfile,
+		setVoiceName,
+		setCustomerInput,
+		setShowPaywallModal,
+		setConsentText,
+		setSelectedTestLanguageCode,
+		setCustomRecording,
+	} = useVoiceCloning();
 
-	const [isSubmittingConsent, setIsSubmittingConsent] =
-		useState<boolean>(false);
-	const [consentId, setConsentId] = useState<string>('');
-
-	const [consentText, setConsentText] = useState<string>(
-		`I, ${username}, am aware that the recording of my voice will be used by ${getBrand()} to create and use a synthetic version of my voice.`,
-	);
-
-	async function submitConsent() {
-    if (!consentAudio) 
-      return;
-
-		setIsSubmittingConsent(true);
-		const consentAudioFile = new File([consentAudio], 'consent.wav', {
-			type: 'audio/wav',
-		});
-		VoiceCloneService.submitConsent(username, consentAudioFile, token)
-			.then((consentId) => {
-				toast.success('Consent verified successfully!');
-				setConsentId(consentId);
-				console.log('Consent ID:', consentId);
-			})
-			.catch((error: any) => {
-				console.error('Error submitting consent:', error.message);
-				toast.error(`${error.message}`);
-			})
-			.finally(() => {
-				setIsSubmittingConsent(false);
-				setAudioLength(0); // for the next audio
-			});
-	}
-
-	const fetchVoiceProfiles = async () => {
-		try {
-			const profiles = await VoiceCloneService.getVoiceProfiles(token);
-			setVoiceProfiles(profiles);
-			if (profiles.length > 0) {
-				setSelectedProfile(profiles[0]);
-			}
-		} catch (error: any) {
-			console.error('Error fetching voice profiles:', error.message);
-		}
-	};
-
-	useEffect(() => {
-		fetchVoiceProfiles();
-	}, [token]);
-
-	const handleLanguageChange = (
-		event: React.ChangeEvent<HTMLSelectElement>,
-	) => {
-		const code = event.target.value;
-		setSelectedLanguageCode(code);
-		setInputBoxText(readingData[code]);
-	};
-
-	const handleInputBoxChange = (value: string) => {
-		setInputBoxText(value);
-	};
-
-	const handleRecordAudio = async (isConsentAudio = false) => {
-		if (isRecordingRecord) {
-			mediaRecorderRef.current?.stop();
-			mediaRecorderRef.current?.stream
-				.getTracks()
-				.forEach((track) => track.stop()); // Stop all tracks
-			setIsRecordingRecord(false);
-			if (timerRef.current) {
-				clearInterval(timerRef.current);
-				timerRef.current = null;
-				setAudioLength(MAX_AUDIO_LENGTH - recordTimeLeft);
-			}
-			setRecordTimeLeft(MAX_AUDIO_LENGTH);
-		} else if (isRecordingConsent) {
-			mediaRecorderRef.current?.stop();
-			mediaRecorderRef.current?.stream
-				.getTracks()
-				.forEach((track) => track.stop()); // Stop all tracks
-			setIsRecordingConsent(false);
-			if (timerRef.current) {
-				clearInterval(timerRef.current);
-				timerRef.current = null;
-				setAudioLength(MAX_CONSENT_LENGTH - consentTimeLeft);
-			}
-			setConsentTimeLeft(MAX_CONSENT_LENGTH);
-		} else {
-			if (!isConsentAudio) setRecordedAudio(null);
-			else setConsentAudio(null);
-			const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-			mediaRecorderRef.current = new MediaRecorder(stream);
-			audioChunksRef.current = [];
-			mediaRecorderRef.current.ondataavailable = (event) => {
-				audioChunksRef.current.push(event.data);
-			};
-			mediaRecorderRef.current.onstop = async () => {
-				const audioBlob = new Blob(audioChunksRef.current, {
-					type: 'audio/webm',
-				});
-				const audioBlobWav = await convertToWav(audioBlob);
-				if (!isConsentAudio) setRecordedAudio(audioBlobWav);
-				else setConsentAudio(audioBlobWav);
-				audioChunksRef.current = [];
-				stream.getTracks().forEach((track) => track.stop()); // Stop all tracks
-			};
-			mediaRecorderRef.current.start();
-			if (!isConsentAudio) setIsRecordingRecord(true);
-			else setIsRecordingConsent(true);
-
-			timerRef.current = setInterval(() => {
-				if (isConsentAudio) {
-					setConsentTimeLeft((prevTime) => {
-						if (prevTime <= 1) {
-							mediaRecorderRef.current?.stop();
-							setConsentAudio(null);
-							setIsRecordingConsent(false);
-							clearInterval(timerRef.current!);
-							timerRef.current = null;
-							setConsentTimeLeft(MAX_CONSENT_LENGTH);
-              setAudioLength(MAX_CONSENT_LENGTH);
-							return MAX_CONSENT_LENGTH;
-						}
-						return prevTime - 1;
-					});
-				} else {
-					setRecordTimeLeft((prevTime) => {
-						if (prevTime <= 1) {
-							mediaRecorderRef.current?.stop();
-							setRecordedAudio(null);
-							setIsRecordingRecord(false);
-							clearInterval(timerRef.current!);
-							timerRef.current = null;
-							setRecordTimeLeft(MAX_AUDIO_LENGTH);
-              setAudioLength(MAX_AUDIO_LENGTH);
-							return MAX_AUDIO_LENGTH;
-						}
-						return prevTime - 1;
-					});
-				}
-			}, 1000);
-		}
-	};
-
-	const handleCloneVoice = async () => {
-		if (voiceName.trim() === '') {
-			toast.error('Please enter a name for the voice profile.');
-			return;
-		}
-
-		if (!tier.includes('ULTIMATE') && !tier.includes('PRO')) {
-			setShowPaywallModal(true);
-			return;
-		}
-
-		if (!recordedAudio) {
-			toast.error('Please record both your voice and consent audio.');
-			return;
-		}
-
-		if (audioLength < MIN_AUDIO_LENGTH) {
-			toast.error(
-				`Please record at least ${MIN_AUDIO_LENGTH} seconds of audio.`,
-			);
-			return;
-		}
-
-		try {
-			setCloning(true);
-			const trainingRecordFile = new File([recordedAudio], 'training.wav', {
-				type: 'audio/wav',
-			});
-			const response = await VoiceCloneService.cloneVoice(
-				consentId,
-				trainingRecordFile,
-				voiceName,
-				token,
-			);
-			toast.success('Voice cloned successfully!');
-			await fetchVoiceProfiles();
-		} catch (error: any) {
-			console.error('Error cloning voice:', error.message);
-			toast.error(`${error.message}`);
-		} finally {
-			setCloning(false);
-		}
-	};
-
-	const handleGenerateVoice = async () => {
-		setGenerating(true);
-		try {
-			setCustomRecording('');
-			const result = await VoiceCloneService.generateVoice(
-				selectedProfile?.voice_id || '',
-				customerInput,
-				selectedTestLanguageCode,
-				token,
-			);
-			setCustomRecording(result.audio_url);
-		} catch (error: any) {
-			console.error('Error generating voice:', error.message);
-		} finally {
-			setGenerating(false);
-		}
-	};
-
-	const handleProfileChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-		const profile = voiceProfiles.find(
-			(profile) => profile.name === event.target.value,
-		);
-		setSelectedProfile(profile || null);
-		setCustomRecording('');
-	};
-
-	const handleDeleteProfile = async () => {
-		if (selectedProfile) {
-			setVoiceProfiles(
-				voiceProfiles.filter(
-					(profile) => profile.voice_id !== selectedProfile.voice_id,
-				),
-			);
-			try {
-				setLoading(true);
-				await VoiceCloneService.deleteVoiceProfile(
-					selectedProfile.voice_id,
-					token,
-				);
-				setSelectedProfile(null);
-				setCustomRecording('');
-				await fetchVoiceProfiles();
-			} catch (error: any) {
-				console.error('Error deleting voice profile:', error.message);
-			} finally {
-				setLoading(false);
-			}
-		}
-	};
-
-	// avoid hydration error during development caused by persistence
 	if (!useHydrated()) return <></>;
 
 	return (
 		<>
+			<ToastContainer />
 			<PaywallModal
 				showModal={showPaywallModal}
 				setShowModal={setShowPaywallModal}
@@ -321,7 +87,7 @@ const VoiceCloning = () => {
 				<BigTitle>🎙️ Create a New Voice Profile</BigTitle>
 				<Instruction>
 					You can create a new voice profile by recording your voice and consent
-					message. This can be used for generating videos with your voice.{' '}
+					message. This can be used for generating videos with your voice.
 					<br />
 					This voice is only accessible to you and will not be shared with
 					anyone else. You can also delete your voice profile at any time.
@@ -334,9 +100,7 @@ const VoiceCloning = () => {
 					</Instruction>
 
 					<NewInputBox
-						onChange={(e) => {
-							setConsentText(e);
-						}}
+						onChange={(e) => setConsentText(e)}
 						value={consentText}
 						maxLength={2000}
 						textarea
@@ -346,7 +110,8 @@ const VoiceCloning = () => {
 							isRecordingRecord ||
 							cloning ||
 							isSubmittingConsent ||
-							(isRecordingConsent && consentTimeLeft > MAX_CONSENT_LENGTH - MIN_CONSENT_LENGTH)
+							(isRecordingConsent &&
+								consentTimeLeft > MAX_CONSENT_LENGTH - MIN_CONSENT_LENGTH)
 						}
 						onClick={() => handleRecordAudio(true)}
 					>
@@ -390,7 +155,8 @@ const VoiceCloning = () => {
 						<Instruction>
 							Click the record button, and read the text below for at least{' '}
 							{MIN_AUDIO_LENGTH}
-							s. You can also edit the text if you want. You don't have to finish the whole text.
+							s. You can also edit the text if you want. You don't have to
+							finish the whole text.
 						</Instruction>
 
 						<WrappableRow type='grid' cols={2}>
@@ -418,7 +184,8 @@ const VoiceCloning = () => {
 								isRecordingConsent ||
 								cloning ||
 								isSubmittingConsent ||
-								(isRecordingRecord && MAX_AUDIO_LENGTH - recordTimeLeft < MIN_AUDIO_LENGTH)
+								(isRecordingRecord &&
+									MAX_AUDIO_LENGTH - recordTimeLeft < MIN_AUDIO_LENGTH)
 							}
 							onClick={() => handleRecordAudio(false)}
 						>
@@ -561,7 +328,7 @@ const VoiceCloning = () => {
 				) : (
 					<p>
 						🤔️ No voice profiles found. Please create a voice profile using the
-						section above.{' '}
+						section above.
 					</p>
 				)}
 			</Card>
