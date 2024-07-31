@@ -1,35 +1,87 @@
 import React, { useState } from 'react';
+// import {
+// 	AlertDialog,
+// 	AlertDialogContent,
+// 	AlertDialogDescription,
+// 	AlertDialogFooter,
+// 	AlertDialogHeader,
+// 	AlertDialogTitle,
+// 	AlertDialogTrigger,
+// } from '@/components/ui/alert-dialog';
 import {
-	AlertDialog,
-	AlertDialogContent,
-	AlertDialogDescription,
-	AlertDialogFooter,
-	AlertDialogHeader,
-	AlertDialogTitle,
-	AlertDialogTrigger,
-} from '@/components/ui/alert-dialog';
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
+} from '@/components/ui/dialog';
+
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Button } from '@/components/ui/button';
 import { FaMicrophone, FaStop } from 'react-icons/fa';
 import { useVoiceCloning } from './useVoiceCloning';
-
+import {
+	MIN_AUDIO_LENGTH,
+	MAX_AUDIO_LENGTH,
+	MIN_CONSENT_LENGTH,
+	MAX_CONSENT_LENGTH,
+} from '../scripts/useVoiceCloning';
+import LANGUAGES, {
+	LANGUAGES_WITH_ACCENTS,
+} from '@/components/language/languageData';
+import { NewInputBox } from '@/components/ui/InputBox';
+import {
+	BigBlueButton,
+	DropDown,
+	InversedBigBlueButton,
+} from '@/components/button/DrlambdaButton';
+import { WrappableRow } from '@/components/layout/WrappableRow';
+import { Instruction } from '@/components/ui/Text';
+import { FiPlay } from 'react-icons/fi';
 function CloneYourVoiceTutorial() {
 	const [isOpen, setIsOpen] = useState(false);
 	const [currentStep, setCurrentStep] = useState(0);
 
 	const {
 		selectedLanguageCode,
+		selectedTestLanguageCode,
 		inputBoxText,
 		recordedAudio,
+		consentAudio,
 		isRecordingRecord,
+		isRecordingConsent,
 		recordTimeLeft,
+		consentTimeLeft,
+		audioLength,
+		voiceProfiles,
+		selectedProfile,
 		voiceName,
+		customRecording,
+		customerInput,
+		loading,
+		generating,
+		cloning,
+		showPaywallModal,
+		isSubmittingConsent,
+		consentId,
+		consentText,
 		handleLanguageChange,
 		handleInputBoxChange,
 		handleRecordAudio,
+		submitConsent,
 		handleCloneVoice,
+		handleGenerateVoice,
+		handleProfileChange,
+		handleDeleteProfile,
 		setVoiceName,
+		setCustomerInput,
+		setShowPaywallModal,
+		setConsentText,
+		setSelectedTestLanguageCode,
+		setCustomRecording,
 	} = useVoiceCloning();
 
 	const handleOpen = () => {
@@ -58,38 +110,85 @@ function CloneYourVoiceTutorial() {
 
 	const stepData = [
 		{
-			title: 'Choose the language',
+			title: 'Record consent message',
 			description: (
-				<select value={selectedLanguageCode} onChange={handleLanguageChange}>
-					<option value='' disabled>
-						Select a language
-					</option>
-					<option value='en'>English</option>
-					<option value='es'>Spanish</option>
-					<option value='zh'>Chinese</option>
-					{/* Add more languages as needed */}
-				</select>
+				// <select value={selectedLanguageCode} onChange={handleLanguageChange}>
+				// 	<option value='' disabled>
+				// 		Select a language
+				// 	</option>
+				// 	<option value='en'>English</option>
+				// 	<option value='es'>Spanish</option>
+				// 	<option value='zh'>Chinese</option>
+				// 	{/* Add more languages as needed */}
+				// </select>
+				<>
+					<NewInputBox
+						onChange={(e) => setConsentText(e)}
+						value={consentText}
+						maxLength={2000}
+						textarea
+					/>
+					<BigBlueButton
+						disabled={
+							isRecordingRecord ||
+							cloning ||
+							isSubmittingConsent ||
+							(isRecordingConsent &&
+								consentTimeLeft > MAX_CONSENT_LENGTH - MIN_CONSENT_LENGTH)
+						}
+						onClick={() => handleRecordAudio(true)}
+					>
+						{isRecordingConsent ? (
+							<span className='flex flex-row gap-x-2 items-center whitespace-nowrap'>
+								<FaStop /> Stop Recording ({consentTimeLeft}s)
+							</span>
+						) : (
+							<>
+								<FaMicrophone /> Record
+							</>
+						)}
+					</BigBlueButton>
+				</>
 			),
 			footer: (
 				<>
-					<span>{`Step 1 of 3`}</span>
-					<Button onClick={handleNextStep} disabled={!selectedLanguageCode}>
+					<span>{`Step 1 of 5`}</span>
+					<Button disabled={!consentAudio} onClick={handleNextStep}>
 						Next
 					</Button>
 				</>
 			),
 		},
 		{
-			title: 'Recording',
+			title: 'Preview and Verify',
 			description: (
-				<textarea readOnly rows={5} cols={33}>
-					Please read the following text...
-					{/* Include the text to be read for recording */}
-				</textarea>
+				<>
+					{' '}
+					{consentAudio && (
+						<WrappableRow type='grid' cols={2}>
+							<Instruction>Preview your consent recording:</Instruction>
+							<audio controls className='mx-auto h-[36px] w-[16rem]'>
+								<source
+									src={URL.createObjectURL(consentAudio)}
+									type='audio/wav'
+								/>
+							</audio>
+						</WrappableRow>
+					)}
+					{consentAudio && (
+						<BigBlueButton
+							onClick={submitConsent}
+							isSubmitting={isSubmittingConsent}
+							disabled={isRecordingRecord || cloning || isRecordingConsent}
+						>
+							{isSubmittingConsent ? 'Verifying...' : 'Verify and Continue'}
+						</BigBlueButton>
+					)}
+				</>
 			),
 			footer: (
 				<>
-					<Button onClick={handlePreviousStep}>Back</Button>
+					{/* <Button onClick={handlePreviousStep}>Back</Button>
 					<span>{`Step 2 of 3`}</span>
 					{isRecordingRecord ? (
 						<Button onClick={() => handleRecordAudio(false)}>
@@ -99,38 +198,220 @@ function CloneYourVoiceTutorial() {
 						<Button onClick={() => handleRecordAudio(false)}>
 							<FaMicrophone /> Record
 						</Button>
-					)}
+					)} */}
+					<>
+						<span>{`Step 2 of 5`}</span>
+						<Button disabled={!consentId} onClick={handleNextStep}>
+							Next
+						</Button>
+					</>
 				</>
 			),
 		},
 		{
-			title: 'Clone Your Voice',
+			title: 'Record your voice',
 			description: (
-				<div>
-					<p>Preview your recorded voice</p>
-					{/* Add an audio player to preview the recorded voice */}
-					<audio controls>
-						<source src='path_to_recorded_voice' type='audio/wav' />
-						Your browser does not support the audio element.
-					</audio>
-					<div>
-						<label htmlFor='voiceName'>Voice Name:</label>
-						<input
-							id='voiceName'
-							type='text'
-							value={voiceName}
-							onChange={(e) => setVoiceName(e.target.value)}
-						/>
-					</div>
-				</div>
+				<>
+					{consentId && (
+						<>
+							<Instruction>
+								Click the record button, and read the text below for at least{' '}
+								{MIN_AUDIO_LENGTH}
+								s. You can also edit the text if you want. You don't have to
+								finish the whole text.
+							</Instruction>
+
+							<WrappableRow type='grid' cols={2}>
+								<Instruction>Select a language:</Instruction>
+								<DropDown
+									value={selectedLanguageCode}
+									onChange={handleLanguageChange}
+								>
+									{LANGUAGES.map((lang) => (
+										<option key={lang.code} value={lang.code}>
+											{lang.displayName}
+										</option>
+									))}
+								</DropDown>
+							</WrappableRow>
+
+							<NewInputBox
+								onChange={handleInputBoxChange}
+								value={inputBoxText}
+								maxLength={2000}
+								textarea
+							/>
+							<BigBlueButton
+								disabled={
+									isRecordingConsent ||
+									cloning ||
+									isSubmittingConsent ||
+									(isRecordingRecord &&
+										MAX_AUDIO_LENGTH - recordTimeLeft < MIN_AUDIO_LENGTH)
+								}
+								onClick={() => handleRecordAudio(false)}
+							>
+								{isRecordingRecord ? (
+									<span className='flex flex-row gap-x-2 items-center whitespace-nowrap'>
+										<FaStop /> Stop Recording ({recordTimeLeft}s)
+									</span>
+								) : (
+									<>
+										<FaMicrophone /> Record
+									</>
+								)}
+							</BigBlueButton>
+
+							{recordedAudio && (
+								<WrappableRow type='grid' cols={2}>
+									<Instruction>Preview your recording:</Instruction>
+									<audio controls className='mx-auto h-[36px] w-[16rem]'>
+										<source
+											src={URL.createObjectURL(recordedAudio)}
+											type='audio/wav'
+										/>
+									</audio>
+								</WrappableRow>
+							)}
+						</>
+					)}
+				</>
 			),
 			footer: (
 				<>
 					<Button onClick={handlePreviousStep}>Back</Button>
-					<span>{`Step 3 of 3`}</span>
-					<Button onClick={handleCloneVoice} disabled={!voiceName}>
+					<span>{`Step 3 of 5`}</span>
+					<Button disabled={!(audioLength >= MIN_AUDIO_LENGTH && consentId)}>
 						Clone
 					</Button>
+				</>
+			),
+		},
+		{
+			title: 'Naming and Clone',
+			description: (
+				<>
+					<div className='flex flex-row items-center justify-center gap-x-2'>
+						<NewInputBox
+							placeholder='Enter a name'
+							value={voiceName}
+							maxLength={20}
+							onChange={setVoiceName}
+						/>
+						<BigBlueButton
+							width='8rem'
+							onClick={handleCloneVoice}
+							isSubmitting={cloning}
+							disabled={
+								audioLength < MIN_AUDIO_LENGTH ||
+								cloning ||
+								isRecordingConsent ||
+								isRecordingRecord
+							}
+						>
+							{cloning ? 'Cloning...' : 'Clone'}
+						</BigBlueButton>
+					</div>
+				</>
+			),
+			footer: (
+				<>
+					<Button onClick={handlePreviousStep}>Back</Button>
+					<span>{`Step 4 of 5`}</span>
+					<Button disabled={!(audioLength >= MIN_AUDIO_LENGTH && consentId)}>
+						Clone
+					</Button>
+				</>
+			),
+		},
+		{
+			title: 'Test voices',
+			description: (
+				<>
+					<Instruction> Select a voice profile:</Instruction>
+					<WrappableRow type='flex'>
+						<DropDown
+							onChange={handleProfileChange}
+							value={selectedProfile?.name || ''}
+						>
+							{voiceProfiles.map((profile) => (
+								<option key={profile.voice_id} value={profile.name}>
+									{profile.name}
+								</option>
+							))}
+						</DropDown>
+						<InversedBigBlueButton
+							onClick={handleDeleteProfile}
+							disabled={loading}
+							width='4rem'
+						>
+							Delete
+						</InversedBigBlueButton>
+					</WrappableRow>
+					{selectedProfile ? (
+						<>
+							<WrappableRow type='grid' cols={2}>
+								<Instruction> Select a language:</Instruction>
+								<WrappableRow type='flex'>
+									<DropDown
+										value={selectedTestLanguageCode}
+										onChange={(e) => {
+											setSelectedTestLanguageCode(e.target.value);
+											setCustomRecording('');
+										}}
+									>
+										{LANGUAGES.map((lang) => (
+											<option key={lang.code} value={lang.code}>
+												{lang.displayName}
+											</option>
+										))}
+									</DropDown>
+								</WrappableRow>
+							</WrappableRow>
+
+							<Instruction>
+								Add some example text to test the voice:
+							</Instruction>
+							<NewInputBox
+								placeholder='Enter text to preview voice'
+								value={customerInput}
+								maxLength={2000}
+								onChange={(element) => {
+									setCustomRecording('');
+									setCustomerInput(element);
+								}}
+								textarea
+							/>
+							<BigBlueButton
+								onClick={handleGenerateVoice}
+								disabled={generating}
+							>
+								{generating ? (
+									<>Generating...</>
+								) : (
+									<>
+										<FiPlay /> Test
+									</>
+								)}
+							</BigBlueButton>
+							{customRecording && (
+								<audio controls className='mx-auto h-[36px] w-[16rem]'>
+									<source src={customRecording} type='audio/webm' />
+								</audio>
+							)}
+						</>
+					) : (
+						<p>
+							🤔️ No voice profiles found. Please create a voice profile using
+							the section above.
+						</p>
+					)}
+				</>
+			),
+			footer: (
+				<>
+					<Button onClick={handlePreviousStep}>Back</Button>
+					<span>{`Step 5 of 5`}</span>
 				</>
 			),
 		},
@@ -139,10 +420,11 @@ function CloneYourVoiceTutorial() {
 	return (
 		<div>
 			<ToastContainer />
-			<AlertDialog open={isOpen} onOpenChange={setIsOpen}>
+			{/* <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
 				<AlertDialogTrigger asChild>
 					<Button onClick={handleOpen}>
 						<FaMicrophone className='mr-2 h-4 w-4' /> Clone your voice
+						<FaMicrophone className='ml-2 h-4 w-4' />
 					</Button>
 				</AlertDialogTrigger>
 				{currentStep > 0 && (
@@ -160,7 +442,27 @@ function CloneYourVoiceTutorial() {
 						</AlertDialogFooter>
 					</AlertDialogContent>
 				)}
-			</AlertDialog>
+			</AlertDialog> */}
+			<Dialog>
+				<DialogTrigger asChild>
+					<Button onClick={handleOpen}>
+						<FaMicrophone className='mr-2 h-4 w-4' /> Clone your voice
+						<FaMicrophone className='ml-2 h-4 w-4' />
+					</Button>
+				</DialogTrigger>
+				{currentStep > 0 && (
+					<DialogContent>
+						<h1 className='border-b-2'>Clone your voice</h1>
+						<DialogHeader>
+							<DialogTitle>{stepData[currentStep - 1]?.title}</DialogTitle>
+							<DialogDescription>
+								{stepData[currentStep - 1]?.description}
+							</DialogDescription>
+						</DialogHeader>
+						<DialogFooter>{stepData[currentStep - 1]?.footer}</DialogFooter>
+					</DialogContent>
+				)}
+			</Dialog>
 		</div>
 	);
 }
