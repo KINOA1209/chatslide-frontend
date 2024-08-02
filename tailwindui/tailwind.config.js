@@ -22,6 +22,10 @@ module.exports = {
         dpr: {
           raw: 'screen and (min-device-pixel-ratio: 2)',
         },
+        'small': { 'max': '991px' },
+        'medium': { 'min': '992px', 'max': '1247px' },
+        'large': { 'min': '1248px', 'max': '1535px' },
+        'xlarge': { 'min': '1536px' },
       },
       backgroundImage: {
 
@@ -29,15 +33,15 @@ module.exports = {
           "url('/images/template/Fun_Education_004/BackgroundElements.png')",
       },
       backgroundColor: {
-				Sky: 'var(--Sky, #F4F6FE)',
-				Blue: 'var(--Blue, #5168f6)',
-				Purple: 'var(--Purple, #6A7EF9)',
-				'Grey-50': 'var(--Grey-50, #F4F4F4)',
-				'Grey-100': 'var(--Grey-100, #E7E9EB)',
-				'Workflow-bg-color': 'var(--Workflow-bg-color, #6A7EF9)',
-				'button-color': 'var(--Blue-600, #5168f6)',
-				Lavender: 'var(--Lavender, #9AAEF9)',
-			},
+        Sky: 'var(--Sky, #F4F6FE)',
+        Blue: 'var(--Blue, #5168f6)',
+        Purple: 'var(--Purple, #6A7EF9)',
+        'Grey-50': 'var(--Grey-50, #F4F4F4)',
+        'Grey-100': 'var(--Grey-100, #E7E9EB)',
+        'Workflow-bg-color': 'var(--Workflow-bg-color, #6A7EF9)',
+        'button-color': 'var(--Blue-600, #5168f6)',
+        Lavender: 'var(--Lavender, #9AAEF9)',
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

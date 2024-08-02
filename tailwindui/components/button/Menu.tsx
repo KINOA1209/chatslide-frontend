@@ -11,7 +11,7 @@ export const Menu: React.FC<{
 	icon?: React.ReactNode;
 	iconPadding?: string;
 	mode?: 'hover' | 'click';
-  align?: 'left' | 'right';
+	align?: 'left' | 'right';
 }> = ({
 	children,
 	button = null,
@@ -22,18 +22,18 @@ export const Menu: React.FC<{
 	),
 	mode = 'click',
 	iconPadding = '5px',
-  align = 'right'
+	align = 'right',
 }) => {
 	const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 	const dropdownRef = useRef<HTMLDivElement>(null);
 	const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
 	const showDropdown = () => {
-    setIsDropdownVisible(true);
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
-  };
+		setIsDropdownVisible(true);
+		if (timeoutRef.current) {
+			clearTimeout(timeoutRef.current);
+		}
+	};
 	const hideDropdown = () => setIsDropdownVisible(false);
 
 	const toggleDropdown = () => {
@@ -60,10 +60,10 @@ export const Menu: React.FC<{
 
 	const handleMouseLeave = (event: React.MouseEvent<HTMLDivElement>) => {
 		if (mode === 'hover') {
-      // wait for 200ms before hiding the dropdown
-      timeoutRef.current = setTimeout(() => {
-        hideDropdown();
-      }, 200);
+			// wait for 200ms before hiding the dropdown
+			timeoutRef.current = setTimeout(() => {
+				hideDropdown();
+			}, 200);
 		} else {
 			event.currentTarget.style.background = 'transparent';
 		}
@@ -142,7 +142,7 @@ export const MenuItem: React.FC<{
 	style = {},
 	isPaidFeature = false,
 }) => {
-  const {isPaidUser} = useUser();
+	const { isPaidUser } = useUser();
 	return (
 		<button
 			className={`block px-[10px] py-[9px] text-sm text-[#182230] rounded-md hover:bg-zinc-100 w-full text-left ${className} justify-between`}
@@ -161,9 +161,7 @@ export const MenuItem: React.FC<{
 				{icon}
 				{label}
 			</div>
-      {isPaidFeature && !isPaidUser && (
-        <PlusLabel />
-      )}
+			{isPaidFeature && !isPaidUser && <PlusLabel />}
 		</button>
 	);
 };
