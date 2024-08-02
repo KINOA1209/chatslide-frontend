@@ -51,7 +51,10 @@ export const DragElement = ({
 	const [elementSize, setElementSize] = useState<{
 		width: number | string;
 		height: number | string;
-	}>({ width: 'max-content', height: 'max-content' });
+	}>({
+		width: 'max-content',
+		height: type === ElementType.ImageView ? 'max-content' : '',
+	});
 
 	useEffect(() => {
 		let x: number, y: number;
@@ -71,10 +74,16 @@ export const DragElement = ({
 			!positions?.[contentIndex]?.height
 		) {
 			width = defaultPos?.[contentIndex]?.width ?? 'max-content';
-			height = defaultPos?.[contentIndex]?.height ?? 'max-content';
+			height =
+				type === ElementType.ImageView
+					? defaultPos?.[contentIndex]?.height ?? 'max-content'
+					: '';
 		} else {
 			width = Number(positions[contentIndex].width) + 'px';
-			height = Number(positions[contentIndex].height) + 'px';
+			height =
+				type === ElementType.ImageView
+					? Number(positions[contentIndex].height) + 'px'
+					: '';
 		}
 		setElementPos({ x, y });
 		setElementSize({ width, height });
@@ -129,7 +138,7 @@ export const DragElement = ({
 			borderWidth: '2px',
 			borderTopLeftRadius: '0px',
 			width: '100%',
-			height: '100%',
+			height: type === ElementType.ImageView ? '100%' : 'max-content',
 			overflow: 'visible',
 		}),
 		[isVisible],
@@ -245,7 +254,7 @@ export const DragElement = ({
 
 	return (
 		<Rnd
-			className={'ResizableElement w-full h-full'}
+			className={'ResizableElement w-full'}
 			style={{
 				zIndex: `${hoveredIndex === elementIndex ? '200' : '100'}`,
 			}}

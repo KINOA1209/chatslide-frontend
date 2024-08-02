@@ -443,7 +443,7 @@ const Affiliate = () => {
 };
 
 const CreditHistory = () => {
-	const { credits, token } = useUser();
+	const { credits, tier, token } = useUser();
 	const router = useRouter();
 	// const [stripeLink, setStripeLink] = useState('');
 	const [showManageSubscription, setShowManageSubscription] = useState(false);
@@ -481,6 +481,10 @@ const CreditHistory = () => {
 					Mange Subscription
 				</InversedBigBlueButton>
 			</WrappableRow>
+
+			<Instruction>⭐️ Subscription Tier</Instruction>
+			<BigTitle>{tier.replace('_', ' ')}</BigTitle>
+      
 		</div>
 	);
 };
@@ -488,12 +492,12 @@ const CreditHistory = () => {
 const DangerZone = () => {
 	const { token, signOut } = useUser();
 	const [showModal, setShowModal] = useState(false);
-  const router = useRouter();
+	const router = useRouter();
 
 	function deleteAndSignOut(reason: string) {
 		UserService.deleteUser(token, reason);
 		signOut();
-    router.push('/landing');
+		router.push('/landing');
 	}
 
 	const ConfirmModal: React.FC<{}> = () => {

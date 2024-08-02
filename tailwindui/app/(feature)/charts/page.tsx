@@ -199,13 +199,23 @@ export default function Page() {
 						<Card>
 							{chartType ? (
 								<>
+									{/* For responsive chart display */}
 									<Chart
 										className=''
 										type={chartType!}
 										data={chartValues}
 										options={chartConfig}
-										ref={chartRef}
 									></Chart>
+									{/* For fixed aspect ratio chart download */}
+									<div className='for-generation absolute w-[720px] h-[480px] invisible'>
+										<Chart
+											className=''
+											type={chartType!}
+											data={chartValues}
+											options={chartConfig}
+											ref={chartRef}
+										></Chart>
+									</div>
 								</>
 							) : (
 								noChart
