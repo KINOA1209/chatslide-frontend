@@ -75,6 +75,7 @@ class ChatBotService {
     token: string,
     model: 'gpt-3.5-turbo' | 'gpt-4' | 'gpt-4o',
 	responseType: 'img' | 'json',
+	search_online: "" | "google" | "bing" | "wikipedia" | "news"
   ): Promise<ChatResponse> {
     // console.log('mode', mode)
 
@@ -112,6 +113,7 @@ class ChatBotService {
         body: JSON.stringify({
 			user_input: messages,
 			model_name: model,
+			search_online: search_online
         }),
       });
 
