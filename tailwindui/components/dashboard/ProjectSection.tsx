@@ -98,7 +98,7 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({
 							className='
 								grid 
 								grid-cols-2 
-								gap-4 
+								gap-[24px] 
 								small:grid-cols-2 
 								medium:grid-cols-3 
 								large:grid-cols-4 
