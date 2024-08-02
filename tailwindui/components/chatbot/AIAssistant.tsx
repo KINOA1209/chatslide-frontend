@@ -24,6 +24,11 @@ import { GrayLabel } from '../ui/GrayLabel';
 import { Explanation, SuccessMessage, WarningMessage } from '../ui/Text';
 import GPTToggle from '../button/WorkflowGPTToggle';
 import { WritableDraft } from "@/types/immer";
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { FormControl, FormHelperText, InputLabel, MenuItem } from '@mui/material';
+
+const SearchOnlineEngine = ["", "google", "bing", "wikipedia", "news"] as const;
+type SearchOnlineType = typeof SearchOnlineEngine[number];
 
 export const AIAssistantIcon: React.FC<{
 	onClick: () => void;
@@ -84,6 +89,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 	const { project } = useProject();
 	const chatWindowRef = useRef<HTMLDivElement>(null);
 	const [model, setModel] = useState(type === 'chart' ? 'GPT-4o' : 'GPT-3.5');
+	const [search_online, setSearchOnline] = useState<SearchOnlineType>("");
 
 	const handleEnter = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
 		if (event.key === 'Enter') {
@@ -168,6 +174,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 					token,
 					model === 'GPT-3.5' ? 'gpt-3.5-turbo' : 'gpt-4o',
 					updateDynamicChart ? 'json' : 'img',
+					search_online
 				)
 				: await ChatBotService.chat(
 					inputToSend,
@@ -264,6 +271,18 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 			? 'sm:fixed xl:relative sm:bottom-0 sm:right-0 sm:z-50 sm:w-[20rem] sm:h-[30rem] xl:h-full'
 			: 'sm:relative sm:w-[20rem] sm:h-full';
 
+
+	const handleSelectEngine = (e: SelectChangeEvent<SearchOnlineType>) => {
+		if (e.target.value === "" ||
+			e.target.value === "google" ||
+			e.target.value === "bing" ||
+			e.target.value === "wikipedia" ||
+			e.target.value === "news"
+		) {
+			setSearchOnline(e.target.value);
+		}
+	}
+
 	return (
 		<section
 			className={`hidden sm:flex ${pos} sm:flex-col bg-white rounded-lg sm:items-center border border-2 border-gray-200`}
@@ -311,7 +330,26 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 					<Explanation>Fast, no credit cost.</Explanation>
 				)}
 			</div>
-
+			<div className='w-full pt-4 pb-2 border-t-2 border-gray-300 flex justify-center'>
+				<FormControl sx={{ m: 1, minWidth: 200 }} size="small">
+					<InputLabel id="search-engine-select-label">Web Search</InputLabel>
+					<Select
+						labelId="search-engine-select-label"
+						id="search-engine-select"
+						value={search_online}
+						label="Web Search"
+						autoWidth
+						onChange={handleSelectEngine}
+					>
+						{SearchOnlineEngine.map((engine) => (
+							<MenuItem key={engine} value={engine}>
+								{engine === "" ? <em>None</em> : engine}
+							</MenuItem>
+						))}
+					</Select>
+					<FormHelperText><span className='text-red-500 font-bold'>NEW!</span> Use web search for more accurate data</FormHelperText>
+				</FormControl>
+			</div>
 			{/* chat history text area */}
 			<div className='w-full h-full border-t-2 border-gray-300 overflow-y-scroll p-2 flex flex-col flex-grow'>
 				<ScrollBar
