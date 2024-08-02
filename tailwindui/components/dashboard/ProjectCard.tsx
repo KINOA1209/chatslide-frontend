@@ -50,13 +50,14 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
 	exportSlidesRef = useRef<HTMLDivElement>(null),
 }) => {
 	return (
-		<Link href={`/${isDiscover ? 'shared' : 'project'}/${project.id}`}>
-			<Card
-				key={index}
-				className='cursor-pointer h-full flex flex-col justify-between'
-			>
-				<CardContent className='p-0 flex flex-col h-full justify-between'>
-					{/* project image */}
+		// <Link href={`/${isDiscover ? 'shared' : 'project'}/${project.id}`}>
+		<Card
+			key={index}
+			className='cursor-pointer h-full flex flex-col justify-between'
+		>
+			<CardContent className='p-0 flex flex-col h-full justify-between'>
+				{/* project image */}
+				<Link href={`/${isDiscover ? 'shared' : 'project'}/${project.id}`}>
 					<div
 						className='flex items-center justify-center w-full'
 						style={{
@@ -74,12 +75,15 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
 							style={{ width: '72px', height: '40px' }}
 						/>
 					</div>
-					{/* project information other than image */}
-					<div
-						style={{ padding: 'var(--spacing-lg, 12px)' }}
-						className='projectInfo'
-					>
-						{/* project title name */}
+				</Link>
+
+				{/* project information other than image */}
+				<div
+					style={{ padding: 'var(--spacing-lg, 12px)' }}
+					className='projectInfo'
+				>
+					{/* project title name */}
+					<Link href={`/${isDiscover ? 'shared' : 'project'}/${project.id}`}>
 						<div
 							className='flex-wrap'
 							style={{
@@ -92,77 +96,78 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
 						>
 							{project.name}
 						</div>
-						{/* row: edited time, badge and dropdown menu icon */}
-						<div className='flex flex-row justify-between items-center'>
-							<span
-								style={{
-									fontSize: '12px',
-									color: 'var(--colors-text-text-quaternary-500, #667085)',
-									fontFamily: 'Creato Display Regular',
-									fontWeight: 'normal',
-									lineHeight: '18px',
-								}}
-							>
-								Edited{' '}
-								{project.updated_datetime &&
-									formatDate(project.updated_datetime)}
-							</span>
+					</Link>
 
-							{/* flex row: badge and menu icon */}
-							<div className='flex flex-row gap-[4px]'>
-								{project.content_type === 'presentation' ? (
-									<DesignSystemBadges
-										size='sm'
-										text=''
-										iconLeading={PiSlideshow}
-										bgColor='var(--Component-colors-Utility-Purple-utility-purple-50, #EFF4FF)'
-										borderColor='var(--Component-colors-Utility-Purple-utility-purple-200, #C7D7FE)'
-										borderRadius='6px'
-										textColor='var(--Component-colors-Utility-Brand-utility-brand-700, #3538CD)'
-										iconColor='var(--Component-colors-Utility-Brand-utility-brand-700, #3538CD)'
-									/>
-								) : (
-									<DesignSystemBadges
-										size='sm'
-										text=''
-										iconLeading={MdOutlineShare}
-										bgColor='var(--Component-colors-Utility-Purple-utility-purple-50, #F4F3FF)'
-										borderColor='var(--Component-colors-Utility-Purple-utility-purple-200, #D9D6FE)'
-										borderRadius='6px'
-										textColor='var(--Component-colors-Utility-Purple-utility-purple-700, #5925DC)'
-										iconColor='var(--Component-colors-Utility-Purple-utility-purple-700, #5925DC)'
-									/>
-								)}
-								{project.video_url ? (
-									<DesignSystemBadges
-										size='sm'
-										text=''
-										iconLeading={MdOndemandVideo}
-										bgColor='var(--Component-colors-Utility-Purple-utility-purple-50, #EFF4FF)'
-										borderColor='var(--Component-colors-Utility-Purple-utility-purple-200, #C7D7FE)'
-										borderRadius='6px'
-										textColor='var(--Component-colors-Utility-Brand-utility-brand-700, #3538CD)'
-										iconColor='var(--Component-colors-Utility-Brand-utility-brand-700, #3538CD)'
-									/>
-								) : null}
-								<ProjectDropdownMenu
-									dropdownTrigger={null}
-									project={project}
-									setCurrentProjects={setCurrentProjects}
-									folders={currentFolders}
-									setFolders={setCurrentFolders}
-									onDelete={onDelete}
-									isDiscover={isDiscover}
-									activeFolder={activeFolder}
-									setRefreshMenu={setRefreshMenu}
-									exportSlidesRef={exportSlidesRef}
+					{/* row: edited time, badge and dropdown menu icon */}
+					<div className='flex flex-row justify-between items-center'>
+						<span
+							style={{
+								fontSize: '12px',
+								color: 'var(--colors-text-text-quaternary-500, #667085)',
+								fontFamily: 'Creato Display Regular',
+								fontWeight: 'normal',
+								lineHeight: '18px',
+							}}
+						>
+							Edited{' '}
+							{project.updated_datetime && formatDate(project.updated_datetime)}
+						</span>
+
+						{/* flex row: badge and menu icon */}
+						<div className='flex flex-row gap-[4px]'>
+							{project.content_type === 'presentation' ? (
+								<DesignSystemBadges
+									size='sm'
+									text=''
+									iconLeading={PiSlideshow}
+									bgColor='var(--Component-colors-Utility-Purple-utility-purple-50, #EFF4FF)'
+									borderColor='var(--Component-colors-Utility-Purple-utility-purple-200, #C7D7FE)'
+									borderRadius='6px'
+									textColor='var(--Component-colors-Utility-Brand-utility-brand-700, #3538CD)'
+									iconColor='var(--Component-colors-Utility-Brand-utility-brand-700, #3538CD)'
 								/>
-							</div>
+							) : (
+								<DesignSystemBadges
+									size='sm'
+									text=''
+									iconLeading={MdOutlineShare}
+									bgColor='var(--Component-colors-Utility-Purple-utility-purple-50, #F4F3FF)'
+									borderColor='var(--Component-colors-Utility-Purple-utility-purple-200, #D9D6FE)'
+									borderRadius='6px'
+									textColor='var(--Component-colors-Utility-Purple-utility-purple-700, #5925DC)'
+									iconColor='var(--Component-colors-Utility-Purple-utility-purple-700, #5925DC)'
+								/>
+							)}
+							{project.video_url ? (
+								<DesignSystemBadges
+									size='sm'
+									text=''
+									iconLeading={MdOndemandVideo}
+									bgColor='var(--Component-colors-Utility-Purple-utility-purple-50, #EFF4FF)'
+									borderColor='var(--Component-colors-Utility-Purple-utility-purple-200, #C7D7FE)'
+									borderRadius='6px'
+									textColor='var(--Component-colors-Utility-Brand-utility-brand-700, #3538CD)'
+									iconColor='var(--Component-colors-Utility-Brand-utility-brand-700, #3538CD)'
+								/>
+							) : null}
+							<ProjectDropdownMenu
+								dropdownTrigger={null}
+								project={project}
+								setCurrentProjects={setCurrentProjects}
+								folders={currentFolders}
+								setFolders={setCurrentFolders}
+								onDelete={onDelete}
+								isDiscover={isDiscover}
+								activeFolder={activeFolder}
+								setRefreshMenu={setRefreshMenu}
+								exportSlidesRef={exportSlidesRef}
+							/>
 						</div>
 					</div>
-				</CardContent>
-			</Card>
-		</Link>
+				</div>
+			</CardContent>
+		</Card>
+		// </Link>
 	);
 };
 

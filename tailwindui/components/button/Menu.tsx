@@ -36,8 +36,9 @@ export const Menu: React.FC<{
 	};
 	const hideDropdown = () => setIsDropdownVisible(false);
 
-	const toggleDropdown = () => {
+	const toggleDropdown = (event: React.MouseEvent) => {
 		if (mode === 'click') {
+			event.stopPropagation(); // Prevents the event from bubbling up to the Link
 			setIsDropdownVisible((prev) => !prev);
 		}
 	};
