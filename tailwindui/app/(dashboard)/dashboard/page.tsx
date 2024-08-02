@@ -22,6 +22,8 @@ import { useTeam } from '@/hooks/use-team';
 import { isChatslide } from '@/utils/getHost';
 import { getUserCountryCode } from '@/utils/userLocation';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { IoGridOutline } from 'react-icons/io5';
+import { HiOutlineViewList } from 'react-icons/hi';
 
 export default function Dashboard() {
 	const [projects, setProjects] = useState<Project[]>([]);
@@ -359,10 +361,20 @@ export default function Dashboard() {
 					teamId={currentTeam}
 				/>
 
-				<Tabs defaultValue='listView' className=''>
-					<TabsList>
-						<TabsTrigger value='listView'>List</TabsTrigger>
-						<TabsTrigger value='cardView'>Card</TabsTrigger>
+				<Tabs defaultValue='cardView' className='flex flex-col'>
+					<TabsList className='w-fit self-end mx-8 mt-[16px]'>
+						<TabsTrigger
+							value='cardView'
+							className='data-[state=active]:text-[#444CE7]'
+						>
+							<IoGridOutline className={`w-5 h-5 `} />
+						</TabsTrigger>
+						<TabsTrigger
+							value='listView'
+							className='data-[state=active]:text-[#444CE7]'
+						>
+							<HiOutlineViewList className='w-5 h-5' />
+						</TabsTrigger>
 					</TabsList>
 					{hasFolder && !isTeamMode && (
 						<FolderList

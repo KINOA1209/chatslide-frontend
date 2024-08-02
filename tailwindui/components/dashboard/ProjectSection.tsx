@@ -50,6 +50,7 @@ import ShareButton from '../button/ShareButton';
 import ProjectService from '@/services/ProjectService';
 import { useUser } from '@/hooks/use-user';
 import ProjectDropdownMenu from './ProjectDowndownMenu';
+import ProjectCard from './ProjectCard';
 const ExportToPdfButton = dynamic(
 	() => import('@/components/slides/ExportButton'), // Path to your ExportToPdfButton component
 	{ ssr: false }, // Disable SSR
@@ -104,86 +105,29 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({
 								xlarge:grid-cols-5'
 						>
 							{currentProjects.map((project, index) => (
-								<ProjectDropdownMenu
-									dropdownTrigger={
-										<Card key={index} className='cursor-pointer'>
-											<CardContent className='p-0'>
-												<div
-													className='flex items-center justify-center w-full'
-													style={{
-														objectFit: 'contain' as 'contain',
-													}}
-												>
-													<Image
-														className=''
-														unoptimized={true}
-														src={getThumbnailUrl(project)}
-														alt={project.name + ' project thumbnail'}
-														layout='responsive'
-														width={72}
-														height={40}
-														style={{ width: '72px', height: '40px' }}
-													/>
-												</div>
-												<div
-													className='flex-wrap'
-													style={{
-														fontSize: '14px',
-														color:
-															'var(--colors-text-text-secondary-700, #344054)',
-													}}
-												>
-													{project.name}
-												</div>
-												<p>
-													Edited{' '}
-													{project.updated_datetime &&
-														formatDate(project.updated_datetime)}
-												</p>
-												<div className='flex flex-row gap-[4px]'>
-													{project.content_type === 'presentation' ? (
-														<DesignSystemBadges
-															size='sm'
-															text=''
-															iconLeading={PiSlideshow}
-															bgColor='var(--Component-colors-Utility-Purple-utility-purple-50, #EFF4FF)'
-															borderColor='var(--Component-colors-Utility-Purple-utility-purple-200, #C7D7FE)'
-															borderRadius='6px'
-															textColor='var(--Component-colors-Utility-Brand-utility-brand-700, #3538CD)'
-															iconColor='var(--Component-colors-Utility-Brand-utility-brand-700, #3538CD)'
-														/>
-													) : (
-														<DesignSystemBadges
-															size='sm'
-															text=''
-															iconLeading={MdOutlineShare}
-															bgColor='var(--Component-colors-Utility-Purple-utility-purple-50, #F4F3FF)'
-															borderColor='var(--Component-colors-Utility-Purple-utility-purple-200, #D9D6FE)'
-															borderRadius='6px'
-															textColor='var(--Component-colors-Utility-Purple-utility-purple-700, #5925DC)'
-															iconColor='var(--Component-colors-Utility-Purple-utility-purple-700, #5925DC)'
-														/>
-													)}
-													{project.video_url ? (
-														<DesignSystemBadges
-															size='sm'
-															text=''
-															iconLeading={MdOndemandVideo}
-															bgColor='var(--Component-colors-Utility-Purple-utility-purple-50, #EFF4FF)'
-															borderColor='var(--Component-colors-Utility-Purple-utility-purple-200, #C7D7FE)'
-															borderRadius='6px'
-															textColor='var(--Component-colors-Utility-Brand-utility-brand-700, #3538CD)'
-															iconColor='var(--Component-colors-Utility-Brand-utility-brand-700, #3538CD)'
-														/>
-													) : null}
-												</div>
-											</CardContent>
-										</Card>
-									}
+								// <ProjectDropdownMenu
+								// 	dropdownTrigger={
+								// 		<ProjectCard key={index} project={project} index={index} />
+								// 	}
+								// 	project={project}
+								// 	setCurrentProjects={setProjects}
+								// 	folders={folders}
+								// 	setFolders={setFolders}
+								// 	onDelete={handleDelete}
+								// 	isDiscover={false}
+								// 	activeFolder={activeFolder}
+								// 	setRefreshMenu={setRefreshMenu}
+								// 	exportSlidesRef={exportSlidesRef}
+								// />
+
+								<ProjectCard
+									key={index}
+									index={index}
 									project={project}
+									currentProjects={currentProjects}
 									setCurrentProjects={setProjects}
-									folders={folders}
-									setFolders={setFolders}
+									currentFolders={folders}
+									setCurrentFolders={setFolders}
 									onDelete={handleDelete}
 									isDiscover={false}
 									activeFolder={activeFolder}
