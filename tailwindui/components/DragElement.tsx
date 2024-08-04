@@ -269,6 +269,8 @@ export const DragElement = ({
 				setIsDragging(true);
 			}}
 			onDragStop={onHandleDragStop}
+			onMouseEnter={onEnterHandler}
+			onMouseLeave={onLeaveHandler}
 			resizeHandleStyles={
 				isVisible
 					? {
@@ -363,7 +365,7 @@ export const DragElement = ({
 				onMouseLeave={() => {
 					setTimeout(() => {
 						setIsHover(false);
-					}, 300);
+					}, 500);
 				}}
 			>
 				{children}
