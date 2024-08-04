@@ -3,7 +3,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import Draggable from 'react-draggable';
 import { FaUndo } from 'react-icons/fa';
 import { IoMove } from 'react-icons/io5';
-import { LuUndo2 } from 'react-icons/lu';
+import { LuTrash2, LuUndo2 } from 'react-icons/lu';
 import { MdDragIndicator, MdRefresh } from 'react-icons/md';
 import { TbRefresh } from 'react-icons/tb';
 import { Rnd } from 'react-rnd';
@@ -219,7 +219,7 @@ export const DragElement = ({
 			currentSlideIndex,
 			positionType,
 			contentIndex,
-			true,
+			false,
 		);
 	};
 
@@ -249,7 +249,7 @@ export const DragElement = ({
 			currentSlideIndex,
 			positionType,
 			contentIndex,
-			true,
+			false,
 		);
 	};
 
