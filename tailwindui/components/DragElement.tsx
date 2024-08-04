@@ -140,6 +140,7 @@ export const DragElement = ({
 			width: '100%',
 			height: type === ElementType.ImageView ? '100%' : 'max-content',
 			overflow: 'visible',
+      cursor: 'move',
 		}),
 		[isVisible],
 	);
@@ -356,7 +357,9 @@ export const DragElement = ({
 			>
 				<LuUndo2 size={20} color={'white'} />
 			</div>
+
 			<div
+				className='drag-handler'
 				style={elementCSS}
 				onMouseEnter={() => {
 					setIsHover(true);
