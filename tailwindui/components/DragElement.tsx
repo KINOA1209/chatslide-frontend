@@ -104,6 +104,7 @@ export const DragElement = ({
 	const [isResizing, setIsResizing] = useState<boolean>(false);
 	const [isDragging, setIsDragging] = useState<boolean>(false);
 	const [isOverHandler, setIsOverHandler] = useState<boolean>(false);
+  const [isShiftPressed, setIsShiftPressed] = useState(false);
 
 	const moveHandlerRef = useRef<HTMLDivElement>(null);
 	const resetHandlerRef = useRef<HTMLDivElement>(null);
@@ -265,6 +266,29 @@ export const DragElement = ({
 		);
 	};
 
+    useEffect(() => {
+			const handleKeyDown = (event: KeyboardEvent) => {
+				if (event.key === 'Shift') {
+					setIsShiftPressed(true);
+				}
+			};
+
+			const handleKeyUp = (event: KeyboardEvent) => {
+				if (event.key === 'Shift') {
+					setIsShiftPressed(false);
+				}
+			};
+
+			window.addEventListener('keydown', handleKeyDown);
+			window.addEventListener('keyup', handleKeyUp);
+
+			// Clean up event listeners on component unmount
+			return () => {
+				window.removeEventListener('keydown', handleKeyDown);
+				window.removeEventListener('keyup', handleKeyUp);
+			};
+		}, []);
+
 	return (
 		<Rnd
 			className={'ResizableElement w-full'}
@@ -273,14 +297,14 @@ export const DragElement = ({
 			}}
 			position={elementPos}
 			size={elementSize}
-			lockAspectRatio={false}
+			lockAspectRatio={isShiftPressed}
 			onResizeStart={() => {
 				setIsResizing(true);
 			}}
 			onResizeStop={onHandleResizeStop}
 			onDragStart={() => {
-        console.log('isAnyElementDragging', isAnyElementDragging);
-        setIsAnyElementDragging(true);
+				console.log('isAnyElementDragging', isAnyElementDragging);
+				setIsAnyElementDragging(true);
 				setIsDragging(true);
 			}}
 			onDragStop={onHandleDragStop}
@@ -393,7 +417,7 @@ export const DragElement = ({
 				className={type === ElementType.TextEdit ? 'drag-handler' : ''}
 				style={elementCSS}
 				onMouseEnter={() => {
-          if (isAnyElementDragging) return;
+					if (isAnyElementDragging) return;
 					setIsHover(true);
 					onHover(elementIndex);
 				}}
