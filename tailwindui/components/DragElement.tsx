@@ -140,7 +140,7 @@ export const DragElement = ({
 			width: '100%',
 			height: type === ElementType.ImageView ? '100%' : 'max-content',
 			overflow: 'visible',
-      cursor: 'move',
+      cursor: type === ElementType.TextEdit ? 'move' : 'default',
 		}),
 		[isVisible],
 	);
@@ -359,7 +359,7 @@ export const DragElement = ({
 			</div>
 
 			<div
-				className='drag-handler'
+				className={type === ElementType.TextEdit ? 'drag-handler' : ''}
 				style={elementCSS}
 				onMouseEnter={() => {
 					setIsHover(true);
