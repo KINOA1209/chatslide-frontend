@@ -162,6 +162,8 @@ const useHasSelectedCustomizedTemplateTitleFontFamily =
 		true,
 	);
 
+const useIsDragging = createBearStore<boolean>()('isDragging', false, false);
+
 export enum SaveStatus {
 	UpToDate,
 	Saving,
@@ -350,21 +352,34 @@ export const useSlides = () => {
 
 	const [canResetAllPositions, setCanResetAllPositions] = useState(false);
 
+  const {isDragging, setIsDragging} = useIsDragging();
+
 	useEffect(() => {
 		const currentSlide = slides[slideIndex];
 		if (!currentSlide) return;
 		else if (
-			(currentSlide?.image_container_positions && Object.keys(currentSlide?.image_container_positions[0]).length > 0) ||
-			(currentSlide?.image_container_positions && Object.keys(currentSlide?.image_container_positions[1]).length > 0) ||
-			(currentSlide?.image_container_positions && Object.keys(currentSlide?.image_container_positions[2]).length > 0) ||
-			(currentSlide?.logo_numeric_position && Object.keys(currentSlide?.logo_numeric_position).length > 0) ||
-			(currentSlide?.username_position && Object.keys(currentSlide?.username_position).length > 0) ||
-			(currentSlide?.head_position && Object.keys(currentSlide?.head_position).length > 0) ||
-			(currentSlide?.title_position && Object.keys(currentSlide?.title_position).length > 0) ||
-			(currentSlide?.subtopic_position && Object.keys(currentSlide?.subtopic_position).length > 0) ||
-			(currentSlide?.content_positions && Object.keys(currentSlide?.content_positions[0]).length > 0) ||
-			(currentSlide?.content_positions && Object.keys(currentSlide?.content_positions[1]).length > 0) ||
-			(currentSlide?.content_positions && Object.keys(currentSlide?.content_positions[2]).length > 0)
+			(currentSlide?.image_container_positions &&
+				Object.keys(currentSlide?.image_container_positions[0]).length > 0) ||
+			(currentSlide?.image_container_positions &&
+				Object.keys(currentSlide?.image_container_positions[1]).length > 0) ||
+			(currentSlide?.image_container_positions &&
+				Object.keys(currentSlide?.image_container_positions[2]).length > 0) ||
+			(currentSlide?.logo_numeric_position &&
+				Object.keys(currentSlide?.logo_numeric_position).length > 0) ||
+			(currentSlide?.username_position &&
+				Object.keys(currentSlide?.username_position).length > 0) ||
+			(currentSlide?.head_position &&
+				Object.keys(currentSlide?.head_position).length > 0) ||
+			(currentSlide?.title_position &&
+				Object.keys(currentSlide?.title_position).length > 0) ||
+			(currentSlide?.subtopic_position &&
+				Object.keys(currentSlide?.subtopic_position).length > 0) ||
+			(currentSlide?.content_positions &&
+				Object.keys(currentSlide?.content_positions[0]).length > 0) ||
+			(currentSlide?.content_positions &&
+				Object.keys(currentSlide?.content_positions[1]).length > 0) ||
+			(currentSlide?.content_positions &&
+				Object.keys(currentSlide?.content_positions[2]).length > 0)
 		)
 			setCanResetAllPositions(true);
 		else setCanResetAllPositions(false);
@@ -1009,5 +1024,7 @@ export const useSlides = () => {
 		setCustomizedTemplateTitleFontColor,
 		hasSelectedCustomizedTemplateTitleFontColor,
 		setHasSelectedCustomizedTemplateTitleFontColor,
+    isDragging,
+    setIsDragging
 	};
 };

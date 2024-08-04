@@ -1,5 +1,13 @@
+import { useSlides } from '@/hooks/use-slides';
 import Position from '@/types/Position';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+	createContext,
+	useContext,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+} from 'react';
 import Draggable from 'react-draggable';
 import { FaUndo } from 'react-icons/fa';
 import { IoMove } from 'react-icons/io5';
@@ -56,6 +64,7 @@ export const DragElement = ({
 		height: type === ElementType.ImageView ? 'max-content' : '',
 	});
 
+	const {isDragging: isAnyElementDragging, setIsDragging: setIsAnyElementDragging} = useSlides();
 	useEffect(() => {
 		let x: number, y: number;
 		let width: number | string, height: number | string;
@@ -140,12 +149,14 @@ export const DragElement = ({
 			width: '100%',
 			height: type === ElementType.ImageView ? '100%' : 'max-content',
 			overflow: 'visible',
-      cursor: type === ElementType.TextEdit ? 'move' : 'default',
+			cursor: type === ElementType.TextEdit ? 'move' : 'default',
 		}),
 		[isVisible],
 	);
 
 	const onEnterHandler = () => {
+    console.log('isAnyElementDragging', isAnyElementDragging);
+    if (isAnyElementDragging) return;
 		setIsOverHandler(true);
 	};
 
@@ -202,6 +213,7 @@ export const DragElement = ({
 	};
 
 	const onHandleDragStop = (e: any, data: any) => {
+    setIsAnyElementDragging(false);
 		setIsDragging(false);
 		setElementPos({ x: data.x, y: data.y });
 		const updatedPosition: Position[] = positions.map((position, index) =>
@@ -267,6 +279,8 @@ export const DragElement = ({
 			}}
 			onResizeStop={onHandleResizeStop}
 			onDragStart={() => {
+        console.log('isAnyElementDragging', isAnyElementDragging);
+        setIsAnyElementDragging(true);
 				setIsDragging(true);
 			}}
 			onDragStop={onHandleDragStop}
@@ -357,11 +371,29 @@ export const DragElement = ({
 			>
 				<LuUndo2 size={20} color={'white'} />
 			</div>
+			{/* icon to delete all text */}
+			{/* <div 
+        style={{ ...elementHandlerCSS, cursor: 'pointer' }}
+        onMouseEnter={onEnterHandler}
+        onMouseLeave={onLeaveHandler}
+        onClick={() => {
+          handleSlideEdit(
+            positions.filter((_, index) => index !== contentIndex),
+            currentSlideIndex,
+            positionType,
+            contentIndex,
+            true,
+          );
+        }}
+      >
+        <LuTrash2 size={20} color={'white'} />
+      </div> */}
 
 			<div
 				className={type === ElementType.TextEdit ? 'drag-handler' : ''}
 				style={elementCSS}
 				onMouseEnter={() => {
+          if (isAnyElementDragging) return;
 					setIsHover(true);
 					onHover(elementIndex);
 				}}
