@@ -320,14 +320,14 @@ export const DragElement = ({
 					: {}
 			}
 			enableResizing={{
-				top: canEdit,
-				bottom: canEdit,
+				top: type === ElementType.ImageView && canEdit,
+				bottom: type === ElementType.ImageView && canEdit,
 				left: canEdit,
 				right: canEdit,
 				topLeft: false,
-				topRight: canEdit,
-				bottomLeft: canEdit,
-				bottomRight: canEdit,
+				topRight: type === ElementType.ImageView && canEdit,
+				bottomLeft: type === ElementType.ImageView && canEdit,
+				bottomRight: type === ElementType.ImageView && canEdit,
 			}}
 			disableDragging={!canEdit}
 			dragHandleClassName='drag-handler'
