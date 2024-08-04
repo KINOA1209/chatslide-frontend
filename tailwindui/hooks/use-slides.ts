@@ -853,6 +853,8 @@ export const useSlides = () => {
 		setCustomizedTemplateSubtitleFontColor(slides[0].subtitleFontColor);
 		setCustomizedTemplateContentFontColor(slides[0].contentFontColor);
 
+    setHasSelectedCustomTemplateBgColor(slides[0].background_color !== colorPreviews[slides[0].palette as PaletteKeys]);
+
 		setHasSelectedCustomizedTemplateContentFontFamily(
 			!!slides[0].contentFontFamily,
 		);
