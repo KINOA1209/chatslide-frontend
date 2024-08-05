@@ -22,10 +22,10 @@ const CHAT_SUGGESTIONS = {
 		'💬 Make the script easier to understand',
 	],
 	chart: [
-		// '💹 Japanese stock market in 2023',
+		'💹 Japanese stock market from 2014 to 2020',
 		'📊 Population in European countries',
 		'📈 40% YoY growth of company XYZ',
-    // '🥧 Three companies in the market, with 50%, 35%, 15% market shares',
+		'🥧 Three companies in the market, with 50%, 35%, 15% market shares',
 	],
 };
 
