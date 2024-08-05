@@ -4,7 +4,7 @@ const CHAT_SUGGESTIONS = {
 	cover: [
 		'💬 Change topic to be more engaging',
 		'🔠 Capitalize the topic',
-		'🌐 Translate topic to Spanish',
+		'🌐 Translate topic',
 		'🌁 Change the image on the slide',
 	],
 	noncover: [
@@ -18,7 +18,7 @@ const CHAT_SUGGESTIONS = {
 	script: [
 		'📝 Add more details in the script',
 		'🤣 Make the script funnier',
-		'🌐 Translate script to German',
+		'🌐 Translate script',
 		'💬 Make the script easier to understand',
 	],
 	chart: [
