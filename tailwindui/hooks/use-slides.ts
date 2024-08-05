@@ -570,8 +570,16 @@ export const useSlides = () => {
 		setSlides(newSlides);
 
 		if (slideIndex >= newSlides.length) {
+      // console.log('slideIndex:', slideIndex, 'newSlides.length:', newSlides.length);
 			setSlideIndex(newSlides.length - 1);
 		}
+
+    // console.log(
+		// 	'slideIndex:',
+		// 	slideIndex,
+		// 	'newSlides.length:',
+		// 	newSlides.length,
+		// );
 
 		updateVersion();
 		updateSlideHistory(newSlides);

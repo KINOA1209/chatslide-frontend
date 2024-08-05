@@ -2,6 +2,10 @@
 	cursor: grab !important;
 }
 
+.grabCursor .pointerCursor * {
+  cursor: pointer !important;
+}
+
 .autoCursor * {
 	cursor: auto !important;
 }
