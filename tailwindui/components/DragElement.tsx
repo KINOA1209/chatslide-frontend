@@ -64,7 +64,12 @@ export const DragElement = ({
 		height: type === ElementType.ImageView ? 'max-content' : '',
 	});
 
-	const {isDragging: isAnyElementDragging, setIsDragging: setIsAnyElementDragging} = useSlides();
+	const {
+		isDragging: isAnyElementDragging,
+		setIsDragging: setIsAnyElementDragging,
+	} = useSlides();
+	const [inited, setInited] = useState(false);
+
 	useEffect(() => {
 		let x: number, y: number;
 		let width: number | string, height: number | string;
@@ -98,13 +103,14 @@ export const DragElement = ({
 		setElementSize({ width, height });
 		setMoveHandlerPos(x, y);
 		setResetHandlerPos(x, y);
+		setInited(true);
 	}, []);
 
 	const [isHover, setIsHover] = useState<boolean>(false);
 	const [isResizing, setIsResizing] = useState<boolean>(false);
 	const [isDragging, setIsDragging] = useState<boolean>(false);
 	const [isOverHandler, setIsOverHandler] = useState<boolean>(false);
-  const [isShiftPressed, setIsShiftPressed] = useState(false);
+	const [isShiftPressed, setIsShiftPressed] = useState(false);
 
 	const moveHandlerRef = useRef<HTMLDivElement>(null);
 	const resetHandlerRef = useRef<HTMLDivElement>(null);
@@ -156,8 +162,8 @@ export const DragElement = ({
 	);
 
 	const onEnterHandler = () => {
-    console.log('isAnyElementDragging', isAnyElementDragging);
-    if (isAnyElementDragging) return;
+		console.log('isAnyElementDragging', isAnyElementDragging);
+		if (isAnyElementDragging) return;
 		setIsOverHandler(true);
 	};
 
@@ -214,7 +220,7 @@ export const DragElement = ({
 	};
 
 	const onHandleDragStop = (e: any, data: any) => {
-    setIsAnyElementDragging(false);
+		setIsAnyElementDragging(false);
 		setIsDragging(false);
 		setElementPos({ x: data.x, y: data.y });
 		const updatedPosition: Position[] = positions.map((position, index) =>
@@ -266,28 +272,30 @@ export const DragElement = ({
 		);
 	};
 
-    useEffect(() => {
-			const handleKeyDown = (event: KeyboardEvent) => {
-				if (event.key === 'Shift') {
-					setIsShiftPressed(true);
-				}
-			};
+	useEffect(() => {
+		const handleKeyDown = (event: KeyboardEvent) => {
+			if (event.key === 'Shift') {
+				setIsShiftPressed(true);
+			}
+		};
 
-			const handleKeyUp = (event: KeyboardEvent) => {
-				if (event.key === 'Shift') {
-					setIsShiftPressed(false);
-				}
-			};
+		const handleKeyUp = (event: KeyboardEvent) => {
+			if (event.key === 'Shift') {
+				setIsShiftPressed(false);
+			}
+		};
 
-			window.addEventListener('keydown', handleKeyDown);
-			window.addEventListener('keyup', handleKeyUp);
+		window.addEventListener('keydown', handleKeyDown);
+		window.addEventListener('keyup', handleKeyUp);
 
-			// Clean up event listeners on component unmount
-			return () => {
-				window.removeEventListener('keydown', handleKeyDown);
-				window.removeEventListener('keyup', handleKeyUp);
-			};
-		}, []);
+		// Clean up event listeners on component unmount
+		return () => {
+			window.removeEventListener('keydown', handleKeyDown);
+			window.removeEventListener('keyup', handleKeyUp);
+		};
+	}, []);
+
+  // if(!inited) return null;
 
 	return (
 		<Rnd
@@ -427,7 +435,7 @@ export const DragElement = ({
 					}, 500);
 				}}
 			>
-				{children}
+				{inited && children}
 			</div>
 		</Rnd>
 	);
