@@ -357,9 +357,9 @@ export const DragElement = ({
 				left: canEdit,
 				right: canEdit,
 				topLeft: false,
-				topRight: type === ElementType.ImageView && canEdit,
-				bottomLeft: type === ElementType.ImageView && canEdit,
-				bottomRight: type === ElementType.ImageView && canEdit,
+				topRight: canEdit,
+				bottomLeft: canEdit,
+				bottomRight: canEdit,
 			}}
 			disableDragging={!canEdit}
 			dragHandleClassName='drag-handler'
