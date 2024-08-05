@@ -23,12 +23,17 @@ import ChatBotService from '@/services/ChatBotService';
 import { GrayLabel } from '../ui/GrayLabel';
 import { Explanation, SuccessMessage, WarningMessage } from '../ui/Text';
 import GPTToggle from '../button/WorkflowGPTToggle';
-import { WritableDraft } from "@/types/immer";
+import { WritableDraft } from '@/types/immer';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { FormControl, FormHelperText, InputLabel, MenuItem } from '@mui/material';
+import {
+	FormControl,
+	FormHelperText,
+	InputLabel,
+	MenuItem,
+} from '@mui/material';
 
-const SearchOnlineEngine = ["", "google", "bing", "wikipedia", "news"] as const;
-type SearchOnlineType = typeof SearchOnlineEngine[number];
+const SearchOnlineEngine = ['', 'google', 'bing', 'wikipedia', 'news'] as const;
+type SearchOnlineType = (typeof SearchOnlineEngine)[number];
 
 export const AIAssistantIcon: React.FC<{
 	onClick: () => void;
@@ -37,7 +42,7 @@ export const AIAssistantIcon: React.FC<{
 		<div
 			className='rounded-md p-2 bg-white border border-gray-200 border-2 flex items-center justify-center relative'
 			onClick={onClick}
-		// style={{ animation: 'pulse 0.5s infinite' }}
+			// style={{ animation: 'pulse 0.5s infinite' }}
 		>
 			{isChatslide() ? (
 				<Image
@@ -89,7 +94,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 	const { project } = useProject();
 	const chatWindowRef = useRef<HTMLDivElement>(null);
 	const [model, setModel] = useState(type === 'chart' ? 'GPT-4o' : 'GPT-3.5');
-	const [search_online, setSearchOnline] = useState<SearchOnlineType>("");
+	const [search_online, setSearchOnline] = useState<SearchOnlineType>('');
 
 	const handleEnter = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
 		if (event.key === 'Enter') {
@@ -167,26 +172,27 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 		try {
 			setLoading(true);
 
-			const response = type === 'chart'
-				? await ChatBotService.chatChart(
-					inputToSend,
-					lastChatMessages,
-					token,
-					model === 'GPT-3.5' ? 'gpt-3.5-turbo' : 'gpt-4o',
-					updateDynamicChart ? 'json' : 'img',
-					search_online
-				)
-				: await ChatBotService.chat(
-					inputToSend,
-					lastChatMessages,
-					token,
-					slides[currentSlideIndex],
-					project?.id || '',
-					slideIndex,
-					undefined, // selectedText
-					type,
-					model === 'GPT-3.5' ? 'gpt-3.5-turbo' : 'gpt-4o',
-				);
+			const response =
+				type === 'chart'
+					? await ChatBotService.chatChart(
+							inputToSend,
+							lastChatMessages,
+							token,
+							model === 'GPT-3.5' ? 'gpt-3.5-turbo' : 'gpt-4o',
+							updateDynamicChart ? 'json' : 'img',
+							search_online,
+						)
+					: await ChatBotService.chat(
+							inputToSend,
+							lastChatMessages,
+							token,
+							slides[currentSlideIndex],
+							project?.id || '',
+							slideIndex,
+							undefined, // selectedText
+							type,
+							model === 'GPT-3.5' ? 'gpt-3.5-turbo' : 'gpt-4o',
+						);
 
 			setLoading(false);
 
@@ -205,7 +211,11 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 
 					setSlides((prevSlides: WritableDraft<Slide>[]) => {
 						const newSlides = [...prevSlides];
-						newSlides.splice(currentSlideIndex + 1, 0, newSlide as WritableDraft<Slide>);
+						newSlides.splice(
+							currentSlideIndex + 1,
+							0,
+							newSlide as WritableDraft<Slide>,
+						);
 						return newSlides;
 					});
 					setSlideIndex(currentSlideIndex + 1);
@@ -226,13 +236,23 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 						};
 						setSlides((prevSlides) => {
 							const newSlides = [...prevSlides];
-							newSlides.splice(currentSlideIndex, 1, slidePage1 as WritableDraft<Slide>, slidePage2 as WritableDraft<Slide>);
+							newSlides.splice(
+								currentSlideIndex,
+								1,
+								slidePage1 as WritableDraft<Slide>,
+								slidePage2 as WritableDraft<Slide>,
+							);
 							return newSlides;
 						});
 						setSlideIndex(currentSlideIndex + 1);
-						addChatHistory(addSuccessMessage('📄 Because of too much content on one page, I have split the content into two pages.'));
+						addChatHistory(
+							addSuccessMessage(
+								'📄 Because of too much content on one page, I have split the content into two pages.',
+							),
+						);
 					} else {
-						updateSlidePage && updateSlidePage(currentSlideIndex, response.slide);
+						updateSlidePage &&
+							updateSlidePage(currentSlideIndex, response.slide);
 						updateVersion();
 					}
 				}
@@ -248,7 +268,8 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 			}
 
 			if (type === 'chart' && updateChartUrl) {
-				if (response?.images && response.images.length > 0) updateChartUrl(response.images[0]);
+				if (response?.images && response.images.length > 0)
+					updateChartUrl(response.images[0]);
 			} else if (type === 'chart' && updateDynamicChart) {
 				updateDynamicChart(response.chartData);
 			}
@@ -256,7 +277,9 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 			addChatHistory(addSuccessMessage(response.chat, response.images));
 		} catch (error) {
 			console.error('Failed to get AI response');
-			const errorMessage = addErrorMessage('😞 Sorry, I do not understand your request, can you try something else?');
+			const errorMessage = addErrorMessage(
+				'😞 Sorry, I do not understand your request, can you try something else?',
+			);
 			addChatHistory(errorMessage);
 		}
 	};
@@ -271,17 +294,17 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 			? 'sm:fixed xl:relative sm:bottom-0 sm:right-0 sm:z-50 sm:w-[20rem] sm:h-[30rem] xl:h-full'
 			: 'sm:relative sm:w-[20rem] sm:h-full';
 
-
 	const handleSelectEngine = (e: SelectChangeEvent<SearchOnlineType>) => {
-		if (e.target.value === "" ||
-			e.target.value === "google" ||
-			e.target.value === "bing" ||
-			e.target.value === "wikipedia" ||
-			e.target.value === "news"
+		if (
+			e.target.value === '' ||
+			e.target.value === 'google' ||
+			e.target.value === 'bing' ||
+			e.target.value === 'wikipedia' ||
+			e.target.value === 'news'
 		) {
 			setSearchOnline(e.target.value);
 		}
-	}
+	};
 
 	return (
 		<section
@@ -330,26 +353,32 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 					<Explanation>Fast, no credit cost.</Explanation>
 				)}
 			</div>
-			<div className='w-full pt-4 pb-2 border-t-2 border-gray-300 flex justify-center'>
-				<FormControl sx={{ m: 1, minWidth: 200 }} size="small">
-					<InputLabel id="search-engine-select-label">Web Search</InputLabel>
-					<Select
-						labelId="search-engine-select-label"
-						id="search-engine-select"
-						value={search_online}
-						label="Web Search"
-						autoWidth
-						onChange={handleSelectEngine}
-					>
-						{SearchOnlineEngine.map((engine) => (
-							<MenuItem key={engine} value={engine}>
-								{engine === "" ? <em>None</em> : engine}
-							</MenuItem>
-						))}
-					</Select>
-					<FormHelperText><span className='text-red-500 font-bold'>NEW!</span> Use web search for more accurate data</FormHelperText>
-				</FormControl>
-			</div>
+
+			{type === 'chart' && (
+				<div className='w-full pt-4 pb-2 border-t-2 border-gray-300 flex justify-center'>
+					<FormControl sx={{ m: 1, minWidth: 200 }} size='small'>
+						<InputLabel id='search-engine-select-label'>Web Search</InputLabel>
+						<Select
+							labelId='search-engine-select-label'
+							id='search-engine-select'
+							value={search_online}
+							label='Web Search'
+							autoWidth
+							onChange={handleSelectEngine}
+						>
+							{SearchOnlineEngine.map((engine) => (
+								<MenuItem key={engine} value={engine}>
+									{engine === '' ? <em>None</em> : engine}
+								</MenuItem>
+							))}
+						</Select>
+						<FormHelperText>
+							<span className='text-red-500 font-bold'>NEW!</span> Use web
+							search for more accurate data
+						</FormHelperText>
+					</FormControl>
+				</div>
+			)}
 			{/* chat history text area */}
 			<div className='w-full h-full border-t-2 border-gray-300 overflow-y-scroll p-2 flex flex-col flex-grow'>
 				<ScrollBar
