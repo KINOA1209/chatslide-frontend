@@ -252,7 +252,7 @@ export const calculateNonPresentScale = (
 			);
 		} else {
 			return Math.min(
-				1.2,
+				1.1,
 				Math.min(
 					(width - 400 - chatWindowWidth) / 960,
 					(height - 250 - scriptEditorHeight) / 540,
@@ -871,7 +871,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 					/>
 				</div>
 
-				<Panel>
+				<Panel allowOverflow>
 					<div className='w-full flex flex-row items-center justify-center'>
 						<ActionsToolBar
 							undo={undoChange}
