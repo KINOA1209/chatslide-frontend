@@ -274,7 +274,7 @@ const SideBar = ({}: SideBarProps) => {
 
 					{isSidebarOpen && (
 						<>
-							{isChatslide() && (
+							{/* {isChatslide() && (
 								<div
 									// className=' px-2'
 									style={{
@@ -285,8 +285,8 @@ const SideBar = ({}: SideBarProps) => {
 								>
 									Join our discord to earn free credits
 								</div>
-							)}
-							{/* {isChatslide() && (
+							)} */}
+							{isChatslide() && (
 								<a
 									href='/meet'
 									target='_blank'
@@ -299,9 +299,9 @@ const SideBar = ({}: SideBarProps) => {
 											'var(--spacing-md, 0.5rem) var(--spacing-lg, 0.75rem)',
 									}}
 								>
-									Get 1000 ⭐️credits
+									Book a call for 1000⭐️
 								</a>
-							)} */}
+							)}
 							{/* {isChatslide() ? (
 								<a
 									href='https://qualtricsxm6ltvkn8sw.qualtrics.com/jfe/form/SV_6nF7L74Sv68ynzw'
@@ -333,20 +333,22 @@ const SideBar = ({}: SideBarProps) => {
 									Get 100 ⭐️credits
 								</a>
 							)} */}
-							{isChatslide() &&  <a
-								href='/discord'
-								target='_blank'
-								className='block flew flex-row items-center gap-1 text-sm  rounded-lg hover:bg-[#F2F4F7] '
-								role='menuitem'
-								id='discord-50-credits'
-								style={{
-									color: 'var(--colors-text-text-quaternary-500, #667085)',
-									padding:
-										'var(--spacing-md, 0.5rem) var(--spacing-lg, 0.75rem)',
-								}}
-							>
-								Get 50 ⭐️credits
-							</a>}
+							{isChatslide() && (
+								<a
+									href='/discord'
+									target='_blank'
+									className='block flew flex-row items-center gap-1 text-sm  rounded-lg hover:bg-[#F2F4F7] '
+									role='menuitem'
+									id='discord-50-credits'
+									style={{
+										color: 'var(--colors-text-text-quaternary-500, #667085)',
+										padding:
+											'var(--spacing-md, 0.5rem) var(--spacing-lg, 0.75rem)',
+									}}
+								>
+									Join Discord for 50⭐️
+								</a>
+							)}
 							<a
 								href='/affiliate'
 								target='_blank'
