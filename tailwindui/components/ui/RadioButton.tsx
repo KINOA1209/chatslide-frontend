@@ -18,7 +18,7 @@ export interface RadioButtonOption {
 
 interface RadioButtonProps {
 	name: string;
-	options: RadioButtonOption[];
+	options: RadioButtonOption[] | string[];
 	selectedValue: string;
 	setSelectedValue: (value: string) => void;
 	cols?: number;
@@ -81,8 +81,18 @@ const RadioButton: React.FC<RadioButtonProps> = ({
 	// 	</div>
 	// );
 
+	const formattedOptions = options.map((option) => {
+		if (typeof option === 'string') {
+			return {
+				value: option,
+				text: option,
+			};
+		}
+		return option;
+	});
+
 	return (
-		<FormControl component='fieldset'>
+		<FormControl component='fieldset' id={'radio_button-' + name}>
 			<RadioGroup
 				aria-label={name}
 				name={name}
@@ -90,7 +100,7 @@ const RadioButton: React.FC<RadioButtonProps> = ({
 				onChange={(event) => setSelectedValue(event.target.value)}
 				className={`grid grid-cols-1 md:grid-cols-${cols} gap-x-3`}
 			>
-				{options.map(({ img, value, text, icon, explanation }) => (
+				{formattedOptions.map(({ img, value, text, icon, explanation }) => (
 					<CustomFormControlLabel
 						key={value}
 						value={value}
