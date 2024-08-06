@@ -34,7 +34,7 @@ const CustomFormControlLabel = styled(FormControlLabel)(({ theme }) => ({
 	'.MuiFormControlLabel-label': {
 		fontSize: '14px', // Adjust font size as needed
 		fontWeight: 'normal', // Adjust font weight as needed
-		fontFamily: 'Creato Display Medium',
+		// fontFamily: 'Creato Display Medium',
 	},
 }));
 
@@ -112,7 +112,7 @@ const RadioButton: React.FC<RadioButtonProps> = ({
 										<Image src={img} alt={text} height={100} />
 									</div>
 								)}
-								<span className='flex flex-row justify-center items-center gap-1'>
+								<span className='flex flex-row justify-center items-center gap-0'>
 									{icon}
 									<div className='flex flex-col'>
 										{text}
