@@ -284,8 +284,8 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		// changeTemplateAndPalette,
 		undoChange,
 		redoChange,
-    canResetAllPositions,
-    resetAllPositions,
+		canResetAllPositions,
+		resetAllPositions,
 		jumpToVersion,
 		slidesHistoryIndex,
 		setSlides,
@@ -409,6 +409,19 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		return () => window.removeEventListener('resize', handleResize);
 	}, [isChatWindowOpen]);
 
+	// Define a helper function to find the next visible slide
+	const findNextVisibleSlide = (currentIndex: number, direction: number) => {
+		let newIndex = currentIndex + direction;
+		while (
+			newIndex >= 0 &&
+			newIndex < slides.length &&
+			slides[newIndex].isHidden
+		) {
+			newIndex += direction;
+		}
+		return newIndex;
+	};
+
 	useEffect(() => {
 		document.addEventListener('add_page', handleAddPage);
 		document.addEventListener('duplicate_page', handleDuplicatePage);
@@ -479,10 +492,13 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 	function handleClick(event: MouseEvent) {
 		if (isPresenting) {
-			if (slideIndex < slides.length - 1) {
-				gotoPage(slideIndex + 1);
+			// Move to the next visible slide if possible
+			const nextIndex = findNextVisibleSlide(slideIndex, 1);
+			if (nextIndex < slides.length) {
+				gotoPage(nextIndex);
 			} else {
 				setIsPresenting(false);
+				// Optionally, trigger an animation or sound to indicate the end of the presentation
 			}
 		}
 	}
@@ -494,14 +510,20 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 			clearTimeout(scrollTimeout);
 			scrollTimeout = setTimeout(() => {
 				if (event.deltaY > 0) {
-					if (slideIndex < slides.length - 1) {
-						gotoPage(slideIndex + 1);
+					// Move to the next visible slide if possible
+					const nextIndex = findNextVisibleSlide(slideIndex, 1);
+					if (nextIndex < slides.length) {
+						gotoPage(nextIndex);
 					} else {
 						setIsPresenting(false);
 						// Optionally, trigger an animation or sound to indicate the end of the presentation
 					}
-				} else if (event.deltaY < 0 && slideIndex > 0) {
-					gotoPage(slideIndex - 1);
+				} else if (event.deltaY < 0) {
+					// Move to the previous visible slide if possible
+					const prevIndex = findNextVisibleSlide(slideIndex, -1);
+					if (prevIndex >= 0) {
+						gotoPage(prevIndex);
+					}
 				}
 			}, 100); // Debounce time of 100ms
 		}
@@ -510,14 +532,18 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 	function handleKeyDown(event: KeyboardEvent) {
 		// console.log('key pressed', event.key);
 		// todo: update iseditmode
-		if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
-			if (slideIndex < slides.length - 1) {
-				gotoPage(slideIndex + 1);
-			} else {
-				setIsPresenting(false);
+		if (event.key === 'ArrowRight') {
+			// Move to the next visible slide if possible
+			const nextIndex = findNextVisibleSlide(slideIndex, 1);
+			if (nextIndex < slides.length) {
+				gotoPage(nextIndex);
 			}
-		} else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
-			if (slideIndex > 0) gotoPage(slideIndex - 1);
+		} else if (event.key === 'ArrowLeft') {
+			// Move to the previous visible slide if possible
+			const prevIndex = findNextVisibleSlide(slideIndex, -1);
+			if (prevIndex >= 0) {
+				gotoPage(prevIndex);
+			}
 		} else if (event.key === 'Escape') {
 			setIsPresenting(false); // Exit presentation mode
 		}
@@ -856,7 +882,7 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 				setShowModal={setShowPaymentModal}
 				message='You need more ⭐️credits'
 				showReferralLink={true}
-        trigger='slides/credits'
+				trigger='slides/credits'
 			/>
 
 			<div className='w-full h-full flex flex-row items-start justify-center lg:justify-around gap-2'>
@@ -914,13 +940,16 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 									{/* reset all positions */}
 									<ButtonWithExplanation
 										button={
-											<button onClick={resetAllPositions} disabled={!canResetAllPositions}>
+											<button
+												onClick={resetAllPositions}
+												disabled={!canResetAllPositions}
+											>
 												<LuAlignLeft
 													style={{
 														width: `24px`,
 														height: `24px`,
 														color: canResetAllPositions ? '#344054' : '#C6C6C6',
-															// 'var(--colors-text-text-secondary-700, #344054)',
+														// 'var(--colors-text-text-secondary-700, #344054)',
 													}}
 												/>
 											</button>

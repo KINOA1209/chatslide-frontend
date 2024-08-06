@@ -96,6 +96,8 @@ export default class Slide {
 	// is_logo_left: boolean;
 	logo_position: LogoPosition;
 	logo_numeric_position: Position;
+  
+  isHidden: boolean;
 
 	constructor() {
 		const emptyGroup: Group = {
@@ -139,5 +141,6 @@ export default class Slide {
 		// this.is_logo_left = true;
 		this.logo_position = 'BottomLeft';
 		this.logo_numeric_position = {};
+    this.isHidden = false;
 	}
 }

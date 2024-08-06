@@ -352,7 +352,7 @@ export const useSlides = () => {
 
 	const [canResetAllPositions, setCanResetAllPositions] = useState(false);
 
-  const {isDragging, setIsDragging} = useIsDragging();
+	const { isDragging, setIsDragging } = useIsDragging();
 
 	useEffect(() => {
 		const currentSlide = slides[slideIndex];
@@ -570,11 +570,11 @@ export const useSlides = () => {
 		setSlides(newSlides);
 
 		if (slideIndex >= newSlides.length) {
-      // console.log('slideIndex:', slideIndex, 'newSlides.length:', newSlides.length);
+			// console.log('slideIndex:', slideIndex, 'newSlides.length:', newSlides.length);
 			setSlideIndex(newSlides.length - 1);
 		}
 
-    // console.log(
+		// console.log(
 		// 	'slideIndex:',
 		// 	slideIndex,
 		// 	'newSlides.length:',
@@ -861,7 +861,10 @@ export const useSlides = () => {
 		setCustomizedTemplateSubtitleFontColor(slides[0].subtitleFontColor);
 		setCustomizedTemplateContentFontColor(slides[0].contentFontColor);
 
-    setHasSelectedCustomTemplateBgColor(slides[0].background_color !== colorPreviews[slides[0].palette as PaletteKeys]);
+		setHasSelectedCustomTemplateBgColor(
+			slides[0].background_color !==
+				colorPreviews[slides[0].palette as PaletteKeys],
+		);
 
 		setHasSelectedCustomizedTemplateContentFontFamily(
 			!!slides[0].contentFontFamily,
@@ -949,6 +952,16 @@ export const useSlides = () => {
 		}
 	};
 
+	const toggleHideSlide = (index: number) => {
+		console.log('-- hide slide: ', { index });
+		const newSlide = { ...slides[index], isHidden: !slides[index].isHidden };
+		const newSlides = [...slides];
+		newSlides[index] = newSlide;
+		setSlides(newSlides);
+		updateSlideHistory(newSlides);
+		debouncedSyncSlides(newSlides, false, newSlides.length);
+	};
+
 	const debouncedSyncSlides = debounce(syncSlides, 1000);
 
 	return {
@@ -1034,7 +1047,8 @@ export const useSlides = () => {
 		setCustomizedTemplateTitleFontColor,
 		hasSelectedCustomizedTemplateTitleFontColor,
 		setHasSelectedCustomizedTemplateTitleFontColor,
-    isDragging,
-    setIsDragging
+		isDragging,
+		setIsDragging,
+		toggleHideSlide,
 	};
 };
