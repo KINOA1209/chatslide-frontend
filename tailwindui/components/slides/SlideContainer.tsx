@@ -51,6 +51,7 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
 	isEmbedded = false,
 }) => {
 	const noBorder = isPresenting || isEmbedded;
+  const { setSlideIndex } = useSlides();
 
 	useEffect(() => {
 		if (length)
@@ -131,8 +132,9 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
 
 			{highlightBorder && index !== 0 && (
 				<div
-					className={`absolute bottom-1 right-1 bg-white text-black px-1 rounded-xs p-1 opacity-50 pointerCursor`}
-					onClick={() => {
+					className={`absolute bottom-1 right-1 bg-white text-black px-1 rounded-xs p-1 opacity-70 pointerCursor`}
+					onClick={(e) => {
+            e.stopPropagation();
 						document.dispatchEvent(new CustomEvent('delete_page'));
 					}}
 				>
@@ -142,8 +144,9 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
 
 			{highlightBorder && index !== 0 && (
 				<div
-					className={`absolute bottom-1 right-7 bg-white text-black px-1 rounded-xs p-1 opacity-50 pointerCursor`}
-					onClick={() => {
+					className={`absolute bottom-1 right-7 bg-white text-black px-1 rounded-xs p-1 opacity-70 pointerCursor`}
+					onClick={(e) => {
+            e.stopPropagation();
 						document.dispatchEvent(new CustomEvent('duplicate_page'));
 					}}
 				>
