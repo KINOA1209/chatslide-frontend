@@ -15,9 +15,10 @@ export default class VideoService {
 		bgm: string,
 		bgmVolume: number,
 		creditCost: number,
-    transitionType: string,
-    withSubtitle: boolean,
-    locale: string
+		transitionType: string,
+		withSubtitle: boolean,
+		locale: string,
+		hiddenSlideIndices: number[],
 	): Promise<void> {
 		fetch('/api/export/generate_video', {
 			method: 'POST',
@@ -38,9 +39,10 @@ export default class VideoService {
 				background_music: bgm,
 				bgm_volume: bgmVolume,
 				credit_cost: creditCost,
-        transition_type: transitionType,
-        with_subtitle: withSubtitle,
-        locale: locale
+				transition_type: transitionType,
+				with_subtitle: withSubtitle,
+				locale: locale,
+				hidden_slide_indices: hiddenSlideIndices,
 			}),
 		});
 	}
@@ -80,7 +82,7 @@ export default class VideoService {
 		style: string,
 		foldername: string,
 		token: string,
-    locale: string
+		locale: string,
 	): Promise<string> {
 		const response = await fetch('/api/generate_audio_single_slide', {
 			method: 'POST',
@@ -93,7 +95,7 @@ export default class VideoService {
 				voice: voice,
 				style: style,
 				foldername: foldername,
-        locale: locale
+				locale: locale,
 			}),
 		});
 

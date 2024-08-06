@@ -272,6 +272,16 @@ export default function WorkflowStep5() {
 				setAvatar('');
 			}
 
+			const hiddenSlideIndices = slides.reduce(
+				(acc: number[], slide, index) => {
+					if (slide.isHidden) {
+						acc.push(index);
+					}
+					return acc;
+				},
+				[],
+			);
+
 			try {
 				console.log('project_id:', project_id);
 				updateProject('video_url', '');
@@ -291,6 +301,7 @@ export default function WorkflowStep5() {
 					transitionType,
 					withSubtitle,
 					selectedLanguage, // locale
+					hiddenSlideIndices,
 				);
 				updateCreditsFE(-20);
 				router.push(addIdToRedir('/video'));
@@ -498,8 +509,6 @@ export default function WorkflowStep5() {
 					</Column>
 				</div>
 			)}
-
-			
 		</div>
 	);
 }
