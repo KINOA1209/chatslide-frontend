@@ -104,7 +104,7 @@ export const useUser = () => {
 					}
 				}
 
-				const isPaidUser = PAID_TIERS.includes(subscription_tier);
+				const isPaidUser = PAID_TIERS.includes(subscription_tier.replace('CANCELLED_', ''));
 
 				username = username?.split('@')[0] || 'User';
 

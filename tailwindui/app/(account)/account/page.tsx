@@ -41,6 +41,7 @@ import SubscriptionModal from '../SubscriptionModal';
 import Modal from '@/components/ui/Modal';
 import { Router } from 'next/router';
 import RadioButton, { RadioButtonOption } from '@/components/ui/RadioButton';
+import exp from 'constants';
 
 const Profile = () => {
 	const { username, email, token, setUsername, user } = useUser();
@@ -444,7 +445,7 @@ const Affiliate = () => {
 };
 
 const CreditHistory = () => {
-	const { credits, tier } = useUser();
+	const { credits, tier, expirationDate } = useUser();
 	// const [stripeLink, setStripeLink] = useState('');
 	const [showManageSubscription, setShowManageSubscription] = useState(false);
 
@@ -456,6 +457,12 @@ const CreditHistory = () => {
 	// 	}
 	// 	fetchStripeLink();
 	// }, [token]);
+
+	const getExpirationDateStatement = (tier: string, date: string) => {
+		if (tier.includes('EXPIRED')) return 'Expired on ' + date;
+		if (tier.includes('CANCELLED')) return 'Expiring on ' + date;
+		return 'Renewing on ' + date;
+	};
 
 	return (
 		<div className='w-full'>
@@ -483,7 +490,14 @@ const CreditHistory = () => {
 			</WrappableRow>
 
 			<Instruction>⭐️ Subscription Tier</Instruction>
-			<BigTitle>{tier.replace('_', ' ')}</BigTitle>
+
+			<BigTitle>{tier.replaceAll('_', ' ')}</BigTitle>
+
+			{expirationDate && (
+				<Instruction>
+					{getExpirationDateStatement(tier, expirationDate)}
+				</Instruction>
+			)}
 		</div>
 	);
 };
