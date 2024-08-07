@@ -262,7 +262,7 @@ const SideBar = ({}: SideBarProps) => {
 							</a>
 						)}
 
-					{expirationDate && tier.includes('CANCELLED_') && (
+					{expirationDate && tier.includes('CANCELLED_') || tier.includes('ONETIME') && (
 						<a
 							href='/account'
 							className={`block py-1 text-sm text-red-400 mx-auto text-center rounded-lg hover:bg-[#F2F4F7] `}
