@@ -460,7 +460,9 @@ const CreditHistory = () => {
 
 	const getExpirationDateStatement = (tier: string, date: string) => {
 		if (tier.includes('EXPIRED')) return 'Expired on ' + date;
-		if (tier.includes('CANCELLED')) return 'Expiring on ' + date;
+		if (tier.includes('ONETIME') || tier.includes('CANCELLED'))
+			return 'Expiring on ' + date;
+		if (tier.includes('LIFETIME')) return '';
 		return 'Renewing on ' + date;
 	};
 
