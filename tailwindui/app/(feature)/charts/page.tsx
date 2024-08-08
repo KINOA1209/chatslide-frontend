@@ -34,6 +34,7 @@ import {
 } from '@/components/chart/chartPluginUtils';
 
 import { useUser } from '@/hooks/use-user';
+import PaywallModal from '@/components/paywallModal';
 // Register Chart.js components
 ChartJS.register(
 	CategoryScale,
@@ -55,6 +56,7 @@ ChartJS.register(
 
 export default function Page() {
 	const isPaidTier = useUser().isPaidUser;
+	const [showPaymentModal, setShowPaymentModal] = useState(false);
 	const [chartData, setChartData] = useState<any>(null);
 	const [chartValues, setChartValues] = useState<any>(null);
 	const [chartConfig, setChartConfig] = useState<any>(null);
@@ -63,10 +65,18 @@ export default function Page() {
 	>(null);
 	const chartRef = useRef<ChartJS>(null);
 
-	function receiveChart(data: any) {
-		// internal chart data contains only the chart_json field
-		setChartData(data.chart_json);
-		console.log('Chart Data: ', data.chart_json);
+	function receiveChart(receivedData: any) {
+		const data = receivedData.chart_json;
+		for (let i = 0; i < data.datasets.length; i++) {
+			data.datasets[i].borderWidth = 2;
+		}
+
+		if (['pie', 'doughnut'].includes(data.chartType)) {
+			if (typeof data.datasets[0].borderColor === 'string') {
+				data.datasets[0].borderColor = new Array(data.datasets[0].data.length).fill(data.datasets[0].borderColor);
+			}
+		}
+		setChartData(data);
 	}
 
 	function updateDynamicChart() {
@@ -140,7 +150,6 @@ export default function Page() {
 				alt='Chart'
 				width={400}
 				height={300}
-				// layout='fixed'
 			/>
 		</div>
 	);
@@ -155,7 +164,16 @@ export default function Page() {
 
 			<Column customStyle={{ height: '100%', overflowY: 'auto' }}>
 				<div className='w-full flex flex-col gap-4 my-auto'>
-					<div className='w-full flex flex-row items-center justify-center gap-y-2 gap-x-4'>
+					<div className='w-full flex flex-row items-center justify-between gap-y-2 gap-x-4'>
+						{!isPaidTier ? <ToolBar>
+							<a href='#' onClick={e => { setShowPaymentModal(true) }} className='hover:text-blue-500 text-blue-400 font-bold'>Remove Watermark</a>
+							<PaywallModal
+								showModal={showPaymentModal}
+								setShowModal={setShowPaymentModal}
+								message='Upgrade to remove watermark and access more powerful LLMs 🚀'
+								trigger='button/gpt_toggle'
+							></PaywallModal>
+						</ToolBar> : <div></div>}
 						<ToolBar>
 							<ButtonWithExplanation
 								explanation='Download Chart'
@@ -181,13 +199,23 @@ export default function Page() {
 						<Card>
 							{chartType ? (
 								<>
+									{/* For responsive chart display */}
 									<Chart
 										className=''
 										type={chartType!}
 										data={chartValues}
 										options={chartConfig}
-										ref={chartRef}
 									></Chart>
+									{/* For fixed aspect ratio chart download */}
+									<div className='for-generation absolute w-[720px] h-[480px] invisible'>
+										<Chart
+											className=''
+											type={chartType!}
+											data={chartValues}
+											options={chartConfig}
+											ref={chartRef}
+										></Chart>
+									</div>
 								</>
 							) : (
 								noChart

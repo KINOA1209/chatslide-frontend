@@ -2,6 +2,11 @@ import React, { useEffect, useRef } from 'react';
 import Slide from '@/models/Slide';
 import { templateDispatch as defaultTemplateDispatch } from './templateDispatch';
 import './slideContainer.css';
+import { LuTrash2 } from 'react-icons/lu';
+import { useSlides } from '@/hooks/use-slides';
+import { FaRegClone } from 'react-icons/fa';
+import { IoEyeOutline, IoEyeOffOutline } from 'react-icons/io5';
+
 
 type SlideContainerProps = {
 	slide: Slide;
@@ -48,6 +53,7 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
 	isEmbedded = false,
 }) => {
 	const noBorder = isPresenting || isEmbedded;
+  const { toggleHideSlide } = useSlides();
 
 	useEffect(() => {
 		if (length)
@@ -107,6 +113,7 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
 					justifyContent: 'flex-start',
 					alignItems: 'flex-start',
 					position: 'relative',
+          opacity: slide.isHidden ? 0.5 : 1,
 				}}
 			>
 				{slide &&
@@ -120,9 +127,45 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
 			</div>
 			{pageNumber && (
 				<div
-					className={`absolute bottom-1 left-1 border rounded-xs border-1 ${highlightBorder ? 'bg-Blue text-white border-Blue' : 'bg-white text-black border-gray-400'} px-1  text-sm rounded-sm`}
+					className={`absolute bottom-1 left-1 border border-1 ${highlightBorder ? 'bg-Blue text-white border-Blue' : 'bg-white text-black border-gray-400'} px-1  text-sm rounded-xs`}
 				>
 					{pageNumber}
+				</div>
+			)}
+
+			{highlightBorder && index !== 0 && (
+				<div
+					className={`absolute bottom-1 right-1 bg-white text-black px-1 rounded-xs p-1 opacity-70 pointerCursor`}
+					onClick={(e) => {
+						e.stopPropagation();
+						document.dispatchEvent(new CustomEvent('delete_page'));
+					}}
+				>
+					<LuTrash2 />
+				</div>
+			)}
+
+			{highlightBorder && index !== 0 && (
+				<div
+					className={`absolute bottom-1 right-7 bg-white text-black px-1 rounded-xs p-1 opacity-70 pointerCursor`}
+					onClick={(e) => {
+						e.stopPropagation();
+						document.dispatchEvent(new CustomEvent('duplicate_page'));
+					}}
+				>
+					<FaRegClone />
+				</div>
+			)}
+
+			{highlightBorder && index !== 0 && (
+				<div
+					className={`absolute bottom-1 right-[52px] bg-white text-black px-1 rounded-xs p-1 opacity-70 pointerCursor`}
+					onClick={(e) => {
+						e.stopPropagation();
+						toggleHideSlide(index);
+					}}
+				>
+					{slide.isHidden ? <IoEyeOutline/> : <IoEyeOffOutline/>}
 				</div>
 			)}
 		</div>

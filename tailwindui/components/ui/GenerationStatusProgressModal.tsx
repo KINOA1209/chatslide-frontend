@@ -44,19 +44,19 @@ const ProgressButton: FC<{
 };
 
 const ctas = [
-	// {
-	// 	href: 'https://calendar.app.google/2uGV3B6h9UdYBHPB8',
-	// 	imgSrc: BookASessionImg.src,
-	// 	alt: 'Book a session',
-	// 	instruction: 'Book a session',
-	// 	emoji: '+1000⭐',
-	// 	explanation: '~30 mins',
-	// },
+	{
+		href: '/meet',
+		imgSrc: BookASessionImg.src,
+		alt: 'Give feedback in a session',
+		instruction: 'Give feedback in in a session',
+		emoji: '+1000⭐',
+		explanation: '~30 mins',
+	},
 	{
 		href: '/account',
 		imgSrc: BookASessionImg.src,
-		alt: 'Upgrade to unlimited',
-		instruction: 'Upgrade to unlimited',
+		alt: 'Upgrade to Ultimate',
+		instruction: 'Upgrade to Ultimate',
 		emoji: '+🌟🌟🌟🌟🌟',
 		explanation: 'One-time payment',
 		condition: ({

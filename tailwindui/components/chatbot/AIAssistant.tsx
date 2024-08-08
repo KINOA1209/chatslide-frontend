@@ -23,6 +23,17 @@ import ChatBotService from '@/services/ChatBotService';
 import { GrayLabel } from '../ui/GrayLabel';
 import { Explanation, SuccessMessage, WarningMessage } from '../ui/Text';
 import GPTToggle from '../button/WorkflowGPTToggle';
+import { WritableDraft } from '@/types/immer';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import {
+	FormControl,
+	FormHelperText,
+	InputLabel,
+	MenuItem,
+} from '@mui/material';
+
+const SearchOnlineEngine = ['', 'google', 'bing', 'wikipedia', 'news'] as const;
+type SearchOnlineType = (typeof SearchOnlineEngine)[number];
 
 export const AIAssistantIcon: React.FC<{
 	onClick: () => void;
@@ -83,6 +94,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 	const { project } = useProject();
 	const chatWindowRef = useRef<HTMLDivElement>(null);
 	const [model, setModel] = useState(type === 'chart' ? 'GPT-4o' : 'GPT-3.5');
+	const [search_online, setSearchOnline] = useState<SearchOnlineType>('');
 
 	const handleEnter = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
 		if (event.key === 'Enter') {
@@ -168,6 +180,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 							token,
 							model === 'GPT-3.5' ? 'gpt-3.5-turbo' : 'gpt-4o',
 							updateDynamicChart ? 'json' : 'img',
+							search_online,
 						)
 					: await ChatBotService.chat(
 							inputToSend,
@@ -184,7 +197,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 			setLoading(false);
 
 			console.log('responseData structure:', response);
-			// If the slide data is updated
+
 			if (response.slide) {
 				console.log('updateSlide content after api call:', response.slide);
 
@@ -196,19 +209,20 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 						images: [],
 					} as Slide;
 
-					// insert the newSlide after the currentSlideIndex
-					setSlides((prevSlides) => {
+					setSlides((prevSlides: WritableDraft<Slide>[]) => {
 						const newSlides = [...prevSlides];
-						newSlides.splice(currentSlideIndex + 1, 0, newSlide);
+						newSlides.splice(
+							currentSlideIndex + 1,
+							0,
+							newSlide as WritableDraft<Slide>,
+						);
 						return newSlides;
 					});
 					setSlideIndex(currentSlideIndex + 1);
 				} else {
-					// change the current slide
 					let content = response.slide.content;
 
 					if (content.length >= 6 && JSON.stringify(content).length > 600) {
-						// too much new content in one page, need to split into two pages
 						const mid = Math.floor(content.length / 2);
 						const slidePage1 = {
 							...slides[currentSlideIndex],
@@ -220,10 +234,14 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 							...response.slide,
 							content: content.slice(mid),
 						};
-						// replace the current slide with the 2 new slides
 						setSlides((prevSlides) => {
 							const newSlides = [...prevSlides];
-							newSlides.splice(currentSlideIndex, 1, slidePage1, slidePage2);
+							newSlides.splice(
+								currentSlideIndex,
+								1,
+								slidePage1 as WritableDraft<Slide>,
+								slidePage2 as WritableDraft<Slide>,
+							);
 							return newSlides;
 						});
 						setSlideIndex(currentSlideIndex + 1);
@@ -233,24 +251,19 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 							),
 						);
 					} else {
-						// Update state with the new slides
-						// console.log('updating script at index', currentSlideIndex)
 						updateSlidePage &&
 							updateSlidePage(currentSlideIndex, response.slide);
-						updateVersion(); // force rerender when version changes and index does not change
+						updateVersion();
 					}
 				}
 			} else if (response.action) {
-				// not add_page action with slide
-				// send this as a document signal
 				let action = response.action;
 				if (action === 'upload_background') {
-					action = 'change_logo'; // for branding
+					action = 'change_logo';
 				}
 				if (action === 'change_font') {
 					action = 'change_template';
 				}
-
 				document.dispatchEvent(new Event(action));
 			}
 
@@ -280,6 +293,18 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 		type === 'slide'
 			? 'sm:fixed xl:relative sm:bottom-0 sm:right-0 sm:z-50 sm:w-[20rem] sm:h-[30rem] xl:h-full'
 			: 'sm:relative sm:w-[20rem] sm:h-full';
+
+	const handleSelectEngine = (e: SelectChangeEvent<SearchOnlineType>) => {
+		if (
+			e.target.value === '' ||
+			e.target.value === 'google' ||
+			e.target.value === 'bing' ||
+			e.target.value === 'wikipedia' ||
+			e.target.value === 'news'
+		) {
+			setSearchOnline(e.target.value);
+		}
+	};
 
 	return (
 		<section
@@ -329,6 +354,31 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 				)}
 			</div>
 
+			{type === 'chart' && (
+				<div className='w-full pt-4 pb-2 border-t-2 border-gray-300 flex justify-center'>
+					<FormControl sx={{ m: 1, minWidth: 200 }} size='small'>
+						<InputLabel id='search-engine-select-label'>Web Search</InputLabel>
+						<Select
+							labelId='search-engine-select-label'
+							id='search-engine-select'
+							value={search_online}
+							label='Web Search'
+							autoWidth
+							onChange={handleSelectEngine}
+						>
+							{SearchOnlineEngine.map((engine) => (
+								<MenuItem key={engine} value={engine}>
+									{engine === '' ? <em>None</em> : engine}
+								</MenuItem>
+							))}
+						</Select>
+						<FormHelperText>
+							<span className='text-red-500 font-bold'>NEW!</span> Use web
+							search for more accurate data
+						</FormHelperText>
+					</FormControl>
+				</div>
+			)}
 			{/* chat history text area */}
 			<div className='w-full h-full border-t-2 border-gray-300 overflow-y-scroll p-2 flex flex-col flex-grow'>
 				<ScrollBar

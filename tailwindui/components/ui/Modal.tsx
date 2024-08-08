@@ -13,7 +13,7 @@ interface ModalProps {
 	onConfirm?: () => Promise<void> | void;
 	onConfirmAsync?: () => Promise<void>;
 	title?: string;
-	description?: string;
+	description?: string | React.ReactNode;
 	clickOutsideToClose?: boolean;
 	canClose?: boolean;
 	width?: string;
@@ -23,8 +23,8 @@ interface ModalProps {
 	maxInputLength?: number;
 	hasTextArea?: boolean;
 	rows?: number;
-  confirmText?: string;
-  onCancel?: () => void;
+	confirmText?: string;
+	onCancel?: () => void;
 }
 
 const Modal: React.FC<ModalProps> = ({

@@ -29,6 +29,42 @@ export default function Studio() {
 				</Card>
 
 				<Card>
+					<BigTitle>August 4</BigTitle>
+					<Instruction>
+						<span>
+							<b>📊 Dashboard Grid View:</b> The dashboard now includes a grid
+							view option, offering an alternative to the traditional list view
+							for a more organized and flexible layout. {' '}
+							<a href='/dashboard' className='text-blue-600'>
+								Try it
+							</a>
+							.
+						</span>
+					</Instruction>
+					<Instruction>
+						<span>
+							<p>
+								<b>🔍 Enhanced Chart Search:</b> You can now opt to search
+								online for charts using our chatbot, making it easier to find
+								and integrate data visualizations into your projects. {' '}
+								{/* try now */}
+								<a href='/charts' className='text-blue-600'>
+									Try it
+								</a>
+								.
+							</p>
+						</span>
+					</Instruction>
+					<Instruction>
+						<div>
+							<b>🖼️ Improved Image Generation:</b> We've made further
+							improvements to our image generation feature, enhancing the
+							quality and variety of generated images for your projects.
+						</div>
+					</Instruction>
+				</Card>
+
+				<Card>
 					<BigTitle>July 21</BigTitle>
 					<Instruction>
 						<span>
@@ -50,9 +86,9 @@ export default function Studio() {
 
 					<Instruction>
 						<div>
-							<b>🖱️ UX Improvements:</b> You can now paste text directly
-							from your clipboard on the summary page, making it easier to incorporate content into
-							your projects.
+							<b>🖱️ UX Improvements:</b> You can now paste text directly from
+							your clipboard on the summary page, making it easier to
+							incorporate content into your projects.
 						</div>
 					</Instruction>
 
@@ -549,10 +585,7 @@ export default function Studio() {
 							<b>💸 Join Affiliate Program: </b> Get paid for your shared
 							content when they drive conversion!
 						</div>
-						<a
-							className='text-blue-600'
-							href='/affiliate'
-						>
+						<a className='text-blue-600' href='/affiliate'>
 							Learn more
 						</a>
 						.

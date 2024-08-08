@@ -190,11 +190,6 @@ class UserService {
 					day: 'numeric',
 				});
 			}
-			if (tier.includes('CANCELLED_')) {
-				if (expirationDate && new Date(expirationDate) > new Date()) {
-					tier = tier.replaceAll('CANCELLED_', '');
-				}
-			}
 
 			const username: string = data['username'] || null;
 			const email: string = data['email'] || null;

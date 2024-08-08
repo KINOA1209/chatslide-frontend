@@ -162,6 +162,8 @@ const useHasSelectedCustomizedTemplateTitleFontFamily =
 		true,
 	);
 
+const useIsDragging = createBearStore<boolean>()('isDragging', false, false);
+
 export enum SaveStatus {
 	UpToDate,
 	Saving,
@@ -350,21 +352,34 @@ export const useSlides = () => {
 
 	const [canResetAllPositions, setCanResetAllPositions] = useState(false);
 
+	const { isDragging, setIsDragging } = useIsDragging();
+
 	useEffect(() => {
 		const currentSlide = slides[slideIndex];
 		if (!currentSlide) return;
 		else if (
-			(currentSlide?.image_container_positions && Object.keys(currentSlide?.image_container_positions[0]).length > 0) ||
-			(currentSlide?.image_container_positions && Object.keys(currentSlide?.image_container_positions[1]).length > 0) ||
-			(currentSlide?.image_container_positions && Object.keys(currentSlide?.image_container_positions[2]).length > 0) ||
-			(currentSlide?.logo_numeric_position && Object.keys(currentSlide?.logo_numeric_position).length > 0) ||
-			(currentSlide?.username_position && Object.keys(currentSlide?.username_position).length > 0) ||
-			(currentSlide?.head_position && Object.keys(currentSlide?.head_position).length > 0) ||
-			(currentSlide?.title_position && Object.keys(currentSlide?.title_position).length > 0) ||
-			(currentSlide?.subtopic_position && Object.keys(currentSlide?.subtopic_position).length > 0) ||
-			(currentSlide?.content_positions && Object.keys(currentSlide?.content_positions[0]).length > 0) ||
-			(currentSlide?.content_positions && Object.keys(currentSlide?.content_positions[1]).length > 0) ||
-			(currentSlide?.content_positions && Object.keys(currentSlide?.content_positions[2]).length > 0)
+			(currentSlide?.image_container_positions &&
+				Object.keys(currentSlide?.image_container_positions[0]).length > 0) ||
+			(currentSlide?.image_container_positions &&
+				Object.keys(currentSlide?.image_container_positions[1]).length > 0) ||
+			(currentSlide?.image_container_positions &&
+				Object.keys(currentSlide?.image_container_positions[2]).length > 0) ||
+			(currentSlide?.logo_numeric_position &&
+				Object.keys(currentSlide?.logo_numeric_position).length > 0) ||
+			(currentSlide?.username_position &&
+				Object.keys(currentSlide?.username_position).length > 0) ||
+			(currentSlide?.head_position &&
+				Object.keys(currentSlide?.head_position).length > 0) ||
+			(currentSlide?.title_position &&
+				Object.keys(currentSlide?.title_position).length > 0) ||
+			(currentSlide?.subtopic_position &&
+				Object.keys(currentSlide?.subtopic_position).length > 0) ||
+			(currentSlide?.content_positions &&
+				Object.keys(currentSlide?.content_positions[0]).length > 0) ||
+			(currentSlide?.content_positions &&
+				Object.keys(currentSlide?.content_positions[1]).length > 0) ||
+			(currentSlide?.content_positions &&
+				Object.keys(currentSlide?.content_positions[2]).length > 0)
 		)
 			setCanResetAllPositions(true);
 		else setCanResetAllPositions(false);
@@ -555,8 +570,16 @@ export const useSlides = () => {
 		setSlides(newSlides);
 
 		if (slideIndex >= newSlides.length) {
+			// console.log('slideIndex:', slideIndex, 'newSlides.length:', newSlides.length);
 			setSlideIndex(newSlides.length - 1);
 		}
+
+		// console.log(
+		// 	'slideIndex:',
+		// 	slideIndex,
+		// 	'newSlides.length:',
+		// 	newSlides.length,
+		// );
 
 		updateVersion();
 		updateSlideHistory(newSlides);
@@ -838,6 +861,11 @@ export const useSlides = () => {
 		setCustomizedTemplateSubtitleFontColor(slides[0].subtitleFontColor);
 		setCustomizedTemplateContentFontColor(slides[0].contentFontColor);
 
+		setHasSelectedCustomTemplateBgColor(
+			slides[0].background_color !==
+				colorPreviews[slides[0].palette as PaletteKeys],
+		);
+
 		setHasSelectedCustomizedTemplateContentFontFamily(
 			!!slides[0].contentFontFamily,
 		);
@@ -922,6 +950,16 @@ export const useSlides = () => {
 		} catch (error) {
 			console.error('Auto-save failed:', error);
 		}
+	};
+
+	const toggleHideSlide = (index: number) => {
+		console.log('-- hide slide: ', { index });
+		const newSlide = { ...slides[index], isHidden: !slides[index].isHidden };
+		const newSlides = [...slides];
+		newSlides[index] = newSlide;
+		setSlides(newSlides);
+		updateSlideHistory(newSlides);
+		debouncedSyncSlides(newSlides, false, newSlides.length);
 	};
 
 	const debouncedSyncSlides = debounce(syncSlides, 1000);
@@ -1009,5 +1047,8 @@ export const useSlides = () => {
 		setCustomizedTemplateTitleFontColor,
 		hasSelectedCustomizedTemplateTitleFontColor,
 		setHasSelectedCustomizedTemplateTitleFontColor,
+		isDragging,
+		setIsDragging,
+		toggleHideSlide,
 	};
 };

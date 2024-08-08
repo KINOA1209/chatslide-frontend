@@ -40,6 +40,8 @@ import { WrappableRow } from '@/components/layout/WrappableRow';
 import SubscriptionModal from '../SubscriptionModal';
 import Modal from '@/components/ui/Modal';
 import { Router } from 'next/router';
+import RadioButton, { RadioButtonOption } from '@/components/ui/RadioButton';
+import exp from 'constants';
 
 const Profile = () => {
 	const { username, email, token, setUsername, user } = useUser();
@@ -443,8 +445,7 @@ const Affiliate = () => {
 };
 
 const CreditHistory = () => {
-	const { credits, token } = useUser();
-	const router = useRouter();
+	const { credits, tier, expirationDate } = useUser();
 	// const [stripeLink, setStripeLink] = useState('');
 	const [showManageSubscription, setShowManageSubscription] = useState(false);
 
@@ -456,6 +457,14 @@ const CreditHistory = () => {
 	// 	}
 	// 	fetchStripeLink();
 	// }, [token]);
+
+	const getExpirationDateStatement = (tier: string, date: string) => {
+		if (tier.includes('EXPIRED')) return 'Expired on ' + date;
+		if (tier.includes('ONETIME') || tier.includes('CANCELLED'))
+			return 'Expiring on ' + date;
+		if (tier.includes('LIFETIME')) return '';
+		return 'Renewing on ' + date;
+	};
 
 	return (
 		<div className='w-full'>
@@ -481,6 +490,16 @@ const CreditHistory = () => {
 					Mange Subscription
 				</InversedBigBlueButton>
 			</WrappableRow>
+
+			<Instruction>⭐️ Subscription Tier</Instruction>
+
+			<BigTitle>{tier.replaceAll('_', ' ')}</BigTitle>
+
+			{expirationDate && (
+				<Instruction>
+					{getExpirationDateStatement(tier, expirationDate)}
+				</Instruction>
+			)}
 		</div>
 	);
 };
@@ -488,27 +507,80 @@ const CreditHistory = () => {
 const DangerZone = () => {
 	const { token, signOut } = useUser();
 	const [showModal, setShowModal] = useState(false);
-  const router = useRouter();
+	const router = useRouter();
 
 	function deleteAndSignOut(reason: string) {
 		UserService.deleteUser(token, reason);
 		signOut();
-    router.push('/landing');
+		router.push('/landing');
 	}
 
 	const ConfirmModal: React.FC<{}> = () => {
 		const [reason, setReason] = useState('');
+		const [detail, setDetail] = useState('');
+
+		const reasonOptions: string[] = [
+			'Found a better tool',
+			'Not using it much',
+			'Dislike user interface',
+			'Technical issues',
+			'Lacks needed templates',
+			// 'Poor design elements',
+			'Inaccurate AI content',
+			// 'Hard to navigate',
+			// 'Frequent bugs or crashes',
+			'Lacks customization',
+			'Poor software integration',
+			'Steep learning curve',
+			'Too expensive',
+			'Data security concerns',
+			'Other:',
+		];
+
+		const moreDetailOptions = [
+			// 'I found a better tool that suits my needs. It is:',
+			// "I'm having technical issues. It is:",
+			'Other:',
+		];
 
 		return (
 			<Modal
 				title='Delete Account and Sign Out'
-				description='Would you like to share why you want to delete your account?'
 				showModal={showModal}
 				setShowModal={setShowModal}
 				hasInputArea
-				inputValue={reason}
-				setInputValue={setReason}
 			>
+				<Instruction>
+					<p>
+						All your data and account information will be deleted. <br />
+						Unused credits will not be forfeited. <br />
+						You will not be able to log in with this account again. <br />
+						This action is irreversible.
+					</p>
+				</Instruction>
+
+				<Instruction>
+					Would you like to share why you are deleting your account?
+				</Instruction>
+
+				<RadioButton
+					name='reason'
+					selectedValue={reason}
+					setSelectedValue={setReason}
+					options={reasonOptions}
+				/>
+
+				{moreDetailOptions.includes(reason) && (
+					<NewInputBox
+						id='detail'
+						value={detail}
+						onChange={setDetail}
+						autoSelect
+						placeholder='Please share more detail'
+						maxLength={100}
+					/>
+				)}
+
 				{reason && (
 					<Instruction>
 						<div

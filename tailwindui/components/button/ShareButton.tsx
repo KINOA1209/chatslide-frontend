@@ -131,6 +131,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({
 				showModal={showShareModal}
 				setShowModal={setShowShareModal}
 				title='Share / Publish'
+				// clickOutsideToClose={false}
 				// description='Share your slides with others or on social media'
 			>
 				<div className='flex flex-col gap-2'>

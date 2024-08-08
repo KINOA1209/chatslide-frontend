@@ -130,19 +130,21 @@ const DesignSystemBadges: React.FC<DesignSystemBadgesProps> = ({
 
 	return (
 		<div style={buttonStyles}>
-			{iconLeading && (
-				<Icon
-					icon={iconLeading}
-					style={{ ...iconStyles, marginRight: '4px' }}
-				/>
+			{iconLeading && <Icon icon={iconLeading} style={{ ...iconStyles }} />}
+			{text && (
+				<span
+					style={{
+						...textStyles[size],
+						whiteSpace: 'nowrap',
+						marginRight: '4px',
+						marginLeft: '4px',
+					}}
+				>
+					{text}
+				</span>
 			)}
-			<span style={{ ...textStyles[size], whiteSpace: 'nowrap' }}>{text}</span>
-			{iconTrailing && (
-				<Icon
-					icon={iconTrailing}
-					style={{ ...iconStyles, marginLeft: '4px' }}
-				/>
-			)}
+
+			{iconTrailing && <Icon icon={iconTrailing} style={{ ...iconStyles }} />}
 		</div>
 	);
 };

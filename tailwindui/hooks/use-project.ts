@@ -4,6 +4,7 @@ import Project from '@/models/Project';
 import Resource from '@/models/Resource';
 import ProjectService from '@/services/ProjectService';
 import { useUser } from './use-user';
+import { produce } from 'immer';
 
 const useProjectBear = createBearStore<Project | null>()('project', null, true);
 const useResourcesBear = createBearStore<Resource[]>()('resources', [], true);
@@ -77,18 +78,21 @@ export const useProject = () => {
 		console.log('-- updateProject', field, value);
 		setProject((currentProject) => {
 			// 'currentProject' is the most up-to-date state of 'project'
-			const newProject = { ...currentProject };
-			newProject[field] = value;
-			return newProject as Project;
+			if (!currentProject) return null;
+			const newProject = { ...currentProject, [field]: value };
+			return newProject;
 		});
 	};
 
-	const bulkUpdateProject = (dict: Project) => {
+	const bulkUpdateProject = (dict: Partial<Project>) => {
 		console.log('-- bulkUpdateProject', dict);
-		setProject((currentProject) => {
-			// 'currentProject' is the most up-to-date state of 'project'
-			return { ...currentProject, ...dict } as Project;
-		});
+		setProject((currentProject) =>
+			produce(currentProject, (draft) => {
+				if (draft) {
+					Object.assign(draft, dict);
+				}
+			})
+		);
 	};
 
 	const updateIsShared = (

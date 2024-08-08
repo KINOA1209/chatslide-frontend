@@ -1,6 +1,17 @@
+import { useSlides } from '@/hooks/use-slides';
 import Position from '@/types/Position';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+	createContext,
+	useContext,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+} from 'react';
 import Draggable from 'react-draggable';
+import { FaUndo } from 'react-icons/fa';
+import { IoMove } from 'react-icons/io5';
+import { LuTrash2, LuUndo2 } from 'react-icons/lu';
 import { MdDragIndicator, MdRefresh } from 'react-icons/md';
 import { TbRefresh } from 'react-icons/tb';
 import { Rnd } from 'react-rnd';
@@ -48,7 +59,16 @@ export const DragElement = ({
 	const [elementSize, setElementSize] = useState<{
 		width: number | string;
 		height: number | string;
-	}>({ width: 'max-content', height: 'max-content' });
+	}>({
+		width: 'max-content',
+		height: type === ElementType.ImageView ? 'max-content' : '',
+	});
+
+	const {
+		isDragging: isAnyElementDragging,
+		setIsDragging: setIsAnyElementDragging,
+	} = useSlides();
+	const [inited, setInited] = useState(false);
 
 	useEffect(() => {
 		let x: number, y: number;
@@ -68,21 +88,29 @@ export const DragElement = ({
 			!positions?.[contentIndex]?.height
 		) {
 			width = defaultPos?.[contentIndex]?.width ?? 'max-content';
-			height = defaultPos?.[contentIndex]?.height ?? 'max-content';
+			height =
+				type === ElementType.ImageView
+					? defaultPos?.[contentIndex]?.height ?? 'max-content'
+					: '';
 		} else {
 			width = Number(positions[contentIndex].width) + 'px';
-			height = Number(positions[contentIndex].height) + 'px';
+			height =
+				type === ElementType.ImageView
+					? Number(positions[contentIndex].height) + 'px'
+					: '';
 		}
-		setElementPos({x, y});
-		setElementSize({width, height});
+		setElementPos({ x, y });
+		setElementSize({ width, height });
 		setMoveHandlerPos(x, y);
 		setResetHandlerPos(x, y);
+		setInited(true);
 	}, []);
 
 	const [isHover, setIsHover] = useState<boolean>(false);
 	const [isResizing, setIsResizing] = useState<boolean>(false);
 	const [isDragging, setIsDragging] = useState<boolean>(false);
 	const [isOverHandler, setIsOverHandler] = useState<boolean>(false);
+	const [isShiftPressed, setIsShiftPressed] = useState(false);
 
 	const moveHandlerRef = useRef<HTMLDivElement>(null);
 	const resetHandlerRef = useRef<HTMLDivElement>(null);
@@ -95,9 +123,9 @@ export const DragElement = ({
 	const elementHandlerCSS: React.CSSProperties = useMemo(
 		() => ({
 			background: '#545657',
-			width: '20px',
-			height: '20px',
-			padding: '2px',
+			width: '28px',
+			height: '28px',
+			padding: '4px',
 			position: 'absolute',
 			zIndex: '120',
 			visibility: `${isVisible ? 'visible' : 'hidden'}`,
@@ -126,12 +154,16 @@ export const DragElement = ({
 			borderWidth: '2px',
 			borderTopLeftRadius: '0px',
 			width: '100%',
-			height: '100%',
+			height: type === ElementType.ImageView ? '100%' : 'max-content',
+			overflow: 'visible',
+			cursor: type === ElementType.TextEdit ? 'move' : 'default',
 		}),
 		[isVisible],
 	);
 
 	const onEnterHandler = () => {
+		console.log('isAnyElementDragging', isAnyElementDragging);
+		if (isAnyElementDragging) return;
 		setIsOverHandler(true);
 	};
 
@@ -143,18 +175,18 @@ export const DragElement = ({
 		if (moveHandlerRef.current) {
 			if (x < -25 && y < -90) {
 				moveHandlerRef.current.style.left = '';
-				moveHandlerRef.current.style.right = '-20px';
-				moveHandlerRef.current.style.bottom = '-20px';
+				moveHandlerRef.current.style.right = '-28px';
+				moveHandlerRef.current.style.bottom = '-28px';
 			} else if (x < -25) {
 				moveHandlerRef.current.style.left = '';
-				moveHandlerRef.current.style.right = '-20px';
+				moveHandlerRef.current.style.right = '-28px';
 				moveHandlerRef.current.style.bottom = '';
 			} else if (y < -90) {
-				moveHandlerRef.current.style.left = '-20px';
+				moveHandlerRef.current.style.left = '-28px';
 				moveHandlerRef.current.style.right = '';
-				moveHandlerRef.current.style.bottom = '-20px';
+				moveHandlerRef.current.style.bottom = '-28px';
 			} else {
-				moveHandlerRef.current.style.left = '-20px';
+				moveHandlerRef.current.style.left = '-28px';
 				moveHandlerRef.current.style.right = '';
 				moveHandlerRef.current.style.bottom = '';
 			}
@@ -165,29 +197,30 @@ export const DragElement = ({
 		if (resetHandlerRef.current) {
 			if (x < -25 && y < -90) {
 				resetHandlerRef.current.style.left = '';
-				resetHandlerRef.current.style.right = '-20px';
+				resetHandlerRef.current.style.right = '-28px';
 				resetHandlerRef.current.style.top = '';
-				resetHandlerRef.current.style.bottom = '23px';
+				resetHandlerRef.current.style.bottom = '30px';
 			} else if (x < -25) {
 				resetHandlerRef.current.style.left = '';
-				resetHandlerRef.current.style.right = '-20px';
-				resetHandlerRef.current.style.top = '23px';
+				resetHandlerRef.current.style.right = '-28px';
+				resetHandlerRef.current.style.top = '30px';
 				resetHandlerRef.current.style.bottom = '';
 			} else if (y < -90) {
-				resetHandlerRef.current.style.left = '-20px';
+				resetHandlerRef.current.style.left = '-28px';
 				resetHandlerRef.current.style.right = '';
 				resetHandlerRef.current.style.top = '';
-				resetHandlerRef.current.style.bottom = '23px';
+				resetHandlerRef.current.style.bottom = '30px';
 			} else {
-				resetHandlerRef.current.style.left = '-20px';
+				resetHandlerRef.current.style.left = '-28px';
 				resetHandlerRef.current.style.right = '';
-				resetHandlerRef.current.style.top = '23px';
+				resetHandlerRef.current.style.top = '30px';
 				resetHandlerRef.current.style.bottom = '';
 			}
 		}
 	};
 
 	const onHandleDragStop = (e: any, data: any) => {
+		setIsAnyElementDragging(false);
 		setIsDragging(false);
 		setElementPos({ x: data.x, y: data.y });
 		const updatedPosition: Position[] = positions.map((position, index) =>
@@ -200,7 +233,13 @@ export const DragElement = ({
 					}
 				: position,
 		);
-		handleSlideEdit(updatedPosition, currentSlideIndex, positionType, contentIndex, true);
+		handleSlideEdit(
+			updatedPosition,
+			currentSlideIndex,
+			positionType,
+			contentIndex,
+			false,
+		);
 	};
 
 	const onHandleResizeStop = (
@@ -224,26 +263,61 @@ export const DragElement = ({
 					}
 				: position,
 		);
-		handleSlideEdit(updatedPosition, currentSlideIndex, positionType, contentIndex, true);
+		handleSlideEdit(
+			updatedPosition,
+			currentSlideIndex,
+			positionType,
+			contentIndex,
+			false,
+		);
 	};
+
+	useEffect(() => {
+		const handleKeyDown = (event: KeyboardEvent) => {
+			if (event.key === 'Shift') {
+				setIsShiftPressed(true);
+			}
+		};
+
+		const handleKeyUp = (event: KeyboardEvent) => {
+			if (event.key === 'Shift') {
+				setIsShiftPressed(false);
+			}
+		};
+
+		window.addEventListener('keydown', handleKeyDown);
+		window.addEventListener('keyup', handleKeyUp);
+
+		// Clean up event listeners on component unmount
+		return () => {
+			window.removeEventListener('keydown', handleKeyDown);
+			window.removeEventListener('keyup', handleKeyUp);
+		};
+	}, []);
+
+  // if(!inited) return null;
 
 	return (
 		<Rnd
-			className={'ResizableElement w-full h-full'}
+			className={'ResizableElement w-full'}
 			style={{
 				zIndex: `${hoveredIndex === elementIndex ? '200' : '100'}`,
 			}}
 			position={elementPos}
 			size={elementSize}
-			lockAspectRatio={false}
+			lockAspectRatio={isShiftPressed}
 			onResizeStart={() => {
 				setIsResizing(true);
 			}}
 			onResizeStop={onHandleResizeStop}
 			onDragStart={() => {
+				console.log('isAnyElementDragging', isAnyElementDragging);
+				setIsAnyElementDragging(true);
 				setIsDragging(true);
 			}}
 			onDragStop={onHandleDragStop}
+			onMouseEnter={onEnterHandler}
+			onMouseLeave={onLeaveHandler}
 			resizeHandleStyles={
 				isVisible
 					? {
@@ -278,8 +352,8 @@ export const DragElement = ({
 					: {}
 			}
 			enableResizing={{
-				top: canEdit,
-				bottom: canEdit,
+				top: type === ElementType.ImageView && canEdit,
+				bottom: type === ElementType.ImageView && canEdit,
 				left: canEdit,
 				right: canEdit,
 				topLeft: false,
@@ -290,6 +364,7 @@ export const DragElement = ({
 			disableDragging={!canEdit}
 			dragHandleClassName='drag-handler'
 		>
+			{/* handler icons  */}
 			<div
 				style={{ ...elementHandlerCSS, cursor: 'move' }}
 				onMouseEnter={onEnterHandler}
@@ -297,10 +372,10 @@ export const DragElement = ({
 				className='drag-handler'
 				ref={moveHandlerRef}
 			>
-				<MdDragIndicator size={16} color={'white'} />
+				<IoMove size={20} color={'white'} />
 			</div>
 			<div
-				style={{ ...elementHandlerCSS, cursor: 'cell' }}
+				style={{ ...elementHandlerCSS, cursor: 'pointer' }}
 				onMouseEnter={onEnterHandler}
 				onMouseLeave={onLeaveHandler}
 				onClick={() => {
@@ -316,25 +391,51 @@ export const DragElement = ({
 						(position, index) =>
 							index === contentIndex ? defaultPos[contentIndex] : position,
 					);
-					handleSlideEdit(updatedPosition, currentSlideIndex, positionType, contentIndex, true);
+					handleSlideEdit(
+						updatedPosition,
+						currentSlideIndex,
+						positionType,
+						contentIndex,
+						true,
+					);
 				}}
 				ref={resetHandlerRef}
 			>
-				<MdRefresh size={16} color={'white'} />
+				<LuUndo2 size={20} color={'white'} />
 			</div>
+			{/* icon to delete all text */}
+			{/* <div 
+        style={{ ...elementHandlerCSS, cursor: 'pointer' }}
+        onMouseEnter={onEnterHandler}
+        onMouseLeave={onLeaveHandler}
+        onClick={() => {
+          handleSlideEdit(
+            positions.filter((_, index) => index !== contentIndex),
+            currentSlideIndex,
+            positionType,
+            contentIndex,
+            true,
+          );
+        }}
+      >
+        <LuTrash2 size={20} color={'white'} />
+      </div> */}
+
 			<div
+				className={type === ElementType.TextEdit ? 'drag-handler' : ''}
 				style={elementCSS}
 				onMouseEnter={() => {
+					if (isAnyElementDragging) return;
 					setIsHover(true);
 					onHover(elementIndex);
 				}}
 				onMouseLeave={() => {
-          setTimeout(() => {
-            setIsHover(false);
-          }, 300);
+					setTimeout(() => {
+						setIsHover(false);
+					}, 500);
 				}}
 			>
-				{children}
+				{inited && children}
 			</div>
 		</Rnd>
 	);
