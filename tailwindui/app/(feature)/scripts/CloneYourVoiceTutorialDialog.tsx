@@ -18,6 +18,7 @@ import {
 	DialogTrigger,
 } from '@/components/ui/dialog';
 
+import { FaChevronLeft } from 'react-icons/fa';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Button } from '@/components/ui/button';
@@ -41,9 +42,14 @@ import {
 import { WrappableRow } from '@/components/layout/WrappableRow';
 import { Instruction } from '@/components/ui/Text';
 import { FiPlay } from 'react-icons/fi';
+import CustomAudioPlayer from './CustomAudioPlayer';
+import { BlueLabel } from '@/components/ui/GrayLabel';
+import { useUser } from '@/hooks/use-user';
+import { getTierDisplayName } from '@/components/layout/SideBar';
 function CloneYourVoiceTutorial() {
 	const [isOpen, setIsOpen] = useState(false);
 	const [currentStep, setCurrentStep] = useState(0);
+	const { token, credits, tier, userStatus, expirationDate } = useUser();
 
 	const {
 		selectedLanguageCode,
@@ -128,6 +134,10 @@ function CloneYourVoiceTutorial() {
 						maxLength={2000}
 						textarea
 					/>
+				</>
+			),
+			footer: (
+				<>
 					<BigBlueButton
 						disabled={
 							isRecordingRecord ||
@@ -148,12 +158,12 @@ function CloneYourVoiceTutorial() {
 							</>
 						)}
 					</BigBlueButton>
-				</>
-			),
-			footer: (
-				<>
-					<span>{`Step 1 of 5`}</span>
-					<Button disabled={!consentAudio} onClick={handleNextStep}>
+					<span>{`Step 1 of 4`}</span>
+					<Button
+						disabled={!consentAudio}
+						onClick={handleNextStep}
+						variant={'DrLambdaPrimary'}
+					>
 						Next
 					</Button>
 				</>
@@ -167,22 +177,14 @@ function CloneYourVoiceTutorial() {
 					{consentAudio && (
 						<WrappableRow type='grid' cols={2}>
 							<Instruction>Preview your consent recording:</Instruction>
-							<audio controls className='mx-auto h-[36px] w-[16rem]'>
+							{/* <audio controls className='mx-auto h-[36px] w-[16rem]'>
 								<source
 									src={URL.createObjectURL(consentAudio)}
 									type='audio/wav'
 								/>
-							</audio>
+							</audio> */}
+							<CustomAudioPlayer audioFile={consentAudio} />
 						</WrappableRow>
-					)}
-					{consentAudio && (
-						<BigBlueButton
-							onClick={submitConsent}
-							isSubmitting={isSubmittingConsent}
-							disabled={isRecordingRecord || cloning || isRecordingConsent}
-						>
-							{isSubmittingConsent ? 'Verifying...' : 'Verify and Continue'}
-						</BigBlueButton>
 					)}
 				</>
 			),
@@ -200,8 +202,27 @@ function CloneYourVoiceTutorial() {
 						</Button>
 					)} */}
 					<>
-						<span>{`Step 2 of 5`}</span>
-						<Button disabled={!consentId} onClick={handleNextStep}>
+						{consentAudio && (
+							<BigBlueButton
+								onClick={submitConsent}
+								isSubmitting={isSubmittingConsent}
+								disabled={isRecordingRecord || cloning || isRecordingConsent}
+							>
+								{isSubmittingConsent ? 'Verifying...' : 'Verify and Continue'}
+							</BigBlueButton>
+						)}
+						<Button
+							onClick={handlePreviousStep}
+							variant={'defaultWhiteBgNoBorder'}
+						>
+							<FaChevronLeft className='text-[#344054]' />
+						</Button>
+						<span>{`Step 2 of 4`}</span>
+						<Button
+							disabled={!consentId}
+							onClick={handleNextStep}
+							variant={'DrLambdaPrimary'}
+						>
 							Next
 						</Button>
 					</>
@@ -241,48 +262,45 @@ function CloneYourVoiceTutorial() {
 								maxLength={2000}
 								textarea
 							/>
-							<BigBlueButton
-								disabled={
-									isRecordingConsent ||
-									cloning ||
-									isSubmittingConsent ||
-									(isRecordingRecord &&
-										MAX_AUDIO_LENGTH - recordTimeLeft < MIN_AUDIO_LENGTH)
-								}
-								onClick={() => handleRecordAudio(false)}
-							>
-								{isRecordingRecord ? (
-									<span className='flex flex-row gap-x-2 items-center whitespace-nowrap'>
-										<FaStop /> Stop Recording ({recordTimeLeft}s)
-									</span>
-								) : (
-									<>
-										<FaMicrophone /> Record
-									</>
-								)}
-							</BigBlueButton>
-
-							{recordedAudio && (
-								<WrappableRow type='grid' cols={2}>
-									<Instruction>Preview your recording:</Instruction>
-									<audio controls className='mx-auto h-[36px] w-[16rem]'>
-										<source
-											src={URL.createObjectURL(recordedAudio)}
-											type='audio/wav'
-										/>
-									</audio>
-								</WrappableRow>
-							)}
 						</>
 					)}
 				</>
 			),
 			footer: (
 				<>
-					<Button onClick={handlePreviousStep}>Back</Button>
-					<span>{`Step 3 of 5`}</span>
-					<Button disabled={!(audioLength >= MIN_AUDIO_LENGTH && consentId)}>
-						Clone
+					<BigBlueButton
+						disabled={
+							isRecordingConsent ||
+							cloning ||
+							isSubmittingConsent ||
+							(isRecordingRecord &&
+								MAX_AUDIO_LENGTH - recordTimeLeft < MIN_AUDIO_LENGTH)
+						}
+						onClick={() => handleRecordAudio(false)}
+					>
+						{isRecordingRecord ? (
+							<span className='flex flex-row gap-x-2 items-center whitespace-nowrap'>
+								<FaStop /> Stop Recording ({recordTimeLeft}s)
+							</span>
+						) : (
+							<>
+								<FaMicrophone /> Record
+							</>
+						)}
+					</BigBlueButton>
+					<Button
+						onClick={handlePreviousStep}
+						variant={'defaultWhiteBgNoBorder'}
+					>
+						<FaChevronLeft className='text-[#344054]' />
+					</Button>
+					<span>{`Step 3 of 4`}</span>
+					<Button
+						disabled={!(audioLength >= MIN_AUDIO_LENGTH && consentId)}
+						onClick={handleNextStep}
+						variant={'DrLambdaPrimary'}
+					>
+						Next
 					</Button>
 				</>
 			),
@@ -291,6 +309,18 @@ function CloneYourVoiceTutorial() {
 			title: 'Naming and Clone',
 			description: (
 				<>
+					{recordedAudio && (
+						<WrappableRow type='grid' cols={2}>
+							<Instruction>Preview your recording:</Instruction>
+							{/* <audio controls className='mx-auto h-[36px] w-[16rem]'>
+										<source
+											src={URL.createObjectURL(recordedAudio)}
+											type='audio/wav'
+										/>
+									</audio> */}
+							<CustomAudioPlayer audioFile={recordedAudio} />
+						</WrappableRow>
+					)}
 					<div className='flex flex-row items-center justify-center gap-x-2'>
 						<NewInputBox
 							placeholder='Enter a name'
@@ -298,123 +328,132 @@ function CloneYourVoiceTutorial() {
 							maxLength={20}
 							onChange={setVoiceName}
 						/>
-						<BigBlueButton
-							width='8rem'
-							onClick={handleCloneVoice}
-							isSubmitting={cloning}
-							disabled={
-								audioLength < MIN_AUDIO_LENGTH ||
-								cloning ||
-								isRecordingConsent ||
-								isRecordingRecord
-							}
-						>
-							{cloning ? 'Cloning...' : 'Clone'}
-						</BigBlueButton>
 					</div>
 				</>
 			),
 			footer: (
 				<>
-					<Button onClick={handlePreviousStep}>Back</Button>
-					<span>{`Step 4 of 5`}</span>
-					<Button disabled={!(audioLength >= MIN_AUDIO_LENGTH && consentId)}>
-						Clone
+					<Button
+						onClick={handlePreviousStep}
+						variant={'defaultWhiteBgNoBorder'}
+					>
+						<FaChevronLeft className='text-[#344054]' />
 					</Button>
+					<span>{`Step 4 of 4`}</span>
+					{/* <Button disabled={!(audioLength >= MIN_AUDIO_LENGTH && consentId)}>
+						Clone
+					</Button> */}
+					<BigBlueButton
+						width='8rem'
+						onClick={handleCloneVoice}
+						isSubmitting={cloning}
+						disabled={
+							audioLength < MIN_AUDIO_LENGTH ||
+							cloning ||
+							isRecordingConsent ||
+							isRecordingRecord ||
+							!voiceName
+						}
+					>
+						{cloning ? 'Cloning...' : 'Clone'}
+					</BigBlueButton>
 				</>
 			),
 		},
-		{
-			title: 'Test voices',
-			description: (
-				<>
-					<Instruction> Select a voice profile:</Instruction>
-					<WrappableRow type='flex'>
-						<DropDown
-							onChange={handleProfileChange}
-							value={selectedProfile?.name || ''}
-						>
-							{voiceProfiles.map((profile) => (
-								<option key={profile.voice_id} value={profile.name}>
-									{profile.name}
-								</option>
-							))}
-						</DropDown>
-						<InversedBigBlueButton
-							onClick={handleDeleteProfile}
-							disabled={loading}
-							width='4rem'
-						>
-							Delete
-						</InversedBigBlueButton>
-					</WrappableRow>
-					{selectedProfile ? (
-						<>
-							<WrappableRow type='grid' cols={2}>
-								<Instruction> Select a language:</Instruction>
-								<WrappableRow type='flex'>
-									<DropDown
-										value={selectedTestLanguageCode}
-										onChange={(e) => {
-											setSelectedTestLanguageCode(e.target.value);
-											setCustomRecording('');
-										}}
-									>
-										{LANGUAGES.map((lang) => (
-											<option key={lang.code} value={lang.code}>
-												{lang.displayName}
-											</option>
-										))}
-									</DropDown>
-								</WrappableRow>
-							</WrappableRow>
+		// {
+		// 	title: 'Test voices',
+		// 	description: (
+		// 		<>
+		// 			<Instruction> Select a voice profile:</Instruction>
+		// 			<WrappableRow type='flex'>
+		// 				<DropDown
+		// 					onChange={handleProfileChange}
+		// 					value={selectedProfile?.name || ''}
+		// 				>
+		// 					{voiceProfiles.map((profile) => (
+		// 						<option key={profile.voice_id} value={profile.name}>
+		// 							{profile.name}
+		// 						</option>
+		// 					))}
+		// 				</DropDown>
+		// 				<InversedBigBlueButton
+		// 					onClick={handleDeleteProfile}
+		// 					disabled={loading}
+		// 					width='4rem'
+		// 				>
+		// 					Delete
+		// 				</InversedBigBlueButton>
+		// 			</WrappableRow>
+		// 			{selectedProfile ? (
+		// 				<>
+		// 					<WrappableRow type='grid' cols={2}>
+		// 						<Instruction> Select a language:</Instruction>
+		// 						<WrappableRow type='flex'>
+		// 							<DropDown
+		// 								value={selectedTestLanguageCode}
+		// 								onChange={(e) => {
+		// 									setSelectedTestLanguageCode(e.target.value);
+		// 									setCustomRecording('');
+		// 								}}
+		// 							>
+		// 								{LANGUAGES.map((lang) => (
+		// 									<option key={lang.code} value={lang.code}>
+		// 										{lang.displayName}
+		// 									</option>
+		// 								))}
+		// 							</DropDown>
+		// 						</WrappableRow>
+		// 					</WrappableRow>
 
-							<Instruction>
-								Add some example text to test the voice:
-							</Instruction>
-							<NewInputBox
-								placeholder='Enter text to preview voice'
-								value={customerInput}
-								maxLength={2000}
-								onChange={(element) => {
-									setCustomRecording('');
-									setCustomerInput(element);
-								}}
-								textarea
-							/>
-							<BigBlueButton
-								onClick={handleGenerateVoice}
-								disabled={generating}
-							>
-								{generating ? (
-									<>Generating...</>
-								) : (
-									<>
-										<FiPlay /> Test
-									</>
-								)}
-							</BigBlueButton>
-							{customRecording && (
-								<audio controls className='mx-auto h-[36px] w-[16rem]'>
-									<source src={customRecording} type='audio/webm' />
-								</audio>
-							)}
-						</>
-					) : (
-						<p>
-							🤔️ No voice profiles found. Please create a voice profile using
-							the section above.
-						</p>
-					)}
-				</>
-			),
-			footer: (
-				<>
-					<Button onClick={handlePreviousStep}>Back</Button>
-					<span>{`Step 5 of 5`}</span>
-				</>
-			),
-		},
+		// 					<Instruction>
+		// 						Add some example text to test the voice:
+		// 					</Instruction>
+		// 					<NewInputBox
+		// 						placeholder='Enter text to preview voice'
+		// 						value={customerInput}
+		// 						maxLength={2000}
+		// 						onChange={(element) => {
+		// 							setCustomRecording('');
+		// 							setCustomerInput(element);
+		// 						}}
+		// 						textarea
+		// 					/>
+		// 					<BigBlueButton
+		// 						onClick={handleGenerateVoice}
+		// 						disabled={generating}
+		// 					>
+		// 						{generating ? (
+		// 							<>Generating...</>
+		// 						) : (
+		// 							<>
+		// 								<FiPlay /> Test
+		// 							</>
+		// 						)}
+		// 					</BigBlueButton>
+		// 					{customRecording && (
+		// 						<audio controls className='mx-auto h-[36px] w-[16rem]'>
+		// 							<source src={customRecording} type='audio/webm' />
+		// 						</audio>
+		// 					)}
+		// 				</>
+		// 			) : (
+		// 				<p>
+		// 					🤔️ No voice profiles found. Please create a voice profile using
+		// 					the section above.
+		// 				</p>
+		// 			)}
+		// 		</>
+		// 	),
+		// 	footer: (
+		// 		<>
+		// 			<Button onClick={handlePreviousStep}>Back</Button>
+		// 			<span>{`Step 5 of 5`}</span>
+		// 			<BigBlueButton width='8rem' onClick={handleClose}>
+		// 				<span>Finish</span>
+		// 			</BigBlueButton>
+		// 		</>
+		// 	),
+		// },
 	];
 
 	return (
@@ -445,14 +484,31 @@ function CloneYourVoiceTutorial() {
 			</AlertDialog> */}
 			<Dialog>
 				<DialogTrigger asChild>
-					<Button onClick={handleOpen}>
-						<FaMicrophone className='mr-2 h-4 w-4' /> Clone your voice
-						<FaMicrophone className='ml-2 h-4 w-4' />
+					<Button onClick={handleOpen} variant={'DrLambdaPrimary'}>
+						<div className='flex flex-row items-center'>
+							<FaMicrophone className='mr-2 h-4 w-4' />{' '}
+							<span>Clone your voice</span>
+							<span className='ml-2 h-4'>
+								<BlueLabel>{getTierDisplayName(tier, false)}</BlueLabel>
+							</span>
+						</div>
 					</Button>
 				</DialogTrigger>
 				{currentStep > 0 && (
 					<DialogContent>
-						<h1 className='border-b-2'>Clone your voice</h1>
+						<p
+							className='border-b-2'
+							style={{
+								color: 'var(--colors-text-text-secondary-700, #344054)',
+								fontFamily: 'Creato Display Medium',
+								fontSize: '14px',
+								fontStyle: 'normal',
+								fontWeight: 'bold',
+								lineHeight: '20px',
+							}}
+						>
+							🎙️ Clone your voice
+						</p>
 						<DialogHeader>
 							<DialogTitle>{stepData[currentStep - 1]?.title}</DialogTitle>
 							<DialogDescription>

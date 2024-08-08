@@ -29,6 +29,18 @@ export function publiclyAvailable(path: string): boolean {
 	);
 }
 
+export function getTierDisplayName(
+	tier: string,
+	isSidebarOpen: boolean,
+): string {
+	const level = tier.split('_')[0];
+	if (!isSidebarOpen && level === 'ULTIMATE') {
+		return 'ULT';
+	}
+	if (isSidebarOpen) return level;
+	return level;
+}
+
 interface SideBarProps {}
 const SideBar = ({}: SideBarProps) => {
 	const [top, setTop] = useState<boolean>(true);
@@ -83,15 +95,6 @@ const SideBar = ({}: SideBarProps) => {
 			}
 		}
 	}, [path]);
-
-	function getTierDisplayName(tier: string, isSidebarOpen: boolean): string {
-		const level = tier.split('_')[0];
-		if (!isSidebarOpen && level === 'ULTIMATE') {
-			return 'ULT';
-		}
-		if (isSidebarOpen) return level;
-		return level;
-	}
 
 	function getCreditsDisplay(credits: string, isSidebarOpen: boolean): string {
 		if (isSidebarOpen) {
@@ -262,15 +265,16 @@ const SideBar = ({}: SideBarProps) => {
 							</a>
 						)}
 
-					{expirationDate && tier.includes('CANCELLED_') || tier.includes('ONETIME') && (
-						<a
-							href='/account'
-							className={`block py-1 text-sm text-red-400 mx-auto text-center rounded-lg hover:bg-[#F2F4F7] `}
-							role='menuitem'
-						>
-							Expiring {isSidebarOpen && 'on ' + expirationDate}
-						</a>
-					)}
+					{(expirationDate && tier.includes('CANCELLED_')) ||
+						(tier.includes('ONETIME') && (
+							<a
+								href='/account'
+								className={`block py-1 text-sm text-red-400 mx-auto text-center rounded-lg hover:bg-[#F2F4F7] `}
+								role='menuitem'
+							>
+								Expiring {isSidebarOpen && 'on ' + expirationDate}
+							</a>
+						))}
 
 					{isSidebarOpen && (
 						<>

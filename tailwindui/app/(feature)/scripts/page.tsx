@@ -511,8 +511,6 @@ export default function WorkflowStep5() {
 					</Column>
 				</div>
 			)}
-
-			<CloneYourVoiceTutorial></CloneYourVoiceTutorial>
 		</div>
 	);
 }

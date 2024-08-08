@@ -27,6 +27,7 @@ import {
 	AccordionItem,
 	AccordionTrigger,
 } from '@/components/ui/accordion';
+import CloneYourVoiceTutorial from './CloneYourVoiceTutorialDialog';
 
 interface AudioVideoDetailSettingsSectionProps {
 	voice: string;
@@ -105,9 +106,10 @@ const AudioVideoDetailSettingsSection: React.FC<
 							<Instruction>
 								<span>
 									Voice cloning is now available for PRO and ULTIMATE users.{' '}
-									<a className='text-blue-600' href='/studio' target='_blank'>
-										Clone voice.
-									</a>{' '}
+									{/* <a className='text-blue-600' href='/studio' target='_blank'>
+										Clone voice .
+									</a>{' '} */}
+									<CloneYourVoiceTutorial></CloneYourVoiceTutorial>
 								</span>
 							</Instruction>
 
