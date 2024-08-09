@@ -87,7 +87,7 @@ const AudioVideoDetailSettingsSection: React.FC<
 	return (
 		<>
 			<Card>
-				<Accordion type='single' collapsible className='w-full'>
+				<Accordion type='single' collapsible className='w-full' value='item-1'>
 					<AccordionItem value='item-1'>
 						<AccordionTrigger>
 							<WrappableRow type='flex' justify='between'>
@@ -134,7 +134,7 @@ const AudioVideoDetailSettingsSection: React.FC<
 
 			<Card>
 				<Accordion type='single' collapsible className='w-full'>
-					<AccordionItem value='item-1'>
+					<AccordionItem value='item-2'>
 						<AccordionTrigger>
 							<BigTitle>🎥 Video Effects</BigTitle>
 						</AccordionTrigger>
@@ -230,7 +230,7 @@ const AudioVideoDetailSettingsSection: React.FC<
 
 			<Card>
 				<Accordion type='single' collapsible className='w-full'>
-					<AccordionItem value='item-1'>
+					<AccordionItem value='item-3'>
 						<AccordionTrigger>
 							<BigTitle>🦹‍♂️ Avatar</BigTitle>
 						</AccordionTrigger>

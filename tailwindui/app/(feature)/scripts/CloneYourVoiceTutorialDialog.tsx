@@ -133,36 +133,59 @@ function CloneYourVoiceTutorial() {
 						value={consentText}
 						maxLength={2000}
 						textarea
+						textStyle={{
+							color: '#000000',
+							fontFamily: 'Inter Medium',
+							fontSize: '12px',
+							fontStyle: 'normal',
+							fontWeight: 'normal',
+							lineHeight: '18px',
+						}}
 					/>
 				</>
 			),
 			footer: (
 				<>
-					<BigBlueButton
-						disabled={
-							isRecordingRecord ||
-							cloning ||
-							isSubmittingConsent ||
-							(isRecordingConsent &&
-								consentTimeLeft > MAX_CONSENT_LENGTH - MIN_CONSENT_LENGTH)
-						}
-						onClick={() => handleRecordAudio(true)}
-					>
-						{isRecordingConsent ? (
-							<span className='flex flex-row gap-x-2 items-center whitespace-nowrap'>
-								<FaStop /> Stop Recording ({consentTimeLeft}s)
-							</span>
-						) : (
-							<>
-								<FaMicrophone /> Record
-							</>
-						)}
-					</BigBlueButton>
-					<span>{`Step 1 of 4`}</span>
+					{/* back and step display */}
+					<div className='flex flex-row gap-[32px] items-center'>
+						<BigBlueButton
+							disabled={
+								isRecordingRecord ||
+								cloning ||
+								isSubmittingConsent ||
+								(isRecordingConsent &&
+									consentTimeLeft > MAX_CONSENT_LENGTH - MIN_CONSENT_LENGTH)
+							}
+							onClick={() => handleRecordAudio(true)}
+						>
+							{isRecordingConsent ? (
+								<span className='flex flex-row gap-x-2 items-center whitespace-nowrap'>
+									<FaStop /> Stop Recording ({consentTimeLeft}s)
+								</span>
+							) : (
+								<>
+									<FaMicrophone /> Record
+								</>
+							)}
+						</BigBlueButton>
+						<span
+							style={{
+								color: 'var(--colors-text-text-quaternary-500, #667085)',
+								fontFamily: 'Inter Medium',
+								fontSize: '14px',
+								fontStyle: 'normal',
+								fontWeight: 'normal',
+								lineHeight: '20px',
+								whiteSpace: 'nowrap',
+							}}
+						>{`1 of 4`}</span>
+					</div>
+
 					<Button
 						disabled={!consentAudio}
 						onClick={handleNextStep}
 						variant={'DrLambdaPrimary'}
+						className='text-sm'
 					>
 						Next
 					</Button>
@@ -170,23 +193,9 @@ function CloneYourVoiceTutorial() {
 			),
 		},
 		{
-			title: 'Preview and Verify',
+			title: 'Preview and Verify consent recording',
 			description: (
-				<>
-					{' '}
-					{consentAudio && (
-						<WrappableRow type='grid' cols={2}>
-							<Instruction>Preview your consent recording:</Instruction>
-							{/* <audio controls className='mx-auto h-[36px] w-[16rem]'>
-								<source
-									src={URL.createObjectURL(consentAudio)}
-									type='audio/wav'
-								/>
-							</audio> */}
-							<CustomAudioPlayer audioFile={consentAudio} />
-						</WrappableRow>
-					)}
-				</>
+				<> {consentAudio && <CustomAudioPlayer audioFile={consentAudio} />}</>
 			),
 			footer: (
 				<>
@@ -202,26 +211,40 @@ function CloneYourVoiceTutorial() {
 						</Button>
 					)} */}
 					<>
-						{consentAudio && (
-							<BigBlueButton
-								onClick={submitConsent}
-								isSubmitting={isSubmittingConsent}
-								disabled={isRecordingRecord || cloning || isRecordingConsent}
+						<div className='flex flex-row gap-[32px] items-center'>
+							{consentAudio && (
+								<BigBlueButton
+									onClick={submitConsent}
+									isSubmitting={isSubmittingConsent}
+									disabled={isRecordingRecord || cloning || isRecordingConsent}
+								>
+									{isSubmittingConsent ? 'Verifying...' : 'Verify and Continue'}
+								</BigBlueButton>
+							)}
+							<Button
+								onClick={handlePreviousStep}
+								variant={'defaultWhiteBgNoBorder'}
 							>
-								{isSubmittingConsent ? 'Verifying...' : 'Verify and Continue'}
-							</BigBlueButton>
-						)}
-						<Button
-							onClick={handlePreviousStep}
-							variant={'defaultWhiteBgNoBorder'}
-						>
-							<FaChevronLeft className='text-[#344054]' />
-						</Button>
-						<span>{`Step 2 of 4`}</span>
+								<FaChevronLeft className='text-[#344054]' />
+							</Button>
+							<span
+								style={{
+									color: 'var(--colors-text-text-quaternary-500, #667085)',
+									fontFamily: 'Inter Medium',
+									fontSize: '14px',
+									fontStyle: 'normal',
+									fontWeight: 'normal',
+									lineHeight: '20px',
+									whiteSpace: 'nowrap',
+								}}
+							>{`2 of 4`}</span>
+						</div>
+
 						<Button
 							disabled={!consentId}
 							onClick={handleNextStep}
 							variant={'DrLambdaPrimary'}
+							className='text-sm'
 						>
 							Next
 						</Button>
@@ -234,7 +257,7 @@ function CloneYourVoiceTutorial() {
 			description: (
 				<>
 					{consentId && (
-						<>
+						<div className='flex flex-col gap-[16px]'>
 							<Instruction>
 								Click the record button, and read the text below for at least{' '}
 								{MIN_AUDIO_LENGTH}
@@ -242,8 +265,21 @@ function CloneYourVoiceTutorial() {
 								finish the whole text.
 							</Instruction>
 
-							<WrappableRow type='grid' cols={2}>
-								<Instruction>Select a language:</Instruction>
+							{/* <WrappableRow type='flex'> */}
+							<div className='flex flex-col gap-[8px]'>
+								{' '}
+								<p
+									style={{
+										color: 'var(--colors-text-text-secondary-700, #344054)',
+										fontFamily: 'Inter Semibold',
+										fontSize: '14px',
+										fontStyle: 'normal',
+										fontWeight: 'bold',
+										lineHeight: '20px',
+									}}
+								>
+									Select a language:
+								</p>
 								<DropDown
 									value={selectedLanguageCode}
 									onChange={handleLanguageChange}
@@ -254,51 +290,75 @@ function CloneYourVoiceTutorial() {
 										</option>
 									))}
 								</DropDown>
-							</WrappableRow>
+							</div>
+
+							{/* </WrappableRow> */}
 
 							<NewInputBox
 								onChange={handleInputBoxChange}
 								value={inputBoxText}
 								maxLength={2000}
 								textarea
+								textStyle={{
+									color: '#000000',
+									fontFamily: 'Inter Medium',
+									fontSize: '12px',
+									fontStyle: 'normal',
+									fontWeight: 'normal',
+									lineHeight: '18px',
+								}}
 							/>
-						</>
+						</div>
 					)}
 				</>
 			),
 			footer: (
 				<>
-					<BigBlueButton
-						disabled={
-							isRecordingConsent ||
-							cloning ||
-							isSubmittingConsent ||
-							(isRecordingRecord &&
-								MAX_AUDIO_LENGTH - recordTimeLeft < MIN_AUDIO_LENGTH)
-						}
-						onClick={() => handleRecordAudio(false)}
-					>
-						{isRecordingRecord ? (
-							<span className='flex flex-row gap-x-2 items-center whitespace-nowrap'>
-								<FaStop /> Stop Recording ({recordTimeLeft}s)
-							</span>
-						) : (
-							<>
-								<FaMicrophone /> Record
-							</>
-						)}
-					</BigBlueButton>
-					<Button
-						onClick={handlePreviousStep}
-						variant={'defaultWhiteBgNoBorder'}
-					>
-						<FaChevronLeft className='text-[#344054]' />
-					</Button>
-					<span>{`Step 3 of 4`}</span>
+					<div className='flex flex-row gap-[32px] items-center'>
+						<BigBlueButton
+							disabled={
+								isRecordingConsent ||
+								cloning ||
+								isSubmittingConsent ||
+								(isRecordingRecord &&
+									MAX_AUDIO_LENGTH - recordTimeLeft < MIN_AUDIO_LENGTH)
+							}
+							onClick={() => handleRecordAudio(false)}
+						>
+							{isRecordingRecord ? (
+								<span className='flex flex-row gap-x-2 items-center whitespace-nowrap'>
+									<FaStop /> Stop Recording ({recordTimeLeft}s)
+								</span>
+							) : (
+								<>
+									<FaMicrophone /> Record
+								</>
+							)}
+						</BigBlueButton>
+						<Button
+							onClick={handlePreviousStep}
+							variant={'defaultWhiteBgNoBorder'}
+						>
+							<FaChevronLeft className='text-[#344054]' />
+						</Button>
+						<span
+							style={{
+								color: 'var(--colors-text-text-quaternary-500, #667085)',
+								fontFamily: 'Inter Medium',
+								fontSize: '14px',
+								fontStyle: 'normal',
+								fontWeight: 'normal',
+								lineHeight: '20px',
+								whiteSpace: 'nowrap',
+							}}
+						>{`3 of 4`}</span>
+					</div>
+
 					<Button
 						disabled={!(audioLength >= MIN_AUDIO_LENGTH && consentId)}
 						onClick={handleNextStep}
 						variant={'DrLambdaPrimary'}
+						className='text-sm'
 					>
 						Next
 					</Button>
@@ -306,40 +366,50 @@ function CloneYourVoiceTutorial() {
 			),
 		},
 		{
-			title: 'Naming and Clone',
+			title: 'Preview your recording, and clone the voice.',
 			description: (
 				<>
-					{recordedAudio && (
-						<WrappableRow type='grid' cols={2}>
-							<Instruction>Preview your recording:</Instruction>
-							{/* <audio controls className='mx-auto h-[36px] w-[16rem]'>
-										<source
-											src={URL.createObjectURL(recordedAudio)}
-											type='audio/wav'
-										/>
-									</audio> */}
-							<CustomAudioPlayer audioFile={recordedAudio} />
-						</WrappableRow>
-					)}
-					<div className='flex flex-row items-center justify-center gap-x-2'>
-						<NewInputBox
-							placeholder='Enter a name'
-							value={voiceName}
-							maxLength={20}
-							onChange={setVoiceName}
-						/>
-					</div>
+					{recordedAudio && <CustomAudioPlayer audioFile={recordedAudio} />}
+
+					<NewInputBox
+						placeholder='Name your voice'
+						value={voiceName}
+						maxLength={20}
+						onChange={setVoiceName}
+						textStyle={{
+							color: '#000000',
+							fontFamily: 'Inter Medium',
+							fontSize: '12px',
+							fontStyle: 'normal',
+							fontWeight: 'normal',
+							lineHeight: '18px',
+						}}
+					/>
 				</>
 			),
 			footer: (
 				<>
-					<Button
-						onClick={handlePreviousStep}
-						variant={'defaultWhiteBgNoBorder'}
-					>
-						<FaChevronLeft className='text-[#344054]' />
-					</Button>
-					<span>{`Step 4 of 4`}</span>
+					<div className='flex flex-row gap-[32px] items-center'>
+						<Button
+							onClick={handlePreviousStep}
+							variant={'defaultWhiteBgNoBorder'}
+							className='text-sm'
+						>
+							<FaChevronLeft className='text-[#344054]' />
+						</Button>
+						<span
+							style={{
+								color: 'var(--colors-text-text-quaternary-500, #667085)',
+								fontFamily: 'Inter Medium',
+								fontSize: '14px',
+								fontStyle: 'normal',
+								fontWeight: 'normal',
+								lineHeight: '20px',
+								whiteSpace: 'nowrap',
+							}}
+						>{`4 of 4`}</span>
+					</div>
+
 					{/* <Button disabled={!(audioLength >= MIN_AUDIO_LENGTH && consentId)}>
 						Clone
 					</Button> */}
@@ -488,7 +558,7 @@ function CloneYourVoiceTutorial() {
 						<div className='flex flex-row items-center'>
 							<FaMicrophone className='mr-2 h-4 w-4' />{' '}
 							<span>Clone your voice</span>
-							<span className='ml-2 h-4'>
+							<span className='ml-2'>
 								<BlueLabel>{getTierDisplayName(tier, false)}</BlueLabel>
 							</span>
 						</div>
@@ -500,22 +570,39 @@ function CloneYourVoiceTutorial() {
 							className='border-b-2'
 							style={{
 								color: 'var(--colors-text-text-secondary-700, #344054)',
-								fontFamily: 'Creato Display Medium',
+								fontFamily: 'Inter Semibold',
 								fontSize: '14px',
 								fontStyle: 'normal',
 								fontWeight: 'bold',
 								lineHeight: '20px',
+								paddingBottom: '16px',
 							}}
 						>
 							🎙️ Clone your voice
 						</p>
-						<DialogHeader>
-							<DialogTitle>{stepData[currentStep - 1]?.title}</DialogTitle>
+						<DialogHeader className=''>
+							<DialogTitle>
+								<span
+									style={{
+										color: 'var(--colors-text-text-secondary-700, #344054)',
+										fontFamily: 'Inter Semibold',
+										fontSize: '14px',
+										fontStyle: 'normal',
+										fontWeight: 'bold',
+										lineHeight: '20px',
+										paddingTop: '16px',
+									}}
+								>
+									{stepData[currentStep - 1]?.title}
+								</span>
+							</DialogTitle>
 							<DialogDescription>
 								{stepData[currentStep - 1]?.description}
 							</DialogDescription>
 						</DialogHeader>
-						<DialogFooter>{stepData[currentStep - 1]?.footer}</DialogFooter>
+						<DialogFooter className='sm:justify-between items-center'>
+							{stepData[currentStep - 1]?.footer}
+						</DialogFooter>
 					</DialogContent>
 				)}
 			</Dialog>

@@ -41,7 +41,8 @@ export const NewInputBox: React.FC<{
 	textarea?: boolean;
 	rows?: number; // number of columns for textarea
 	id?: string;
-  width?: string;
+	width?: string;
+	textStyle?: React.CSSProperties;
 }> = ({
 	value,
 	onChange,
@@ -52,7 +53,8 @@ export const NewInputBox: React.FC<{
 	textarea = false,
 	rows,
 	id,
-  width,
+	width,
+	textStyle,
 }) => {
 	const ref = useRef<HTMLDivElement>(null);
 
@@ -84,21 +86,22 @@ export const NewInputBox: React.FC<{
 						type='text'
 						className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800'
 						onChange={(e) => {
-              onChange(e.target.value);
-            }}
+							onChange(e.target.value);
+						}}
 						onClick={(e) => {
 							autoSelect && (e.target as HTMLInputElement)?.select();
 						}}
 						value={value}
 						maxLength={maxLength}
 						placeholder={placeholder}
+						style={textStyle}
 					/>
 				) : (
 					<textarea
 						className='w-full h-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800'
 						onChange={(e) => {
-              onChange(e.target.value);
-            }}
+							onChange(e.target.value);
+						}}
 						onClick={(e) => {
 							autoSelect && (e.target as HTMLInputElement)?.select();
 						}}
@@ -106,6 +109,7 @@ export const NewInputBox: React.FC<{
 						maxLength={maxLength}
 						placeholder={placeholder}
 						rows={rows}
+						style={textStyle}
 					/>
 				)}
 			</div>

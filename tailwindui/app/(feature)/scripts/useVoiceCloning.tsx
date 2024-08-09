@@ -207,7 +207,9 @@ export const useVoiceCloning = () => {
 				voiceName,
 				token,
 			);
-			toast.success('Voice cloned successfully!');
+			toast.success(
+				'Voice cloned successfully!, you can proceed to select voice profile and test',
+			);
 			await fetchVoiceProfiles();
 		} catch (error: any) {
 			console.error('Error cloning voice:', error.message);

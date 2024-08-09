@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import WaveSurfer from 'wavesurfer.js';
-import { FaPlay, FaPause } from 'react-icons/fa';
+// import { FaPlay, FaPause } from 'react-icons/fa';
+import { CiPause1 } from 'react-icons/ci';
+import { CiPlay1 } from 'react-icons/ci';
 import { Button } from '@/components/ui/button';
 interface CustomAudioPlayerProps {
 	audioFile: Blob; // Changed from File to Blob
@@ -77,20 +79,20 @@ const CustomAudioPlayer: React.FC<CustomAudioPlayerProps> = ({ audioFile }) => {
 	};
 
 	return (
-		<div className='custom-audio-player flex items-center'>
+		<div className='custom-audio-player flex flex-row items-center justify-between gap-[16px]'>
 			<Button
 				onClick={handlePlayPause}
-				className='play-button ml-6'
+				className='play-button'
 				variant={'defaultWhiteBg'}
 			>
 				{isPlaying ? (
-					<FaPause className='w-[20px] h-[20px] text-[#344054]' />
+					<CiPause1 className='w-[20px] h-[20px] text-[#344054]' />
 				) : (
-					<FaPlay className='w-[20px] h-[20px] text-[#344054]' />
+					<CiPlay1 className='w-[20px] h-[20px] text-[#344054]' />
 				)}
 			</Button>
 			<div ref={waveformRef} className='waveform flex-grow' />
-			<div className='ml-6 text-[#344054] font-inter'>
+			<div className='text-[#344054] font-inter'>
 				{formatTime(remainingTime)}
 			</div>
 		</div>
