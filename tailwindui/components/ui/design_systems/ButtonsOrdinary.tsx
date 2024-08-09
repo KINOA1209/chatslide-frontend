@@ -26,7 +26,7 @@ interface DesignSystemButtonProps {
 	customButtonStyles?: React.CSSProperties;
 	customTextStyles?: React.CSSProperties;
 	customIconStyles?: React.CSSProperties;
-  width?: string;
+	width?: string;
 }
 
 const DesignSystemButton: React.FC<DesignSystemButtonProps> = ({
@@ -45,7 +45,7 @@ const DesignSystemButton: React.FC<DesignSystemButtonProps> = ({
 	customButtonStyles,
 	customIconStyles,
 	customTextStyles,
-  width = '100%',
+	width = '100%',
 }) => {
 	// Define the CSS variables for spacing and colors
 	const [showPaywallModal, setShowPaywallModal] = useState(false);
@@ -119,7 +119,7 @@ const DesignSystemButton: React.FC<DesignSystemButtonProps> = ({
 			spacing[size]?.paddingLeft || spacing.md.paddingLeft
 		}`,
 		justifyContent: 'center',
-    width: width,
+		width: width,
 		alignItems: 'center',
 		gap: 'var(--spacing-xs, 4px)',
 		borderRadius: 'var(--radius-md, 8px)',
@@ -131,7 +131,7 @@ const DesignSystemButton: React.FC<DesignSystemButtonProps> = ({
 	const textStyles = {
 		sm: {
 			color: `var(--Component-colors-Components-Buttons-${hierarchy}-button-${hierarchy}-fg, ${fontColors[hierarchy][buttonStatus]})`,
-			fontFamily: 'Inter',
+			fontFamily: 'Inter Medium',
 			fontSize: '14px',
 			fontStyle: 'normal',
 			fontWeight: 600,
@@ -195,11 +195,11 @@ const DesignSystemButton: React.FC<DesignSystemButtonProps> = ({
 				showModal={showPaywallModal}
 				setShowModal={setShowPaywallModal}
 				message='Upgrade to unlock more features 🚀'
-        trigger={'button/' + id}
+				trigger={'button/' + id}
 			/>
 			<button
 				id={'primary-' + id}
-        className='disabled:cursor-not-allowed'
+				className='disabled:cursor-not-allowed'
 				disabled={isSubmitting || buttonStatus === 'disabled'}
 				onClick={checkPaidUser}
 				style={{ ...buttonStyles, ...customButtonStyles }}
@@ -207,7 +207,10 @@ const DesignSystemButton: React.FC<DesignSystemButtonProps> = ({
 				{iconLeft && (
 					<span style={{ ...iconStyles, ...customIconStyles }}>{iconLeft}</span>
 				)}
-				<span className='flex flex-row items-center gap-x-2' style={{ ...textStyles[size], ...customTextStyles }}>
+				<span
+					className='flex flex-row items-center gap-x-2'
+					style={{ ...textStyles[size], ...customTextStyles }}
+				>
 					{/* {text} */}
 					{children}
 					{isPaidFeature && !isPaidUser && <PlusLabel />}

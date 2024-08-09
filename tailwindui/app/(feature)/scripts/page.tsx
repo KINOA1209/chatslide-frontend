@@ -58,7 +58,9 @@ import {
 	AccordionTrigger,
 } from '@/components/ui/accordion';
 import AudioVideoDetailSettingsSection from '@/app/(feature)/scripts/AudioVideoDetailSettingsSection';
-
+import { FaMicrophone } from 'react-icons/fa';
+import { Button } from '@/components/ui/button';
+import CloneYourVoiceTutorial from './CloneYourVoiceTutorialDialog';
 const ScriptSection = dynamic(
 	() => import('@/components/script/ScriptSection'),
 	{ ssr: false },

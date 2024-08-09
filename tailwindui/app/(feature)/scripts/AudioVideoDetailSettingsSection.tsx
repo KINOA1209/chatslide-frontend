@@ -27,6 +27,7 @@ import {
 	AccordionItem,
 	AccordionTrigger,
 } from '@/components/ui/accordion';
+import CloneYourVoiceTutorial from './CloneYourVoiceTutorialDialog';
 
 interface AudioVideoDetailSettingsSectionProps {
 	voice: string;
@@ -86,7 +87,7 @@ const AudioVideoDetailSettingsSection: React.FC<
 	return (
 		<>
 			<Card>
-				<Accordion type='single' collapsible className='w-full'>
+				<Accordion type='single' collapsible className='w-full' value='item-1'>
 					<AccordionItem value='item-1'>
 						<AccordionTrigger>
 							<WrappableRow type='flex' justify='between'>
@@ -105,9 +106,10 @@ const AudioVideoDetailSettingsSection: React.FC<
 							<Instruction>
 								<span>
 									Voice cloning is now available for PRO and ULTIMATE users.{' '}
-									<a className='text-blue-600' href='/studio' target='_blank'>
-										Clone voice.
-									</a>{' '}
+									{/* <a className='text-blue-600' href='/studio' target='_blank'>
+										Clone voice .
+									</a>{' '} */}
+									<CloneYourVoiceTutorial></CloneYourVoiceTutorial>
 								</span>
 							</Instruction>
 
@@ -132,7 +134,7 @@ const AudioVideoDetailSettingsSection: React.FC<
 
 			<Card>
 				<Accordion type='single' collapsible className='w-full'>
-					<AccordionItem value='item-1'>
+					<AccordionItem value='item-2'>
 						<AccordionTrigger>
 							<BigTitle>🎥 Video Effects</BigTitle>
 						</AccordionTrigger>
@@ -228,7 +230,7 @@ const AudioVideoDetailSettingsSection: React.FC<
 
 			<Card>
 				<Accordion type='single' collapsible className='w-full'>
-					<AccordionItem value='item-1'>
+					<AccordionItem value='item-3'>
 						<AccordionTrigger>
 							<BigTitle>🦹‍♂️ Avatar</BigTitle>
 						</AccordionTrigger>
