@@ -11,7 +11,9 @@ interface MetadataOptions {
 	name?: string;
 }
 
-export const generateMetadata = (options: MetadataOptions = {}): any => {
+export const generateMetadata = (
+	options: MetadataOptions = {},
+): Record<string, any> => {
 	const {
 		title = `${getBrand()}: Create Professional Slides with AI`,
 		description = 'Your AI assistant to create professional slides and posts. Convert your documents, webpages, videos, and tweets into professional slides and documents.',
@@ -56,7 +58,11 @@ export const generateMetadata = (options: MetadataOptions = {}): any => {
 	};
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+	children,
+}: {
+	children: React.ReactNode;
+}) {
 	return (
 		<>
 			<html lang='en'>
@@ -65,8 +71,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 						rel='icon'
 						href={isChatslide() ? '/favicon_chatslide.ico' : '/favicon.ico'}
 					/>
-
-					{ !isLocal() && <TrackingScripts />}
+					{!isLocal() && <TrackingScripts />}
 				</head>
 				<body
 					className={`font-inter antialiased bg-white text-gray-900 tracking-tight`}
