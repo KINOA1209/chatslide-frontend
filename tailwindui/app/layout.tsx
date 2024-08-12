@@ -19,7 +19,7 @@ export const generateMetadata = (
 		description = 'Your AI assistant to create professional slides and posts. Convert your documents, webpages, videos, and tweets into professional slides and documents.',
 		keywords = `${getBrand()}, AI-powered, documents_to_slides, tool, create, professional, slides, documents, sources, pdf, docx, notion, presentation, knowledge, google_slides, powerpoint, keynote, canva, figma, design, content, marketing, social_media, twitter, linkedin, facebook, instagram, youtube, tiktok, pinterest, slideshare, medium`,
 		name = `${getBrand()}: AI Slides`,
-	} = options;
+	} = options || {}; // Ensure options is an object
 
 	return {
 		title,
@@ -58,11 +58,14 @@ export const generateMetadata = (
 	};
 };
 
-export default function RootLayout({
-	children,
-}: {
-	children: React.ReactNode;
-}) {
+export default function RootLayout(
+	{
+		children,
+	}: {
+		children: React.ReactNode;
+	} = { children: null },
+) {
+	// Provide default value if needed
 	return (
 		<>
 			<html lang='en'>
