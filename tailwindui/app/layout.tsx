@@ -4,6 +4,15 @@ import Script from 'next/script';
 import { getBrand, getOrigin, isChatslide, isLocal } from '@/utils/getHost';
 import { TrackingScripts } from './TrackingScripts';
 
+interface LayoutProps {
+	title: string;
+	description: string;
+	keywords: string;
+	name: string;
+	openGraph?: Record<string, any>;
+	twitter?: Record<string, any>;
+}
+
 interface MetadataOptions {
 	title?: string;
 	description?: string;
@@ -13,7 +22,7 @@ interface MetadataOptions {
 
 export const generateMetadata = (
 	options: MetadataOptions = {},
-): Record<string, any> => {
+): LayoutProps => {
 	const {
 		title = `${getBrand()}: Create Professional Slides with AI`,
 		description = 'Your AI assistant to create professional slides and posts. Convert your documents, webpages, videos, and tweets into professional slides and documents.',
@@ -26,12 +35,6 @@ export const generateMetadata = (
 		description,
 		keywords,
 		name,
-		metadataBase: {
-			title,
-			description,
-			keywords,
-			name,
-		},
 		openGraph: {
 			title,
 			description,
