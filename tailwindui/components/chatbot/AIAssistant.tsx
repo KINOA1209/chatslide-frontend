@@ -368,7 +368,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 						>
 							{SearchOnlineEngine.map((engine) => (
 								<MenuItem key={engine} value={engine}>
-									{engine === '' ? <em>None</em> : engine}
+									{engine === '' ? <em>None</em> : engine.charAt(0).toUpperCase() + engine.slice(1)}
 								</MenuItem>
 							))}
 						</Select>
