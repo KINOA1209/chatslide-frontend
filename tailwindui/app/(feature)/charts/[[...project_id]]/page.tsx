@@ -1,7 +1,7 @@
 'use client';
 
 import { AIAssistantChatWindow } from '@/components/chatbot/AIAssistant';
-import { useEffect, useRef, useState } from 'react';
+import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Card from '@/components/ui/Card';
 import { ToolBar } from '@/components/ui/ToolBar';
@@ -36,6 +36,7 @@ import {
 import { useUser } from '@/hooks/use-user';
 import PaywallModal from '@/components/paywallModal';
 import { useParams } from 'next/navigation';
+import { debounce } from 'lodash';
 // Register Chart.js components
 ChartJS.register(
 	CategoryScale,
@@ -61,16 +62,90 @@ export default function Page() {
 	const [chartData, setChartData] = useState<any>(null);
 	const [chartValues, setChartValues] = useState<any>(null);
 	const [chartConfig, setChartConfig] = useState<any>(null);
+	const [projectId, setProjectId] = useState<string>("");
+	const [enableSave, setEnableSave] = useState<boolean>(false);
 	const [chartType, setChartType] = useState<
 		null | 'line' | 'bar' | 'pie' | 'scatter'
 	>(null);
 	const chartRef = useRef<ChartJS>(null);
+	const { token, updateCreditsFE, isPaidUser } = useUser();
 	const params = useParams<{ project_id?: string[] }>()
 	const project_id = params.project_id?.[0]
-	console.log('project_id', project_id)
+
+	// Enable save after modifying chart data
+	// saveChartData is directly called only when
+	// the chart data is loaded from the server
+	// (preventing saving on initial load)
+	const saveNeededSetChartData = (data: any) => {
+		setChartData(data);
+		setEnableSave(true);
+	}
+
+	useEffect(() => {
+		if (project_id) {
+			setProjectId(project_id);
+			fetch('/api/chart/get_project', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: 'Bearer ' + token,
+				},
+				body: JSON.stringify({
+					project_id: project_id,
+				}),
+			})
+				.then(resp => {
+					if (!resp.ok) {
+						throw new Error('Failed to fetch project ' + project_id);
+					}
+					return resp.json()
+				})
+				.then(data => {
+					setChartData(data.data.chart_json);
+				}).catch(err => {
+					console.error('FAIL: ', err);
+					window.location.href = '/charts';
+				});
+
+		}
+	}, []);
+
+	function saveChart(projectId: string, chartData: any, chartRef: RefObject<ChartJS>) {
+		let img_data = "";
+		if (chartRef.current !== null) {
+			let canvas = chartRef.current.getContext();
+			chartRef.current.resize(720 / 2, 480 / 2);
+			img_data = canvas.chart.canvas.toDataURL();
+			img_data = img_data.substring(22); // remove data:image/png;base64,
+			chartRef.current.resize(720, 480);
+		}
+		const data = JSON.stringify({
+			project_id: projectId,
+			chart_json: chartData,
+			img_data: img_data,
+		})
+		fetch('/api/chart/save_project', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: 'Bearer ' + token,
+			},
+			body: data,
+		})
+			.then(resp => {
+				if (resp.ok) {
+					if (!window.location.href.includes(projectId)) {
+						history.pushState(null, '', window.location.href + '/' + projectId);
+					}
+				}
+			});
+	}
+
+	const debounceSaveChart = useCallback(debounce(saveChart, 1000), []);
 
 	function receiveChart(receivedData: any) {
 		const data = receivedData.chart_json;
+		setProjectId(receivedData.project_id);
 		for (let i = 0; i < data.datasets.length; i++) {
 			data.datasets[i].borderWidth = 2;
 		}
@@ -80,8 +155,14 @@ export default function Page() {
 				data.datasets[0].borderColor = new Array(data.datasets[0].data.length).fill(data.datasets[0].borderColor);
 			}
 		}
-		setChartData(data);
+		saveNeededSetChartData(data);
 	}
+
+	useEffect(() => {
+		if (enableSave && chartData && projectId && chartRef.current !== null) {
+			debounceSaveChart(projectId, chartData, chartRef);
+		}
+	}, [chartData, projectId, enableSave, chartRef]);
 
 	function updateDynamicChart() {
 		if (!chartData) return;
@@ -210,20 +291,20 @@ export default function Page() {
 										data={chartValues}
 										options={chartConfig}
 									></Chart>
-									{/* For fixed aspect ratio chart download */}
-									<div className='for-generation absolute w-[720px] h-[480px] invisible'>
-										<Chart
-											className=''
-											type={chartType!}
-											data={chartValues}
-											options={chartConfig}
-											ref={chartRef}
-										></Chart>
-									</div>
 								</>
 							) : (
 								noChart
 							)}
+							{/* For fixed aspect ratio chart download */}
+							<div className='for-generation absolute w-[720px] h-[480px] invisible'>
+								<Chart
+									className=''
+									type={chartType || 'line'}
+									data={chartValues || { labels: [], datasets: [] }}
+									options={{ ...chartConfig, animation: false }}
+									ref={chartRef}
+								></Chart>
+							</div>
 						</Card>
 					</div>
 
@@ -233,7 +314,7 @@ export default function Page() {
 								<div className='w-full'>
 									<ChartEditor
 										chartData={chartData}
-										setChartData={setChartData}
+										setChartData={saveNeededSetChartData}
 									/>
 								</div>
 							</Card>
