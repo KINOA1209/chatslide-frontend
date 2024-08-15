@@ -123,6 +123,7 @@ export default function Page() {
 			project_id: projectId,
 			chart_json: chartData,
 			img_data: img_data,
+			project_name: chartData.title,
 		})
 		fetch('/api/chart/save_project', {
 			method: 'POST',
