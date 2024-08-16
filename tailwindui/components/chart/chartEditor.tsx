@@ -1,5 +1,5 @@
 import { DataGrid, GridActionsCellItem, GridColDef, GridColumnMenu, GridColumnMenuItemProps, GridColumnMenuProps, GridRenderCellParams, GridRowId, useGridApiRef } from '@mui/x-data-grid';
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { Button, ListItemIcon, ListItemText, MenuItem, Typography } from '@mui/material';
 import { AddSectionIcon, DeleteIcon } from '@/app/(feature)/icons';
 import TextField from "@mui/material/TextField";
@@ -287,6 +287,24 @@ export const ChartEditor = ({ chartData, setChartData }: ChartEditorProps) => {
         );
     }
 
+    function handleChangeTitle(e: ChangeEvent<HTMLInputElement>) {
+        const newChartData = { ...chartData };
+        newChartData.title = e.target.value;
+        setChartData(newChartData);
+    }
+
+    function handleChangeXAxis(e: ChangeEvent<HTMLInputElement>) {
+        const newChartData = { ...chartData };
+        newChartData.options.xTitle = e.target.value;
+        setChartData(newChartData);
+    }
+
+    function handleChangeYAxis(e: ChangeEvent<HTMLInputElement>) {
+        const newChartData = { ...chartData };
+        newChartData.options.yTitle = e.target.value;
+        setChartData(newChartData);
+    }
+
     return (
         <div className="w-full">
             <Popover
@@ -311,14 +329,21 @@ export const ChartEditor = ({ chartData, setChartData }: ChartEditorProps) => {
                     } />
                 </div>
             </Popover>
-            <div className='w-full flex justify-between'>
+            <div className='w-full flex justify-start'>
                 <h2 className="text-lg font-bold">Edit Data</h2>
-                <div className='flex flex-row gap-2'>
-                    <Button variant="outlined" startIcon={<AddSectionIcon />} onClick={handleAddRow}>
+            </div>
+            <div className='w-full flex flex-col lg:flex-row justify-between gap-4 items-center mt-4'>
+                <div className='grid grid-cols-4 gap-2 shrink'>
+                    <TextField className='col-span-2' id="title" label="Title" size="small" value={chartData.title} onChange={handleChangeTitle} />
+                    <TextField id="x-axis" label="X-axis" size="small" value={chartData.options.xTitle} onChange={handleChangeXAxis} />
+                    <TextField id="y-axis" label="Y-axis" size="small" value={chartData.options.yTitle} onChange={handleChangeYAxis} />
+                </div>
+                <div className='flex gap-2 w-[287px] shrink-0 justify-end'>
+                    <Button variant="outlined" startIcon={<AddSectionIcon />} onClick={handleAddRow} className='w-fit h-fit'>
                         Add Row
                     </Button>
                     {chartData.chartType !== 'pie' && chartData.chartType !== 'doughnut' &&
-                        <Button variant="outlined" startIcon={<AddSectionIcon />} onClick={handleAddColumn}>
+                        <Button variant="outlined" startIcon={<AddSectionIcon />} onClick={handleAddColumn}  className='w-fit h-fit'>
                             Add Column
                         </Button>}
                 </div>
@@ -332,8 +357,6 @@ export const ChartEditor = ({ chartData, setChartData }: ChartEditorProps) => {
                     slots={{ columnMenu: CustomColumnMenu }}
                     apiRef={apiRef} />
             </div>
-
-
         </div>
     );
 
