@@ -14,7 +14,7 @@ type Project = {
 	updated_datetime?: string;
 	project_name?: string;
 	topic?: string;
-	content_type: 'social_posts' | 'presentation';
+	content_type: 'social_posts' | 'presentation' | 'chart';
 	language: string;
 	foldername?: string;
 	thumbnail_url?: string;

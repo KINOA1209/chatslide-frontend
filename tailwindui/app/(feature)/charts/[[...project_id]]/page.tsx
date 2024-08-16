@@ -37,6 +37,7 @@ import { useUser } from '@/hooks/use-user';
 import PaywallModal from '@/components/paywallModal';
 import { useParams } from 'next/navigation';
 import { debounce } from 'lodash';
+import { useProject } from '@/hooks/use-project';
 // Register Chart.js components
 ChartJS.register(
 	CategoryScale,
@@ -62,13 +63,13 @@ export default function Page() {
 	const [chartData, setChartData] = useState<any>(null);
 	const [chartValues, setChartValues] = useState<any>(null);
 	const [chartConfig, setChartConfig] = useState<any>(null);
-	const [projectId, setProjectId] = useState<string>("");
 	const [enableSave, setEnableSave] = useState<boolean>(false);
 	const [chartType, setChartType] = useState<
 		null | 'line' | 'bar' | 'pie' | 'scatter'
 	>(null);
 	const chartRef = useRef<ChartJS>(null);
 	const { token, updateCreditsFE, isPaidUser } = useUser();
+	const { project, initProject, updateProject, clearProject } = useProject();
 	const params = useParams<{ project_id?: string[] }>()
 	const project_id = params.project_id?.[0]
 
@@ -82,8 +83,12 @@ export default function Page() {
 	}
 
 	useEffect(() => {
+		if (!project_id) {
+			clearProject();
+		}
+
 		if (project_id) {
-			setProjectId(project_id);
+			initProject({ id: project_id, name: '', created_datetime: "", content_type: "chart", language: "" });
 			fetch('/api/chart/get_project', {
 				method: 'POST',
 				headers: {
@@ -146,7 +151,11 @@ export default function Page() {
 
 	function receiveChart(receivedData: any) {
 		const data = receivedData.chart_json;
-		setProjectId(receivedData.project_id);
+		if (project) {
+			updateProject('id', receivedData.project_id);
+		} else {
+			initProject({ id: receivedData.project_id, name: '', created_datetime: "", content_type: "chart", language: "" });
+		}
 		for (let i = 0; i < data.datasets.length; i++) {
 			data.datasets[i].borderWidth = 2;
 		}
@@ -160,10 +169,10 @@ export default function Page() {
 	}
 
 	useEffect(() => {
-		if (enableSave && chartData && projectId && chartRef.current !== null) {
-			debounceSaveChart(projectId, chartData, chartRef);
+		if (enableSave && chartData && project && chartRef.current !== null) {
+			debounceSaveChart(project.id, chartData, chartRef);
 		}
-	}, [chartData, projectId, enableSave, chartRef]);
+	}, [chartData, project, enableSave, chartRef]);
 
 	function updateDynamicChart() {
 		if (!chartData) return;

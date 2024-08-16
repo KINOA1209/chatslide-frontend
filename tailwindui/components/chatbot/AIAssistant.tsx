@@ -181,6 +181,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 							model === 'GPT-3.5' ? 'gpt-3.5-turbo' : 'gpt-4o',
 							updateDynamicChart ? 'json' : 'img',
 							search_online,
+							project?.id || '',
 						)
 					: await ChatBotService.chat(
 							inputToSend,
