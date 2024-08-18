@@ -430,8 +430,7 @@ const TemplateSelector: React.FC<{
 						</DropDown>
 					</div>
 					<div className='paletteChoice w-full gap-y-2'>
-						{!hasSelectedCustomTemplateBgColor &&
-							paletteOptions[0] !== 'Original' && (
+						{ paletteOptions[0] !== 'Original' && (
 								<div>
 									<Instruction>Theme color</Instruction>
 									<PaletteSelector />
