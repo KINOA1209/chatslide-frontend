@@ -235,32 +235,34 @@ const AudioVideoDetailSettingsSection: React.FC<
 							<BigTitle>🦹‍♂️ Avatar</BigTitle>
 						</AccordionTrigger>
 						<AccordionContent>
-							<Instruction>
-								Select the avatar you want to use for your video.
-								<GrayLabel>Beta</GrayLabel>
-							</Instruction>
-							<Explanation>
-								Due to the limitation of our resources, we can only provide a
-								limited number of video generations with avatars. <br />
-								This feature will cost more credits. <br />
-								The credit cost for videos with avatar is 400⭐️ per video. This
-								may change in the future.
-							</Explanation>
 							{isOpenaiVoice(voice) || isClonedVoice(voice) ? (
 								<WarningMessage>
 									The voice you selected does not support avatars yet.
 								</WarningMessage>
 							) : (
-								<AvatarSelector
-									avatar={avatar}
-									setAvatar={setAvatar}
-									posture={posture}
-									setPosture={setPosture}
-									size={size}
-									setSize={setSize}
-									position={position}
-									setPosition={setPosition}
-								/>
+								<>
+									<Instruction>
+										Select the avatar you want to use for your video.
+										<GrayLabel>Beta</GrayLabel>
+									</Instruction>
+									<Explanation>
+										Due to the limitation of our resources, we can only provide
+										a limited number of video generations with avatars. <br />
+										This feature will cost more credits. <br />
+										The credit cost for videos with avatar is 400⭐️ per video.
+										This may change in the future.
+									</Explanation>
+									<AvatarSelector
+										avatar={avatar}
+										setAvatar={setAvatar}
+										posture={posture}
+										setPosture={setPosture}
+										size={size}
+										setSize={setSize}
+										position={position}
+										setPosition={setPosition}
+									/>
+								</>
 							)}
 						</AccordionContent>
 					</AccordionItem>
