@@ -445,7 +445,7 @@ const Affiliate = () => {
 };
 
 const CreditHistory = () => {
-	const { credits, tier, expirationDate } = useUser();
+	const { credits, tier, expirationDate, token } = useUser();
 	// const [stripeLink, setStripeLink] = useState('');
 	const [showManageSubscription, setShowManageSubscription] = useState(false);
 
@@ -457,13 +457,33 @@ const CreditHistory = () => {
 	// 	}
 	// 	fetchStripeLink();
 	// }, [token]);
+	async function handleResub() {
+		const url = await UserService.createStripePortalSession(token);
+		// open a new window to unsubscribe
+		window.open(url, '_blank');
+	}
 
 	const getExpirationDateStatement = (tier: string, date: string) => {
-		if (tier.includes('EXPIRED')) return 'Expired on ' + date;
+		const resubscribe = (
+			<span className='text-green-600 cursor-pointer' onClick={handleResub}>
+				Resubscribe
+			</span>
+		);
+
+		if (tier.includes('EXPIRED'))
+			return (
+				<div>
+					<span>Expired on {date},</span> {resubscribe}
+				</div>
+			);
 		if (tier.includes('ONETIME') || tier.includes('CANCELLED'))
-			return 'Expiring on ' + date;
+			return (
+				<div>
+					<span>Expiring on {date},</span> {resubscribe}
+				</div>
+			);
 		if (tier.includes('LIFETIME')) return '';
-		return 'Renewing on ' + date;
+		return <div>Renewing on {date}</div>;
 	};
 
 	return (
@@ -477,19 +497,9 @@ const CreditHistory = () => {
 				/>
 			)}
 
-			<WrappableRow type='flex' justify='between'>
-				<BigTitle>
-					<>{credits}</>
-				</BigTitle>
-				<InversedBigBlueButton
-					onClick={() => {
-						setShowManageSubscription(!showManageSubscription);
-					}}
-					width='12rem'
-				>
-					Mange Subscription
-				</InversedBigBlueButton>
-			</WrappableRow>
+			<BigTitle>
+				<>{credits}</>
+			</BigTitle>
 
 			<Instruction>⭐️ Subscription Tier</Instruction>
 
@@ -517,10 +527,24 @@ const DangerZone = () => {
 	}
 
 	async function unsubscribe(reason: string) {
+		UserService.submitFeedback(
+			-1, // rating
+			reason,
+			'x', // project_id
+			token,
+		);
 		const url = await UserService.createStripePortalSession(token);
-    // open a new window to unsubscribe
-    window.open(url, '_blank');
+		// open a new window to unsubscribe
+		window.open(url, '_blank');
 		setShowModal(false);
+	}
+
+	function canUnsubscribe(tier: string) {
+		return (
+			(tier.includes('MONTHLY') || tier.includes('YEARLY')) &&
+			!tier.includes('EXPIRED') &&
+			!tier.includes('CANCELLED')
+		);
 	}
 
 	const ConfirmModal: React.FC<{}> = () => {
@@ -621,7 +645,7 @@ const DangerZone = () => {
 			{showModal && <ConfirmModal />}
 			<Instruction>🔥 Danger Zone</Instruction>
 
-			{(tier.includes('MONTHLY') || tier.includes('YEARLY')) && (
+			{canUnsubscribe(tier) && (
 				<Instruction>
 					<span
 						className='text-red-600 cursor-pointer'
