@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import SignupForm from '@/components/signup/signup-form';
 import CustomerServiceInfo from '@/components/signup/customerService';
-import { generateMetadata } from '@/app/layout';
+import { generateMetadata } from '@/app/metadata';
 import { getBrand } from '@/utils/getHost';
 import { BigTitle } from '@/components/ui/Text';
 

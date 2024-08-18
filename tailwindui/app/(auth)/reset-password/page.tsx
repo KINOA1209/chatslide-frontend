@@ -1,5 +1,5 @@
 import ResetPassowrd from '@/app/(auth)/reset-password/ResetPassword';
-import { generateMetadata } from '@/app/layout';
+import { generateMetadata } from '@/app/metadata';
 import { getBrand } from '@/utils/getHost';
 
 export const metadata = generateMetadata({

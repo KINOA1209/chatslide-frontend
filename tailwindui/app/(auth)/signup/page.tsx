@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import GoogleSignIn from '@/components/button/GoogleSignIn';
 import Promo from '@/components/signup/Promo';
-import { generateMetadata } from '@/app/layout';
+import { generateMetadata } from '@/app/metadata';
 import { getBrand } from '@/utils/getHost';
 import { BigBlueButton } from '@/components/button/DrlambdaButton';
 import { BigTitle, Title } from '@/components/ui/Text';
