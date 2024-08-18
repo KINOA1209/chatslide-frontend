@@ -35,7 +35,11 @@ export default function Studio() {
 							<b>🗣️ Voice Cloning for Scripts:</b> You can now clone your voice
 							directly on the scripts page, allowing you to create more
 							personalized voiceovers for your projects. Easily generate voice
-							clones and integrate them into your videos or presentations.
+							clones and integrate them into your videos or presentations.{' '}
+							<a href='/scripts' className='text-blue-600'>
+								Try it
+							</a>
+							.
 						</span>
 					</Instruction>
 					<Instruction>
@@ -47,6 +51,40 @@ export default function Studio() {
 								the final content without deleting anything.{' '}
 								<a href='/projects' className='text-blue-600'>
 									Try it
+								</a>
+								.
+							</p>
+						</span>
+					</Instruction>
+					<Instruction>
+						<span>
+							<p>
+								<b>💾 Save Chart Projects:</b> You can now save your chart
+								projects, allowing you to come back and edit or reuse your data
+								visualizations at any time. Keep your work organized and
+								accessible for future use.{' '}
+								<a href='/charts' className='text-blue-600'>
+									Try it
+								</a>
+								.
+							</p>
+						</span>
+					</Instruction>
+					<Instruction>
+						<span>
+							<p>
+								<b>🛠️ Roadmap & Feature Requests:</b> You can now add your
+								feature requests and see what’s in development! Visit our
+								roadmap to submit your ideas at{' '}
+								<a
+									href='https://chatslide.canny.io/roadmap'
+									className='text-blue-600'
+								>
+									https://chatslide.canny.io/roadmap
+								</a>{' '}
+								and view all features currently in development at{' '}
+								<a href='https://chatslide.canny.io/' className='text-blue-600'>
+									https://chatslide.canny.io/
 								</a>
 								.
 							</p>
