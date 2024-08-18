@@ -32,6 +32,8 @@ import {
 	MIN_CONSENT_LENGTH,
 	MAX_CONSENT_LENGTH,
 } from '../scripts/useVoiceCloning';
+import { useUser } from '@/hooks/use-user';
+import { BlueLabel } from '@/components/ui/GrayLabel';
 const VoiceCloning = () => {
 	const {
 		selectedLanguageCode,
@@ -72,7 +74,15 @@ const VoiceCloning = () => {
 		setCustomRecording,
 	} = useVoiceCloning();
 
+	const { isProUser } = useUser();
+
 	if (!useHydrated()) return <></>;
+
+	const upgradeButton = (
+		<BigBlueButton onClick={() => setShowPaywallModal(true)} width='8rem'>
+			Upgrade
+		</BigBlueButton>
+	);
 
 	return (
 		<>
@@ -80,7 +90,7 @@ const VoiceCloning = () => {
 			<PaywallModal
 				showModal={showPaywallModal}
 				setShowModal={setShowPaywallModal}
-				message='Upgrade to get an early access to Beta features. 🚀'
+				message='Upgrade to clone your voice!'
 				trigger='studio/voice_cloning'
 			/>
 			<Card>
@@ -93,62 +103,76 @@ const VoiceCloning = () => {
 					anyone else. You can also delete your voice profile at any time.
 				</Instruction>
 
-				<Column width='100%'>
-					<Title>Step 1</Title>
-					<Instruction>
-						Please also record the consent message below (English only):
-					</Instruction>
-
-					<NewInputBox
-						onChange={(e) => setConsentText(e)}
-						value={consentText}
-						maxLength={2000}
-						textarea
-					/>
-					<BigBlueButton
-						disabled={
-							isRecordingRecord ||
-							cloning ||
-							isSubmittingConsent ||
-							(isRecordingConsent &&
-								consentTimeLeft > MAX_CONSENT_LENGTH - MIN_CONSENT_LENGTH)
-						}
-						onClick={() => handleRecordAudio(true)}
-					>
-						{isRecordingConsent ? (
-							<span className='flex flex-row gap-x-2 items-center whitespace-nowrap'>
-								<FaStop /> Stop Recording ({consentTimeLeft}s)
+				{!isProUser ? (
+					<BigBlueButton onClick={() => setShowPaywallModal(true)} width='16rem'>
+						<div className='flex flex-row items-center'>
+							<FaMicrophone className='mr-2 h-4 w-4' />{' '}
+							<span className='whitespace-nowrap'>Clone your voice</span>
+							<span className='ml-2'>
+								<BlueLabel>PRO</BlueLabel>
 							</span>
-						) : (
-							<>
-								<FaMicrophone /> Record
-							</>
-						)}
+						</div>
 					</BigBlueButton>
+				) : (
+					// step 1
+					<Column width='100%'>
+						<Title>Step 1</Title>
+						<Instruction>
+							Please also record the consent message below (English only):
+						</Instruction>
 
-					{consentAudio && (
-						<WrappableRow type='grid' cols={2}>
-							<Instruction>Preview your consent recording:</Instruction>
-							<audio controls className='mx-auto h-[36px] w-[16rem]'>
-								<source
-									src={URL.createObjectURL(consentAudio)}
-									type='audio/wav'
-								/>
-							</audio>
-						</WrappableRow>
-					)}
-
-					{consentAudio && (
+						<NewInputBox
+							onChange={(e) => setConsentText(e)}
+							value={consentText}
+							maxLength={2000}
+							textarea
+						/>
 						<BigBlueButton
-							onClick={submitConsent}
-							isSubmitting={isSubmittingConsent}
-							disabled={isRecordingRecord || cloning || isRecordingConsent}
+							disabled={
+								isRecordingRecord ||
+								cloning ||
+								isSubmittingConsent ||
+								(isRecordingConsent &&
+									consentTimeLeft > MAX_CONSENT_LENGTH - MIN_CONSENT_LENGTH)
+							}
+							onClick={() => handleRecordAudio(true)}
 						>
-							{isSubmittingConsent ? 'Verifying...' : 'Verify and Continue'}
+							{isRecordingConsent ? (
+								<span className='flex flex-row gap-x-2 items-center whitespace-nowrap'>
+									<FaStop /> Stop Recording ({consentTimeLeft}s)
+								</span>
+							) : (
+								<>
+									<FaMicrophone /> Record
+								</>
+							)}
 						</BigBlueButton>
-					)}
-				</Column>
 
+						{consentAudio && (
+							<WrappableRow type='grid' cols={2}>
+								<Instruction>Preview your consent recording:</Instruction>
+								<audio controls className='mx-auto h-[36px] w-[16rem]'>
+									<source
+										src={URL.createObjectURL(consentAudio)}
+										type='audio/wav'
+									/>
+								</audio>
+							</WrappableRow>
+						)}
+
+						{consentAudio && (
+							<BigBlueButton
+								onClick={submitConsent}
+								isSubmitting={isSubmittingConsent}
+								disabled={isRecordingRecord || cloning || isRecordingConsent}
+							>
+								{isSubmittingConsent ? 'Verifying...' : 'Verify and Continue'}
+							</BigBlueButton>
+						)}
+					</Column>
+				)}
+
+				{/* step 2 */}
 				{consentId && (
 					<Column width='100%'>
 						<Title>Step 2</Title>
