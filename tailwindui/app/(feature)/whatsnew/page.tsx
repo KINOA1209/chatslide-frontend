@@ -42,11 +42,7 @@ export default function Studio() {
 							<b>🗣️ Voice Cloning for Scripts:</b> You can now clone your voice
 							directly on the scripts page, allowing you to create more
 							personalized voiceovers for your projects. Easily generate voice
-							clones and integrate them into your videos or presentations.{' '}
-							<a href='/scripts' className='text-blue-600'>
-								Try it
-							</a>
-							.
+							clones and integrate them into your videos or presentations.
 						</span>
 					</Instruction>
 					<Instruction>
@@ -55,11 +51,7 @@ export default function Studio() {
 								<b>🚫 Hide Pages:</b> Introducing the ability to hide pages from
 								your projects. Hidden pages will be automatically skipped during
 								presentations or video creation, giving you more control over
-								the final content without deleting anything.{' '}
-								<a href='/projects' className='text-blue-600'>
-									Try it
-								</a>
-								.
+								the final content without deleting anything.
 							</p>
 						</span>
 					</Instruction>
