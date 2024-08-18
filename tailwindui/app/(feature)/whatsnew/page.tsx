@@ -29,12 +29,38 @@ export default function Studio() {
 				</Card>
 
 				<Card>
+					<BigTitle>August 18</BigTitle>
+					<Instruction>
+						<span>
+							<b>🗣️ Voice Cloning for Scripts:</b> You can now clone your voice
+							directly on the scripts page, allowing you to create more
+							personalized voiceovers for your projects. Easily generate voice
+							clones and integrate them into your videos or presentations.
+						</span>
+					</Instruction>
+					<Instruction>
+						<span>
+							<p>
+								<b>🚫 Hide Pages:</b> Introducing the ability to hide pages from
+								your projects. Hidden pages will be automatically skipped during
+								presentations or video creation, giving you more control over
+								the final content without deleting anything.{' '}
+								<a href='/projects' className='text-blue-600'>
+									Try it
+								</a>
+								.
+							</p>
+						</span>
+					</Instruction>
+				</Card>
+
+				<Card>
 					<BigTitle>August 4</BigTitle>
 					<Instruction>
 						<span>
 							<b>📊 Dashboard Grid View:</b> The dashboard now includes a grid
 							view option, offering an alternative to the traditional list view
-							for a more organized and flexible layout. {' '}
+							for a more organized and flexible layout.{' '}
 							<a href='/dashboard' className='text-blue-600'>
 								Try it
 							</a>
@@ -46,7 +72,7 @@ export default function Studio() {
 							<p>
 								<b>🔍 Enhanced Chart Search:</b> You can now opt to search
 								online for charts using our chatbot, making it easier to find
-								and integrate data visualizations into your projects. {' '}
+								and integrate data visualizations into your projects.{' '}
 								{/* try now */}
 								<a href='/charts' className='text-blue-600'>
 									Try it
