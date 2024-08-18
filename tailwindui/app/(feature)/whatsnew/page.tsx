@@ -8,6 +8,7 @@ import FeedbackButton from '@/components/ui/feedback';
 import { getBrand, isChatslide } from '@/utils/getHost';
 import { LuAlignLeft } from 'react-icons/lu';
 import { MdManageHistory } from 'react-icons/md';
+import { BigBlueButton } from '@/components/button/DrlambdaButton';
 
 export default function Studio() {
 	// avoid hydration error during development caused by persistence
@@ -22,10 +23,16 @@ export default function Studio() {
 						🎰 Directly add scripts, voiceover, and avatar to PPTX
 					</Instruction> */}
 
-					<FeedbackButton
+					{/* <FeedbackButton
 						instructionText='What features would you like to see next?'
 						displayText='Ask for more features!'
-					/>
+					/> */}
+
+					<BigBlueButton>
+						<a href='https://chatslide.canny.io/roadmap' target='_blank'>
+							Ask for more features!
+						</a>
+					</BigBlueButton>
 				</Card>
 
 				<Card>
