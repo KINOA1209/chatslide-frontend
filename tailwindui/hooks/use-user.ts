@@ -16,6 +16,12 @@ const useIsPaidUserBear = createBearStore<boolean>()(
 	true,
 	false,
 );
+const useIsProUserBear = createBearStore<boolean>()(
+  'isProUser',
+  false,
+  true,
+  false,
+);
 const useCreditsBear = createBearStore<string>()('credits', '', true, false);
 const useTierBear = createBearStore<string>()('tier', '', true, false);
 const useExpirationDateBear = createBearStore<string>()(
@@ -51,6 +57,17 @@ const PAID_TIERS = [
   'ULTIMATE_FREE'
 ];
 
+const PRO_TIERS = [
+  'PRO_ONETIME',
+  'PRO_MONTHLY',
+  'PRO_YEARLY',
+  'PRO_LIFETIME',
+  'ULTIMATE_ONETIME',
+  'ULTIMATE_MONTHLY',
+  'ULTIMATE_YEARLY',
+  'ULTIMATE_LIFETIME',
+];
+
 export const useUser = () => {
 	// const { user, setUser } = useUserBear();
 	// const { session, setSession } = useSessionBear();
@@ -59,6 +76,7 @@ export const useUser = () => {
 	const { credits, setCredits } = useCreditsBear();
 	const { tier, setTier } = useTierBear();
 	const { isPaidUser, setIsPaidUser } = useIsPaidUserBear();
+  const { isProUser, setIsProUser } = useIsProUserBear();  // if user is pro user or ultimate user
 	const { username, setUsername } = useUsernameBear();
 	const { email, setEmail } = useEmailBear();
 	const { expirationDate, setExpirationDate } = useExpirationDateBear();
@@ -105,6 +123,7 @@ export const useUser = () => {
 				}
 
 				const isPaidUser = PAID_TIERS.includes(subscription_tier.replace('CANCELLED_', ''));
+        const isProUser = PRO_TIERS.includes(subscription_tier.replace('CANCELLED_', ''));
 
 				username = username?.split('@')[0] || 'User';
 
@@ -131,6 +150,7 @@ export const useUser = () => {
 				setUid(uid);
 				setToken(idToken);
 				setIsPaidUser(isPaidUser);
+        setIsProUser(isProUser);
 				if (expiration_date) setExpirationDate(expiration_date);
 				setUsername(username);
 				setEmail(email);
@@ -200,6 +220,7 @@ export const useUser = () => {
 		tier,
 		expirationDate,
 		isPaidUser,
+    isProUser,
 		updateCreditsAndTier,
 		setUsername,
 		userStatus,
