@@ -23,7 +23,7 @@ export const Simplistic_008_TemplateThemeConfig: {
 			fontWeight: 'Bold',
 			fontFamily: 'DM Sans Bold',
 			lineHeight: 1.2,
-			color: '#FFFFFF',
+			color: '#111111',
 			textTransform: 'uppercase', // Add this line to capitalize the text
 		},
 		subtopicFontCSS: {
@@ -31,7 +31,7 @@ export const Simplistic_008_TemplateThemeConfig: {
 			fontFamily: 'DM Sans Bold',
 			fontSize: '24pt',
 			lineHeight: 1,
-			color: '#FFFFFF',
+			color: '#111111',
 			overflowY: 'hidden',
 		},
 		contentFontCSS: {
@@ -39,7 +39,7 @@ export const Simplistic_008_TemplateThemeConfig: {
 			fontWeight: 'normal',
 			fontFamily: 'DM Sans Regular',
 			lineHeight: 1.5,
-			color: '#FFFFFF',
+			color: '#111111',
 			display: 'list-item',
 		},
 		userNameFontCSS: {
@@ -47,7 +47,7 @@ export const Simplistic_008_TemplateThemeConfig: {
 			fontFamily: 'DM Sans Medium',
 			lineHeight: '140%',
 			letterSpacing: '0.026rem',
-			color: '#FFFFFF',
+			color: '#111111',
 			opacity: '0.5',
 		},
 		headFontCSS: {
@@ -55,14 +55,14 @@ export const Simplistic_008_TemplateThemeConfig: {
 			fontWeight: 'bold',
 			fontFamily: 'DM Sans Bold',
 			lineHeight: 1.2,
-			color: '#FFFFFF',
+			color: '#111111',
 		},
 		contentFontCSS_non_vertical_content: {
 			fontSize: '14pt',
 			fontWeight: 'normal',
 			fontFamily: 'DM Sans Regular',
 			lineHeight: 1.5,
-			color: '#FFFFFF',
+			color: '#111111',
 		},
 	},
 	'Light Cyan': {
