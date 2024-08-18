@@ -14,16 +14,16 @@ export const Simplistic_008_TemplateThemeConfig: {
 	[key in PaletteKeys]?: ThemeElements;
 } = {
 	'Dynamic Purple': {
-		// backgroundColorCover: 'bg-gradient-to-br from-[#7E96F7] to-[#A388F7]',
+		backgroundColorCover: '#A388F7',
 		isGradientBackground: true,
-		backgroundColorCover: 'linear-gradient(to bottom right, #7E96F7, #A388F7)',
-		backgroundColor: 'linear-gradient(to bottom right, #7E96F7, #A388F7)',
+		// backgroundColorCover: 'linear-gradient(to bottom right, #7E96F7, #A388F7)',
+		backgroundColor: '#A388F7',
 		titleFontCSS: {
 			fontSize: '14pt',
 			fontWeight: 'Bold',
 			fontFamily: 'DM Sans Bold',
 			lineHeight: 1.2,
-			color: '#111111',
+			color: '#FFFFFF',
 			textTransform: 'uppercase', // Add this line to capitalize the text
 		},
 		subtopicFontCSS: {
@@ -31,7 +31,7 @@ export const Simplistic_008_TemplateThemeConfig: {
 			fontFamily: 'DM Sans Bold',
 			fontSize: '24pt',
 			lineHeight: 1,
-			color: '#111111',
+			color: '#FFFFFF',
 			overflowY: 'hidden',
 		},
 		contentFontCSS: {
@@ -39,7 +39,7 @@ export const Simplistic_008_TemplateThemeConfig: {
 			fontWeight: 'normal',
 			fontFamily: 'DM Sans Regular',
 			lineHeight: 1.5,
-			color: '#111111',
+			color: '#FFFFFF',
 			display: 'list-item',
 		},
 		userNameFontCSS: {
@@ -47,7 +47,7 @@ export const Simplistic_008_TemplateThemeConfig: {
 			fontFamily: 'DM Sans Medium',
 			lineHeight: '140%',
 			letterSpacing: '0.026rem',
-			color: '#111111',
+			color: '#FFFFFF',
 			opacity: '0.5',
 		},
 		headFontCSS: {
@@ -55,14 +55,14 @@ export const Simplistic_008_TemplateThemeConfig: {
 			fontWeight: 'bold',
 			fontFamily: 'DM Sans Bold',
 			lineHeight: 1.2,
-			color: '#111111',
+			color: '#FFFFFF',
 		},
 		contentFontCSS_non_vertical_content: {
 			fontSize: '14pt',
 			fontWeight: 'normal',
 			fontFamily: 'DM Sans Regular',
 			lineHeight: 1.5,
-			color: '#111111',
+			color: '#FFFFFF',
 		},
 	},
 	'Light Cyan': {
