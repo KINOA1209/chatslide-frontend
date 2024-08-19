@@ -113,7 +113,7 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
 					justifyContent: 'flex-start',
 					alignItems: 'flex-start',
 					position: 'relative',
-          opacity: slide.isHidden ? 0.5 : 1,
+					opacity: slide.isHidden ? 0.5 : 1,
 				}}
 			>
 				{slide &&
@@ -130,6 +130,11 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
 					className={`absolute bottom-1 left-1 border border-1 ${highlightBorder ? 'bg-Blue text-white border-Blue' : 'bg-white text-black border-gray-400'} px-1  text-sm rounded-xs`}
 				>
 					{pageNumber}
+					{slide.isHidden && (
+						<div className='absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none'>
+							<div className='w-full h-[1px] bg-black transform rotate-45'></div>
+						</div>
+					)}
 				</div>
 			)}
 
@@ -165,7 +170,7 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
 						toggleHideSlide(index);
 					}}
 				>
-					{slide.isHidden ? <IoEyeOutline/> : <IoEyeOffOutline/>}
+					{slide.isHidden ? <IoEyeOutline /> : <IoEyeOffOutline />}
 				</div>
 			)}
 		</div>
