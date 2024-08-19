@@ -38,6 +38,10 @@ const ScenarioChoicePage = () => {
 			router.push('/charts');
 			return;
 		}
+    if (type === 'ppt2video') {
+			router.push('/ppt2video');
+			return;
+		}
 		SessionStorage.setItem('workflowType', type);
 		router.push('/scenario-choice');
 	};

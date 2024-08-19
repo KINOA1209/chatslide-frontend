@@ -688,7 +688,6 @@ export default function Topic() {
 						selectedResources={selectedResources}
 						setSelectedResources={setSelectedResources}
 						removeResourceAtIndex={removeResourceAtIndex}
-						isRequired
 						generationMode='from_files'
 						setGenerationMode={setGenerationMode}
 						errorMessage={resourcesErrorMessage}

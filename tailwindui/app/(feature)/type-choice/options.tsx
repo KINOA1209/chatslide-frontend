@@ -50,6 +50,13 @@ const chatslideMinorOptions: ScenarioOption[] = [
 		icon: <FaChartBar />,
 		previewOnly: false,
 	},
+	{
+		id: 'ppt2video',
+		title: 'PPT to Video (Beta)',
+		imageSrc: '/images/scenario/charts.png',  // no use
+		icon: <FaFilm />,
+		previewOnly: false,
+	},
 ];
 
 const drlambdaMinorOptions: ScenarioOption[] = [

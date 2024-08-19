@@ -3,18 +3,14 @@
 import React, { MouseEvent, useEffect, useRef, useState } from 'react';
 import '@/app/css/workflow-edit-topic-css/topic_style.css';
 import 'react-toastify/dist/ReactToastify.css';
-import { QuestionExplainIcon } from '@/app/(feature)/icons';
 import SelectedResourcesList from '@/components/file/SelectedResources';
 import { FiFilePlus, FiGlobe, FiYoutube } from 'react-icons/fi';
 import ResourceService from '@/services/ResourceService';
 import { toast, ToastContainer } from 'react-toastify';
-import AuthService from '@/services/AuthService';
 import Resource from '@/models/Resource';
 import LinkInput from '../ui/LinkInput';
 import { useUser } from '@/hooks/use-user';
 import RadioButton, { RadioButtonOption } from '../ui/RadioButton';
-import { FaInternetExplorer, FaNewspaper, FaWikipediaW } from 'react-icons/fa';
-import { IoIosRemoveCircle, IoIosRemoveCircleOutline } from 'react-icons/io';
 import {
 	Instruction,
 	Explanation,
@@ -25,11 +21,11 @@ import {
 import Card from '../ui/Card';
 import {
 	DOCUMENT_EXTENSIONS,
+	PPTX_EXTENSIONS,
 	determineSupportedFormats,
 } from '../file/FileUploadButton';
 import GenModeToggle from './GenModeToggle';
 import { WrappableRow } from '../layout/WrappableRow';
-import { select } from 'd3';
 
 interface AddResourcesProps {
 	searchOnlineScope?: string;
@@ -38,8 +34,7 @@ interface AddResourcesProps {
 	selectedResources: any[];
 	setSelectedResources: React.Dispatch<React.SetStateAction<any[]>>;
 	removeResourceAtIndex: (index: number) => void;
-	isRequired?: boolean;
-	generationMode?: 'from_topic' | 'from_files';
+	generationMode?: 'from_topic' | 'from_files' | 'ppt2video';
 	setGenerationMode?: (mode: 'from_topic' | 'from_files') => void;
 	errorMessage?: string;
 	setErrorMessage?: (message: string) => void;
@@ -52,7 +47,6 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 	selectedResources,
 	setSelectedResources,
 	removeResourceAtIndex,
-	isRequired = false,
 	generationMode,
 	setGenerationMode,
 	errorMessage,
@@ -62,6 +56,9 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 	const { token } = useUser();
 	const [isUploading, setIsUploading] = useState(false);
 	const selectedResourcesRef = useRef<HTMLDivElement>(null);
+
+  const supportedExtensions =
+		generationMode === 'ppt2video' ? PPTX_EXTENSIONS : DOCUMENT_EXTENSIONS;
 
 	const searchOnlineOptions: RadioButtonOption[] = [
 		// { value: '', text: 'None', icon: <IoIosRemoveCircleOutline /> },
@@ -107,10 +104,10 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 
 	const [isDragging, setIsDragging] = useState(false);
 
-  useEffect(() => {
-    if(!setErrorMessage) return;
-    setErrorMessage('');
-  }, [selectedResources]);
+	useEffect(() => {
+		if (!setErrorMessage) return;
+		setErrorMessage('');
+	}, [selectedResources]);
 
 	const handleDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
 		e.preventDefault();
@@ -130,7 +127,7 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 	const handleDrop = async (e: React.DragEvent<HTMLDivElement>) => {
 		e.preventDefault();
 		setIsDragging(false);
-		const extensions = determineSupportedFormats('summary');
+		const extensions = determineSupportedFormats(generationMode === 'ppt2video' ? 'ppt2video' : 'summary');
 
 		if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
 			const file = e.dataTransfer.files[0];
@@ -189,7 +186,7 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 	return (
 		<Card id='SummaryStep-3'>
 			<div>
-				{isRequired ? (
+				{generationMode === 'from_files' ? (
 					<WrappableRow type='flex' justify='between'>
 						<BigTitle>📚 Import Sources</BigTitle>
 						{generationMode && setGenerationMode && (
@@ -199,8 +196,10 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 							/>
 						)}
 					</WrappableRow>
-				) : (
+				) : generationMode === 'from_topic' ? (
 					<BigTitle>📚 Supporting Sources (Optional)</BigTitle>
+				) : (
+					<BigTitle>📚 Add PPT Files</BigTitle>
 				)}
 				{/* <Explanation>
 					{isRequired
@@ -232,7 +231,7 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 			{/* files */}
 			<div>
 				{/* <Instruction>What additional files do you want to include?</Instruction> */}
-				<Instruction>Additional files</Instruction>
+				<Instruction>Files</Instruction>
 				<div
 					className={`w-full h-[150px] flex flex-col items-center justify-center border rounded-md border-2 border-gray-200 cursor-pointer 
 						${isDragging ? 'bg-blue-100 border-blue-500' : ''}
@@ -256,9 +255,9 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 							<Explanation>
 								<div className='text-center'>
 									Supports{' '}
-									{DOCUMENT_EXTENSIONS.map((ext) => ext.toUpperCase()).join(
-										', ',
-									)}{' '}
+									{supportedExtensions
+										.map((ext) => ext.toUpperCase())
+										.join(', ')}{' '}
 								</div>
 							</Explanation>
 						</div>
@@ -267,16 +266,15 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 			</div>
 
 			{/* links */}
-			<div>
-				{/* <Instruction>
-					What additional online links do you want to include?
-				</Instruction> */}
-				<Instruction>Additional online links</Instruction>
-				<LinkInput
-					selectedResources={selectedResources}
-					setSelectedResources={setSelectedResources}
-				/>
-			</div>
+			{generationMode !== 'ppt2video' && (
+				<div>
+					<Instruction>Online links</Instruction>
+					<LinkInput
+						selectedResources={selectedResources}
+						setSelectedResources={setSelectedResources}
+					/>
+				</div>
+			)}
 
 			{selectedResources.length > 0 && (
 				<div ref={selectedResourcesRef}>

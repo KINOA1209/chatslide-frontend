@@ -432,7 +432,7 @@ interface filesInterface {
 	selectable: boolean;
 	selectedResources?: Array<Resource>;
 	setSelectedResources?: Function;
-	pageInvoked?: string;
+	pageInvoked?: 'resources' | 'theme' | 'ppt2video' | 'summary';
 	fileType?: string;
 	uploadSection?: 'Template Extraction' | ''; // templateExtraction
 	fileNameExtension?: string;
@@ -1049,7 +1049,6 @@ const MyFiles: React.FC<filesInterface> = ({
 							<span>Images</span>
 						</DesignSystemButton>
 					)}
-					{pageInvoked != 'theme' && (
 						<DesignSystemButton
 							width='12rem'
 							isPaidFeature={false}
@@ -1078,8 +1077,6 @@ const MyFiles: React.FC<filesInterface> = ({
 						>
 							<span>Links</span>
 						</DesignSystemButton>
-					)}
-					{pageInvoked != 'theme' && (
 						<DesignSystemButton
 							width='12rem'
 							isPaidFeature={false}
@@ -1108,7 +1105,6 @@ const MyFiles: React.FC<filesInterface> = ({
 						>
 							<span>YouTube</span>
 						</DesignSystemButton>
-					)}
 					{pageInvoked != 'summary' && (
 						<DesignSystemButton
 							width='12rem'
