@@ -789,14 +789,6 @@ export const ImgModule = ({
 						Search
 					</span> */}
 					<InputBox>
-						{searching ? (
-							<SpinIcon />
-						) : (
-							<button type='submit'>
-								{/* <FaSearch className='h-[20px] w-[20px] text-gray-400' /> */}
-								<CiSearch className='h-[20px] w-[20px] text-gray-400'></CiSearch>
-							</button>
-						)}
 						<input
 							id='search_keyword'
 							type='text'
@@ -812,6 +804,14 @@ export const ImgModule = ({
 							}}
 							value={keyword}
 						/>
+						{searching ? (
+							<SpinIcon />
+						) : (
+							<button type='submit'>
+								{/* <FaSearch className='h-[20px] w-[20px] text-gray-400' /> */}
+								<CiSearch className='h-[20px] w-[20px] text-gray-400'></CiSearch>
+							</button>
+						)}
 					</InputBox>
 
 					<WordSelector text={getSearchText()} setQuery={setKeyword} />
