@@ -28,7 +28,7 @@ export default function WorkflowLayout({
 						{/* only show Header on small screen */}
 						<Header loginRequired={true} isLanding={false} isAuth={false} />
 					</div>
-					<main className='featurePageMainContent flex grow flex-col overflow-y-scroll'>
+					<main className='featurePageMainContent flex grow flex-col overflow-y-auto'>
 						{/* Content */}
 						{children}
 					</main>

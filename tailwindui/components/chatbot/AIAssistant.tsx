@@ -381,7 +381,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 				</div>
 			)}
 			{/* chat history text area */}
-			<div className='w-full h-full border-t-2 border-gray-300 overflow-y-scroll p-2 flex flex-col flex-grow'>
+			<div className='w-full h-full border-t-2 border-gray-300 overflow-y-auto p-2 flex flex-col flex-grow'>
 				<ScrollBar
 					axial='y'
 					index={chatHistory.length}
@@ -465,7 +465,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 				<div className='flex flex-row justify-between p-2 items-center gap-4'>
 					<TextareaAutosize
 						value={userInput}
-						className='w-full max-h-[30rem] border-0 focus:outline-none focus:ring-0 resize-none overflow-y-scroll'
+						className='w-full max-h-[30rem] border-0 focus:outline-none focus:ring-0 resize-none'
 						onChange={(e: any) => setUserInput(e.target.value)}
 						onKeyDown={handleEnter}
 						placeholder='Start here...'

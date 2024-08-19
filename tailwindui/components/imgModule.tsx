@@ -869,7 +869,7 @@ export const ImgModule = ({
 				</div>
 			</form>
 			{/* Search result images display area */}
-			<div className='search-result-images w-full h-[350px] overflow-y-scroll p-1'>
+			<div className='search-result-images w-full h-[350px] overflow-y-auto p-1'>
 				<div className='w-full h-fit grid grid-cols-2 gap-1 md:gap-2'>
 					{searchResult.map((url, index) => {
 						if (url === selectedImg) {
