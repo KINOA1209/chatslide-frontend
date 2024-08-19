@@ -796,9 +796,6 @@ export const ImgModule = ({
 							placeholder='Enter the keywords'
 							required
 							ref={searchRef}
-							onClick={(e) => {
-								(e.target as HTMLInputElement)?.select();
-							}}
 							onChange={(e) => {
 								setKeyword(e.target.value);
 							}}
