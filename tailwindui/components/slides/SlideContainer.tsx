@@ -6,7 +6,7 @@ import { LuTrash2 } from 'react-icons/lu';
 import { useSlides } from '@/hooks/use-slides';
 import { FaRegClone } from 'react-icons/fa';
 import { IoEyeOutline, IoEyeOffOutline } from 'react-icons/io5';
-
+import ButtonWithExplanation from '../button/ButtonWithExplanation';
 
 type SlideContainerProps = {
 	slide: Slide;
@@ -53,7 +53,17 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
 	isEmbedded = false,
 }) => {
 	const noBorder = isPresenting || isEmbedded;
-  const { toggleHideSlide } = useSlides();
+	const { toggleHideSlide } = useSlides();
+
+	function handleClickHide(e: React.MouseEvent<SVGElement>) {
+		if (e.shiftKey) {
+			if (slide.isHidden)
+				toggleHideSlide(-1); // unhide all
+			else toggleHideSlide(-2); // hide all
+		} else {
+			toggleHideSlide(index);
+		}
+	}
 
 	useEffect(() => {
 		if (length)
@@ -165,12 +175,32 @@ const SlideContainer: React.FC<SlideContainerProps> = ({
 			{highlightBorder && index !== 0 && (
 				<div
 					className={`absolute bottom-1 right-[52px] bg-white text-black px-1 rounded-xs p-1 opacity-70 pointerCursor`}
-					onClick={(e) => {
-						e.stopPropagation();
-						toggleHideSlide(index);
-					}}
 				>
-					{slide.isHidden ? <IoEyeOutline /> : <IoEyeOffOutline />}
+					{slide.isHidden ? (
+						<ButtonWithExplanation
+							button={<IoEyeOutline onClick={handleClickHide} />}
+							explanation={
+								<p className='text-xs'>
+									Unhide
+									<br />
+									Hold Shift to apply to all
+								</p>
+							}
+							id='unhide'
+						/>
+					) : (
+						<ButtonWithExplanation
+							button={<IoEyeOffOutline onClick={handleClickHide} />}
+							explanation={
+								<p className='text-xs'>
+									Hide
+									<br />
+									Hold Shift to apply to all
+								</p>
+							}
+							id='hide'
+						/>
+					)}
 				</div>
 			)}
 		</div>
