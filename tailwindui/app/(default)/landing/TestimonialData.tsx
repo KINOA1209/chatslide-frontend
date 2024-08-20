@@ -109,12 +109,18 @@ const ChatSlideTestimonialsData = [
 		text: 'Simply input files,webpages, social links, let Chatslide. ai transform your  tailored slide to videos with avatars.',
 		profile_url: 'images/kamran.jpeg',
 	},
-	{
-		name: 'Hamza Khalid',
-		title: 'AI Soloprenuer',
-		text: "Customize slides with ChatSlide AI's templates and branding tools. Adapt to diverse content types and use cases seamlessly.",
-		profile_url: 'images/hamza.png',
-	},
+	// {
+	// 	name: 'Hamza Khalid',
+	// 	title: 'AI Soloprenuer',
+	// 	text: "Customize slides with ChatSlide AI's templates and branding tools. Adapt to diverse content types and use cases seamlessly.",
+	// 	profile_url: 'images/hamza.png',
+	// },
+  {
+    name: 'Nicola Sciascia',
+    title: 'Consulente Finanziario',
+    text: "🇮🇹 ChatSlide non si limita a creare semplici presentazioni; ti consente di elevare i tuoi progetti a un altro livello.",
+    profile_url: 'images/nicola.jpeg',
+  },
 	{
 		name: 'Yaser Alosefer',
 		title: 'Entrepreneur, Investor',
