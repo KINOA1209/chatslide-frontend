@@ -16,14 +16,16 @@ import { useProject } from '@/hooks/use-project';
 import useTourStore from '@/components/user_onboarding/TourStore';
 import { Column } from '@/components/layout/Column';
 import { GenerationStatusProgressModal } from '@/components/ui/GenerationStatusProgressModal';
+import ProjectService from '@/services/ProjectService';
+import Project from '@/models/Project';
+import { useSlides } from '@/hooks/use-slides';
+import SlidesService from '@/services/SlidesService';
+import { addIdToRedir } from '@/utils/redirWithId';
 
 export default function Topic() {
 	const { token, isPaidUser, updateCreditsFE } = useUser();
-	const {
-		project,
-		bulkUpdateProject,
-		initProject,
-	} = useProject();
+	const { project, bulkUpdateProject, initProject } = useProject();
+  const { initSlides } = useSlides();
 
 	const [showPaymentModal, setShowPaymentModal] = useState(false);
 	const [showFileModal, setShowFileModal] = useState(false);
@@ -37,14 +39,14 @@ export default function Topic() {
 	const [showGenerationStatusModal, setShowGenerationStatusModal] =
 		useState(false);
 
+  const router = useRouter();
+
 	const handleGenerationStatusModal = () => {
 		// console.log('user Research Modal toggled');
 		setShowGenerationStatusModal(!showGenerationStatusModal);
 	};
 
-	const removeResourceAtIndex = (
-		indexToRemove: number,
-	) => {
+	const removeResourceAtIndex = (indexToRemove: number) => {
 		setSelectedResources((currentResources) =>
 			currentResources.filter((_, index) => index !== indexToRemove),
 		);
@@ -56,7 +58,51 @@ export default function Topic() {
 		}
 	}, [isSubmitting]);
 
-	const handleSubmit = async () => {};
+	const handleSubmit = async () => {
+		setShowGenerationStatusModal(true);
+		const selectedResourceIds = selectedResources.map(
+			(resource) => resource.id,
+		);
+    console.log('handling submit');
+		try {
+      updateCreditsFE(-20);
+
+			const data = await ProjectService.ppt2video(
+				selectedResourceIds,
+				'',
+				token,
+			);
+      const slides = data.slides;
+      const project_id = data.project_id;
+      const project_name = data.project_name;
+
+      initProject({
+				id: project_id,
+				name: project_name,
+				content_type: 'presentation',
+        language: 'English',
+        presentation_slides: JSON.stringify(slides),
+			} as Project);
+
+      const parsedSlides = ProjectService.parseSlides(JSON.stringify(slides));
+      
+      console.log('parsed slides: ', parsedSlides);
+      initSlides(parsedSlides);
+
+      router.push(addIdToRedir('slides', project_id));
+
+		} catch (error) {
+			if (error instanceof Error) {
+        console.log('error during ppt2video: ', error);
+				toast.error(error.message);
+			} else {
+        console.log('error during ppt2video: ', error);
+				toast.error('An unknown error occurred');
+			}
+		}
+    setIsSubmitting(false);
+    setShowGenerationStatusModal(false);
+	};
 
 	// avoid hydration error during development caused by persistence
 	if (!useHydrated()) return <></>;

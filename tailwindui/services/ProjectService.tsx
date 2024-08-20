@@ -309,13 +309,13 @@ class ProjectService {
 				slide.layout = slideData.layout || ('Cover_img_1_layout' as LayoutKeys);
 			} else {
 				// choose default layout based on number of bullet points
-				if (slideData.content.length === 1) {
+				if (slide.content.length === 1) {
 					slide.layout =
 						slideData.layout || ('Col_2_img_1_layout' as LayoutKeys);
-				} else if (slideData.content.length === 2) {
+				} else if (slide.content.length === 2) {
 					slide.layout =
 						slideData.layout || ('Col_2_img_2_layout' as LayoutKeys);
-				} else if (slideData.content.length >= 3) {
+				} else if (slide.content.length >= 3) {
 					// Generate a random number between 0 and 1
 					const randomNumber = Math.random();
 					// Choose layout based on probability distribution
@@ -634,6 +634,35 @@ class ProjectService {
 		}
 		return responseJson;
 	}
+
+  static async ppt2video(
+    selectedResourceIds: string[],
+    teamId: string,
+    token: string,
+  ) { 
+    const response = await fetch('/api/slide/ppt_to_video', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify({
+				resource_ids: selectedResourceIds,
+				team_id: teamId,
+			}),
+		});
+    const responseJson = await response.json();
+
+    if (!response.ok) {
+      throw new Error(
+        responseJson.message || 'An error occurred during the moving project',
+      );
+    }
+    console.log('returning responseJson: ', responseJson.data);
+    return responseJson.data;
+  }
+
+
 }
 
 export default ProjectService;

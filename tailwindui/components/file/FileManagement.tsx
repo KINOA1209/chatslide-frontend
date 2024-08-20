@@ -523,7 +523,7 @@ const MyFiles: React.FC<filesInterface> = ({
 	useEffect(() => {
 		// This effect will trigger a re-render whenever selectedResources changes
 		// setForceUpdate((prev) => !prev);
-		console.log('resources updated, force update', resources);
+		// console.log('resources updated, force update', resources);
 		filterResources(currentResourceType);
 	}, [resources, setResources]);
 
@@ -610,7 +610,7 @@ const MyFiles: React.FC<filesInterface> = ({
 					: []; // uploads page, all resources
 
 		ResourceService.fetchResources(resource_type, token).then((resources) => {
-			console.log('resources 0 extension', getFileExtension(resources[0].name));
+			// console.log('resources 0 extension', getFileExtension(resources[0].name));
 			if (uploadSection === 'Template Extraction') {
 				console.log('upload section is', uploadSection);
 				// another filter, only needs those resource in resources list whose extension etracted from name field contains 'ppt' or 'pptx'
@@ -741,10 +741,10 @@ const MyFiles: React.FC<filesInterface> = ({
 				}
 			}
 		}
-		console.log('newSelectedResourceId', newSelectedResourceId);
-		console.log('selectedResourceId', selectedResourceId);
+		// console.log('newSelectedResourceId', newSelectedResourceId);
+		// console.log('selectedResourceId', selectedResourceId);
 		if (setSelectedResources) {
-			console.log(resources);
+			// console.log(resources);
 			setSelectedResources(
 				resources.filter((resource) =>
 					newSelectedResourceId.includes(resource.id),
