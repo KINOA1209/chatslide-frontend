@@ -747,7 +747,7 @@ function Landing() {
 									</li>
 									<li className='brix---footer-list-item'>
 										<a
-											href='https://blog.drlambda.ai/drlambda-product-roadmap/'
+											href='https://chatslide.canny.io/'
 											className='brix---footer-link'
 										>
 											Roadmap 🛣️
@@ -764,10 +764,7 @@ function Landing() {
 										</a>
 									</li>
 									<li className='brix---footer-list-item'>
-										<a
-											href='/affiliate'
-											className='brix---footer-link'
-										>
+										<a href='/affiliate' className='brix---footer-link'>
 											Affiliate Program 💵
 										</a>
 									</li>
