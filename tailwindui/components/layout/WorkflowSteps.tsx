@@ -5,7 +5,7 @@ import { CurrentStepCircle, FinishedStepCircle, ConnectedLine } from '../icons';
 import { FaChevronCircleLeft, FaChevronCircleRight } from 'react-icons/fa';
 import { IoMdLock } from 'react-icons/io';
 import SessionStorage from '@/utils/SessionStorage';
-import Project from '@/models/Project';
+import Project, { ContentType } from '@/models/Project';
 import { useProject } from '@/hooks/use-project';
 import useHydrated from '@/hooks/use-hydrated';
 import { addIdToRedir } from '../../utils/redirWithId';
@@ -191,6 +191,12 @@ const PRESENTATION_STEPS = [
 	'Scripts',
 	'Video',
 ];
+const PPT2VIDEO_STEPS = [
+	'Upload',
+	'Slides',
+	'Scripts',
+	'Video',
+];
 const SOCIAL_POSTS_REDIRECTS = ['/summary-socialpost', '/socialpost'];
 const PRESENTATION_REDIRECTS = [
 	'/summary',
@@ -200,6 +206,12 @@ const PRESENTATION_REDIRECTS = [
 	'/scripts',
 	'/video',
 ];
+const PPT2VIDEO_REDIRECTS = [
+  '/ppt2video',
+  '/slides',
+  '/scripts',
+  '/video',
+];
 
 export const projectFinishedSteps = (project: Project | null) => {
 	const finishedStepsArray: number[] = [];
@@ -207,7 +219,7 @@ export const projectFinishedSteps = (project: Project | null) => {
 	if (project.content_type === 'social_posts') {
 		finishedStepsArray.push(0);
 		if (project.social_posts) finishedStepsArray.push(1);
-	} else {
+	} else if (project.content_type === 'presentation') {
 		finishedStepsArray.push(0);
 		if (project.outlines) {
 			finishedStepsArray.push(1);
@@ -222,8 +234,18 @@ export const projectFinishedSteps = (project: Project | null) => {
 		}
 		if (project.has_scripts) finishedStepsArray.push(4);
 		if (project.video_url) finishedStepsArray.push(5);
-	}
-
+	} else if (project.content_type === 'ppt2video') {
+    finishedStepsArray.push(0);
+    if (project.presentation_slides) {
+      finishedStepsArray.push(1);
+    }
+    if (project.has_scripts) {
+      finishedStepsArray.push(2);
+    }
+    if (project.video_url) {
+      finishedStepsArray.push(3);
+    }
+  }
 	return finishedStepsArray;
 };
 
@@ -234,25 +256,53 @@ export const getLastStepReidrect = (project: Project) => {
 	let url = '';
 	if (project.content_type == 'social_posts') {
 		url = SOCIAL_POSTS_REDIRECTS[finishedSteps[finishedSteps.length - 1]];
-	} else {
+	} else if (project.content_type == 'presentation') {
 		url = PRESENTATION_REDIRECTS[finishedSteps[finishedSteps.length - 1]];
-	}
+	} else if (project.content_type == 'ppt2video') { 
+    url = PPT2VIDEO_REDIRECTS[finishedSteps[finishedSteps.length - 1]];
+  }
 	return url;
 };
 
 // Set up actual progress indicators with texts and redirections
-const ProjectProgress: React.FC<{ currentInd: number }> = ({ currentInd }) => {
+const ProjectProgress: React.FC<{
+	currentInd: number;
+	contentType?: ContentType;
+}> = ({ currentInd, contentType }) => {
 	const { project } = useProject();
+  if (!contentType) {
+    contentType = project?.content_type;
+  }
 
-	let content_type =
-		project?.content_type || SessionStorage.getItem('workflowType');
+	let stepNames;
+	switch (contentType) {
+		case 'social_posts':
+			stepNames = SOCIAL_POSTS_STEPS;
+			break;
+		case 'presentation':
+			stepNames = PRESENTATION_STEPS;
+			break;
+		case 'ppt2video':
+			stepNames = PPT2VIDEO_STEPS;
+			break;
+		default:
+			stepNames = PRESENTATION_STEPS; // or some default value if needed
+	}
 
-	const stepNames =
-		content_type === 'social_posts' ? SOCIAL_POSTS_STEPS : PRESENTATION_STEPS;
-	const redirects =
-		content_type === 'social_posts'
-			? SOCIAL_POSTS_REDIRECTS
-			: PRESENTATION_REDIRECTS;
+	let redirects;
+	switch (contentType) {
+		case 'social_posts':
+			redirects = SOCIAL_POSTS_REDIRECTS;
+			break;
+		case 'presentation':
+			redirects = PRESENTATION_REDIRECTS;
+			break;
+		case 'ppt2video':
+			redirects = PPT2VIDEO_REDIRECTS;
+			break;
+		default:
+			redirects = PRESENTATION_REDIRECTS;
+	}
 
 	// avoid hydration error during development caused by persistence
 	if (!useHydrated()) return <></>;

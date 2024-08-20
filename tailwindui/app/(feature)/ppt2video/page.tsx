@@ -67,7 +67,7 @@ export default function Topic() {
 		try {
       updateCreditsFE(-20);
 
-			const data = await ProjectService.ppt2video(
+			const data = await ProjectService.ppt2slides(
 				selectedResourceIds,
 				'',
 				token,
@@ -79,9 +79,11 @@ export default function Topic() {
       initProject({
 				id: project_id,
 				name: project_name,
-				content_type: 'presentation',
+				content_type: 'ppt2video',
         language: 'English',
         presentation_slides: JSON.stringify(slides),
+        has_scripts: false,
+        video_url: '',
 			} as Project);
 
       const parsedSlides = ProjectService.parseSlides(JSON.stringify(slides));
@@ -144,6 +146,7 @@ export default function Topic() {
 					!isSubmitting ? `Preview Slides (20⭐️)` : 'Generating Preview...'
 				}
 				onClickNext={handleGenerationStatusModal}
+        contentType='ppt2video'
 			/>
 
 			{/* main content */}
