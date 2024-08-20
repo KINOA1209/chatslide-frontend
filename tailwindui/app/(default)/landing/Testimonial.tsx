@@ -4,13 +4,52 @@ export const Testimonial: React.FC<{
 	text: string;
 	profile_url: string;
   rtl?: boolean;
+  link?: string | null;
 }> = ({
   name,
   title,
   text,
   profile_url,
   rtl,
+  link,
 }) => {
+
+  const Name = link ? (
+		<a href={link} target='_blank' rel='noreferrer'>
+			<div className='uui-testimonial13_client'>
+				<div className='uui-testimonial13_client-image-wrapper'>
+					<img
+						src={profile_url}
+						loading='lazy'
+						alt=''
+						className='uui-testimonial13_customer-image'
+					/>
+				</div>
+				<div className='uui-testimonial13_client-info'>
+					<div className='uui-testimonial13_client-heading'>{name}</div>
+					<div className='uui-text-size-small'>{title}</div>
+				</div>
+			</div>
+		</a>
+	) : (
+		<div className='uui-testimonial13_client'>
+			<div className='uui-testimonial13_client-image-wrapper'>
+				<img
+					src={profile_url}
+					loading='lazy'
+					alt=''
+					className='uui-testimonial13_customer-image'
+				/>
+			</div>
+			<div className='uui-testimonial13_client-info'>
+				<div className='uui-testimonial13_client-heading'>{name}</div>
+				<div className='uui-text-size-small'>{title}</div>
+			</div>
+		</div>
+	);
+
+  
+  console.log('link', link);
 	return (
 		<div className='uui-testimonial13_content'>
 			<div className='uui-testimonial13_rating-wrapper'>
@@ -95,25 +134,13 @@ export const Testimonial: React.FC<{
 					</svg>
 				</div>
 			</div>
-			<div className='uui-heading-xxsmall text-weight-medium' style={{direction: rtl ? 'rtl' : 'ltr'}}>
+			<div
+				className='uui-heading-xxsmall text-weight-medium'
+				style={{ direction: rtl ? 'rtl' : 'ltr' }}
+			>
 				{text}
 			</div>
-			<div className='uui-testimonial13_client'>
-				<div className='uui-testimonial13_client-image-wrapper'>
-					<img
-						src={profile_url}
-						loading='lazy'
-						alt=''
-						className='uui-testimonial13_customer-image'
-					/>
-				</div>
-				<div className='uui-testimonial13_client-info'>
-					<div className='uui-testimonial13_client-heading'>
-						<strong>{name}</strong>
-					</div>
-					<div className='uui-text-size-small'>{title}</div>
-				</div>
-			</div>
+			{Name}
 		</div>
 	);
 };

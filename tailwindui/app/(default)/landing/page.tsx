@@ -683,6 +683,7 @@ function Landing() {
 										text={testimonial.text}
 										profile_url={testimonial.profile_url}
 										rtl={testimonial.rtl}
+                    link={testimonial?.link}
 									/>
 								))}
 							</div>
