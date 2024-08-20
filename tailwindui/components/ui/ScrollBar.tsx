@@ -19,7 +19,7 @@ export const ScrollBar: React.FC<{
 	const overflowClass =
 		axial === 'x'
 			? 'overflow-x-scroll overflow-y-hidden'
-			: 'overflow-y-scroll overflow-x-hidden my-4';
+			: 'overflow-y-auto overflow-x-hidden my-4';
 	const flexDirClass = axial === 'x' ? 'flex-row' : 'flex-col';
 	const containerRef = useRef<HTMLDivElement>(null);
 

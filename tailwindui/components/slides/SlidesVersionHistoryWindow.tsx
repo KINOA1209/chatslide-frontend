@@ -69,7 +69,7 @@ export const SlidesVersionHistoryWindow: React.FC<
 			</div>
 
 			{/* history text area */}
-			<div className='w-full h-full overflow-y-scroll flex flex-col flex-grow'>
+			<div className='w-full h-full overflow-y-auto flex flex-col flex-grow'>
 				<ScrollBar axial='y'>
 					{/* version history render */}
 					{slidesHistory

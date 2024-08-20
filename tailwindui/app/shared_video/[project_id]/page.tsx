@@ -80,7 +80,7 @@ export default async function Page({ params }: Props) {
 				<Header loginRequired={false} isLanding={false} />
 			</div>
 			<JoinUsBanner />
-			<main className='w-full flex h-full flex-col overflow-y-scroll'>
+			<main className='w-full flex h-full flex-col overflow-y-auto'>
 				{project.description && (
 					<div className='hidden sm:flex m-4'>
 						<Card>

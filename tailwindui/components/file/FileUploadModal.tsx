@@ -10,7 +10,7 @@ type FileUploadModalProps = {
 	showModal: boolean;
 	setShowModal: (value: boolean) => void;
 	pageInvoked: 'summary' | 'theme' | 'ppt2video' | 'resources';
-	type?: string;
+	type?: 'file' | 'logo' | 'background'
 	uploadSection?: 'Template Extraction' | ''; // templateExtraction
 	fileNameExtension?: string;
 };

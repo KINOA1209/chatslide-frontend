@@ -27,7 +27,7 @@ import { PiImageSquare, PiTagLight } from 'react-icons/pi';
 import { FiVideo } from 'react-icons/fi';
 import { MdArrowDownward } from 'react-icons/md';
 import { MdArrowUpward } from 'react-icons/md';
-import { color } from 'd3';
+
 
 interface UserFileList {
 	selectable: boolean;
@@ -433,7 +433,7 @@ interface filesInterface {
 	selectedResources?: Array<Resource>;
 	setSelectedResources?: Function;
 	pageInvoked?: 'resources' | 'theme' | 'ppt2video' | 'summary';
-	fileType?: string;
+	fileType?: 'file' | 'logo' | 'background'; // only used when pageInvoked is theme
 	uploadSection?: 'Template Extraction' | ''; // templateExtraction
 	fileNameExtension?: string;
 }
@@ -469,6 +469,7 @@ export const fileExtensions = {
 		'3gp',
 		'mpeg',
 	],
+	ppt: ['ppt', 'pptx'],
 };
 
 const customFilterButtonGroupStyles = {
@@ -564,7 +565,13 @@ const MyFiles: React.FC<filesInterface> = ({
 		setCurrentResourceType(type);
 
 		let filtered: Resource[] = [];
-		if (type === 'all') {
+		if (pageInvoked === 'ppt2video') {
+			filtered = resources.filter((resource) =>
+				fileExtensions.ppt.includes(
+					getFileExtension(resource.name) || resource.type,
+				),
+			);
+		} else if (type === 'all') {
 			filtered = resources;
 		} else if (type === 'files') {
 			filtered = resources.filter((resource) =>
@@ -599,15 +606,20 @@ const MyFiles: React.FC<filesInterface> = ({
 	};
 
 	const fetchFiles = async (token: string) => {
-		// console.log('pageInvoked', pageInvoked);
+		let resource_type: string[] = [];
 
-		//const resource_type = selectable ? ['doc', 'url'] : [];
-		const resource_type =
-			pageInvoked === 'summary'
-				? ['doc', 'url', 'webpage', 'youtube']
-				: pageInvoked === 'theme'
-					? [fileType]
-					: []; // uploads page, all resources
+		switch (pageInvoked) {
+			case 'summary':
+				resource_type = ['doc', 'url', 'webpage', 'youtube'];
+				break;
+			case 'theme':
+				resource_type = [fileType];
+				break;
+			case 'ppt2video':
+				resource_type = ['doc'];
+				break;
+			// For 'uploads' and any other cases, resource_type remains as an empty array
+		}
 
 		ResourceService.fetchResources(resource_type, token).then((resources) => {
 			// console.log('resources 0 extension', getFileExtension(resources[0].name));
@@ -1049,62 +1061,62 @@ const MyFiles: React.FC<filesInterface> = ({
 							<span>Images</span>
 						</DesignSystemButton>
 					)}
-						<DesignSystemButton
-							width='12rem'
-							isPaidFeature={false}
-							size='sm'
-							hierarchy='tertiary'
-							buttonStatus='enabled'
-							iconLeft={<IoMdLink />}
-							customButtonStyles={
-								currentResourceType === 'links'
-									? customFilterButtonGroupStyles.selected.button
-									: customFilterButtonGroupStyles.unselected.button
-							}
-							customIconStyles={
-								currentResourceType === 'links'
-									? customFilterButtonGroupStyles.selected.icon
-									: customFilterButtonGroupStyles.unselected.icon
-							}
-							customTextStyles={
-								currentResourceType === 'links'
-									? customFilterButtonGroupStyles.selected.text
-									: customFilterButtonGroupStyles.unselected.text
-							}
-							onClick={() => filterResources('links')}
-							// text='Create New'
-							// onClick={handleStartNewProject}
-						>
-							<span>Links</span>
-						</DesignSystemButton>
-						<DesignSystemButton
-							width='12rem'
-							isPaidFeature={false}
-							size='sm'
-							hierarchy='tertiary'
-							buttonStatus='enabled'
-							iconLeft={<FiVideo />}
-							customButtonStyles={
-								currentResourceType === 'videos'
-									? customFilterButtonGroupStyles.selected.button
-									: customFilterButtonGroupStyles.unselected.button
-							}
-							customIconStyles={
-								currentResourceType === 'videos'
-									? customFilterButtonGroupStyles.selected.icon
-									: customFilterButtonGroupStyles.unselected.icon
-							}
-							customTextStyles={
-								currentResourceType === 'videos'
-									? customFilterButtonGroupStyles.selected.text
-									: customFilterButtonGroupStyles.unselected.text
-							}
-							onClick={() => filterResources('videos')}
-							// text='Create New'
-							// onClick={handleStartNewProject}
-						>
-							<span>YouTube</span>
-						</DesignSystemButton>
+					<DesignSystemButton
+						width='12rem'
+						isPaidFeature={false}
+						size='sm'
+						hierarchy='tertiary'
+						buttonStatus='enabled'
+						iconLeft={<IoMdLink />}
+						customButtonStyles={
+							currentResourceType === 'links'
+								? customFilterButtonGroupStyles.selected.button
+								: customFilterButtonGroupStyles.unselected.button
+						}
+						customIconStyles={
+							currentResourceType === 'links'
+								? customFilterButtonGroupStyles.selected.icon
+								: customFilterButtonGroupStyles.unselected.icon
+						}
+						customTextStyles={
+							currentResourceType === 'links'
+								? customFilterButtonGroupStyles.selected.text
+								: customFilterButtonGroupStyles.unselected.text
+						}
+						onClick={() => filterResources('links')}
+						// text='Create New'
+						// onClick={handleStartNewProject}
+					>
+						<span>Links</span>
+					</DesignSystemButton>
+					<DesignSystemButton
+						width='12rem'
+						isPaidFeature={false}
+						size='sm'
+						hierarchy='tertiary'
+						buttonStatus='enabled'
+						iconLeft={<FiVideo />}
+						customButtonStyles={
+							currentResourceType === 'videos'
+								? customFilterButtonGroupStyles.selected.button
+								: customFilterButtonGroupStyles.unselected.button
+						}
+						customIconStyles={
+							currentResourceType === 'videos'
+								? customFilterButtonGroupStyles.selected.icon
+								: customFilterButtonGroupStyles.unselected.icon
+						}
+						customTextStyles={
+							currentResourceType === 'videos'
+								? customFilterButtonGroupStyles.selected.text
+								: customFilterButtonGroupStyles.unselected.text
+						}
+						onClick={() => filterResources('videos')}
+						// text='Create New'
+						// onClick={handleStartNewProject}
+					>
+						<span>YouTube</span>
+					</DesignSystemButton>
 					{pageInvoked != 'summary' && (
 						<DesignSystemButton
 							width='12rem'

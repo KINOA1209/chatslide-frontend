@@ -80,7 +80,7 @@ export default async function Page({ params }: Props) {
 				<Header loginRequired={false} isLanding={false} />
 			</div>
 			<JoinUsBanner />
-			<main className='w-full flex grow flex-col overflow-y-scroll'>
+			<main className='w-full flex grow flex-col overflow-y-auto'>
 				<SharePage project={project} />
 
 				<DescriptionCard project={project} />
