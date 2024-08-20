@@ -820,7 +820,7 @@ function Landing() {
 									/>
 								</a>
 								<a
-									href='https://www.youtube.com/@drlambda_ai'
+									href='https://www.youtube.com/@chatslide'
 									className='brix---social-icon-square-30px w-inline-block'
 								>
 									<img
