@@ -321,6 +321,8 @@ export default function Topic() {
 	}, []);
 
 	const updateTopic = (topic: string) => {
+    console.log('updating topic to ', topic);
+
 		if (topic.length < MIN_TOPIC_LENGTH) {
 			setIsNextEnabled(false);
 			setTopicError(
@@ -584,6 +586,7 @@ export default function Topic() {
 
 	const handlePaste = async (e: React.ClipboardEvent<HTMLTextAreaElement>) => {
 		const pasteText = e.clipboardData.getData('text');
+    e.preventDefault();
 		if (pasteText.length > 500) {
 			// Set your threshold for "large text" here
 			e.preventDefault();

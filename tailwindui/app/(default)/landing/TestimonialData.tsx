@@ -87,6 +87,7 @@ const DrLambdaTestimonialsData = [
 		text: ' DrLambda surpasses similar software and shows potential to rival industry leaders. I wholeheartedly recommend it to educators, especially for course creation.',
 		profile_url: 'images/latif.webp',
     rtl: false,
+    link: null,
 	},
 ];
 
@@ -96,24 +97,34 @@ const ChatSlideTestimonialsData = [
 		title: 'Founder of B3 Media Solutions',
 		text: 'I have to admit, I tried out @chatslide_ai today and now I totally rethinking how I should do my content for my business and personal accounts. If you liked @MeetGamma  you most definitely have to check out ChatSlide AI.',
 		profile_url: 'images/barika.jpeg',
+		link: 'https://x.com/The_SocialLife_/status/1790463804737982678',
 	},
 	{
 		name: 'Miguel',
 		title: 'Experto en monetización y crecimiento en 𝕏',
 		text: '🇪🇸 Tu herramienta definitiva para crear contenido atractivo de diapositivas, publicaciones y videos con fácil integración',
 		profile_url: 'images/miguel.jpeg',
+		link: 'https://x.com/MiguelMaestroIA/status/1791522707265159669',
 	},
 	{
 		name: 'kamran Hassan',
 		title: 'AI enthusiast',
 		text: 'Simply input files,webpages, social links, let Chatslide. ai transform your  tailored slide to videos with avatars.',
 		profile_url: 'images/kamran.jpeg',
+		link: 'https://x.com/Rana_kamran43/status/1791059301223563319',
 	},
+	// {
+	// 	name: 'Hamza Khalid',
+	// 	title: 'AI Soloprenuer',
+	// 	text: "Customize slides with ChatSlide AI's templates and branding tools. Adapt to diverse content types and use cases seamlessly.",
+	// 	profile_url: 'images/hamza.png',
+	// },
 	{
-		name: 'Hamza Khalid',
-		title: 'AI Soloprenuer',
-		text: "Customize slides with ChatSlide AI's templates and branding tools. Adapt to diverse content types and use cases seamlessly.",
-		profile_url: 'images/hamza.png',
+		name: 'Nicola Sciascia',
+		title: 'Consulente Finanziario',
+		text: '🇮🇹 ChatSlide non si limita a creare semplici presentazioni; ti consente di elevare i tuoi progetti a un altro livello.',
+		profile_url: 'images/nicola.jpeg',
+		link: 'https://www.linkedin.com/pulse/semplifica-la-creazione-di-contenuti-con-chatslide-nicola-sciascia-qir7f',
 	},
 	{
 		name: 'Yaser Alosefer',
@@ -121,18 +132,27 @@ const ChatSlideTestimonialsData = [
 		text: '🇸🇦 عروض بثواني😎 لاتكتب اي عروض بعد اليوم، كل ما هو عليك	فقط كتابة ماتريد للـAI وهو يكتب العرض كامل لك مع الصور	والمعلومات من بحثك وملفاتك ويلخصها وكل شي، يعني كأنه كاتب ',
 		profile_url: 'images/yaser.jpeg',
 		rtl: true,
+		link: 'https://x.com/alosefer/status/1779152870660616362',
 	},
+	// {
+	// 	name: 'Hasan Rajpoot',
+	// 	title: 'Sharing insights on AI',
+	// 	text: 'Powered by ChatGPT & GPT-4, Chatslide ai is your personalized AI content generation assistant whenever and wherever you generate slides or videos.',
+	// 	profile_url: 'images/hasan.jpeg',
+	// },
 	{
-		name: 'Hasan Rajpoot',
-		title: 'Sharing insights on AI',
-		text: 'Powered by ChatGPT & GPT-4, Chatslide ai is your personalized AI content generation assistant whenever and wherever you generate slides or videos.',
-		profile_url: 'images/hasan.jpeg',
+		name: 'Abdellatif Abid',
+		title: 'International Consultant',
+		text: 'Say hello to ChatSlide - Your go-to AI assistant for crafting professional slides and posts! 🚀🎨 Transform your documents, webpages, videos, and even tweets into stunning presentations with just a few clicks. 📊🖥️',
+		profile_url: 'images/abdel.jpeg',
+		link: 'https://www.linkedin.com/posts/abdellatif-abid_chatslide-create-professional-slides-with-activity-7196941798366158850-yuTG',
 	},
 	{
 		name: 'EyeingAI',
 		title: 'Sharing insights on AI',
 		text: 'Utilize ChatSlide AI customizable templates to adapt your slides to various content types, catering to different use cases.',
 		profile_url: 'images/eyeingai.jpeg',
+		link: 'https://x.com/EyeingAI/status/1789993524412498011',
 	},
 	{
 		name: 'Tianwei Yue',
@@ -145,6 +165,7 @@ const ChatSlideTestimonialsData = [
 		title: 'Sharing latest Ai tools',
 		text: 'Your ultimate tool for creating engaging slide, post and video content with easy integration.',
 		profile_url: 'images/hussain.jpg',
+		link: 'https://x.com/shussainasghar/status/1795796904904990827',
 	},
 ];
 

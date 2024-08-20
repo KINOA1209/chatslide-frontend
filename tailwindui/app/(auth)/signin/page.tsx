@@ -3,7 +3,7 @@ import Link from 'next/link';
 import React from 'react';
 import GoogleSignIn from '@/components/button/GoogleSignIn';
 import CustomerServiceInfo from '@/components/signup/customerService';
-import { generateMetadata } from '@/app/layout';
+import { generateMetadata } from '@/app/metadata';
 import { getBrand } from '@/utils/getHost';
 import { BigTitle } from '@/components/ui/Text';
 

@@ -14,10 +14,10 @@ export const Simplistic_008_TemplateThemeConfig: {
 	[key in PaletteKeys]?: ThemeElements;
 } = {
 	'Dynamic Purple': {
-		// backgroundColorCover: 'bg-gradient-to-br from-[#7E96F7] to-[#A388F7]',
+		backgroundColorCover: '#A388F7',
 		isGradientBackground: true,
-		backgroundColorCover: 'linear-gradient(to bottom right, #7E96F7, #A388F7)',
-		backgroundColor: 'linear-gradient(to bottom right, #7E96F7, #A388F7)',
+		// backgroundColorCover: 'linear-gradient(to bottom right, #7E96F7, #A388F7)',
+		backgroundColor: '#A388F7',
 		titleFontCSS: {
 			fontSize: '14pt',
 			fontWeight: 'Bold',

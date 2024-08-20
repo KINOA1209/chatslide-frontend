@@ -8,6 +8,7 @@ import FeedbackButton from '@/components/ui/feedback';
 import { getBrand, isChatslide } from '@/utils/getHost';
 import { LuAlignLeft } from 'react-icons/lu';
 import { MdManageHistory } from 'react-icons/md';
+import { BigBlueButton } from '@/components/button/DrlambdaButton';
 
 export default function Studio() {
 	// avoid hydration error during development caused by persistence
@@ -22,10 +23,72 @@ export default function Studio() {
 						🎰 Directly add scripts, voiceover, and avatar to PPTX
 					</Instruction> */}
 
-					<FeedbackButton
+					{/* <FeedbackButton
 						instructionText='What features would you like to see next?'
 						displayText='Ask for more features!'
-					/>
+					/> */}
+
+					<BigBlueButton>
+						<a href='https://chatslide.canny.io/roadmap' target='_blank'>
+							Ask for more features!
+						</a>
+					</BigBlueButton>
+				</Card>
+
+				<Card>
+					<BigTitle>August 18</BigTitle>
+					<Instruction>
+						<span>
+							<b>🗣️ Voice Cloning for Scripts:</b> You can now clone your voice
+							directly on the scripts page, allowing you to create more
+							personalized voiceovers for your projects. Easily generate voice
+							clones and integrate them into your videos or presentations.
+						</span>
+					</Instruction>
+					<Instruction>
+						<span>
+							<p>
+								<b>🚫 Hide Pages:</b> Introducing the ability to hide pages from
+								your projects. Hidden pages will be automatically skipped during
+								presentations or video creation, giving you more control over
+								the final content without deleting anything.
+							</p>
+						</span>
+					</Instruction>
+					<Instruction>
+						<span>
+							<p>
+								<b>💾 Save Chart Projects:</b> You can now save your chart
+								projects, allowing you to come back and edit or reuse your data
+								visualizations at any time. Keep your work organized and
+								accessible for future use.{' '}
+								<a href='/charts' className='text-blue-600'>
+									Try it
+								</a>
+								.
+							</p>
+						</span>
+					</Instruction>
+					<Instruction>
+						<span>
+							<p>
+								<b>🛠️ Roadmap & Feature Requests:</b> You can now add your
+								feature requests and see what’s in development! Visit our
+								roadmap to submit your ideas at{' '}
+								<a
+									href='https://chatslide.canny.io/roadmap'
+									className='text-blue-600'
+								>
+									https://chatslide.canny.io/roadmap
+								</a>{' '}
+								and view all features currently in development at{' '}
+								<a href='https://chatslide.canny.io/' className='text-blue-600'>
+									https://chatslide.canny.io/
+								</a>
+								.
+							</p>
+						</span>
+					</Instruction>
 				</Card>
 
 				<Card>
@@ -34,7 +97,7 @@ export default function Studio() {
 						<span>
 							<b>📊 Dashboard Grid View:</b> The dashboard now includes a grid
 							view option, offering an alternative to the traditional list view
-							for a more organized and flexible layout. {' '}
+							for a more organized and flexible layout.{' '}
 							<a href='/dashboard' className='text-blue-600'>
 								Try it
 							</a>
@@ -46,7 +109,7 @@ export default function Studio() {
 							<p>
 								<b>🔍 Enhanced Chart Search:</b> You can now opt to search
 								online for charts using our chatbot, making it easier to find
-								and integrate data visualizations into your projects. {' '}
+								and integrate data visualizations into your projects.{' '}
 								{/* try now */}
 								<a href='/charts' className='text-blue-600'>
 									Try it

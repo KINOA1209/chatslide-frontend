@@ -155,7 +155,7 @@ export default function Footer() {
 							</li>
 							<li className='mb-2'>
 								<a
-									href='https://blog.drlambda.ai/drlambda-product-roadmap/'
+									href='https://chatslide.canny.io'
 									className='text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out'
 								>
 									Roadmap

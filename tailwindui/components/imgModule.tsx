@@ -789,6 +789,18 @@ export const ImgModule = ({
 						Search
 					</span> */}
 					<InputBox>
+						<input
+							id='search_keyword'
+							type='text'
+							className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800 bg-gray-100'
+							placeholder='Enter the keywords'
+							required
+							ref={searchRef}
+							onChange={(e) => {
+								setKeyword(e.target.value);
+							}}
+							value={keyword}
+						/>
 						{searching ? (
 							<SpinIcon />
 						) : (
@@ -797,21 +809,6 @@ export const ImgModule = ({
 								<CiSearch className='h-[20px] w-[20px] text-gray-400'></CiSearch>
 							</button>
 						)}
-						<input
-							id='search_keyword'
-							type='text'
-							className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800 bg-gray-100'
-							placeholder='Enter the keywords'
-							required
-							ref={searchRef}
-							onClick={(e) => {
-								(e.target as HTMLInputElement)?.select();
-							}}
-							onChange={(e) => {
-								setKeyword(e.target.value);
-							}}
-							value={keyword}
-						/>
 					</InputBox>
 
 					<WordSelector text={getSearchText()} setQuery={setKeyword} />
@@ -869,7 +866,7 @@ export const ImgModule = ({
 				</div>
 			</form>
 			{/* Search result images display area */}
-			<div className='search-result-images w-full h-[350px] overflow-y-scroll p-1'>
+			<div className='search-result-images w-full h-[350px] overflow-y-auto p-1'>
 				<div className='w-full h-fit grid grid-cols-2 gap-1 md:gap-2'>
 					{searchResult.map((url, index) => {
 						if (url === selectedImg) {

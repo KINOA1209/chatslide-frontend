@@ -1,30 +1,6 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-// import { TemplatesLogos } from './templates_customizable_elements/Templates_logos';
-// import { Berkeley_school_template } from './school_templates/Berkeley_school_template';
-// import { Harvard_school_template } from './school_templates/Harvard_school_template';
-// import { Stanford_school_template } from './school_templates/Stanford_school_template';
-// import { MIT_school_template } from './school_templates/MIT_school_template';
-// import { Princeton_school_template } from './school_templates/Princeton_University_school_template';
-// import { Caltech_school_template } from './school_templates/Caltech_school_template';
-// import { Columbia_school_template } from './school_templates/Columbia_University_school_template';
-// import { JHU_school_template } from './school_templates/Johns_Hopkins_University_school_template';
-// import { University_of_Chicago_school_template } from './school_templates/University_of_Chicago_school_template';
-// import { Yale_school_template } from './school_templates/Yale_school_template';
-// import { UPenn_school_template } from './school_templates/University_of_Pennsylvania_school_template';
-
-// import { Default } from './new_templates/Default_template';
-// import { Fun_Education_001_template } from './new_templates/Fun_Education_001_templates';
-// import { Clean_Lifestyle_003_template } from './new_templates/Clean_Lifestyle_003_template';
-// import { Fun_Education_004_template } from './new_templates/Fun_Education_004_template';
-// import { Business_002_template } from './new_templates/Business_002_template';
-// import { Fun_Vibrant_007_template } from './new_templates/Fun_Vibrant_007_template';
-// import { Business_Light_006_template } from './new_templates/Business_Light_006_template';
-// import { Simplistic_008_template } from './new_templates/Simplistic_008_template';
-// import { Event_Report_010_template } from './new_templates/Event_Report_010_template';
-// import { Business_Dark_005_template } from './new_templates/Business_Dark_005_template';
-// import { New_Education_009_template } from './new_templates/New_Education_009_template';
 import { LayoutKeys } from './slideLayout';
 import { layoutOptions } from './slideLayout';
 import Image from 'next/image';

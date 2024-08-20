@@ -47,10 +47,13 @@ import CustomAudioPlayer from './CustomAudioPlayer';
 import { BlueLabel } from '@/components/ui/GrayLabel';
 import { useUser } from '@/hooks/use-user';
 import { getTierDisplayName } from '@/components/layout/SideBar';
+import PaywallModal from '@/components/paywallModal';
 function CloneYourVoiceTutorial() {
 	const [isOpen, setIsOpen] = useState(false);
 	const [currentStep, setCurrentStep] = useState(0);
-	const { token, credits, tier, userStatus, expirationDate } = useUser();
+	const { isProUser } = useUser();
+
+	const [paywallModalOpen, setPaywallModalOpen] = useState(false);
 
 	const {
 		selectedLanguageCode,
@@ -71,7 +74,6 @@ function CloneYourVoiceTutorial() {
 		loading,
 		generating,
 		cloning,
-		showPaywallModal,
 		isSubmittingConsent,
 		consentId,
 		consentText,
@@ -85,13 +87,16 @@ function CloneYourVoiceTutorial() {
 		handleDeleteProfile,
 		setVoiceName,
 		setCustomerInput,
-		setShowPaywallModal,
 		setConsentText,
 		setSelectedTestLanguageCode,
 		setCustomRecording,
 	} = useVoiceCloning();
 
 	const handleOpen = () => {
+		if (!isProUser) {
+			setPaywallModalOpen(true);
+			return;
+		}
 		setIsOpen(true);
 		setCurrentStep(1);
 	};
@@ -560,7 +565,7 @@ function CloneYourVoiceTutorial() {
 							<FaMicrophone className='mr-2 h-4 w-4' />{' '}
 							<span>Clone your voice</span>
 							<span className='ml-2'>
-								<BlueLabel>{getTierDisplayName(tier, false)}</BlueLabel>
+								<BlueLabel>PRO</BlueLabel>
 							</span>
 						</div>
 					</Button>
@@ -607,6 +612,16 @@ function CloneYourVoiceTutorial() {
 					</DialogContent>
 				)}
 			</Dialog>
+
+			{paywallModalOpen && (
+				<PaywallModal
+					showModal={paywallModalOpen}
+					setShowModal={setPaywallModalOpen}
+					message='Upgrade to clone your voice!'
+					showReferralLink={false}
+					trigger='script/voice_cloning'
+				/>
+			)}
 		</div>
 	);
 }

@@ -400,7 +400,7 @@ export default function WorkflowStep5() {
 				<Column width={'100%'} customStyle={{ width: 'auto' }}>
 					<Card>
 						<BigTitle>📝 Scripts</BigTitle>
-						{!isOpenaiVoice(voice) && (
+						{!isOpenaiVoice(voice) && !isClonedVoice(voice) && (
 							<Instruction>
 								<div className='flex flex-col gap-y-1'>
 									<p>💡 Script to voice tips: </p>

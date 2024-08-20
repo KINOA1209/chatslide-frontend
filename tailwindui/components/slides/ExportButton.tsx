@@ -200,7 +200,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 				setShowModal={setShowPaymentModal}
 				message='Upgrade to export your work!'
 				showReferralLink={false}
-        trigger='slides/export'
+				trigger='slides/export'
 			/>
 
 			<ToastContainer />
@@ -231,19 +231,20 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 					label='PDF'
 					onClick={() => handleExport('pdf', false)}
 					icon={<FaRegFilePdf />}
-          isPaidFeature={true}
+					isPaidFeature={true}
 				/>
 				<MenuItem
 					label='PowerPoint'
+					// onClick={() => handleExport('pptx', false)}  // method by jonas, not working yet
 					onClick={() => handleExport('pptx', false)}
 					icon={<FaRegFilePowerpoint />}
-          isPaidFeature={true}
+					isPaidFeature={true}
 				/>
 				<MenuItem
 					label='Keynote'
 					onClick={() => handleExport('key', false)}
 					icon={<RiKeynoteLine />}
-          isPaidFeature={true}
+					isPaidFeature={true}
 				/>
 				<MenuItem
 					label='Thumbnail'

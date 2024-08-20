@@ -64,7 +64,7 @@ export const SideBarData: SideBarItem[] = [
 		chatslideOnly: true,
 	},
 	{
-		title: 'Updates 7.21',
+		title: 'Updates 8.18',
 		icon: <LuNewspaper />,
 		path: '/whatsnew',
 		drlambdaOnly: true,
@@ -82,6 +82,12 @@ export const SideBarData: SideBarItem[] = [
 		target: '_blank',
 		drlambdaOnly: true,
 	},
+  {
+    title: 'Roadmap',
+    icon: <LuCompass />,
+    path: 'https://chatslide.canny.io/',
+    target: '_blank',
+  },
 	{
 		title: 'Onboarding',
 		icon: <PiShield />,

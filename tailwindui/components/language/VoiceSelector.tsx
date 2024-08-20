@@ -273,11 +273,6 @@ const VoiceSelector: React.FC<{
 					seconds silently.
 				</WarningMessage>
 			)}
-			{isOpenaiVoice(selectedVoice) && (
-				<WarningMessage>
-					The voice you selected does not support avatars yet.
-				</WarningMessage>
-			)}
 		</>
 	);
 };

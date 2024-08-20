@@ -445,7 +445,7 @@ const Affiliate = () => {
 };
 
 const CreditHistory = () => {
-	const { credits, tier, expirationDate } = useUser();
+	const { credits, tier, expirationDate, token } = useUser();
 	// const [stripeLink, setStripeLink] = useState('');
 	const [showManageSubscription, setShowManageSubscription] = useState(false);
 
@@ -457,13 +457,33 @@ const CreditHistory = () => {
 	// 	}
 	// 	fetchStripeLink();
 	// }, [token]);
+	async function handleResub() {
+		const url = await UserService.createStripePortalSession(token);
+		// open a new window to unsubscribe
+		window.open(url, '_blank');
+	}
 
 	const getExpirationDateStatement = (tier: string, date: string) => {
-		if (tier.includes('EXPIRED')) return 'Expired on ' + date;
+		const resubscribe = (
+			<span className='text-green-600 cursor-pointer' onClick={handleResub}>
+				Resubscribe
+			</span>
+		);
+
+		if (tier.includes('EXPIRED'))
+			return (
+				<div>
+					<span>Expired on {date},</span> {resubscribe}
+				</div>
+			);
 		if (tier.includes('ONETIME') || tier.includes('CANCELLED'))
-			return 'Expiring on ' + date;
+			return (
+				<div>
+					<span>Expiring on {date},</span> {resubscribe}
+				</div>
+			);
 		if (tier.includes('LIFETIME')) return '';
-		return 'Renewing on ' + date;
+		return <div>Renewing on {date}</div>;
 	};
 
 	return (
@@ -477,19 +497,9 @@ const CreditHistory = () => {
 				/>
 			)}
 
-			<WrappableRow type='flex' justify='between'>
-				<BigTitle>
-					<>{credits}</>
-				</BigTitle>
-				<InversedBigBlueButton
-					onClick={() => {
-						setShowManageSubscription(!showManageSubscription);
-					}}
-					width='12rem'
-				>
-					Mange Subscription
-				</InversedBigBlueButton>
-			</WrappableRow>
+			<BigTitle>
+				<>{credits}</>
+			</BigTitle>
 
 			<Instruction>⭐️ Subscription Tier</Instruction>
 
@@ -505,14 +515,36 @@ const CreditHistory = () => {
 };
 
 const DangerZone = () => {
-	const { token, signOut } = useUser();
+	const { token, signOut, tier } = useUser();
 	const [showModal, setShowModal] = useState(false);
+	const [isUnsubscribing, setIsUnsubscribing] = useState(false);
 	const router = useRouter();
 
 	function deleteAndSignOut(reason: string) {
 		UserService.deleteUser(token, reason);
 		signOut();
 		router.push('/landing');
+	}
+
+	async function unsubscribe(reason: string) {
+		UserService.submitFeedback(
+			-1, // rating
+			reason,
+			'x', // project_id
+			token,
+		);
+		const url = await UserService.createStripePortalSession(token);
+		// open a new window to unsubscribe
+		window.open(url, '_blank');
+		setShowModal(false);
+	}
+
+	function canUnsubscribe(tier: string) {
+		return (
+			(tier.includes('MONTHLY') || tier.includes('YEARLY')) &&
+			!tier.includes('EXPIRED') &&
+			!tier.includes('CANCELLED')
+		);
 	}
 
 	const ConfirmModal: React.FC<{}> = () => {
@@ -545,22 +577,27 @@ const DangerZone = () => {
 
 		return (
 			<Modal
-				title='Delete Account and Sign Out'
+				title={isUnsubscribing ? 'Unsubscribe' : 'Delete Account and Sign Out'}
 				showModal={showModal}
 				setShowModal={setShowModal}
 				hasInputArea
 			>
 				<Instruction>
-					<p>
-						All your data and account information will be deleted. <br />
-						Unused credits will not be forfeited. <br />
-						You will not be able to log in with this account again. <br />
-						This action is irreversible.
-					</p>
+					{isUnsubscribing ? (
+						'Are you sure you want to unsubscribe? Your subscription will be extended until the end of the billing cycle.'
+					) : (
+						<p>
+							All your data and account information will be deleted. <br />
+							Unused credits will not be forfeited. <br />
+							You will not be able to log in with this account again. <br />
+							This action is irreversible.
+						</p>
+					)}
 				</Instruction>
 
 				<Instruction>
-					Would you like to share why you are deleting your account?
+					Would you like to share why you are{' '}
+					{isUnsubscribing ? ' unsubscribing?' : ' deleting your account?'}
 				</Instruction>
 
 				<RadioButton
@@ -584,10 +621,14 @@ const DangerZone = () => {
 				{reason && (
 					<Instruction>
 						<div
-							onClick={() => deleteAndSignOut(reason)}
-							className='text-red-600'
+							onClick={() => {
+								isUnsubscribing
+									? unsubscribe(reason)
+									: deleteAndSignOut(reason);
+							}}
+							className='text-red-600 cursor-pointer'
 						>
-							Confirm Deletion
+							Confirm
 						</div>
 					</Instruction>
 				)}
@@ -603,6 +644,21 @@ const DangerZone = () => {
 		<Card>
 			{showModal && <ConfirmModal />}
 			<Instruction>🔥 Danger Zone</Instruction>
+
+			{canUnsubscribe(tier) && (
+				<Instruction>
+					<span
+						className='text-red-600 cursor-pointer'
+						onClick={() => {
+							setShowModal(true);
+							setIsUnsubscribing(true);
+						}}
+					>
+						Unsubscribe
+					</span>
+				</Instruction>
+			)}
+
 			<Instruction>
 				<span
 					className='text-red-600 cursor-pointer'

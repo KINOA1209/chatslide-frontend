@@ -1,5 +1,5 @@
 import Header from '@/components/layout/header';
-import { generateMetadata } from '../layout';
+import { generateMetadata } from '../metadata';
 import { getBrand } from '@/utils/getHost';
 
 const title = `Sign Up | ${getBrand()}`;

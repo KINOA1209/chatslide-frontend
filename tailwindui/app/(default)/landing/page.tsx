@@ -683,6 +683,7 @@ function Landing() {
 										text={testimonial.text}
 										profile_url={testimonial.profile_url}
 										rtl={testimonial.rtl}
+                    link={testimonial?.link}
 									/>
 								))}
 							</div>
@@ -747,7 +748,7 @@ function Landing() {
 									</li>
 									<li className='brix---footer-list-item'>
 										<a
-											href='https://blog.drlambda.ai/drlambda-product-roadmap/'
+											href='https://chatslide.canny.io/'
 											className='brix---footer-link'
 										>
 											Roadmap 🛣️
@@ -764,10 +765,7 @@ function Landing() {
 										</a>
 									</li>
 									<li className='brix---footer-list-item'>
-										<a
-											href='/affiliate'
-											className='brix---footer-link'
-										>
+										<a href='/affiliate' className='brix---footer-link'>
 											Affiliate Program 💵
 										</a>
 									</li>
@@ -823,7 +821,7 @@ function Landing() {
 									/>
 								</a>
 								<a
-									href='https://www.youtube.com/@drlambda_ai'
+									href='https://www.youtube.com/@chatslide'
 									className='brix---social-icon-square-30px w-inline-block'
 								>
 									<img

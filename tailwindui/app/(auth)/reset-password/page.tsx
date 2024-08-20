@@ -1,5 +1,5 @@
-import ResetPassowrd from '@/app/(auth)/reset-password/ResetPassword';
-import { generateMetadata } from '@/app/layout';
+import ResetPassword from '@/app/(auth)/reset-password/ResetPassword';
+import { generateMetadata } from '@/app/metadata';
 import { getBrand } from '@/utils/getHost';
 
 export const metadata = generateMetadata({
@@ -8,5 +8,5 @@ export const metadata = generateMetadata({
 });
 
 export default function Page() {
-	return <ResetPassowrd />;
+	return <ResetPassword />;
 }
