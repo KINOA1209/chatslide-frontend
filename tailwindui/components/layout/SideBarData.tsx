@@ -82,6 +82,12 @@ export const SideBarData: SideBarItem[] = [
 		target: '_blank',
 		drlambdaOnly: true,
 	},
+  {
+    title: 'Roadmap',
+    icon: <LuCompass />,
+    path: 'https://chatslide.canny.io/',
+    target: '_blank',
+  },
 	{
 		title: 'Onboarding',
 		icon: <PiShield />,
