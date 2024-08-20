@@ -258,7 +258,7 @@ const SideBar = ({}: SideBarProps) => {
 						isSidebarOpen && (
 							<a
 								href='/account#unlimited-upgrade'
-								className={`block py-1 text-sm text-green-400 mx-auto text-center rounded-lg hover:bg-[#F2F4F7] `}
+								className={`block py-1 text-sm text-green-600 mx-auto text-center rounded-lg hover:bg-[#F2F4F7] `}
 								role='menuitem'
 							>
 								{'Get unlimited'}
