@@ -131,7 +131,7 @@ const DesignSystemButton: React.FC<DesignSystemButtonProps> = ({
 	const textStyles = {
 		sm: {
 			color: `var(--Component-colors-Components-Buttons-${hierarchy}-button-${hierarchy}-fg, ${fontColors[hierarchy][buttonStatus]})`,
-			fontFamily: 'Inter Medium',
+			// fontFamily: 'Inter Medium',
 			fontSize: '14px',
 			fontStyle: 'normal',
 			fontWeight: 600,
@@ -139,7 +139,7 @@ const DesignSystemButton: React.FC<DesignSystemButtonProps> = ({
 		},
 		md: {
 			color: `var(--Component-colors-Components-Buttons-${hierarchy}-button-${hierarchy}-fg, ${fontColors[hierarchy][buttonStatus]})`,
-			fontFamily: 'Inter SemiBold',
+			// fontFamily: 'Inter SemiBold',
 			fontSize: '14px',
 			fontStyle: 'normal',
 			fontWeight: 600,
@@ -147,7 +147,7 @@ const DesignSystemButton: React.FC<DesignSystemButtonProps> = ({
 		},
 		lg: {
 			color: `var(--Component-colors-Components-Buttons-${hierarchy}-button-${hierarchy}-fg, ${fontColors[hierarchy][buttonStatus]})`,
-			fontFamily: 'Inter SemiBold',
+			// fontFamily: 'Inter SemiBold',
 			fontSize: '16px',
 			fontStyle: 'normal',
 			fontWeight: 600,
@@ -155,7 +155,7 @@ const DesignSystemButton: React.FC<DesignSystemButtonProps> = ({
 		},
 		xl: {
 			color: `var(--Component-colors-Components-Buttons-${hierarchy}-button-${hierarchy}-fg, ${fontColors[hierarchy][buttonStatus]})`,
-			fontFamily: 'Inter SemiBold',
+			// fontFamily: 'Inter SemiBold',
 			fontSize: '16px',
 			fontStyle: 'normal',
 			fontWeight: 600,
@@ -163,7 +163,7 @@ const DesignSystemButton: React.FC<DesignSystemButtonProps> = ({
 		},
 		'2xl': {
 			color: `var(--Component-colors-Components-Buttons-${hierarchy}-button-${hierarchy}-fg, ${fontColors[hierarchy][buttonStatus]})`,
-			fontFamily: 'Inter SemiBold',
+			// fontFamily: 'Inter SemiBold',
 			fontSize: '18px',
 			fontStyle: 'normal',
 			fontWeight: 600,
