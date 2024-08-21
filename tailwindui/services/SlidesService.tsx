@@ -45,7 +45,7 @@ class SlidesService {
 		license: string,
 		image_amount: string,
 		token: string,
-    selectedLayouts?: string[]
+		selectedLayouts?: string[],
 	) {
 		const resp = await fetch('/api/init_slide_images', {
 			method: 'POST',
@@ -58,7 +58,7 @@ class SlidesService {
 				topic: topic,
 				license: license,
 				image_amount: image_amount,
-        selected_layouts: selectedLayouts
+				selected_layouts: selectedLayouts,
 			}),
 		});
 		const data = await resp.json();
@@ -106,6 +106,60 @@ class SlidesService {
 		} else {
 			throw new Error('Error when generating scripts: ' + response.status);
 		}
+	}
+
+	static async ppt2slides(
+		selectedResourceIds: string[],
+		teamId: string,
+		token: string,
+	) {
+		const response = await fetch('/api/pptx/to_slides', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify({
+				resource_ids: selectedResourceIds,
+				team_id: teamId,
+			}),
+		});
+		const responseJson = await response.json();
+
+		if (!response.ok) {
+			throw new Error(
+				responseJson.message || 'An error occurred during the moving project',
+			);
+		}
+		console.log('returning responseJson: ', responseJson.data);
+		return responseJson.data; // { slides: slides, project_id: project_id, project_name: project_name }
+	}
+
+	static async ppt2scripts(
+		selectedResourceIds: string[],
+		language: string,
+		token: string,
+	) {
+		const response = await fetch('/api/pptx/to_scripts', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token}`,
+			},
+			body: JSON.stringify({
+				resource_ids: selectedResourceIds,
+				language: language,
+			}),
+		});
+		const responseJson = await response.json();
+
+		if (!response.ok) {
+			throw new Error(
+				responseJson.message || 'An error occurred during the moving project',
+			);
+		}
+		console.log('returning responseJson: ', responseJson.data);
+		return responseJson.data.scripts;
 	}
 }
 

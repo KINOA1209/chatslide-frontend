@@ -162,7 +162,7 @@ export const DragElement = ({
 	);
 
 	const onEnterHandler = () => {
-		console.log('isAnyElementDragging', isAnyElementDragging);
+		// console.log('isAnyElementDragging', isAnyElementDragging);
 		if (isAnyElementDragging) return;
 		setIsOverHandler(true);
 	};

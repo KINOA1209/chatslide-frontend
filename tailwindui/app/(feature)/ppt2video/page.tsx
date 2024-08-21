@@ -67,7 +67,7 @@ export default function Topic() {
 		try {
       updateCreditsFE(-20);
 
-			const data = await ProjectService.ppt2slides(
+			const data = await SlidesService.ppt2slides(
 				selectedResourceIds,
 				'',
 				token,
@@ -83,7 +83,7 @@ export default function Topic() {
         language: 'English',
         presentation_slides: JSON.stringify(slides),
         has_scripts: false,
-        video_url: '',
+        resources: selectedResources,
 			} as Project);
 
       const parsedSlides = ProjectService.parseSlides(JSON.stringify(slides));

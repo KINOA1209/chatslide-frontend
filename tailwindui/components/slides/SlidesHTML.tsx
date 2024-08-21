@@ -375,6 +375,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 	// show chatwindow if width > 1200
 	useEffect(() => {
+    if (project?.content_type === 'ppt2video') {
+      console.log('ppt2video, closing chat window');
+      setIsChatWindowOpen(false);
+      return ;
+    }
 		if (window.innerWidth > 1200) {
 			setIsChatWindowOpen(true);
 			console.log('Window size > 1200, Resizing the layout...');
