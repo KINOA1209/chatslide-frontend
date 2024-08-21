@@ -309,13 +309,13 @@ class ProjectService {
 				slide.layout = slideData.layout || ('Cover_img_1_layout' as LayoutKeys);
 			} else {
 				// choose default layout based on number of bullet points
-				if (slideData.content.length === 1) {
+				if (slide.content.length === 1) {
 					slide.layout =
 						slideData.layout || ('Col_2_img_1_layout' as LayoutKeys);
-				} else if (slideData.content.length === 2) {
+				} else if (slide.content.length === 2) {
 					slide.layout =
 						slideData.layout || ('Col_2_img_2_layout' as LayoutKeys);
-				} else if (slideData.content.length >= 3) {
+				} else if (slide.content.length >= 3) {
 					// Generate a random number between 0 and 1
 					const randomNumber = Math.random();
 					// Choose layout based on probability distribution

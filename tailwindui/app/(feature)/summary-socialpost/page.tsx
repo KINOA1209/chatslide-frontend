@@ -402,7 +402,7 @@ export default function Topic_SocialPost() {
 					isPaidUser={isPaidUser}
 					nextIsPaidFeature={false}
 					nextText={!isSubmitting ? 'Create Post' : 'Creating Post...'}
-					workflow='socialPosts'
+          contentType='social_posts'
 				/>
 				{/* main content */}
 				<div className='gap-y-4 w-full flex flex-col items-center'>

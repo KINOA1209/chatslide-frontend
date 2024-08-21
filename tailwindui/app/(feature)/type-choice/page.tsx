@@ -20,10 +20,12 @@ import {
 	chatslideWorkflowTypeOptions,
 	drlambdaWorkflowTypeOptions,
 } from './options';
+import { useProject } from '@/hooks/use-project';
 
 const ScenarioChoicePage = () => {
 	const router = useRouter(); // Initialize the router
 	const { username } = useUser();
+  const { clearProject } = useProject();
 
 	const teamMode = SessionStorage.getItem('currentTeam');
 
@@ -36,6 +38,11 @@ const ScenarioChoicePage = () => {
 	const navigate = (type: string) => {
 		if (type === 'charts') {
 			router.push('/charts');
+			return;
+		}
+    if (type === 'ppt2video') {
+			router.push('/ppt2video');
+      clearProject();
 			return;
 		}
 		SessionStorage.setItem('workflowType', type);

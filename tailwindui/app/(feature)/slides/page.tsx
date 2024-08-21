@@ -100,11 +100,13 @@ export default function WorkflowStep3() {
 				onClick={() => router.push(addIdToRedir('/scripts'))}
 				icon={<PiFileText />}
 			/>
-			<MenuItem
-				label='Advanced Generation'
-				onClick={() => setShowScriptsSettingsModal(true)}
-				icon={<FaRegStar />}
-			/>
+			{project?.content_type === 'presentation' && (
+				<MenuItem
+					label='Advanced Generation'
+					onClick={() => setShowScriptsSettingsModal(true)}
+					icon={<FaRegStar />}
+				/>
+			)}
 		</>
 	);
 
@@ -231,24 +233,35 @@ export default function WorkflowStep3() {
 
 		// console.log('submitting');
 
-		const formData = {
-			foldername: project.foldername,
-			topic: project.topic,
-			project_id: project.id,
-			language: project.language,
-			json_list: slides,
-			model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4',
-			max_index: isPaidUser ? 0 : 5,
-			pronoun: pronoun,
-			style: style,
-			additional_requirements: additionalRequirements,
-		};
-
 		try {
-			const transcripts = await SlidesService.generateScripts(formData, token);
+      let transcripts = [];
+			if (project?.content_type === 'presentation') {
+				const formData = {
+					foldername: project.foldername,
+					topic: project.topic,
+					project_id: project.id,
+					language: project.language,
+					json_list: slides,
+					model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4',
+					max_index: isPaidUser ? 0 : 5,
+					pronoun: pronoun,
+					style: style,
+					additional_requirements: additionalRequirements,
+				};
+				transcripts = await SlidesService.generateScripts(
+					formData,
+					token,
+				);
+			} else {
+        // ppt2video
+        transcripts = await SlidesService.ppt2scripts(
+          project?.resources?.map((r) => r.id) || [],
+          project.language,
+          token
+        )
+      }
+
 			setTranscripts(transcripts); // and auto-save
-			setIsSubmitting(false);
-			setShowGenerationStatusModal(false);
 			router.push(addIdToRedir('/scripts'));
 			updateProject('has_scripts', true);
 		} catch (error) {
