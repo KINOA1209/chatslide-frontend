@@ -44,8 +44,8 @@ const Modal: React.FC<ModalProps> = ({
 	maxInputLength,
 	hasTextArea = false,
 	rows,
-  confirmText = 'Confirm',
-  onCancel = () => {},
+	confirmText = 'Confirm',
+	onCancel = () => {},
 }) => {
 	const modalRef = React.useRef<HTMLDivElement>(null);
 	const modalContentRef = React.useRef<HTMLDivElement>(null);
@@ -54,7 +54,6 @@ const Modal: React.FC<ModalProps> = ({
 	const handleCloseModal = () => {
 		// console.log('handleCloseModal');
 		if (!canClose) return;
-		else if (!clickOutsideToClose) return;
 		else {
 			setShowModal(false);
 		}
@@ -83,7 +82,7 @@ const Modal: React.FC<ModalProps> = ({
 		const handleEsc = (e: KeyboardEvent) => {
 			if (e.key === 'Escape') {
 				handleCloseModal();
-        onCancel();
+				onCancel();
 				e.stopPropagation();
 			}
 		};
@@ -111,13 +110,10 @@ const Modal: React.FC<ModalProps> = ({
 		<Transition
 			className='h-[100vh] w-[100vw] z-40 bg-[#121212B2]/70 fixed top-0 left-0 flex flex-col items-center justify-center'
 			show={showModal}
-			onClick={() => {
+			onMouseDown={(e) => {
 				if (clickOutsideToClose) {
 					setShowModal(false);
 				}
-			}}
-			onMouseDown={(e) => {
-				e.stopPropagation();
 			}}
 			enter='transition ease duration-300 transform'
 			enterFrom='opacity-0 translate-y-12'
@@ -138,6 +134,9 @@ const Modal: React.FC<ModalProps> = ({
 				leaveFrom='opacity-100 translate-y-0'
 				leaveTo='opacity-0 translate-y-12'
 				onClick={(e) => {
+					e.stopPropagation();
+				}}
+				onMouseDown={(e) => {
 					e.stopPropagation();
 				}}
 				ref={modalContentRef}
@@ -171,10 +170,9 @@ const Modal: React.FC<ModalProps> = ({
 									// className='absolute top-0 right-0 text-[24px] focus:outline-none'
 									className='text-[24px] focus:outline-none'
 									onClick={() => {
-                      handleCloseModal();
-                      onCancel();
-                    }
-                  }
+										handleCloseModal();
+										onCancel();
+									}}
 								>
 									<FaTimes className='text-gray-600 hover:text-gray-800' />
 								</button>
@@ -216,10 +214,9 @@ const Modal: React.FC<ModalProps> = ({
 									<InversedBigBlueButton
 										id='modal-cancel'
 										onClick={() => {
-                      handleCloseModal();
-                      onCancel();
-                    }
-                  }
+											handleCloseModal();
+											onCancel();
+										}}
 									>
 										Cancel
 									</InversedBigBlueButton>

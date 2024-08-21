@@ -28,10 +28,10 @@ export default function Career() {
 						<a href='mailto:contact@drlambda.ai'>contact@drlambda.ai</a>.
 						<br />
 						<br />
-						<div className='pb-8' id='design'>
+						{/* <div className='pb-8' id='design'>
 							<h2 className='h3 text-2xl'>🧑🏻‍🎨 Design</h2>
-						</div>
-						<div className='flex flex-col md:flex-row items-center pb-8'>
+						</div> */}
+						{/* <div className='flex flex-col md:flex-row items-center pb-8'>
 							<div>
 								<h3 className='h3 text-xl mb-2'>UX Design Intern</h3>
 								<p className='text-base text-gray-600'>
@@ -84,9 +84,9 @@ export default function Career() {
 									<br />
 								</p>
 							</div>
-						</div>
+						</div> */}
 					</div>
-					<div className='max-w-3xl mx-auto pb-4'>
+					{/* <div className='max-w-3xl mx-auto pb-4'>
 						<div className='pb-8'>
 							<h2 className='h3 text-2xl'>🧑🏽‍💻 Engineering</h2>
 						</div>
@@ -290,47 +290,118 @@ export default function Career() {
 								</p>
 							</div>
 						</div>
+					</div> */}
+					<div className='max-w-3xl mx-auto pb-4'>
+						<div></div>
+						<div className='pb-8'>
+							<h2 className='h3 text-2xl'>
+								🚀 Join Our Revolution in Document Creation
+							</h2>
+						</div>
+						<div className='flex flex-col md:flex-row items-center pb-8'>
+							<div>
+								<h3 className='h3 text-xl mb-2'>
+									Data-Driven Growth & Marketing Data Strategist Intern
+								</h3>
+								<p className='text-base text-gray-600'>
+									At DrLambda, we are transforming the future of document
+									creation by turning static content into dynamic digital
+									workspaces. Using cutting-edge AI tools, we’ve developed a
+									powerful external second brain designed to enhance
+									productivity and efficiency across various industries.
+									<br />
+									<br />
+									<strong>
+										Introducing One of Our Flagship Products - ChatSlide.ai:
+									</strong>
+									<br />
+									Experience a revolution in content creation with ChatSlide.ai,
+									now accessible in over 200 countries. Whether you start with
+									an image 🖼️, a PDF 📄, or any weblink 🔗, ChatSlide.ai
+									seamlessly transforms it into engaging content, including
+									slides, videos, and social media posts. 🚀 Boost your
+									productivity instantly and streamline your knowledge-sharing
+									workflow!
+									<br />
+									<br />
+									We are on a mission to build the digital workspace that
+									converts your documents into anything you need, enabling you
+									to share knowledge with ease and creativity.
+									<br />
+									<br />
+									<strong>Website:</strong>{' '}
+									<a
+										href='https://chatslide.ai'
+										target='_blank'
+										rel='noopener noreferrer'
+									>
+										https://drlambda.ai
+									</a>
+									<br />
+									<br />
+									<strong>Role Overview:</strong>
+									<br />
+									We are on the lookout for a dynamic and driven Data-Driven
+									Growth & Marketing Operations Intern to become a key player in
+									our team. In this role, you will:
+									<br />
+									<br />-{' '}
+									<strong>
+										Supercharge Content Marketing Conversion:
+									</strong>{' '}
+									Design and execute innovative strategies to significantly
+									boost our content marketing conversion rates. You'll have the
+									opportunity to craft and share captivating brand stories that
+									resonate across multiple platforms, helping to build our
+									brand's global presence.
+									<br />
+									<br />- <strong>Leverage Data for User Insights:</strong> Dive
+									deep into our rich data sets to uncover user personas and
+									behavior patterns. Your analysis will be crucial in providing
+									actionable insights that drive our growth strategy and enhance
+									user engagement.
+									<br />
+									<br />- <strong>Create Impactful Case Studies:</strong> Take
+									the lead in optimizing and crafting compelling product case
+									studies that not only highlight our product’s capabilities but
+									also demonstrate the real-world impact and value we bring to
+									our clients. Your work will play a pivotal role in showcasing
+									the transformative power of our AI-driven tools.
+									<br />
+									<br />- <strong>Analyze Historical Data Trends:</strong>{' '}
+									Examine and interpret historical data to identify trends and
+									patterns that inform our marketing and product strategies,
+									ensuring we stay ahead of the curve and meet our users'
+									evolving needs.
+									<br />
+									<br />- <strong>
+										Identify User Personas and Behaviors:
+									</strong>{' '}
+									Use data-driven methods to gain deep insights into user
+									personas and behaviors, allowing us to tailor our products and
+									marketing efforts to better align with user expectations and
+									drive sustained growth.
+									<br />
+									<br />
+									<strong>What Will Make You Stand Out:</strong>
+									<br />
+									- If you have previous experience in content operations within
+									a SaaS company, you’re already ahead of the game.
+									<br />
+									- A strong passion for knowledge and information management
+									will set you apart and greatly enhance your chances of being
+									the perfect fit for our team.
+									<br />
+									<br />
+									If you’re passionate about AI, digital marketing, and data
+									analysis, and eager to make a tangible impact on a rapidly
+									growing company, contact{' '}
+									<a href='mailto:sophie@drlambda.ai'>sophie@drlambda.ai</a>—we
+									want to hear from you!
+								</p>
+							</div>
+						</div>
 					</div>
-					{/* <div className='max-w-3xl mx-auto pb-4'>
-            <div>
-
-            </div>
-            <div className='pb-8'>
-              <h2 className='h3 text-2xl'>📊 Data Science</h2>
-            </div>
-            <div className='flex flex-col md:flex-row items-center pb-8'>
-              <div>
-                <h3 className='h3 text-xl mb-2'>Data Scientist</h3>
-                <p className='text-base text-gray-600'>
-                  Are you a detail-oriented Data Scientist with a knack for turning data into insights? We're looking for a skilled individual to join our team and drive data-informed decisions. This role is an excellent opportunity for someone who thrives in extracting meaningful insights from complex datasets and has a passion for data visualization and analytics.
-                  <br /><br />
-                  <strong>Role Insight:</strong><br />
-                  As our Data Scientist, you will play a critical role in analyzing large datasets, creating dynamic dashboards, and providing actionable insights to guide our strategic decisions. Your expertise in SQL, Google Analytics, Retool, and dashboard creation will be pivotal in enhancing our data-driven approach.
-                  <br /><br />
-                  <strong>Key Tasks:</strong><br />
-                  - Develop and maintain databases, ensuring data integrity and efficiency using SQL and Python.<br />
-                  - Analyze web traffic and user engagement metrics using Google Analytics.<br />
-                  - Design, build and deploy interactive dashboards and reports using Retool and other visualization tools.<br />
-                  - Perform advanced data analysis to uncover trends, patterns, and insights.<br />
-                  - Collaborate with cross-functional teams to understand their data needs and deliver comprehensive analytics solutions.<br />
-                  - Stay updated with the latest trends and best practices in data science and analytics.<br /><br />
-                  <strong>What You Bring:</strong><br />
-                  - Proficiency in SQL and experience in database management.<br />
-                  - Strong understanding of Google Analytics for web data analysis.<br />
-                  - Experience in using Retool or similar tools for creating interactive dashboards.<br />
-                  - Solid background in data analytics, statistics, and data visualization.<br />
-                  - Ability to translate complex datasets into understandable and actionable insights.<br />
-                  - Familiarity with data processing, data modeling, and data mining techniques.<br /><br />
-                  <strong>Preferred Expertise:</strong><br />
-                  - A degree in Data Science, Statistics, Computer Science, or a related field.<br />
-                  - Experience with machine learning algorithms and predictive modeling.<br />
-                  - Proficiency in programming languages such as Python or R.<br />
-                  - Excellent problem-solving skills and attention to detail.<br />
-                  - Strong communication and presentation skills.<br /><br />
-                </p>
-              </div>
-            </div>
-          </div> */}
 				</div>
 			</div>
 			<Footer />

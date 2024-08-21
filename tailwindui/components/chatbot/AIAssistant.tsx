@@ -465,7 +465,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 				<div className='flex flex-row justify-between p-2 items-center gap-4'>
 					<TextareaAutosize
 						value={userInput}
-						className='w-full max-h-[30rem] border-0 focus:outline-none focus:ring-0 resize-none overflow-y-auto'
+						className='w-full max-h-[30rem] border-0 focus:outline-none focus:ring-0 resize-none'
 						onChange={(e: any) => setUserInput(e.target.value)}
 						onKeyDown={handleEnter}
 						placeholder='Start here...'

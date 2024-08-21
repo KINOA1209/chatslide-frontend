@@ -954,9 +954,23 @@ export const useSlides = () => {
 
 	const toggleHideSlide = (index: number) => {
 		console.log('-- hide slide: ', { index });
-		const newSlide = { ...slides[index], isHidden: !slides[index].isHidden };
-		const newSlides = [...slides];
-		newSlides[index] = newSlide;
+
+    let newSlides = [];
+		if (index == -1) {
+			// unhide all slides
+			 newSlides = slides.map((slide, index) => {
+				return { ...slide, isHidden: false };
+			});
+		} else if (index == -2) {
+			// hide all slides
+			newSlides = slides.map((slide, index) => {
+				return { ...slide, isHidden: true };
+			});
+		} else {
+			const newSlide = { ...slides[index], isHidden: !slides[index].isHidden };
+			newSlides = [...slides];
+      newSlides[index] = newSlide;
+		}
 		setSlides(newSlides);
 		updateSlideHistory(newSlides);
 		debouncedSyncSlides(newSlides, false, newSlides.length);
