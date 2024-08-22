@@ -203,6 +203,7 @@ export default function WorkflowStep5() {
 			console.error('No project found');
 			return;
 		}
+    console.log("Confirming video jobs");
 		const hasRunningVideoJob = await VideoService.hasRunningVideoJob(
 			project.id,
 			token,
@@ -216,6 +217,7 @@ export default function WorkflowStep5() {
 	}
 
 	async function handleSubmitVideo() {
+    console.log('Handling submit video');
 		const longScriptIndices = slides
 			.map((slide, index) =>
 				(slide.transcript?.length || 0) >= 4096 ? index : -1,
@@ -264,7 +266,7 @@ export default function WorkflowStep5() {
 		const foldername = project?.foldername;
 		const project_id = project.id;
 		if (!foldername || !project_id) {
-			console.error('No pid or foldername or project_id found');
+			console.error('No or foldername or project_id found');
 			setIsSubmitting(false);
 			return;
 		}

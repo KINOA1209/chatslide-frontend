@@ -75,10 +75,12 @@ export default function Topic() {
       const slides = data.slides;
       const project_id = data.project_id;
       const project_name = data.project_name;
+      const foldername = data.foldername;
 
       initProject({
 				id: project_id,
 				name: project_name,
+        foldername: foldername,
 				content_type: 'ppt2video',
         language: 'English',
         presentation_slides: JSON.stringify(slides),
