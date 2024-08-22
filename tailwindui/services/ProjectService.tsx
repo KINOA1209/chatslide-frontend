@@ -537,13 +537,14 @@ class ProjectService {
 		project_id: string,
 		target_language: string,
 		token: string,
+		content_type: string = 'presentation',
 	): Promise<Project> {
 		const headers = new Headers();
 		if (token) {
 			headers.append('Authorization', `Bearer ${token}`);
 		}
-
-		const response = await fetch('/api/clone_project', {
+		const url = content_type === "chart" ? "api/chart/clone_project" : '/api/clone_project';
+		const response = await fetch(url, {
 			method: 'POST',
 			headers: headers,
 			body: JSON.stringify({

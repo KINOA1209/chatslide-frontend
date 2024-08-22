@@ -40,6 +40,7 @@ export const CloneButton: React.FC<{
 				project.id,
 				targetCloneLanguage,
 				token,
+				project.content_type,
 			);
 			setCurrentProjects((projects) => [newProject, ...projects]);
 			setIsDropdownVisible && setIsDropdownVisible(false);
