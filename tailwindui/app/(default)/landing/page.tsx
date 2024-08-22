@@ -245,16 +245,16 @@ function Landing() {
 						/>
 						<div className='margin-bottom-24'>
 							{isChatslide() ? (
-								<h3 className='heading'>
+								<h1 className='heading'>
 									Build your <span className='text-span'>Slides</span> and{' '}
 									<span className='text-span'>Video</span> in one click
-								</h3>
+								</h1>
 							) : (
-								<h3 className='heading'>
-									Digital workspace for{' '}
-									<span className='text-span'>documents</span> to
-									<span className='text-span'> anything</span>
-								</h3>
+								<h1 className='heading'>
+									AI workspace for{' '}
+									<span className='text-span'>slides</span> and
+									<span className='text-span'> videos</span>
+								</h1>
 							)}
 						</div>
 						<p className='paragraph-regular'>
