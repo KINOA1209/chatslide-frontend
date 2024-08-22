@@ -10,7 +10,7 @@ import {
 import Image from 'next/image';
 import DesignSystemBadges from '@/components/ui/design_systems/Badges'; // Adjust the import path
 import { PiSlideshow } from 'react-icons/pi';
-import { MdOutlineShare, MdOndemandVideo } from 'react-icons/md';
+import { MdOutlineShare, MdOndemandVideo, MdOutlineInsertChartOutlined } from 'react-icons/md';
 import Project from '@/models/Project'; // Adjust the import path to your Project model
 import ProjectTable, {
 	formatDate,
@@ -49,6 +49,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
 	setRefreshMenu,
 	exportSlidesRef = useRef<HTMLDivElement>(null),
 }) => {
+	const url = project.content_type !== "chart" ? `/${isDiscover ? 'shared' : 'project'}/${project.id}` : `/charts/${project.id}`;
 	return (
 		// <Link href={`/${isDiscover ? 'shared' : 'project'}/${project.id}`}>
 		<Card
@@ -57,7 +58,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
 		>
 			<CardContent className='p-0 flex flex-col h-full justify-between'>
 				{/* project image */}
-				<Link href={`/${isDiscover ? 'shared' : 'project'}/${project.id}`}>
+				<Link href={url}>
 					<div
 						className='flex items-center justify-center w-full'
 						style={{
@@ -83,7 +84,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
 					className='projectInfo'
 				>
 					{/* project title name */}
-					<Link href={`/${isDiscover ? 'shared' : 'project'}/${project.id}`}>
+					<Link href={url}>
 						<div
 							className='flex-wrap'
 							style={{
@@ -126,7 +127,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
 									textColor='var(--Component-colors-Utility-Brand-utility-brand-700, #3538CD)'
 									iconColor='var(--Component-colors-Utility-Brand-utility-brand-700, #3538CD)'
 								/>
-							) : (
+							) : project.content_type === 'social_posts' ? (
 								<DesignSystemBadges
 									size='sm'
 									text=''
@@ -137,7 +138,18 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
 									textColor='var(--Component-colors-Utility-Purple-utility-purple-700, #5925DC)'
 									iconColor='var(--Component-colors-Utility-Purple-utility-purple-700, #5925DC)'
 								/>
-							)}
+							) :
+								<DesignSystemBadges
+									size='sm'
+									text=''
+									iconLeading={MdOutlineInsertChartOutlined}
+									bgColor='var(--Component-colors-Utility-Purple-utility-purple-50, #FEF2FF)'
+									borderColor='var(--Component-colors-Utility-Purple-utility-purple-200, #FCC7F8)'
+									borderRadius='6px'
+									textColor='var(--Component-colors-Utility-Purple-utility-purple-700, #B01C99)'
+									iconColor='var(--Component-colors-Utility-Purple-utility-purple-700, #B01C99)'
+								/>
+							}
 							{project.video_url ? (
 								<DesignSystemBadges
 									size='sm'

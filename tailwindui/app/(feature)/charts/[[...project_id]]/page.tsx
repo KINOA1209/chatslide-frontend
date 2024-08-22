@@ -119,10 +119,8 @@ export default function Page() {
 		let img_data = "";
 		if (chartRef.current !== null) {
 			let canvas = chartRef.current.getContext();
-			chartRef.current.resize(720 / 2, 480 / 2);
 			img_data = canvas.chart.canvas.toDataURL();
 			img_data = img_data.substring(22); // remove data:image/png;base64,
-			chartRef.current.resize(720, 480);
 		}
 		const data = JSON.stringify({
 			project_id: projectId,

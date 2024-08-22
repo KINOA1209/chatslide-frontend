@@ -12,7 +12,7 @@ import ProjectService from '@/services/ProjectService';
 import { useUser } from '@/hooks/use-user';
 import DesignSystemBadges from '@/components/ui/design_systems/Badges';
 import { PiSlideshow } from 'react-icons/pi';
-import { MdOndemandVideo, MdOutlineOpenInNew } from 'react-icons/md';
+import { MdOndemandVideo, MdOutlineInsertChartOutlined } from 'react-icons/md';
 import { MdOutlineShare } from 'react-icons/md';
 import { HiOutlineDotsVertical } from 'react-icons/hi';
 import { MdOutlineDelete } from 'react-icons/md';
@@ -80,6 +80,12 @@ export function getThumbnailUrl(project: Project) {
 			(isChatslide() ? defaultChatSlideThumbnail : defaultDrLambdaThumbnail)
 		);
 	}
+	if (project.content_type === 'chart') {
+		return (
+			// project.thumbnail_url || # disable thumbnail url for chart for now
+			(isChatslide() ? defaultChatSlideThumbnail : defaultDrLambdaThumbnail)
+		);
+	}
 	if (project.post_type === 'casual_topic') {
 		return causalTopicThumbnail;
 	}
@@ -136,6 +142,8 @@ const ProjectItem: React.FC<{
 		setShowChangeProjectDescriptionModal,
 	] = useState(false);
 
+	const url = project.content_type !== 'chart' ? `/${isDiscover ? 'shared' : 'project'}/${project.id}` : `/charts/${project.id}`;
+
 	return (
 		<React.Fragment key={project.id}>
 			{/* thumbnail */}
@@ -153,7 +161,7 @@ const ProjectItem: React.FC<{
 						{project.view_count || 0}
 					</div>
 				)}
-				<Link href={`/${isDiscover ? 'shared' : 'project'}/${project.id}`}>
+				<Link href={url}>
 					<div
 						className='flex items-center justify-center w-full'
 						style={{
@@ -186,7 +194,7 @@ const ProjectItem: React.FC<{
 				draggable={onDrag ? true : false}
 				onDragStart={() => onDrag && onDrag(project.id)}
 			>
-				<Link href={`/${isDiscover ? 'shared' : 'project'}/${project.id}`}>
+				<Link href={url}>
 					<div
 						className='flex-wrap'
 						style={{
@@ -218,7 +226,7 @@ const ProjectItem: React.FC<{
 								textColor='var(--Component-colors-Utility-Brand-utility-brand-700, #3538CD)'
 								iconColor='var(--Component-colors-Utility-Brand-utility-brand-700, #3538CD)'
 							></DesignSystemBadges>
-						) : (
+						) : project.content_type === "social_posts" ? (
 							<DesignSystemBadges
 								size='sm'
 								text={'Social Post'}
@@ -229,7 +237,17 @@ const ProjectItem: React.FC<{
 								textColor='var(--Component-colors-Utility-Purple-utility-purple-700, #5925DC)'
 								iconColor='var(--Component-colors-Utility-Purple-utility-purple-700, #5925DC)'
 							></DesignSystemBadges>
-						)}{' '}
+							) :
+								<DesignSystemBadges
+									size='sm'
+									text={'Chart'}
+									iconLeading={MdOutlineInsertChartOutlined}
+									bgColor='var(--Component-colors-Utility-Purple-utility-purple-50, #FEF2FF)'
+									borderColor='var(--Component-colors-Utility-Purple-utility-purple-200, #FCC7F8)'
+									borderRadius='6px'
+									textColor='var(--Component-colors-Utility-Purple-utility-purple-700, #B01C99)'
+									iconColor='var(--Component-colors-Utility-Purple-utility-purple-700, #B01C99)'
+								></DesignSystemBadges>}
 						{project.video_url ? (
 							<DesignSystemBadges
 								size='sm'
