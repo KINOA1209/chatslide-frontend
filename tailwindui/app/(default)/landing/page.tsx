@@ -8,6 +8,7 @@ import {
 	DrLambdaTestimonialsData,
 } from './TestimonialData';
 import { generateMetadata } from '@/app/metadata';
+import Footer from '@/components/layout/footer';
 
 const title = `${getBrand()} | AI Workspace for Slides and Videos`;
 
@@ -699,147 +700,7 @@ function Landing() {
 			{isChatslide() && <Tutorial />}
 			{/* <Pricing /> */}
 			<section className='uui-section_pricing11-2 hide-tablet' />
-			<footer className='brix---footer-wrapper'>
-				<div className='brix---container-default w-container'>
-					<div className='brix---footer-top-border-bottom'>
-						<div className='w-layout-grid brix---grid-footer-v5'>
-							<div id='w-node-d59964e8-3442-2a41-7a53-b080d62796ce-a1504b34'>
-								<div className='brix---mg-bottom-24px flex items-center justify-center'>
-									<a
-										href='#'
-										className='brix---footer-logo-wrapper w-inline-block'
-									>
-										<img
-											src={
-												isChatslide()
-													? 'images/template/chatslide_color.svg'
-													: 'images/Frame-1707478931-1.png'
-											}
-											alt=''
-											width={196}
-											className='brix---footer-logo'
-										/>
-									</a>
-								</div>
-							</div>
-							<div>
-								<div className='brix---footer-col-title'>Product</div>
-								<ul role='list' className='brix---footer-list-wrapper'>
-									<li className='brix---footer-list-item'>
-										<a href='/privacy' className='brix---footer-link'>
-											Privacy Policy
-										</a>
-									</li>
-									<li className='brix---footer-list-item'>
-										<a href='/terms' className='brix---footer-link'>
-											Terms and Services
-										</a>
-									</li>
-									<li className='brix---footer-list-item'>
-										<a
-											href='https://blog.drlambda.ai'
-											className='brix---footer-link'
-										>
-											Blog
-										</a>
-									</li>
-									<li className='brix---footer-list-item'>
-										<a
-											href='https://blog.drlambda.ai/frequently-asked-questions/'
-											className='brix---footer-link'
-										>
-											FAQ ❓
-										</a>
-									</li>
-									<li className='brix---footer-list-item'>
-										<a
-											href='https://chatslide.canny.io/'
-											className='brix---footer-link'
-										>
-											Roadmap 🛣️
-										</a>
-									</li>
-								</ul>
-							</div>
-							<div id='w-node-d59964e8-3442-2a41-7a53-b080d62796fb-a1504b34'>
-								<div className='brix---footer-col-title'>Company</div>
-								<ul role='list' className='brix---footer-list-wrapper'>
-									<li className='brix---footer-list-item'>
-										<a href='/career' className='brix---footer-link'>
-											Career
-										</a>
-									</li>
-									<li className='brix---footer-list-item'>
-										<a href='/affiliate' className='brix---footer-link'>
-											Affiliate Program 💵
-										</a>
-									</li>
-									<li className='brix---footer-list-item'>
-										<a href='about.html' className='brix---footer-link'>
-											About Us
-										</a>
-									</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-					<div className='brix---footer-bottom-v5'>
-						<div className='w-layout-grid brix---grid-footer-bottom-v2'>
-							<p className='brix---mg-bottom-0'>
-								©️ {getBrand(true)}.ai. All rights reserved.
-								<br />
-								Created with 💙 from San Francisco.
-							</p>
-							<div className='w-layout-grid brix---social-media-grid-right---t-center'>
-								<a
-									href={
-										isChatslide()
-											? 'https://twitter.com/chatslide_ai'
-											: 'https://twitter.com/drlambda_ai'
-									}
-									className='brix---social-icon-square-30px w-inline-block'
-								>
-									<img
-										src='images/twitter-social-media-icon-brix-templates.svg'
-										alt='Twitter - Elements Webflow Library - BRIX Templates'
-										className='image-12'
-									/>
-								</a>
-								<a
-									href='https://www.instagram.com/chatslide_ai/'
-									className='brix---social-icon-square-30px w-inline-block'
-								>
-									<img
-										src='images/instagram-social-media-icon-brix-templates.svg'
-										alt='Instagram - Elements Webflow Library - BRIX Templates'
-										className='image-11'
-									/>
-								</a>
-								<a
-									href='https://www.linkedin.com/company/drlambda/'
-									className='brix---social-icon-square-30px w-inline-block'
-								>
-									<img
-										src='images/linkedin-social-media-icon-brix-templates.svg'
-										alt='Linkedin - Elements Webflow Library - BRIX Templates'
-										className='image-10'
-									/>
-								</a>
-								<a
-									href='https://www.youtube.com/@chatslide'
-									className='brix---social-icon-square-30px w-inline-block'
-								>
-									<img
-										src='images/youtube-social-media-icon-brix-templates.svg'
-										alt='YouTube - Elements Webflow Library - BRIX Templates'
-										className='image-9'
-									/>
-								</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</footer>
+      <Footer />
 		</>
 	);
 }

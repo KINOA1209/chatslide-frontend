@@ -289,7 +289,7 @@ const PricingComparison: React.FC<{
 			];
 
 	return (
-		<div className='flex flex-col items-center overflow-y-auto overflow-x-scroll notranslate'>
+		<div className='flex flex-col items-center overflow-y-auto overflow-x-auto notranslate'>
 			<MultiwayToggle
 				options={options}
 				selectedKey={interval}

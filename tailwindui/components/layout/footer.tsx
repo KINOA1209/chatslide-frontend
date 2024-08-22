@@ -57,7 +57,7 @@ const socialMediaBlock = (
 		{/* youtube */}
 		<li className='ml-4'>
 			<a
-				href='https://www.youtube.com/@drlambda_ai'
+				href='https://www.youtube.com/@chatslide'
 				target='_blank'
 				className='flex justify-center items-center text-gray-600 hover:text-gray-900 bg-white hover:bg-white-100 rounded-full shadow transition duration-150 ease-in-out'
 				aria-label='Facebook'
@@ -105,7 +105,7 @@ export default function Footer() {
 					{/* 1st block */}
 					<div className='flex flex-col items-center justify-center'>
 						<div className='flex justify-center mb-2'>
-							<Logo />
+							<Logo size='64px'/>
 						</div>
 						<div className='flex justify-center mb-2 text-sm text-gray-600'>
 							{getBrand()}
@@ -181,7 +181,7 @@ export default function Footer() {
 									href='/affiliate'
 									className='text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out'
 								>
-									Affliate Program
+									Affiliate Program
 								</a>
 							</li>
 							<li className='mb-2'>
@@ -220,10 +220,12 @@ export default function Footer() {
 export function WorkflowFooter() {
 	return (
 		<footer>
-			<div className='w-full border-t border-gray-200 bg-[#F4F4F4]'>
+			<div className='w-screen by-2 border-t border-gray-200 bg-[#F4F4F4]'>
 				{/* Social as */}
 				{socialMediaBlock}
 			</div>
 		</footer>
 	);
 }
+
+export const ThinFooter = WorkflowFooter
