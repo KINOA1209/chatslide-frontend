@@ -233,7 +233,7 @@ export const projectFinishedSteps = (project: Project | null) => {
 			finishedStepsArray.push(3);
 		}
 		if (project.has_scripts) finishedStepsArray.push(4);
-		if (project.video_url) finishedStepsArray.push(5);
+		if (project.video_url != "") finishedStepsArray.push(5);
 	} else if (project.content_type === 'ppt2video') {
     finishedStepsArray.push(0);
     if (project.presentation_slides) {
@@ -242,7 +242,7 @@ export const projectFinishedSteps = (project: Project | null) => {
     if (project.has_scripts) {
       finishedStepsArray.push(2);
     }
-    if (project.video_url) {
+    if (project.video_url != "") {
       finishedStepsArray.push(3);
     }
   }
