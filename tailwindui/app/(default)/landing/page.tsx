@@ -17,14 +17,14 @@ function Landing() {
 		<>
 			<meta charSet='utf-8' />
 			<title>
-				{`${getBrand()} | Build your Slides and Videos from Documents in one click`}
+				{`${getBrand()} | AI Workspace for Slides and Videos`}
 			</title>
 			<meta
 				content='Your AI assistant to create professional slides and posts. Convert your documents, webpages, videos, and tweets into professional slides and documents.'
 				name='description'
 			/>
 			<meta
-				content={`${getBrand()} | Build your Slides and Videos from Documents in one click`}
+				content={`${getBrand()} | AI Workspace for Slides and Videos`}
 				property='og:title'
 			/>
 			<meta
