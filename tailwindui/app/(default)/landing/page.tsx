@@ -7,6 +7,11 @@ import {
 	ChatSlideTestimonialsData,
 	DrLambdaTestimonialsData,
 } from './TestimonialData';
+import { generateMetadata } from '@/app/metadata';
+
+const title = `${getBrand()} | AI Workspace for Slides and Videos`;
+
+export const metadata = generateMetadata({ title });
 
 function Landing() {
 	const testimonialData = isChatslide()
