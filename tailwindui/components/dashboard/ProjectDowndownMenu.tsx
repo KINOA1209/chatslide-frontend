@@ -161,7 +161,7 @@ const ProjectDropdownMenu: React.FC<ProjectDropdownMenuProps> = ({
 				</button>
 			)}
 
-			{!isDiscover && setCurrentProjects && project.team_id === '' && (
+			{!isDiscover && setCurrentProjects && !project.team_id && project.content_type !== "chart" && (
 				<button
 					className='block px-[10px] py-[9px] text-sm text-[#182230] rounded-md hover:bg-zinc-100 w-full text-left'
 					onClick={() => setShowMoveToTeamModal(true)}
@@ -176,7 +176,7 @@ const ProjectDropdownMenu: React.FC<ProjectDropdownMenuProps> = ({
 					<MoveToTeamButton
 						project={project}
 						setCurrentProjects={setCurrentProjects}
-						teamId={project.team_id}
+						teamId={""}
 						showMoveToTeamModal={showMoveToTeamModal}
 						setShowMoveToTeamModal={setShowMoveToTeamModal}
 						setRefreshMenu={setRefreshMenu}
@@ -216,7 +216,7 @@ const ProjectDropdownMenu: React.FC<ProjectDropdownMenuProps> = ({
 					</button>
 				)}
 
-			{project.thumbnail_url && (
+			{project.thumbnail_url && project.content_type !== "chart" && (
 				<button
 					className='block px-[10px] py-[9px] text-sm text-[#182230] rounded-md hover:bg-zinc-100 w-full text-left'
 					onClick={() => setShowShareModal(true)}
@@ -251,7 +251,7 @@ const ProjectDropdownMenu: React.FC<ProjectDropdownMenuProps> = ({
 				</button>
 			)}
 
-			{!isDiscover && setCurrentProjects && project.thumbnail_url && (
+			{!isDiscover && setCurrentProjects && project.thumbnail_url && project.content_type !== "chart" && (
 				<button
 					className='block px-[10px] py-[9px] text-sm text-[#182230] rounded-md hover:bg-zinc-100 w-full text-left'
 					onClick={() => {
