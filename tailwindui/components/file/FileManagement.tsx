@@ -469,7 +469,7 @@ export const fileExtensions = {
 		'3gp',
 		'mpeg',
 	],
-	ppt: ['ppt', 'pptx'],
+	ppt: ['ppt', 'pptx', 'pdf'],
 };
 
 const customFilterButtonGroupStyles = {

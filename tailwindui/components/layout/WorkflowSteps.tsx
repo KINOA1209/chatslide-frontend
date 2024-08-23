@@ -192,7 +192,7 @@ const PRESENTATION_STEPS = [
 	'Video',
 ];
 const PPT2VIDEO_STEPS = [
-	'PPT',
+	'File',
 	'Slides',
 	'Scripts',
 	'Video',

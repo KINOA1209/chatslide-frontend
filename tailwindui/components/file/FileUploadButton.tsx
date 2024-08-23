@@ -28,7 +28,7 @@ export const DOCUMENT_EXTENSIONS = [
 	'jpg',
   'jpeg'
 ];
-export const PPTX_EXTENSIONS = ['pptx', 'ppt'];
+export const PPTX_EXTENSIONS = ['pptx', 'ppt', 'pdf'];
 export const THEMEPAGE_EXTENSIONs = [...MEDIA_EXTENSIONS, ...PPTX_EXTENSIONS];
 export const ALL_EXTENSIONS = [...MEDIA_EXTENSIONS, ...DOCUMENT_EXTENSIONS];
 

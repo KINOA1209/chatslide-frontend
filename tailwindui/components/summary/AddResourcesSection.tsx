@@ -199,7 +199,7 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 				) : generationMode === 'from_topic' ? (
 					<BigTitle>📚 Supporting Sources (Optional)</BigTitle>
 				) : (
-					<BigTitle>📚 Add PPT Files</BigTitle>
+					<BigTitle>📚 Add PPT, PPTX, or PDF Files</BigTitle>
 				)}
 				{/* <Explanation>
 					{isRequired
