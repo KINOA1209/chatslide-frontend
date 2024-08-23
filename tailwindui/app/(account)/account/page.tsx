@@ -315,9 +315,11 @@ const ApplyPromo = () => {
 
 	return (
 		<div className='w-full'>
-			<div className='text-green-600 text-md py-1'>
-				🌟 Apply Promo Code or License Key
-			</div>
+			<Instruction>
+				<div className='text-green-600'>
+					🌟 Apply Promo Code or License Key
+				</div>
+			</Instruction>
 			<div className='w-full mx-auto justify-center flex flex-row gap-x-2'>
 				<NewInputBox
 					id='promo_code'
