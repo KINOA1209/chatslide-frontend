@@ -181,15 +181,6 @@ const DesignSystemButton: React.FC<DesignSystemButtonProps> = ({
 	};
 
 	return (
-		// <button style={buttonStyles} onClick={onClick}>
-		// 	{iconLeft && (
-		// 		<span style={{ ...iconStyles, marginRight: '6px' }}>{iconLeft}</span>
-		// 	)}
-		// 	{text}
-		// 	{iconRight && (
-		// 		<span style={{ ...iconStyles, marginLeft: '6px' }}>{iconRight}</span>
-		// 	)}
-		// </button>
 		<>
 			<PaywallModal
 				showModal={showPaywallModal}
@@ -204,8 +195,14 @@ const DesignSystemButton: React.FC<DesignSystemButtonProps> = ({
 				onClick={checkPaidUser}
 				style={{ ...buttonStyles, ...customButtonStyles }}
 			>
-				{iconLeft && (
-					<span style={{ ...iconStyles, ...customIconStyles }}>{iconLeft}</span>
+				{isSubmitting ? (
+					<SpinIcon />
+				) : (
+					iconLeft && (
+						<span style={{ ...iconStyles, ...customIconStyles }}>
+							{iconLeft}
+						</span>
+					)
 				)}
 				<span
 					className='flex flex-row items-center gap-x-2'
@@ -216,14 +213,10 @@ const DesignSystemButton: React.FC<DesignSystemButtonProps> = ({
 					{isPaidFeature && !isPaidUser && <PlusLabel />}
 				</span>
 
-				{isSubmitting ? (
-					<SpinIcon />
-				) : (
-					iconRight && (
-						<span style={{ ...iconStyles, ...customIconStyles }}>
-							{iconRight}
-						</span>
-					)
+				{iconRight && (
+					<span style={{ ...iconStyles, ...customIconStyles }}>
+						{iconRight}
+					</span>
 				)}
 			</button>
 		</>
