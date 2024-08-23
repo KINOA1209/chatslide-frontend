@@ -36,6 +36,33 @@ export default function Studio() {
 				</Card>
 
 				<Card>
+					<BigTitle>August 23</BigTitle>
+					<Instruction>
+						<span>
+							<p>
+								<b>🎥 New Workflow: PPT to Video:</b> The new workflow of PPT to
+								video is now available! You can upload your existing PPT, PPTX,
+								or PDF files, and our AI will add scripts, voiceovers, and
+								convert them into videos. Easily transform your presentations
+								into engaging video content.{' '}
+								<a href='/ppt2video' className='text-blue-600'>
+									Try it.
+								</a>
+							</p>
+						</span>
+					</Instruction>
+					<Instruction>
+						<span>
+							<p>
+								<b>🔧 Bug Fixes:</b> We've fixed some issues with reading
+								YouTube links and web links, ensuring smoother integration for
+								your projects.
+							</p>
+						</span>
+					</Instruction>
+				</Card>
+
+				<Card>
 					<BigTitle>August 18</BigTitle>
 					<Instruction>
 						<span>
