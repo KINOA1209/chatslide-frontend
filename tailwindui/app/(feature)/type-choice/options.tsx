@@ -2,7 +2,6 @@ import React from 'react';
 import { FaShareAlt, FaFilm, FaChartBar, FaImage } from 'react-icons/fa';
 import { ScenarioOption } from '../scenario-choice/slidesScenarios';
 
-
 const drlambdaOptions: ScenarioOption[] = [
 	{
 		id: 'social_posts',
@@ -27,13 +26,13 @@ const drlambdaOptions: ScenarioOption[] = [
 ];
 
 const chatslideOptions: ScenarioOption[] = [
-  {
-    id: 'presentation',
-    title: 'Slide / Video',
-    imageSrc: '/images/scenario/slides.png',
-    icon: <FaFilm />,
-    featured: true,
-  },
+	{
+		id: 'presentation',
+		title: 'Slide / Video',
+		imageSrc: '/images/scenario/slides.png',
+		icon: <FaFilm />,
+		featured: true,
+	},
 ];
 
 const chatslideMinorOptions: ScenarioOption[] = [
@@ -53,18 +52,25 @@ const chatslideMinorOptions: ScenarioOption[] = [
 	{
 		id: 'ppt2video',
 		title: 'PPT to Video (Beta)',
-		imageSrc: '/images/scenario/charts.png',  // no use
+		imageSrc: '/images/scenario/charts.png', // no use
 		icon: <FaFilm />,
 		previewOnly: false,
 	},
 ];
 
 const drlambdaMinorOptions: ScenarioOption[] = [
+	// {
+	// 	id: 'image',
+	// 	title: 'Image',
+	// 	imageSrc: '/images/scenario/charts.png',
+	// 	icon: <FaImage />,
+	// },
 	{
-		id: 'image',
-		title: 'Image',
-		imageSrc: '/images/scenario/charts.png',
-		icon: <FaImage />,
+		id: 'ppt2video',
+		title: 'PPT to Video (Beta)',
+		imageSrc: '/images/scenario/charts.png', // no use
+		icon: <FaFilm />,
+		previewOnly: false,
 	},
 ];
 
