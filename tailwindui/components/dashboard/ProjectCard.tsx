@@ -90,7 +90,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
 							style={{
 								fontSize: '14px',
 								color: 'var(--colors-text-text-secondary-700, #344054)',
-								fontFamily: 'Creato Display Medium',
+								// fontFamily: 'Creato Display Medium',
 								fontWeight: 'normal',
 								lineHeight: '20px',
 							}}
@@ -105,7 +105,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
 							style={{
 								fontSize: '12px',
 								color: 'var(--colors-text-text-quaternary-500, #667085)',
-								fontFamily: 'Creato Display Regular',
+								// fontFamily: 'Creato Display Regular',
 								fontWeight: 'normal',
 								lineHeight: '18px',
 							}}

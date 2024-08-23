@@ -316,7 +316,7 @@ export const ResourceItem: React.FC<Resource> = ({
 				<span
 					style={{
 						color: 'var(--colors-text-text-secondary-700, #344054)',
-						fontFamily: 'Creato Display Medium',
+						// fontFamily: 'Creato Display Medium',
 						fontSize: '14px',
 						fontStyle: 'normal',
 						fontWeight: 500,

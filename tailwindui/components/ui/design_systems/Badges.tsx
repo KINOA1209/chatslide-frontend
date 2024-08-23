@@ -58,21 +58,21 @@ const DesignSystemBadges: React.FC<DesignSystemBadgesProps> = ({
 			paddingTop: '2px',
 			paddingBottom: '2px',
 			paddingLeft: '4px',
-			paddingRight: '6px',
+			paddingRight: '4px',
 			borderRadius: '4px',
 		},
 		md: {
 			paddingTop: '2px',
 			paddingBottom: '2px',
 			paddingLeft: '6px',
-			paddingRight: '8px',
+			paddingRight: '6px',
 			borderRadius: '4px',
 		},
 		lg: {
 			paddingTop: '4px',
 			paddingBottom: '4px',
 			paddingLeft: '8px',
-			paddingRight: '10px',
+			paddingRight: '8px',
 			borderRadius: '4px',
 		},
 	};
@@ -98,7 +98,7 @@ const DesignSystemBadges: React.FC<DesignSystemBadgesProps> = ({
 	const textStyles = {
 		sm: {
 			color: `${textColor}`,
-			fontFamily: 'Creato Display Medium',
+			// fontFamily: 'Creato Display Medium',
 			fontSize: '12px',
 			fontStyle: 'normal',
 			fontWeight: 500,
@@ -106,7 +106,7 @@ const DesignSystemBadges: React.FC<DesignSystemBadgesProps> = ({
 		},
 		md: {
 			color: `${textColor}`,
-			fontFamily: 'Creato Display Medium',
+			// fontFamily: 'Creato Display Medium',
 			fontSize: '12px',
 			fontStyle: 'normal',
 			fontWeight: 500,
@@ -114,7 +114,7 @@ const DesignSystemBadges: React.FC<DesignSystemBadgesProps> = ({
 		},
 		lg: {
 			color: `${textColor}`,
-			fontFamily: 'Creato Display Medium',
+			// fontFamily: 'Creato Display Medium',
 			fontSize: '14px',
 			fontStyle: 'normal',
 			fontWeight: 500,
