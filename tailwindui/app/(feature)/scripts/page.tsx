@@ -350,7 +350,7 @@ export default function WorkflowStep5() {
 			{/* flex col container for steps, title, etc */}
 
 			<WorkflowStepsBanner
-				currentIndex={4}
+				currentIndex={project.content_type === 'presentation' ? 4 : 2}
 				isSubmitting={isSubmitting}
 				setIsSubmitting={setIsSubmitting}
 				isPaidUser={isPaidUser}
