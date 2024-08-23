@@ -59,11 +59,22 @@ export default function Topic() {
 	}, [isSubmitting]);
 
 	const handleSubmit = async () => {
+    if (selectedResources.length == 0) {
+      toast.error("Please select at least one file.");
+      setIsSubmitting(false);
+      setShowGenerationStatusModal(false);
+      return;
+    } else if (selectedResources.length > 1) {
+      toast.error("Please select only one file.");
+      setIsSubmitting(false);
+      setShowGenerationStatusModal(false);
+      return;
+    } 
+    
 		setShowGenerationStatusModal(true);
 		const selectedResourceIds = selectedResources.map(
 			(resource) => resource.id,
 		);
-    console.log('handling submit');
 		try {
       updateCreditsFE(-20);
 

@@ -57,7 +57,7 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 	const [isUploading, setIsUploading] = useState(false);
 	const selectedResourcesRef = useRef<HTMLDivElement>(null);
 
-  const supportedExtensions =
+	const supportedExtensions =
 		generationMode === 'ppt2video' ? PPTX_EXTENSIONS : DOCUMENT_EXTENSIONS;
 
 	const searchOnlineOptions: RadioButtonOption[] = [
@@ -127,7 +127,9 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 	const handleDrop = async (e: React.DragEvent<HTMLDivElement>) => {
 		e.preventDefault();
 		setIsDragging(false);
-		const extensions = determineSupportedFormats(generationMode === 'ppt2video' ? 'ppt2video' : 'summary');
+		const extensions = determineSupportedFormats(
+			generationMode === 'ppt2video' ? 'ppt2video' : 'summary',
+		);
 
 		if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
 			const file = e.dataTransfer.files[0];
@@ -201,11 +203,6 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 				) : (
 					<BigTitle>📚 Add PPT, PPTX, or PDF Files</BigTitle>
 				)}
-				{/* <Explanation>
-					{isRequired
-						? 'Add any sources that would support your topic. This could be online sources, files, or links.'
-						: 'To get started, use any sources that would support your topic. This could be online sources, files, or links.'}
-				</Explanation> */}
 			</div>
 
 			{/* search online */}
@@ -230,8 +227,13 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 
 			{/* files */}
 			<div>
-				{/* <Instruction>What additional files do you want to include?</Instruction> */}
-				<Instruction>Files</Instruction>
+				{generationMode === 'ppt2video' ? (
+					<Instruction>
+						Select one file to convert to a video with voice over:
+					</Instruction>
+				) : (
+					<Instruction>Files</Instruction>
+				)}
 				<div
 					className={`w-full h-[150px] flex flex-col items-center justify-center border rounded-md border-2 border-gray-200 cursor-pointer 
 						${isDragging ? 'bg-blue-100 border-blue-500' : ''}
@@ -288,6 +290,7 @@ const AddResourcesSection: React.FC<AddResourcesProps> = ({
 					<SelectedResourcesList
 						selectedResources={selectedResources}
 						removeResourceAtIndex={removeResourceAtIndex}
+						canOcr={generationMode !== 'ppt2video'}
 					/>
 				</div>
 			)}
