@@ -98,7 +98,7 @@ const CreateFolderModal: React.FC<{
                         id='key'
                         type='text'
                         placeholder='New folder name'
-                        className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800 bg-gray-100'
+                        className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800'
                         maxLength={100}
                         value={folderName}
                         onChange={handleInputChange}

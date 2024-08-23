@@ -180,7 +180,7 @@ const LinkInput = ({
 					<input
 						id='link'
 						type='text'
-						className='text-sm md:text-l form-input w-full border-none bg-gray-100'
+						className='text-sm md:text-l form-input w-full border-none'
 						value={linkUrl}
 						onChange={(e) => handleLinkChange(e.target.value)}
 						onClick={(e) => (e.target as HTMLInputElement).select()}

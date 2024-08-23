@@ -792,7 +792,7 @@ export const ImgModule = ({
 						<input
 							id='search_keyword'
 							type='text'
-							className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800 bg-gray-100'
+							className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800'
 							placeholder='Enter the keywords'
 							required
 							ref={searchRef}
@@ -960,7 +960,7 @@ export const ImgModule = ({
 					<input
 						id='search_keyword'
 						type='text'
-						className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800 bg-gray-100'
+						className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800'
 						placeholder='Enter the keywords (10⭐️)'
 						required
 						ref={searchRef}
