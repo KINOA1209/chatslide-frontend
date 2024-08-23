@@ -121,7 +121,7 @@ const ProjectSection: React.FC<ProjectSectionProps> = ({
 								// />
 
 								<ProjectCard
-									key={index}
+									key={project.id}
 									index={index}
 									project={project}
 									currentProjects={currentProjects}
