@@ -71,7 +71,7 @@ export function formatDate(dateString: string): string {
 	}
 }
 
-export function getThumbnailUrl(project: Project) {
+export function getThumbnailUrl(project: Project | null) {
 	if (!project)
 		return isChatslide() ? defaultChatSlideThumbnail : defaultDrLambdaThumbnail;
 	if (project.content_type === 'presentation') {
@@ -82,7 +82,7 @@ export function getThumbnailUrl(project: Project) {
 	}
 	if (project.content_type === 'chart') {
 		return (
-			// project.thumbnail_url || # disable thumbnail url for chart for now
+			project.thumbnail_url ||
 			(isChatslide() ? defaultChatSlideThumbnail : defaultDrLambdaThumbnail)
 		);
 	}
@@ -141,6 +141,7 @@ const ProjectItem: React.FC<{
 		showChangeProjectDescriptionModal,
 		setShowChangeProjectDescriptionModal,
 	] = useState(false);
+	const [loaded, setLoaded] = useState(false);
 
 	const url = project.content_type !== 'chart' ? `/${isDiscover ? 'shared' : 'project'}/${project.id}` : `/charts/${project.id}`;
 
@@ -168,28 +169,34 @@ const ProjectItem: React.FC<{
 							objectFit: 'contain' as 'contain',
 						}}
 					>
-						<Image
-							className=''
+						{!loaded && <Image
+							className='w-[72px] h-[40px]'
 							unoptimized={true}
-							src={getThumbnailUrl(project)}
-							alt={project.name + 'project thumbnail'}
+							src={getThumbnailUrl(null)}
+							alt={project.name + ' project thumbnail'}
 							layout='responsive'
 							width={72}
 							height={40}
-							style={{ width: '72px', height: '40px' }}
-							//priority={isPriority}
-							// onError={(e) => {
-							// 	e.currentTarget.src = DEFAULT_THUMBNAIL;
-							// }}
+						/>}
+						<Image
+							className='w-[72px] h-[40px]'
+							unoptimized={true}
+							src={getThumbnailUrl(project)}
+							alt={project.name + ' project thumbnail'}
+							layout='responsive'
+							width={72}
+							height={40}
+							style={loaded ? {} : { display: 'none' }}
+							onLoad={() => setLoaded(true)}
+							loading='eager'
 						/>
 					</div>
 				</Link>
 			</div>
 			{/* title */}
 			<div
-				className={`col-span-3 lg:col-span-2 p-2 flex items-center ${
-					!isCloning ? 'cursor-pointer' : 'cursor-not-allowed'
-				} leading-[20px]`}
+				className={`col-span-3 lg:col-span-2 p-2 flex items-center ${!isCloning ? 'cursor-pointer' : 'cursor-not-allowed'
+					} leading-[20px]`}
 				style={{ padding: `var(--spacing-xl, 8px) var(--spacing-3xl, 8px)` }}
 				draggable={onDrag ? true : false}
 				onDragStart={() => onDrag && onDrag(project.id)}
