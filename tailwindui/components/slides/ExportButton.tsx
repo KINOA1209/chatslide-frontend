@@ -144,7 +144,7 @@ const ExportToFile: React.FC<ExportToPdfProps> = ({
 			// wait for 10s for prev file to be deleted
 			await sleep(10000);
 
-			const maxAttempts = 30; // try 30 times in 60 seconds
+			const maxAttempts = 45; // try 45 times in 90 seconds
 			for (let attempts = 0; attempts < maxAttempts; attempts++) {
 				try {
 					console.log(`Attempt ${attempts}: Trying to download the file...`);
