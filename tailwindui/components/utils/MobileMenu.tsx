@@ -11,22 +11,26 @@ import { SideBarData, SideBarItem } from '../layout/SideBarData';
 import { isChatslide } from '@/utils/getHost';
 
 
-const MenuItem: React.FC<SideBarItem> = ({
+type MenuItemProps = SideBarItem & { onSignOut: () => void };
+
+
+const MenuItem: React.FC<MenuItemProps> = ({
 	title,
 	icon,
 	path,
-  target,
+	target,
 	drlambdaOnly,
-  chatslideOnly,
-  subMenus,
+	chatslideOnly,
+	subMenus,
+	onSignOut,
 	// setMobileNavOpen,
 }) => {
-  if (drlambdaOnly && isChatslide()) {
-    return <></>;
-  }
-  if (chatslideOnly && !isChatslide()) {
-    return <></>;
-  }
+	if (drlambdaOnly && isChatslide()) {
+		return <></>;
+	}
+	if (chatslideOnly && !isChatslide()) {
+		return <></>;
+	}
 
 	return (
 		<>
@@ -47,6 +51,7 @@ const MenuItem: React.FC<SideBarItem> = ({
 							<Link
 								href={submenu.path}
 								className='block flex flex-row px-2 py-1 text-xs text-gray-600 hover:bg-gray-100 items-center'
+								onClick={submenu.title === 'Sign Out' ? onSignOut : () => {}}
 							>
 								<span>{submenu.title}</span>
 							</Link>
@@ -151,6 +156,7 @@ const MobileMenu: React.FC<DropdownButtonProps> = () => {
 								<MenuItem
 									key={index}
 									{...item}
+                  onSignOut={onSignOut}
 								/>
 							);
 						})}
@@ -170,17 +176,6 @@ const MobileMenu: React.FC<DropdownButtonProps> = () => {
 						>
 							Tier: {tier.split('_')[0]}
 						</a>
-					</div>
-					<div className='py-1' role='none'>
-						<div className='py-0.2' role='none'>
-							<a
-								onClick={onSignOut}
-								className='block px-4 py-1 text-sm text-blue-600 hover:bg-gray-200 cursor-pointer'
-								role='menuitem'
-							>
-								Sign out
-							</a>
-						</div>
 					</div>
 				</div>
 			)}

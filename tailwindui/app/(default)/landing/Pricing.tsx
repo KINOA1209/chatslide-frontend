@@ -21,6 +21,9 @@ const PricingComparison: React.FC<{
 	showFreeTier?: boolean;
 	trigger: string;
 }> = ({ extraPadding, small = false, showFreeTier = true, trigger }) => {
+	// avoid hydration error during development caused by persistence
+	if (!useHydrated()) return <></>;
+
 	const { token, email, tier: userTier, user } = useUser();
 	const [currency, setCurrency] = useState<string>('$');
 	const router = useRouter();
