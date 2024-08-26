@@ -64,7 +64,7 @@ export const SideBarData: SideBarItem[] = [
 		chatslideOnly: true,
 	},
 	{
-		title: 'Updates 8.23',
+		title: 'Updates 8.26',
 		icon: <LuNewspaper />,
 		path: '/whatsnew',
 		drlambdaOnly: true,

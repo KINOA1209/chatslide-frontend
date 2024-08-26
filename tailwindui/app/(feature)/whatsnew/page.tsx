@@ -36,6 +36,29 @@ export default function Studio() {
 				</Card>
 
 				<Card>
+					<BigTitle>August 26</BigTitle>
+					<Instruction>
+						<span>
+							<p>
+								<b>🖼️ Image Support:</b> Now you can freely add new images to
+								your projects! Enhance your presentations with custom images to
+								make them more engaging and visually appealing.
+							</p>
+						</span>
+					</Instruction>
+					<Instruction>
+						<span>
+							<p>
+								<b>🎥 Improved PPT to Video Workflow:</b> We've enhanced the PPT
+								to video workflow, making the process smoother and more
+								reliable. Additionally, we've fixed a few bugs to ensure a
+								better user experience.
+							</p>
+						</span>
+					</Instruction>
+				</Card>
+
+				<Card>
 					<BigTitle>August 23</BigTitle>
 					<Instruction>
 						<span>
