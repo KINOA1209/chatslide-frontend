@@ -21,9 +21,6 @@ const PricingComparison: React.FC<{
 	showFreeTier?: boolean;
 	trigger: string;
 }> = ({ extraPadding, small = false, showFreeTier = true, trigger }) => {
-	// avoid hydration error during development caused by persistence
-	if (!useHydrated()) return <></>;
-
 	const { token, email, tier: userTier, user } = useUser();
 	const [currency, setCurrency] = useState<string>('$');
 	const router = useRouter();
@@ -111,9 +108,6 @@ const PricingComparison: React.FC<{
 		firstTime: boolean = false,
 	): string | JSX.Element => {
 		let amount = getOriginalPrice(tier);
-
-		// avoid hydration error during development caused by persistence
-		if (!useHydrated()) return <></>;
 
 		// apply discounts
 		switch (interval) {
@@ -301,6 +295,9 @@ const PricingComparison: React.FC<{
 				},
 			];
 
+	// avoid hydration error during development caused by persistence
+	if (!useHydrated()) return <></>;
+
 	return (
 		<div className='flex flex-col items-center overflow-y-auto overflow-x-auto notranslate'>
 			<MultiwayToggle
@@ -386,62 +383,6 @@ const PricingComparison: React.FC<{
 						</div>
 					</div>
 				</div>
-				{/* {showFreeTier &&
-          <div className="brix---pricing-column">
-            <div className="brix---pricing-table-top">
-              <div className="brix---mg-bottom-8px">
-                <div className="brix---color-neutral-600">
-                  <div className="brix---text-200">FREE</div>
-                </div>
-              </div>
-              <div className="brix---mg-bottom-16px">
-                <div className="brix---color-neutral-800 flex flex-col items-center">
-                  <div className="brix---text-400-bold">{getPrice('FREE')}</div>
-                  <div className="brix---text-300-medium">{'\u00A0'}</div>
-                  <div className="brix---text-300-medium">{'\u00A0'}</div>
-                </div>
-              </div>
-              <button
-                onClick={() => handleClick('FREE')}
-                className="brix---btn-secondary-small-full-width w-button whitespace-nowrap bg-white"
-              >
-                {getCta('FREE')}
-              </button>
-            </div>
-            <div className={`brix---pricing-content-wrapper${smallSuffix}`}>
-              <div className="brix---pricing-v8-title-table">
-                <div className="brix---text-300-medium">⭐️ credits</div>
-              </div>
-              <div className="brix---text-300-medium">20</div>
-            </div>
-            <div className={`brix---pricing-content-wrapper${smallSuffix}`}>
-              <div className="brix---pricing-v8-title-table">
-                <div className="brix---text-300-medium">🌟 GPT</div>
-              </div>
-              <div className="brix---text-300-medium">3.5</div>
-            </div>
-            <div className={`brix---pricing-content-wrapper${smallSuffix}`}>
-              <div className="brix---pricing-v8-title-table">
-                <div className="brix---text-300-medium">📚 Upload documents</div>
-              </div>
-              <div className="brix---text-300-medium">Single</div>
-            </div>
-            <div className={`brix---pricing-content-wrapper${smallSuffix}`}>
-              <div className="brix---pricing-v8-title-table">
-                <div className="brix---text-300-medium">📑 Generate slides</div>
-              </div>
-              <img src="images/check-icon-white-brix-templates.svg" alt="" />
-            </div>
-            <div className={`brix---pricing-content-wrapper-empty${smallSuffix}`} />
-            <div className={`brix---pricing-content-wrapper-empty${smallSuffix}`} />
-            <div className={`brix---pricing-content-wrapper-empty${smallSuffix}`} />
-            <div className={`brix---pricing-content-wrapper-empty${smallSuffix}`} />
-            <div className={`brix---pricing-content-wrapper-empty${smallSuffix}`} />
-            <div className={`brix---pricing-content-wrapper-empty${smallSuffix}`} />
-            <div className={`brix---pricing-content-wrapper-empty${smallSuffix}`} />
-            <div className={`brix---pricing-content-wrapper-empty${smallSuffix}`} />
-          </div>
-        } */}
 				<div className='brix---pricing-column-last'>
 					<div className='brix---pricing-table-top'>
 						<div className='brix---mg-bottom-8px'>
@@ -839,6 +780,9 @@ const PricingComparison: React.FC<{
 };
 
 export function Pricing() {
+	// avoid hydration error during development caused by persistence
+	if (!useHydrated()) return <></>;
+
 	return (
 		<div className='brix---section'>
 			<div className='brix---container-default w-container'>
