@@ -36,8 +36,8 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
 	if (!useHydrated()) return <></>;
 
 	return (
-		<div className='flex flex-row items-end w-full z-40 pt-[2rem] px-[2rem]'>
-			<div className='w-full flex flex-wrap items-center justify-between'>
+		<div className='flex flex-row items-end w-full z-40  pt-4 px-4 sm:pt-8 sm:px-8'>
+			<div className='w-full flex flex-wrap items-center justify-between gap-2'>
 				<div
 					className='text-[24px] font-bold leading-[32px] tracking-wide cursor-pointer'
 					style={{
@@ -54,13 +54,13 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
 					}}
 				>
 					{isTeamMode
-						? (team?.name + `'s` || 'Team') + ' Projects' 
+						? (team?.name + `'s` || 'Team') + ' Projects'
 						: activeFolder === 'drlambda-default'
 							? username + `'s Projects`
 							: username + `'s Projects > ${activeFolder}`}
 				</div>
 
-				<div className='flex flex-row gap-2'>
+				<div className='ml-auto flex flex-row gap-2 justify-end'>
 					{activeFolder === 'drlambda-default' &&
 						projects.length > 0 &&
 						!isTeamMode && (
