@@ -11,14 +11,13 @@ import { DeleteIcon, SpinIcon } from '@/app/(feature)/icons';
 import { ResourceItem, getFileExtension } from '../ui/ResourceItem';
 import Resource from '@/models/Resource';
 import ResourceService from '@/services/ResourceService';
-import DrlambdaButton, { BigBlueButton } from '../button/DrlambdaButton';
+import { BigBlueButton } from '../button/DrlambdaButton';
 import { FaCheckCircle } from 'react-icons/fa';
 import { useUser } from '@/hooks/use-user';
 import { Blank, Loading } from '../ui/Loading';
 import { getBrand, getLogoUrl } from '@/utils/getHost';
 import MyResourcePageHeader from '@/app/(feature)/uploads/MyResourcePageHeader';
 import { MdOutlineCloudUpload } from 'react-icons/md';
-import { FiUpload } from 'react-icons/fi';
 import DesignSystemButton from '../ui/design_systems/ButtonsOrdinary';
 import { MdFolderOpen } from 'react-icons/md';
 import { FiFileText } from 'react-icons/fi';
@@ -27,6 +26,7 @@ import { PiImageSquare, PiTagLight } from 'react-icons/pi';
 import { FiVideo } from 'react-icons/fi';
 import { MdArrowDownward } from 'react-icons/md';
 import { MdArrowUpward } from 'react-icons/md';
+import '@/components/ui/design_systems/variables.css';
 
 
 interface UserFileList {
@@ -314,7 +314,7 @@ const FileManagement: React.FC<UserFileList> = ({
 				style={{
 					alignItems: 'center',
 					border: '1px solid #EAECF0',
-					borderRadius: ' 0px 0px var(--radius-md) var(--radius-md)',
+					// borderRadius: ' 0px 0px var(--radius-md) var(--radius-md)',
 					// gridTemplateColumns: '2fr 1fr',
 				}}
 				onClick={(e) => {
@@ -378,52 +378,47 @@ const FileManagement: React.FC<UserFileList> = ({
 
 	return (
 		<div className='w-full h-fit'>
-			{/* <div className='w-full px-4'>
-        <div className='w-full border-b border-gray-300'></div>
-      </div> */}
 			<FileTableHeader
 				onSort={handleSort}
 				sortBy={sortBy}
 				sortOrder={sortOrder}
 			/>{' '}
-			{/* Render the table header */}
-			{/* {userfiles.map((resource) => {
-				return entry(resource);
-			})} */}
-			{userfiles
-				.slice()
-				.sort((a, b) => {
-					let valueA: string | Date;
-					let valueB: string | Date;
+			<div className='border rounded-b-md'>
+				{userfiles
+					.slice()
+					.sort((a, b) => {
+						let valueA: string | Date;
+						let valueB: string | Date;
 
-					if (sortBy === 'name') {
-						valueA = a.name as string;
-						valueB = b.name as string;
-					} else {
-						valueA = new Date(a.timestamp as string);
-						valueB = new Date(b.timestamp as string);
-						if (isNaN(valueA.getTime()) || isNaN(valueB.getTime())) {
-							// Parsing failed, fallback to string comparison
-							valueA = a.timestamp as string;
-							valueB = b.timestamp as string;
+						if (sortBy === 'name') {
+							valueA = a.name as string;
+							valueB = b.name as string;
+						} else {
+							valueA = new Date(a.timestamp as string);
+							valueB = new Date(b.timestamp as string);
+							if (isNaN(valueA.getTime()) || isNaN(valueB.getTime())) {
+								// Parsing failed, fallback to string comparison
+								valueA = a.timestamp as string;
+								valueB = b.timestamp as string;
+							}
 						}
-					}
 
-					// Check if parsing was successful
+						// Check if parsing was successful
 
-					return sortOrder === 'asc'
-						? valueA > valueB
-							? 1
+						return sortOrder === 'asc'
+							? valueA > valueB
+								? 1
+								: valueA < valueB
+									? -1
+									: 0
 							: valueA < valueB
-								? -1
-								: 0
-						: valueA < valueB
-							? 1
-							: valueA > valueB
-								? -1
-								: 0;
-				})
-				.map((resource) => entry(resource))}
+								? 1
+								: valueA > valueB
+									? -1
+									: 0;
+					})
+					.map((resource) => entry(resource))}
+			</div>
 		</div>
 	);
 };
@@ -972,7 +967,7 @@ const MyFiles: React.FC<filesInterface> = ({
 
 			{/* Filter buttons */}
 			{pageInvoked != 'theme' && (
-				<div className='grid grid-cols-3 md:flex md:flex-row gap-4 px-[1rem] pt-[1rem]'>
+				<div className='grid grid-cols-3 md:flex md:flex-row gap-4 pt-4 sm:pt-8'>
 					<DesignSystemButton
 						width='12rem'
 						isPaidFeature={false}

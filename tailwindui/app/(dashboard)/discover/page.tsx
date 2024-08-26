@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import ProjectTable from '../../../components/dashboard/ProjectTable';
-import DrlambdaButton from '@/components/button/DrlambdaButton';
 import ProjectService from '@/services/ProjectService';
 import Link from 'next/link';
 import { JoinUsBanner } from '@/components/layout/JoinUsBanner';
@@ -58,7 +56,7 @@ export default async function Discover() {
 			</div>
 
 			{/* projects details area */}
-			<div className='pb-[1rem] w-full px-8 pt-8 flex flex-col grow overflow-auto'>
+			<div className='pb-[1rem] w-full px-4 pt-4 sm:px-8 sm:pt-8 flex flex-col grow overflow-auto'>
 				{projects && projects.length > 0 ? (
 					// <ProjectTable currentProjects={projects} isDiscover={true} />
 					<ProjectTableSSR currentProjects={projects} isDiscover={true} />
