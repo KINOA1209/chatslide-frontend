@@ -104,8 +104,11 @@ export default function Footer() {
 				<div className='flex flex-row py-8 md:py-12 border-t border-gray-200 justify-around'>
 					{/* 1st block */}
 					<div className='flex flex-col items-center justify-center'>
-						<div className='flex justify-center mb-2'>
-							<Logo size='64px'/>
+						<div className='flex sm:hidden justify-center mb-2'>
+							<Logo size='32px' />
+						</div>
+						<div className='hidden sm:flex justify-center mb-2'>
+							<Logo size='64px' />
 						</div>
 						<div className='flex justify-center mb-2 text-sm text-gray-600'>
 							{getBrand()}
@@ -150,7 +153,7 @@ export default function Footer() {
 									href='https://blog.drlambda.ai/frequently-asked-questions/'
 									className='text-gray-600 hover:text-gray-900 transition duration-150 ease-in-out'
 								>
-									Frequently Asked Questions
+                  FAQ
 								</a>
 							</li>
 							<li className='mb-2'>
