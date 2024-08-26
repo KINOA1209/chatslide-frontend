@@ -6,10 +6,61 @@ import { toast } from 'react-toastify';
 import AuthService from '../../services/AuthService';
 import { useUser } from '@/hooks/use-user';
 import { sign } from 'crypto';
+import Link from 'next/link';
+import { SideBarData, SideBarItem } from '../layout/SideBarData';
+import { isChatslide } from '@/utils/getHost';
+
+
+const MenuItem: React.FC<SideBarItem> = ({
+	title,
+	icon,
+	path,
+  target,
+	drlambdaOnly,
+  chatslideOnly,
+  subMenus,
+	// setMobileNavOpen,
+}) => {
+  if (drlambdaOnly && isChatslide()) {
+    return <></>;
+  }
+  if (chatslideOnly && !isChatslide()) {
+    return <></>;
+  }
+
+	return (
+		<>
+			<Link
+				target={target}
+				href={path || ''}
+				className='block flex flex-row px-2 py-1 text-sm text-blue-600 hover:bg-gray-200 items-center'
+				// onClick={() => setMobileNavOpen(false)}
+			>
+				{icon}
+				<span className='ml-2'>{title}</span>
+			</Link>
+
+			{subMenus && subMenus.length > 0 && (
+				<ul className='ml-4 mt-1 space-y-1'>
+					{subMenus.map((submenu, index) => (
+						<li key={index}>
+							<Link
+								href={submenu.path}
+								className='block flex flex-row px-2 py-1 text-xs text-gray-600 hover:bg-gray-100 items-center'
+							>
+								<span>{submenu.title}</span>
+							</Link>
+						</li>
+					))}
+				</ul>
+			)}
+		</>
+	);
+};
 
 interface DropdownButtonProps {}
 
-const DropdownButton: React.FC<DropdownButtonProps> = () => {
+const MobileMenu: React.FC<DropdownButtonProps> = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const dropdownRef = useRef<HTMLDivElement>(null);
 	const router = useRouter();
@@ -95,34 +146,14 @@ const DropdownButton: React.FC<DropdownButtonProps> = () => {
 					aria-labelledby='dropdown-menu-button'
 				>
 					<div className='py-1' role='none'>
-						<a
-							href='/dashboard'
-							className='block px-4 py-1 text-sm text-blue-600 hover:bg-gray-200'
-							role='menuitem'
-						>
-							Dashboard
-						</a>
-						<a
-							href='/uploads'
-							className='block px-4 py-1 text-sm text-blue-600 hover:bg-gray-200'
-							role='menuitem'
-						>
-							Uploads
-						</a>
-						<a
-							href='/discover'
-							className='block px-4 py-1 text-sm text-blue-600 hover:bg-gray-200'
-							role='menuitem'
-						>
-							Discover
-						</a>
-						<a
-							href='/account'
-							className='block px-4 py-1 text-sm text-blue-600 hover:bg-gray-200'
-							role='menuitem'
-						>
-							Account
-						</a>
+						{SideBarData.map((item, index) => {
+							return (
+								<MenuItem
+									key={index}
+									{...item}
+								/>
+							);
+						})}
 					</div>
 					<div className='block py-1 text-sm text-blue-600'>
 						<a
@@ -157,4 +188,4 @@ const DropdownButton: React.FC<DropdownButtonProps> = () => {
 	);
 };
 
-export default DropdownButton;
+export default MobileMenu;

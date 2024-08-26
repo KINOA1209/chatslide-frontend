@@ -10,7 +10,7 @@ import { RiDiscordLine } from 'react-icons/ri';
 
 export interface SubMenu {
 	title: string;
-	path?: string;
+	path: string;
 }
 
 export interface SideBarItem {
