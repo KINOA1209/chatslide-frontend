@@ -41,6 +41,10 @@ export const getUserLanguage = async () => {
 		return 'Spanish';
 	}
 
+  if (['HK', 'MO', 'TW'].includes(countryCode)) {
+    return 'Traditional Chinese';
+  }
+
 	// if country code is a German speaking country, use German
 	if (['AT', 'CH', 'DE', 'LU'].includes(countryCode)) {
 		return 'German';
