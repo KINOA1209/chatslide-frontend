@@ -277,25 +277,10 @@ const FileManagement: React.FC<UserFileList> = ({
 		console.log('deletingIds', deletingIds);
 		e.stopPropagation();
 		try {
-			const deleted = await ResourceService.deleteResource(id, token);
-			if (deleted) {
-				deleteCallback(id);
-			} else {
-				throw new Error('Failed to delete file');
-			}
+			ResourceService.deleteResource(id, token);
+      deleteCallback(id);
 		} catch (error: any) {
 			console.error(error);
-			toast.error(error.message, {
-				position: 'top-center',
-				autoClose: 5000,
-				hideProgressBar: false,
-				closeOnClick: true,
-				pauseOnHover: true,
-				draggable: true,
-				progress: undefined,
-				theme: 'light',
-				containerId: 'fileManagement',
-			});
 		}
 		setDeletingIds(deletingIds.filter((i) => i !== id));
 	};

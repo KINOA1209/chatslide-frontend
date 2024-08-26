@@ -228,7 +228,7 @@ export default function Dashboard() {
 			throw 'Error';
 		}
 		try {
-			await ProjectService.deleteProject(token, deleteInd);
+			ProjectService.deleteProject(token, deleteInd);
 			const updatedProjects = projects.filter((proj) => proj.id !== deleteInd);
 			setProjects(updatedProjects);
 			const updatedFolders = folders.map((folder) => ({
@@ -237,11 +237,7 @@ export default function Dashboard() {
 			}));
 			setFolders(updatedFolders);
 		} catch (error: any) {
-			toast.error(error.message, {
-				position: 'top-center',
-				autoClose: 5000,
-				theme: 'light',
-			});
+      console.error(error);
 		}
 		setShowDeleteModal(false);
 		setDeleteInd('');
