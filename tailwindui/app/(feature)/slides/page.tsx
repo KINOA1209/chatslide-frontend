@@ -100,13 +100,11 @@ export default function WorkflowStep3() {
 				onClick={() => router.push(addIdToRedir('/scripts'))}
 				icon={<PiFileText />}
 			/>
-			{project?.content_type === 'presentation' && (
-				<MenuItem
-					label='Advanced Generation'
-					onClick={() => setShowScriptsSettingsModal(true)}
-					icon={<FaRegStar />}
-				/>
-			)}
+			<MenuItem
+				label='Advanced Generation'
+				onClick={() => setShowScriptsSettingsModal(true)}
+				icon={<FaRegStar />}
+			/>
 		</>
 	);
 
@@ -234,7 +232,7 @@ export default function WorkflowStep3() {
 		// console.log('submitting');
 
 		try {
-      let transcripts = [];
+			let transcripts = [];
 			if (project?.content_type === 'presentation') {
 				const formData = {
 					foldername: project.foldername,
@@ -248,18 +246,15 @@ export default function WorkflowStep3() {
 					style: style,
 					additional_requirements: additionalRequirements,
 				};
-				transcripts = await SlidesService.generateScripts(
-					formData,
+				transcripts = await SlidesService.generateScripts(formData, token);
+			} else {
+				// ppt2video
+				transcripts = await SlidesService.ppt2scripts(
+					project?.resources?.map((r) => r.id) || [],
+					project.language,
 					token,
 				);
-			} else {
-        // ppt2video
-        transcripts = await SlidesService.ppt2scripts(
-          project?.resources?.map((r) => r.id) || [],
-          project.language,
-          token
-        )
-      }
+			}
 
 			setTranscripts(transcripts); // and auto-save
 			router.push(addIdToRedir('/scripts'));
@@ -289,7 +284,7 @@ export default function WorkflowStep3() {
 			{/* flex col container for steps, title, etc */}
 			<MyCustomJoyride steps={StepsSlidesPage()} />
 			<WorkflowStepsBanner
-				currentIndex={project.content_type === 'presentation' ? 3 : 1} 
+				currentIndex={project.content_type === 'presentation' ? 3 : 1}
 				isSubmitting={isSubmitting}
 				setIsSubmitting={setIsSubmitting}
 				isPaidUser={isPaidUser}
