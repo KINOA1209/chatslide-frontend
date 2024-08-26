@@ -346,6 +346,23 @@ export default function Dashboard() {
 		setActiveFolder('drlambda-default');
 	};
 
+	const ProjectToggle = (
+		<TabsList className='w-fit self-end'>
+			<TabsTrigger
+				value='cardView'
+				className='data-[state=active]:text-[#444CE7]'
+			>
+				<IoGridOutline className={`w-5 h-5 `} />
+			</TabsTrigger>
+			<TabsTrigger
+				value='listView'
+				className='data-[state=active]:text-[#444CE7]'
+			>
+				<HiOutlineViewList className='w-5 h-5' />
+			</TabsTrigger>
+		</TabsList>
+	);
+
 	return (
 		<section className='grow flex flex-col'>
 			<ToastContainer />
@@ -362,20 +379,6 @@ export default function Dashboard() {
 				/>
 
 				<Tabs defaultValue='cardView' className='flex flex-col'>
-					<TabsList className='w-fit self-end mx-8 mt-[16px]'>
-						<TabsTrigger
-							value='cardView'
-							className='data-[state=active]:text-[#444CE7]'
-						>
-							<IoGridOutline className={`w-5 h-5 `} />
-						</TabsTrigger>
-						<TabsTrigger
-							value='listView'
-							className='data-[state=active]:text-[#444CE7]'
-						>
-							<HiOutlineViewList className='w-5 h-5' />
-						</TabsTrigger>
-					</TabsList>
 					{hasFolder && !isTeamMode && (
 						<FolderList
 							folders={folders}
@@ -397,6 +400,7 @@ export default function Dashboard() {
 							handleDelete={handleDelete}
 							setDraggingProjectId={setDraggingProjectId}
 							isTableView={true}
+							projectToggle={ProjectToggle}
 						/>
 					</TabsContent>
 					<TabsContent value='cardView'>
@@ -410,6 +414,7 @@ export default function Dashboard() {
 							handleDelete={handleDelete}
 							setDraggingProjectId={setDraggingProjectId}
 							isTableView={false}
+							projectToggle={ProjectToggle}
 						/>
 					</TabsContent>
 				</Tabs>
