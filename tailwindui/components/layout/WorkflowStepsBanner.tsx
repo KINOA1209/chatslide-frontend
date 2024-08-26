@@ -45,7 +45,7 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 			setButtonBounce(true);
 			setTimeout(() => {
 				setButtonBounce(false);
-			}, 5000);
+			}, 5 * 1000);
 		};
 
 		document.addEventListener('buttonBounce', bounce);
@@ -119,7 +119,7 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 						</div>
 
 						{showPing && (
-							<span className='flex h-4 w-4 absolute -top-2 -right-2'>
+							<span className='flex h-4 w-4 absolute -top-2 -left-2'>
 								<span className='animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-600 opacity-100'></span>
 								{/* <span className="relative inline-flex rounded-full h-3 w-3 bg-white"></span> */}
 							</span>

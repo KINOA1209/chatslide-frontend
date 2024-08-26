@@ -92,7 +92,7 @@ const DrlambdaButton: React.FC<DrlambdaButtonProps> = ({
 					id={'primary-' + id}
 					disabled={isSubmitting}
 					onClick={checkPaidUser}
-					className={`sm:min-w-[6rem] lg:min-w-[12rem] px-2 h-[36px] sm:h-[36px] ${getButtonBg()} disabled:animate-pulse rounded-[0.4375rem] flex justify-center items-center gap-2 cursor-pointer }`}
+					className={`sm:min-w-[6rem] lg:min-w-[12rem] px-2 h-[36px] sm:h-[36px] ${getButtonBg()} disabled:animate-pulse rounded-[0.4375rem] flex justify-center items-center gap-2 cursor-pointer`}
 					onMouseEnter={() => setShowMenu(true)}
 				>
 					{isSubmitting && <SpinIcon />}
