@@ -3,6 +3,7 @@
 import SubscriptionModal from '@/app/(account)/SubscriptionModal';
 import MultiwayToggle from '@/components/button/MultiwayToggle';
 import { Explanation } from '@/components/ui/Text';
+import useHydrated from '@/hooks/use-hydrated';
 import { useUser } from '@/hooks/use-user';
 import UserService from '@/services/UserService';
 import { isChatslide } from '@/utils/getHost';
@@ -70,7 +71,7 @@ const PricingComparison: React.FC<{
 		const cta = getCta(tier);
 		const bgColor = cta.includes('✅') || cta.includes('⏹️') ? 'white' : '';
 		const textColor = cta.includes('✅') || cta.includes('⏹️') ? 'black' : '';
-    const btnTier = tier === 'PRO' ? 'primary' : 'secondary';
+		const btnTier = tier === 'PRO' ? 'primary' : 'secondary';
 
 		return (
 			<button
@@ -97,8 +98,8 @@ const PricingComparison: React.FC<{
 			case 'PRO':
 				return 14.9;
 			case 'ULTIMATE':
-        if (isChatslide()) return 59.9;
-        else return 69.9;
+				if (isChatslide()) return 59.9;
+				else return 69.9;
 		}
 	};
 
@@ -107,6 +108,9 @@ const PricingComparison: React.FC<{
 		firstTime: boolean = false,
 	): string | JSX.Element => {
 		let amount = getOriginalPrice(tier);
+
+		// avoid hydration error during development caused by persistence
+		if (!useHydrated()) return <></>;
 
 		// apply discounts
 		switch (interval) {
@@ -250,39 +254,45 @@ const PricingComparison: React.FC<{
 
 	const options = isChatslide()
 		? [
-				{ key: 'onetime', text: '15-Day' },
+				{
+					key: 'onetime',
+					element: <span className='whitespace-nowrap'>15-Day</span>,
+				},
 				{
 					key: 'monthly',
 					element: (
-						<span>
-							Monthly <span className='text-xs'>-30%</span>
+						<span className='whitespace-nowrap'>
+							Monthly <span className='text-xs whitespace-nowrap'>-30%</span>
 						</span>
 					),
 				},
 				{
 					key: 'yearly',
 					element: (
-						<span>
-							Yearly <span className='text-xs'>-40%</span>
+						<span className='whitespace-nowrap'>
+							Yearly <span className='text-xs whitespace-nowrap'>-40%</span>
 						</span>
 					),
 				},
 				{
 					key: 'lifetime',
 					element: (
-						<span className='text-green-600'>
-							Lifetime <span className='text-xs'>-80%</span>
+						<span className='text-green-600 whitespace-nowrap'>
+							Lifetime <span className='text-xs whitespace-nowrap'>-80%</span>
 						</span>
 					),
 				},
 			]
 		: [
-				{ key: 'onetime', text: '30-Day' },
+				{
+					key: 'onetime',
+					element: <span className='whitespace-nowrap'>15-Day</span>,
+				},
 				{
 					key: 'lifetime',
 					element: (
-						<span className='text-green-600'>
-							Lifetime <span className='text-xs'>-60%</span>
+						<span className='text-green-600 whitespace-nowrap'>
+							Lifetime <span className='text-xs whitespace-nowrap'>-60%</span>
 						</span>
 					),
 				},
@@ -774,7 +784,9 @@ const PricingComparison: React.FC<{
 								🎙️ Voice cloning (new)
 							</div>
 						</div>
-						<div className='brix---text-300-medium'><b>Unlimited</b></div>
+						<div className='brix---text-300-medium'>
+							<b>Unlimited</b>
+						</div>
 					</div>
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className='brix---pricing-v8-title-table'>
