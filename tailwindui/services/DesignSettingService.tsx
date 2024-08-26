@@ -1,6 +1,6 @@
 export default class DesignSettingsService {
     static async createDesignSettings(data: any, token: string) {
-        const response = await fetch('/api/pptx/design_settings', {
+        const response = await fetch('/api/design/save', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -23,7 +23,7 @@ export default class DesignSettingsService {
             throw new Error('No token provided');
         }
 
-        const response = await fetch(`/api/pptx/design_settings`, {
+        const response = await fetch(`/api/design/load`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`,
