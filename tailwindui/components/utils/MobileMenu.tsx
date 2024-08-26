@@ -145,20 +145,15 @@ const MobileMenu: React.FC<DropdownButtonProps> = () => {
 
 			{isOpen && (
 				<div
-					className='origin-top-right absolute right-0 mt-2 w-40 rounded-xl shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-300'
+					className='absolute top-10 right-0 z-50 mt-2 w-40 rounded-xl shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-300'
+					style={{ zIndex: 9999 }}
 					role='menu'
 					aria-orientation='vertical'
 					aria-labelledby='dropdown-menu-button'
 				>
 					<div className='py-1' role='none'>
 						{SideBarData.map((item, index) => {
-							return (
-								<MenuItem
-									key={index}
-									{...item}
-                  onSignOut={onSignOut}
-								/>
-							);
+							return <MenuItem key={index} {...item} onSignOut={onSignOut} />;
 						})}
 					</div>
 					<div className='block py-1 text-sm text-blue-600'>
