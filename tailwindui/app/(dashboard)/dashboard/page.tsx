@@ -19,7 +19,7 @@ import Project from '@/models/Project';
 import Folder from '@/models/Folder';
 import UserService from '@/services/UserService';
 import { useTeam } from '@/hooks/use-team';
-import { isChatslide } from '@/utils/getHost';
+import { isChatslide, isLocal } from '@/utils/getHost';
 import { getUserCountryCode } from '@/utils/userLocation';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { IoGridOutline } from 'react-icons/io5';
@@ -192,6 +192,11 @@ export default function Dashboard() {
 				updateCreditsAndTier();
 			}
 		}
+
+		fetchProjects();
+
+		if (isLocal()) return;  // Skip the following code if running locally
+
 		if (isTeamMode) {
 			if (!teamId) {
 				setNoTeam(true);
@@ -202,7 +207,7 @@ export default function Dashboard() {
 		} else {
 			sessionStorage.removeItem('currentTeam');
 		}
-		fetchProjects();
+
 		const surveyFinished = await UserService.checkSurveyFinished(token);
 		if (!surveyFinished) {
 			setShowSurvey(true);
@@ -237,7 +242,7 @@ export default function Dashboard() {
 			}));
 			setFolders(updatedFolders);
 		} catch (error: any) {
-      console.error(error);
+			console.error(error);
 		}
 		setShowDeleteModal(false);
 		setDeleteInd('');
