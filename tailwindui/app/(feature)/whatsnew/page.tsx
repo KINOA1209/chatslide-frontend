@@ -40,7 +40,7 @@ export default function Studio() {
 					<Instruction>
 						<span>
 							<p>
-								<b>🖼️ Image Support:</b> Now you can freely add new images to
+								<b>🖼️ Add Images Freely:</b> Now you can freely add new images to
 								your projects! Enhance your presentations with custom images to
 								make them more engaging and visually appealing.
 							</p>
@@ -53,6 +53,15 @@ export default function Studio() {
 								to video workflow, making the process smoother and more
 								reliable. Additionally, we've fixed a few bugs to ensure a
 								better user experience.
+							</p>
+						</span>
+					</Instruction>
+					<Instruction>
+						<span>
+							<p>
+								<b>📱 UI/UX Improvements on Mobile:</b> We’ve improved the user
+								interface and user experience on mobile devices, ensuring a
+								smoother and more intuitive experience for mobile users.
 							</p>
 						</span>
 					</Instruction>
