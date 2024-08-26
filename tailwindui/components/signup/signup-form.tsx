@@ -246,13 +246,11 @@ const SignupForm: React.FC = () => {
 				</div>
 			</div>
 			<div className='flex flex-wrap -mx-3 mt-6'>
-				<div className='w-full px-3'>
-					<button>
-						<BigBlueButton disabled={submitting} width='384px'>
-							{!submitting ? 'Sign up' : 'Signing up...'}
-						</BigBlueButton>
-					</button>
-				</div>
+				<button className='w-full px-3'>
+					<BigBlueButton disabled={submitting} width='100%'>
+						{!submitting ? 'Sign up' : 'Signing up...'}
+					</BigBlueButton>
+				</button>
 			</div>
 			<div className='text-sm text-gray-500 text-center mt-3'>
 				<input type='checkbox' id='agree' name='agree' checked readOnly /> By
