@@ -136,8 +136,7 @@ class SlidesService {
 	}
 
 	static async ppt2scripts(
-		selectedResourceIds: string[],
-		language: string,
+    formData: any,
 		token: string,
 	) {
 		const response = await fetch('/api/pptx/to_scripts', {
@@ -146,10 +145,7 @@ class SlidesService {
 				'Content-Type': 'application/json',
 				Authorization: `Bearer ${token}`,
 			},
-			body: JSON.stringify({
-				resource_ids: selectedResourceIds,
-				language: language,
-			}),
+			body: JSON.stringify(formData),
 		});
 		const responseJson = await response.json();
 
