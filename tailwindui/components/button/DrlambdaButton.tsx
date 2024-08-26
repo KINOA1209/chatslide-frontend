@@ -30,6 +30,7 @@ type DrlambdaButtonProps = {
 	customizeStyle?: React.CSSProperties;
 	isUploadDropdownItem?: boolean;
 	width?: string;
+  maxWidth?: string;
   menuItems?: ReactNode;
 };
 
@@ -199,6 +200,7 @@ export const BigBlueButton: React.FC<DrlambdaButtonProps> = ({
 	customizeStyle,
 	isUploadDropdownItem,
 	width = '12rem',
+  maxWidth = '100%',
 }) => {
 	const [showPaywallModal, setShowPaywallModal] = useState(false);
 
@@ -208,7 +210,7 @@ export const BigBlueButton: React.FC<DrlambdaButtonProps> = ({
 				showModal={showPaywallModal}
 				setShowModal={setShowPaywallModal}
 				message='Upgrade to unlock more features 🚀'
-        trigger={'button/' + id}
+				trigger={'button/' + id}
 			/>
 			<div id={id} className='mx-auto'>
 				{isUploadDropdownItem ? (
@@ -241,9 +243,10 @@ export const BigBlueButton: React.FC<DrlambdaButtonProps> = ({
 						size='sm'
 						hierarchy='primary'
 						isSubmitting={isSubmitting}
-            buttonStatus={disabled ? 'disabled' : 'enabled'}
+						buttonStatus={disabled ? 'disabled' : 'enabled'}
 						customButtonStyles={customizeStyle}
-						width={width}
+            width={width}
+						maxWidth={maxWidth}
 					>
 						{children}
 					</DesignSystemButton>

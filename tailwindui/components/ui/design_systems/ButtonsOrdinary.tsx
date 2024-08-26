@@ -27,6 +27,7 @@ interface DesignSystemButtonProps {
 	customTextStyles?: React.CSSProperties;
 	customIconStyles?: React.CSSProperties;
 	width?: string;
+  maxWidth?: string;
 }
 
 const DesignSystemButton: React.FC<DesignSystemButtonProps> = ({
@@ -46,6 +47,7 @@ const DesignSystemButton: React.FC<DesignSystemButtonProps> = ({
 	customIconStyles,
 	customTextStyles,
 	width = '100%',
+  maxWidth = '100%'
 }) => {
 	// Define the CSS variables for spacing and colors
 	const [showPaywallModal, setShowPaywallModal] = useState(false);
@@ -120,6 +122,7 @@ const DesignSystemButton: React.FC<DesignSystemButtonProps> = ({
 		}`,
 		justifyContent: 'center',
 		width: width,
+    maxWidth: maxWidth,
 		alignItems: 'center',
 		gap: 'var(--spacing-xs, 4px)',
 		borderRadius: 'var(--radius-md, 8px)',
