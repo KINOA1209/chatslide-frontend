@@ -228,6 +228,38 @@ export default function Page() {
 		}
 	}
 
+	function handleAddResources() {
+		if (chartRef.current !== null && chartType) {
+			console.log('Add to Resources');
+			const ctx = chartRef.current.getContext().chart.canvas;
+			ctx.toBlob(async (blob) => {
+				try {
+					if (!blob) {
+						throw new Error('Failed to create image blob');
+					}
+
+					const body = new FormData();
+					body.append('file', blob, chartData.title+'.png');
+
+					const response = await fetch('/api/upload_user_file', {
+						method: 'POST',
+						headers: {
+							Authorization: `Bearer ${token}`,
+						},
+						body: body,
+					});
+
+					if (!response.ok) {
+						throw new Error('Upload failed');
+					}
+
+				} catch (error) {
+					console.error('Error uploading image:', error);
+				}
+			}, 'image/png');
+		}
+	}
+
 	// avoid hydration error during development caused by persistence
 	if (!useHydrated()) return <></>;
 
@@ -260,15 +292,20 @@ export default function Page() {
 			<Column customStyle={{ height: '100%', overflowY: 'auto' }}>
 				<div className='w-full flex flex-col gap-4 my-auto'>
 					<div className='w-full flex flex-row items-center justify-between gap-y-2 gap-x-4'>
-						{!isPaidTier ? <ToolBar>
-							<a href='#' onClick={e => { setShowPaymentModal(true) }} className='hover:text-blue-500 text-blue-400 font-bold'>Remove Watermark</a>
-							<PaywallModal
-								showModal={showPaymentModal}
-								setShowModal={setShowPaymentModal}
-								message='Upgrade to remove watermark and access more powerful LLMs 🚀'
-								trigger='button/gpt_toggle'
-							></PaywallModal>
-						</ToolBar> : <div></div>}
+						<div className='flex flex-row gap-2'>
+							{!isPaidTier ? <ToolBar>
+								<a href='#' onClick={e => { setShowPaymentModal(true) }} className='hover:text-blue-500 text-blue-400 font-bold'>Remove Watermark</a>
+								<PaywallModal
+									showModal={showPaymentModal}
+									setShowModal={setShowPaymentModal}
+									message='Upgrade to remove watermark and access more powerful LLMs 🚀'
+									trigger='button/gpt_toggle'
+								></PaywallModal>
+							</ToolBar> : <div></div>}
+							<ToolBar>
+								<a href='#' onClick={handleAddResources} className='hover:text-blue-500 text-blue-400 font-bold'>Add to Resouces</a>
+							</ToolBar>
+						</div>
 						<ToolBar>
 							<ButtonWithExplanation
 								explanation='Download Chart'
