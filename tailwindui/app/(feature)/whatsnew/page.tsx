@@ -57,6 +57,15 @@ export default function Studio() {
 							</p>
 						</span>
 					</Instruction>
+					<Instruction>
+						<span>
+							<p>
+								<b>🇵🇰 Added Urdu (from Pakistan) as a Language:</b> Urdu has
+								been added as a supported language, making your content more
+								accessible to Urdu-speaking audiences.
+							</p>
+						</span>
+					</Instruction>
 				</Card>
 
 				<Card>
