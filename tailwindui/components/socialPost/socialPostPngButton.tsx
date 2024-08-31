@@ -127,7 +127,7 @@ const ExportButton: React.FC<ExportToPdfProps> = ({
 			</Menu>
 
       {/* hidden div for export to pdf */}
-				<div className='absolute left-[-9999px] top-[-9999px] -z-1'>
+				<div className='absolute left-[0x] top-[200px] -z-1'>
 					<div>
 						{socialPostSlide.map((slide, index) => (
 							<div key={`exportToPdfContainer` + index.toString()}>
