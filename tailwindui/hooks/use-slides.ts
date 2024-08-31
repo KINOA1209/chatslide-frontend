@@ -537,8 +537,10 @@ export const useSlides = () => {
 		newSlide.palette = slides[index].palette;
 		newSlide.logo = slides[index].logo;
 		newSlide.logo_url = slides[index].logo_url;
-		newSlide.background_url = slides[index].background_url;
+    if (slides[index].layout !== 'Blank_layout')
+		  newSlide.background_url = slides[index].background_url;
 		newSlide.image_positions = slides[index].image_positions;
+
 		const newSlides = [...slides];
 		newSlides.splice(index + 1, 0, newSlide);
 		setSlides(newSlides);
@@ -552,7 +554,9 @@ export const useSlides = () => {
 	const duplicatePage = (index: number) => {
 		console.log('-- duplicate page: ', { index });
 		const oldSlide = slides[index];
-		const newSlide = { ...oldSlide };
+		let newSlide; // Declare newSlide outside of the blocks
+
+    newSlide = { ...oldSlide } as Slide;
 		const newSlides = [...slides];
 		newSlides.splice(index + 1, 0, newSlide);
 		setSlides(newSlides);
@@ -955,10 +959,10 @@ export const useSlides = () => {
 	const toggleHideSlide = (index: number) => {
 		console.log('-- hide slide: ', { index });
 
-    let newSlides = [];
+		let newSlides = [];
 		if (index == -1) {
 			// unhide all slides
-			 newSlides = slides.map((slide, index) => {
+			newSlides = slides.map((slide, index) => {
 				return { ...slide, isHidden: false };
 			});
 		} else if (index == -2) {
@@ -969,7 +973,7 @@ export const useSlides = () => {
 		} else {
 			const newSlide = { ...slides[index], isHidden: !slides[index].isHidden };
 			newSlides = [...slides];
-      newSlides[index] = newSlide;
+			newSlides[index] = newSlide;
 		}
 		setSlides(newSlides);
 		updateSlideHistory(newSlides);

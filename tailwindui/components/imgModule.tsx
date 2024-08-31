@@ -1044,36 +1044,6 @@ export const ImgModule = ({
 		}
 	};
 
-	// const iFrameDimension = (layout: LayoutKeys) => {
-	// 	if (layout === 'Cover_img_1_layout' || layout === 'Col_2_img_1_layout') {
-	// 		return 'width="450px" height="500px"';
-	// 	} else if (layout === 'Full_img_only_layout') {
-	// 		return 'width="940px" height="520px"';
-	// 	} else if (layout === 'Col_2_img_2_layout') {
-	// 		return 'width="400px" height="150px"';
-	// 	} else if (layout === 'Col_1_img_1_layout') {
-	// 		return 'width="940px" height="150px"';
-	// 	} else {
-	// 		return 'width="300px" height="100px"';
-	// 	}
-	// };
-
-	// Regular expression to find width and height attributes
-	// const regex = /width="(\d+)" height="(\d+)"/;
-
-	// const modified_embed_code_single =
-	// 	embed_code_single &&
-	// 	embed_code_single.replace(
-	// 		regex,
-	// 		iFrameDimension(slides[slideIndex].layout),
-	// 	);
-
-	// const [mediaType, setMediaType] = useState({
-	// 	image: false,
-	// 	embed: true,
-	// 	chart: false,
-	// });
-	// handle all embed code related
 	const [currentYoutubeUrl, setCurrentYoutubeUrl] = useState<string>(
 		embed_code_single || '',
 	);

@@ -95,7 +95,12 @@ export const generateTemplate = (templateName: string) => {
 				>
 					{/* background picture when user uploaded this  */}
 					{uploadedBackgroundImageUrl && (
-						<div style={{ ...uploadedBackgroundImgStyle }}>
+						<div
+							style={{
+								...uploadedBackgroundImgStyle,
+								opacity: layoutOptionNonCover === 'Blank_layout' ? 1 : 0.5,
+							}}
+						>
 							<Image
 								style={{ objectFit: 'cover', height: '100%' }}
 								width={960}
@@ -162,7 +167,12 @@ export const generateTemplate = (templateName: string) => {
 				>
 					{/* background picture when user uploaded this  */}
 					{uploadedBackgroundImageUrl && (
-						<div style={{ ...uploadedBackgroundImgStyle }}>
+						<div
+							style={{
+								...uploadedBackgroundImgStyle,
+								opacity: layoutOptionNonCover === 'Blank_layout' ? 1 : 0.5,
+							}}
+						>
 							<Image
 								style={{ objectFit: 'cover', height: '100%' }}
 								width={960}

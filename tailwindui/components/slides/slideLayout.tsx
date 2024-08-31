@@ -20,6 +20,7 @@ import col1img1_png from '@/public/images/template/layout/col1img1.png';
 import col3img3_png from '@/public/images/template/layout/col3img3.png';
 import col2img2_png from '@/public/images/template/layout/col2img2.png';
 import Full_img_only_png from '@/public/images/template/layout/Full_img_only.png';
+import Blank_png from '@/public/images/template/layout/Full_img_only.png';
 import { useLocalImgs } from './slideTemplates';
 import { ThemeElements } from './templates_customizable_elements/theme_elements';
 // import { LayoutElements } from './templates_customizable_elements/layout_elements';
@@ -32,6 +33,7 @@ import Draggable from 'react-draggable';
 import dynamic from 'next/dynamic';
 import Slide, { LogoPosition, Media, SlideKeys } from '@/models/Slide';
 import { DragElement, ElementType } from '../DragElement';
+import { Blank } from '../ui/Loading';
 const QuillEditable = dynamic(
 	() => import('@/components/slides/quillEditorSlide'),
 	{ ssr: false },
@@ -71,7 +73,8 @@ export type LayoutKeys =
 	// | 'Col_2_img_2_top_layout' // new
 	| 'Col_3_img_3_layout'
 	// | 'Col_3_img_3_bottom_layout' // new
-	| 'Full_img_only_layout';
+	| 'Full_img_only_layout'
+  | 'Blank_layout';
 // for add column of text button style
 const addButtonStyle = `
 flex items-center justify-center
@@ -2629,6 +2632,41 @@ export const Full_img_only_layout = ({
 	);
 };
 
+
+export const Blank_layout = ({
+	user_name,
+	title,
+	topic,
+	subtopic,
+	content,
+	imgs,
+	update_callback,
+	canEdit,
+	scale,
+	isCoverPage,
+	layoutOptionNonCover,
+	layoutOptionCover,
+	themeElements,
+	layoutElements,
+	templateLogo,
+	charts,
+	ischarts,
+	handleSlideEdit,
+	currentSlideIndex,
+	image_positions,
+	embed_code,
+	media_types,
+	image_container_positions,
+	logo_position,
+	logo_numeric_position,
+}: MainSlideProps) => {
+
+	return (
+		<div style={layoutElements.canvaCSS}>
+		</div>
+	);
+};
+
 export const layoutOptions = {
 	Cover_img_0_layout: Cover_img_0_layout,
 	Cover_img_1_layout: Cover_img_1_layout,
@@ -2640,6 +2678,7 @@ export const layoutOptions = {
 	Col_2_img_2_layout: Col_2_img_2_layout,
 	Col_3_img_3_layout: Col_3_img_3_layout,
 	Full_img_only_layout: Full_img_only_layout,
+  Blank_layout: Blank_layout,
 };
 
 export const availableLayouts = {
@@ -2655,6 +2694,10 @@ export const availableLayouts = {
 		{
 			name: 'Full_img_only_layout' as LayoutKeys,
 			img: Full_img_only_png.src,
+		},
+		{
+			name: 'Blank_layout' as LayoutKeys,
+			img: Blank_png.src,
 		},
 	],
 	main: [
@@ -2689,6 +2732,10 @@ export const availableLayouts = {
 		{
 			name: 'Full_img_only_layout' as LayoutKeys,
 			img: Full_img_only_png.src,
+		},
+		{
+			name: 'Blank_layout' as LayoutKeys,
+			img: Blank_png.src,
 		},
 	],
 };
