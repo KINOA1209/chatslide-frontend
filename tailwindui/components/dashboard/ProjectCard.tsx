@@ -73,7 +73,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
 							layout='responsive'
 							width={72}
 							height={40}
-							style={{ width: '72px', height: '40px' }}
+							style={{ width: '72px', height: '40px', borderRadius: '5px' }}
 						/>
 					</div>
 				</Link>
@@ -138,7 +138,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
 									textColor='var(--Component-colors-Utility-Purple-utility-purple-700, #5925DC)'
 									iconColor='var(--Component-colors-Utility-Purple-utility-purple-700, #5925DC)'
 								/>
-							) :
+							) : (
 								<DesignSystemBadges
 									size='sm'
 									text=''
@@ -149,7 +149,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
 									textColor='var(--Component-colors-Utility-Purple-utility-purple-700, #B01C99)'
 									iconColor='var(--Component-colors-Utility-Purple-utility-purple-700, #B01C99)'
 								/>
-							}
+							)}
 							{project.video_url ? (
 								<DesignSystemBadges
 									size='sm'
