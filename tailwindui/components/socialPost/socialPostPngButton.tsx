@@ -126,22 +126,22 @@ const ExportButton: React.FC<ExportToPdfProps> = ({
 				/>
 			</Menu>
 
-      {/* hidden div for export to pdf */}
-				<div className='absolute left-[0x] top-[200px] -z-1'>
-					<div>
-						{socialPostSlide.map((slide, index) => (
-							<div key={`exportToPdfContainer` + index.toString()}>
-								<SocialPostContainer
-									slide={slide}
-									currentSlideIndex={index}
-									exportToPdfMode={true}
-									templateDispatch={templateDispatch}
-									slideRef={slideRefs[index]}
-								/>
-							</div>
-						))}
-					</div>
+			{/* hidden div for export to pdf */}
+			<div className='absolute left-[-99999px] top-[-99999px] -z-1'>
+				<div>
+					{socialPostSlide.map((slide, index) => (
+						<div key={`exportToPdfContainer` + index.toString()}>
+							<SocialPostContainer
+								slide={slide}
+								currentSlideIndex={index}
+								exportToPdfMode={true}
+								templateDispatch={templateDispatch}
+								slideRef={slideRefs[index]}
+							/>
+						</div>
+					))}
 				</div>
+			</div>
 		</div>
 	);
 };
