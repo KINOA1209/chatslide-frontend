@@ -230,6 +230,14 @@ const PricingComparison: React.FC<{
 	};
 
 	const handleSubscription = async (tier: Tier, token: string) => {
+    if (tier === 'ULTIMATE') {
+      window.open(
+				'https://dealmirror.com/product/chatslide-ai-build-your-slides-and-video-in-one-click/',
+        '_blank'
+			);
+      return ;
+    }
+
 		const suffix = '_' + interval.toUpperCase();
 		const plan = tier + suffix;
 
@@ -263,14 +271,14 @@ const PricingComparison: React.FC<{
 						</span>
 					),
 				},
-				{
-					key: 'yearly',
-					element: (
-						<span className='whitespace-nowrap'>
-							Yearly <span className='text-xs whitespace-nowrap'>-40%</span>
-						</span>
-					),
-				},
+				// {
+				// 	key: 'yearly',
+				// 	element: (
+				// 		<span className='whitespace-nowrap'>
+				// 			Yearly <span className='text-xs whitespace-nowrap'>-40%</span>
+				// 		</span>
+				// 	),
+				// },
 				{
 					key: 'lifetime',
 					element: (
