@@ -45,7 +45,7 @@ import SlidesService from '@/services/SlidesService';
 import DesignSettingsService from '@/services/DesignSettingService';
 import Slide, { LogoPosition } from '@/models/Slide';
 import ProjectService from '@/services/ProjectService';
-import { BigBlueButton } from '@/components/button/DrlambdaButton';
+import { BigBlueButton, DropDown } from '@/components/button/DrlambdaButton';
 import { WrappableRow } from '@/components/layout/WrappableRow';
 import DesignSystemBadges from '@/components/ui/design_systems/Badges';
 import DesignSystemButton from '@/components/ui/design_systems/ButtonsOrdinary';
@@ -324,11 +324,40 @@ export default function DesignPage() {
 			text: 'All',
 			explanation: 'Wider range, personal use',
 		},
-    {
-      value: 'illustration',
-      text: 'Illustration',
-      explanation: 'Small set of illustration images',
-    }
+		{
+			value: 'illustration',
+			text: 'Illustration',
+			explanation: 'Small set of illustration images',
+		},
+	];
+
+	const [imageColor, setImageColor] = useState('all');
+	const imageColorOptions: RadioButtonOption[] = [
+		// green, red, yellow, purple, blue
+		{
+			value: 'all',
+			text: '🌈 All',
+		},
+		{
+			value: 'red',
+			text: '🔴 Red',
+		},
+		{
+			value: 'purple',
+			text: '🟣 Purple',
+		},
+		{
+			value: 'blue',
+			text: '🔵 Blue',
+		},
+		{
+			value: 'green',
+			text: '🟢 Green',
+		},
+		{
+			value: 'yellow',
+			text: '🟡 Yellow',
+		},
 	];
 
 	if (project?.logo === undefined) {
@@ -363,6 +392,7 @@ export default function DesignPage() {
 						project.id,
 						project.topic,
 						imageLicense,
+						imageColor,
 						imageAmount,
 						token,
 						selectedLayouts,
@@ -589,7 +619,7 @@ export default function DesignPage() {
 				showModal={showPaymentModal}
 				message='Upgrade for this 🌟premium feature!'
 				setShowModal={setShowPaymentModal}
-        trigger='design'
+				trigger='design'
 			/>
 
 			<div
@@ -684,6 +714,24 @@ export default function DesignPage() {
 										name='imageLicense'
 										cols={1}
 									/>
+								</div>
+							)}
+							{imageAmount != 'no_image' && (
+								<div>
+									<Instruction boldenFont={true}>
+										Do you want to use images of a specific color?
+									</Instruction>
+
+									<DropDown
+										onChange={(e) => setImageColor(e.target.value)}
+										value={imageColor}
+									>
+										{imageColorOptions.map((option) => (
+											<option key={option.value} value={option.value}>
+												{option.text}
+											</option>
+										))}
+									</DropDown>
 								</div>
 							)}
 						</Card>
