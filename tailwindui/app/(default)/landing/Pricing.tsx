@@ -182,11 +182,11 @@ const PricingComparison: React.FC<{
 		}
 	};
 
-	useEffect(() => {
-		userInEU().then((res) => {
-			setCurrency(res ? '€' : '$');
-		});
-	}, []);
+	// useEffect(() => {
+	// 	userInEU().then((res) => {
+	// 		setCurrency(res ? '€' : '$');
+	// 	});
+	// }, []);
 
 	const handleClick = async (tier: Tier) => {
 		if (!token) {
@@ -361,10 +361,10 @@ const PricingComparison: React.FC<{
 						<div className='brix---text-300-medium'>📱 Generate video</div>
 					</div>
 					<div className={`brix---pricing-content-wrapper-left${smallSuffix}`}>
-						<div className='brix---text-300-medium'>🦹‍♂️ Attach avatar (new)</div>
+						<div className='brix---text-300-medium'>🦹‍♂️ Attach avatar</div>
 					</div>
 					<div className={`brix---pricing-content-wrapper-left${smallSuffix}`}>
-						<div className='brix---text-300-medium'>🎙️ Voice cloning (new)</div>
+						<div className='brix---text-300-medium'>🎙️ Cloned Voiceover</div>
 					</div>
 					<div className={`brix---pricing-content-wrapper-left${smallSuffix}`}>
 						<div className='brix---text-300-medium'>🪑 Free Team Seats</div>
@@ -466,7 +466,7 @@ const PricingComparison: React.FC<{
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className='brix---pricing-v8-title-table'>
 							<div className='brix---text-300-medium'>
-								🦹‍♂️ Attach avatar (new)
+								🦹‍♂️ Attach avatar
 							</div>
 						</div>
 						<img src='images/check-icon-white-brix-templates.svg' alt='' />
@@ -581,7 +581,7 @@ const PricingComparison: React.FC<{
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className='brix---pricing-v8-title-table'>
 							<div className='brix---text-300-medium'>
-								🦹‍♂️ Attach avatar (new)
+								🦹‍♂️ Attach avatar
 							</div>
 						</div>
 						<img
@@ -591,9 +591,7 @@ const PricingComparison: React.FC<{
 					</div>
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className='brix---pricing-v8-title-table'>
-							<div className='brix---text-300-medium'>
-								🎙️ Voice cloning (new)
-							</div>
+							<div className='brix---text-300-medium'>🎙️ Cloned Voiceover</div>
 						</div>
 						<div className='brix---text-300-medium'>1 Voice</div>
 					</div>
@@ -717,7 +715,7 @@ const PricingComparison: React.FC<{
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className='brix---pricing-v8-title-table'>
 							<div className='brix---text-300-medium'>
-								🦹‍♂️ Attach avatar (new)
+								🦹‍♂️ Attach avatar
 							</div>
 						</div>
 						<img src='images/check-icon-white-brix-templates.svg' alt='' />
@@ -725,7 +723,7 @@ const PricingComparison: React.FC<{
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className='brix---pricing-v8-title-table'>
 							<div className='brix---text-300-medium'>
-								🎙️ Voice cloning (new)
+								🎙️ Cloned Voiceover (new)
 							</div>
 						</div>
 						<div className='brix---text-300-medium'>
