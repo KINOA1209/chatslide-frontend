@@ -12,23 +12,25 @@ import { SpinIcon } from '@/app/(feature)/icons';
 import { GoDownload } from 'react-icons/go';
 import { useProject } from '@/hooks/use-project';
 import SessionStorage from '@/utils/SessionStorage';
+import jsPDF from 'jspdf';
+import { Menu, MenuItem } from '../button/Menu';
+import { RiImage2Line } from 'react-icons/ri';
+import { FaRegFilePdf } from 'react-icons/fa';
 
 interface ExportToPdfProps {
 	socialPostSlide: SocialPostSlide[];
 	currentSlideIndex: number;
 }
 
-const ExportToPngButton: React.FC<ExportToPdfProps> = ({
+const ExportButton: React.FC<ExportToPdfProps> = ({
 	socialPostSlide,
 	currentSlideIndex,
 }) => {
 	const { project } = useProject();
 	const topic = project?.topic;
 
-	const res_scenario = SessionStorage.getItem('scenarioType');
 	const [downloading, setDownloading] = useState(false);
-	const exportSlidesRef = useRef<HTMLDivElement>(null);
-	const [slideRefs, setSlideRefs] = useState(
+  const [slideRefs, setSlideRefs] = useState(
 		socialPostSlide.map(() => React.createRef<HTMLDivElement>()),
 	);
 
@@ -39,42 +41,94 @@ const ExportToPngButton: React.FC<ExportToPdfProps> = ({
 			const dataUrl = await downloadImage(topic || '', slideRefs[i]);
 			if (dataUrl) {
 				const base64Data = dataUrl.split(',')[1];
-				zip.file(`slide-${i + 1}.png`, base64Data, { base64: true });
+				zip.file(`page-${i + 1}.png`, base64Data, { base64: true });
 			}
 		}
 		const content = await zip.generateAsync({ type: 'blob' });
-		saveAs(content, 'slides.zip');
+		saveAs(content, project?.id + '.zip');
+		setDownloading(false);
+	};
+
+	const handleSavePdf = async () => {
+		if (slideRefs[0].current === null) {
+			console.log('slideRefs[0].current is null');
+			return;
+		}
+
+		setDownloading(true);
+
+		const pdf = new jsPDF({
+			// orientation: 'landscape',
+			unit: 'px',
+			format: [
+				slideRefs[0].current.offsetWidth,
+				slideRefs[0].current.offsetHeight,
+			],
+		});
+
+		for (let i = 0; i < slideRefs.length; i++) {
+			const dataUrl = await downloadImage(topic || '', slideRefs[i]);
+			if (dataUrl) {
+				if (i > 0) {
+					pdf.addPage();
+				}
+				pdf.addImage(
+					dataUrl,
+					'PNG',
+					0,
+					0,
+					slideRefs[0].current.offsetWidth,
+					slideRefs[0].current.offsetHeight,
+					undefined,
+					'NONE',
+				);
+			}
+		}
+
+		pdf.save(project?.id + '.pdf');
 		setDownloading(false);
 	};
 
 	return (
 		<div className='flex flex-wrap flex-grow-0'>
-			<div className=''>
-				<ButtonWithExplanation
-					button={
-						<button onClick={handleSaveImage}>
-							{!downloading ? (
-								<GoDownload
-									style={{
-										strokeWidth: '1',
-										flex: '1',
-										width: '1.5rem',
-										height: '1.5rem',
-										fontWeight: 'bold',
-										color: '#344054',
-									}}
-								/>
-							) : (
-								<SpinIcon />
-							)}
-						</button>
-					}
-					explanation={'Export to PNGs'}
+			<Menu
+				align='left'
+				icon={
+					!downloading ? (
+						<GoDownload
+							style={{
+								strokeWidth: '1',
+								flex: '1',
+								width: '24px',
+								height: '24px',
+								color: 'var(--colors-text-text-secondary-700, #344054)',
+							}}
+						/>
+					) : (
+						<SpinIcon />
+					)
+				}
+				mode='hover'
+				iconPadding='0'
+			>
+				<MenuItem
+					label='PNGs'
+					onClick={handleSaveImage}
+					icon={<RiImage2Line />}
+					isPaidFeature={true}
 				/>
+				<MenuItem
+					label='PDF'
+					// onClick={() => handleExport('pptx', false)}  // method by jonas, not working yet
+					onClick={handleSavePdf}
+					icon={<FaRegFilePdf />}
+					isPaidFeature={true}
+				/>
+			</Menu>
 
-				{/* hidden div for export to pdf */}
+      {/* hidden div for export to pdf */}
 				<div className='absolute left-[-9999px] top-[-9999px] -z-1'>
-					<div ref={exportSlidesRef}>
+					<div>
 						{socialPostSlide.map((slide, index) => (
 							<div key={`exportToPdfContainer` + index.toString()}>
 								<SocialPostContainer
@@ -88,9 +142,8 @@ const ExportToPngButton: React.FC<ExportToPdfProps> = ({
 						))}
 					</div>
 				</div>
-			</div>
 		</div>
 	);
 };
 
-export default ExportToPngButton;
+export default ExportButton;
