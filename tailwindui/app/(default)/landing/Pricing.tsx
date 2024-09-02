@@ -25,7 +25,8 @@ const PricingComparison: React.FC<{
 	const [currency, setCurrency] = useState<string>('$');
 	const router = useRouter();
 	const [interval, setInterval] = useState<Interval>(
-		isChatslide() ? 'yearly' : 'lifetime',
+		// isChatslide() ? 'yearly' : 'lifetime',
+		'lifetime',
 	);
 	const smallSuffix = small ? '-small' : '';
 	const [showManageSubscription, setShowManageSubscription] = useState(false);
@@ -121,30 +122,35 @@ const PricingComparison: React.FC<{
 				amount = amount * 0.6; // 40% off forever
 				break;
 			case 'lifetime':
-				amount = amount * 14; // original price is * 40, so this is a 60% off discount
+				switch (tier) {
+					case 'PLUS':
+						amount = 97;
+						break;
+					case 'PRO':
+						amount = 146;
+						break;
+					case 'ULTIMATE':
+						amount = 335;
+						break;
+				}
+				break;
 		}
 
-		// special for lifetime ultimate
+		let discountLabel = '';
+
+		// special discount label for lifetime ultimate
 		if (interval === 'lifetime') {
-			if (tier === 'ULTIMATE') {
-				amount = 479.2;
-				return (
-					<span className='text-green-600'>
-						{currency + amount.toFixed(2)}
-						<span className='text-xs'>-80%</span>
-					</span>
-				);
-			} else {
-				return (
-					<span>
-						{currency + amount.toFixed(2)}
-						<span className='text-xs'> -60%</span>
-					</span>
-				);
-			}
+			discountLabel = ' -80%';
+		} else if (interval === 'yearly' || interval === 'monthly') {
+			discountLabel = ' -60%';
 		}
 
-		return currency + amount.toFixed(2);
+		return (
+			<span className={interval === 'lifetime' ? 'text-green-600' : ''}>
+				{currency + amount.toFixed(2)}
+				{discountLabel && <span className='text-xs'>{discountLabel}</span>}
+			</span>
+		);
 	};
 
 	const getFirstLine = (tier: Tier): string => {
@@ -230,13 +236,13 @@ const PricingComparison: React.FC<{
 	};
 
 	const handleSubscription = async (tier: Tier, token: string) => {
-    if (tier === 'ULTIMATE') {
-      window.open(
+		if (tier === 'ULTIMATE') {
+			window.open(
 				'https://dealmirror.com/product/chatslide-ai-build-your-slides-and-video-in-one-click/',
-        '_blank'
+				'_blank',
 			);
-      return ;
-    }
+			return;
+		}
 
 		const suffix = '_' + interval.toUpperCase();
 		const plan = tier + suffix;
@@ -263,14 +269,14 @@ const PricingComparison: React.FC<{
 					key: 'onetime',
 					element: <span className='whitespace-nowrap'>15-Day</span>,
 				},
-				{
-					key: 'monthly',
-					element: (
-						<span className='whitespace-nowrap'>
-							Monthly <span className='text-xs whitespace-nowrap'>-30%</span>
-						</span>
-					),
-				},
+				// {
+				// 	key: 'monthly',
+				// 	element: (
+				// 		<span className='whitespace-nowrap'>
+				// 			Monthly <span className='text-xs whitespace-nowrap'>-30%</span>
+				// 		</span>
+				// 	),
+				// },
 				// {
 				// 	key: 'yearly',
 				// 	element: (
@@ -473,9 +479,7 @@ const PricingComparison: React.FC<{
 					</div>
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className='brix---pricing-v8-title-table'>
-							<div className='brix---text-300-medium'>
-								🦹‍♂️ Attach avatar
-							</div>
+							<div className='brix---text-300-medium'>🦹‍♂️ Attach avatar</div>
 						</div>
 						<img src='images/check-icon-white-brix-templates.svg' alt='' />
 					</div>
@@ -588,9 +592,7 @@ const PricingComparison: React.FC<{
 					</div>
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className='brix---pricing-v8-title-table'>
-							<div className='brix---text-300-medium'>
-								🦹‍♂️ Attach avatar
-							</div>
+							<div className='brix---text-300-medium'>🦹‍♂️ Attach avatar</div>
 						</div>
 						<img
 							src='images/check-icon-brix-templates.svg'
@@ -722,9 +724,7 @@ const PricingComparison: React.FC<{
 					</div>
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className='brix---pricing-v8-title-table'>
-							<div className='brix---text-300-medium'>
-								🦹‍♂️ Attach avatar
-							</div>
+							<div className='brix---text-300-medium'>🦹‍♂️ Attach avatar</div>
 						</div>
 						<img src='images/check-icon-white-brix-templates.svg' alt='' />
 					</div>
