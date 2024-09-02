@@ -170,7 +170,7 @@ const LinkInput = ({
 	};
 
 	return (
-		<div className='bg-gray-100 border border-2 rounded-lg border-gray-200'>
+		<div className='border border-2 rounded-lg border-gray-200'>
 			<div className='flex justify-center items-center w-full px-4 py-2'>
 				<div className='flex items-center gap-1'>
 					<IoIosLink />
