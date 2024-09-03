@@ -36,6 +36,27 @@ export default function Studio() {
 				</Card>
 
 				<Card>
+					<BigTitle>September 2</BigTitle>
+					<Instruction>
+						<span>
+							<p>
+								<b>👤 New Avatars Added:</b> We have added 5 more available
+								avatars. Female: Lori and Meg, and Male: Harry, Max, and Jeff.
+							</p>
+						</span>
+					</Instruction>
+					<Instruction>
+						<span>
+							<p>
+								<b>↩️ Undo Script Editing Changes:</b> You can now undo changes
+								during script editing, making it easier to revert to previous
+								versions and enhance your workflow.
+							</p>
+						</span>
+					</Instruction>
+				</Card>
+
+				<Card>
 					<BigTitle>August 30</BigTitle>
 					<Instruction>
 						<span>
