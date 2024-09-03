@@ -261,14 +261,14 @@ const PricingComparison: React.FC<{
 					key: 'onetime',
 					element: <span className='whitespace-nowrap'>15-Day</span>,
 				},
-				// {
-				// 	key: 'monthly',
-				// 	element: (
-				// 		<span className='whitespace-nowrap'>
-				// 			Monthly <span className='text-xs whitespace-nowrap'>-30%</span>
-				// 		</span>
-				// 	),
-				// },
+				{
+					key: 'monthly',
+					element: (
+						<span className='whitespace-nowrap'>
+							Monthly <span className='text-xs whitespace-nowrap'>-30%</span>
+						</span>
+					),
+				},
 				{
 					key: 'yearly',
 					element: (
