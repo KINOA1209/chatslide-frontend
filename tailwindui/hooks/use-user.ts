@@ -66,6 +66,7 @@ const PRO_TIERS = [
   'ULTIMATE_MONTHLY',
   'ULTIMATE_YEARLY',
   'ULTIMATE_LIFETIME',
+  'ULTIMATE_FREE'
 ];
 
 export const useUser = () => {
