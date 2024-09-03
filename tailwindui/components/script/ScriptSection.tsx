@@ -107,15 +107,19 @@ const ScriptSection: React.FC<{
 					<ButtonWithExplanation
 						explanation='Play the script'
 						button={
-							<button onClick={playScript}>
+							<button
+								onClick={playScript}
+								disabled={slides[index].transcript === ''}
+							>
 								<FiPlay
 									style={{
-										strokeWidth: '2',
+										strokeWidth: '2.5',
 										flex: '1',
 										width: '1.5rem',
 										height: '1.5rem',
 										fontWeight: 'bold',
-										color: '#344054',
+										color:
+											slides[index].transcript === '' ? '#C6C6C6' : '#344054',
 									}}
 								/>
 							</button>

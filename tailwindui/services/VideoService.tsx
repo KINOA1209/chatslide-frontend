@@ -85,6 +85,10 @@ export default class VideoService {
 		token: string,
 		locale: string,
 	): Promise<string> {
+    if(text.length === 0) {
+      return '';
+    }
+
 		const response = await fetch('/api/generate_audio_single_slide', {
 			method: 'POST',
 			headers: {
