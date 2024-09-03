@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import {
 	Card,
 	CardContent,
@@ -49,6 +49,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
 	setRefreshMenu,
 	exportSlidesRef = useRef<HTMLDivElement>(null),
 }) => {
+	const [loaded, setLoaded] = useState(false);
 	const url = project.content_type !== "chart" ? `/${isDiscover ? 'shared' : 'project'}/${project.id}` : `/charts/${project.id}`;
 	return (
 		// <Link href={`/${isDiscover ? 'shared' : 'project'}/${project.id}`}>
@@ -65,15 +66,26 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
 							objectFit: 'contain' as 'contain',
 						}}
 					>
+						{!loaded && <Image
+							className='w-[72px] h-[40px]'
+							unoptimized={true}
+							src={getThumbnailUrl(null)}
+							alt={project.name + ' project thumbnail'}
+							layout='responsive'
+							width={72}
+							height={40}
+						/>}
 						<Image
-							className=''
+							className='w-[72px] h-[40px]'
 							unoptimized={true}
 							src={getThumbnailUrl(project)}
 							alt={project.name + ' project thumbnail'}
 							layout='responsive'
 							width={72}
 							height={40}
-							style={{ width: '72px', height: '40px', borderRadius: '5px' }}
+							style={loaded ? {width: '72px', height: '40px', borderRadius: '5px' } : { display: 'none' }}
+							onLoad={() => setLoaded(true)}
+							loading='eager'
 						/>
 					</div>
 				</Link>
