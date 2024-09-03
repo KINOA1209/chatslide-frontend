@@ -38,6 +38,11 @@ import PaywallModal from '@/components/paywallModal';
 import { useParams } from 'next/navigation';
 import { debounce } from 'lodash';
 import { useProject } from '@/hooks/use-project';
+import { Typography } from '@mui/material';
+import { MdExpandMore } from 'react-icons/md';
+import { getBrand } from '@/utils/getHost';
+import { FaCopy } from 'react-icons/fa';
+import Link from '@mui/material/Link';
 // Register Chart.js components
 ChartJS.register(
 	CategoryScale,
@@ -67,6 +72,7 @@ export default function Page() {
 	const [chartType, setChartType] = useState<
 		null | 'line' | 'bar' | 'pie' | 'scatter'
 	>(null);
+	const [expandReferences, setExpandReferences] = useState<boolean>(false);
 	const chartRef = useRef<ChartJS>(null);
 	const { token, updateCreditsFE, isPaidUser } = useUser();
 	const { project, initProject, updateProject, clearProject } = useProject();
@@ -106,7 +112,11 @@ export default function Page() {
 					return resp.json()
 				})
 				.then(data => {
-					setChartData(data.data.chart_json);
+					const receivedChartData = data.data.chart_json;
+					if (!("reference_urls" in receivedChartData)) {
+						receivedChartData.reference_urls = []
+					}
+					setChartData(receivedChartData);
 				}).catch(err => {
 					console.error('FAIL: ', err);
 					window.location.href = '/charts';
@@ -150,7 +160,13 @@ export default function Page() {
 	const debounceSaveChart = useCallback(debounce(saveChart, 1000), []);
 
 	function receiveChart(receivedData: any) {
+		console.log("received data", receivedData)
 		const data = receivedData.chart_json;
+		if (receivedData.reference_urls) {
+			data.reference_urls = receivedData.reference_urls;
+		} else {
+			data.reference_urls = []
+		}
 		if (project) {
 			updateProject('id', receivedData.project_id);
 		} else {
@@ -239,7 +255,7 @@ export default function Page() {
 					}
 
 					const body = new FormData();
-					body.append('file', blob, chartData.title+'.png');
+					body.append('file', blob, chartData.title + '.png');
 
 					const response = await fetch('/api/upload_user_file', {
 						method: 'POST',
@@ -280,6 +296,11 @@ export default function Page() {
 			/>
 		</div>
 	);
+
+	const handleCopyReferences = () => {
+		const references = chartData.reference_urls.join('\n');
+		navigator.clipboard.writeText(references);
+	}
 
 	return (
 		<div className='flex flex-row flex-grow justify-around items-center relative h-screen'>
@@ -355,6 +376,45 @@ export default function Page() {
 							</div>
 						</Card>
 					</div>
+
+					{(chartData && chartData.reference_urls.length > 0) ? (
+						<div>
+							<Card>
+								<div id='aaaa' className='w-full'>
+									<div className='w-full flex justify-between cursor-pointer' onClick={e => { setExpandReferences(!expandReferences) }}>
+										<h2 className="text-lg font-bold">References</h2>
+										<div className='flex flex-col justify-center'>
+											<MdExpandMore className={expandReferences ? 'rotate-180' : 'rotate-0'} />
+										</div>
+									</div>
+
+									<div className={`flex flex-col gap-4 px-4 transition-all ease-in-out duration-300 ${expandReferences ? 'max-h-screen overflow-x-clip' : 'max-h-0 overflow-y-hidden'}`}>
+										<ul className='mt-4'>
+											{chartData.reference_urls.map((url: string, index: number) => {
+												return <li>• <Link href={url} target='_blank'>{url}</Link></li>
+											})
+											}
+										</ul>
+										<div className='flex justify-between gap-4'>
+											<Typography variant="caption" gutterBottom sx={{ display: 'block' }}>
+												Results are gathered from the internet. {getBrand()} is not responsible for the accuracy of the data.
+											</Typography>
+											<ButtonWithExplanation
+												explanation='Copy to Clipboard'
+												position='left'
+												button={
+													<button onClick={handleCopyReferences}>
+														<FaCopy />
+													</button>
+												}
+											/>
+										</div>
+									</div>
+								</div>
+							</Card>
+						</div>) : (
+						<></>
+					)}
 
 					<div>
 						{chartType ? (
