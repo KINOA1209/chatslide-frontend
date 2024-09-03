@@ -15,8 +15,9 @@ export const Simplistic_008_TemplateThemeConfig: {
 } = {
 	'Dynamic Purple': {
 		backgroundColorCover: '#A388F7',
-		isGradientBackground: true,
+		// isGradientBackground: true,
 		// backgroundColorCover: 'linear-gradient(to bottom right, #7E96F7, #A388F7)',
+		// backgroundColor: 'linear-gradient(to bottom right, #7E96F7, #A388F7)',
 		backgroundColor: '#A388F7',
 		titleFontCSS: {
 			fontSize: '14pt',

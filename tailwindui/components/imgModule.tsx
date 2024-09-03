@@ -1,5 +1,4 @@
 import React, { CSSProperties, useEffect, useRef, useState } from 'react';
-import AuthService from '@/services/AuthService';
 import { createPortal } from 'react-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import ResourceService from '@/services/ResourceService';
@@ -38,10 +37,6 @@ import { SpinIcon } from '@/app/(feature)/icons';
 import { FaCheck, FaSearch, FaTrash } from 'react-icons/fa';
 import DrlambdaButton, { BigBlueButton } from './button/DrlambdaButton';
 import { ToolBar } from './ui/ToolBar';
-import ButtonWithExplanation from './button/ButtonWithExplanation';
-import { index } from 'd3';
-import { GoPencil } from 'react-icons/go';
-import { IoMdResize } from 'react-icons/io';
 import { Blank } from './ui/Loading';
 import { useImageStore } from '@/hooks/use-img-store';
 import { LuTrash2 } from 'react-icons/lu';
@@ -73,6 +68,7 @@ import { CiSearch } from 'react-icons/ci';
 // import { Select, Option } from '@material-tailwind/react';
 
 import Select, { StylesConfig, SingleValue } from 'react-select';
+import { extendedImageLicenseOptions, imageColorOptions } from '@/app/(feature)/design/ImageOptions';
 
 interface OptionType {
 	value: string;
@@ -136,33 +132,6 @@ enum ImgQueryMode {
 	CHART_SELECTION,
 	EMBED_CODE,
 }
-
-const imageLicenseOptions: RadioButtonOption[] = [
-	{
-		value: 'all',
-		text: 'All',
-	},
-	{
-		value: 'creative',
-		text: 'Creative',
-	},
-	{
-		value: 'stock',
-		text: 'Stock',
-	},
-	{
-		value: 'illustration',
-		text: 'Illustration',
-	},
-	{
-		value: 'giphy',
-		text: 'Gif',
-	},
-	{
-		value: 'icon',
-		text: 'Icon',
-	},
-];
 
 const getImageLicenseExplanation = (license: string) => {
 	switch (license) {
@@ -237,22 +206,37 @@ export const ImgModule = ({
 
 	const [uploading, setUploading] = useState(false);
 	const [imageLicense, setImageLicense] = useState('all');
+  const [imageColor, setImageColor] = useState('');  // all
 
-	const optionsWithExplanation = imageLicenseOptions.map((option) => ({
-		...option,
-		label: (
-			<div>
-				<span className='font-bold'>{option.text}</span>{' '}
-				<span className='font-normal'>
-					{getImageLicenseExplanation(option.value)}
-				</span>
-			</div>
-		),
-	}));
+	const imageLicenseOptionsWithExplanation = extendedImageLicenseOptions.map(
+		(option) => ({
+			...option,
+			label: (
+				<div>
+					<span className='font-bold'>{option.text}</span>{' '}
+					<span className='font-normal'>
+						{getImageLicenseExplanation(option.value)}
+					</span>
+				</div>
+			),
+		}),
+	);
+  const colorOptions = imageColorOptions.map((option) => ({
+    ...option,
+    label: (
+      <div>
+        <span className='font-bold'>{option.text}</span>
+      </div>
+    ),
+  }));
 
-	const handleChange = (selectedOption: SingleValue<OptionType>) => {
+	const handleImageLicenseChange = (selectedOption: SingleValue<OptionType>) => {
 		setImageLicense((selectedOption as OptionType)?.value || 'all');
 	};
+
+  const handleImageColorChange = (selectedOption: SingleValue<OptionType>) => {
+    setImageColor((selectedOption as OptionType)?.value || 'all');
+  }
 
 	function getSearchText() {
 		const slide = slides[slideIndex];
@@ -332,6 +316,7 @@ export const ImgModule = ({
 			body: JSON.stringify({
 				search_keyword: (e.target as HTMLFormElement).search_keyword.value,
 				license: imageLicense,
+        color: imageColor,
 			}),
 		})
 			.then((response) => {
@@ -766,33 +751,17 @@ export const ImgModule = ({
 			<form
 				onSubmit={async (e) => {
 					e.preventDefault();
-					if (imageLicense == 'illustration') {
-						await handleIllustrationSearchSubmit(e);
-					} else {
-						await handleImageSearchSubmit(e);
-					}
+          await handleImageSearchSubmit(e);
 				}}
 				className='w-full flex flex-col gap-[16px]'
 			>
 				{/* search box input area */}
 				<div>
-					{/* <span
-						style={{
-							color: 'var(--colors-text-text-secondary-700, #344054)',
-							fontSize: '14px',
-							fontStyle: 'normal',
-							fontWeight: '500',
-							lineHeight: '20px',
-							marginBottom: '8px',
-						}}
-					>
-						Search
-					</span> */}
 					<InputBox>
 						<input
 							id='search_keyword'
 							type='text'
-							className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800 bg-gray-100'
+							className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800'
 							placeholder='Enter the keywords'
 							required
 							ref={searchRef}
@@ -814,55 +783,59 @@ export const ImgModule = ({
 					<WordSelector text={getSearchText()} setQuery={setKeyword} />
 				</div>
 				{/* Image type selection */}
-				<div className='w-full'>
-					<span
-						style={{
-							color: 'var(--colors-text-text-secondary-700, #344054)',
-							fontSize: '14px',
-							fontStyle: 'normal',
-							fontWeight: '500',
-							lineHeight: '20px',
-							marginBottom: '8px',
-						}}
-					>
-						Image Type
-					</span>
-					{/* <RadioButton
-						options={imageLicenseOptions}
-						selectedValue={imageLicense}
-						setSelectedValue={setImageLicense}
-						name='imageLicense'
-						cols={3}
-					/>
+				<div className='grid grid-cols-2 gap-2'>
+					<div className='w-full'>
+						<span
+							style={{
+								color: 'var(--colors-text-text-secondary-700, #344054)',
+								fontSize: '14px',
+								fontStyle: 'normal',
+								fontWeight: '500',
+								lineHeight: '20px',
+								marginBottom: '8px',
+							}}
+						>
+							Image License
+						</span>
+						<Select
+							value={imageLicenseOptionsWithExplanation.find(
+								(option) => option.value === imageLicense,
+							)}
+							// menuPortalTarget={document.body}
+							menuPosition='fixed'
+							isClearable={false}
+							isSearchable={false}
+							onChange={handleImageLicenseChange}
+							options={imageLicenseOptionsWithExplanation}
+							styles={customStyles}
+						/>
+					</div>
 
-					<Explanation>{getImageLicenseExplanation(imageLicense)}</Explanation> */}
-					{/* <Select
-						// label='Select Image License'
-						value={imageLicense}
-						onChange={(val) => setImageLicense(val || 'all')} // Ensure val is a string
-						// onChange={(val) => console.log('change option')} // Ensure val is a string
-					>
-						{imageLicenseOptions.map((option) => (
-							<Option key={option.value} value={option.value}>
-								<span className='font-bold'>{option.text}</span>{' '}
-								<span className='font-normal'>
-									{getImageLicenseExplanation(option.value)}
-								</span>
-							</Option>
-						))}
-					</Select> */}
-					<Select
-						value={optionsWithExplanation.find(
-							(option) => option.value === imageLicense,
-						)}
-						// menuPortalTarget={document.body}
-						menuPosition='fixed'
-						isClearable={false}
-						isSearchable={false}
-						onChange={handleChange}
-						options={optionsWithExplanation}
-						styles={customStyles}
-					/>
+					{/* Image color selection */}
+					{imageLicense !== 'giphy' && imageLicense !=='icon' && <div className='w-full'>
+						<span
+							style={{
+								color: 'var(--colors-text-text-secondary-700, #344054)',
+								fontSize: '14px',
+								fontStyle: 'normal',
+								fontWeight: '500',
+								lineHeight: '20px',
+								marginBottom: '8px',
+							}}
+						>
+							Image Color
+						</span>
+						<Select
+							value={colorOptions.find((option) => option.value === imageColor)}
+							// menuPortalTarget={document.body}
+							menuPosition='fixed'
+							isClearable={false}
+							isSearchable={false}
+							onChange={handleImageColorChange}
+							options={colorOptions}
+							styles={customStyles}
+						/>
+					</div>}
 				</div>
 			</form>
 			{/* Search result images display area */}
@@ -960,7 +933,7 @@ export const ImgModule = ({
 					<input
 						id='search_keyword'
 						type='text'
-						className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800 bg-gray-100'
+						className='w-full border-0 p-0 focus:outline-none focus:ring-0 cursor-text text-gray-800'
 						placeholder='Enter the keywords (10⭐️)'
 						required
 						ref={searchRef}
@@ -1071,36 +1044,6 @@ export const ImgModule = ({
 		}
 	};
 
-	// const iFrameDimension = (layout: LayoutKeys) => {
-	// 	if (layout === 'Cover_img_1_layout' || layout === 'Col_2_img_1_layout') {
-	// 		return 'width="450px" height="500px"';
-	// 	} else if (layout === 'Full_img_only_layout') {
-	// 		return 'width="940px" height="520px"';
-	// 	} else if (layout === 'Col_2_img_2_layout') {
-	// 		return 'width="400px" height="150px"';
-	// 	} else if (layout === 'Col_1_img_1_layout') {
-	// 		return 'width="940px" height="150px"';
-	// 	} else {
-	// 		return 'width="300px" height="100px"';
-	// 	}
-	// };
-
-	// Regular expression to find width and height attributes
-	// const regex = /width="(\d+)" height="(\d+)"/;
-
-	// const modified_embed_code_single =
-	// 	embed_code_single &&
-	// 	embed_code_single.replace(
-	// 		regex,
-	// 		iFrameDimension(slides[slideIndex].layout),
-	// 	);
-
-	// const [mediaType, setMediaType] = useState({
-	// 	image: false,
-	// 	embed: true,
-	// 	chart: false,
-	// });
-	// handle all embed code related
 	const [currentYoutubeUrl, setCurrentYoutubeUrl] = useState<string>(
 		embed_code_single || '',
 	);
@@ -1442,7 +1385,7 @@ export const ImgModule = ({
 				<Modal showModal={showModal} setShowModal={setShowModal} title='Media'>
 					{/* <div className='flex grow h-[400px] w-full sm:w-[600px] flex-col overflow-auto'> */}
 					<div
-						className='grow h-[400px] w-full sm:w-[600px] grid grid-cols-4 overflow-auto'
+						className='grow w-full sm:w-[600px] grid grid-cols-4 overflow-auto'
 						style={{ borderTop: '1px solid #E7E9EB' }}
 					>
 						{/* the different choices tab */}

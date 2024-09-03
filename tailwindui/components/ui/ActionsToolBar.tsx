@@ -12,11 +12,13 @@ type ActionsToolBarProps = {
 	canUndo?: boolean;
 	canRedo?: boolean;
 	// Other props...
-	startTour: () => void;
-	onlyShowTutorial: boolean;
+	startTour?: () => void;
+	onlyShowTutorial?: boolean;
 	isViewing?: boolean;
 	children?: React.ReactNode;
 	toggleVersionHistoryWindow?: () => void;
+	showVersionHistory?: boolean;
+	showVerticalLine?: boolean;
 };
 
 const ActionsToolBar: React.FC<ActionsToolBarProps> = ({
@@ -25,22 +27,24 @@ const ActionsToolBar: React.FC<ActionsToolBarProps> = ({
 	canUndo,
 	canRedo,
 	startTour,
-	onlyShowTutorial,
+	onlyShowTutorial = false,
 	isViewing = false,
 	children,
-  toggleVersionHistoryWindow,
+	toggleVersionHistoryWindow,
+	showVersionHistory = true,
+	showVerticalLine = true,
 }) => {
 	const [showTutorialPrompt, setShowTutorialPrompt] = useState(false);
-	const handleStartTour = () => {
-		setShowTutorialPrompt(true);
-	};
+	// const handleStartTour = () => {
+	// 	setShowTutorialPrompt(true);
+	// };
 
 	const handleCloseTutorialPrompt = () => {
 		setShowTutorialPrompt(false);
 	};
 
 	const handleConfirmStartTour = () => {
-		startTour();
+		startTour && startTour();
 		setShowTutorialPrompt(false);
 	};
 
@@ -176,30 +180,32 @@ const ActionsToolBar: React.FC<ActionsToolBarProps> = ({
 					/>
 
 					{/* version history */}
-					<ButtonWithExplanation
-						button={
-							<button onClick={toggleVersionHistoryWindow}>
-								<MdManageHistory
-									style={{
-										// strokeWidth: '0.8',
-										// flex: '1',
-										width: `24px`,
-										height: `24px`,
-										// fontWeight: 'bold',
-										color: 'var(--colors-text-text-secondary-700, #344054)',
-									}}
-								/>
-							</button>
-						}
-						explanation='Version History'
-					/>
-					<div className='h-8 w-0.5 bg-gray-200'></div>
+					{showVersionHistory && (
+						<ButtonWithExplanation
+							button={
+								<button onClick={toggleVersionHistoryWindow}>
+									<MdManageHistory
+										style={{
+											// strokeWidth: '0.8',
+											// flex: '1',
+											width: `24px`,
+											height: `24px`,
+											// fontWeight: 'bold',
+											color: 'var(--colors-text-text-secondary-700, #344054)',
+										}}
+									/>
+								</button>
+							}
+							explanation='Version History'
+						/>
+					)}
+					{showVerticalLine && <div className='h-8 w-0.5 bg-gray-200'></div>}
 				</>
 			)}
 
 			{children}
 
-			{showTutorialPrompt && (
+			{showTutorialPrompt && startTour && (
 				<StartATourGuidePromptWindow
 					onClose={handleCloseTutorialPrompt}
 					onConfirm={handleConfirmStartTour}

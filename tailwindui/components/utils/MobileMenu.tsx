@@ -6,10 +6,66 @@ import { toast } from 'react-toastify';
 import AuthService from '../../services/AuthService';
 import { useUser } from '@/hooks/use-user';
 import { sign } from 'crypto';
+import Link from 'next/link';
+import { SideBarData, SideBarItem } from '../layout/SideBarData';
+import { isChatslide } from '@/utils/getHost';
+
+
+type MenuItemProps = SideBarItem & { onSignOut: () => void };
+
+
+const MenuItem: React.FC<MenuItemProps> = ({
+	title,
+	icon,
+	path,
+	target,
+	drlambdaOnly,
+	chatslideOnly,
+	subMenus,
+	onSignOut,
+	// setMobileNavOpen,
+}) => {
+	if (drlambdaOnly && isChatslide()) {
+		return <></>;
+	}
+	if (chatslideOnly && !isChatslide()) {
+		return <></>;
+	}
+
+	return (
+		<>
+			<Link
+				target={target}
+				href={path || ''}
+				className='block flex flex-row px-2 py-1 text-sm text-blue-600 hover:bg-gray-200 items-center'
+				// onClick={() => setMobileNavOpen(false)}
+			>
+				{icon}
+				<span className='ml-2'>{title}</span>
+			</Link>
+
+			{subMenus && subMenus.length > 0 && (
+				<ul className='ml-4 mt-1 space-y-1'>
+					{subMenus.map((submenu, index) => (
+						<li key={index}>
+							<Link
+								href={submenu.path}
+								className='block flex flex-row px-2 py-1 text-xs text-gray-600 hover:bg-gray-100 items-center'
+								onClick={submenu.title === 'Sign Out' ? onSignOut : () => {}}
+							>
+								<span>{submenu.title}</span>
+							</Link>
+						</li>
+					))}
+				</ul>
+			)}
+		</>
+	);
+};
 
 interface DropdownButtonProps {}
 
-const DropdownButton: React.FC<DropdownButtonProps> = () => {
+const MobileMenu: React.FC<DropdownButtonProps> = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const dropdownRef = useRef<HTMLDivElement>(null);
 	const router = useRouter();
@@ -89,40 +145,16 @@ const DropdownButton: React.FC<DropdownButtonProps> = () => {
 
 			{isOpen && (
 				<div
-					className='origin-top-right absolute right-0 mt-2 w-40 rounded-xl shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-300'
+					className='absolute top-10 right-0 z-50 mt-2 w-40 rounded-xl shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-300'
+					style={{ zIndex: 9999 }}
 					role='menu'
 					aria-orientation='vertical'
 					aria-labelledby='dropdown-menu-button'
 				>
 					<div className='py-1' role='none'>
-						<a
-							href='/dashboard'
-							className='block px-4 py-1 text-sm text-blue-600 hover:bg-gray-200'
-							role='menuitem'
-						>
-							Dashboard
-						</a>
-						<a
-							href='/uploads'
-							className='block px-4 py-1 text-sm text-blue-600 hover:bg-gray-200'
-							role='menuitem'
-						>
-							Uploads
-						</a>
-						<a
-							href='/discover'
-							className='block px-4 py-1 text-sm text-blue-600 hover:bg-gray-200'
-							role='menuitem'
-						>
-							Discover
-						</a>
-						<a
-							href='/account'
-							className='block px-4 py-1 text-sm text-blue-600 hover:bg-gray-200'
-							role='menuitem'
-						>
-							Account
-						</a>
+						{SideBarData.map((item, index) => {
+							return <MenuItem key={index} {...item} onSignOut={onSignOut} />;
+						})}
 					</div>
 					<div className='block py-1 text-sm text-blue-600'>
 						<a
@@ -140,21 +172,10 @@ const DropdownButton: React.FC<DropdownButtonProps> = () => {
 							Tier: {tier.split('_')[0]}
 						</a>
 					</div>
-					<div className='py-1' role='none'>
-						<div className='py-0.2' role='none'>
-							<a
-								onClick={onSignOut}
-								className='block px-4 py-1 text-sm text-blue-600 hover:bg-gray-200 cursor-pointer'
-								role='menuitem'
-							>
-								Sign out
-							</a>
-						</div>
-					</div>
 				</div>
 			)}
 		</div>
 	);
 };
 
-export default DropdownButton;
+export default MobileMenu;

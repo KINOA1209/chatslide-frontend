@@ -55,7 +55,7 @@ export default function SignUp() {
 						<div className='flex flex-wrap -mx-3 mt-6'>
 							<div className='w-full px-3'>
 								<a href={'/signup-with-email'}>
-									<BigBlueButton width='384px'>
+									<BigBlueButton width='100%'>
 										Sign up with email
 									</BigBlueButton>
 								</a>

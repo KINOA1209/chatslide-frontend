@@ -4,6 +4,7 @@ import { BackButton } from '@/components/button/DrlambdaButton';
 import ProjectProgress from '@/components/layout/WorkflowSteps';
 import DrlambdaButton from '@/components/button/DrlambdaButton';
 import { sleep } from '../../utils/sleep';
+import { ContentType } from '@/models/Project';
 
 interface YourComponentProps {
 	currentIndex: number;
@@ -15,7 +16,7 @@ interface YourComponentProps {
 	nextStep?: boolean;
 	nextText?: string;
 	onClickNext?: () => void;
-	workflow?: string;
+	contentType?: ContentType;
 	showLoadingButton?: boolean;
 	menuItems?: React.ReactNode;
 }
@@ -30,7 +31,7 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 	nextStep = true,
 	nextText = 'Next',
 	onClickNext,
-	workflow = 'slides',
+	contentType,
 	showLoadingButton = false,
 	menuItems,
 }) => {
@@ -44,7 +45,7 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 			setButtonBounce(true);
 			setTimeout(() => {
 				setButtonBounce(false);
-			}, 5000);
+			}, 5 * 1000);
 		};
 
 		document.addEventListener('buttonBounce', bounce);
@@ -67,17 +68,17 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 	return (
 		<section className='sticky top-0 z-10 flex flex-col'>
 			<div className='relative w-full h-[80px] flex flex-row items-center bg-[#5168F6] gap-x-2 lg:gap-x-4 px-2 lg:px-4 xl:px-6'>
-				{currentIndex === 0 ? (
+				{currentIndex === 0 && contentType !== 'ppt2video' ? (
 					<BackButton href='/scenario-choice' text='Scenario' />
 				) : (
 					<BackButton href='/dashboard' />
 				)}
 				<div
 					className={`flex-grow items-center justify-center flex py-2 
-								${workflow === 'socialPosts' && !nextStep ? 'absolute left-1/2 transform -translate-x-1/2' : ''}
+								${contentType === 'social_posts' && !nextStep ? 'absolute left-1/2 transform -translate-x-1/2' : ''}
 				`}
 				>
-					<ProjectProgress currentInd={currentIndex} />
+					<ProjectProgress currentInd={currentIndex} contentType={contentType}/>
 				</div>
 				{lastStep ? (
 					// empty div to keep the layout consistent
@@ -105,7 +106,8 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 								isSubmitting={isSubmitting}
 								isPaidUser={isPaidUser}
 								isPaidFeature={nextIsPaidFeature}
-								onClick={(e) => {  // paid user status checked inside
+								onClick={(e) => {
+									// paid user status checked inside
 									onClickNext && onClickNext();
 									setIsSubmitting(true);
 								}}
@@ -117,7 +119,7 @@ const WorkflowStepsBanner: FunctionComponent<YourComponentProps> = ({
 						</div>
 
 						{showPing && (
-							<span className='flex h-4 w-4 absolute -top-2 -right-2'>
+							<span className='flex h-4 w-4 absolute -top-2 -left-2'>
 								<span className='animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-600 opacity-100'></span>
 								{/* <span className="relative inline-flex rounded-full h-3 w-3 bg-white"></span> */}
 							</span>

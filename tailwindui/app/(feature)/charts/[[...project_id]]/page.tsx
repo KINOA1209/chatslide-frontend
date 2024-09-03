@@ -309,6 +309,7 @@ export default function Page() {
 						<ToolBar>
 							<ButtonWithExplanation
 								explanation='Download Chart'
+								position='left'
 								button={
 									<button onClick={downloadChart}>
 										<GoDownload

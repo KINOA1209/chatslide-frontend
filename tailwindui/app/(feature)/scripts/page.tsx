@@ -61,6 +61,7 @@ import AudioVideoDetailSettingsSection from '@/app/(feature)/scripts/AudioVideoD
 import { FaMicrophone } from 'react-icons/fa';
 import { Button } from '@/components/ui/button';
 import CloneYourVoiceTutorial from './CloneYourVoiceTutorialDialog';
+import { AVATAR_ID } from '@/components/language/avatarData';
 const ScriptSection = dynamic(
 	() => import('@/components/script/ScriptSection'),
 	{ ssr: false },
@@ -73,9 +74,9 @@ export default function WorkflowStep5() {
 	const { username, token, updateCreditsFE, isPaidUser } = useUser();
 	const router = useRouter();
 	const [voice, setVoice] = useState('en-US-AvaNeural');
-
+  const [gender, setGender] = useState<'female' | 'male'>('female');
 	const [style, setStyle] = useState('');
-	const [avatar, setAvatar] = useState('');
+	const [avatar, setAvatar] = useState<AVATAR_ID | undefined>(undefined);
 	const [posture, setPosture] = useState('casual-sitting');
 	const [size, setSize] = useState('medium');
 	const [position, setPosition] = useState('bottom-right');
@@ -203,6 +204,7 @@ export default function WorkflowStep5() {
 			console.error('No project found');
 			return;
 		}
+    console.log("Confirming video jobs");
 		const hasRunningVideoJob = await VideoService.hasRunningVideoJob(
 			project.id,
 			token,
@@ -216,6 +218,7 @@ export default function WorkflowStep5() {
 	}
 
 	async function handleSubmitVideo() {
+    console.log('Handling submit video');
 		const longScriptIndices = slides
 			.map((slide, index) =>
 				(slide.transcript?.length || 0) >= 4096 ? index : -1,
@@ -264,14 +267,14 @@ export default function WorkflowStep5() {
 		const foldername = project?.foldername;
 		const project_id = project.id;
 		if (!foldername || !project_id) {
-			console.error('No pid or foldername or project_id found');
+			console.error('No or foldername or project_id found');
 			setIsSubmitting(false);
 			return;
 		}
 
 		const generateVideo = async () => {
 			if (isClonedVoice(voice) || isOpenaiVoice(voice)) {
-				setAvatar('');
+				setAvatar(undefined);
 			}
 
 			const hiddenSlideIndices = slides.reduce(
@@ -348,7 +351,7 @@ export default function WorkflowStep5() {
 			{/* flex col container for steps, title, etc */}
 
 			<WorkflowStepsBanner
-				currentIndex={4}
+				currentIndex={project.content_type === 'presentation' ? 4 : 2}
 				isSubmitting={isSubmitting}
 				setIsSubmitting={setIsSubmitting}
 				isPaidUser={isPaidUser}
@@ -368,6 +371,8 @@ export default function WorkflowStep5() {
 				{showAudioVideoDetailSettingSection && (
 					<Column width={'100%'} customStyle={{ width: '33.33%' }}>
 						<AudioVideoDetailSettingsSection
+              gender={gender}
+              setGender={setGender}
 							voice={voice}
 							setVoice={setVoice}
 							voiceIsHD={voiceIsHD}
@@ -485,6 +490,8 @@ export default function WorkflowStep5() {
 						<AudioVideoDetailSettingsSection
 							voice={voice}
 							setVoice={setVoice}
+              gender={gender}
+              setGender={setGender}
 							voiceIsHD={voiceIsHD}
 							setVoiceIsHD={setVoiceIsHD}
 							selectedLanguage={selectedLanguage}

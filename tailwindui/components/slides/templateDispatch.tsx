@@ -203,6 +203,7 @@ export const templateDispatch = (
 		Col_2_img_2_layout: true,
 		Col_3_img_3_layout: true,
 		Full_img_only_layout: true,
+    Blank_layout: true,
 	};
 
 	const layoutKeysArray: LayoutKeys[] = Object.keys(

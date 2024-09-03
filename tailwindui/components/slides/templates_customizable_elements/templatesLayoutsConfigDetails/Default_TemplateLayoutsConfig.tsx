@@ -27,7 +27,7 @@ export const Default_TemplateLayoutsConfig: {
 			zIndex: 30,
 		},
 		titlePos: { x: 80, y: 130, width: 390, height: 200 },
-		usernamePos: {x: 80, y: 400, width: 390, height: 50},
+		usernamePos: { x: 80, y: 400, width: 390, height: 50 },
 	},
 	Cover_img_1_layout: {
 		canvaCSS: {
@@ -68,7 +68,7 @@ export const Default_TemplateLayoutsConfig: {
 		},
 		titlePos: { x: 80, y: 130, width: 390, height: 200 },
 		imgContainerPos: [{ x: 480, y: 30, width: 450, height: 480 }],
-		usernamePos: {x: 80, y: 400, width: 390, height: 50},
+		usernamePos: { x: 80, y: 400, width: 390, height: 50 },
 	},
 	Col_1_img_0_layout: {
 		canvaCSS: {
@@ -352,12 +352,12 @@ export const Default_TemplateLayoutsConfig: {
 
 		imageContainerCSS: {
 			width: '100%', // equivalent to w-full
-			padding: '50px 50px 50px 50px',
+			padding: '0px 0px 0px 0px',
 		},
 		imageCSS: {
 			height: '100%', // equivalent to h-[11rem]
 			width: '100%',
-			borderRadius: '24px',
+			borderRadius: '0px',
 		},
 
 		rndContainerCSS: {
@@ -368,6 +368,6 @@ export const Default_TemplateLayoutsConfig: {
 		rndCSS: {
 			zIndex: '51',
 		},
-		imgContainerPos: [{ x: 30, y: 30, width: 900, height: 480 }],
+		imgContainerPos: [{ x: 0, y: 0, width: 960, height: 540 }],
 	},
 };

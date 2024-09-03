@@ -232,7 +232,6 @@ const PPTXTemplateSelector: React.FC<Props> = ({
 				showModal={showFileModal}
 				setShowModal={setShowFileModal}
 				pageInvoked='theme'
-				type='doc'
 				uploadSection='Template Extraction'
 				fileNameExtension={selectedTemplateFileExtension}
 			/>

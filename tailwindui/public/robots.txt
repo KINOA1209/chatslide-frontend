@@ -3,4 +3,11 @@ Disallow: /private/
 Disallow: /temp/
 Allow: /
 
-Sitemap: https://drlambda.ai/sitemap.xml
+Sitemap: https://drlambda.ai/sitemap.xmlUser-agent: *
+Disallow: /admin/
+Disallow: /login/
+Disallow: /checkout/
+Disallow: /user-profile/
+Disallow: /internal-api/
+
+Sitemap: https://chatslide.ai/sitemap.xml

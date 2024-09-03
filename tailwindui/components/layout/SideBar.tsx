@@ -226,11 +226,11 @@ const SideBar = ({}: SideBarProps) => {
               {'Missing credits?'}
             </a>
           )} */}
-					<div
-						className={`flex flex-row ${isSidebarOpen ? '' : 'flex-col'} justify-between items-center mx-1`}
+					<a
+						href='/account'
+						className={`flex flex-row ${isSidebarOpen ? '' : 'flex-col'} justify-between items-center mx-1 cursor-pointer`}
 					>
-						<a
-							href='/account'
+						<div
 							className={
 								`block py-1 text-sm rounded-lg hover:bg-[#F2F4F7]  `
 								// (credits === 'Unlimited'
@@ -248,11 +248,11 @@ const SideBar = ({}: SideBarProps) => {
 							}}
 						>
 							{getCreditsDisplay(credits, isSidebarOpen)}
-						</a>
+						</div>
 						<div className={`w-fit`}>
 							<BlueLabel>{getTierDisplayName(tier, isSidebarOpen)}</BlueLabel>
 						</div>
-					</div>
+					</a>
 					{credits != 'Unlimited' &&
 						tier.includes('LIFETIME') &&
 						isSidebarOpen && (

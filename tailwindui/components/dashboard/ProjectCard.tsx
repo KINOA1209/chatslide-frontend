@@ -83,7 +83,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
 							layout='responsive'
 							width={72}
 							height={40}
-							style={loaded ? {} : { display: 'none' }}
+							style={loaded ? {width: '72px', height: '40px', borderRadius: '5px' } : { display: 'none' }}
 							onLoad={() => setLoaded(true)}
 							loading='eager'
 						/>
@@ -102,7 +102,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
 							style={{
 								fontSize: '14px',
 								color: 'var(--colors-text-text-secondary-700, #344054)',
-								fontFamily: 'Creato Display Medium',
+								// fontFamily: 'Creato Display Medium',
 								fontWeight: 'normal',
 								lineHeight: '20px',
 							}}
@@ -117,7 +117,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
 							style={{
 								fontSize: '12px',
 								color: 'var(--colors-text-text-quaternary-500, #667085)',
-								fontFamily: 'Creato Display Regular',
+								// fontFamily: 'Creato Display Regular',
 								fontWeight: 'normal',
 								lineHeight: '18px',
 							}}
@@ -150,7 +150,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
 									textColor='var(--Component-colors-Utility-Purple-utility-purple-700, #5925DC)'
 									iconColor='var(--Component-colors-Utility-Purple-utility-purple-700, #5925DC)'
 								/>
-							) :
+							) : (
 								<DesignSystemBadges
 									size='sm'
 									text=''
@@ -161,7 +161,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
 									textColor='var(--Component-colors-Utility-Purple-utility-purple-700, #B01C99)'
 									iconColor='var(--Component-colors-Utility-Purple-utility-purple-700, #B01C99)'
 								/>
-							}
+							)}
 							{project.video_url ? (
 								<DesignSystemBadges
 									size='sm'

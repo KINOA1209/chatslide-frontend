@@ -634,10 +634,6 @@ const SocialPostHTML: React.FC<SlidesHTMLProps> = ({
 			updateIllustrationUrlArray,
 			toggleEditMode,
 			socialPosts.length - 1 === index,
-			// logoMode,
-			socialPostLogoMode,
-			// selectedLogo[0]?.thumbnail_url,
-			socialPostCustomLogoResource[0]?.thumbnail_url,
 		);
 	};
 

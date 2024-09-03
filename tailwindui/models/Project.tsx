@@ -3,6 +3,8 @@ import Resource from './Resource';
 import Slide, { LogoPosition } from './Slide';
 import { SocialPostSlide } from './SocialPost';
 
+export type ContentType = 'social_posts' | 'presentation' | 'chart' | 'ppt2video';
+
 type Project = {
 	id: string;
 	name: string;
@@ -14,7 +16,7 @@ type Project = {
 	updated_datetime?: string;
 	project_name?: string;
 	topic?: string;
-	content_type: 'social_posts' | 'presentation' | 'chart';
+	content_type: ContentType;
 	language: string;
 	foldername?: string;
 	thumbnail_url?: string;

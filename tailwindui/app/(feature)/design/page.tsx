@@ -11,10 +11,6 @@ import 'react-toastify/dist/ReactToastify.css';
 // Stylesheets
 import '@/app/css/workflow-edit-topic-css/topic_style.css';
 
-// Your project's global imports
-import MoreImagesImg from '@/public/images/design/more_images.png';
-import FewerImagesImg from '@/public/images/design/fewer_images.png';
-
 import Resource from '@/models/Resource';
 import useHydrated from '@/hooks/use-hydrated';
 import { useProject } from '@/hooks/use-project';
@@ -45,22 +41,15 @@ import SlidesService from '@/services/SlidesService';
 import DesignSettingsService from '@/services/DesignSettingService';
 import Slide, { LogoPosition } from '@/models/Slide';
 import ProjectService from '@/services/ProjectService';
-import { BigBlueButton } from '@/components/button/DrlambdaButton';
+import { BigBlueButton, DropDown } from '@/components/button/DrlambdaButton';
 import { WrappableRow } from '@/components/layout/WrappableRow';
-import DesignSystemBadges from '@/components/ui/design_systems/Badges';
 import DesignSystemButton from '@/components/ui/design_systems/ButtonsOrdinary';
-// import SlideDesignPreview from '@/components/slides/SlideDesignPreview';
 const SlideDesignPreview = dynamic(
 	() => import('@/components/slides/SlideDesignPreview'),
 	{ ssr: false },
 );
-// import FileUploadDropdownButton from '@/components/file/FileUploadDropdownButton';
-// import { getBrand, getLogoUrl } from '@/utils/getHost';
-// import ResourceService from '@/services/ResourceService';
-// import ImageSelector from './ImageSelector';
-// import PPTXTemplateSelector from './PPTXTemplateSelector';
-import { Suspense } from 'react';
 import { layoutOptions } from '@/components/slides/slideLayout';
+import { imageColorOptions, imageLicenseOptions } from './ImageOptions';
 const PPTXTemplateSelector: any = dynamic(
 	() => import('@/app/(feature)/design/PPTXTemplateSelector'),
 	{
@@ -308,28 +297,8 @@ export default function DesignPage() {
 	];
 
 	const [imageLicense, setImageLicense] = useState('all');
-	const imageLicenseOptions: RadioButtonOption[] = [
-		{
-			value: 'stock',
-			text: 'Stock',
-			explanation: 'Generic, high quality',
-		},
-		{
-			value: 'creative',
-			text: 'Creative',
-			explanation: 'Wide range',
-		},
-		{
-			value: 'all',
-			text: 'All',
-			explanation: 'Wider range, personal use',
-		},
-    {
-      value: 'illustration',
-      text: 'Illustration',
-      explanation: 'Small set of illustration images',
-    }
-	];
+	
+	const [imageColor, setImageColor] = useState('all');
 
 	if (project?.logo === undefined) {
 		updateProject('logo', isPaidUser ? '' : 'Default');
@@ -363,6 +332,7 @@ export default function DesignPage() {
 						project.id,
 						project.topic,
 						imageLicense,
+						imageColor,
 						imageAmount,
 						token,
 						selectedLayouts,
@@ -589,7 +559,7 @@ export default function DesignPage() {
 				showModal={showPaymentModal}
 				message='Upgrade for this 🌟premium feature!'
 				setShowModal={setShowPaymentModal}
-        trigger='design'
+				trigger='design'
 			/>
 
 			<div
@@ -684,6 +654,24 @@ export default function DesignPage() {
 										name='imageLicense'
 										cols={1}
 									/>
+								</div>
+							)}
+							{imageAmount != 'no_image' && (
+								<div>
+									<Instruction boldenFont={true}>
+										Do you want to use images of a specific color?
+									</Instruction>
+
+									<DropDown
+										onChange={(e) => setImageColor(e.target.value)}
+										value={imageColor}
+									>
+										{imageColorOptions.map((option) => (
+											<option key={option.value} value={option.value}>
+												{option.text}
+											</option>
+										))}
+									</DropDown>
 								</div>
 							)}
 						</Card>

@@ -28,24 +28,26 @@ export const DOCUMENT_EXTENSIONS = [
 	'jpg',
   'jpeg'
 ];
-export const PPTX_EXTENSION = ['pptx', 'ppt'];
-export const THEMEPAGE_EXTENSIONs = [...MEDIA_EXTENSIONS, ...PPTX_EXTENSION];
+export const PPTX_EXTENSIONS = ['pptx', 'ppt', 'pdf'];
+export const THEMEPAGE_EXTENSIONs = [...MEDIA_EXTENSIONS, ...PPTX_EXTENSIONS];
 export const ALL_EXTENSIONS = [...MEDIA_EXTENSIONS, ...DOCUMENT_EXTENSIONS];
 
 const determineSupportedFormats = (
-	pageInvoked: string,
+	pageInvoked: 'summary' | 'theme' | 'ppt2video' | 'resources',
 	fileNameExtension?: string,
 	uploadSection?: 'Template Extraction' | '',
 ) => {
 	if (pageInvoked === 'theme') {
 		if (uploadSection === 'Template Extraction') {
-			return PPTX_EXTENSION;
+			return PPTX_EXTENSIONS;
 		} else {
 			return THEMEPAGE_EXTENSIONs;
 		}
 	} else if (pageInvoked === 'summary') {
 		return DOCUMENT_EXTENSIONS;
-	}
+	} else if (pageInvoked === 'ppt2video') {
+    return PPTX_EXTENSIONS;
+  }
 	// resources
 	return ALL_EXTENSIONS;
 };
@@ -57,7 +59,7 @@ interface FileUploadButtonProps {
 	//formats?: string[];
 	//extensions?: string[];
 	isSubmitting?: boolean;
-	pageInvoked?: string;
+	pageInvoked?: 'resources' | 'theme' | 'ppt2video' | 'summary';
 	fileNameExtension?: string;
 	uploadSection?: 'Template Extraction' | ''; // templateExtraction
 }

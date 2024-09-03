@@ -176,7 +176,7 @@ const UploadOptionsDropdownMenu: React.FC<UploadOptionsDropdownMenuProps> = ({
 										<span
 											style={{
 												color: '#CAD0D3',
-												fontFamily: 'Creato Display Medium',
+												// fontFamily: 'Creato Display Medium',
 												fontSize: '12px',
 												fontStyle: 'normal',
 												fontWeight: ' 400',

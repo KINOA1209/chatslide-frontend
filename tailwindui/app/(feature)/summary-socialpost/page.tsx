@@ -402,7 +402,7 @@ export default function Topic_SocialPost() {
 					isPaidUser={isPaidUser}
 					nextIsPaidFeature={false}
 					nextText={!isSubmitting ? 'Create Post' : 'Creating Post...'}
-					workflow='socialPosts'
+          contentType='social_posts'
 				/>
 				{/* main content */}
 				<div className='gap-y-4 w-full flex flex-col items-center'>
@@ -444,7 +444,7 @@ export default function Topic_SocialPost() {
 							<div className='textfield'>
 								<TextareaAutosize
 									onChange={(e: any) => updateTopic(e.target.value)}
-									className='focus:ring-0 text-l md:text-xl bg-gray-100'
+									className='focus:ring-0 text-l md:text-xl'
 									id='topic'
 									value={topic}
 									maxLength={MAX_TOPIC_LENGTH}
@@ -489,7 +489,7 @@ export default function Topic_SocialPost() {
 
 									<div className='language_drop'>
 										<select
-											className='focus:ring-0 bg-gray-100 border border-2 border-gray-200'
+											className='focus:ring-0 border border-2 border-gray-200'
 											id='language'
 											value={language}
 											onChange={(e) => setLanguage(e.target.value)}
@@ -558,7 +558,7 @@ export default function Topic_SocialPost() {
 										<input
 											id='link'
 											type='text'
-											className='text-sm md:text-l form-input w-full border-none bg-gray-100'
+											className='text-sm md:text-l form-input w-full border-none'
 											value={linkUrl}
 											onChange={(e) => handleLinkChange(e.target.value)}
 											placeholder='Paste webpage, Youtube, or 𝕏 link'

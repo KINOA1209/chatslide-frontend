@@ -1,4 +1,4 @@
-import React, { use, useEffect, useRef, useState } from 'react';
+import React, { use, useEffect, useMemo, useRef, useState } from 'react';
 import { useUser } from '@/hooks/use-user';
 import PaywallModal from '../paywallModal';
 import 'react-toastify/dist/ReactToastify.css';
@@ -329,8 +329,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 		),
 	);
 
-	const canUndo = slidesHistoryIndex > 0;
-	const canRedo = slidesHistoryIndex < slidesHistory.length - 1;
+  const canUndo = useMemo(() => slidesHistoryIndex > 0, [slidesHistoryIndex]);
+	const canRedo = useMemo(
+		() => slidesHistoryIndex < slidesHistory.length - 1,
+		[slidesHistoryIndex, slidesHistory],
+	);
 
 	const horizontalCurrentSlideRef = useRef<HTMLDivElement>(null);
 	const verticalCurrentSlideRef = useRef<HTMLDivElement>(null);
@@ -375,6 +378,11 @@ const SlidesHTML: React.FC<SlidesHTMLProps> = ({
 
 	// show chatwindow if width > 1200
 	useEffect(() => {
+    if (project?.content_type === 'ppt2video') {
+      console.log('ppt2video, closing chat window');
+      setIsChatWindowOpen(false);
+      return ;
+    }
 		if (window.innerWidth > 1200) {
 			setIsChatWindowOpen(true);
 			console.log('Window size > 1200, Resizing the layout...');

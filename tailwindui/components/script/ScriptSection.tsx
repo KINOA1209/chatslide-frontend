@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useUser } from '@/hooks/use-user';
 import SlideContainer from '@/components/slides/SlideContainer';
 import { uneditableTemplateDispatch } from '@/components/slides/templateDispatch';
@@ -11,6 +11,9 @@ import Slide from '@/models/Slide';
 import { useProject } from '@/hooks/use-project';
 import VideoService from '@/services/VideoService';
 import { SpinIcon } from '@/app/(feature)/icons';
+import { useSlides } from '@/hooks/use-slides';
+import ActionsToolBar from '../ui/ActionsToolBar';
+import { Button } from '@mui/material';
 
 const ScriptSection: React.FC<{
 	slides: Array<Slide>;
@@ -27,6 +30,15 @@ const ScriptSection: React.FC<{
 	const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
 	const { token } = useUser();
 	const { project } = useProject();
+
+	const { slidesHistory, slidesHistoryIndex, undoChange, redoChange } =
+		useSlides();
+
+	const canUndo = useMemo(() => slidesHistoryIndex > 0, [slidesHistoryIndex]);
+	const canRedo = useMemo(
+		() => slidesHistoryIndex < slidesHistory.length - 1,
+		[slidesHistoryIndex, slidesHistory],
+	);
 
 	function calculateScale() {
 		const width = window.innerWidth;
@@ -88,7 +100,7 @@ const ScriptSection: React.FC<{
 
 	const PlayButton = () => {
 		return (
-			<div className='mt-4 mx-auto'>
+			<div>
 				{isLoading ? (
 					<SpinIcon />
 				) : !isPlaying ? (
@@ -147,8 +159,19 @@ const ScriptSection: React.FC<{
 				currentSlideIndex={index}
 				scale={scale}
 			/>
-			{/* play and pause the script */}
-			<PlayButton />
+
+			<div className='mx-auto'>
+				<ActionsToolBar
+					undo={undoChange}
+					redo={redoChange}
+					canUndo={canUndo}
+					canRedo={canRedo}
+          showVersionHistory={false}
+				>
+					{/* play and pause the script */}
+					<PlayButton />
+				</ActionsToolBar>
+			</div>
 		</div>
 	);
 };

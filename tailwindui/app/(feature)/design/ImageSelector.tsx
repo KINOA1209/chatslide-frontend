@@ -10,7 +10,7 @@ import { Instruction } from '@/components/ui/Text';
 import RadioButton from '@/components/ui/RadioButton';
 
 interface Props {
-	type: string;
+	type: 'file' | 'logo' | 'background';
 	selectedImage: Resource[];
 	setSelectedImage: (selectedImage: Resource[]) => void;
 	showQuestion?: boolean;

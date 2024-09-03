@@ -3,6 +3,7 @@
 import SubscriptionModal from '@/app/(account)/SubscriptionModal';
 import MultiwayToggle from '@/components/button/MultiwayToggle';
 import { Explanation } from '@/components/ui/Text';
+import useHydrated from '@/hooks/use-hydrated';
 import { useUser } from '@/hooks/use-user';
 import UserService from '@/services/UserService';
 import { isChatslide } from '@/utils/getHost';
@@ -25,6 +26,7 @@ const PricingComparison: React.FC<{
 	const router = useRouter();
 	const [interval, setInterval] = useState<Interval>(
 		isChatslide() ? 'yearly' : 'lifetime',
+		// 'lifetime',
 	);
 	const smallSuffix = small ? '-small' : '';
 	const [showManageSubscription, setShowManageSubscription] = useState(false);
@@ -70,7 +72,7 @@ const PricingComparison: React.FC<{
 		const cta = getCta(tier);
 		const bgColor = cta.includes('✅') || cta.includes('⏹️') ? 'white' : '';
 		const textColor = cta.includes('✅') || cta.includes('⏹️') ? 'black' : '';
-    const btnTier = tier === 'PRO' ? 'primary' : 'secondary';
+		const btnTier = tier === 'PRO' ? 'primary' : 'secondary';
 
 		return (
 			<button
@@ -97,8 +99,8 @@ const PricingComparison: React.FC<{
 			case 'PRO':
 				return 14.9;
 			case 'ULTIMATE':
-        if (isChatslide()) return 59.9;
-        else return 69.9;
+				if (isChatslide()) return 59.9;
+				else return 69.9;
 		}
 	};
 
@@ -120,30 +122,35 @@ const PricingComparison: React.FC<{
 				amount = amount * 0.6; // 40% off forever
 				break;
 			case 'lifetime':
-				amount = amount * 14; // original price is * 40, so this is a 60% off discount
+				switch (tier) {
+					case 'PLUS':
+						amount = 119;
+						break;
+					case 'PRO':
+						amount = 208.6;
+						break;
+					case 'ULTIMATE':
+						amount = 479.2;
+						break;
+				}
+				break;
 		}
 
-		// special for lifetime ultimate
+		let discountLabel = '';
+
+		// special discount label for lifetime ultimate
 		if (interval === 'lifetime') {
-			if (tier === 'ULTIMATE') {
-				amount = 479.2;
-				return (
-					<span className='text-green-600'>
-						{currency + amount.toFixed(2)}
-						<span className='text-xs'>-80%</span>
-					</span>
-				);
-			} else {
-				return (
-					<span>
-						{currency + amount.toFixed(2)}
-						<span className='text-xs'> -60%</span>
-					</span>
-				);
-			}
+			discountLabel = ' -80%';
+		} else if (interval === 'yearly' || interval === 'monthly') {
+			discountLabel = ' -60%';
 		}
 
-		return currency + amount.toFixed(2);
+		return (
+			<span className={interval === 'lifetime' ? 'text-green-600' : ''}>
+				{currency + amount.toFixed(2)}
+				{discountLabel && <span className='text-xs'>{discountLabel}</span>}
+			</span>
+		);
 	};
 
 	const getFirstLine = (tier: Tier): string => {
@@ -181,11 +188,11 @@ const PricingComparison: React.FC<{
 		}
 	};
 
-	useEffect(() => {
-		userInEU().then((res) => {
-			setCurrency(res ? '€' : '$');
-		});
-	}, []);
+	// useEffect(() => {
+	// 	userInEU().then((res) => {
+	// 		setCurrency(res ? '€' : '$');
+	// 	});
+	// }, []);
 
 	const handleClick = async (tier: Tier) => {
 		if (!token) {
@@ -250,46 +257,55 @@ const PricingComparison: React.FC<{
 
 	const options = isChatslide()
 		? [
-				{ key: 'onetime', text: '15-Day' },
+				{
+					key: 'onetime',
+					element: <span className='whitespace-nowrap'>15-Day</span>,
+				},
 				{
 					key: 'monthly',
 					element: (
-						<span>
-							Monthly <span className='text-xs'>-30%</span>
+						<span className='whitespace-nowrap'>
+							Monthly <span className='text-xs whitespace-nowrap'>-30%</span>
 						</span>
 					),
 				},
 				{
 					key: 'yearly',
 					element: (
-						<span>
-							Yearly <span className='text-xs'>-40%</span>
+						<span className='whitespace-nowrap'>
+							Yearly <span className='text-xs whitespace-nowrap'>-40%</span>
 						</span>
 					),
 				},
 				{
 					key: 'lifetime',
 					element: (
-						<span className='text-green-600'>
-							Lifetime <span className='text-xs'>-80%</span>
+						<span className='text-green-600 whitespace-nowrap'>
+							Lifetime <span className='text-xs whitespace-nowrap'>-80%</span>
 						</span>
 					),
 				},
 			]
 		: [
-				{ key: 'onetime', text: '30-Day' },
+				{
+					key: 'onetime',
+					element: <span className='whitespace-nowrap'>15-Day</span>,
+				},
 				{
 					key: 'lifetime',
 					element: (
-						<span className='text-green-600'>
-							Lifetime <span className='text-xs'>-60%</span>
+						<span className='text-green-600 whitespace-nowrap'>
+							Lifetime <span className='text-xs whitespace-nowrap'>-60%</span>
 						</span>
 					),
 				},
 			];
 
+	// avoid hydration error during development caused by persistence
+	if (!useHydrated()) return <></>;
+
 	return (
-		<div className='flex flex-col items-center overflow-y-auto overflow-x-scroll notranslate'>
+		<div className='flex flex-col items-center overflow-y-auto overflow-x-auto notranslate'>
 			<MultiwayToggle
 				options={options}
 				selectedKey={interval}
@@ -351,10 +367,10 @@ const PricingComparison: React.FC<{
 						<div className='brix---text-300-medium'>📱 Generate video</div>
 					</div>
 					<div className={`brix---pricing-content-wrapper-left${smallSuffix}`}>
-						<div className='brix---text-300-medium'>🦹‍♂️ Attach avatar (new)</div>
+						<div className='brix---text-300-medium'>🦹‍♂️ Attach avatar</div>
 					</div>
 					<div className={`brix---pricing-content-wrapper-left${smallSuffix}`}>
-						<div className='brix---text-300-medium'>🎙️ Voice cloning (new)</div>
+						<div className='brix---text-300-medium'>🎙️ Cloned Voiceover</div>
 					</div>
 					<div className={`brix---pricing-content-wrapper-left${smallSuffix}`}>
 						<div className='brix---text-300-medium'>🪑 Free Team Seats</div>
@@ -373,62 +389,6 @@ const PricingComparison: React.FC<{
 						</div>
 					</div>
 				</div>
-				{/* {showFreeTier &&
-          <div className="brix---pricing-column">
-            <div className="brix---pricing-table-top">
-              <div className="brix---mg-bottom-8px">
-                <div className="brix---color-neutral-600">
-                  <div className="brix---text-200">FREE</div>
-                </div>
-              </div>
-              <div className="brix---mg-bottom-16px">
-                <div className="brix---color-neutral-800 flex flex-col items-center">
-                  <div className="brix---text-400-bold">{getPrice('FREE')}</div>
-                  <div className="brix---text-300-medium">{'\u00A0'}</div>
-                  <div className="brix---text-300-medium">{'\u00A0'}</div>
-                </div>
-              </div>
-              <button
-                onClick={() => handleClick('FREE')}
-                className="brix---btn-secondary-small-full-width w-button whitespace-nowrap bg-white"
-              >
-                {getCta('FREE')}
-              </button>
-            </div>
-            <div className={`brix---pricing-content-wrapper${smallSuffix}`}>
-              <div className="brix---pricing-v8-title-table">
-                <div className="brix---text-300-medium">⭐️ credits</div>
-              </div>
-              <div className="brix---text-300-medium">20</div>
-            </div>
-            <div className={`brix---pricing-content-wrapper${smallSuffix}`}>
-              <div className="brix---pricing-v8-title-table">
-                <div className="brix---text-300-medium">🌟 GPT</div>
-              </div>
-              <div className="brix---text-300-medium">3.5</div>
-            </div>
-            <div className={`brix---pricing-content-wrapper${smallSuffix}`}>
-              <div className="brix---pricing-v8-title-table">
-                <div className="brix---text-300-medium">📚 Upload documents</div>
-              </div>
-              <div className="brix---text-300-medium">Single</div>
-            </div>
-            <div className={`brix---pricing-content-wrapper${smallSuffix}`}>
-              <div className="brix---pricing-v8-title-table">
-                <div className="brix---text-300-medium">📑 Generate slides</div>
-              </div>
-              <img src="images/check-icon-white-brix-templates.svg" alt="" />
-            </div>
-            <div className={`brix---pricing-content-wrapper-empty${smallSuffix}`} />
-            <div className={`brix---pricing-content-wrapper-empty${smallSuffix}`} />
-            <div className={`brix---pricing-content-wrapper-empty${smallSuffix}`} />
-            <div className={`brix---pricing-content-wrapper-empty${smallSuffix}`} />
-            <div className={`brix---pricing-content-wrapper-empty${smallSuffix}`} />
-            <div className={`brix---pricing-content-wrapper-empty${smallSuffix}`} />
-            <div className={`brix---pricing-content-wrapper-empty${smallSuffix}`} />
-            <div className={`brix---pricing-content-wrapper-empty${smallSuffix}`} />
-          </div>
-        } */}
 				<div className='brix---pricing-column-last'>
 					<div className='brix---pricing-table-top'>
 						<div className='brix---mg-bottom-8px'>
@@ -511,9 +471,7 @@ const PricingComparison: React.FC<{
 					</div>
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className='brix---pricing-v8-title-table'>
-							<div className='brix---text-300-medium'>
-								🦹‍♂️ Attach avatar (new)
-							</div>
+							<div className='brix---text-300-medium'>🦹‍♂️ Attach avatar</div>
 						</div>
 						<img src='images/check-icon-white-brix-templates.svg' alt='' />
 					</div>
@@ -626,9 +584,7 @@ const PricingComparison: React.FC<{
 					</div>
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className='brix---pricing-v8-title-table'>
-							<div className='brix---text-300-medium'>
-								🦹‍♂️ Attach avatar (new)
-							</div>
+							<div className='brix---text-300-medium'>🦹‍♂️ Attach avatar</div>
 						</div>
 						<img
 							src='images/check-icon-brix-templates.svg'
@@ -637,9 +593,7 @@ const PricingComparison: React.FC<{
 					</div>
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className='brix---pricing-v8-title-table'>
-							<div className='brix---text-300-medium'>
-								🎙️ Voice cloning (new)
-							</div>
+							<div className='brix---text-300-medium'>🎙️ Cloned Voiceover</div>
 						</div>
 						<div className='brix---text-300-medium'>1 Voice</div>
 					</div>
@@ -762,19 +716,19 @@ const PricingComparison: React.FC<{
 					</div>
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className='brix---pricing-v8-title-table'>
-							<div className='brix---text-300-medium'>
-								🦹‍♂️ Attach avatar (new)
-							</div>
+							<div className='brix---text-300-medium'>🦹‍♂️ Attach avatar</div>
 						</div>
 						<img src='images/check-icon-white-brix-templates.svg' alt='' />
 					</div>
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className='brix---pricing-v8-title-table'>
 							<div className='brix---text-300-medium'>
-								🎙️ Voice cloning (new)
+								🎙️ Cloned Voiceover (new)
 							</div>
 						</div>
-						<div className='brix---text-300-medium'><b>Unlimited</b></div>
+						<div className='brix---text-300-medium'>
+							<b>Unlimited</b>
+						</div>
 					</div>
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className='brix---pricing-v8-title-table'>
@@ -824,6 +778,9 @@ const PricingComparison: React.FC<{
 };
 
 export function Pricing() {
+	// avoid hydration error during development caused by persistence
+	if (!useHydrated()) return <></>;
+
 	return (
 		<div className='brix---section'>
 			<div className='brix---container-default w-container'>

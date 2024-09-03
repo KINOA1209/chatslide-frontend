@@ -49,6 +49,7 @@ import {
 	SocialPostColorPaletteConfigType,
 	SocialPostColorPaletteKeys,
 } from '@/components/socialPost/templates_customizable_elements/color_palette_settings/SocialPostTemplatesColorPalettes';
+import { useSocialPosts } from '@/hooks/use-socialpost';
 
 export const templateThemeKeyAndIndicatorImgMapCoverPage: Record<
 	SocialPostTemplateKeys,
@@ -145,24 +146,15 @@ export const templateDispatch = (
 	) => void = () => () => {},
 	toggleEditMathMode: () => void = () => {}, // Replace with your default function if you have one
 	isLastPage: boolean = false,
-	logoMode: 'no' | 'default' | 'custom' = 'default',
-	customLogoUrl: string = '',
+	// logoMode?: 'no' | 'default' | 'custom',
+	// customLogoUrl?: string = '',
 ): JSX.Element => {
 	const { isPaidUser, token, username } = useUser();
-	// const [currUserName, setCurrUserName] = useState('');
-	// useEffect(() => {
-	// 	const fetchUser = async () => {
-	// 		try {
-	// 			const username = await AuthService.getCurrentUserDisplayName();
-	// 			setCurrUserName(username);
-	// 		} catch (error) {
-	// 			console.log('No authenticated user.');
-	// 		}
-	// 	};
-
-	// 	fetchUser();
-	// }, []);
 	const { project } = useProject();
+  const { socialPostLogoMode, socialPostCustomLogoResource } = useSocialPosts();
+  const logoMode = socialPostLogoMode;
+  const customLogoUrl = socialPostCustomLogoResource[0]?.thumbnail_url || '';
+
 	const post_type: PostTypeKeys =
 		(project?.post_type as PostTypeKeys) || 'casual_topic';
 

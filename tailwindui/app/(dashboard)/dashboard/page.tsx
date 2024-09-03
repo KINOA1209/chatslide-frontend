@@ -19,7 +19,7 @@ import Project from '@/models/Project';
 import Folder from '@/models/Folder';
 import UserService from '@/services/UserService';
 import { useTeam } from '@/hooks/use-team';
-import { isChatslide } from '@/utils/getHost';
+import { isChatslide, isLocal } from '@/utils/getHost';
 import { getUserCountryCode } from '@/utils/userLocation';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { IoGridOutline } from 'react-icons/io5';
@@ -192,6 +192,11 @@ export default function Dashboard() {
 				updateCreditsAndTier();
 			}
 		}
+
+		fetchProjects();
+
+		if (isLocal()) return;  // Skip the following code if running locally
+
 		if (isTeamMode) {
 			if (!teamId) {
 				setNoTeam(true);
@@ -202,7 +207,7 @@ export default function Dashboard() {
 		} else {
 			sessionStorage.removeItem('currentTeam');
 		}
-		fetchProjects();
+
 		const surveyFinished = await UserService.checkSurveyFinished(token);
 		if (!surveyFinished) {
 			setShowSurvey(true);
@@ -228,7 +233,7 @@ export default function Dashboard() {
 			throw 'Error';
 		}
 		try {
-			await ProjectService.deleteProject(token, deleteInd);
+			ProjectService.deleteProject(token, deleteInd);
 			const updatedProjects = projects.filter((proj) => proj.id !== deleteInd);
 			setProjects(updatedProjects);
 			const updatedFolders = folders.map((folder) => ({
@@ -237,11 +242,7 @@ export default function Dashboard() {
 			}));
 			setFolders(updatedFolders);
 		} catch (error: any) {
-			toast.error(error.message, {
-				position: 'top-center',
-				autoClose: 5000,
-				theme: 'light',
-			});
+			console.error(error);
 		}
 		setShowDeleteModal(false);
 		setDeleteInd('');
@@ -346,6 +347,23 @@ export default function Dashboard() {
 		setActiveFolder('drlambda-default');
 	};
 
+	const ProjectToggle = (
+		<TabsList className='w-fit self-end'>
+			<TabsTrigger
+				value='cardView'
+				className='data-[state=active]:text-[#444CE7]'
+			>
+				<IoGridOutline className={`w-5 h-5 `} />
+			</TabsTrigger>
+			<TabsTrigger
+				value='listView'
+				className='data-[state=active]:text-[#444CE7]'
+			>
+				<HiOutlineViewList className='w-5 h-5' />
+			</TabsTrigger>
+		</TabsList>
+	);
+
 	return (
 		<section className='grow flex flex-col'>
 			<ToastContainer />
@@ -362,20 +380,6 @@ export default function Dashboard() {
 				/>
 
 				<Tabs defaultValue='cardView' className='flex flex-col'>
-					<TabsList className='w-fit self-end mx-8 mt-[16px]'>
-						<TabsTrigger
-							value='cardView'
-							className='data-[state=active]:text-[#444CE7]'
-						>
-							<IoGridOutline className={`w-5 h-5 `} />
-						</TabsTrigger>
-						<TabsTrigger
-							value='listView'
-							className='data-[state=active]:text-[#444CE7]'
-						>
-							<HiOutlineViewList className='w-5 h-5' />
-						</TabsTrigger>
-					</TabsList>
 					{hasFolder && !isTeamMode && (
 						<FolderList
 							folders={folders}
@@ -397,6 +401,7 @@ export default function Dashboard() {
 							handleDelete={handleDelete}
 							setDraggingProjectId={setDraggingProjectId}
 							isTableView={true}
+							projectToggle={ProjectToggle}
 						/>
 					</TabsContent>
 					<TabsContent value='cardView'>
@@ -410,6 +415,7 @@ export default function Dashboard() {
 							handleDelete={handleDelete}
 							setDraggingProjectId={setDraggingProjectId}
 							isTableView={false}
+							projectToggle={ProjectToggle}
 						/>
 					</TabsContent>
 				</Tabs>

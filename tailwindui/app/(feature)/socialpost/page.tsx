@@ -122,7 +122,7 @@ export default function SocialMediaTemplate() {
 					lastStep={true}
 					nextStep={false}
 					nextText={'Next'}
-					workflow='socialPosts'
+          contentType={'social_posts'}
 				/>
 
 				<ToastContainer enableMultiContainer containerId={'slides'} />

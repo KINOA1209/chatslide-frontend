@@ -36,6 +36,130 @@ export default function Studio() {
 				</Card>
 
 				<Card>
+					<BigTitle>August 30</BigTitle>
+					<Instruction>
+						<span>
+							<p>
+								<b>🎨 Favorite Color for Image Searches:</b> You can now add
+								your favorite color when searching for images, either during the
+								design step or while editing a slide. This feature allows you to
+								tailor your presentations even more to your aesthetic
+								preferences.
+							</p>
+						</span>
+					</Instruction>
+					<Instruction>
+						<span>
+							<p>
+								<b>📄 Social Posts Downloadable as PDF:</b> Social posts can now
+								be downloaded as PDFs, and we've also resolved the logo bug for
+								a smoother experience.
+							</p>
+						</span>
+					</Instruction>
+					<Instruction>
+						<span>
+							<p>
+								<b>🇵🇰 Added Urdu (from Pakistan) as a Language:</b> Urdu has
+								been added as a supported language, making your content more
+								accessible to Urdu-speaking audiences.
+							</p>
+						</span>
+					</Instruction>
+				</Card>
+
+				<Card>
+					<BigTitle>August 26</BigTitle>
+					<Instruction>
+						<span>
+							<p>
+								<b>🖼️ Add Images Freely:</b> Now you can freely add new images
+								to your projects! Enhance your presentations with custom images
+								to make them more engaging and visually appealing.
+							</p>
+						</span>
+					</Instruction>
+					<Instruction>
+						<span>
+							<p>
+								<b>🎥 Improved PPT to Video Workflow:</b> We've enhanced the PPT
+								to video workflow, making the process smoother and more
+								reliable. Additionally, we've fixed a few bugs to ensure a
+								better user experience.
+							</p>
+						</span>
+					</Instruction>
+					<Instruction>
+						<span>
+							<p>
+								<b>📱 UI/UX Improvements on Mobile:</b> We’ve improved the user
+								interface and user experience on mobile devices, ensuring a
+								smoother and more intuitive experience for mobile users.
+							</p>
+						</span>
+					</Instruction>
+				</Card>
+
+				<Card>
+					<BigTitle>August 26</BigTitle>
+					<Instruction>
+						<span>
+							<p>
+								<b>🖼️ Add Images Freely:</b> Now you can freely add new images
+								to your projects! Enhance your presentations with custom images
+								to make them more engaging and visually appealing.
+							</p>
+						</span>
+					</Instruction>
+					<Instruction>
+						<span>
+							<p>
+								<b>🎥 Improved PPT to Video Workflow:</b> We've enhanced the PPT
+								to video workflow, making the process smoother and more
+								reliable. Additionally, we've fixed a few bugs to ensure a
+								better user experience.
+							</p>
+						</span>
+					</Instruction>
+					<Instruction>
+						<span>
+							<p>
+								<b>📱 UI/UX Improvements on Mobile:</b> We’ve improved the user
+								interface and user experience on mobile devices, ensuring a
+								smoother and more intuitive experience for mobile users.
+							</p>
+						</span>
+					</Instruction>
+				</Card>
+
+				<Card>
+					<BigTitle>August 23</BigTitle>
+					<Instruction>
+						<span>
+							<p>
+								<b>🎥 New Workflow: PPT to Video:</b> The new workflow of PPT to
+								video is now available! You can upload your existing PPT, PPTX,
+								or PDF files, and our AI will add scripts, voiceovers, and
+								convert them into videos. Easily transform your presentations
+								into engaging video content.{' '}
+								<a href='/ppt2video' className='text-blue-600'>
+									Try it.
+								</a>
+							</p>
+						</span>
+					</Instruction>
+					<Instruction>
+						<span>
+							<p>
+								<b>🔧 Bug Fixes:</b> We've fixed some issues with reading
+								YouTube links and web links, ensuring smoother integration for
+								your projects.
+							</p>
+						</span>
+					</Instruction>
+				</Card>
+
+				<Card>
 					<BigTitle>August 18</BigTitle>
 					<Instruction>
 						<span>

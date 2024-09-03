@@ -27,6 +27,7 @@ interface DesignSystemButtonProps {
 	customTextStyles?: React.CSSProperties;
 	customIconStyles?: React.CSSProperties;
 	width?: string;
+  maxWidth?: string;
 }
 
 const DesignSystemButton: React.FC<DesignSystemButtonProps> = ({
@@ -46,6 +47,7 @@ const DesignSystemButton: React.FC<DesignSystemButtonProps> = ({
 	customIconStyles,
 	customTextStyles,
 	width = '100%',
+  maxWidth = '100%'
 }) => {
 	// Define the CSS variables for spacing and colors
 	const [showPaywallModal, setShowPaywallModal] = useState(false);
@@ -120,6 +122,7 @@ const DesignSystemButton: React.FC<DesignSystemButtonProps> = ({
 		}`,
 		justifyContent: 'center',
 		width: width,
+    maxWidth: maxWidth,
 		alignItems: 'center',
 		gap: 'var(--spacing-xs, 4px)',
 		borderRadius: 'var(--radius-md, 8px)',
@@ -181,15 +184,6 @@ const DesignSystemButton: React.FC<DesignSystemButtonProps> = ({
 	};
 
 	return (
-		// <button style={buttonStyles} onClick={onClick}>
-		// 	{iconLeft && (
-		// 		<span style={{ ...iconStyles, marginRight: '6px' }}>{iconLeft}</span>
-		// 	)}
-		// 	{text}
-		// 	{iconRight && (
-		// 		<span style={{ ...iconStyles, marginLeft: '6px' }}>{iconRight}</span>
-		// 	)}
-		// </button>
 		<>
 			<PaywallModal
 				showModal={showPaywallModal}
@@ -204,8 +198,14 @@ const DesignSystemButton: React.FC<DesignSystemButtonProps> = ({
 				onClick={checkPaidUser}
 				style={{ ...buttonStyles, ...customButtonStyles }}
 			>
-				{iconLeft && (
-					<span style={{ ...iconStyles, ...customIconStyles }}>{iconLeft}</span>
+				{isSubmitting ? (
+					<SpinIcon />
+				) : (
+					iconLeft && (
+						<span style={{ ...iconStyles, ...customIconStyles }}>
+							{iconLeft}
+						</span>
+					)
 				)}
 				<span
 					className='flex flex-row items-center gap-x-2'
@@ -216,14 +216,10 @@ const DesignSystemButton: React.FC<DesignSystemButtonProps> = ({
 					{isPaidFeature && !isPaidUser && <PlusLabel />}
 				</span>
 
-				{isSubmitting ? (
-					<SpinIcon />
-				) : (
-					iconRight && (
-						<span style={{ ...iconStyles, ...customIconStyles }}>
-							{iconRight}
-						</span>
-					)
+				{iconRight && (
+					<span style={{ ...iconStyles, ...customIconStyles }}>
+						{iconRight}
+					</span>
 				)}
 			</button>
 		</>

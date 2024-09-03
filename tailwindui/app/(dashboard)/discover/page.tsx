@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import ProjectTable from '../../../components/dashboard/ProjectTable';
-import DrlambdaButton from '@/components/button/DrlambdaButton';
 import ProjectService from '@/services/ProjectService';
 import Link from 'next/link';
 import { JoinUsBanner } from '@/components/layout/JoinUsBanner';
@@ -26,9 +24,9 @@ export default async function Discover() {
 		<section className='grow flex flex-col'>
 			<JoinUsBanner />
 			<ToastContainer />
-			<div className='flex flex-row items-end w-full z-10 pt-[2rem] px-[2rem]'>
+			<div className='flex flex-row items-end w-full z-10 pt-4 px-4 sm:pt-8 sm:px-8'>
 				{/* flex container controlling max width */}
-				<div className='w-full flex flex-wrap items-center justify-between'>
+				<div className='w-full flex flex-wrap items-center justify-between gap-2'>
 					{/* my project title text */}
 					{/* <div className='absolute left-10 md:left-1/2 transform md:-translate-x-1/2  text-black text-base font-bold leading-10 tracking-wide border-white border-b-2'>
 							My Projects
@@ -58,7 +56,7 @@ export default async function Discover() {
 			</div>
 
 			{/* projects details area */}
-			<div className='pb-[1rem] w-full px-8 pt-8 flex flex-col grow overflow-auto'>
+			<div className='pb-[1rem] w-full px-4 pt-4 sm:px-8 sm:pt-8 flex flex-col grow overflow-auto'>
 				{projects && projects.length > 0 ? (
 					// <ProjectTable currentProjects={projects} isDiscover={true} />
 					<ProjectTableSSR currentProjects={projects} isDiscover={true} />

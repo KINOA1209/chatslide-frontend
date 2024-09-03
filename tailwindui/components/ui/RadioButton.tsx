@@ -33,7 +33,7 @@ const CustomRadio = styled(Radio)({
 const CustomFormControlLabel = styled(FormControlLabel)(({ theme }) => ({
 	'.MuiFormControlLabel-label': {
 		fontSize: '14px', // Adjust font size as needed
-		fontWeight: 'normal', // Adjust font weight as needed
+		// fontWeight: 'normal', // Adjust font weight as needed
 		// fontFamily: 'Creato Display Medium',
 	},
 }));
@@ -45,41 +45,6 @@ const RadioButton: React.FC<RadioButtonProps> = ({
 	setSelectedValue,
 	cols = 4,
 }) => {
-	// return (
-	// 	<div className={`grid grid-cols-1 md:grid-cols-${cols} gap-x-3`}>
-	// 		{options.map(({ img, value, text, icon, explanation }) => (
-	// 			<div
-	// 				key={value}
-	// 				className={`rounded-lg`}
-	// 				onClick={() => setSelectedValue(value)}
-	// 			>
-	// 				<label>
-	// 					{img && (
-	// 						<div className='h-[100px]'>
-	// 							<Image src={img} alt={text} height={100} />
-	// 						</div>
-	// 					)}
-	// 					<div className='flex flex-row items-center gap-x-2'>
-	// 						<input
-	// 							type='radio'
-	// 							name={name}
-	// 							value={value}
-	// 							checked={selectedValue === value}
-	// 							onChange={() => setSelectedValue(value)}
-	// 						/>
-	// 						<span className='flex flex-row justify-center items-center gap-1'>
-	// 							{icon}
-	// 							<div className='flex flex-col'>
-	// 								{text}
-	// 								<Explanation>{explanation}</Explanation>
-	// 							</div>
-	// 						</span>
-	// 					</div>
-	// 				</label>
-	// 			</div>
-	// 		))}
-	// 	</div>
-	// );
 
 	const formattedOptions = options.map((option) => {
 		if (typeof option === 'string') {

@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 
 import Link from 'next/link';
 import { Home, Logo } from '../ui/logo';
-import DropdownButton from '@/components/utils/dropdown';
+import MobileMenu from '@/components/utils/MobileMenu';
 import { usePathname, useRouter } from 'next/navigation';
 import GoogleAnalytics from '@/components/integrations/GoogleAnalytics';
 // import AuthService from "../utils/AuthService";
@@ -84,7 +84,7 @@ const Header = ({
 
 	return (
 		<header
-			className={`relative sticky top-0 w-full z-30 bg-Dark transition duration-300 ease-in-out ${
+			className={`relative sticky top-0 w-full z-50 bg-Dark transition duration-300 ease-in-out ${
 				!top ? 'bg-gray-800 backdrop-blur-sm shadow-lg' : ''
 			}`}
 		>
@@ -141,7 +141,7 @@ const Header = ({
 					<nav className='flex w-[200px]'>
 						{/* Desktop sign in links */}
 						{!loading && token ? (
-							!isAuth && <DropdownButton />
+							!isAuth && <MobileMenu />
 						) : (
 							<ul className='flex grow justify-end flex-nowrap items-center'>
 								<li>

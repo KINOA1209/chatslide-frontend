@@ -68,21 +68,9 @@ const MyResourcePageHeader: React.FC<MyResourcePageHeaderProps> = ({
 		};
 	}, []);
 	return (
-		// <section>
-		// 	{/* top background container of my projects title text and  */}
-		// 	<div className='flex items-end w-full z-10 pt-[4rem] bg-Blue border-b-2 px-[5rem]'>
-		// 		{/* flex container controlling max width */}
-		// 		<div className='w-full max-w-7xl flex flex-wrap justify-center items-end'>
-		// 			{/* my project title text */}
-		// 			<div className='absolute left-10 md:left-1/2 transform md:-translate-x-1/2 text-white text-base font-bold leading-10 tracking-wide border-white border-b-2'>
-		// 				My Resources
-		// 			</div>
-		// 		</div>
-		// 	</div>
-		// </section>
-		<div className='flex flex-row items-end w-full z-10 pt-[2rem] px-[1rem]'>
+		<div className='flex flex-row items-end w-full z-10'>
 			{/* flex container controlling max width */}
-			<div className='w-full flex flex-wrap items-center justify-between'>
+			<div className='w-full flex flex-wrap items-center justify-between gap-2'>
 				{/* my project title text */}
 				{/* <div className='absolute left-10 md:left-1/2 transform md:-translate-x-1/2  text-black text-base font-bold leading-10 tracking-wide border-white border-b-2'>
 							My Projects
@@ -96,72 +84,6 @@ const MyResourcePageHeader: React.FC<MyResourcePageHeaderProps> = ({
 					<span>Uploads</span>
 				</div>
 
-				{/*upload section*/}
-				{/* <div
-					className='upload_section'
-					style={{
-						display: 'flex',
-						flexDirection: 'row',
-						justifyContent: 'center',
-						alignItems: 'center',
-						gap: '1px',
-						position: 'relative',
-					}}
-					ref={uploadSectionRef}
-					onClick={() => setShowUploadOptionsMenu(!showUploadOptionsMenu)}
-				>
-					<DesignSystemButton
-						isPaidFeature={false}
-						size='lg'
-						hierarchy='primary'
-						buttonStatus='enabled'
-						iconLeft={<FiUpload />}
-						customButtonStyles={{
-							borderRadius:
-								'var(--radius-md, 8px) var(--radius-xxs, 2px) var(--radius-xxs, 2px) var(--radius-md, 8px)',
-						}}
-						isSubmitting={isSubmitting}
-						// text='Create New'
-						// onClick={handleStartNewProject}
-					>
-						<span>{!isSubmitting ? 'Upload' : 'Uploading...'}</span>
-					</DesignSystemButton>
-					<DesignSystemButton
-						isPaidFeature={false}
-						size='lg'
-						hierarchy='primary'
-						buttonStatus='enabled'
-						iconLeft={
-							showUploadOptionsMenu ? (
-								<FaChevronUp></FaChevronUp>
-							) : (
-								<FaChevronDown></FaChevronDown>
-							)
-						}
-						customButtonStyles={{
-							borderRadius:
-								'var(--radius-xxs, 2px) var(--radius-md, 8px) var(--radius-md, 8px) var(--radius-xxs, 2px)',
-						}}
-						// text='Create New'
-						// onClick={handleStartNewProject}
-					></DesignSystemButton>
-					{showUploadOptionsMenu && (
-						<UploadOptionsDropdownMenu
-							setIsDropdownVisible={setShowUploadOptionsMenu}
-							setSelectedResources={setSelectedResources}
-							selectedResources={selectedResources}
-							onFileSelected={onFileSelected}
-							isSubmitting={isSubmitting}
-							pageInvoked={pageInvoked}
-							isPaidUser={isPaidUser}
-							getBrand={getBrand}
-							getLogoUrl={getLogoUrl}
-							carbonTokenFetcher={carbonTokenFetcher}
-							handleSuccess={handleSuccess}
-							isUploadDropdownItem={isUploadDropdownItem}
-						></UploadOptionsDropdownMenu>
-					)}
-				</div> */}
 				<FileUploadDropdownButton
 					uploadSectionRef={uploadSectionRef}
 					setShowUploadOptionsMenu={setShowUploadOptionsMenu}

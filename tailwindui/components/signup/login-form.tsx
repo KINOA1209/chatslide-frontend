@@ -98,14 +98,12 @@ const LoginForm: React.FC = () => {
 				</div>
 			</div>
 			<div className='flex flex-wrap -mx-3 mt-6'>
-				<div className='w-full px-3'>
-					<button>
-						<BigBlueButton width='384px' disabled={isSubmitting}>
-							{isSubmitting ? 'Signing in...' : 'Sign in'}
-						</BigBlueButton>
-					</button>
-					<ToastContainer />
-				</div>
+				<button className='w-full px-3'>
+					<BigBlueButton disabled={isSubmitting} width='100%'>
+						{isSubmitting ? 'Signing in...' : 'Sign in'}
+					</BigBlueButton>
+				</button>
+				<ToastContainer />
 			</div>
 		</form>
 	);

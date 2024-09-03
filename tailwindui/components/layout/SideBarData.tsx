@@ -10,7 +10,7 @@ import { RiDiscordLine } from 'react-icons/ri';
 
 export interface SubMenu {
 	title: string;
-	path?: string;
+	path: string;
 }
 
 export interface SideBarItem {
@@ -64,7 +64,7 @@ export const SideBarData: SideBarItem[] = [
 		chatslideOnly: true,
 	},
 	{
-		title: 'Updates 8.18',
+		title: 'Updates 8.30',
 		icon: <LuNewspaper />,
 		path: '/whatsnew',
 		drlambdaOnly: true,

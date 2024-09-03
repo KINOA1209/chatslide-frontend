@@ -26,6 +26,8 @@ import { PiFileText } from 'react-icons/pi';
 import { FaRegStar } from 'react-icons/fa';
 import { GenerationStatusProgressModal } from '@/components/ui/GenerationStatusProgressModal';
 import { InputBox, NewInputBox } from '@/components/ui/InputBox';
+import LANGUAGES from '@/components/language/languageData';
+import { getUserLanguage } from '@/utils/userLocation';
 
 const SlidesHTML = dynamic(() => import('@/components/slides/SlidesHTML'), {
 	ssr: false,
@@ -90,6 +92,7 @@ export default function WorkflowStep3() {
 	const [pronoun, setPronoun] = useState('second');
 	const [style, setStyle] = useState('engaging');
 	const [length, setLength] = useState('normal');
+	const [language, setLanguage] = useState(project?.language || 'English');
 
 	const isGpt35 = true;
 
@@ -178,6 +181,24 @@ export default function WorkflowStep3() {
 
 				<div>
 					<Instruction>
+						What language do you want to write the scripts in?
+					</Instruction>
+					<DropDown
+						width='12rem'
+						onChange={(e) => setLanguage(e.target.value)}
+						value={language}
+						style='input'
+					>
+						{LANGUAGES.map((option) => (
+							<option key={option.code} value={option.code}>
+								{option.displayName}
+							</option>
+						))}
+					</DropDown>
+				</div>
+
+				<div>
+					<Instruction>
 						Any additional requirements for the scripts?
 					</Instruction>
 					<NewInputBox
@@ -231,24 +252,32 @@ export default function WorkflowStep3() {
 
 		// console.log('submitting');
 
-		const formData = {
-			foldername: project.foldername,
-			topic: project.topic,
-			project_id: project.id,
-			language: project.language,
-			json_list: slides,
-			model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4',
-			max_index: isPaidUser ? 0 : 5,
-			pronoun: pronoun,
-			style: style,
-			additional_requirements: additionalRequirements,
-		};
-
 		try {
-			const transcripts = await SlidesService.generateScripts(formData, token);
+			let transcripts = [];
+      const formData = {
+				foldername: project.foldername,
+				topic: project.topic,
+				project_id: project.id,
+				language: language,
+				json_list: slides,
+				model_name: isGpt35 ? 'gpt-3.5-turbo' : 'gpt-4',
+				max_index: isPaidUser ? 0 : 5,
+				pronoun: pronoun,
+				style: style,
+				additional_requirements: additionalRequirements,
+				resource_ids: project.resources?.map((r) => r.id),
+			};
+			if (project?.content_type === 'presentation') {
+				transcripts = await SlidesService.generateScripts(formData, token);
+			} else {
+				// ppt2video
+				transcripts = await SlidesService.ppt2scripts(
+					formData,
+					token,
+				);
+			}
+
 			setTranscripts(transcripts); // and auto-save
-			setIsSubmitting(false);
-			setShowGenerationStatusModal(false);
 			router.push(addIdToRedir('/scripts'));
 			updateProject('has_scripts', true);
 		} catch (error) {
@@ -276,7 +305,7 @@ export default function WorkflowStep3() {
 			{/* flex col container for steps, title, etc */}
 			<MyCustomJoyride steps={StepsSlidesPage()} />
 			<WorkflowStepsBanner
-				currentIndex={3}
+				currentIndex={project.content_type === 'presentation' ? 3 : 1}
 				isSubmitting={isSubmitting}
 				setIsSubmitting={setIsSubmitting}
 				isPaidUser={isPaidUser}
