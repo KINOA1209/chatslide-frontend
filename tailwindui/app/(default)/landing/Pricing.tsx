@@ -25,8 +25,8 @@ const PricingComparison: React.FC<{
 	const [currency, setCurrency] = useState<string>('$');
 	const router = useRouter();
 	const [interval, setInterval] = useState<Interval>(
-		// isChatslide() ? 'yearly' : 'lifetime',
-		'lifetime',
+		isChatslide() ? 'yearly' : 'lifetime',
+		// 'lifetime',
 	);
 	const smallSuffix = small ? '-small' : '';
 	const [showManageSubscription, setShowManageSubscription] = useState(false);
@@ -124,13 +124,13 @@ const PricingComparison: React.FC<{
 			case 'lifetime':
 				switch (tier) {
 					case 'PLUS':
-						amount = 97;
+						amount = 119;
 						break;
 					case 'PRO':
-						amount = 146;
+						amount = 208.6;
 						break;
 					case 'ULTIMATE':
-						amount = 335;
+						amount = 479.2;
 						break;
 				}
 				break;
@@ -236,14 +236,6 @@ const PricingComparison: React.FC<{
 	};
 
 	const handleSubscription = async (tier: Tier, token: string) => {
-		if (tier === 'ULTIMATE') {
-			window.open(
-				'https://dealmirror.com/product/chatslide-ai-build-your-slides-and-video-in-one-click/',
-				'_blank',
-			);
-			return;
-		}
-
 		const suffix = '_' + interval.toUpperCase();
 		const plan = tier + suffix;
 
@@ -277,14 +269,14 @@ const PricingComparison: React.FC<{
 				// 		</span>
 				// 	),
 				// },
-				// {
-				// 	key: 'yearly',
-				// 	element: (
-				// 		<span className='whitespace-nowrap'>
-				// 			Yearly <span className='text-xs whitespace-nowrap'>-40%</span>
-				// 		</span>
-				// 	),
-				// },
+				{
+					key: 'yearly',
+					element: (
+						<span className='whitespace-nowrap'>
+							Yearly <span className='text-xs whitespace-nowrap'>-40%</span>
+						</span>
+					),
+				},
 				{
 					key: 'lifetime',
 					element: (
