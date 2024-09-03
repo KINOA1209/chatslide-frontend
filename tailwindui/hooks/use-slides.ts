@@ -962,12 +962,15 @@ export const useSlides = () => {
 		let newSlides = [];
 		if (index == -1) {
 			// unhide all slides
-			newSlides = slides.map((slide, index) => {
+			newSlides = slides.map((slide, idx) => {
 				return { ...slide, isHidden: false };
 			});
 		} else if (index == -2) {
-			// hide all slides
-			newSlides = slides.map((slide, index) => {
+			// hide all slides but the cover page
+			newSlides = slides.map((slide, idx) => {
+        if (idx === 0) {
+          return slide; // Keep the original slide unchanged
+        }
 				return { ...slide, isHidden: true };
 			});
 		} else {
