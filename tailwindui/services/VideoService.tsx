@@ -1,3 +1,4 @@
+import { AVATAR_ID } from '@/components/language/avatarData';
 import VideoJobStatus from '@/models/VideoJobStatus';
 
 export default class VideoService {
@@ -8,7 +9,7 @@ export default class VideoService {
 		voice: string | null,
 		userToken: string,
 		style: string,
-		avatar: string,
+		avatar: AVATAR_ID | undefined,
 		avatarStyle: string,
 		avatarSize: string,
 		avatarPosition: string,
@@ -31,7 +32,7 @@ export default class VideoService {
 				foldername: foldername,
 				voice: voice,
 				style: style,
-				has_avatar: avatar !== '',
+				has_avatar: avatar !== undefined,
 				avatar: avatar,
 				avatar_style: avatarStyle,
 				avatar_size: avatarSize,

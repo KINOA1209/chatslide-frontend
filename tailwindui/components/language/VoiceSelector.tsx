@@ -69,6 +69,8 @@ export const getVoiceStyles = (voice: string): string[] => {
 };
 
 const VoiceSelector: React.FC<{
+  selectedGender: 'female' | 'male';
+  setSelectedGender: (gender: 'female' | 'male') => void;
 	selectedVoice: string;
 	setSelectedVoice: (language: string) => void;
   selectedLanguage: string;
@@ -76,7 +78,7 @@ const VoiceSelector: React.FC<{
 	style: string;
 	setStyle: (style: string) => void;
 	isHD: boolean;
-}> = ({ selectedVoice, setSelectedVoice, selectedLanguage, setSelectedLanguage, style, setStyle, isHD }) => {
+}> = ({ selectedGender, setSelectedGender, selectedVoice, setSelectedVoice, selectedLanguage, setSelectedLanguage, style, setStyle, isHD }) => {
 	const getCodeFromLanguage = (language: string | undefined): string => {
 		const selectedLanguage = LANGUAGES.find(
 			(lang) => lang.englishName === language,
@@ -86,9 +88,6 @@ const VoiceSelector: React.FC<{
 
 	const { project } = useProject();
 	const originalLanguageCode = getCodeFromLanguage(project?.language);
-	const [selectedGender, setSelectedGender] = useState<'female' | 'male'>(
-		'female',
-	);
 	const [voiceOptions, setVoiceOptions] = useState<string[]>([]);
 	const { clonedVoices } = useClonedVoices();
 	const { token } = useUser();

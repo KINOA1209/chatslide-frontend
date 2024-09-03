@@ -28,10 +28,13 @@ import {
 	AccordionTrigger,
 } from '@/components/ui/accordion';
 import CloneYourVoiceTutorial from './CloneYourVoiceTutorialDialog';
+import { AVATAR_ID } from '@/components/language/avatarData';
 
 interface AudioVideoDetailSettingsSectionProps {
 	voice: string;
 	setVoice: React.Dispatch<React.SetStateAction<string>>;
+	gender: 'female' | 'male';
+	setGender: React.Dispatch<React.SetStateAction<'female' | 'male'>>;
 	voiceIsHD: boolean;
 	setVoiceIsHD: React.Dispatch<React.SetStateAction<boolean>>;
 	selectedLanguage: string;
@@ -46,8 +49,8 @@ interface AudioVideoDetailSettingsSectionProps {
 	setTransitionType: React.Dispatch<React.SetStateAction<string>>;
 	withSubtitle: boolean;
 	setWithSubtitle: React.Dispatch<React.SetStateAction<boolean>>;
-	avatar: string;
-	setAvatar: React.Dispatch<React.SetStateAction<string>>;
+	avatar?: AVATAR_ID;
+	setAvatar: React.Dispatch<React.SetStateAction<AVATAR_ID | undefined>>;
 	posture: string;
 	setPosture: React.Dispatch<React.SetStateAction<string>>;
 	size: string;
@@ -61,6 +64,8 @@ const AudioVideoDetailSettingsSection: React.FC<
 > = ({
 	voice,
 	setVoice,
+  gender,
+  setGender,
 	voiceIsHD,
 	setVoiceIsHD,
 	selectedLanguage,
@@ -118,6 +123,8 @@ const AudioVideoDetailSettingsSection: React.FC<
 							</Instruction>
 							<ClonedVoicesProvider>
 								<VoiceSelector
+                  selectedGender={gender}
+                  setSelectedGender={setGender}
 									selectedVoice={voice}
 									setSelectedVoice={setVoice}
 									selectedLanguage={selectedLanguage}
@@ -243,7 +250,7 @@ const AudioVideoDetailSettingsSection: React.FC<
 								<>
 									<Instruction>
 										Select the avatar you want to use for your video.
-										<GrayLabel>Beta</GrayLabel>
+										{/* <GrayLabel>Beta</GrayLabel> */}
 									</Instruction>
 									<Explanation>
 										Due to the limitation of our resources, we can only provide
@@ -253,6 +260,7 @@ const AudioVideoDetailSettingsSection: React.FC<
 										This may change in the future.
 									</Explanation>
 									<AvatarSelector
+                    gender={gender}
 										avatar={avatar}
 										setAvatar={setAvatar}
 										posture={posture}

@@ -4,8 +4,10 @@ import React, { useEffect, useState } from 'react';
 import { ErrorMessage, Instruction, WarningMessage } from '../ui/Text';
 import { DropDown } from '../button/DrlambdaButton';
 import {
+	AVATAR_ID,
 	AVATAR_NAMES,
-	AVATAR_OPTIONS,
+	GENDER_AVATAR,
+	AVATAR_POSTURE,
 	POSITION_NAMES,
 	POSTURE_NAMES,
 	SIZE_NAMES,
@@ -14,8 +16,9 @@ import Image from 'next/image';
 import { WrappableRow } from '../layout/WrappableRow';
 
 const AvatarSelector: React.FC<{
-	avatar: string;
-	setAvatar: (avatar: string) => void;
+	gender: 'female' | 'male';
+	avatar?: AVATAR_ID;
+	setAvatar: (avatar?: AVATAR_ID) => void;
 	posture: string;
 	setPosture: (posture: string) => void;
 	size: string;
@@ -23,6 +26,7 @@ const AvatarSelector: React.FC<{
 	position: string;
 	setPosition: (position: string) => void;
 }> = ({
+	gender,
 	avatar,
 	setAvatar,
 	posture,
@@ -33,10 +37,18 @@ const AvatarSelector: React.FC<{
 	setPosition,
 }) => {
 	useEffect(() => {
-		if (avatar == 'None') {
-			setPosture('');
+		// Set default avatar based on gender
+		const defaultAvatar = GENDER_AVATAR[gender][0] as AVATAR_ID;
+		setAvatar(defaultAvatar);
+	}, [gender]);
+
+	useEffect(() => {
+		if (avatar) {
+			const postures = AVATAR_POSTURE[avatar];
+			if (postures && postures.length > 0) {
+				setPosture(postures[0]);
+			}
 		}
-		setPosture('casual-sitting');
 	}, [avatar]);
 
 	return (
@@ -47,24 +59,20 @@ const AvatarSelector: React.FC<{
 						<Instruction>Avatar: </Instruction>
 						<DropDown
 							value={avatar}
-							onChange={(e) => setAvatar(e.target.value)}
+							onChange={(e) => setAvatar(e.target.value as AVATAR_ID)}
 						>
 							<option key={''} value={''}>
 								⏹️ None
 							</option>
-							{Object.entries(AVATAR_OPTIONS).map(([key, value]) => (
-								<option
-									key={key}
-									value={key}
-									disabled={AVATAR_NAMES[key].includes('coming')}
-								>
-									{AVATAR_NAMES[key]}
+							{GENDER_AVATAR[gender].map((key) => (
+								<option key={key} value={key}>
+									{AVATAR_NAMES[key as AVATAR_ID]}
 								</option>
 							))}
 						</DropDown>
 					</div>
 
-					{avatar != '' && (
+					{avatar && (
 						<>
 							<div>
 								<Instruction>Posture: </Instruction>
@@ -72,8 +80,8 @@ const AvatarSelector: React.FC<{
 									value={posture}
 									onChange={(e) => setPosture(e.target.value)}
 								>
-									{AVATAR_OPTIONS[avatar].map((posture) => (
-										<option key={posture} value={posture}>
+									{AVATAR_POSTURE[avatar].map((posture, index) => (
+										<option key={index} value={posture}>
 											{POSTURE_NAMES[posture]}
 										</option>
 									))}
@@ -108,7 +116,7 @@ const AvatarSelector: React.FC<{
 						</>
 					)}
 				</div>
-				{avatar != '' && (
+				{avatar && (
 					<Image
 						unoptimized={true}
 						src={`/images/avatar/${avatar}-${posture}-thumbnail.png`}

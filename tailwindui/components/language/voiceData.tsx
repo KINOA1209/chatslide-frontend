@@ -1,3 +1,5 @@
+export type Gender = 'female' | 'male';
+
 type VoiceOptions = {
 	female: string[];
 	male: string[];
