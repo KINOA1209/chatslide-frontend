@@ -447,7 +447,7 @@ const Affiliate = () => {
 };
 
 const CreditHistory = () => {
-	const { credits, tier, expirationDate, token } = useUser();
+	const { credits, tier, expirationDate, token, email } = useUser();
 	// const [stripeLink, setStripeLink] = useState('');
 	const [showManageSubscription, setShowManageSubscription] = useState(false);
 
@@ -460,7 +460,13 @@ const CreditHistory = () => {
 	// 	fetchStripeLink();
 	// }, [token]);
 	async function handleResub() {
-		const url = await UserService.createStripePortalSession(token);
+		const url = await UserService.checkout(
+      tier.replaceAll('CANCELLED_', '').replaceAll('EXPIRED_', ''),
+      email,
+      '$',
+      token,
+      'resubscribe' // trigger
+    )
 		// open a new window to unsubscribe
 		window.open(url, '_blank');
 	}
