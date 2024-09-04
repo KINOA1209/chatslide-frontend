@@ -35,16 +35,17 @@ import {
 import brandingIcon from 'public/icons/button/show_logo.svg';
 import { useUser } from '@/hooks/use-user';
 import PaywallModal from '@/components/paywallModal';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { debounce } from 'lodash';
 import { useProject } from '@/hooks/use-project';
 import { Typography } from '@mui/material';
 import { MdExpandMore, MdOutlineContentCopy } from 'react-icons/md';
 import { getBrand } from '@/utils/getHost';
-import { FaCopy } from 'react-icons/fa';
 import Link from '@mui/material/Link';
 import { BsFiles } from 'react-icons/bs';
 import { toast, ToastContainer } from 'react-toastify';
+import { RiRestartLine } from 'react-icons/ri';
+import { useChatHistory } from '@/hooks/use-chat-history';
 // Register Chart.js components
 ChartJS.register(
 	CategoryScale,
@@ -80,6 +81,8 @@ export default function Page() {
 	const { project, initProject, updateProject, clearProject } = useProject();
 	const params = useParams<{ project_id?: string[] }>();
 	const project_id = params.project_id?.[0];
+	const { clearChatHistory } = useChatHistory();
+	const router = useRouter();
 
 	// Enable save after modifying chart data
 	// saveChartData is directly called only when
@@ -263,6 +266,17 @@ export default function Page() {
 		}
 	}
 
+	function startNewChart() {
+		clearProject();
+		setChartData(null);
+		setChartValues(null);
+		setChartConfig(null);
+		setEnableSave(false);
+		setChartType(null);
+		clearChatHistory();
+		router.push('/charts');
+	}
+
 	function handleAddResources() {
 		if (chartRef.current !== null && chartType) {
 			console.log('Add to Resources');
@@ -287,8 +301,8 @@ export default function Page() {
 					if (!response.ok) {
 						throw new Error('Upload failed');
 					} else {
-            toast.success('Chart added to your resource library.');
-          }
+						toast.success('Chart added to your resource library.');
+					}
 				} catch (error) {
 					console.error('Error uploading image:', error);
 				}
@@ -328,8 +342,8 @@ export default function Page() {
 
 			<Column customStyle={{ height: '100%', overflowY: 'auto' }}>
 				<div className='w-full flex flex-col gap-4 my-auto'>
-					<div className='w-full flex flex-row items-center justify-between gap-y-2 gap-x-4'>
-						<div className='flex flex-row gap-2 mx-auto'>
+					<div className='flex mx-auto'>
+						{chartData && (
 							<ToolBar>
 								{!isPaidTier ? (
 									<>
@@ -383,8 +397,22 @@ export default function Page() {
 										/>
 									}
 								/>
+								<ButtonWithExplanation
+									explanation='Start New Chart'
+									button={
+										<RiRestartLine
+											onClick={startNewChart}
+											style={{
+												strokeWidth: '0.5',
+												width: '1.5rem',
+												height: '1.5rem',
+												color: '#344054',
+											}}
+										/>
+									}
+								/>
 							</ToolBar>
-						</div>
+						)}
 					</div>
 
 					<div className='flex items-center'>
