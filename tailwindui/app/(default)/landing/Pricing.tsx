@@ -369,17 +369,17 @@ const PricingComparison: React.FC<{
 					<div className={`brix---pricing-content-wrapper-left${smallSuffix}`}>
 						<div className='brix---text-300-medium'>🦹‍♂️ Attach avatar</div>
 					</div>
-					<div className={`brix---pricing-content-wrapper-left${smallSuffix}`}>
+					{!small && <div className={`brix---pricing-content-wrapper-left${smallSuffix}`}>
 						<div className='brix---text-300-medium'>🎙️ Cloned Voiceover</div>
-					</div>
+					</div>}
 					<div className={`brix---pricing-content-wrapper-left${smallSuffix}`}>
 						<div className='brix---text-300-medium'>🪑 Free Team Seats</div>
 					</div>
-					<div className={`brix---pricing-content-wrapper-left${smallSuffix}`}>
+					{!small && <div className={`brix---pricing-content-wrapper-left${smallSuffix}`}>
 						<div className='brix---text-300-medium'>
 							🦹🏽‍♂️ Avatar cloning (coming)
 						</div>
-					</div>
+					</div>}
 					<div className={`brix---pricing-content-wrapper-left${smallSuffix}`}>
 						<div className='brix---text-300-medium'>📈 Smart chart</div>
 					</div>
@@ -484,12 +484,12 @@ const PricingComparison: React.FC<{
 					<div
 						className={`brix---pricing-content-wrapper-empty${smallSuffix}`}
 					/>
-					<div
+					{!small && <div
 						className={`brix---pricing-content-wrapper-empty${smallSuffix}`}
-					/>
-					<div
+					/>}
+					{!small && <div
 						className={`brix---pricing-content-wrapper-empty${smallSuffix}`}
-					/>
+					/>}
 				</div>
 
 				{/* PRO */}
@@ -591,26 +591,26 @@ const PricingComparison: React.FC<{
 							alt='Check - Elements Webflow Library - BRIX Templates'
 						/>
 					</div>
-					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
+					{!small && <div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className='brix---pricing-v8-title-table'>
 							<div className='brix---text-300-medium'>🎙️ Cloned Voiceover</div>
 						</div>
 						<div className='brix---text-300-medium'>1 Voice</div>
-					</div>
+					</div>}
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className='brix---pricing-v8-title-table'>
 							<div className='brix---text-300-medium'>🪑 Free Team Seats</div>
 						</div>
 						<div className='brix---text-300-medium'>1 Seat</div>
 					</div>
-					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
+					{!small && <div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className='brix---pricing-v8-title-table'>
 							<div className='brix---text-300-medium'>
 								🦹🏽‍♂️ Avatar cloning (coming)
 							</div>
 						</div>
 						<div className='brix---text-300-medium'>1 Avatar</div>
-					</div>
+					</div>}
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className='brix---pricing-v8-title-table'>
 							<div className='brix---text-300-medium'>📈 Smart chart</div>
@@ -720,7 +720,7 @@ const PricingComparison: React.FC<{
 						</div>
 						<img src='images/check-icon-white-brix-templates.svg' alt='' />
 					</div>
-					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
+					{!small && <div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className='brix---pricing-v8-title-table'>
 							<div className='brix---text-300-medium'>
 								🎙️ Cloned Voiceover (new)
@@ -729,21 +729,21 @@ const PricingComparison: React.FC<{
 						<div className='brix---text-300-medium'>
 							<b>Unlimited</b>
 						</div>
-					</div>
+					</div>}
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className='brix---pricing-v8-title-table'>
 							<div className='brix---text-300-medium'>🪑 Free Team Seats</div>
 						</div>
 						<div className='brix---text-300-medium'>5 Seats</div>
 					</div>
-					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
+					{!small && <div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className='brix---pricing-v8-title-table'>
 							<div className='brix---text-300-medium'>
 								🦹🏽‍♂️ Avatar cloning (coming)
 							</div>
 						</div>
 						<div className='brix---text-300-medium'>10 Avatars</div>
-					</div>
+					</div>}
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className='brix---pricing-v8-title-table'>
 							<div className='brix---text-300-medium'>📈 Smart chart</div>
