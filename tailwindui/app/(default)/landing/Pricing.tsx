@@ -142,7 +142,7 @@ const PricingComparison: React.FC<{
 		if (interval === 'lifetime') {
 			discountLabel = ' -80%';
 		} else if (interval === 'yearly' || interval === 'monthly') {
-			discountLabel = ' -60%';
+			discountLabel = ' -40%';
 		}
 
 		return (
@@ -171,7 +171,7 @@ const PricingComparison: React.FC<{
 			case 'onetime':
 				return '15 day access';
 			case 'monthly':
-				return 'then ' + getPrice(tier);
+				return 'then ' + currency +  getOriginalPrice(tier);
 			case 'yearly':
 				// strike through the original price
 				return (
