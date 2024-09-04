@@ -70,7 +70,7 @@ const PaywallModal: React.FC<PaywallModalProps> = ({
 					</Card>
 				)}
 				{/* <Title>🚀 Upgrade for more credits</Title> */}
-				<PricingComparison trigger={trigger}/>
+				<PricingComparison small={true} trigger={trigger}/>
 			</div>
 		</Modal>
 	);

@@ -5,11 +5,11 @@ import 'aos/dist/aos.css';
 import { Title } from '@/components/ui/Text';
 import Card from '@/components/ui/Card';
 import { Panel } from '@/components/layout/Panel';
-import useHydrated from '@/hooks/use-hydrated';
 import { PricingComparison } from '@/app/(default)/landing/Pricing';
 import Footer, { ThinFooter, WorkflowFooter } from '@/components/layout/footer';
 import { getBrand } from '@/utils/getHost';
 import { PaidToast } from './PaidToast';
+import '@/public/css/pricing.css';
 
 export const metadata = {
 	title: `Pricing | ${getBrand()}`,
@@ -44,7 +44,7 @@ export default function SubscriptionAndUserResearch() {
 		<div className='flex flex-col items-center mx-auto w-full'>
 			<PaidToast />
 			<Panel>
-				<Subscription />
+				<PricingComparison small={true} trigger='pricing' />
 			</Panel>
 			<ThinFooter />
 		</div>

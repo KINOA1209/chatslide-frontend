@@ -11,6 +11,9 @@ import { userInEU } from '@/utils/userLocation';
 import { useRouter } from 'next/navigation';
 import { FC, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import '@/public/css/pricing.css';
+import checkIcon from '@/public/images/check-icon-white-brix-templates.svg';
+import darkCheckIcon from '@/public/images/check-icon-brix-templates.svg';
 
 type Tier = 'FREE' | 'PLUS' | 'PRO' | 'ULTIMATE';
 type Interval = 'onetime' | 'monthly' | 'yearly' | 'lifetime';
@@ -327,13 +330,11 @@ const PricingComparison: React.FC<{
 				/>
 			)}
 
+			<link href='css/pricing.css' rel='stylesheet' type='text/css' />
 			<div
 				data-w-id='a8590735-7e8f-bd41-a09e-37f58b801ed3'
 				className={`w-layout-grid ${showFreeTier ? 'brix---grid-4-columns-pricing-tablet' : 'brix---grid-3-columns'}`}
 			>
-				{/* <link href="css/webflow.css" rel="stylesheet" type="text/css" /> */}
-				<link href='css/pricing.webflow.css' rel='stylesheet' type='text/css' />
-
 				<div className='brix---pricing-column-first'>
 					<div className='brix---pricing-table-top-first'>
 						<div className='brix---color-neutral-800'>
@@ -369,17 +370,25 @@ const PricingComparison: React.FC<{
 					<div className={`brix---pricing-content-wrapper-left${smallSuffix}`}>
 						<div className='brix---text-300-medium'>🦹‍♂️ Attach avatar</div>
 					</div>
-					{!small && <div className={`brix---pricing-content-wrapper-left${smallSuffix}`}>
-						<div className='brix---text-300-medium'>🎙️ Cloned Voiceover</div>
-					</div>}
+					{!small && (
+						<div
+							className={`brix---pricing-content-wrapper-left${smallSuffix}`}
+						>
+							<div className='brix---text-300-medium'>🎙️ Cloned Voiceover</div>
+						</div>
+					)}
 					<div className={`brix---pricing-content-wrapper-left${smallSuffix}`}>
 						<div className='brix---text-300-medium'>🪑 Free Team Seats</div>
 					</div>
-					{!small && <div className={`brix---pricing-content-wrapper-left${smallSuffix}`}>
-						<div className='brix---text-300-medium'>
-							🦹🏽‍♂️ Avatar cloning (coming)
+					{!small && (
+						<div
+							className={`brix---pricing-content-wrapper-left${smallSuffix}`}
+						>
+							<div className='brix---text-300-medium'>
+								🦹🏽‍♂️ Avatar cloning (coming)
+							</div>
 						</div>
-					</div>}
+					)}
 					<div className={`brix---pricing-content-wrapper-left${smallSuffix}`}>
 						<div className='brix---text-300-medium'>📈 Smart chart</div>
 					</div>
@@ -439,7 +448,7 @@ const PricingComparison: React.FC<{
 						<div className='brix---pricing-v8-title-table'>
 							<div className='brix---text-300-medium'>📑 Generate slides</div>
 						</div>
-						<img src='images/check-icon-white-brix-templates.svg' alt='' />
+						<img src={checkIcon.src} alt='' />
 					</div>
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className='brix---pricing-v8-title-table'>
@@ -453,7 +462,7 @@ const PricingComparison: React.FC<{
 								🏷️ Customized branding
 							</div>
 						</div>
-						<img src='images/check-icon-white-brix-templates.svg' alt='' />
+						<img src={checkIcon.src} alt='' />
 					</div>
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className='brix---pricing-v8-title-table'>
@@ -461,19 +470,19 @@ const PricingComparison: React.FC<{
 								🔈 Generate slide scripts
 							</div>
 						</div>
-						<img src='images/check-icon-white-brix-templates.svg' alt='' />
+						<img src={checkIcon.src} alt='' />
 					</div>
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className='brix---pricing-v8-title-table'>
 							<div className='brix---text-300-medium'>📱 Generate video</div>
 						</div>
-						<img src='images/check-icon-white-brix-templates.svg' alt='' />
+						<img src={checkIcon.src} alt='' />
 					</div>
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className='brix---pricing-v8-title-table'>
 							<div className='brix---text-300-medium'>🦹‍♂️ Attach avatar</div>
 						</div>
-						<img src='images/check-icon-white-brix-templates.svg' alt='' />
+						<img src={checkIcon.src} alt='' />
 					</div>
 					<div
 						className={`brix---pricing-content-wrapper-empty${smallSuffix}`}
@@ -484,12 +493,16 @@ const PricingComparison: React.FC<{
 					<div
 						className={`brix---pricing-content-wrapper-empty${smallSuffix}`}
 					/>
-					{!small && <div
-						className={`brix---pricing-content-wrapper-empty${smallSuffix}`}
-					/>}
-					{!small && <div
-						className={`brix---pricing-content-wrapper-empty${smallSuffix}`}
-					/>}
+					{!small && (
+						<div
+							className={`brix---pricing-content-wrapper-empty${smallSuffix}`}
+						/>
+					)}
+					{!small && (
+						<div
+							className={`brix---pricing-content-wrapper-empty${smallSuffix}`}
+						/>
+					)}
 				</div>
 
 				{/* PRO */}
@@ -543,7 +556,7 @@ const PricingComparison: React.FC<{
 						<div className='brix---pricing-v8-title-table'>
 							<div className='brix---text-300-medium'>📑 Generate slides</div>
 						</div>
-						<img src='images/check-icon-brix-templates.svg' alt='' />
+						<img src={darkCheckIcon.src} alt='' />
 					</div>
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className='brix---pricing-v8-title-table'>
@@ -557,10 +570,7 @@ const PricingComparison: React.FC<{
 								🏷️ Customized branding
 							</div>
 						</div>
-						<img
-							src='images/check-icon-brix-templates.svg'
-							alt='Check - Elements Webflow Library - BRIX Templates'
-						/>
+						<img src={darkCheckIcon.src} alt='Check' />
 					</div>
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className='brix---pricing-v8-title-table'>
@@ -568,57 +578,51 @@ const PricingComparison: React.FC<{
 								🔈 Generate slide scripts
 							</div>
 						</div>
-						<img
-							src='images/check-icon-brix-templates.svg'
-							alt='Check - Elements Webflow Library - BRIX Templates'
-						/>
+						<img src={darkCheckIcon.src} alt='Check' />
 					</div>
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className='brix---pricing-v8-title-table'>
 							<div className='brix---text-300-medium'>📱 Generate video</div>
 						</div>
-						<img
-							src='images/check-icon-brix-templates.svg'
-							alt='Check - Elements Webflow Library - BRIX Templates'
-						/>
+						<img src={darkCheckIcon.src} alt='Check' />
 					</div>
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className='brix---pricing-v8-title-table'>
 							<div className='brix---text-300-medium'>🦹‍♂️ Attach avatar</div>
 						</div>
-						<img
-							src='images/check-icon-brix-templates.svg'
-							alt='Check - Elements Webflow Library - BRIX Templates'
-						/>
+						<img src={darkCheckIcon.src} alt='Check' />
 					</div>
-					{!small && <div className={`brix---pricing-content-wrapper${smallSuffix}`}>
-						<div className='brix---pricing-v8-title-table'>
-							<div className='brix---text-300-medium'>🎙️ Cloned Voiceover</div>
+					{!small && (
+						<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
+							<div className='brix---pricing-v8-title-table'>
+								<div className='brix---text-300-medium'>
+									🎙️ Cloned Voiceover
+								</div>
+							</div>
+							<div className='brix---text-300-medium'>1 Voice</div>
 						</div>
-						<div className='brix---text-300-medium'>1 Voice</div>
-					</div>}
+					)}
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className='brix---pricing-v8-title-table'>
 							<div className='brix---text-300-medium'>🪑 Free Team Seats</div>
 						</div>
 						<div className='brix---text-300-medium'>1 Seat</div>
 					</div>
-					{!small && <div className={`brix---pricing-content-wrapper${smallSuffix}`}>
-						<div className='brix---pricing-v8-title-table'>
-							<div className='brix---text-300-medium'>
-								🦹🏽‍♂️ Avatar cloning (coming)
+					{!small && (
+						<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
+							<div className='brix---pricing-v8-title-table'>
+								<div className='brix---text-300-medium'>
+									🦹🏽‍♂️ Avatar cloning (coming)
+								</div>
 							</div>
+							<div className='brix---text-300-medium'>1 Avatar</div>
 						</div>
-						<div className='brix---text-300-medium'>1 Avatar</div>
-					</div>}
+					)}
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className='brix---pricing-v8-title-table'>
 							<div className='brix---text-300-medium'>📈 Smart chart</div>
 						</div>
-						<img
-							src='images/check-icon-brix-templates.svg'
-							alt='Check - Elements Webflow Library - BRIX Templates'
-						/>
+						<img src={darkCheckIcon.src} alt='Check' />
 					</div>
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className='brix---pricing-v8-title-table'>
@@ -626,10 +630,7 @@ const PricingComparison: React.FC<{
 								☎️ Direct customer support
 							</div>
 						</div>
-						<img
-							src='images/check-icon-brix-templates.svg'
-							alt='Check - Elements Webflow Library - BRIX Templates'
-						/>
+						<img src={darkCheckIcon.src} alt='Check' />
 					</div>
 				</div>
 
@@ -684,7 +685,7 @@ const PricingComparison: React.FC<{
 						<div className='brix---pricing-v8-title-table'>
 							<div className='brix---text-300-medium'>📑 Generate slides</div>
 						</div>
-						<img src='images/check-icon-white-brix-templates.svg' alt='' />
+						<img src={checkIcon.src} alt='' />
 					</div>
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className='brix---pricing-v8-title-table'>
@@ -698,7 +699,7 @@ const PricingComparison: React.FC<{
 								🏷️ Customized branding
 							</div>
 						</div>
-						<img src='images/check-icon-white-brix-templates.svg' alt='' />
+						<img src={checkIcon.src} alt='' />
 					</div>
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className='brix---pricing-v8-title-table'>
@@ -706,49 +707,53 @@ const PricingComparison: React.FC<{
 								🔈 Generate slide scripts
 							</div>
 						</div>
-						<img src='images/check-icon-white-brix-templates.svg' alt='' />
+						<img src={checkIcon.src} alt='' />
 					</div>
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className='brix---pricing-v8-title-table'>
 							<div className='brix---text-300-medium'>📱 Generate video</div>
 						</div>
-						<img src='images/check-icon-white-brix-templates.svg' alt='' />
+						<img src={checkIcon.src} alt='' />
 					</div>
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className='brix---pricing-v8-title-table'>
 							<div className='brix---text-300-medium'>🦹‍♂️ Attach avatar</div>
 						</div>
-						<img src='images/check-icon-white-brix-templates.svg' alt='' />
+						<img src={checkIcon.src} alt='' />
 					</div>
-					{!small && <div className={`brix---pricing-content-wrapper${smallSuffix}`}>
-						<div className='brix---pricing-v8-title-table'>
+					{!small && (
+						<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
+							<div className='brix---pricing-v8-title-table'>
+								<div className='brix---text-300-medium'>
+									🎙️ Cloned Voiceover (new)
+								</div>
+							</div>
 							<div className='brix---text-300-medium'>
-								🎙️ Cloned Voiceover (new)
+								<b>Unlimited</b>
 							</div>
 						</div>
-						<div className='brix---text-300-medium'>
-							<b>Unlimited</b>
-						</div>
-					</div>}
+					)}
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className='brix---pricing-v8-title-table'>
 							<div className='brix---text-300-medium'>🪑 Free Team Seats</div>
 						</div>
 						<div className='brix---text-300-medium'>5 Seats</div>
 					</div>
-					{!small && <div className={`brix---pricing-content-wrapper${smallSuffix}`}>
-						<div className='brix---pricing-v8-title-table'>
-							<div className='brix---text-300-medium'>
-								🦹🏽‍♂️ Avatar cloning (coming)
+					{!small && (
+						<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
+							<div className='brix---pricing-v8-title-table'>
+								<div className='brix---text-300-medium'>
+									🦹🏽‍♂️ Avatar cloning (coming)
+								</div>
 							</div>
+							<div className='brix---text-300-medium'>10 Avatars</div>
 						</div>
-						<div className='brix---text-300-medium'>10 Avatars</div>
-					</div>}
+					)}
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className='brix---pricing-v8-title-table'>
 							<div className='brix---text-300-medium'>📈 Smart chart</div>
 						</div>
-						<img src='images/check-icon-white-brix-templates.svg' alt='' />
+						<img src={checkIcon.src} alt='' />
 					</div>
 					<div className={`brix---pricing-content-wrapper${smallSuffix}`}>
 						<div className='brix---pricing-v8-title-table'>
@@ -756,17 +761,17 @@ const PricingComparison: React.FC<{
 								☎️ Direct customer support
 							</div>
 						</div>
-						<img src='images/check-icon-white-brix-templates.svg' alt='' />
+						<img src={checkIcon.src} alt='' />
 					</div>
 				</div>
 			</div>
 
-			{userTier.includes('PRO') && (
+			{/* {userTier.includes('PRO') && (
 				<div className='text-gray-600 md:whitespace-nowrap mt-4'>
 					* Early users who purchased PRO plan before still have Unlimited
 					credits under our <a href='terms'>fair usage</a> policy.
 				</div>
-			)}
+			)} */}
 			{userTier.includes('PLUS') && (
 				<div className='text-gray-600 md:whitespace-nowrap mt-4'>
 					* If you purchased a lifetime deal, the monthly credits may be
