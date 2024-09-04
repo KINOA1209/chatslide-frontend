@@ -22,10 +22,10 @@ const CHAT_SUGGESTIONS = {
 		'💬 Make the script easier to understand',
 	],
 	chart: [
-		'💹 Japanese stock market from 2014 to 2020',
+		'🇺🇸 Harris VS Trump',
 		'📊 Population in European countries',
-		'📈 40% YoY growth of company XYZ',
-		'🥧 Three companies in the market, with 50%, 35%, 15% market shares',
+		'☕️ Coffee consumption per capita in the world',
+		'🍎 Largest market cap companies',
 	],
 };
 
