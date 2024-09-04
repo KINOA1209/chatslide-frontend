@@ -4,18 +4,11 @@ import React, { use, useEffect, useRef, useState } from 'react';
 import { ResourceItem } from '@/components/ui/ResourceItem';
 import Project from '@/models/Project';
 import Image from 'next/image';
-import ButtonWithExplanation from '@/components/button/ButtonWithExplanation';
-import { CloneButton } from '@/components/button/CloneButton';
 import Link from 'next/link';
-import ShareButton from '@/components/button/ShareButton';
-import ProjectService from '@/services/ProjectService';
-import { useUser } from '@/hooks/use-user';
 import DesignSystemBadges from '@/components/ui/design_systems/Badges';
 import { PiSlideshow } from 'react-icons/pi';
 import { MdOndemandVideo, MdOutlineInsertChartOutlined } from 'react-icons/md';
 import { MdOutlineShare } from 'react-icons/md';
-import { HiOutlineDotsVertical } from 'react-icons/hi';
-import { MdOutlineDelete } from 'react-icons/md';
 import '@/components/ui/design_systems/variables.css';
 import dynamic from 'next/dynamic';
 import defaultDrLambdaThumbnail from '@/public/images/ogimage_drlambda.png';
@@ -24,17 +17,8 @@ import causalTopicThumbnail from '@/public/images/socialpost/casual_topic_thumbn
 import readingNotesThumbnail from '@/public/images/socialpost/reading_notes_thumbnail_classic.png';
 import seriousSubjectThumbnail from '@/public/images/socialpost/serious_subject_thumbnail_classic.png';
 import { isChatslide } from '@/utils/getHost';
-import { useRouter } from 'next/navigation';
 import { FaEye } from 'react-icons/fa';
-import { MoveToFolderButton } from '@/components/dashboard/MoveToFolderButton';
 import Folder from '@/models/Folder';
-import { Menu } from '@/components/button/Menu';
-import { RenameProjectButton } from './renameProjectButton';
-// import ExportToPdfButton from '@/components/slides/ExportButton';
-import { MoveToTeamButton } from '@/components/dashboard/MoveToTeamButton';
-import { ChangeProjectDescriptionButton } from './changeProjectDescriptionButton';
-import TeamService from '@/services/TeamService';
-import { useTeam } from '@/hooks/use-team';
 import ProjectDropdownMenu from './ProjectDowndownMenu';
 
 const ExportToPdfButton = dynamic(
@@ -122,23 +106,6 @@ const ProjectItem: React.FC<{
 	setRefreshMenu,
 }) => {
 	const isCloning = index === -1;
-	const { token } = useUser();
-	const [isShared, setIsShared] = React.useState(false);
-	// Parent component
-	const [showCloneModal, setShowCloneModal] = useState(false);
-	const [showShareModal, setShowShareModal] = useState(false);
-	const [showExportToPdfModal, setShowExportToPdfModal] = useState(false);
-	const [showMoveToFolderModal, setShowMoveToFolderModal] = useState(false);
-	const [showMoveToTeamModal, setShowMoveToTeamModal] = useState(false);
-	const [showRenameProjectModal, setShowRenameProjectModal] = useState(false);
-	const { teamId } = useTeam();
-	//const isPriority = project.post_type !== 'presentation';
-	const router = useRouter();
-	// const exportSlidesRef = useRef<HTMLDivElement>(null);
-	const [
-		showChangeProjectDescriptionModal,
-		setShowChangeProjectDescriptionModal,
-	] = useState(false);
 	const [loaded, setLoaded] = useState(false);
 
 	const url = project.content_type !== 'chart' ? `/${isDiscover ? 'shared' : 'project'}/${project.id}` : `/charts/${project.id}`;
@@ -220,7 +187,7 @@ const ProjectItem: React.FC<{
 					}}
 				>
 					<div className='flex flex-col gap-[4px]'>
-						{project.content_type === 'presentation' ? (
+						{project.content_type === 'presentation' || project.content_type==='ppt2video' ? (
 							<DesignSystemBadges
 								size='sm'
 								text={'Slide'}
@@ -242,7 +209,7 @@ const ProjectItem: React.FC<{
 								textColor='var(--Component-colors-Utility-Purple-utility-purple-700, #5925DC)'
 								iconColor='var(--Component-colors-Utility-Purple-utility-purple-700, #5925DC)'
 							></DesignSystemBadges>
-							) :
+							) :  // charts 
 								<DesignSystemBadges
 									size='sm'
 									text={'Chart'}

@@ -109,7 +109,8 @@ const ProjectDropdownMenu: React.FC<ProjectDropdownMenuProps> = ({
 				setCurrentProjects &&
 				folders &&
 				setFolders &&
-				project.content_type === 'presentation' && (
+				(project.content_type === 'presentation' ||
+					project.content_type === 'ppt2video') && (
 					<button
 						className='block px-[10px] py-[9px] text-sm text-[#182230] rounded-md hover:bg-zinc-100 w-full text-left'
 						onClick={() => setShowChangeProjectDescriptionModal(true)}
@@ -161,29 +162,32 @@ const ProjectDropdownMenu: React.FC<ProjectDropdownMenuProps> = ({
 				</button>
 			)}
 
-			{!isDiscover && setCurrentProjects && !project.team_id && project.content_type !== "chart" && (
-				<button
-					className='block px-[10px] py-[9px] text-sm text-[#182230] rounded-md hover:bg-zinc-100 w-full text-left'
-					onClick={() => setShowMoveToTeamModal(true)}
-					style={{
-						display: 'flex',
-						flexDirection: 'row',
-						alignItems: 'center',
-						justifyContent: 'flex-start',
-						gap: 'var(--spacing-lg, 12px)',
-					}}
-				>
-					<MoveToTeamButton
-						project={project}
-						setCurrentProjects={setCurrentProjects}
-						teamId={""}
-						showMoveToTeamModal={showMoveToTeamModal}
-						setShowMoveToTeamModal={setShowMoveToTeamModal}
-						setRefreshMenu={setRefreshMenu}
-					/>
-					Move to team
-				</button>
-			)}
+			{!isDiscover &&
+				setCurrentProjects &&
+				!project.team_id &&
+				project.content_type !== 'chart' && (
+					<button
+						className='block px-[10px] py-[9px] text-sm text-[#182230] rounded-md hover:bg-zinc-100 w-full text-left'
+						onClick={() => setShowMoveToTeamModal(true)}
+						style={{
+							display: 'flex',
+							flexDirection: 'row',
+							alignItems: 'center',
+							justifyContent: 'flex-start',
+							gap: 'var(--spacing-lg, 12px)',
+						}}
+					>
+						<MoveToTeamButton
+							project={project}
+							setCurrentProjects={setCurrentProjects}
+							teamId={''}
+							showMoveToTeamModal={showMoveToTeamModal}
+							setShowMoveToTeamModal={setShowMoveToTeamModal}
+							setRefreshMenu={setRefreshMenu}
+						/>
+						Move to team
+					</button>
+				)}
 
 			{!isDiscover &&
 				folders &&
@@ -216,7 +220,7 @@ const ProjectDropdownMenu: React.FC<ProjectDropdownMenuProps> = ({
 					</button>
 				)}
 
-			{project.thumbnail_url && project.content_type !== "chart" && (
+			{project.thumbnail_url && project.content_type !== 'chart' && (
 				<button
 					className='block px-[10px] py-[9px] text-sm text-[#182230] rounded-md hover:bg-zinc-100 w-full text-left'
 					onClick={() => setShowShareModal(true)}
@@ -251,34 +255,37 @@ const ProjectDropdownMenu: React.FC<ProjectDropdownMenuProps> = ({
 				</button>
 			)}
 
-			{!isDiscover && setCurrentProjects && project.thumbnail_url && project.content_type !== "chart" && (
-				<button
-					className='block px-[10px] py-[9px] text-sm text-[#182230] rounded-md hover:bg-zinc-100 w-full text-left'
-					onClick={() => {
-						if (project.content_type === 'presentation')
-							setShowExportToPdfModal(true);
-						else router.push(`/project/${project.id}`);
-					}}
-					style={{
-						display: 'flex',
-						flexDirection: 'row',
-						alignItems: 'center',
-						justifyContent: 'flex-start',
-						gap: 'var(--spacing-lg, 12px)',
-						borderBottom:
-							'1px solid var(--Colors-Border-border-secondary, #EAECF0)',
-					}}
-				>
-					<ExportToPdfButton
-						exportSlidesRef={exportSlidesRef}
-						setShowExportToPdfModal={setShowExportToPdfModal}
-						showExportToPdfModal={showExportToPdfModal}
-						width='16px'
-						height='16px'
-					/>
-					Download
-				</button>
-			)}
+			{!isDiscover &&
+				setCurrentProjects &&
+				project.thumbnail_url &&
+				project.content_type !== 'chart' && (
+					<button
+						className='block px-[10px] py-[9px] text-sm text-[#182230] rounded-md hover:bg-zinc-100 w-full text-left'
+						onClick={() => {
+							if (project.content_type === 'presentation')
+								setShowExportToPdfModal(true);
+							else router.push(`/project/${project.id}`);
+						}}
+						style={{
+							display: 'flex',
+							flexDirection: 'row',
+							alignItems: 'center',
+							justifyContent: 'flex-start',
+							gap: 'var(--spacing-lg, 12px)',
+							borderBottom:
+								'1px solid var(--Colors-Border-border-secondary, #EAECF0)',
+						}}
+					>
+						<ExportToPdfButton
+							exportSlidesRef={exportSlidesRef}
+							setShowExportToPdfModal={setShowExportToPdfModal}
+							showExportToPdfModal={showExportToPdfModal}
+							width='16px'
+							height='16px'
+						/>
+						Download
+					</button>
+				)}
 
 			{!isDiscover && onDelete && (
 				<button

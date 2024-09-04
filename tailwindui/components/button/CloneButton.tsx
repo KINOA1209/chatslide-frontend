@@ -58,7 +58,7 @@ export const CloneButton: React.FC<{
 				description='You can create a new project with the same content.'
 				onConfirm={onClone}
 			>
-				{project.content_type === 'presentation' && (
+				{project.content_type === 'presentation' || project.content_type === 'ppt2video' && (
 					<>
 						<Instruction>
 							Your current project language is {project.language}.

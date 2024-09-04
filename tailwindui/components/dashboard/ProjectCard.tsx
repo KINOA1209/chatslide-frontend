@@ -128,7 +128,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
 
 						{/* flex row: badge and menu icon */}
 						<div className='flex flex-row gap-[4px]'>
-							{project.content_type === 'presentation' ? (
+							{project.content_type === 'presentation' || project.content_type === 'ppt2video' ? (
 								<DesignSystemBadges
 									size='sm'
 									text=''
