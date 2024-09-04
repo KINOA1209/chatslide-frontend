@@ -32,7 +32,7 @@ import {
 	MenuItem,
 } from '@mui/material';
 
-const SearchOnlineEngine = ['', 'google', 'bing', 'wikipedia', 'news'] as const;
+const SearchOnlineEngine = ['none', 'google', 'bing', 'wikipedia', 'news'] as const;
 type SearchOnlineType = (typeof SearchOnlineEngine)[number];
 
 export const AIAssistantIcon: React.FC<{
@@ -42,7 +42,7 @@ export const AIAssistantIcon: React.FC<{
 		<div
 			className='rounded-md p-2 bg-white border border-gray-200 border-2 flex items-center justify-center relative'
 			onClick={onClick}
-			// style={{ animation: 'pulse 0.5s infinite' }}
+		// style={{ animation: 'pulse 0.5s infinite' }}
 		>
 			{isChatslide() ? (
 				<Image
@@ -94,7 +94,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 	const { project } = useProject();
 	const chatWindowRef = useRef<HTMLDivElement>(null);
 	const [model, setModel] = useState(type === 'chart' ? 'GPT-4o' : 'GPT-3.5');
-	const [search_online, setSearchOnline] = useState<SearchOnlineType>('');
+	const [search_online, setSearchOnline] = useState<SearchOnlineType>('none');
 
 	const handleEnter = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
 		if (event.key === 'Enter') {
@@ -175,25 +175,25 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 			const response =
 				type === 'chart'
 					? await ChatBotService.chatChart(
-							inputToSend,
-							lastChatMessages,
-							token,
-							model === 'GPT-3.5' ? 'gpt-3.5-turbo' : 'gpt-4o',
-							updateDynamicChart ? 'json' : 'img',
-							search_online,
-							project?.id || '',
-						)
+						inputToSend,
+						lastChatMessages,
+						token,
+						model === 'GPT-3.5' ? 'gpt-3.5-turbo' : 'gpt-4o',
+						updateDynamicChart ? 'json' : 'img',
+						search_online === 'none' ? '' : search_online,
+						project?.id || '',
+					)
 					: await ChatBotService.chat(
-							inputToSend,
-							lastChatMessages,
-							token,
-							slides[currentSlideIndex],
-							project?.id || '',
-							slideIndex,
-							undefined, // selectedText
-							type,
-							model === 'GPT-3.5' ? 'gpt-3.5-turbo' : 'gpt-4o',
-						);
+						inputToSend,
+						lastChatMessages,
+						token,
+						slides[currentSlideIndex],
+						project?.id || '',
+						slideIndex,
+						undefined, // selectedText
+						type,
+						model === 'GPT-3.5' ? 'gpt-3.5-turbo' : 'gpt-4o',
+					);
 
 			setLoading(false);
 
@@ -297,7 +297,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 
 	const handleSelectEngine = (e: SelectChangeEvent<SearchOnlineType>) => {
 		if (
-			e.target.value === '' ||
+			e.target.value === 'none' ||
 			e.target.value === 'google' ||
 			e.target.value === 'bing' ||
 			e.target.value === 'wikipedia' ||
@@ -356,20 +356,18 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 			</div>
 
 			{type === 'chart' && (
-				<div className='w-full pt-4 pb-2 border-t-2 border-gray-300 flex justify-center'>
+				<div className='w-full pt-4 pb-2 border-t-2 border-gray-300 flex flex-col justify-center'>
+					<h2 className="text-lg font-bold mx-3">Search Engine</h2>
 					<FormControl sx={{ m: 1, minWidth: 200 }} size='small'>
-						<InputLabel id='search-engine-select-label'>Web Search</InputLabel>
 						<Select
-							labelId='search-engine-select-label'
 							id='search-engine-select'
 							value={search_online}
-							label='Web Search'
 							autoWidth
 							onChange={handleSelectEngine}
 						>
 							{SearchOnlineEngine.map((engine) => (
 								<MenuItem key={engine} value={engine}>
-									{engine === '' ? <em>None</em> : engine.charAt(0).toUpperCase() + engine.slice(1)}
+									{engine === 'none' ? <em>None</em> : engine.charAt(0).toUpperCase() + engine.slice(1)}
 								</MenuItem>
 							))}
 						</Select>
