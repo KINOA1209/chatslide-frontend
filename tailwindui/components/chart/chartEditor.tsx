@@ -338,7 +338,7 @@ export const ChartEditor = ({ chartData, setChartData }: ChartEditorProps) => {
 					</div>
 				</Popover>
 				<div className='w-full flex justify-start'>
-					<SmallTitle>Edit Data</SmallTitle>
+					<SmallTitle bottomMargin={false}>Edit Data</SmallTitle>
 				</div>
 				<div className='w-full flex flex-col lg:flex-row justify-between gap-4 items-center mt-4'>
 					<div className='grid grid-cols-4 gap-2 shrink'>

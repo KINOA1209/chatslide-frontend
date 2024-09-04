@@ -6,7 +6,7 @@ import Image from 'next/image';
 import Card from '@/components/ui/Card';
 import { ToolBar } from '@/components/ui/ToolBar';
 import ButtonWithExplanation from '@/components/button/ButtonWithExplanation';
-import { GoDownload } from 'react-icons/go';
+import { GoDownload, GoFile } from 'react-icons/go';
 import { Column } from '@/components/layout/Column';
 import { Instruction, SmallTitle } from '@/components/ui/Text';
 import useHydrated from '@/hooks/use-hydrated';
@@ -32,17 +32,19 @@ import {
 	WatermarkPlugin,
 	BackgroundColor,
 } from '@/components/chart/chartPluginUtils';
-
+import brandingIcon from 'public/icons/button/show_logo.svg';
 import { useUser } from '@/hooks/use-user';
 import PaywallModal from '@/components/paywallModal';
 import { useParams } from 'next/navigation';
 import { debounce } from 'lodash';
 import { useProject } from '@/hooks/use-project';
 import { Typography } from '@mui/material';
-import { MdExpandMore } from 'react-icons/md';
+import { MdExpandMore, MdOutlineContentCopy } from 'react-icons/md';
 import { getBrand } from '@/utils/getHost';
 import { FaCopy } from 'react-icons/fa';
 import Link from '@mui/material/Link';
+import { BsFiles } from 'react-icons/bs';
+import { toast, ToastContainer } from 'react-toastify';
 // Register Chart.js components
 ChartJS.register(
 	CategoryScale,
@@ -76,8 +78,8 @@ export default function Page() {
 	const chartRef = useRef<ChartJS>(null);
 	const { token, updateCreditsFE, isPaidUser } = useUser();
 	const { project, initProject, updateProject, clearProject } = useProject();
-	const params = useParams<{ project_id?: string[] }>()
-	const project_id = params.project_id?.[0]
+	const params = useParams<{ project_id?: string[] }>();
+	const project_id = params.project_id?.[0];
 
 	// Enable save after modifying chart data
 	// saveChartData is directly called only when
@@ -86,7 +88,7 @@ export default function Page() {
 	const saveNeededSetChartData = (data: any) => {
 		setChartData(data);
 		setEnableSave(true);
-	}
+	};
 
 	useEffect(() => {
 		if (!project_id) {
@@ -94,7 +96,13 @@ export default function Page() {
 		}
 
 		if (project_id) {
-			initProject({ id: project_id, name: '', created_datetime: "", content_type: "chart", language: "" });
+			initProject({
+				id: project_id,
+				name: '',
+				created_datetime: '',
+				content_type: 'chart',
+				language: '',
+			});
 			fetch('/api/chart/get_project', {
 				method: 'POST',
 				headers: {
@@ -105,28 +113,32 @@ export default function Page() {
 					project_id: project_id,
 				}),
 			})
-				.then(resp => {
+				.then((resp) => {
 					if (!resp.ok) {
 						throw new Error('Failed to fetch project ' + project_id);
 					}
-					return resp.json()
+					return resp.json();
 				})
-				.then(data => {
+				.then((data) => {
 					const receivedChartData = data.data.chart_json;
-					if (!("reference_urls" in receivedChartData)) {
-						receivedChartData.reference_urls = []
+					if (!('reference_urls' in receivedChartData)) {
+						receivedChartData.reference_urls = [];
 					}
 					setChartData(receivedChartData);
-				}).catch(err => {
+				})
+				.catch((err) => {
 					console.error('FAIL: ', err);
 					window.location.href = '/charts';
 				});
-
 		}
 	}, []);
 
-	function saveChart(projectId: string, chartData: any, chartRef: RefObject<ChartJS>) {
-		let img_data = "";
+	function saveChart(
+		projectId: string,
+		chartData: any,
+		chartRef: RefObject<ChartJS>,
+	) {
+		let img_data = '';
 		if (chartRef.current !== null) {
 			let canvas = chartRef.current.getContext();
 			chartRef.current.resize(720 / 2, 480 / 2);
@@ -139,7 +151,7 @@ export default function Page() {
 			chart_json: chartData,
 			img_data: img_data,
 			project_name: chartData.title,
-		})
+		});
 		fetch('/api/chart/save_project', {
 			method: 'POST',
 			headers: {
@@ -147,30 +159,35 @@ export default function Page() {
 				Authorization: 'Bearer ' + token,
 			},
 			body: data,
-		})
-			.then(resp => {
-				if (resp.ok) {
-					if (!window.location.href.includes(projectId)) {
-						history.pushState(null, '', window.location.href + '/' + projectId);
-					}
+		}).then((resp) => {
+			if (resp.ok) {
+				if (!window.location.href.includes(projectId)) {
+					history.pushState(null, '', window.location.href + '/' + projectId);
 				}
-			});
+			}
+		});
 	}
 
 	const debounceSaveChart = useCallback(debounce(saveChart, 1000), []);
 
 	function receiveChart(receivedData: any) {
-		console.log("received data", receivedData)
+		console.log('received data', receivedData);
 		const data = receivedData.chart_json;
 		if (receivedData.reference_urls) {
 			data.reference_urls = receivedData.reference_urls;
 		} else {
-			data.reference_urls = []
+			data.reference_urls = [];
 		}
 		if (project) {
 			updateProject('id', receivedData.project_id);
 		} else {
-			initProject({ id: receivedData.project_id, name: '', created_datetime: "", content_type: "chart", language: "" });
+			initProject({
+				id: receivedData.project_id,
+				name: '',
+				created_datetime: '',
+				content_type: 'chart',
+				language: '',
+			});
 		}
 		for (let i = 0; i < data.datasets.length; i++) {
 			data.datasets[i].borderWidth = 2;
@@ -178,7 +195,9 @@ export default function Page() {
 
 		if (['pie', 'doughnut'].includes(data.chartType)) {
 			if (typeof data.datasets[0].borderColor === 'string') {
-				data.datasets[0].borderColor = new Array(data.datasets[0].data.length).fill(data.datasets[0].borderColor);
+				data.datasets[0].borderColor = new Array(
+					data.datasets[0].data.length,
+				).fill(data.datasets[0].borderColor);
 			}
 		}
 		saveNeededSetChartData(data);
@@ -267,8 +286,9 @@ export default function Page() {
 
 					if (!response.ok) {
 						throw new Error('Upload failed');
-					}
-
+					} else {
+            toast.success('Chart added to your resource library.');
+          }
 				} catch (error) {
 					console.error('Error uploading image:', error);
 				}
@@ -300,71 +320,71 @@ export default function Page() {
 	const handleCopyReferences = () => {
 		const references = chartData.reference_urls.join('\n');
 		navigator.clipboard.writeText(references);
-	}
+	};
 
 	return (
 		<div className='flex flex-row flex-grow justify-around items-center relative h-screen'>
-			{/* <Panel>
-				<Card>
-					<GPTToggle setIsGpt35={setIsGpt35} />
-				</Card>
-			</Panel> */}
+			<ToastContainer />
 
 			<Column customStyle={{ height: '100%', overflowY: 'auto' }}>
 				<div className='w-full flex flex-col gap-4 my-auto'>
 					<div className='w-full flex flex-row items-center justify-between gap-y-2 gap-x-4'>
-						<div className='flex flex-row gap-2'>
-							{!isPaidTier ? (
-								<ToolBar>
-									<a
-										href='#'
-										onClick={(e) => {
-											setShowPaymentModal(true);
-										}}
-										className='hover:text-blue-500 text-blue-400 font-bold'
-									>
-										Remove Watermark
-									</a>
-									<PaywallModal
-										showModal={showPaymentModal}
-										setShowModal={setShowPaymentModal}
-										message='Upgrade to remove watermark and access more powerful LLMs 🚀'
-										trigger='button/gpt_toggle'
-									></PaywallModal>
-								</ToolBar>
-							) : (
-								<div></div>
-							)}
+						<div className='flex flex-row gap-2 mx-auto'>
 							<ToolBar>
-								<a
-									href='#'
-									onClick={handleAddResources}
-									className='hover:text-blue-500 text-blue-400 font-bold'
-								>
-									Add to Resouces
-								</a>
-							</ToolBar>
-						</div>
-						<ToolBar>
-							<ButtonWithExplanation
-								explanation='Download Chart'
-								position='left'
-								button={
-									<button onClick={downloadChart}>
-										<GoDownload
+								{!isPaidTier ? (
+									<>
+										<ButtonWithExplanation
+											button={
+												<Image
+													onClick={() => setShowPaymentModal(true)}
+													src={brandingIcon}
+													alt='Remove Watermark'
+													width={24}
+													height={24}
+												/>
+											}
+											explanation={'Remove Watermark'}
+										/>
+										<PaywallModal
+											showModal={showPaymentModal}
+											setShowModal={setShowPaymentModal}
+											message='Upgrade to remove watermark and access more powerful LLMs 🚀'
+											trigger='chart/remove_watermark'
+										></PaywallModal>
+									</>
+								) : (
+									<div></div>
+								)}
+								<ButtonWithExplanation
+									explanation='Add to Resources'
+									button={
+										<BsFiles
 											style={{
-												strokeWidth: '2',
-												flex: '1',
+												strokeWidth: '0.5',
+												width: '1.3rem',
+												height: '1.3rem',
+												color: '#344054',
+											}}
+											onClick={handleAddResources}
+										/>
+									}
+								/>
+								<ButtonWithExplanation
+									explanation='Download Chart'
+									button={
+										<GoDownload
+											onClick={downloadChart}
+											style={{
+												strokeWidth: '1',
 												width: '1.5rem',
 												height: '1.5rem',
-												fontWeight: 'bold',
 												color: '#344054',
 											}}
 										/>
-									</button>
-								}
-							/>
-						</ToolBar>
+									}
+								/>
+							</ToolBar>
+						</div>
 					</div>
 
 					<div className='flex items-center'>
@@ -400,12 +420,12 @@ export default function Page() {
 							<Card>
 								<div id='aaaa' className='w-full'>
 									<div
-										className='w-full flex justify-between cursor-pointer'
+										className='w-full flex items-center justify-between cursor-pointer'
 										onClick={(e) => {
 											setExpandReferences(!expandReferences);
 										}}
 									>
-										<SmallTitle>References</SmallTitle>
+										<SmallTitle bottomMargin={false}>References</SmallTitle>
 										<div className='flex flex-col justify-center'>
 											<MdExpandMore
 												className={expandReferences ? 'rotate-180' : 'rotate-0'}
@@ -444,7 +464,7 @@ export default function Page() {
 												position='left'
 												button={
 													<button onClick={handleCopyReferences}>
-														<FaCopy />
+														<MdOutlineContentCopy />
 													</button>
 												}
 											/>

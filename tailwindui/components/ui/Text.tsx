@@ -17,9 +17,16 @@ const Title: React.FC<{ center?: boolean; children: React.ReactNode }> = ({
 		);
 };
 
-const SmallTitle: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+const SmallTitle: React.FC<{
+	children: React.ReactNode;
+	bottomMargin?: boolean;
+}> = ({ children, bottomMargin=false }) => {
 	return (
-		<h2 className='block text-grey-700 text-md font-bold mb-2'>{children}</h2>
+		<h2
+			className={`block text-grey-700 text-md font-bold ${bottomMargin ? 'mb-2' : ''}`}
+		>
+			{children}
+		</h2>
 	);
 };
 
