@@ -74,28 +74,26 @@ export function formatDate(dateString: string): string {
 export function getThumbnailUrl(project: Project | null) {
 	if (!project)
 		return isChatslide() ? defaultChatSlideThumbnail : defaultDrLambdaThumbnail;
-	if (project.content_type === 'presentation') {
+	if (
+		project.content_type === 'presentation' ||
+		project.content_type === 'ppt2video'
+	) {
 		return (
 			project.thumbnail_url ||
 			(isChatslide() ? defaultChatSlideThumbnail : defaultDrLambdaThumbnail)
 		);
-	}
-	if (project.content_type === 'chart') {
+	} else if (project.content_type === 'chart') {
 		return (
 			project.thumbnail_url ||
 			(isChatslide() ? defaultChatSlideThumbnail : defaultDrLambdaThumbnail)
 		);
-	}
-	if (project.post_type === 'casual_topic') {
+	} else if (project.post_type === 'casual_topic') {
 		return causalTopicThumbnail;
-	}
-	if (project.post_type === 'reading_notes') {
+	} else if (project.post_type === 'reading_notes') {
 		return readingNotesThumbnail;
-	}
-	if (project.post_type === 'serious_subject') {
+	} else if (project.post_type === 'serious_subject') {
 		return seriousSubjectThumbnail;
-	}
-	return causalTopicThumbnail;
+	} else return causalTopicThumbnail;
 }
 
 const ProjectItem: React.FC<{

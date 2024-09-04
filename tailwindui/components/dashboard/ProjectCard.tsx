@@ -76,7 +76,6 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
 							height={40}
 						/>}
 						<Image
-							className='w-[72px] h-[40px]'
 							unoptimized={true}
 							src={getThumbnailUrl(project)}
 							alt={project.name + ' project thumbnail'}
