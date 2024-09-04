@@ -393,6 +393,7 @@ export default function DesignPage() {
 
 				initSlides(newSlides, true);
 				debouncedSyncSlides(newSlides);
+        SlidesService.updateThumbnail(project.id, token);
 
 				router.push(addIdToRedir('/slides'));
 			} else {
