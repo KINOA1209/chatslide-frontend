@@ -29,7 +29,7 @@ export default function Studio() {
 					/> */}
 
 					<BigBlueButton>
-						<a href='https://chatslide.canny.io/roadmap' target='_blank'>
+						<a href='https://chatslide.canny.io/backlog' target='_blank'>
 							Ask for more features!
 						</a>
 					</BigBlueButton>
@@ -221,10 +221,10 @@ export default function Studio() {
 								feature requests and see what’s in development! Visit our
 								roadmap to submit your ideas at{' '}
 								<a
-									href='https://chatslide.canny.io/roadmap'
+									href='https://chatslide.canny.io/backlog'
 									className='text-blue-600'
 								>
-									https://chatslide.canny.io/roadmap
+									https://chatslide.canny.io/backlog
 								</a>{' '}
 								and view all features currently in development at{' '}
 								<a href='https://chatslide.canny.io/' className='text-blue-600'>
