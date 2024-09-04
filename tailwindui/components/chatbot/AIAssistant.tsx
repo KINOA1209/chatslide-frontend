@@ -329,7 +329,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 				</div>
 
 				<div className='flex flex-row gap-2'>
-					{type !== 'slide' && <GrayLabel>Beta</GrayLabel>}
+					{/* {type !== 'slide' && <GrayLabel>Beta</GrayLabel>} */}
 
 					{/* Clear Chat button */}
 					<button onClick={() => clearChatHistory()}>
@@ -409,15 +409,6 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 										Welcome to {getBrand()}! I'm your AI assistant, ready to
 										help with creating charts 📈.
 									</span>
-									<WarningMessage>
-										I am only in beta version now. There might be a higher
-										likelihood of errors or inaccuracies.
-									</WarningMessage>
-									<SuccessMessage>
-										In the future, you will also be able to: directly add chart
-										to your slide, use your files as sources, drag and drop to
-										edit your charts, etc.
-									</SuccessMessage>
 								</>
 							)}
 						</div>
