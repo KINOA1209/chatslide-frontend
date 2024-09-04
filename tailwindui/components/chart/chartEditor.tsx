@@ -5,6 +5,7 @@ import { AddSectionIcon, DeleteIcon } from '@/app/(feature)/icons';
 import TextField from "@mui/material/TextField";
 import Popover from "@mui/material/Popover";
 import MiniColorPicker from '../utils/miniColorPicker';
+import { SmallTitle } from '../ui/Text';
 
 interface ChartEditorProps {
     chartData: any;
@@ -306,59 +307,104 @@ export const ChartEditor = ({ chartData, setChartData }: ChartEditorProps) => {
     }
 
     return (
-        <div className="w-full">
-            <Popover
-                id="columnTitleInput"
-                open={anchorEl !== null}
-                anchorEl={anchorEl}
-                onClose={finishUpdateColumn}
-                anchorOrigin={{
-                    vertical: "bottom",
-                    horizontal: "left"
-                }}
-            >
-                <div className='flex flex-col gap-2 m-2'>
-                    <Typography sx={{ p: 2 }}>Enter new column name</Typography>
-                    <TextField value={columnToEdit?.headerName || ""} onChange={(e) => setColumnToEdit({ field: columnToEdit?.field || "", headerName: e.target.value })} onKeyDown={
-                        e => {
-                            if (e.key === 'Enter' || e.key === 'Tab') {
-                                e.preventDefault();
-                                finishUpdateColumn();
-                            }
-                        }
-                    } />
-                </div>
-            </Popover>
-            <div className='w-full flex justify-start'>
-                <h2 className="text-lg font-bold">Edit Data</h2>
-            </div>
-            <div className='w-full flex flex-col lg:flex-row justify-between gap-4 items-center mt-4'>
-                <div className='grid grid-cols-4 gap-2 shrink'>
-                    <TextField className='col-span-2' id="title" label="Title" size="small" value={chartData.title} onChange={handleChangeTitle} />
-                    <TextField id="x-axis" label="X-axis" size="small" value={chartData.options.xTitle} onChange={handleChangeXAxis} />
-                    <TextField id="y-axis" label="Y-axis" size="small" value={chartData.options.yTitle} onChange={handleChangeYAxis} />
-                </div>
-                <div className='flex gap-2 w-[287px] shrink-0 justify-end'>
-                    <Button variant="outlined" startIcon={<AddSectionIcon />} onClick={handleAddRow} className='w-fit h-fit whitespace-nowrap'>
-                        Add Row
-                    </Button>
-                    {chartData.chartType !== 'pie' && chartData.chartType !== 'doughnut' &&
-                        <Button variant="outlined" startIcon={<AddSectionIcon />} onClick={handleAddColumn}  className='w-fit h-fit whitespace-nowrap'>
-                            Add Column
-                        </Button>}
-                </div>
-            </div>
-            <div className="mt-4 w-full">
-                <DataGrid autoHeight disableColumnSorting
-                    rows={editorData.rows}
-                    columns={editorData.columns}
-                    processRowUpdate={(updatedRow, originalRow) => updateChartData(updatedRow)}
-                    onProcessRowUpdateError={(error) => { console.error(error) }}
-                    slots={{ columnMenu: CustomColumnMenu }}
-                    apiRef={apiRef} />
-            </div>
-        </div>
-    );
+			<div className='w-full'>
+				<Popover
+					id='columnTitleInput'
+					open={anchorEl !== null}
+					anchorEl={anchorEl}
+					onClose={finishUpdateColumn}
+					anchorOrigin={{
+						vertical: 'bottom',
+						horizontal: 'left',
+					}}
+				>
+					<div className='flex flex-col gap-2 m-2'>
+						<Typography sx={{ p: 2 }}>Enter new column name</Typography>
+						<TextField
+							value={columnToEdit?.headerName || ''}
+							onChange={(e) =>
+								setColumnToEdit({
+									field: columnToEdit?.field || '',
+									headerName: e.target.value,
+								})
+							}
+							onKeyDown={(e) => {
+								if (e.key === 'Enter' || e.key === 'Tab') {
+									e.preventDefault();
+									finishUpdateColumn();
+								}
+							}}
+						/>
+					</div>
+				</Popover>
+				<div className='w-full flex justify-start'>
+					<SmallTitle>Edit Data</SmallTitle>
+				</div>
+				<div className='w-full flex flex-col lg:flex-row justify-between gap-4 items-center mt-4'>
+					<div className='grid grid-cols-4 gap-2 shrink'>
+						<TextField
+							className='col-span-2'
+							id='title'
+							label='Title'
+							size='small'
+							value={chartData.title}
+							onChange={handleChangeTitle}
+						/>
+						<TextField
+							id='x-axis'
+							label='X-axis'
+							size='small'
+							value={chartData.options.xTitle}
+							onChange={handleChangeXAxis}
+						/>
+						<TextField
+							id='y-axis'
+							label='Y-axis'
+							size='small'
+							value={chartData.options.yTitle}
+							onChange={handleChangeYAxis}
+						/>
+					</div>
+					<div className='flex gap-2 w-[287px] shrink-0 justify-end'>
+						<Button
+							variant='outlined'
+							startIcon={<AddSectionIcon />}
+							onClick={handleAddRow}
+							className='w-fit h-fit whitespace-nowrap'
+						>
+							Add Row
+						</Button>
+						{chartData.chartType !== 'pie' &&
+							chartData.chartType !== 'doughnut' && (
+								<Button
+									variant='outlined'
+									startIcon={<AddSectionIcon />}
+									onClick={handleAddColumn}
+									className='w-fit h-fit whitespace-nowrap'
+								>
+									Add Column
+								</Button>
+							)}
+					</div>
+				</div>
+				<div className='mt-4 w-full'>
+					<DataGrid
+						autoHeight
+						disableColumnSorting
+						rows={editorData.rows}
+						columns={editorData.columns}
+						processRowUpdate={(updatedRow, originalRow) =>
+							updateChartData(updatedRow)
+						}
+						onProcessRowUpdateError={(error) => {
+							console.error(error);
+						}}
+						slots={{ columnMenu: CustomColumnMenu }}
+						apiRef={apiRef}
+					/>
+				</div>
+			</div>
+		);
 
 
 

@@ -21,7 +21,7 @@ import { getBrand, getLogoUrl, isChatslide } from '@/utils/getHost';
 import Chats from './Chats';
 import ChatBotService from '@/services/ChatBotService';
 import { GrayLabel } from '../ui/GrayLabel';
-import { Explanation, SuccessMessage, WarningMessage } from '../ui/Text';
+import { BigTitle, Explanation, SmallTitle, SuccessMessage, WarningMessage } from '../ui/Text';
 import GPTToggle from '../button/WorkflowGPTToggle';
 import { WritableDraft } from '@/types/immer';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
@@ -94,7 +94,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 	const { project } = useProject();
 	const chatWindowRef = useRef<HTMLDivElement>(null);
 	const [model, setModel] = useState(type === 'chart' ? 'GPT-4o' : 'GPT-3.5');
-	const [search_online, setSearchOnline] = useState<SearchOnlineType>('none');
+	const [search_online, setSearchOnline] = useState<SearchOnlineType>('google');
 
 	const handleEnter = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
 		if (event.key === 'Enter') {
@@ -356,9 +356,9 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 			</div>
 
 			{type === 'chart' && (
-				<div className='w-full pt-4 pb-2 border-t-2 border-gray-300 flex flex-col justify-center'>
-					<h2 className="text-lg font-bold mx-3">Search Engine</h2>
-					<FormControl sx={{ m: 1, minWidth: 200 }} size='small'>
+				<div className='w-full p-2 border-t-2 border-gray-300 flex flex-col justify-center'>
+					<SmallTitle>Search Engine</SmallTitle>
+					<FormControl sx={{ minWidth: 200 }} size='small'>
 						<Select
 							id='search-engine-select'
 							value={search_online}
@@ -367,7 +367,11 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 						>
 							{SearchOnlineEngine.map((engine) => (
 								<MenuItem key={engine} value={engine}>
-									{engine === 'none' ? <em>None</em> : engine.charAt(0).toUpperCase() + engine.slice(1)}
+									{engine === 'none' ? (
+										<em>None</em>
+									) : (
+										engine.charAt(0).toUpperCase() + engine.slice(1)
+									)}
 								</MenuItem>
 							))}
 						</Select>

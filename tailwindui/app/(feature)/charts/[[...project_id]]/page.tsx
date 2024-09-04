@@ -8,7 +8,7 @@ import { ToolBar } from '@/components/ui/ToolBar';
 import ButtonWithExplanation from '@/components/button/ButtonWithExplanation';
 import { GoDownload } from 'react-icons/go';
 import { Column } from '@/components/layout/Column';
-import { Instruction } from '@/components/ui/Text';
+import { Instruction, SmallTitle } from '@/components/ui/Text';
 import useHydrated from '@/hooks/use-hydrated';
 import { ChartEditor } from '@/components/chart/chartEditor';
 import {
@@ -314,17 +314,35 @@ export default function Page() {
 				<div className='w-full flex flex-col gap-4 my-auto'>
 					<div className='w-full flex flex-row items-center justify-between gap-y-2 gap-x-4'>
 						<div className='flex flex-row gap-2'>
-							{!isPaidTier ? <ToolBar>
-								<a href='#' onClick={e => { setShowPaymentModal(true) }} className='hover:text-blue-500 text-blue-400 font-bold'>Remove Watermark</a>
-								<PaywallModal
-									showModal={showPaymentModal}
-									setShowModal={setShowPaymentModal}
-									message='Upgrade to remove watermark and access more powerful LLMs 🚀'
-									trigger='button/gpt_toggle'
-								></PaywallModal>
-							</ToolBar> : <div></div>}
+							{!isPaidTier ? (
+								<ToolBar>
+									<a
+										href='#'
+										onClick={(e) => {
+											setShowPaymentModal(true);
+										}}
+										className='hover:text-blue-500 text-blue-400 font-bold'
+									>
+										Remove Watermark
+									</a>
+									<PaywallModal
+										showModal={showPaymentModal}
+										setShowModal={setShowPaymentModal}
+										message='Upgrade to remove watermark and access more powerful LLMs 🚀'
+										trigger='button/gpt_toggle'
+									></PaywallModal>
+								</ToolBar>
+							) : (
+								<div></div>
+							)}
 							<ToolBar>
-								<a href='#' onClick={handleAddResources} className='hover:text-blue-500 text-blue-400 font-bold'>Add to Resouces</a>
+								<a
+									href='#'
+									onClick={handleAddResources}
+									className='hover:text-blue-500 text-blue-400 font-bold'
+								>
+									Add to Resouces
+								</a>
 							</ToolBar>
 						</div>
 						<ToolBar>
@@ -377,27 +395,49 @@ export default function Page() {
 						</Card>
 					</div>
 
-					{(chartData && chartData.reference_urls.length > 0) ? (
+					{chartData && chartData.reference_urls.length > 0 ? (
 						<div>
 							<Card>
 								<div id='aaaa' className='w-full'>
-									<div className='w-full flex justify-between cursor-pointer' onClick={e => { setExpandReferences(!expandReferences) }}>
-										<h2 className="text-lg font-bold">References</h2>
+									<div
+										className='w-full flex justify-between cursor-pointer'
+										onClick={(e) => {
+											setExpandReferences(!expandReferences);
+										}}
+									>
+										<SmallTitle>References</SmallTitle>
 										<div className='flex flex-col justify-center'>
-											<MdExpandMore className={expandReferences ? 'rotate-180' : 'rotate-0'} />
+											<MdExpandMore
+												className={expandReferences ? 'rotate-180' : 'rotate-0'}
+											/>
 										</div>
 									</div>
 
-									<div className={`flex flex-col gap-4 px-4 transition-all ease-in-out duration-300 ${expandReferences ? 'max-h-screen overflow-x-clip' : 'max-h-0 overflow-y-hidden'}`}>
+									<div
+										className={`flex flex-col gap-4 px-4 transition-all ease-in-out duration-300 ${expandReferences ? 'max-h-screen overflow-x-clip' : 'max-h-0 overflow-y-hidden'}`}
+									>
 										<ul className='mt-4'>
-											{chartData.reference_urls.map((url: string, index: number) => {
-												return <li>• <Link href={url} target='_blank'>{url}</Link></li>
-											})
-											}
+											{chartData.reference_urls.map(
+												(url: string, index: number) => {
+													return (
+														<li>
+															•{' '}
+															<Link href={url} target='_blank'>
+																{url}
+															</Link>
+														</li>
+													);
+												},
+											)}
 										</ul>
 										<div className='flex justify-between gap-4'>
-											<Typography variant="caption" gutterBottom sx={{ display: 'block' }}>
-												Results are gathered from the internet. {getBrand()} is not responsible for the accuracy of the data.
+											<Typography
+												variant='caption'
+												gutterBottom
+												sx={{ display: 'block' }}
+											>
+												Results are gathered from the internet. {getBrand()} is
+												not responsible for the accuracy of the data.
 											</Typography>
 											<ButtonWithExplanation
 												explanation='Copy to Clipboard'
@@ -412,7 +452,8 @@ export default function Page() {
 									</div>
 								</div>
 							</Card>
-						</div>) : (
+						</div>
+					) : (
 						<></>
 					)}
 
