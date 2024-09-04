@@ -82,8 +82,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
 							layout='responsive'
 							width={72}
 							height={40}
-              border-radius='5px'
-							style={loaded ? {} : { display: 'none' }}
+							style={loaded ? { borderRadius: '5px'} : { display: 'none' }}
 							onLoad={() => setLoaded(true)}
 							loading='eager'
 						/>
