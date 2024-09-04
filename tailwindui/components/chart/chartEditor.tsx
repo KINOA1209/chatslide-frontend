@@ -339,11 +339,11 @@ export const ChartEditor = ({ chartData, setChartData }: ChartEditorProps) => {
                     <TextField id="y-axis" label="Y-axis" size="small" value={chartData.options.yTitle} onChange={handleChangeYAxis} />
                 </div>
                 <div className='flex gap-2 w-[287px] shrink-0 justify-end'>
-                    <Button variant="outlined" startIcon={<AddSectionIcon />} onClick={handleAddRow} className='w-fit h-fit'>
+                    <Button variant="outlined" startIcon={<AddSectionIcon />} onClick={handleAddRow} className='w-fit h-fit whitespace-nowrap'>
                         Add Row
                     </Button>
                     {chartData.chartType !== 'pie' && chartData.chartType !== 'doughnut' &&
-                        <Button variant="outlined" startIcon={<AddSectionIcon />} onClick={handleAddColumn}  className='w-fit h-fit'>
+                        <Button variant="outlined" startIcon={<AddSectionIcon />} onClick={handleAddColumn}  className='w-fit h-fit whitespace-nowrap'>
                             Add Column
                         </Button>}
                 </div>
