@@ -94,9 +94,8 @@ export const MoveToFolderButton: React.FC<{
                 <Modal
                     showModal={showMoveToFolderModal}
                     setShowModal={setShowMoveToFolderModal}
-                    title='Move project'
+                    title='Move Project'
                     onConfirm={confirmMoveToFolder}
-                    width='400px'
                 >
                     <MoveToFolderSelector
                         folders={folders}
