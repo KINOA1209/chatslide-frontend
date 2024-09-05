@@ -33,7 +33,7 @@ export default class VideoService {
 				voice: voice,
 				style: style,
 				has_avatar: avatar !== undefined,
-				avatar: avatar,
+				avatar_character: avatar,
 				avatar_style: avatarStyle,
 				avatar_size: avatarSize,
 				avatar_position: avatarPosition,
