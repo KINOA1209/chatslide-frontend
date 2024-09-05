@@ -84,7 +84,7 @@ const ProjectItem: React.FC<{
 			>
 				{/* view count */}
 				{isDiscover && (
-					<div className='flex flex-col items-center justify-center w-full text-xs text-[#475467] mx-1 gap-y-1'>
+					<div className='flex flex-col items-center justify-center w-12 text-xs text-[#475467] mx-1 gap-y-1'>
 						<FaEye />
 						{project.view_count || 0}
 					</div>
