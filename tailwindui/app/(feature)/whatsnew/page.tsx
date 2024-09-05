@@ -10,6 +10,8 @@ import { LuAlignLeft } from 'react-icons/lu';
 import { MdManageHistory } from 'react-icons/md';
 import { BigBlueButton } from '@/components/button/DrlambdaButton';
 
+export const whatsnewVersion = '9.02';
+
 export default function Studio() {
 	// avoid hydration error during development caused by persistence
 	// if (!useHydrated()) return <></>;

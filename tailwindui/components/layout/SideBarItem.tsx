@@ -1,9 +1,10 @@
 'use client';
 // SidebarItem.tsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa'; // Import chevron icons
 import { useRouter } from 'next/navigation';
 import { SubMenu } from './SideBarData';
+import { whatsnewVersion } from '@/app/(feature)/whatsnew/page';
 
 interface SidebarItemProps {
 	title: string;
@@ -45,6 +46,10 @@ const SideBarItem: React.FC<SidebarItemProps> = ({
 			onClick();
 		}
 		setIsSubMenuOpen(false); // Close the submenu when clicking on the item
+    if (path === '/whatsnew') {
+      localStorage.setItem('whatsnewVersion', whatsnewVersion);
+      setShowRedDot(false);
+    }
 	};
 
 	const handleSubMenuClick = (subMenu: SubMenu) => {
@@ -60,6 +65,18 @@ const SideBarItem: React.FC<SidebarItemProps> = ({
 		}
 	};
 
+  const [showRedDot, setShowRedDot] = useState(false);
+
+  useEffect(() => {
+    const localVersion = localStorage.getItem('whatsnewVersion');
+    if (localVersion != whatsnewVersion) {
+			setShowRedDot(true);
+		} else {
+			setShowRedDot(false);
+		}
+  }, []);
+
+
 	return (
 		<div id={id}>
 			<div onClick={handleSubMenuToggle} role='menuitem'>
@@ -67,7 +84,7 @@ const SideBarItem: React.FC<SidebarItemProps> = ({
 					href={path}
 					target={target}
 					className={
-						'w-full block flex flex-row items-center py-2 rounded-lg hover:bg-[#F2F4F7]  cursor-pointer ' +
+						'w-full block flex flex-row items-center py-2 rounded-lg hover:bg-[#F2F4F7] cursor-pointer ' +
 						(isSidebarOpen
 							? 'py-[0.5rem] px-[0.75rem] gap-2'
 							: 'justify-center')
@@ -76,9 +93,28 @@ const SideBarItem: React.FC<SidebarItemProps> = ({
 					style={{
 						color: 'var(--colors-text-text-secondary-700, #344054)',
 					}}
+          onClick={handleItemClick}
 				>
 					{icon}
-					{isSidebarOpen ? title : '\u200B'}
+					{isSidebarOpen ? (
+						<>
+							{title}
+							{path === '/whatsnew' && showRedDot && (
+								<span
+									style={{
+										display: 'inline-block',
+										width: '6px',
+										height: '6px',
+										backgroundColor: 'red',
+										borderRadius: '50%',
+										marginLeft: '5px',
+									}}
+								></span>
+							)}
+						</>
+					) : (
+						'\u200B'
+					)}
 					{subMenus &&
 						isSidebarOpen &&
 						(isSubMenuOpen ? <FaChevronUp /> : <FaChevronDown />)}
