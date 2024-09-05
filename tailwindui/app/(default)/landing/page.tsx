@@ -490,7 +490,7 @@ function Landing() {
 									</h3>
 								) : (
 									<h3 className='heading'>
-										👤 Clone your
+										👤 Personalize a digital
 										<span className='text-span'> avatar </span> to speak for you
 										<br />
 									</h3>
