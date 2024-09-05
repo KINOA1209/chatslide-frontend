@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa'; // Import chevron icons
 import { useRouter } from 'next/navigation';
 import { SubMenu } from './SideBarData';
-import { whatsnewVersion } from '@/app/(feature)/whatsnew/page';
+import { whatsnewVersion } from '@/app/(feature)/whatsnew/version';
 
 interface SidebarItemProps {
 	title: string;
