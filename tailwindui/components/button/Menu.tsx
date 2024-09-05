@@ -119,6 +119,7 @@ export const Menu: React.FC<{
 						}}
 						onMouseEnter={mode === 'hover' ? showDropdown : undefined}
 						onMouseLeave={mode === 'hover' ? hideDropdown : undefined}
+            onClick={() => setIsDropdownVisible(false)}
 					>
 						{children}
 					</div>
