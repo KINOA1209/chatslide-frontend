@@ -59,7 +59,7 @@ function Landing() {
 			<meta content='Webflow' name='generator' />
 			<link href='css/normalize.css' rel='stylesheet' type='text/css' />
 			<link href='css/webflow.css' rel='stylesheet' type='text/css' />
-			<link href='css/drlambda.webflow.css' rel='stylesheet' type='text/css' />
+			<link href='css/drlambda.css' rel='stylesheet' type='text/css' />
 			<link href='https://fonts.googleapis.com' rel='preconnect' />
 			<link
 				href='https://fonts.gstatic.com'
