@@ -308,7 +308,7 @@ const PricingComparison: React.FC<{
 	if (!useHydrated()) return <></>;
 
 	return (
-		<div className='flex flex-col items-center overflow-y-auto overflow-x-auto notranslate'>
+		<div className='flex flex-col items-center overflow-y-auto overflow-x-auto notranslate gap-y-2'>
 			<MultiwayToggle
 				options={options}
 				selectedKey={interval}
