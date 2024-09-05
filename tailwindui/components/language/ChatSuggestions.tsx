@@ -22,7 +22,7 @@ const CHAT_SUGGESTIONS = {
 		'💬 Make the script easier to understand',
 	],
 	chart: [
-		'🇺🇸 Harris VS Trump',
+		'🇺🇸 Harris VS Trump poll results',
 		'📊 Population in European countries',
 		'☕️ Coffee consumption per capita in the world',
 		'🍎 Largest market cap companies',

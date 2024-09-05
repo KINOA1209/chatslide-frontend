@@ -38,6 +38,49 @@ export default function Studio() {
 				</Card>
 
 				<Card>
+					<BigTitle>September 4</BigTitle>
+					<Instruction>
+						<span>
+							<p>
+								<b>📊 Largely Improved Chart Generation:</b>
+								<ul>
+									<li>
+										You can now save the generated charts to your library.
+									</li>
+									<li>
+										Start new chart projects easily with the updated interface.
+									</li>
+									<li>
+										View the sources used for chart generation when using online
+										search.
+									</li>
+								</ul>
+								<a href='/charts' className='text-blue-600'>
+									Try it.
+								</a>
+							</p>
+						</span>
+					</Instruction>
+					<Instruction>
+						<span>
+							<p>
+								<b>🖼️ Thumbnails Updated:</b> The thumbnails for both slides and
+								charts will be up to date for a better experience.
+							</p>
+						</span>
+					</Instruction>
+					<Instruction>
+						<span>
+							<p>
+								<b>🎤 Improved Voice Cloning Reliability:</b> We have enhanced
+								the reliability of cloned voice generation, providing more
+								accurate and stable results.
+							</p>
+						</span>
+					</Instruction>
+				</Card>
+
+				<Card>
 					<BigTitle>September 2</BigTitle>
 					<Instruction>
 						<span>
