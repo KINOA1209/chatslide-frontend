@@ -1,10 +1,21 @@
 // sidebarData.tsx
+import { fontWeight } from '@mui/system';
 import React from 'react';
 import { BsFiles } from 'react-icons/bs';
 import { FaDiscord } from 'react-icons/fa';
 import { GoHome, GoFile, GoDiscussionOutdated, GoGear } from 'react-icons/go';
-import { IoExitOutline, IoMicOutline, IoPeople, IoPeopleOutline } from 'react-icons/io5';
-import { LuCompass, LuFiles, LuNewspaper, LuPersonStanding } from 'react-icons/lu';
+import {
+	IoExitOutline,
+	IoMicOutline,
+	IoPeople,
+	IoPeopleOutline,
+} from 'react-icons/io5';
+import {
+	LuCompass,
+	LuFiles,
+	LuNewspaper,
+	LuPersonStanding,
+} from 'react-icons/lu';
 import { PiShield } from 'react-icons/pi';
 import { RiDiscordLine } from 'react-icons/ri';
 
@@ -19,8 +30,8 @@ export interface SideBarItem {
 	path?: string; // Main path for the item
 	subMenus?: SubMenu[]; // Submenus for the item
 	target?: string; // Target attribute for external links
-  drlambdaOnly?: boolean; // Only show this item for Dr. Lambda users
-  chatslideOnly?: boolean; // Only show this item for Chatslide users
+	drlambdaOnly?: boolean; // Only show this item for Dr. Lambda users
+	chatslideOnly?: boolean; // Only show this item for Chatslide users
 }
 
 export const SideBarData: SideBarItem[] = [
@@ -59,7 +70,7 @@ export const SideBarData: SideBarItem[] = [
 	},
 	{
 		title: 'Discover',
-		icon: <LuCompass />,
+		icon: <GoDiscussionOutdated />,
 		path: '/discover',
 		chatslideOnly: true,
 	},
@@ -71,7 +82,7 @@ export const SideBarData: SideBarItem[] = [
 	},
 	{
 		title: `What's New`,
-		icon: <LuNewspaper />,
+		icon: <LuNewspaper style={{ strokeWidth: 1.5 }} />,
 		path: '/whatsnew',
 		chatslideOnly: true,
 	},
@@ -82,15 +93,15 @@ export const SideBarData: SideBarItem[] = [
 		target: '_blank',
 		drlambdaOnly: true,
 	},
-  {
-    title: 'Roadmap',
-    icon: <LuCompass />,
-    path: 'https://chatslide.canny.io/',
-    target: '_blank',
-  },
+	{
+		title: 'Roadmap',
+		icon: <LuCompass style={{ strokeWidth: 1.5 }} />,
+		path: 'https://chatslide.canny.io/',
+		target: '_blank',
+	},
 	{
 		title: 'Onboarding',
-		icon: <PiShield />,
+		icon: <PiShield style={{ strokeWidth: 1.5 }} />,
 		path: '/onboarding',
 		chatslideOnly: true,
 	},
