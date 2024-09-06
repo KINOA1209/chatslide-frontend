@@ -345,7 +345,7 @@ export default function Page() {
 					<div className='flex mx-auto'>
 						{chartData && (
 							<ToolBar>
-								{!isPaidTier ? (
+								{!isPaidTier && (
 									<>
 										<ButtonWithExplanation
 											button={
@@ -366,8 +366,6 @@ export default function Page() {
 											trigger='chart/remove_watermark'
 										></PaywallModal>
 									</>
-								) : (
-									<div></div>
 								)}
 								<ButtonWithExplanation
 									explanation='Add to Resources'
