@@ -522,13 +522,15 @@ export default function Page() {
 				</div>
 			</Column>
 
-			<AIAssistantChatWindow
-				onToggle={undefined}
-				slides={[]}
-				currentSlideIndex={0}
-				type='chart'
-				updateDynamicChart={receiveChart}
-			/>
+			<div className='p-2 h-full'>
+				<AIAssistantChatWindow
+					onToggle={undefined}
+					slides={[]}
+					currentSlideIndex={0}
+					type='chart'
+					updateDynamicChart={receiveChart}
+				/>
+			</div>
 		</div>
 	);
 }
