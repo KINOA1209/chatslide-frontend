@@ -16,10 +16,10 @@ const CHAT_SUGGESTIONS = {
 		'📝 Add an example to the content',
 	],
 	script: [
-		'📝 Add more details in the script',
-		'🤣 Make the script funnier',
-		'🌐 Translate script',
-		'💬 Make the script easier to understand',
+		'🔍 Provide more info',
+		'😄 Make the script funnier',
+		'✂️ Shorten the script',
+		'🗣️ Expand the script',
 	],
 	chart: [
 		'🇺🇸 Harris VS Trump poll results',
@@ -35,10 +35,27 @@ const ChatSuggestions: React.FC<{
 	sendChat: (chat: string) => void;
 }> = ({ language, type, sendChat }) => {
 	const suggestions = CHAT_SUGGESTIONS[type];
+	const useSlider = type === 'chart';
 
-	return (
-		<div className='w-full'>
-			<TextSlider slidesToShow={1} rows={2}>
+	if (useSlider) {
+		return (
+			<div className='w-full'>
+				<TextSlider slidesToShow={1} rows={2}>
+					{suggestions.map((chat) => (
+						<div
+							className='hover:cursor-pointer'
+							key={chat}
+							onClick={() => sendChat(chat)}
+						>
+							<TextBox key={chat}>{chat}</TextBox>
+						</div>
+					))}
+				</TextSlider>
+			</div>
+		);
+	} else {
+		return (
+			<div className='w-full'>
 				{suggestions.map((chat) => (
 					<div
 						className='hover:cursor-pointer'
@@ -48,9 +65,9 @@ const ChatSuggestions: React.FC<{
 						<TextBox key={chat}>{chat}</TextBox>
 					</div>
 				))}
-			</TextSlider>
-		</div>
-	);
+			</div>
+		);
+	}
 };
 
 export default ChatSuggestions;
