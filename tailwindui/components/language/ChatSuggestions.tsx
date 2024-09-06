@@ -16,7 +16,7 @@ const CHAT_SUGGESTIONS = {
 		'📝 Add an example to the content',
 	],
 	script: [
-		'🔍 Provide more info',
+		'🔍 Provide more details in the script',
 		'😄 Make the script funnier',
 		'✂️ Shorten the script',
 		'🗣️ Expand the script',
@@ -35,9 +35,8 @@ const ChatSuggestions: React.FC<{
 	sendChat: (chat: string) => void;
 }> = ({ language, type, sendChat }) => {
 	const suggestions = CHAT_SUGGESTIONS[type];
-	const useSlider = type === 'chart';
 
-	if (useSlider) {
+	if (type !== 'script') {
 		return (
 			<div className='w-full'>
 				<TextSlider slidesToShow={1} rows={2}>

@@ -356,7 +356,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 			</div>
 
 			{type === 'chart' && (
-				<div className='w-full p-2 border-t-2 border-gray-300 flex flex-col justify-center'>
+				<div id='search-engine' className='w-full p-2 border-t-2 border-gray-300 flex flex-col justify-center'>
 					<SmallTitle>Search Engine</SmallTitle>
 					<FormControl sx={{ minWidth: 200 }} size='small'>
 						<Select
@@ -383,7 +383,7 @@ export const AIAssistantChatWindow: React.FC<AIAssistantChatWindowProps> = ({
 				</div>
 			)}
 			{/* chat history text area */}
-			<div className='w-full h-full border-t-2 border-gray-300 overflow-y-auto p-2 flex flex-col flex-grow'>
+			<div id='chat-history' className='w-full h-full border-t-2 border-gray-300 overflow-y-hidden px-1 flex flex-col flex-grow'>
 				<ScrollBar
 					axial='y'
 					index={chatHistory.length}
